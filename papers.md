@@ -32,7 +32,8 @@
 | **FOLD 格式** | — | https://github.com/edemaine/fold | 事实标准 JSON 格式 |
 | Tachi 的软件 | L1 运动学 | https://origami.c.u-tokyo.ac.jp/~tachi/software/ | Rigid Origami Simulator, Freeform Origami |
 | Origami Simulator | L1 | https://origamisimulator.org/ | Ghassaei, GPU 质点弹簧, 实时 |
-| **MERLIN2** | **L2 力学** | Liu & Paulino, MATLAB | bar-and-hinge 标准实现 |
+| **Sim-FAST-PY** | **L2 力学** | https://github.com/zzhuyii/Sim-FAST-PY | **Python！** Yi Zhu（SWOMPS 作者）。CC-BY 4.0。含 `Assembly_ThickOrigami.py`、载荷控制求解器。在线 demo: https://deployablebridges.streamlit.app/ |
+| MERLIN2 | L2 力学 | Liu & Paulino, MATLAB | bar-and-hinge 标准实现 |
 | **SWOMPS** | **L2 力学** | https://drsl.engin.umich.edu/software/swomps-package/ · https://github.com/zzhuyii/OrigamiSimulator | Zhu & Filipov, 含多物理场 |
 | rigid-origami | L1 RL | https://github.com/belalugaX/rigid-origami | 31★。**唯一公开的折纸 gym 环境**，但是 rigid 不是 flat。论文 arXiv:2211.13219 |
 | GamiBench | benchmark | https://github.com/stvngo/GamiBench · https://huggingface.co/datasets/stvngo/GamiBench | MIT，完整可跑 |

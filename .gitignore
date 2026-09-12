@@ -1,1 +1,4 @@
 .DS_Store
+Sim-FAST-PY/
+venv/
+__pycache__/

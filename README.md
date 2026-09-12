@@ -64,7 +64,7 @@ AI 折纸研究笔记。原始想法存放处。
 | --- | --- | --- | --- |
 | L0 组合 | 能不能折平、层序 | Flat-Folder | 毫秒～秒 |
 | L1 运动学 | 折叠过程、刚性可折性 | Tachi 的软件、Origami Simulator | 毫秒～秒 |
-| **L2 降阶力学** | **刚度、承载、多稳态** | **MERLIN2、SWOMPS**（bar-and-hinge） | 秒～分钟 |
+| **L2 降阶力学** | **刚度、承载、多稳态** | **Sim-FAST-PY（Python！）**、MERLIN2、SWOMPS | 秒～分钟 |
 | L3 有限元 | 真实材料、厚度、风载 | Abaqus / ANSYS | 分钟～小时 |
 
 **simulator ≠ environment**：environment = simulator + 动作空间 + reward + reset + **够快**。
@@ -90,7 +90,7 @@ CP (.fold) ──Flat-Folder──→ 枚举合法折叠态 {s₁...sₙ}      L
            ──三维化────────→ 按 faceOrders 赋予厚度 t 展开     Ku & Demaine 2016 已做（Thick Folding）
                                   │                        见 notes/thick-folding-ku-demaine.md
            ──转换层────────→ 转成 bar-and-hinge              面→杆，折痕→扭转弹簧（κ 要实验标定）
-           ──MERLIN2/SWOMPS─→ 刚度/承载/多稳态              L2 已有，MATLAB
+           ──Sim-FAST-PY──→ 刚度/承载/多稳态              L2 已有，**Python**
                                   │                        这层说：哪个好
            ──learned GNN────→ 直接从 CP-graph 预测力学性能   ★ Learn2Fold 架构的搬运
                                                            训练数据由上面三层自动生成
