@@ -22,6 +22,7 @@
 | M1 | https://arxiv.org/abs/1404.1243 | **必读第一篇** | Lechenault, Thiria & Adda-Bedia, PRL 112, 244301 (2014) *Mechanical Response of a Creased Sheet*。折痕扭转刚度 κ 与面板弯曲刚度 B，比值给出特征长度 ℓ~B/κ。**跨过 ℓ 行为定性改变 —— 这就是「不同尺寸下会怎样」的答案** |
 | M2 | https://www.sciencedirect.com/science/article/pii/S0020768317302408 | todo | *Bar and hinge models for scalable analysis of origami* (IJSS 2017)。bar-and-hinge 综述，先读这篇 |
 | M3 | https://asmedigitalcollection.asme.org/mechanismsrobotics/article/12/2/021110/1072475/ | todo | ASME JMR 2020，柔顺折痕（compliant crease）的处理 |
+| M0 | https://royalsocietypublishing.org/doi/10.1098/rspa.2019.0366 · 免费: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6834023/ | **必读** | Zhu & Filipov, *An efficient numerical approach for simulating contact in origami assemblages*, Proc. R. Soc. A 475(2230):20190366, 2019。**自接触 = 层序影响力学的机制**。原文: self-contact "has significant implications for the foldability, kinematics and resulting mechanical properties" |
 | M4 | https://pubmed.ncbi.nlm.nih.gov/33075954/ | todo | *Plasticity and aging of folded elastic sheets*。纸的折痕会随时间松弛 |
 
 ## 工具与代码

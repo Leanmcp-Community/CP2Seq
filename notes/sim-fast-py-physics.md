@@ -183,3 +183,76 @@ https://www.youtube.com/playlist?list=PLLR0SJ1WSb92-_e7nog4T6sGMNHzgWRNx
 3. 跑 `Example_Kirigami_Truss_Bridge.py`，看承重怎么算
 4. **想清楚上面那个「层序如何传进力学」的开放问题**
 5. 再写 FOLD → Sim-FAST-PY 的转换器
+
+---
+
+# 补充（2026-09-12）：MATLAB 版有接触，Python 版没有
+
+## ⚠️ 更正上面「没有的东西」那张表
+
+上面写「塑性 ❌ / 通用接触 ❌ / 摩擦 ❌」——**那只对 Python 版成立**。
+去翻了 MATLAB 仓库的源码目录，**接触和塑性都有**。
+
+## 两套接触实现（都在 MATLAB）
+
+### ① `Sim-FAST/00_SourceCode_Elements/@CD_Elements_T2T_Contact`
+**三角形-三角形接触**（T2T）。完整的碰撞检测 + 接触力/刚度，做了 SIMD 向量化。
+
+```
+CD_Elements_T2T_Contact.m   Potential.m           Solve_Distance.m
+Solve_Global_Force.m        Solve_Global_Stiff.m  Solve_Local_Force.m
+Solve_Local_Stiff.m         closestEdgePoints.m   closestEdgeToEdge.m
+closestVertToTri.m          simdTriContact.m      simdTriTri2.m
+simdTriPoint2.m             simdSegmentSegment2.m simdProject6.m   clamp.m
+```
+全部 `.m` 加起来约 20KB —— 移植不是不可能，但接触的数值细节极易出微妙 bug，
+**跑通 MATLAB 版之前不要动手移植**。
+
+### ② `OrigamiSimulator(SWOMPS)/00_SourceCode/@OrigamiSolver`
+**点-三角形接触**（P2T），分区公式 —— 这套是 **2019 RSPA 论文**的实现。
+
+```
+Contact_AssembleForceStiffness.m
+Contact_DerivativeZone0.m / Zone1.m / Zone2.m   ← 三个 zone，对应论文分区推导
+Contact_P2TDistance.m
+Mesh_NumberingForContact.m
+Plot_ContactForce.m
+```
+
+> **Zhu, Y. & Filipov, E. T., "An efficient numerical approach for simulating contact
+> in origami assemblages"**, *Proc. R. Soc. A* **475**(2230):20190366, 2019
+> https://royalsocietypublishing.org/doi/10.1098/rspa.2019.0366
+> 免费全文: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6834023/
+
+摘要原话：
+> *"The presence of **self-contact** within origami patterns has been difficult to simulate,
+> yet it has **significant implications for the foldability, kinematics and resulting
+> mechanical properties** of the final origami system."*
+
+## ★ 这解答了上面那个开放问题
+
+**层序影响力学的机制 = 面板自接触（self-contact）。**
+层序决定了哪些面贴到哪些面。**而 Zhu 本人已发文证明自接触对力学性能有显著影响**
+—— 等于替我的核心假设背了一半的书。
+
+推论：**没有接触模型，不同 state 之间的方差会接近零，我会测不到任何东西。**
+接触模型是这个项目的必需品，不是可选项。
+
+## MATLAB vs Python 功能差表
+
+| 功能 | MATLAB | Python |
+| --- | --- | --- |
+| 杆 / CST / 4N 转动弹簧 | ✅ | ✅ |
+| 载荷控制 / 位移控制求解 | ✅ | ✅ |
+| 厚板折纸 | ✅ | ✅ |
+| **接触（T2T + P2T 两套）** | ✅ | ❌ |
+| **塑性**（`@Vec_Elements_Bars_Plastic` / `@Solver_DC_Plastic`） | ✅ | ❌ |
+| 3N 转动弹簧 | ✅ | ❌ |
+| MGDCM（追 snap-through） | ✅ | ❌ |
+| 动力学（`@Solver_CAA_Dynamics`） | ✅ | ❌ |
+| 多物理场：热 / 电热 / 频率分析（SWOMPS） | ✅ | ❌ |
+
+**Sim-FAST-PY 是 MATLAB 版的一个子集。**
+
+→ 决策点：**用 MATLAB，还是把接触单元移植到 Python。** 这是要问 Yi Zhu 的问题之一。
+→ SWOMPS 还有 `AddHingeForThickPanel.m`（厚板铰链），也值得看。
