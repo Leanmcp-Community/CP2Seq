@@ -114,3 +114,11 @@ CP (.fold) ──Flat-Folder──→ 枚举合法折叠态 {s₁...sₙ}      L
 4. 接上 Learn2Fold 前端 → 完整的 prompt → CP → 结构性能 管线
 
 **第一件事做 1，不是先复现 Learn2Fold。** 不依赖任何人回邮件、不需要 GPU、做完立刻知道整条路通不通。
+
+## Phase 0 进展（2026-09-14）
+
+- `notes/probe-a-results.md` — **Probe A 完成**。主实验区 ≈100–500 faces；验证器免费边界 ≈500 faces
+- `notes/probe-b-findings.md` — **Probe B 初查**。部分状态可行性判据**存在**（`solver.js` 的 `initial_assignment` 接受部分 `BA`）
+- `notes/experiment-spec-checklist.md` — 跑实验前要冻结的东西（EN + 中文）
+- `notes/research-workflow.md` — Phase 0–5，当前位置 Phase 0
+- `workspace/probe_a.svg` — 爆炸曲线图
