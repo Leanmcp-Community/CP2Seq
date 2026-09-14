@@ -367,9 +367,8 @@ Run these first, in this order, before touching our method — they define the r
 2. **BFS** over the CP action space + Flat-Folder legality check.
 3. **DFS** over the same action space.
    - ⚠️ Decide the query-budget parity between random / BFS / DFS up front (group C already flags this) — otherwise the comparison is meaningless.
-4. **Learn2Fold** — reproduce its reported accuracy on our CP set as a fourth reference point. It's a paper in its own right, so treat this as a faithful reproduction (same splits, same metric definitions where possible), not a reimplementation-from-memory. Flag anywhere our setup has to diverge from theirs and why.
 
-Only once these four numbers exist do we know what "better than baseline" would even mean for our method.
+Only once these three numbers exist do we know what "better than baseline" would even mean for our method.
 
 ### Algorithmic complexity and error rate of the three search baselines
 
@@ -392,7 +391,7 @@ Tools:
 
 The LLM sits on top of this tool belt: at each step it proposes (or filters a proposal), calls the verifier, optionally looks at the rendered state, and decides whether to continue or backtrack.
 
-We then compare this tool-augmented LLM against the four baseline rows above (Random / BFS / DFS / Learn2Fold) and report whether it is actually better, and on which axis (success rate vs. query efficiency vs. pruning quality — group C's distinction matters here).
+We then compare this tool-augmented LLM against the three baseline rows above (Random / BFS / DFS) and report whether it is actually better, and on which axis (success rate vs. query efficiency vs. pruning quality — group C's distinction matters here).
 
 ### The memorization control (critical)
 
@@ -402,7 +401,7 @@ To make sure any win isn't just the LLM recalling folds it has seen in pretraini
 
 - [ ] Which VLM(s) — candidates: **Gemini Flash** (we have free credits, so it's the cheapest way to run the full parameter sweep) and **Nemotron** or other open-weight LLMs as a second reference point. No training/fine-tuning on any of them — API/inference-only, prompting and tool-calling only.
       - [ ] Must be held fixed between the tool-augmented run and the no-tools control per model; comparing across models would confound the ablation, but running the whole pipeline on both Gemini Flash and Nemotron (and swapping in others opportunistically) tells us whether the effect is model-specific or general
-- [ ] Query budget per CP — same cap across all rows (Random / BFS / DFS / Learn2Fold / Ours-full / Ours-no-tools), per group C's parity requirement
+- [ ] Query budget per CP — same cap across all rows (Random / BFS / DFS / Ours-full / Ours-no-tools), per group C's parity requirement
 - [ ] Number of retries after failure (ties to group A)
 - [ ] History window kept in context (ties to group A)
 - [ ] Image resolution / rendering style for the visual feedback channel, and how often it's sent (every step? only on failure/backtrack?)
@@ -431,7 +430,6 @@ Report as a single table, one row per arm, columns = the metrics group C already
 | Random | | | — | — |
 | BFS | | | — | n/a |
 | DFS | | | — | n/a |
-| Learn2Fold | | | | |
 | Ours (full tool belt) | | | | |
 | Ours (no vision) | | | | |
 | Ours (no tools, prompt-only) | | | — | — |
@@ -442,7 +440,7 @@ If instead Ours (no tools) is close to Ours (full), the honest conclusion is tha
 
 ## Contribution
 
-- A reproducible baseline ladder (Random → BFS → DFS → Learn2Fold) on the same CP set and query-budget definition, which by itself is missing from the current literature comparison.
+- A reproducible baseline ladder (Random → BFS → DFS) on the same CP set and query-budget definition, which by itself is missing from the current literature comparison.
 - A tool-augmented LLM loop (proposal + filter + verifier + optional visual feedback) evaluated on query efficiency and pruning/backtracking quality, not just success rate — operationalizing the metric group C argues for.
 - A direct memorization control (same model, same CPs, tools removed) that separates "the LLM reasons better with tools" from "the LLM already knew the answer" — something most LLM-for-planning papers skip.
 - A visual-feedback ablation quantifying whether rendering the simulation state back to the model measurably changes pruning/backtracking quality, which speaks to the Spa3R vs. "I Know About Up!" mental-imagery debate referenced in group D.
@@ -477,9 +475,8 @@ If instead Ours (no tools) is close to Ours (full), the honest conclusion is tha
 2. **BFS** —— 在 CP 的动作空间上跑，配合 Flat-Folder 的合法性检查。
 3. **DFS** —— 在同一个动作空间上跑。
    - ⚠️ 提前定好 random / BFS / DFS 之间的 query 预算对齐方式（C 组已经提过这一点）—— 否则比较毫无意义。
-4. **Learn2Fold** —— 在我们的 CP 集上复现它报告的准确率，作为第四个参照点。它本身就是一篇论文，所以要当作忠实复现来做（尽量用相同的划分、相同的指标定义），而不是凭记忆重新实现一遍。哪里跟原论文的设置不一样，要标出来并说明原因。
 
-只有这四个数字都有了，「比基线好」对我们的方法来说才有意义。
+只有这三个数字都有了，「比基线好」对我们的方法来说才有意义。
 
 ### 三个搜索基线的算法复杂度和错误率
 
@@ -502,7 +499,7 @@ If instead Ours (no tools) is close to Ours (full), the honest conclusion is tha
 
 LLM 就架在这套工具腰带之上：每一步它提议（或过滤一个提议）、调用验证器、可选地看一眼渲染出来的状态，然后决定继续还是回溯。
 
-然后我们把这个工具增强的 LLM 拿去跟上面四个基线（Random / BFS / DFS / Learn2Fold）比较，报告它是否真的更好，以及在哪个维度上更好（成功率 vs. query 效率 vs. 剪枝质量 —— C 组的这个区分在这里很关键）。
+然后我们把这个工具增强的 LLM 拿去跟上面三个基线（Random / BFS / DFS）比较，报告它是否真的更好，以及在哪个维度上更好（成功率 vs. query 效率 vs. 剪枝质量 —— C 组的这个区分在这里很关键）。
 
 ### 记忆性对照实验（关键）
 
@@ -512,7 +509,7 @@ LLM 就架在这套工具腰带之上：每一步它提议（或过滤一个提�
 
 - [ ] 用哪个/哪些 VLM —— 候选：**Gemini Flash**（我们有免费额度，是跑完整参数扫描最便宜的方式）和 **Nemotron** 或其他开源权重的 LLM 作为第二个参照点。不对它们做任何训练/微调 —— 纯 API/推理，只用 prompting 和 tool-calling。
       - [ ] 同一个模型内，工具增强版和无工具对照版必须固定不变；跨模型比较会混淆消融实验，但在 Gemini Flash 和 Nemotron 上都跑一遍完整流程（并伺机换用其他模型），能告诉我们这个效应是模型特有的还是普遍的
-- [ ] 每个 CP 的 query 预算 —— 所有行（Random / BFS / DFS / Learn2Fold / Ours-full / Ours-no-tools）用同一个上限，按 C 组的对齐要求
+- [ ] 每个 CP 的 query 预算 —— 所有行（Random / BFS / DFS / Ours-full / Ours-no-tools）用同一个上限，按 C 组的对齐要求
 - [ ] 失败后允许的重试次数（对应 A 组）
 - [ ] 上下文里保留的历史窗口（对应 A 组）
 - [ ] 视觉反馈通道的图像分辨率 / 渲染方式，以及多久发送一次（每一步？只在失败/回溯时？）
@@ -541,7 +538,6 @@ LLM 就架在这套工具腰带之上：每一步它提议（或过滤一个提�
 | Random | | | — | — |
 | BFS | | | — | n/a |
 | DFS | | | — | n/a |
-| Learn2Fold | | | | |
 | Ours（完整工具腰带） | | | | |
 | Ours（无视觉） | | | | |
 | Ours（无工具，纯 prompting） | | | — | — |
@@ -552,7 +548,7 @@ LLM 就架在这套工具腰带之上：每一步它提议（或过滤一个提�
 
 ## 贡献
 
-- 一套在同一个 CP 集合、同一个 query 预算定义下可复现的基线阶梯（Random → BFS → DFS → Learn2Fold），这本身就是目前文献比较里缺失的东西。
+- 一套在同一个 CP 集合、同一个 query 预算定义下可复现的基线阶梯（Random → BFS → DFS），这本身就是目前文献比较里缺失的东西。
 - 一个工具增强的 LLM 循环（提议 + 过滤 + 验证器 + 可选的视觉反馈），按 query 效率和剪枝/回溯质量而不只是成功率来评估 —— 把 C 组主张的那个度量真正操作化。
 - 一个直接的记忆性对照实验（同一个模型、同一批 CP、拿掉工具），把「LLM 靠工具推理得更好」和「LLM 本来就知道答案」这两件事分开 —— 这是大多数「LLM 做规划」的论文会跳过的一步。
 - 一个视觉反馈消融，量化把模拟状态渲染回模型是否可测量地改变了剪枝/回溯质量，这和 D 组提到的 Spa3R vs. "I Know About Up!" 心理表征之争相呼应。
