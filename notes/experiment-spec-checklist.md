@@ -337,3 +337,224 @@ Every item below exists because it is needed to test, or to avoid contaminating,
 - [ ] 缓存：相同 (prompt, seed, model) 直接命中，跑第二遍不花钱
 - [ ] **所有中间结果落盘成结构化日志，分析全部离线从日志做，不重跑模型**
       → 绝大部分「又烧了一遍 token」都是因为分析时发现没记某个字段
+
+---
+---
+
+# Experiment Plan — Tool-Augmented LLM vs. Search Baselines
+
+2026-09-14. First pass at turning the checklist above into an actual run order. Still a plan to be argued with, not a locked spec — the `pending pilot` items in A–G above still gate the real numbers.
+
+⚠️ **This is a VLM, not a text-only LLM.** The moment the visual feedback channel exists, "the LLM" in every section below means a vision-language model — it has to consume the rendered fold-state image, not just a symbolic state string. Every mention of "LLM" past this point should be read as "VLM."
+
+⚠️ **This is purely an engineering exercise, not a training project.** We do not train, fine-tune, or otherwise modify any model. Every arm uses an off-the-shelf VLM/LLM through its API, driven only by prompting and tool-calling. The contribution is the harness (tools, verifier, ablation design), not a new model.
+
+## Hypothesis
+
+Restates the core claim this whole file serves (see "The claim this checklist exists to serve" at the top):
+
+> On sequential CSPs with an exact verifier, the LLM's gain is in early pruning and targeted
+> backtracking, not proposal quality — so **query efficiency**, not raw success rate, is the
+> right metric.
+
+Everything below is built to produce the numbers that confirm or kill this sentence, and to rule out the obvious alternative explanation: that the LLM is just pattern-matching folds it has memorized from pretraining/dataset exposure rather than reasoning over the CP in front of it.
+
+## Baseline Reproduction
+
+Run these first, in this order, before touching our method — they define the reference frame group C already calls for, and they're also the cheapest sanity checks that the difficulty axis (group B) and the "one query" definition (group A) actually behave.
+
+1. **Random Selection baseline** — random legal move at every step, no pruning, restart on failure. Cheapest possible baseline; also the floor every other row must clear.
+2. **BFS** over the CP action space + Flat-Folder legality check.
+3. **DFS** over the same action space.
+   - ⚠️ Decide the query-budget parity between random / BFS / DFS up front (group C already flags this) — otherwise the comparison is meaningless.
+4. **Learn2Fold** — reproduce its reported accuracy on our CP set as a fourth reference point. It's a paper in its own right, so treat this as a faithful reproduction (same splits, same metric definitions where possible), not a reimplementation-from-memory. Flag anywhere our setup has to diverge from theirs and why.
+
+Only once these four numbers exist do we know what "better than baseline" would even mean for our method.
+
+### Algorithmic complexity and error rate of the three search baselines
+
+Let `b` = branching factor (legal actions per step, group B's axis) and `d` = shortest solution length (also group B). These give BFS/DFS/Random genuinely different profiles, which is exactly why group B warns the three difficulty axes "give completely different curve shapes":
+
+- **BFS**: time and space `O(b^d)` — it explores level by level, so at depth `d` it may be holding the entire frontier of size `~b^d` in memory. **Error rate: zero.** Because it only accepts a path once the exact verifier confirms it and only abandons a branch once fully exhausted, it can't produce a false prune or a wrong backtrack distance — the failure-taxonomy categories in group E (false prune, backtracked too far/not far enough) don't apply to it by construction.
+- **DFS**: time `O(b^d)` in the worst case (same asymptotic bound as BFS — both are exhaustive over the same tree), but space only `O(d)` (just the current path), which is the practical reason to run both rather than only one. **Error rate: also zero**, for the same reason as BFS — it backtracks only after the verifier has exhaustively ruled out a subtree, so its backtracking is correct by definition, not approximate.
+- **Random Selection**: no deterministic complexity bound and **no completeness guarantee within a finite query budget** — this is the key asymmetry with BFS/DFS. Its *expected* number of queries to reach a depth-`d` solution scales with the inverse probability of staying on a solution path at each step (roughly `O(b^d)` in expectation if legal moves are close to uniformly likely, same order as brute force, but as an expectation with variance rather than a guarantee). Because it can exhaust its query budget without ever finding a solution that exists, it has a genuine **nonzero failure/error rate** for any fixed finite budget — unlike BFS/DFS, whose only "cost" is query count, never correctness.
+  - ⚠️ This is why Random needs the same query budget as everyone else (already flagged above) *and* needs enough repeated trials/seeds to report that failure rate meaningfully — a single run of Random conflates "got unlucky" with "the baseline is weak."
+
+## Experiment Setup (our method)
+
+The core idea: give the LLM a small tool belt around the CP simulator instead of asking it to reason blind, then see how much of the gain over the baselines above actually comes from that tool use versus from the model itself.
+
+Tools:
+- **Verifier / simulator tool** — runs the actual folding algorithm on the CP so the LLM can check "if I take this action, is the resulting state still solvable" instead of guessing. This is the same verifier as group C, exposed as a callable tool rather than only a pass/fail wrapper.
+- **Proposal tool** — enumerates or suggests candidate next folds from the current state, so the LLM isn't required to hallucinate the action space from scratch.
+- **Filter** — takes the verifier's output and narrows the proposal set before the LLM commits, i.e. the explicit "declare this branch dead" step group C requires.
+- **Visual feedback channel** — the simulator renders the current fold state as an image and sends it back to the LLM, so it can *see* what the paper looks like after each step and reason about layer order / geometry visually, not just from a symbolic state string. This is a variant of the "state representation" interface in group A — it needs to be switchable, since we ablate it below.
+
+The LLM sits on top of this tool belt: at each step it proposes (or filters a proposal), calls the verifier, optionally looks at the rendered state, and decides whether to continue or backtrack.
+
+We then compare this tool-augmented LLM against the four baseline rows above (Random / BFS / DFS / Learn2Fold) and report whether it is actually better, and on which axis (success rate vs. query efficiency vs. pruning quality — group C's distinction matters here).
+
+### The memorization control (critical)
+
+To make sure any win isn't just the LLM recalling folds it has seen in pretraining or in the dataset, run the **same LLM, same CP set, with the tools and verifier removed** — plain prompting only, no verifier calls, no visual feedback, no filter. If the tool-augmented version wins by a wide margin over this no-tools/prompt-only version *on the same model*, that's evidence the gain comes from the tool loop (verification + pruning + vision), not from what the model already "knows." If the two are close, the earlier win over Random/BFS/DFS is suspect and likely reflects memorization rather than reasoning.
+
+## Experiment Parameters
+
+- [ ] Which VLM(s) — candidates: **Gemini Flash** (we have free credits, so it's the cheapest way to run the full parameter sweep) and **Nemotron** or other open-weight LLMs as a second reference point. No training/fine-tuning on any of them — API/inference-only, prompting and tool-calling only.
+      - [ ] Must be held fixed between the tool-augmented run and the no-tools control per model; comparing across models would confound the ablation, but running the whole pipeline on both Gemini Flash and Nemotron (and swapping in others opportunistically) tells us whether the effect is model-specific or general
+- [ ] Query budget per CP — same cap across all rows (Random / BFS / DFS / Learn2Fold / Ours-full / Ours-no-tools), per group C's parity requirement
+- [ ] Number of retries after failure (ties to group A)
+- [ ] History window kept in context (ties to group A)
+- [ ] Image resolution / rendering style for the visual feedback channel, and how often it's sent (every step? only on failure/backtrack?)
+- [ ] CP dataset and difficulty bins — same set used for baseline reproduction, our method, and the no-tools control (group B/G)
+- [ ] Whether the verifier returns a failure *reason* to the LLM — must match whatever was decided in group A, and must be identical across the tool-augmented and no-tools-control arms wherever the no-tools arm can still receive it (e.g. as text in the prompt)
+
+## Ablations
+
+Beyond the three ablations already specified in group C (proposal off / pruning off / backtracking off), this experiment adds:
+
+| Ablation | How | What it isolates |
+| --- | --- | --- |
+| **Full tool belt** (reference) | proposal + filter + verifier + vision | upper bound |
+| **No vision** | same tools, drop the rendered-image channel | value of visual/geometric feedback specifically |
+| **No tools, prompt-only** | plain LLM, no verifier/proposal/filter/vision calls | memorization control — is the LLM reasoning or recalling |
+| **Verifier, no vision, no filter** | LLM sees only pass/fail from the verifier | value of the filter step on top of raw verification |
+
+> Same caveat as group C: if the no-vision or no-tools arm performs nearly as well as the full arm, that itself is a finding — it means the gain isn't where we assumed, not that the experiment failed.
+
+## Possible Results and Comparison
+
+Report as a single table, one row per arm, columns = the metrics group C already defines (success rate, query count, pruning precision/recall, backtracking distance error `|i-j|`):
+
+| Arm | Success rate | Queries to solve | Pruning P/R | Backtrack error |
+| --- | --- | --- | --- | --- |
+| Random | | | — | — |
+| BFS | | | — | n/a |
+| DFS | | | — | n/a |
+| Learn2Fold | | | | |
+| Ours (full tool belt) | | | | |
+| Ours (no vision) | | | | |
+| Ours (no tools, prompt-only) | | | — | — |
+
+Expected pattern if the hypothesis holds: Ours (full) beats Random/BFS/DFS mainly on **query count**, not necessarily on raw success rate; Ours (no tools) drops back down close to a prompting-only baseline, confirming the gain is tool-driven; the vision ablation shows whether geometric/visual feedback specifically helps pruning correctness or backtracking accuracy (plausible mechanism: seeing the folded state helps catch layer-ordering errors, which is one of the group E failure categories).
+
+If instead Ours (no tools) is close to Ours (full), the honest conclusion is that the LLM already "knows" these folds and the tool belt isn't adding reasoning — report that as the finding rather than reframing the metric to hide it.
+
+## Contribution
+
+- A reproducible baseline ladder (Random → BFS → DFS → Learn2Fold) on the same CP set and query-budget definition, which by itself is missing from the current literature comparison.
+- A tool-augmented LLM loop (proposal + filter + verifier + optional visual feedback) evaluated on query efficiency and pruning/backtracking quality, not just success rate — operationalizing the metric group C argues for.
+- A direct memorization control (same model, same CPs, tools removed) that separates "the LLM reasons better with tools" from "the LLM already knew the answer" — something most LLM-for-planning papers skip.
+- A visual-feedback ablation quantifying whether rendering the simulation state back to the model measurably changes pruning/backtracking quality, which speaks to the Spa3R vs. "I Know About Up!" mental-imagery debate referenced in group D.
+
+> ⚠️ **Scope reminder**: none of this involves training a model. It's an engineering problem — building the tool belt, the verifier, the rendering pipeline, and the ablation harness around existing VLMs/LLMs (Gemini Flash, Nemotron, others) — not a modeling contribution.
+
+---
+---
+
+# 实验计划 —— 工具增强 LLM vs. 搜索基线
+
+2026-09-14。把上面的清单落成一个具体的跑法顺序的第一版。仍然是一份可以被反驳的计划，不是定死的 spec —— A–G 组里 `pending pilot` 的条目仍然卡着真正的数字。
+
+⚠️ **这是一个 VLM，不是纯文本 LLM。** 只要视觉反馈通道存在，下文里所有「LLM」指的都是视觉语言模型 —— 它需要消费渲染出来的折叠状态图像，而不只是一段符号化的状态字符串。从这里开始，凡是提到「LLM」都应读作「VLM」。
+
+⚠️ **这纯粹是一个工程问题，不是训练项目。** 我们不训练、不微调、也不以任何方式修改任何模型。每一臂都是通过 API 调用现成的 VLM/LLM，只靠 prompting 和 tool-calling 驱动。这里的贡献是这套 harness（工具、验证器、消融设计），不是一个新模型。
+
+## 假设
+
+重述这整份文件服务的核心主张（见文首「这份清单服务的那句主张」）：
+
+> 在带精确验证器的序贯 CSP 上，LLM 的增益在于提前剪枝和定位回溯，而不在提议质量 ——
+> 所以 **query efficiency**，而不是原始成功率，才是正确的度量。
+
+下面的一切都是为了产出能证实或证伪这句话的数字，同时排除一个显而易见的替代解释：LLM 只是在套用它从预训练/数据集里记住的折法模式，而不是在真正对眼前的 CP 做推理。
+
+## 基线复现
+
+按这个顺序先跑这些 —— 在动我们自己的方法之前。它们定义了 C 组已经要求的参照系，也是最便宜的方式来检验难度轴（B 组）和「一次 query」的定义（A 组）是否真的表现如预期。
+
+1. **随机选择基线** —— 每一步随机选一个合法动作，不剪枝，失败就重启。最便宜的基线，也是其他每一行必须超过的下限。
+2. **BFS** —— 在 CP 的动作空间上跑，配合 Flat-Folder 的合法性检查。
+3. **DFS** —— 在同一个动作空间上跑。
+   - ⚠️ 提前定好 random / BFS / DFS 之间的 query 预算对齐方式（C 组已经提过这一点）—— 否则比较毫无意义。
+4. **Learn2Fold** —— 在我们的 CP 集上复现它报告的准确率，作为第四个参照点。它本身就是一篇论文，所以要当作忠实复现来做（尽量用相同的划分、相同的指标定义），而不是凭记忆重新实现一遍。哪里跟原论文的设置不一样，要标出来并说明原因。
+
+只有这四个数字都有了，「比基线好」对我们的方法来说才有意义。
+
+### 三个搜索基线的算法复杂度和错误率
+
+设 `b` = 分支因子（每一步的合法动作数，B 组的轴之一），`d` = 最短解长度（也是 B 组的轴之一）。这三者的复杂度画像完全不同，这正是 B 组警告「三条难度轴会给出完全不同曲线形状」的原因：
+
+- **BFS**：时间和空间都是 `O(b^d)` —— 它逐层展开，所以到第 `d` 层时可能要在内存里保留大小约 `~b^d` 的整个前沿。**错误率：零。** 因为它只在精确验证器确认之后才接受一条路径，也只在一个分支被彻底穷尽之后才放弃它，所以它不可能产生误剪或错误的回溯距离 —— E 组失败分类学里的那些类别（误剪、回溯过头/不足）从构造上就不适用于它。
+- **DFS**：最坏情况下时间同样是 `O(b^d)`（跟 BFS 渐进阶数一致 —— 两者都在同一棵树上做穷举），但空间只要 `O(d)`（只需保存当前路径），这也是两者都要跑一遍而不是只跑一个的实际理由。**错误率同样为零**，原因跟 BFS 一样 —— 它只在验证器已经穷尽排除了某个子树之后才回溯，所以它的回溯从定义上就是正确的，不是近似的。
+- **随机选择**：没有确定性的复杂度上界，并且**在有限 query 预算内没有完备性保证** —— 这是它跟 BFS/DFS 的关键不对称之处。它到达深度为 `d` 的解所需的*期望* query 数，取决于每一步停留在解路径上的概率的倒数（如果合法动作接近均匀分布，量级大致是 `O(b^d)`，跟暴力搜索同阶，但这是一个带方差的期望值，不是保证）。因为它可能耗尽 query 预算却始终没找到一个实际存在的解，所以对任何固定的有限预算，它都有真实存在的**非零失败/错误率** —— 不像 BFS/DFS，它们唯一的「代价」是 query 数量，正确性上从不出错。
+  - ⚠️ 这就是为什么随机基线既要跟其他所有方法用相同的 query 预算（前面已经提过），**又**需要足够多次重复实验/多个随机种子才能有意义地报出这个失败率 —— 只跑一次随机基线会把「运气不好」和「这个基线本身就弱」混为一谈。
+
+## 实验设置（我们的方法）
+
+核心想法：给 LLM 配一个围绕 CP 模拟器的小工具腰带，而不是让它盲目推理，然后看看相对于上面这些基线的增益到底有多少是来自工具使用本身，多少是来自模型自身。
+
+工具：
+- **验证器 / 模拟器工具** —— 在 CP 上真正运行折叠算法，让 LLM 能查「如果我采取这个动作，结果状态是否仍然可解」，而不是靠猜。这就是 C 组里的那个验证器，只是把它暴露成一个可调用的工具，而不只是一个 pass/fail 的包装。
+- **提议工具** —— 从当前状态枚举或建议候选的下一步折法，这样 LLM 不需要凭空幻想出整个动作空间。
+- **过滤器** —— 拿验证器的输出去收窄提议集合，然后 LLM 才做决定，也就是 C 组要求的那个显式的「宣布这条分支已死」步骤。
+- **视觉反馈通道** —— 模拟器把当前折叠状态渲染成图像发回给 LLM，让它能*看到*每一步之后纸张的样子，从而对层序 / 几何关系做视觉上的推理，而不只是靠一段符号化的状态字符串。这是 A 组「状态表示」接口的一个变体 —— 必须做成可切换的，因为下面要对它做消融。
+
+LLM 就架在这套工具腰带之上：每一步它提议（或过滤一个提议）、调用验证器、可选地看一眼渲染出来的状态，然后决定继续还是回溯。
+
+然后我们把这个工具增强的 LLM 拿去跟上面四个基线（Random / BFS / DFS / Learn2Fold）比较，报告它是否真的更好，以及在哪个维度上更好（成功率 vs. query 效率 vs. 剪枝质量 —— C 组的这个区分在这里很关键）。
+
+### 记忆性对照实验（关键）
+
+为了确认任何胜出都不只是 LLM 在回忆它在预训练或数据集里见过的折法，要跑一遍**同一个 LLM、同一批 CP，但把工具和验证器全部拿掉** —— 纯 prompting，不调用验证器，没有视觉反馈，没有过滤器。如果工具增强版本在*同一个模型上*大幅领先这个无工具/纯 prompting 版本，这就是证据表明增益来自工具循环（验证 + 剪枝 + 视觉），而不是模型本来就「知道」的东西。如果两者接近，那之前相对 Random/BFS/DFS 的胜出就很可疑，更可能反映的是记忆而不是推理。
+
+## 实验参数
+
+- [ ] 用哪个/哪些 VLM —— 候选：**Gemini Flash**（我们有免费额度，是跑完整参数扫描最便宜的方式）和 **Nemotron** 或其他开源权重的 LLM 作为第二个参照点。不对它们做任何训练/微调 —— 纯 API/推理，只用 prompting 和 tool-calling。
+      - [ ] 同一个模型内，工具增强版和无工具对照版必须固定不变；跨模型比较会混淆消融实验，但在 Gemini Flash 和 Nemotron 上都跑一遍完整流程（并伺机换用其他模型），能告诉我们这个效应是模型特有的还是普遍的
+- [ ] 每个 CP 的 query 预算 —— 所有行（Random / BFS / DFS / Learn2Fold / Ours-full / Ours-no-tools）用同一个上限，按 C 组的对齐要求
+- [ ] 失败后允许的重试次数（对应 A 组）
+- [ ] 上下文里保留的历史窗口（对应 A 组）
+- [ ] 视觉反馈通道的图像分辨率 / 渲染方式，以及多久发送一次（每一步？只在失败/回溯时？）
+- [ ] CP 数据集和难度分层 —— 基线复现、我们的方法、无工具对照三者用同一批（B/G 组）
+- [ ] 验证器是否向 LLM 返回失败*原因* —— 必须和 A 组已经定下的一致，并且在无工具对照臂仍能接收到该信息的地方（比如以文本形式放进 prompt）保持一致
+
+## 消融实验
+
+除了 C 组已经指定的三个消融（关掉提议 / 关掉剪枝 / 关掉回溯），本实验再加：
+
+| 消融 | 做法 | 隔离出的东西 |
+| --- | --- | --- |
+| **完整工具腰带**（参照） | 提议 + 过滤 + 验证器 + 视觉 | 上限 |
+| **无视觉** | 同样的工具，去掉渲染图像通道 | 视觉/几何反馈本身的价值 |
+| **无工具，纯 prompting** | 普通 LLM，不调用验证器/提议/过滤/视觉 | 记忆性对照 —— LLM 是在推理还是在回忆 |
+| **只有验证器，无视觉，无过滤** | LLM 只看到验证器的 pass/fail | 在原始验证之上，过滤步骤的价值 |
+
+> 跟 C 组一样的提醒：如果无视觉或无工具那一臂表现跟完整臂几乎一样好，这本身就是一个发现 —— 说明增益不在我们以为的地方，而不是实验失败了。
+
+## 可能的结果与比较
+
+汇总成一张表，每个臂一行，列是 C 组已经定义的那些指标（成功率、query 数、剪枝 precision/recall、回溯距离误差 `|i-j|`）：
+
+| 臂 | 成功率 | 解决所需 query 数 | 剪枝 P/R | 回溯误差 |
+| --- | --- | --- | --- | --- |
+| Random | | | — | — |
+| BFS | | | — | n/a |
+| DFS | | | — | n/a |
+| Learn2Fold | | | | |
+| Ours（完整工具腰带） | | | | |
+| Ours（无视觉） | | | | |
+| Ours（无工具，纯 prompting） | | | — | — |
+
+如果假设成立，预期的模式是：Ours（完整版）主要在 **query 数**上赢过 Random/BFS/DFS，不一定在原始成功率上赢；Ours（无工具）会跌回接近纯 prompting 基线的水平，从而确认增益来自工具本身；视觉消融则显示几何/视觉反馈是否具体地帮助了剪枝正确性或回溯准确性（一个可能的机制：看到折叠后的状态有助于抓住层序推理错误，这正是 E 组失败分类学里的一类）。
+
+如果反而是 Ours（无工具）跟 Ours（完整版）很接近，诚实的结论就是 LLM 本来就「知道」这些折法，工具腰带并没有增加推理能力 —— 应该把这个如实报告为发现，而不是重新包装指标来掩盖它。
+
+## 贡献
+
+- 一套在同一个 CP 集合、同一个 query 预算定义下可复现的基线阶梯（Random → BFS → DFS → Learn2Fold），这本身就是目前文献比较里缺失的东西。
+- 一个工具增强的 LLM 循环（提议 + 过滤 + 验证器 + 可选的视觉反馈），按 query 效率和剪枝/回溯质量而不只是成功率来评估 —— 把 C 组主张的那个度量真正操作化。
+- 一个直接的记忆性对照实验（同一个模型、同一批 CP、拿掉工具），把「LLM 靠工具推理得更好」和「LLM 本来就知道答案」这两件事分开 —— 这是大多数「LLM 做规划」的论文会跳过的一步。
+- 一个视觉反馈消融，量化把模拟状态渲染回模型是否可测量地改变了剪枝/回溯质量，这和 D 组提到的 Spa3R vs. "I Know About Up!" 心理表征之争相呼应。
+
+> ⚠️ **范围提醒**：这里面不涉及训练任何模型。这是一个工程问题 —— 围绕现成的 VLM/LLM（Gemini Flash、Nemotron 等）搭建工具腰带、验证器、渲染管线和消融实验 harness —— 不是一个建模上的贡献。
