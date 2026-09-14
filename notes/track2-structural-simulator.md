@@ -2,6 +2,11 @@
 
 2026-09-14。我的命名保留：**structural simulation**。
 
+> **已决定（2026-09-14）：Track 1 和 Track 2 是两篇独立论文。** 定案，不再讨论合并。
+> **推论：Track 2 不需要等 Track 1。** 它有自己的问题、自己的会议、自己的对手。
+> 两者唯一的连接是 Learn2Fold 那个架构（慢验证器 → 学快代理 → 代理上搜索），
+> 那是**第三篇**的素材，不是把这两篇缝起来的理由。
+
 ---
 
 ## 我的原始想法
@@ -39,7 +44,47 @@
 > resulting mechanical properties** of the final origami system."*
 
 **层序 → 哪些面贴到哪些面 → 力学。** 而且 Zhu 本人已发文证明自接触对力学性能有显著影响。
-**没有接触模型，state 之间方差接近零，我会测不到任何东西。接触是必需品不是可选项。**
+
+### ⚠️ 更正：不是「方差接近零」，情况比这麻烦
+
+之前写「没有接触模型，state 之间方差接近零」—— 不准确。核实自 Flat-Folder `src/NOTATION.txt`：
+`Vf`（folded position）由 CP + M/V 赋值**算一次**；一个 state 是求解器选了一组不同的 `GI`，
+产出不同的 `FO`。**N 个态共享同一份 `Vf`，只有层序不同。** 所以：
+
+| | 结果 |
+| --- | --- |
+| **不加厚** | N 个态的 bar-and-hinge 模型**逐字节相同** → 方差**恰好**为 0，不是「接近 0」 |
+| **加厚，不加接触** | 层序决定每个面的 z → 几何真的不同 → 刚度真的不同。**但密堆栈里最主要的传力路径（层压着层）不存在**，受载时层与层互穿 |
+| **加厚 + 接触** | 层序 → 哪些面贴哪些面 → 传力 → 刚度。**机制在这里** |
+
+**第二行是真正的陷阱。** 它给出非零的数字，看起来像结果。但本课题的产出物是**排序**，
+而接触对不同层序的贡献不同 —— 缺接触时排序可能不是偏一点，是**次序翻转**。
+**非零方差会让人误以为管线通了。**
+
+### 工具现状：管线在这一段是断的
+
+核实自源码（2026-09-14）：
+
+- **SWOMPS（MATLAB）有真接触** —— `00_SourceCode/@OrigamiSolver/Contact_P2TDistance.m`（点—三角形距离）、
+  `Contact_AssembleForceStiffness.m`、`Contact_DerivativeZone0/1/2.m`、`Mesh_NumberingForContact.m`
+- **Sim-FAST-PY 没有。** 全仓库 `contact` 只命中 `Elements_Vec_RotSprings_4N_Directional.py:6` 一处注释。
+  `Elements_Vec_RotSprings_4N.py:59` 的 `theta1 = 0.1π` / `theta2 = 1.9π` 刚化项是
+  **单条折痕的角度门限**（防折痕过闭），**不是面—面接触**（防面 A 穿过面 F）。两件完全不同的事
+
+→ README 管线图里「转换层 → bar-and-hinge → Sim-FAST-PY」这一段，按现在的工具**是断的**。
+两条路：① 需要接触的试件走 SWOMPS（MATLAB），管线分叉；
+② 把上面那 5–6 个 `Contact_*` 文件移植进 Sim-FAST-PY（Zhu 在 README 里写做 Python 版的动机
+就是 "better integration with other AI methods"，PR 大概率会被接受）。
+
+### Zhu 本人的判断（2026-09-14 邮件）
+
+> `For some shapes, we may need to include contact. For some, perhaps we can get away with it.`
+
+**写接触求解器的人说：接触重不重要是形状相关的，而且他没有先验判据。**
+
+→ 这正是「方差为零 → 立论要重做」那个风险。**处理办法是把它变成产出**：
+命题从「不同 state 力学性能不同」改成 —— **对哪些折痕图，层序真的改变力学排序？改变多少？**
+方差小的那些图案就是结果的一部分，不是失败的实验。
 
 ---
 
