@@ -1,3 +1,177 @@
+# Experiment Spec Checklist — what must be frozen before any experiment runs
+
+2026-09-14. **A checklist to be filled in, not a set of conclusions.** Every line is my own call.
+
+> **How to use**: Group `A` is frozen once decided — changing it means re-running.
+> Any item in `B`–`G` marked *pending pilot* must state **which pilot number it is waiting on**.
+> A "TBD" that doesn't name what it's waiting for is still TBD three months from now.
+
+> **Current position: Phase 0** (see `research-workflow.md`).
+> Until the two Phase 0 probes have run, most items below aren't yet ready to be filled in.
+
+---
+
+## The claim this checklist exists to serve
+
+> **On sequential constraint-satisfaction problems with an exact verifier, the LLM's gain lies
+> not in proposal quality but in early pruning and targeted backtracking. Therefore query
+> efficiency, not success rate, is the right metric.**
+
+Every item below exists because it is needed to test, or to avoid contaminating, this one sentence.
+**If an item can't be traced back to this sentence, it doesn't belong in the main experiment.**
+
+---
+
+## First, distinguish two kinds of "TBD"
+
+| | What | When to decide |
+| --- | --- | --- |
+| **Frozen (definitional)** | Interfaces, contracts, units of measurement. Determines how the simulator is written and what the logs record | **Now.** Deferring this = re-doing everything later |
+| **Pending pilot (calibration)** | Thresholds, bin boundaries, budget caps, distance functions | After the pilot numbers. **Guessing early is just guessing** |
+
+---
+
+## A. Interface layer · Frozen
+
+- [ ] **Which named model for the action space**
+      one-layer / some-layers / all-layers simple fold; infinite vs finite line
+      → Hard constraint, see `track1-surface-simulator.md`. **Decide this first — everything else depends on it**
+- [ ] **State representation**: what the LLM is shown
+      → Also the baseline arm for the group D ablation, so the interface must be switchable
+- [ ] **Verifier contract**: what goes in, what comes out
+- [ ] ⚠️ **Does the verifier return a reason for failure?**
+      Returning a reason = handing the LLM a free pruning signal = **directly contaminates the core experiment in group C**.
+      Must be decided explicitly, and most likely built as a toggle
+- [ ] **Definition of "one query"** — this is the denominator of every number I report
+      - [ ] One Flat-Folder call? (most natural, but cost varies with fold depth, so it isn't comparable across difficulty levels)
+      - [ ] One "state advance + legality check"?
+      - [ ] One LLM call?
+      ⚠️ These do not measure the same thing: ① measures **compute** saved, ③ measures **reasoning** saved.
+      **My claim is about reasoning; readers will assume I mean compute. This ambiguity must be killed in the first paragraph of Section 3.**
+- [ ] **How many retries allowed after a failure**
+- [ ] **How much history is kept in context**
+- [ ] **CP dataset**: where from, how synthesized, how many, how difficulty is covered
+
+---
+
+## B. Difficulty axis
+
+- [ ] **Which quantity is the primary axis**
+      - [ ] Number of feasible actions at step k (branching factor)
+      - [ ] Log of the state-space size
+      - [ ] Shortest solution length
+      ⚠️ The three give **completely different curve shapes**
+- [ ] **Recommendation: record all of them, plot only one in the main figure, rest to the appendix. Recording is free; re-running is not**
+- [ ] Bin boundaries — *pending pilot*
+- [ ] **Verify monotonicity**: does pure search's query count actually rise monotonically with this axis?
+      Not monotone → the axis is broken, replace it
+
+> All of these can be computed directly from Flat-Folder. "We can precisely control and measure task difficulty" is itself a contribution for a methods paper.
+
+---
+
+## C. Measurement protocol for pruning / backtracking · **the core of the paper, design this first**
+
+- [ ] **How to make "pruning" an observable, explicit action**
+      The LLM must declare "this branch is dead" **before** calling the verifier,
+      otherwise the LLM's judgment can't be separated from the verifier's ruling
+- [ ] **How to compute the pruning ground truth**
+      = whether a solution still exists from a given state = one exhaustive search. Possibly expensive → precompute and cache?
+- [ ] **Report the two pruning metrics separately**
+      - [ ] Pruning correctness (precision / recall)
+      - [ ] Query savings from pruning
+      ⚠️ An over-conservative model prunes accurately but saves little; an aggressive one saves a lot but may cut the only solution.
+      **Report a trade-off curve, or a single point?**
+- [ ] **Backtracking distance error**: failure at step k, the real error at step j (the last prefix that still has a solution),
+      LLM says go back to step i → `|i − j|`
+      - [ ] How is `j` computed, and how expensive is it
+      ⚠️ This quantity is meaningless in mazes (you can back up cell by cell); **it is meaningful in origami, because "each fold gets harder" makes backing up to the wrong step very costly**
+- [ ] **Baselines: who am I comparing against?**
+      ⚠️ **Baselines are not ablations.** Ablations strip parts off the LLM; baselines are the
+      reference frame. Without the pure-search row, "the LLM wins on pruning" has nothing to
+      win against.
+
+| | Proposal | Pruning | Backtracking |
+| --- | --- | --- | --- |
+| **Random baseline** | Random legal move | None | Restart |
+| **Pure search** (DFS/BFS + Flat-Folder) | Enumeration | Verifier only — you only find out once you've gone all the way down | Back up one step |
+| **LLM** | LLM proposes | **LLM rejects early, without calling the verifier** | **LLM specifies backing up to step k** |
+
+      - [ ] Is pure search DFS or BFS? (different query profiles — decide, don't leave it implicit)
+      - [ ] Does the random baseline get the same query budget as the LLM?
+      - [ ] Is there a fourth row worth having — an LLM-free heuristic search (e.g. greedy on
+            a hand-written score)? It's the cheapest way to pre-empt "your baseline is a straw man"
+
+- [ ] **Concrete implementation of the three ablations**
+
+| Ablation | How | Expected (if my intuition is right) |
+| --- | --- | --- |
+| Proposal off | Actions come from enumeration, LLM acts only as a filter | **small** drop |
+| Pruning off | Every proposal goes to the verifier | **large** drop |
+| Backtracking off | Restart on failure | **large** drop |
+
+> If the result inverts (proposal turns out to be the key), it means the LLM is a good proposer rather than a good critic —
+> **that is also a finding, not a failed experiment.**
+
+---
+
+## D. Representation ablation (the science version, not the engineering version)
+
+- [ ] ❌ Not "try four representations and see which is best" (that produces a table)
+- [ ] ✅ Instead: "**do the two representations differ systematically in the *types* of pruning errors they make**" (that produces a mechanism)
+- [ ] ⚠️ **D depends on E** — without the failure taxonomy there are no "error types"
+- [ ] Statistical test: comparing **distributions**, not means → which test?
+- [ ] This group is what can engage the Spa3R vs "I Know About Up!" debate
+      (see the mental imagery table in `track1-surface-simulator.md`)
+
+---
+
+## E. Failure-mode taxonomy
+
+- [ ] **Category definitions**
+      - [ ] Proposed an illegal action
+      - [ ] False prune (cut a branch that had a solution)
+      - [ ] Backtracked too far
+      - [ ] Backtracked not far enough
+      - [ ] Layer-ordering reasoning error
+      - [ ] Repeated the same error on the same CP
+- [ ] ⚠️ **How each category is automatically determined from the logs** — this decides what the logs must record, so it **must be settled before running**
+- [ ] Are the categories mutually exclusive? Exhaustive? What is the catch-all called?
+
+> A methods paper with nothing but curves reads thin. A free verifier means failures can be classified **exhaustively**.
+> This table may end up cited more than the main experiment.
+
+---
+
+## F. Turning "find multiple ways" into a metric
+
+- [ ] **How to obtain the solution-space ground truth**
+      - [ ] Exhaustively enumerable on small CPs?
+      - [ ] Sampling only on large CPs? What about sampling bias?
+- [ ] **Which distance between sequences**
+      - [ ] Edit distance (easiest to defend)
+      - [ ] Hausdorff (a **shape** distance — using it on **sequences** needs extra justification; don't conflate the two)
+- [ ] Definition of coverage / diversity — *pending*, depends on the above
+- [ ] ⚠️ **This group and group C are two sides of the same story**:
+      **over-confident pruning systematically cuts one class of solutions.**
+      If that holds, the "sequence space" gap and the "pruning/backtracking" gap merge into one paper instead of two parallel selling points
+
+---
+
+## G. Experimental hygiene
+
+- [ ] **dev / test split**; the test set is **not looked at once** before the main experiment finishes
+- [ ] Random seeds, model versions, prompt versions **all recorded**
+- [ ] **Budget gate**: a hard token cap per experiment, stop on trigger, human decides whether to continue
+- [ ] Caching: identical `(prompt, seed, model)` hits cache, second run costs nothing
+- [ ] **All intermediate results written to structured logs; all analysis done offline from the logs, never by re-running the model**
+      → Nearly every "burned the tokens again" is caused by discovering at analysis time that a field wasn't recorded
+
+---
+---
+
+# 中文版
+
 # 实验 Spec 清单（跑实验前必须冻结的东西）
 
 2026-09-14。**这是一份待填的清单，不是结论。** 每一条都由我自己拍板。
@@ -7,6 +181,16 @@
 
 > **当前位置：Phase 0**（见 `research-workflow.md`）。
 > Phase 0 的两个探针跑完之前，这份清单里大部分条目都还没有资格填。
+
+---
+
+## 这份清单服务的那句主张
+
+> **在带精确验证器的序贯约束满足问题上，LLM 的增益不在提议质量，而在提前剪枝和定位回溯；
+> 因此 query efficiency 而非 success rate 才是正确的度量。**
+
+下面每一条存在的理由，都是为了检验这句话、或者为了不污染这句话。
+**追溯不到这句话的条目，不属于主实验。**
 
 ---
 
@@ -74,6 +258,21 @@
       LLM 说退到第 i 步 → `|i − j|`
       - [ ] `j` 怎么算、贵不贵
       ⚠️ 这个量在迷宫里没意义（可逐格退），**在折纸里有意义，因为「越折越难」让退错一步代价极高**
+- [ ] **基线：我在跟谁比？**
+      ⚠️ **基线不是消融。** 消融是从 LLM 身上拆零件，基线是参照系。
+      没有纯搜索那一行，「LLM 赢在剪枝」就没有东西可赢。
+
+| | 提议 | 剪枝 | 回溯 |
+| --- | --- | --- | --- |
+| **随机基线** | 随机合法动作 | 无 | 重启 |
+| **纯搜索**（DFS/BFS + Flat-Folder） | 枚举 | 只靠验证器 —— 走到底才知道 | 退一步 |
+| **LLM** | LLM 提议 | **LLM 提前否决，未调用验证器** | **LLM 指定退回第 k 步** |
+
+      - [ ] 纯搜索用 DFS 还是 BFS？（query 曲线完全不同 —— 要定，不要含糊带过）
+      - [ ] 随机基线拿到的 query 预算和 LLM 一样吗？
+      - [ ] 要不要加第四行 —— 不含 LLM 的启发式搜索（比如按手写打分贪心）？
+            这是抵挡「你的基线是稻草人」最便宜的办法
+
 - [ ] **三组消融的具体实现**
 
 | 消融 | 做法 | 预期（如果我的直觉对） |
