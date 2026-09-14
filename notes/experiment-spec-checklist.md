@@ -371,6 +371,15 @@ Run these first, in this order, before touching our method — they define the r
 
 Only once these four numbers exist do we know what "better than baseline" would even mean for our method.
 
+### Algorithmic complexity and error rate of the three search baselines
+
+Let `b` = branching factor (legal actions per step, group B's axis) and `d` = shortest solution length (also group B). These give BFS/DFS/Random genuinely different profiles, which is exactly why group B warns the three difficulty axes "give completely different curve shapes":
+
+- **BFS**: time and space `O(b^d)` — it explores level by level, so at depth `d` it may be holding the entire frontier of size `~b^d` in memory. **Error rate: zero.** Because it only accepts a path once the exact verifier confirms it and only abandons a branch once fully exhausted, it can't produce a false prune or a wrong backtrack distance — the failure-taxonomy categories in group E (false prune, backtracked too far/not far enough) don't apply to it by construction.
+- **DFS**: time `O(b^d)` in the worst case (same asymptotic bound as BFS — both are exhaustive over the same tree), but space only `O(d)` (just the current path), which is the practical reason to run both rather than only one. **Error rate: also zero**, for the same reason as BFS — it backtracks only after the verifier has exhaustively ruled out a subtree, so its backtracking is correct by definition, not approximate.
+- **Random Selection**: no deterministic complexity bound and **no completeness guarantee within a finite query budget** — this is the key asymmetry with BFS/DFS. Its *expected* number of queries to reach a depth-`d` solution scales with the inverse probability of staying on a solution path at each step (roughly `O(b^d)` in expectation if legal moves are close to uniformly likely, same order as brute force, but as an expectation with variance rather than a guarantee). Because it can exhaust its query budget without ever finding a solution that exists, it has a genuine **nonzero failure/error rate** for any fixed finite budget — unlike BFS/DFS, whose only "cost" is query count, never correctness.
+  - ⚠️ This is why Random needs the same query budget as everyone else (already flagged above) *and* needs enough repeated trials/seeds to report that failure rate meaningfully — a single run of Random conflates "got unlucky" with "the baseline is weak."
+
 ## Experiment Setup (our method)
 
 The core idea: give the LLM a small tool belt around the CP simulator instead of asking it to reason blind, then see how much of the gain over the baselines above actually comes from that tool use versus from the model itself.
