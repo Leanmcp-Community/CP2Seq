@@ -51,9 +51,10 @@ AI 折纸研究笔记。原始想法存放处。
 
 - `notes/track1-surface-simulator.md` — **Surface simulator / CP→Seq**。组合+拓扑，验证器免费
 - `notes/track2-structural-simulator.md` — **Structural simulation**。连续力学，验证器昂贵
+- `notes/flat-folder-capabilities.md` — **Flat-Folder 到底能/不能回答什么**（核实自源码；它没有「步骤」）
 - `notes/geometry-topology-definitions.md` — **几何 ⊕ 拓扑的定义 + abstract 草稿**（写论文时查这页）
 
-**不要写成一篇论文**：验证器成本差 10⁴ 倍。
+**两篇论文，已定案（2026-09-14）**：验证器成本差 10⁴ 倍。两条线各自独立设计，互不迁就。
 节奏：**先做 Track 2（方差数字本周能出），先写 Track 1（不依赖任何人）**。
 
 ## 方向（2026-09-11 定）
