@@ -59,7 +59,7 @@
 | T0 | **Bern & Hayes, "The Complexity of Flat Origami"**, SODA 1996, 175–183 · https://dl.acm.org/doi/10.5555/313852.313918 | **必读** | **几何不决定层序**：即使给定合法 M/V 赋值，确定 overlap order 仍是 NP-hard。这是核心论断的引用 |
 | T1 | Arkin, Bender, Demaine×2, Mitchell, Sethia, Skiena, **"When Can You Fold a Map?"** Comput. Geom. 29(1):23–46, 2004 · https://erikdemaine.org/papers/MapFolding/ | **必读** | simple foldability 的理论地基。地图折叠多项式，稍推广即 NP-complete |
 | T2 | **Akitaya, Demaine, Ku, "Computing Flat-Folded States"**, OSME 2024 · https://erikdemaine.org/papers/FlatFolder_OSME2024/paper.pdf | **必读** | **Flat-Folder 本身的论文**。判定全局平折态 NP-hard |
-| T3 | Demaine, Devadoss, Mitchell, O'Rourke, **"Continuous Foldability of Polygonal Paper"**, CCCG 2004 · https://erikdemaine.org/papers/PaperReachability_CCCG2004/paper.pdf | **必读** | **folded state vs folding motion** 的标准区分。任何良态折叠态都存在连续运动可达 → CP→Seq 不是存在性问题，是离散步骤结构问题 |
+| T3 | Demaine, Devadoss, Mitchell, O'Rourke, **"Continuous Foldability of Polygonal Paper"**, CCCG 2004 · https://erikdemaine.org/papers/PaperReachability_CCCG2004/paper.pdf | **read** | **folded state vs folding motion** 的标准区分。**可达性是免费的**（Cor. 3 位形空间连通）→ CP→Seq 不是存在性问题，是离散步骤结构问题。**纯理论无工具**；§2 的 `(f, λ)` 是 pointwise 层序 `l` 的祖先。⚠️ 零厚度，别挪用到 Track 2。笔记: `notes/paper-reachability-cccg2004.md` |
 | T4 | Akitaya, Demaine, Ku, **"Simple Folding is Really Hard"**, J. Information Processing, 2017 | todo | |
 | T5 | **"Infinite All-Layers Simple Foldability"**, Graphs and Combinatorics · https://arxiv.org/pdf/1901.08564 | todo | all-layers 模型（对应钣金折弯） |
 | T6 | **"Complexity of Simple Folding of Mixed Orthogonal Crease Patterns"** · https://arxiv.org/pdf/2306.00702 | todo | |
