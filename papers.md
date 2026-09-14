@@ -38,6 +38,8 @@
 | **SWOMPS** | **L2 力学** | https://drsl.engin.umich.edu/software/swomps-package/ · https://github.com/zzhuyii/OrigamiSimulator | Zhu & Filipov, 含多物理场 |
 | rigid-origami | L1 RL | https://github.com/belalugaX/rigid-origami | 31★。**唯一公开的折纸 gym 环境**，但是 rigid 不是 flat。论文 arXiv:2211.13219 |
 | GamiBench | benchmark | https://github.com/stvngo/GamiBench · https://huggingface.co/datasets/stvngo/GamiBench | MIT，完整可跑 |
+| **Creasy** | **L0 CP→Seq** | https://github.com/xkevio/Creasy | Java+JavaFX, **GPL3**, 15★, **停更 2022-02**。T11 的实现（马格德堡大学学生项目），折叠预览调 ORIPA 1.45。**跑，不复现** —— 拿来做 baseline + 收集失败清单。笔记: `notes/creasy-cp-to-seq.md` |
+| ORIPA | L0 | https://github.com/oripa/oripa | Mitani。CP 编辑 + 折叠形推定，Creasy 依赖它 |
 | PurelandFold | 数据 | https://huggingface.co/datasets/mayaweiz/PurelandFold | CC-BY-4.0。27 序列/337 帧，`cp.fold` 含**层序 ground truth** |
 
 ## 该找的人（力学侧，比 Jason Ku 更对口）
@@ -65,7 +67,7 @@
 | T8 | Schneider, **"Flat-Foldability of Origami Crease Patterns"** · https://www.sccs.swarthmore.edu/users/05/jschnei3/origami.pdf | 读 | **isotopy 措辞的出处**；纽结类比在这里只是 open direction |
 | T9 | **"An Algebraic Approach to Layer Ordering Constraints for Origami Flat-Foldability"**, Origami8 (2026) · https://link.springer.com/chapter/10.1007/978-981-96-6561-7_21 | todo | 最新的层序约束代数化 |
 | T10 | **"Realization and Connectivity of the Graphs of Origami Flat Foldings"** · https://arxiv.org/pdf/1808.06013 | todo | 折叠态的图论刻画与连通性 |
-| T11 | Akitaya et al., **"Generating Folding Sequences from Crease Patterns of Flat-Foldable Origami"**, ACM SRC 2013 · https://src.acm.org/binaries/content/assets/src/2013/hugoakitaya.pdf | **读** | **CP→Seq 问题 2013 年就被命名了** |
+| T11 | Akitaya, Mitani, Kanamori, Fukui, **"Generating Folding Sequences from Crease Patterns of Flat-Foldable Origami"**, ACM SRC / SIGGRAPH Posters 2013 · **完整 4 页版（读这个）**: https://www.npal.cs.tsukuba.ac.jp/~akitaya/CSSeminarAkitaya.pdf · 两页摘要: https://src.acm.org/binaries/content/assets/src/2013/hugoakitaya.pdf | **read** | **CP→Seq 问题 2013 年就被命名了**。reflection path + 图重写 + step-graph。**蛙基 22,665 节点 / 30 分钟 → 经典解爆炸**；作者 future work 明说需要优先级启发式 = 我的 gap。有开源实现 Creasy。笔记: `notes/creasy-cp-to-seq.md` |
 
 ## 组合：数折叠态（stamp / map folding）
 
