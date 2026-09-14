@@ -1,0 +1,96 @@
+# Track 2 · Structural Simulation
+
+2026-09-14。我的命名保留：**structural simulation**。
+
+---
+
+## 我的原始想法
+
+> paper fold is simple limited physical constraints. Since origami shape has its complex
+> kinetics and math inside, can we train AI to let them be able to, based on real problems,
+> **design origami-inspired products, robot arms, architectures, furnitures** etc. using
+> different rigid or specific materials? On top of it, we need to build a more well-rounded
+> simulator that can correctly sim **different materials to test weight, gravity, wind** etc.
+
+**这里才是真正的 3D**：
+1. **刚性折纸的部分折叠** —— 二面角在 0 到 π 之间连续变化，真的三维运动学。平折只是退化终点
+2. **厚度和材料**
+
+> **「2D → 3D」这个卖点属于 Track 2 和刚性折纸，不属于 Track 1。**
+
+---
+
+## 现在的具体命题
+
+> **在 flat-foldability 的世界里，一个折痕图的所有合法折叠态是等价的；
+> 引入结构性能之后，它们不再等价，而且这个排序是可计算的。**
+
+管线见 `README.md`。工具与物理量见 `sim-fast-py-physics.md`。
+三维化见 `thick-folding-ku-demaine.md`。
+
+## 机制已经找到：面板自接触
+
+> **Zhu, Y. & Filipov, E. T., "An efficient numerical approach for simulating contact in
+> origami assemblages"**, *Proc. R. Soc. A* 475(2230):20190366, 2019
+> https://royalsocietypublishing.org/doi/10.1098/rspa.2019.0366
+> 免费: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6834023/
+
+> *"self-contact ... has **significant implications for the foldability, kinematics and
+> resulting mechanical properties** of the final origami system."*
+
+**层序 → 哪些面贴到哪些面 → 力学。** 而且 Zhu 本人已发文证明自接触对力学性能有显著影响。
+**没有接触模型，state 之间方差接近零，我会测不到任何东西。接触是必需品不是可选项。**
+
+---
+
+## ⚠️ 这条线的竞争格局：ML 做力学超材料逆设计已经很拥挤
+
+2026 年一大批：
+
+| 论文 | |
+| --- | --- |
+| **A Review of ML Applications in Mechanical Metamaterial Design** · https://pmc.ncbi.nlm.nih.gov/articles/PMC13362914/ | **先读这篇综述** |
+| RL for inverse structural design and rapid laser cutting of **kirigami** prototypes · https://arxiv.org/pdf/2605.08098 | 最接近的对手 |
+| Nonlinear Inverse Design via **Video Denoising Diffusion** · https://arxiv.org/pdf/2409.13908 | |
+| Algebraic Language Models for Inverse Design via **Diffusion Transformers** · https://arxiv.org/pdf/2507.15753 | |
+| **Generative metamaterials based on LLMs** · https://arxiv.org/pdf/2601.17997 | |
+| ML-enabled inverse design of bimaterial thermoelastic lattice metamaterials · https://arxiv.org/pdf/2602.20173 | |
+| Neural Operator Transformer + Diffusion for SDF-based metamaterial design · https://arxiv.org/pdf/2504.01195 | |
+| OPERA: operator learning + physics embedding + normalizing-flow inverse · https://pmc.ncbi.nlm.nih.gov/articles/PMC13417098/ | |
+
+**但「折纸 + AI + 真实材料力学」这一格明显稀薄。** 这是我的优势。
+Yi Zhu 的研究方向写着 "Machine Learning with Application in Structural Design"
+—— **他有工具没有 AI，我有 AI 没有工具。**
+
+---
+
+## 两条线的关系：**不要写成一篇论文**
+
+| | Track 1 surface | Track 2 structural |
+| --- | --- | --- |
+| 状态 | 平面图 + 面全序 | 节点 XYZ + 材料 |
+| 数学 | **组合 / 拓扑** | **连续 / 力学** |
+| 验证器 | 免费、精确、毫秒级 | 昂贵、近似、秒到分钟 |
+| 数据 | 可无限合成 | 每个样本都要算 |
+| 能宣称 | 序贯规划、拓扑推理 | 2D→3D、真实物理 |
+| 会议 | NeurIPS / ICLR / SoCG | ASME JMR / IJSS / Extreme Mechanics |
+| 对手 | Learn2Fold, OrigamiBench | ML-metamaterial 那一大片 |
+
+**验证器成本相差 10⁴ 倍，这一条就决定了不可能是同一篇论文。**
+Track 1 可以百万次采样，Track 2 每个样本都要付钱。
+
+**唯一把它们连起来的是 Learn2Fold 那个架构**：慢验证器生成数据 → 学快代理 → 在代理上搜索。
+**Track 1 是这个架构已被验证的例子，Track 2 是它没被验证的例子。**
+这是两篇论文之间的真实逻辑关系，也是先写 Track 1 的理由。
+
+---
+
+## 节奏：**先做 Track 2，但先写 Track 1**
+
+- **Track 2 是我真正想要的**（家具、建筑、机器人），而且手工实验（5 个 state 的刚度方差）
+  **本周就能出第一个数字**，不依赖任何人
+- **Track 1 更容易先发表**：验证器免费、数据无限、不需要 MATLAB、不需要任何回信
+
+**两个都不要现在动笔。先把那个方差数字拿到手** —— 它是唯一能同时验证两条线的东西：
+- 方差非零 → state/序列的多解性有物理意义，两条线都成立
+- 方差为零 → Track 2 的立论要重做

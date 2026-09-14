@@ -47,6 +47,15 @@ AI 折纸研究笔记。原始想法存放处。
 | **Origamizer** | 三谷纯 (Jun Mitani) / 馆知宏 | **三维网格展平设计**。将任意给定的 3D 多面体网格，自动转化为一张可以折叠出该形状的完整折痕图。 | **多面体可展化算法**（Tuck-folding）、几何优化 |
 | **MERLIN / OrigamiKotobuki** | 普林斯顿大学等学术机构 | **工程折纸力学分析**。分析折纸结构的刚度、多稳态响应、能量吸收等力学特性。 | **非线性有限元法**（FEA）、位移控制算法 |
 
+## 两条线（2026-09-14）
+
+- `notes/track1-surface-simulator.md` — **Surface simulator / CP→Seq**。组合+拓扑，验证器免费
+- `notes/track2-structural-simulator.md` — **Structural simulation**。连续力学，验证器昂贵
+- `notes/geometry-topology-definitions.md` — **几何 ⊕ 拓扑的定义 + abstract 草稿**（写论文时查这页）
+
+**不要写成一篇论文**：验证器成本差 10⁴ 倍。
+节奏：**先做 Track 2（方差数字本周能出），先写 Track 1（不依赖任何人）**。
+
 ## 方向（2026-09-11 定）
 
 **这次论文的重点：折痕图 → 结构性能。**

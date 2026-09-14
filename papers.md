@@ -47,3 +47,64 @@
 - **Glaucio Paulino**（Princeton）—— MERLIN 作者
 - **Sergio Pellegrino**（Caltech）—— 航天可展开结构
 - **Larry Howell**（BYU）—— 柔顺机构、厚板折纸
+
+---
+
+## 理论地基：平折、层序、复杂度
+
+| # | 论文 | 状态 | 为什么重要 |
+| --- | --- | --- | --- |
+| T0 | **Bern & Hayes, "The Complexity of Flat Origami"**, SODA 1996, 175–183 · https://dl.acm.org/doi/10.5555/313852.313918 | **必读** | **几何不决定层序**：即使给定合法 M/V 赋值，确定 overlap order 仍是 NP-hard。这是核心论断的引用 |
+| T1 | Arkin, Bender, Demaine×2, Mitchell, Sethia, Skiena, **"When Can You Fold a Map?"** Comput. Geom. 29(1):23–46, 2004 · https://erikdemaine.org/papers/MapFolding/ | **必读** | simple foldability 的理论地基。地图折叠多项式，稍推广即 NP-complete |
+| T2 | **Akitaya, Demaine, Ku, "Computing Flat-Folded States"**, OSME 2024 · https://erikdemaine.org/papers/FlatFolder_OSME2024/paper.pdf | **必读** | **Flat-Folder 本身的论文**。判定全局平折态 NP-hard |
+| T3 | Demaine, Devadoss, Mitchell, O'Rourke, **"Continuous Foldability of Polygonal Paper"**, CCCG 2004 · https://erikdemaine.org/papers/PaperReachability_CCCG2004/paper.pdf | **必读** | **folded state vs folding motion** 的标准区分。任何良态折叠态都存在连续运动可达 → CP→Seq 不是存在性问题，是离散步骤结构问题 |
+| T4 | Akitaya, Demaine, Ku, **"Simple Folding is Really Hard"**, J. Information Processing, 2017 | todo | |
+| T5 | **"Infinite All-Layers Simple Foldability"**, Graphs and Combinatorics · https://arxiv.org/pdf/1901.08564 | todo | all-layers 模型（对应钣金折弯） |
+| T6 | **"Complexity of Simple Folding of Mixed Orthogonal Crease Patterns"** · https://arxiv.org/pdf/2306.00702 | todo | |
+| T7 | **"Flat Origami is Turing Complete"** · https://arxiv.org/pdf/2309.07932 | **读** | 撑起「折纸是研究推理的模式生物」 |
+| T8 | Schneider, **"Flat-Foldability of Origami Crease Patterns"** · https://www.sccs.swarthmore.edu/users/05/jschnei3/origami.pdf | 读 | **isotopy 措辞的出处**；纽结类比在这里只是 open direction |
+| T9 | **"An Algebraic Approach to Layer Ordering Constraints for Origami Flat-Foldability"**, Origami8 (2026) · https://link.springer.com/chapter/10.1007/978-981-96-6561-7_21 | todo | 最新的层序约束代数化 |
+| T10 | **"Realization and Connectivity of the Graphs of Origami Flat Foldings"** · https://arxiv.org/pdf/1808.06013 | todo | 折叠态的图论刻画与连通性 |
+| T11 | Akitaya et al., **"Generating Folding Sequences from Crease Patterns of Flat-Foldable Origami"**, ACM SRC 2013 · https://src.acm.org/binaries/content/assets/src/2013/hugoakitaya.pdf | **读** | **CP→Seq 问题 2013 年就被命名了** |
+
+## 组合：数折叠态（stamp / map folding）
+
+**至今没有闭式公式。** 一维就已经没有公式 → `states` 列的天文数字不是工具没优化，是问题本身难。
+
+- OEIS **A000136**: 1, 2, 6, 16, 50, 144, 462, 1392, 4536, 14060, … · https://oeis.org/A000136 （另见 A001011, A001416）
+- Lucas (1891) 归于 Émile Lemoine；Touchard (1950)
+- Koehler, *Folding a Strip of Stamps*, J. Combin. Theory 5:135–152, 1968
+- Lunnon (1971) 多维地图折叠
+- https://en.wikipedia.org/wiki/Map_folding · https://mathworld.wolfram.com/MapFolding.html
+- *Foldings and Meanders* · https://arxiv.org/pdf/1302.2025
+
+## 统计物理：随机折纸的平折性
+
+论证「state 多解性是普遍现象不是特例」的弹药；提供配分函数/相变/熵的语言。
+
+- **A Spin model for global flat-foldability of random origami** · https://arxiv.org/pdf/2403.07306
+- **On random locally flat-foldable origami** · https://arxiv.org/pdf/2502.04279
+
+## Mental imagery / 空间推理（Track 1 的外部语境）
+
+| 论文 | |
+| --- | --- |
+| **Spatial Reasoning in MLLMs: A Survey** · https://arxiv.org/pdf/2511.15722 | **先读这篇** |
+| **Mind's Eye of LLMs: Visualization-of-Thought**, NeurIPS 2024 · https://arxiv.org/pdf/2404.03622 | 「心像」有名字了 |
+| **Machine Mental Imagery: latent visual tokens** · https://arxiv.org/pdf/2506.17218 | |
+| **Limits of Spatial Imagery Reasoning in Frontier LLM Models** · https://arxiv.org/html/2603.26779v2 | |
+| **Reasmory: 3D Reconstruction as Explicit Memory for VLMs** · https://arxiv.org/pdf/2606.00963 | |
+| **Spa3R** · https://arxiv.org/pdf/2602.21186 | 不用显式 3D 也能学 ← **反方** |
+| **"I Know About Up!"** · https://arxiv.org/pdf/2407.14133 | 3D 重建有帮助 ← **正方** |
+
+## ML × 力学超材料逆设计（Track 2 的竞争格局）
+
+| 论文 | |
+| --- | --- |
+| **A Review of ML Applications in Mechanical Metamaterial Design** · https://pmc.ncbi.nlm.nih.gov/articles/PMC13362914/ | **先读综述** |
+| RL for inverse structural design + laser cutting of **kirigami** · https://arxiv.org/pdf/2605.08098 | 最接近的对手 |
+| Video Denoising Diffusion for nonlinear metamaterial inverse design · https://arxiv.org/pdf/2409.13908 | |
+| Algebraic Language Models via Diffusion Transformers · https://arxiv.org/pdf/2507.15753 | |
+| Generative metamaterials based on LLMs · https://arxiv.org/pdf/2601.17997 | |
+| Neural Operator Transformer + Diffusion (SDF-based) · https://arxiv.org/pdf/2504.01195 | |
+| OPERA · https://pmc.ncbi.nlm.nih.gov/articles/PMC13417098/ | |
