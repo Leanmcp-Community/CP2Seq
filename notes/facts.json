@@ -1,0 +1,137 @@
+{
+ "_generated": "2026-09-15",
+ "_how": "node workspace/tools/facts.mjs — derived from workspace/probe-c/*.json",
+ "corpus.instagram.total": {
+  "v": 366,
+  "src": "derived"
+ },
+ "probeC.screenFail": {
+  "v": 125,
+  "src": "derived"
+ },
+ "probeC.screenFailPct": {
+  "v": 34.2,
+  "unit": "%",
+  "src": "derived"
+ },
+ "probeC.passScreen": {
+  "v": 241,
+  "src": "derived"
+ },
+ "probeC.passScreenPct": {
+  "v": 65.8,
+  "unit": "%",
+  "src": "derived"
+ },
+ "probeC.preCrease": {
+  "v": 46,
+  "src": "derived"
+ },
+ "probeC.preCreasePct": {
+  "v": 12.6,
+  "unit": "%",
+  "src": "derived"
+ },
+ "probeC.inPlay": {
+  "v": 195,
+  "src": "derived"
+ },
+ "probeC.exhausted": {
+  "v": 156,
+  "src": "derived"
+ },
+ "probeC.exhaustedPct": {
+  "v": 42.6,
+  "unit": "%",
+  "src": "derived"
+ },
+ "probeC.timeout": {
+  "v": 37,
+  "src": "derived"
+ },
+ "probeC.timeoutPct": {
+  "v": 10.1,
+  "unit": "%",
+  "src": "derived"
+ },
+ "probeC.solved": {
+  "v": 2,
+  "src": "derived"
+ },
+ "probeC.solvedPct": {
+  "v": 0.5,
+  "unit": "%",
+  "src": "derived"
+ },
+ "probeC.provenNot": {
+  "v": 327,
+  "src": "derived"
+ },
+ "probeC.provenNotPct": {
+  "v": 89.3,
+  "unit": "%",
+  "src": "derived"
+ },
+ "probeC.stage1Ceiling": {
+  "v": 195,
+  "src": "derived: the ceiling after stage 1 only, kept so each layer stays traceable"
+ },
+ "probeC.stage1CeilingPct": {
+  "v": 53.3,
+  "unit": "%",
+  "src": "derived"
+ },
+ "probeC.ceiling": {
+  "v": 39,
+  "src": "derived"
+ },
+ "probeC.ceilingPct": {
+  "v": 10.7,
+  "unit": "%",
+  "src": "derived"
+ },
+ "purelandfold.sequences": {
+  "v": 27,
+  "src": "manual: HF dataset mayaweiz/PurelandFold"
+ },
+ "purelandfold.frames": {
+  "v": 337,
+  "src": "manual: same"
+ },
+ "purelandfold.skippedRows": {
+  "v": 74,
+  "src": "manual: variables=0 rows, still unexplained"
+ },
+ "_retired": [
+  {
+   "value": "65.8%",
+   "was": "the foldability ceiling before stage 2",
+   "now": "probeC.ceilingPct (10.7%); 65.8% is only the screen pass rate"
+  },
+  {
+   "value": "34.2%",
+   "was": "the headline 'proven not foldable'",
+   "now": "probeC.provenNotPct (89.3%); 34.2% is only the screen's share"
+  },
+  {
+   "value": "40.2%",
+   "was": "proven-not-foldable mid-revision",
+   "now": "probeC.provenNotPct"
+  },
+  {
+   "value": "46.7%",
+   "was": "proven-not-foldable mid-revision",
+   "now": "probeC.provenNotPct"
+  },
+  {
+   "value": "59.8%",
+   "was": "a ceiling mid-revision",
+   "now": "probeC.ceilingPct"
+  },
+  {
+   "value": "53.3%",
+   "was": "a ceiling mid-revision",
+   "now": "probeC.ceilingPct"
+  }
+ ]
+}

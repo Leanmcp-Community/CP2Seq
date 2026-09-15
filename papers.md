@@ -38,7 +38,7 @@
 | **SWOMPS** | **L2 力学** | https://drsl.engin.umich.edu/software/swomps-package/ · https://github.com/zzhuyii/OrigamiSimulator | Zhu & Filipov, 含多物理场 |
 | rigid-origami | L1 RL | https://github.com/belalugaX/rigid-origami | 31★。**唯一公开的折纸 gym 环境**，但是 rigid 不是 flat。论文 arXiv:2211.13219 |
 | GamiBench | benchmark | https://github.com/stvngo/GamiBench · https://huggingface.co/datasets/stvngo/GamiBench | MIT，完整可跑 |
-| **Creasy** | **L0 CP→Seq** | https://github.com/xkevio/Creasy | Java+JavaFX, **GPL3**, 15★, **停更 2022-02**。T11 的实现（马格德堡大学学生项目），折叠预览调 ORIPA 1.45。**跑，不复现** —— 拿来做 baseline + 收集失败清单。笔记: `notes/creasy-cp-to-seq.md` |
+| **Creasy** | **L0 CP→Seq** | https://github.com/xkevio/Creasy | Java+JavaFX, **GPL3**, 15★, **停更 2022-02**。T11 的实现（马格德堡大学学生项目），折叠预览调 ORIPA 1.45。**跑，不复现** —— 拿来做 baseline + 收集失败清单。笔记: `notes/reading/creasy-cp-to-seq.md` |
 | ORIPA | L0 | https://github.com/oripa/oripa | Mitani。CP 编辑 + 折叠形推定，Creasy 依赖它 |
 | **PurelandFold** | **数据（要用）** | https://huggingface.co/datasets/mayaweiz/PurelandFold | CC-BY-4.0（代码 MIT）。**27 序列 / 337 帧**，一行一个关键帧，单一 `train` split。列：`sequence`、**`step`（1–21，1=展开的方纸）**、`image`(1920²)、`cp.svg`、**`cp.fold`**（顶点/面/MV/折叠角/**面堆叠顺序**）、**`flat_folder`**（Flat-Folder 编译输出：折叠位置、层序、四类约束计数）。⚠️ **最关键**：这是 **Pureland 折纸 = 只允许 simple fold**，所以**每个中间态本身就是合法平折态**，数据集写明所有 ground-truth 状态都能通过 Flat-Folder 编译 → **不需要自建 step semantics，Flat-Folder 每步直接可用** |
 
@@ -59,7 +59,7 @@
 | T0 | **Bern & Hayes, "The Complexity of Flat Origami"**, SODA 1996, 175–183 · https://dl.acm.org/doi/10.5555/313852.313918 | **必读** | **几何不决定层序**：即使给定合法 M/V 赋值，确定 overlap order 仍是 NP-hard。这是核心论断的引用 |
 | T1 | Arkin, Bender, Demaine×2, Mitchell, Sethia, Skiena, **"When Can You Fold a Map?"** Comput. Geom. 29(1):23–46, 2004 · https://erikdemaine.org/papers/MapFolding/ | **必读** | simple foldability 的理论地基。地图折叠多项式，稍推广即 NP-complete |
 | T2 | **Akitaya, Demaine, Ku, "Computing Flat-Folded States"**, OSME 2024 · https://erikdemaine.org/papers/FlatFolder_OSME2024/paper.pdf | **必读** | **Flat-Folder 本身的论文**。判定全局平折态 NP-hard |
-| T3 | Demaine, Devadoss, Mitchell, O'Rourke, **"Continuous Foldability of Polygonal Paper"**, CCCG 2004 · https://erikdemaine.org/papers/PaperReachability_CCCG2004/paper.pdf | **read** | **folded state vs folding motion** 的标准区分。**可达性是免费的**（Cor. 3 位形空间连通）→ CP→Seq 不是存在性问题，是离散步骤结构问题。**纯理论无工具**；§2 的 `(f, λ)` 是 pointwise 层序 `l` 的祖先。⚠️ 零厚度，别挪用到 Track 2。笔记: `notes/paper-reachability-cccg2004.md` |
+| T3 | Demaine, Devadoss, Mitchell, O'Rourke, **"Continuous Foldability of Polygonal Paper"**, CCCG 2004 · https://erikdemaine.org/papers/PaperReachability_CCCG2004/paper.pdf | **read** | **folded state vs folding motion** 的标准区分。**可达性是免费的**（Cor. 3 位形空间连通）→ CP→Seq 不是存在性问题，是离散步骤结构问题。**纯理论无工具**；§2 的 `(f, λ)` 是 pointwise 层序 `l` 的祖先。⚠️ 零厚度，别挪用到 Track 2。笔记: `notes/reading/paper-reachability-cccg2004.md` |
 | T4 | Akitaya, Demaine, Ku, **"Simple Folding is Really Hard"**, *J. Information Processing* 25:580–589, 2017 · https://erikdemaine.org/papers/SimpleFolds_JIP/ | todo | **simple folding 是 NP-hard**。与「找终态」形成对比（Probe B 实测 95.1% 零回溯）—— 这是论文必须站在序列层的理由 |
 | T5 | **"Infinite All-Layers Simple Foldability"**, Graphs and Combinatorics · https://arxiv.org/pdf/1901.08564 | todo | all-layers 模型（对应钣金折弯） |
 | T6 | **"Complexity of Simple Folding of Mixed Orthogonal Crease Patterns"** · https://arxiv.org/pdf/2306.00702 | todo | |
@@ -67,7 +67,7 @@
 | T8 | Schneider, **"Flat-Foldability of Origami Crease Patterns"** · https://www.sccs.swarthmore.edu/users/05/jschnei3/origami.pdf | 读 | **isotopy 措辞的出处**；纽结类比在这里只是 open direction |
 | T9 | **"An Algebraic Approach to Layer Ordering Constraints for Origami Flat-Foldability"**, Origami8 (2026) · https://link.springer.com/chapter/10.1007/978-981-96-6561-7_21 | todo | 最新的层序约束代数化 |
 | T10 | **"Realization and Connectivity of the Graphs of Origami Flat Foldings"** · https://arxiv.org/pdf/1808.06013 | todo | 折叠态的图论刻画与连通性 |
-| T11 | Akitaya, Mitani, Kanamori, Fukui, **"Generating Folding Sequences from Crease Patterns of Flat-Foldable Origami"**, ACM SRC / SIGGRAPH Posters 2013 · **完整 4 页版（读这个）**: https://www.npal.cs.tsukuba.ac.jp/~akitaya/CSSeminarAkitaya.pdf · 两页摘要: https://src.acm.org/binaries/content/assets/src/2013/hugoakitaya.pdf | **read** | **CP→Seq 问题 2013 年就被命名了**。reflection path + 图重写 + step-graph。**蛙基 22,665 节点 / 30 分钟 → 经典解爆炸**；作者 future work 明说需要优先级启发式 = 我的 gap。有开源实现 Creasy。笔记: `notes/creasy-cp-to-seq.md` |
+| T11 | Akitaya, Mitani, Kanamori, Fukui, **"Generating Folding Sequences from Crease Patterns of Flat-Foldable Origami"**, ACM SRC / SIGGRAPH Posters 2013 · **完整 4 页版（读这个）**: https://www.npal.cs.tsukuba.ac.jp/~akitaya/CSSeminarAkitaya.pdf · 两页摘要: https://src.acm.org/binaries/content/assets/src/2013/hugoakitaya.pdf | **read** | **CP→Seq 问题 2013 年就被命名了**。reflection path + 图重写 + step-graph。**蛙基 22,665 节点 / 30 分钟 → 经典解爆炸**；作者 future work 明说需要优先级启发式 = 我的 gap。有开源实现 Creasy。笔记: `notes/reading/creasy-cp-to-seq.md` |
 
 ## 组合：数折叠态（stamp / map folding）
 

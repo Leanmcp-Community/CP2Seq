@@ -51,12 +51,12 @@ each a proof rather than an estimate, rule out most of the corpus:
 
 | | | |
 | --- | --- | --- |
-| Fails the spanning-line necessary condition | 125 | 34.2% |
-| Carries a pre-crease (a flat crease simple folding cannot make) | 46 | 12.6% |
-| **Full search EXHAUSTED the space without a solution** | **156** | **42.6%** |
-| **PROVEN not simple-foldable** | **327 / 366** | **89.3%** |
-| Search timed out — status genuinely unknown | 37 | 10.1% |
-| **Confirmed foldable** | **2** | **0.5%** |
+| Fails the spanning-line necessary condition | 125<!--fact:probeC.screenFail--> | 34.2%<!--fact:probeC.screenFailPct--> |
+| Carries a pre-crease (a flat crease simple folding cannot make) | 46<!--fact:probeC.preCrease--> | 12.6%<!--fact:probeC.preCreasePct--> |
+| **Full search EXHAUSTED the space without a solution** | **156**<!--fact:probeC.exhausted--> | **42.6%**<!--fact:probeC.exhaustedPct--> |
+| **PROVEN not simple-foldable** | **327**<!--fact:probeC.provenNot--> **/ 366**<!--fact:corpus.instagram.total--> | **89.3%**<!--fact:probeC.provenNotPct--> |
+| Search timed out — status genuinely unknown | 37<!--fact:probeC.timeout--> | 10.1%<!--fact:probeC.timeoutPct--> |
+| **Confirmed foldable** | **2**<!--fact:probeC.solved--> | **0.5%**<!--fact:probeC.solvedPct--> |
 
 The action space is fixed to simple folding (Pureland), so those 327 CPs **have no solution in
 our action space at all**. A flat "% of dataset solved" over 366 has a ceiling of **10.7%**, and
