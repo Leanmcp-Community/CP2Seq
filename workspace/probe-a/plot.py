@@ -1,7 +1,7 @@
 """Probe A — explosion curves from Flat-Folder's shipped batch CSVs.
 
-Run:  python workspace/probe_a_plot.py
-Out:  workspace/probe_a_states.png, workspace/probe_a_time.png
+Run:  python workspace/probe-a/plot.py
+Out:  workspace/probe-a/states.png, workspace/probe-a/time.png
 """
 import csv, os
 import matplotlib
@@ -40,7 +40,7 @@ plt.title("Probe A — state-space explosion")
 plt.axvspan(100, 500, alpha=0.12, color="green")
 plt.text(110, 1e60, "candidate main-experiment band\n(space huge, verifier still cheap)", fontsize=8)
 plt.legend(); plt.grid(alpha=0.3)
-plt.tight_layout(); plt.savefig("workspace/probe_a_states.png", dpi=150)
+plt.tight_layout(); plt.savefig("workspace/probe-a/states.png", dpi=150)
 
 # --- solve time vs faces ---
 plt.figure(figsize=(7, 5))
@@ -55,5 +55,5 @@ plt.xlabel("faces"); plt.ylabel("setup + solve (sec)")
 plt.title("Probe A — where the verifier stops being free")
 plt.axvspan(100, 500, alpha=0.12, color="green")
 plt.legend(); plt.grid(alpha=0.3)
-plt.tight_layout(); plt.savefig("workspace/probe_a_time.png", dpi=150)
-print("wrote workspace/probe_a_states.png and workspace/probe_a_time.png")
+plt.tight_layout(); plt.savefig("workspace/probe-a/time.png", dpi=150)
+print("wrote workspace/probe-a/states.png and workspace/probe-a/time.png")
