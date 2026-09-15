@@ -3,7 +3,7 @@
 // numbers the Flat-Folder author shipped in examples/*_data.csv.
 // If these do not match exactly, nothing downstream can be trusted.
 import fs from "fs"; import path from "path";
-import { EXDIR, build, propagate, complete, loadFold } from "./probe_b_lib.mjs";
+import { EXDIR, build, propagate, complete, loadFold } from "./lib.mjs";
 
 const want = new Map();                       // "set/number" -> states (BigInt)
 for (const set of ["grids", "instagram"]) {

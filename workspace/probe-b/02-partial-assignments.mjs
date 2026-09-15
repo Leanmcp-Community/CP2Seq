@@ -14,7 +14,7 @@
 // STRUCTURED set of variables, not a uniformly random one. This measures an upper
 // bound on how easy the detection problem is under a random-commitment distribution.
 import fs from "fs"; import path from "path";
-import { EXDIR, build, propagate, complete, loadFold, rng } from "./probe_b_lib.mjs";
+import { EXDIR, build, propagate, complete, loadFold, rng } from "./lib.mjs";
 
 const MAXFACES = +(process.env.MAXFACES ?? 150);
 const NCP      = +(process.env.NCP ?? 40);

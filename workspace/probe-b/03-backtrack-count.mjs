@@ -11,7 +11,7 @@
 // lim=1 => count dead ends on the way to the FIRST solution, i.e. "could a
 // greedy, never-backtracking strategy have found a folded state?"
 import fs from "fs"; import path from "path";
-import { EXDIR, build, propagate, complete, loadFold, SOLVER } from "./probe_b_lib.mjs";
+import { EXDIR, build, propagate, complete, loadFold, SOLVER } from "./lib.mjs";
 
 const orig = SOLVER.propagate;
 let deadEnds = 0, calls = 0;

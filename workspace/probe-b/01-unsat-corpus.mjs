@@ -8,7 +8,7 @@
 // Corpus: examples/unsatisfiable/ — 12 CPs the Flat-Folder author shipped
 // precisely because they have no solution. Real distribution, no synthesis.
 import fs from "fs"; import path from "path";
-import { EXDIR, build, propagate, complete, loadFold } from "./probe_b_lib.mjs";
+import { EXDIR, build, propagate, complete, loadFold } from "./lib.mjs";
 
 const dir = path.join(EXDIR, "unsatisfiable");
 const files = fs.readdirSync(dir).filter(f => f.endsWith(".fold") || f.endsWith(".opx")).sort();
