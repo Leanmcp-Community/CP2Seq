@@ -54,10 +54,12 @@ for (const d of docs) {
     });
 
     // 2 — retired values sitting untagged
-    const tagged = new Set([...s.matchAll(/([0-9][0-9.,]*%?)\s*<!--\s*fact:/g)].map(m => m.index));
+    // A number inside a code span is a literal being discussed, not a claim being made --
+    // e.g. documenting the checker itself. Blank those out before hunting retired values.
+    const prose = s.replace(/`[^`\n]*`/g, (m) => " ".repeat(m.length));
     for (const r of facts._retired ?? []) {
-        for (const m of s.matchAll(new RegExp(r.value.replace(".", "\\."), "g"))) {
-            const after = s.slice(m.index + r.value.length, m.index + r.value.length + 14);
+        for (const m of prose.matchAll(new RegExp(r.value.replace(".", "\\."), "g"))) {
+            const after = s.slice(m.index + r.value.length, m.index + r.value.length + 16);
             if (/^[*_\s]*<!--\s*fact:/.test(after)) continue;     // explicitly acknowledged
             say("RETIRED", `"${r.value}" (${r.was}) — now ${r.now}`);
             retired++;
