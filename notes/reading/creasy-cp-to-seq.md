@@ -143,3 +143,41 @@ M 里放 4 个基本手法（inside reverse / outside reverse / squash / petal�
 **`KnownPatterns.java` 只有 67 行、4 条规则**：`insideReverseFold`、`outsideReverseFold`、`swivelFold1`、`swivelFold2`。
 
 ⚠️ 与论文有出入：论文说 M = inside reverse / outside reverse / **squash** / **petal**；Creasy 实现的是 inside/outside reverse + **swivel ×2**。要引用 baseline 数字时注意这个保真度差异。
+
+---
+
+## ⚠️ 2026-09-15：能不能拿 Table 1 当 Probe C 的基线？**不能。**
+
+Probe C 想要的是「纯搜索找一条折叠序列要多少次调用」。Table 1 的 22,665 / 30 分钟看起来正好，
+但三条都对不上：
+
+**1. 动作空间不同 —— 这条最致命。**
+T11 的模型是 **4 个 maneuver 的字典**（inside/outside reverse、squash/petal，Creasy 实现的是
+swivel×2）。**这些都不是 simple fold。**
+而我们已定 action space = **simple folding（Pureland）**，序列数据用 PurelandFold。
+→ **两套模型的序列互不可表达。** T11 的数字量的是另一个问题。
+
+**2. 量的东西不同。**
+22,665 是**完整 step-graph 的节点数**（所有拆解可能性的全图），不是「找到一条序列要展开多少节点」。
+找一条会便宜得多，枚举全部会更贵。**这个数既不是上界也不是下界，是另一个量。**
+
+**3. n=3。**
+Table 1 只有三个模型（Figure 2 例子 / 鹤 / 蛙基）。不是曲线，不是分布。
+**Probe A 的教训就是分布比均值重要**，三个点撑不起基线。
+
+### 由此暴露的决定点
+
+**「action space = simple folding」和「拿 T11 当基线」二选一，不能都要：**
+
+| | 保 simple folding | 改用 T11 的 maneuver 模型 |
+| --- | --- | --- |
+| 序列数据 | ✅ PurelandFold（27 序列，现成） | ❌ 要自己造 |
+| 理论地基 | ✅ T4 simple folding NP-hard 可引 | ❌ T4 不适用，maneuver 模型没有复杂度结论 |
+| 已发表基线 | ❌ 没有，Probe C 要自己跑 | ✅ Table 1 可引 |
+| 每步可用 Flat-Folder | ✅ Pureland 中间态都是平折态 | ❓ 未验证 |
+
+**倾向保 simple folding** —— 三比一，而且丢掉的那一项（基线）本来就只有 3 个数据点。
+**T11 降级为 related work：证明「经典方法会爆炸」的引文，不是对照组。**
+
+→ **Probe C 仍然要自己跑。** 但现在有明确的落点：在 PurelandFold 的 27 条序列上，
+用 simple fold 动作空间做穷举搜索，记录 query 数，按 step 三档（≤11 / 12–14 / >14）分层报。

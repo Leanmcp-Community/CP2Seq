@@ -4,10 +4,10 @@
 
 | # | 链接 | 状态 | 笔记 |
 | --- | --- | --- | --- |
-| 1 | https://arxiv.org/html/2609.00377v1 | todo | |
+| 1 | https://arxiv.org/html/2609.00377v1 · 代码 https://github.com/maya-moriya/FoldingAgent | **必读** | **FoldingAgent** —— 从教学视频重建折叠过程。数据集就是 PurelandFold（见下） |
 | 2 | https://arxiv.org/html/2603.13856v1 | todo | |
 | 3 | https://arxiv.org/html/2606.26299v1 | todo | (关注 bib.bib30 引用) |
-| 4 | https://arxiv.org/html/2603.29585v1 · https://www.alphaxiv.org/pdf/2603.29585 | to-reproduce | Learn2Fold。语义→CP，架构要搬到 L2 |
+| 4 | https://arxiv.org/html/2603.29585v1 · https://www.alphaxiv.org/pdf/2603.29585 | to-reproduce | Learn2Fold。语义→CP，架构要搬到 L2。**难度分三档 Simple(10类)/Intermediate(10类)/Complex(5类)，依据是 step count + non-local dependency**；held-out 基准 25 个类别。指标是 step-level P/R/F1、Cat-SR、Edge-IoU —— **不报 query efficiency，也不报 world-model 调用次数** |
 | 5 | https://arxiv.org/abs/2511.18450 | todo | OrigamiSpace, NeurIPS'25。无 repo |
 | 6 | https://arxiv.org/abs/2512.22207 | todo | GamiBench。**唯一完整可跑** repo+HF |
 
@@ -40,7 +40,7 @@
 | GamiBench | benchmark | https://github.com/stvngo/GamiBench · https://huggingface.co/datasets/stvngo/GamiBench | MIT，完整可跑 |
 | **Creasy** | **L0 CP→Seq** | https://github.com/xkevio/Creasy | Java+JavaFX, **GPL3**, 15★, **停更 2022-02**。T11 的实现（马格德堡大学学生项目），折叠预览调 ORIPA 1.45。**跑，不复现** —— 拿来做 baseline + 收集失败清单。笔记: `notes/creasy-cp-to-seq.md` |
 | ORIPA | L0 | https://github.com/oripa/oripa | Mitani。CP 编辑 + 折叠形推定，Creasy 依赖它 |
-| PurelandFold | 数据 | https://huggingface.co/datasets/mayaweiz/PurelandFold | CC-BY-4.0。27 序列/337 帧，`cp.fold` 含**层序 ground truth** |
+| **PurelandFold** | **数据（要用）** | https://huggingface.co/datasets/mayaweiz/PurelandFold | CC-BY-4.0（代码 MIT）。**27 序列 / 337 帧**，一行一个关键帧，单一 `train` split。列：`sequence`、**`step`（1–21，1=展开的方纸）**、`image`(1920²)、`cp.svg`、**`cp.fold`**（顶点/面/MV/折叠角/**面堆叠顺序**）、**`flat_folder`**（Flat-Folder 编译输出：折叠位置、层序、四类约束计数）。⚠️ **最关键**：这是 **Pureland 折纸 = 只允许 simple fold**，所以**每个中间态本身就是合法平折态**，数据集写明所有 ground-truth 状态都能通过 Flat-Folder 编译 → **不需要自建 step semantics，Flat-Folder 每步直接可用** |
 
 ## 该找的人（力学侧，比 Jason Ku 更对口）
 
@@ -60,7 +60,7 @@
 | T1 | Arkin, Bender, Demaine×2, Mitchell, Sethia, Skiena, **"When Can You Fold a Map?"** Comput. Geom. 29(1):23–46, 2004 · https://erikdemaine.org/papers/MapFolding/ | **必读** | simple foldability 的理论地基。地图折叠多项式，稍推广即 NP-complete |
 | T2 | **Akitaya, Demaine, Ku, "Computing Flat-Folded States"**, OSME 2024 · https://erikdemaine.org/papers/FlatFolder_OSME2024/paper.pdf | **必读** | **Flat-Folder 本身的论文**。判定全局平折态 NP-hard |
 | T3 | Demaine, Devadoss, Mitchell, O'Rourke, **"Continuous Foldability of Polygonal Paper"**, CCCG 2004 · https://erikdemaine.org/papers/PaperReachability_CCCG2004/paper.pdf | **read** | **folded state vs folding motion** 的标准区分。**可达性是免费的**（Cor. 3 位形空间连通）→ CP→Seq 不是存在性问题，是离散步骤结构问题。**纯理论无工具**；§2 的 `(f, λ)` 是 pointwise 层序 `l` 的祖先。⚠️ 零厚度，别挪用到 Track 2。笔记: `notes/paper-reachability-cccg2004.md` |
-| T4 | Akitaya, Demaine, Ku, **"Simple Folding is Really Hard"**, J. Information Processing, 2017 | todo | |
+| T4 | Akitaya, Demaine, Ku, **"Simple Folding is Really Hard"**, *J. Information Processing* 25:580–589, 2017 · https://erikdemaine.org/papers/SimpleFolds_JIP/ | todo | **simple folding 是 NP-hard**。与「找终态」形成对比（Probe B 实测 95.1% 零回溯）—— 这是论文必须站在序列层的理由 |
 | T5 | **"Infinite All-Layers Simple Foldability"**, Graphs and Combinatorics · https://arxiv.org/pdf/1901.08564 | todo | all-layers 模型（对应钣金折弯） |
 | T6 | **"Complexity of Simple Folding of Mixed Orthogonal Crease Patterns"** · https://arxiv.org/pdf/2306.00702 | todo | |
 | T7 | **"Flat Origami is Turing Complete"** · https://arxiv.org/pdf/2309.07932 | **读** | 撑起「折纸是研究推理的模式生物」 |
