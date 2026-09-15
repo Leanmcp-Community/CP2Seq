@@ -105,8 +105,8 @@ can run on every bucket:
 | Bucket | Has | Usable for |
 | --- | --- | --- |
 | A | CP + full step sequence | Sequence-level metrics (edit distance, group F of the checklist) |
-| B | CP + final result only, no intermediate steps | ACCEPT/REJECT loop (this doc's main experiment) |
-| C | CP only, no ground truth of any kind | Not usable for scored experiments — exploration/pilot only |
+
+
 
 These buckets are **orthogonal** to the four strata of §1.2: a CP can be bucket B *and*
 proven-not-foldable. Bucket says what ground truth exists; stratum says whether a solution
@@ -114,20 +114,18 @@ exists at all.
 
 ### 1.4 Action item before running anything
 
-- [ ] Write an audit script over every dataset source that buckets each CP into A/B/C above and
-      records, for bucket A, exactly how many intermediate steps exist.
-- [ ] Report bucket sizes before doing the dev/test split (group G in the checklist depends on
-      knowing how many samples are actually scorable).
+
 - [ ] Generate the first batch of the synthetic corpus and inspect its step / degeneracy
-      distribution **before** fixing the sampling design (`notes/plan/corpus-plan.md`).
-- [ ] Label every instagram CP with its §1.2 stratum, so no score can be pooled over all 366 by
-      accident.
+      distribution **before** fixing the sampling design (`notes/plan/corpus-plan.md`). - For Lu
+      the data set will have CP(.CP) & ONE .fold (along with Sequence: Frame1, Frame 2...), 
+      Just final Steps or with all Steps.
+
 - [ ] Confirm PurelandFold's frame format converts to the per-step `.fold` shape the simulator
       (§3.1) expects, since the comparison step (§4) needs to know what it is diffing against.
 
 ---
 
-## 2. The model under test: a VLM
+## 2. The model under test: a VLM 
 
 **VLM = an LLM with vision input.** Nothing more exotic than that — the same text context (CP
 description, prompt, history) as a plain LLM, plus the images the simulator renders. **Every
@@ -140,26 +138,26 @@ model is held fixed between the tool-augmented arm and the no-tools control; com
 models would confound the ablation. Running the whole pipeline on two models tells us whether
 the effect is model-specific or general.
 
+- [ ] We need to list the models and tests
 ---
 
 ## 3. Tools given to the VLM
 
-### 3.1 Surface simulator — the core tool, must be built
+### 3.1 Surface simulator — the core tool, must be built - for Dheeraj
 
 - **Input**: a `.fold` file — either a full state, or the previous state plus one candidate next
   fold applied to it.
 - **Output on success**: a 3D representation of that state — either (a) a three.js scene, or
-  (b) 3–4 static images rendered from different camera angles.
+  (b) 3–4 static images rendered from different camera angles. X ray
 - **Output on failure**: a structured **error**, not images — the candidate fold is illegal
   because the paper would have to pass through itself ("penetrate"). This is the same class of
   check as Flat-Folder's four constraint types (`taco-taco` / `taco-tortilla` /
   `tortilla-tortilla` / `transitivity` — see `notes/tools/flat-folder-capabilities.md`), but applied to
   **one candidate step**, not a global terminal state.
 - This is the piece the rest of the notes call the **surface simulator**. Flat-Folder does not
-  provide it — Flat-Folder has no notion of "step," full stop — so it has to be built from
-  scratch. This is the actual engineering deliverable of Track 1.
+  provide it — Flat-Folder has no notion or Motion of "step," full stop 
 
-### 3.2 Hamiltonian-path tool (Prof. Yi's suggestion) — to attempt
+### 3.2 Hamiltonian-path tool (Prof. Yi's suggestion) — to attempt - Both Dheeraj and Jialu
 
 - Intended purpose (still being scoped): search over / verify a traversal order on the crease
   graph, to help the VLM propose an ordering instead of deriving one from scratch every step.
@@ -167,15 +165,6 @@ the effect is model-specific or general.
   open-source implementation that does the equivalent job — needs its own short scoping note
   before it's added to the tool belt for real. Don't let it block the surface simulator work.
 
-### 3.3 Image-generation tool — optional, experimental
-
-- Purpose: given a `.fold` file, generate a picture of the folded state directly (candidates:
-  **Nano Banana**, a **GPT Imagen-2-class** model), as an alternative to the simulator's
-  geometrically exact render.
-- ⚠️ **Accuracy is unverified.** An image generator is not a geometry solver — it can produce a
-  plausible-looking image of a fold that is actually illegal. Treat this strictly as an
-  **ablation arm** ("does a fast-but-unverified image help or hurt vs. the simulator's exact
-  render?"), never as a substitute for the simulator's correctness guarantee.
 
 ---
 
@@ -192,15 +181,15 @@ the effect is model-specific or general.
       ┌───────────┐                       │
       │    VLM    │                       │
       └─────┬─────┘                       │
-            │ candidate next .fold step    │
+            │ candidate next .fold step   │
             ▼                             │
       ┌────────────────────┐              │
       │  SURFACE SIMULATOR  │              │
-      │   (+ optional tools) │              │
+      │   (+ optional tools)│              │
       └─────────┬───────────┘              │
            ok   │   illegal fold           │
            ▼    ▼                          │
-        IMAGES  ERROR ──────────────────────┘
+         3D    ERROR ──────────────────────┘
            │
            │  (VLM marks its own step "final")
            ▼
@@ -231,9 +220,9 @@ the effect is model-specific or general.
 
 | Condition | Tools available | What it measures |
 | --- | --- | --- |
-| **Full tool belt** | surface simulator + Hamiltonian tool (if ready) + optional image-gen | upper bound — how well the loop does with everything |
+| **Full tool belt** | surface simulator + 3D + Hamiltonian tool (if ready) | upper bound — how well the loop does with everything |
 | **No vision** | same tools, the rendered-image channel dropped | the value of visual/geometric feedback specifically |
-| **Verifier only** | pass/fail from the simulator; no images, no filter | the value of the filter step on top of raw verification |
+| **Verifier only** | pass/fail from the simulator; no filter | the value of the filter step on top of raw verification |
 | **No tools, prompt-only** | none — plain VLM prompting, no simulator calls | memorization control — is the model reasoning through the loop, or recalling the fold from pretraining/dataset exposure |
 
 > If the no-vision or no-tools arm performs nearly as well as the full arm, **that is a finding,
