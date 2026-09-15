@@ -50,19 +50,36 @@ ff = json.loads(row["flat_folder"])
 print(f"\nflat_folder keys (row 0):")
 for k in sorted(ff): print(f"  {k}  ({type(ff[k]).__name__})")
 
-# --- 4. the non-local-dependency axis, same formula as the instagram corpus ---
-print("\nnon-local dependency proxy (transitivity / variables), per sequence:")
-vals = []
+# --- 3b. what is inside `counts` (the instagram corpus calls this `variables`) ---
+cnt = ff.get("counts")
+print(f"\nflat_folder['counts'] = {json.dumps(cnt)[:400]}")
+
+# --- 4. the non-local-dependency axis ---
+# On the instagram corpus the axis was transitivity / variables, where `variables`
+# = len(BF) = number of overlapping face pairs. PurelandFold exposes `transitivity`
+# at top level; the denominator is looked up below in whichever field carries it.
+def n_vars(f):
+    for k in ("variables", "num_variables", "n_variables"):
+        if isinstance(f.get(k), int): return f[k]
+    c = f.get("counts")
+    if isinstance(c, dict):
+        for k in ("variables", "num_variables", "n_variables", "B", "BF"):
+            if isinstance(c.get(k), int): return c[k]
+    fo = f.get("faceOrders")
+    if isinstance(fo, list) and fo: return len(fo)   # fallback: one entry per pair
+    return None
+
+print("\nnon-local dependency proxy (transitivity / variables):")
+vals, missing = [], 0
 for r in ds:
-    try:
-        f = json.loads(r["flat_topfolder"]) if False else json.loads(r["flat_folder"])
-        t, v = f.get("transitivity"), f.get("variables")
-        if t and v: vals.append((r["sequence"], r["step"], t / v))
-    except Exception:
-        pass
+    f = json.loads(r["flat_folder"])
+    t, v = f.get("transitivity"), n_vars(f)
+    if isinstance(t, int) and v: vals.append((r["sequence"], r["step"], t / v))
+    else: missing += 1
 if vals:
-    vs = sorted(x[2] for x in vals)
-    m = len(vs)
-    print(f"  n={m}  p10={vs[m//10]:.1f}  p50={vs[m//2]:.1f}  p90={vs[9*m//10]:.1f}  max={vs[-1]:.1f}")
+    vs = sorted(x[2] for x in vals); m = len(vs)
+    print(f"  n={m} (skipped {missing})  p10={vs[m//10]:.1f}  p50={vs[m//2]:.1f}  "
+          f"p90={vs[9*m//10]:.1f}  max={vs[-1]:.1f}")
+    print("  instagram corpus, same formula:  p10=2.6  p50=12.8  p90=54.4  max=159.9")
 else:
-    print("  (field names differ -- inspect the flat_folder keys printed above)")
+    print(f"  no usable rows ({missing} skipped) -- see the `counts` dump above")
