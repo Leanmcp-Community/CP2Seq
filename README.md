@@ -49,10 +49,10 @@ AI 折纸研究笔记。原始想法存放处。
 
 ## 两条线（2026-09-14）
 
-- `notes/track1-surface-simulator.md` — **Surface simulator / CP→Seq**。组合+拓扑，验证器免费
-- `notes/track2-structural-simulator.md` — **Structural simulation**。连续力学，验证器昂贵
-- `notes/flat-folder-capabilities.md` — **Flat-Folder 到底能/不能回答什么**（核实自源码；它没有「步骤」）
-- `notes/geometry-topology-definitions.md` — **几何 ⊕ 拓扑的定义 + abstract 草稿**（写论文时查这页）
+- `notes/plan/track1-surface-simulator.md` — **Surface simulator / CP→Seq**。组合+拓扑，验证器免费
+- `notes/plan/track2-structural-simulator.md` — **Structural simulation**。连续力学，验证器昂贵
+- `notes/tools/flat-folder-capabilities.md` — **Flat-Folder 到底能/不能回答什么**（核实自源码；它没有「步骤」）
+- `notes/reading/geometry-topology-definitions.md` — **几何 ⊕ 拓扑的定义 + abstract 草稿**（写论文时查这页）
 
 **两篇论文，已定案（2026-09-14）**：验证器成本差 10⁴ 倍。两条线各自独立设计，互不迁就。
 节奏：**先做 Track 2（方差数字本周能出），先写 Track 1（不依赖任何人）**。
@@ -61,7 +61,8 @@ AI 折纸研究笔记。原始想法存放处。
 
 **这次论文的重点：折痕图 → 结构性能。**
 
-- 复现 Learn2Fold，解决语义 → 折痕图
+- ~~复现 Learn2Fold，解决语义 → 折痕图~~ → **作废**：它解的是另一个问题（语言 → 序列），
+  而且数据集从未公开。只作架构引用，见 `BASELINE_REPRODUCTION.md`
 - Flat-Folder 当 verifier（它只管几何合法性，不管力学）
 - 先用纸做 paper dynamics，材料以后再换
 - 机械臂这次不做
@@ -108,8 +109,8 @@ CP (.fold) ──Flat-Folder──→ 枚举合法折叠态 {s₁...sₙ}      L
 
 四个可独立发布的产出：
 1. **把 Flat-Folder（枚举态）和 Thick Folding（加厚）接起来 → bar-and-hinge** —— 两半 Ku 都造了，没人连过。
-   详见 `notes/thick-folding-ku-demaine.md` 和 `notes/flat-folder-export-and-3d.md`
-2. 同一 CP 不同折叠态的力学性能差异有多大 —— 见 `notes/2026-09-11-states-and-simulator.md` 的 MARK
+   详见 `notes/reading/thick-folding-ku-demaine.md` 和 `notes/tools/flat-folder-export-and-3d.md`
+2. 同一 CP 不同折叠态的力学性能差异有多大 —— 见 `notes/reading/2026-09-11-states-and-simulator.md` 的 MARK
 3. learned surrogate —— Learn2Fold 架构搬到 L2
 4. 接上 Learn2Fold 前端 → 完整的 prompt → CP → 结构性能 管线
 
@@ -117,8 +118,9 @@ CP (.fold) ──Flat-Folder──→ 枚举合法折叠态 {s₁...sₙ}      L
 
 ## Phase 0 进展（2026-09-14）
 
-- `notes/probe-a-results.md` — **Probe A 完成**。主实验区 ≈100–500 faces；验证器免费边界 ≈500 faces
-- `notes/probe-b-findings.md` — **Probe B 初查**。部分状态可行性判据**存在**（`solver.js` 的 `initial_assignment` 接受部分 `BA`）
-- `notes/experiment-spec-checklist.md` — 跑实验前要冻结的东西（EN + 中文）
-- `notes/research-workflow.md` — Phase 0–5，当前位置 Phase 0
+- `notes/probes/probe-a-explosion.md` — **Probe A 完成**。主实验区 ≈100–500 faces；验证器免费边界 ≈500 faces
+- `notes/probes/probe-b-oracle.md` — **Probe B 初查**。部分状态可行性判据**存在**（`solver.js` 的 `initial_assignment` 接受部分 `BA`）
+- `notes/plan/experiment-spec-checklist.md` — 跑实验前要冻结的决定 + 每条状态（中文）
+- `notes/plan/research-workflow.md` — Phase 0–5，**Phase 0 已结束**（中文）
+- `EXPERIMENTS_SETUP.md` / `DATASET.md` / `BASELINE_REPRODUCTION.md` — 怎么跑 / 数据 / 基线（英文，给同事看）
 - `workspace/probe_a.svg` — 爆炸曲线图
