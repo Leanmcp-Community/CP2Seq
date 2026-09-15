@@ -48,7 +48,7 @@ Bucket reminder:
 - **Size / format**: 366 `.fold` crease patterns
 - **Ground truth**: CP only. Flat-Folder itself can *solve* each one into a terminal flat-folded
   state on demand, but that's a computed output, not a stored label, and there can be
-  many valid terminal states per CP (see `notes/flat-folder-capabilities.md` — states ≠
+  many valid terminal states per CP (see `notes/tools/flat-folder-capabilities.md` — states ≠
   sequences, and a CP can have zero, one, or many folding sequences reaching a given state).
 - **Bucket**: C by default (CP only); can be promoted to a synthetic B by running Flat-Folder's
   solver and picking one terminal state as `FINAL RESULT` — but that pick is an experimental
@@ -94,7 +94,7 @@ Bucket reminder:
 - **Size / format**: TBD — full repo + HF dataset, the only benchmark in this list that's
   "completely runnable" out of the box (`papers.md`).
 - **Ground truth**: unknown until audited. GamiBench's reported metrics (Accuracy, Viewpoint
-  Consistency, Impossible Fold Selection Rate — `notes/related-work-metrics-EN.md`) suggest a
+  Consistency, Impossible Fold Selection Rate — `notes/reading/related-work-metrics-EN.md`) suggest a
   QA/classification task shape, which may mean its items are not raw `(CP, sequence)` pairs.
 - **Bucket**: TBD, pending audit (see `BASELINE_REPRODUCTION.md` action items).
 
@@ -104,14 +104,14 @@ Bucket reminder:
 
 - **Link**: https://github.com/xkevio/Creasy (generator, not a static dataset)
 - **License**: GPL-3 (we run it, we don't vendor its code or outputs into anything we ship —
-  see `notes/creasy-cp-to-seq.md`)
+  see `notes/reading/creasy-cp-to-seq.md`)
 - **Size / format**: not fixed — Creasy *computes* a full step-graph for any CP its 4-maneuver
   dictionary can handle (inside/outside reverse fold, swivel ×2). For classic models it already
   covers (crane, traditional frog base), this gives genuine bucket-A sequences, sometimes tens
   of thousands of step-graph nodes deep.
 - **Ground truth**: bucket A, but only for the small set of models expressible in its 4 rules —
   most real-world CPs are outside its coverage, and it can also fail expensively (the frog base
-  case took ~30 minutes and 22,665 nodes — see `notes/creasy-cp-to-seq.md`).
+  case took ~30 minutes and 22,665 nodes — see `notes/reading/creasy-cp-to-seq.md`).
 - **Use**: source of a handful of high-quality bucket-A reference sequences, not a bulk data
   source. Also doubles as the Creasy baseline in `BASELINE_REPRODUCTION.md`.
 

@@ -1,5 +1,17 @@
 # notes 索引
 
+## 文件分工（每件事只有一个出处）
+
+| 文件 | 只负责 | 语言 |
+| --- | --- | --- |
+| `../BASELINE_REPRODUCTION.md` | 跟谁比：已发表方法 + 自建搜索基线 | 英文 |
+| `../DATASET.md` | 数据从哪来 | 英文 |
+| `../EXPERIMENTS_SETUP.md` | 怎么跑：循环、工具、条件、指标、协议 | 英文 |
+| `plan/experiment-spec-checklist.md` | 要冻结哪些决定 + 每条状态 | 中文 |
+| `plan/research-workflow.md` | 阶段、纪律、现在走到哪 | 中文 |
+
+**根目录是给同事看的（英文），`notes/` 是我的工作笔记（中文）。同一段不写两遍。**
+
 | 目录 | 放什么 |
 | --- | --- |
 | **`plan/`** | 两条 track 的方案、研究流程、语料方案、实验 spec 清单 |
@@ -7,7 +19,7 @@
 | **`reading/`** | 读论文的笔记 |
 | **`tools/`** | 工具能力核实（Flat-Folder、Sim-FAST-PY） |
 
-## Phase 0 现状
+## Phase 0 · 已结束
 
 | 探针 | 状态 | 一句话结论 |
 | --- | --- | --- |

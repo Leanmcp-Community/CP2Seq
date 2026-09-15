@@ -53,7 +53,7 @@
 
 ## 「3D imagination」怎么说才站得住
 
-见 `geometry-topology-definitions.md`。结论：
+见 `../reading/geometry-topology-definitions.md`。结论：
 
 | 能说 | 不能说 |
 | --- | --- |
@@ -141,7 +141,7 @@ Akitaya 就是 Flat-Folder 理论论文的作者之一 —— **我用的工具�
 
 **这和「一个 CP 多个 state」是同一问题的另一个投影**
 —— 之前那四个维度（力学性能 / 步骤数 / 人手易折性 / 机器可执行性）原样搬到序列上。
-**这是已有资产，不用重新想。** 见 `2026-09-11-states-and-simulator.md`。
+**这是已有资产，不用重新想。** 见 `../reading/2026-09-11-states-and-simulator.md`。
 
 ---
 

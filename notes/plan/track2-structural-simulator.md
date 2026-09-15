@@ -30,8 +30,8 @@
 > **在 flat-foldability 的世界里，一个折痕图的所有合法折叠态是等价的；
 > 引入结构性能之后，它们不再等价，而且这个排序是可计算的。**
 
-管线见 `README.md`。工具与物理量见 `sim-fast-py-physics.md`。
-三维化见 `thick-folding-ku-demaine.md`。
+管线见 `README.md`。工具与物理量见 `../tools/sim-fast-py-physics.md`。
+三维化见 `../reading/thick-folding-ku-demaine.md`。
 
 ## 机制已经找到：面板自接触
 

@@ -1,14 +1,14 @@
-# Baseline Reproduction — CP → Seq / CP → (.fold + sequence)
+# Baselines — who we compare against, and what each comparison is worth
 
-2026-09-14. Catalog of existing methods and papers that already attempt the problem this
-project is scoped to (Track 1: CP → Seq, per `notes/track1-surface-simulator.md`), a decision
-per method on whether to reproduce it, run it as-is, or only cite its numbers, and what that
-turns into as an actual row in our results table.
+2026-09-14, revised 2026-09-15.
 
-This file is about **published prior work**. The from-scratch search baselines (Random / BFS /
-DFS) we build and run ourselves are already specified in
-`notes/experiment-spec-checklist.md` (group C) and `EXPERIMENTS_SETUP.md` (§5) — not repeated
-here.
+**This file owns one question: what goes in the comparison column.** Both halves live here —
+published prior work (§0–§1) and the search baselines we build ourselves (§3) — so there is one
+place to look and one place to edit.
+
+> **Scope boundary.** How the experiment runs is `EXPERIMENTS_SETUP.md`. Where the data comes
+> from is `DATASET.md`. Which decisions are frozen is
+> `notes/plan/experiment-spec-checklist.md`. Nothing is restated across those files.
 
 ---
 
@@ -16,14 +16,14 @@ here.
 
 Not everything below solves CP → Seq. Some solve a related-but-different problem, and treating
 them as directly comparable would be a mistake worth flagging up front (see
-`notes/track1-surface-simulator.md`):
+`notes/plan/track1-surface-simulator.md`):
 
 | Problem | What goes in | What comes out | Who does this |
 | --- | --- | --- | --- |
 | **CP → Seq** (ours) | A crease pattern | A folding sequence that produces it | Akitaya 2013 / Creasy, discrete PSO |
 | **prompt → Seq** | A natural-language description | A folding sequence | Learn2Fold |
 | **semantic → CP** | A natural-language description | A crease pattern (not a sequence) | Learn2Fold (their other framing), OrigamiSpace |
-| **CP → terminal state only** | A crease pattern | *One* valid flat-folded state, no path to it | Flat-Folder (it doesn't produce sequences at all — see `notes/flat-folder-capabilities.md`) |
+| **CP → terminal state only** | A crease pattern | *One* valid flat-folded state, no path to it | Flat-Folder (it doesn't produce sequences at all — see `notes/tools/flat-folder-capabilities.md`) |
 
 ⚠️ Methods in the last three rows are **not drop-in baselines** for a CP → Seq comparison table.
 They're either adaptable with a caveat (Flat-Folder), or only usable as an architectural
@@ -35,21 +35,57 @@ reference / related-work contrast (Learn2Fold, OrigamiSpace) — see per-method 
 
 | Method | Problem it solves | Repro status | Why |
 | --- | --- | --- | --- |
-| **Akitaya et al. 2013 / Creasy** | CP → Seq | **Run, don't reproduce** | Already decided in `notes/creasy-cp-to-seq.md`: GPL-3, unmaintained since 2022, Java+JavaFX with a hand-installed ORIPA dependency. Reproducing it is rebuilding a 2013 wheel for no benefit. Download the release jar and run it. |
-| **Discrete PSO** (minimizes Hausdorff distance to target shape) | CP → Seq | **TBD — locate an implementation** | Referenced in `notes/track1-surface-simulator.md` as an existing approach; no repo identified yet. Find the paper/code before deciding run vs. reproduce. |
-| **Flat-Folder** (adapted) | CP → terminal state only | **Run, with an adapter** | Not a sequence method at all (no notion of "step" — `notes/flat-folder-capabilities.md`). To use it as any kind of baseline row, we'd have to bolt on a rule for "which of its N valid states counts as the target" (e.g., first solution, or a specific state matched to our dataset's ground truth). This is a baseline for the *terminal-state* half of the problem only, never for sequence quality. |
+| **Akitaya et al. 2013 / Creasy** | CP → Seq | **Run, don't reproduce** | Already decided in `notes/reading/creasy-cp-to-seq.md`: GPL-3, unmaintained since 2022, Java+JavaFX with a hand-installed ORIPA dependency. Reproducing it is rebuilding a 2013 wheel for no benefit. Download the release jar and run it. |
+| **Discrete PSO** (minimizes Hausdorff distance to target shape) | CP → Seq | **TBD — locate an implementation** | Referenced in `notes/plan/track1-surface-simulator.md` as an existing approach; no repo identified yet. Find the paper/code before deciding run vs. reproduce. |
+| **Flat-Folder** (adapted) | CP → terminal state only | **Run, with an adapter** | Not a sequence method at all (no notion of "step" — `notes/tools/flat-folder-capabilities.md`). To use it as any kind of baseline row, we'd have to bolt on a rule for "which of its N valid states counts as the target" (e.g., first solution, or a specific state matched to our dataset's ground truth). This is a baseline for the *terminal-state* half of the problem only, never for sequence quality. |
 | **Learn2Fold (2026)** | prompt → Seq / semantic → CP | **Cite only — different problem, and no public data** | Solves a different input problem (language, not CP) with a different data assumption (expert demonstration trajectories, so it never has to choose between multiple valid states — see `notes/reading/2026-09-11-states-and-simulator.md` Q3). ⚠️ **Its dataset was never released** — OrigamiCode (5,760 sequences / 75,000 transitions, mostly generated by their own symbolic simulator) is not downloadable, so it is not a data source for us either (`DATASET.md`). Cite the architecture (LLM proposer + learned world model for lookahead) as the closest published analogue to our tool-augmented VLM loop; nothing else is reusable. |
 | **FoldingAgent** | Restricted-scope folding (Pureland: simple folds only) | **Cite only — but this is now *our* scope too** | Explicitly avoids the "each fold gets harder" dimension by restricting to Pureland origami (simple folds only) — see `notes/reading/related-work-metrics-EN.md`. ⚠️ We have since adopted the same restriction as our action space, so this is no longer a contrast we can draw for free: the honest framing is that we *measure* the boundary of that restriction (34.2% of real CPs fall outside it — `notes/probes/probe-c-screen.md`) rather than escape it. Its reported "simultaneous compound actions" failure mode is exactly what leaks through at the boundary of that restriction. Useful as a related-work contrast, not a same-scope baseline. |
 | **COrigami** | Flat-foldability check + aesthetic scoring | **Not applicable** | Reports a boolean flat-foldability check and a subjective VLM aesthetic score, not a sequence or a terminal-state match. No comparable metric to reuse. |
-| **OrigamiBench** | Benchmark (defines metrics, ships a dataset) | **Reuse dataset + metric definitions** | Not a method — a benchmark. Its dataset **is** Flat-Folder's `examples/instagram/` (366 `.fold` files, see `DATASET.md`), and its Query Efficiency metric is the direct ancestor of the query-efficiency claim this whole project is built around (`notes/track1-surface-simulator.md`). Reuse the metric definition; the underlying agent it benchmarks is not itself a baseline for us. |
+| **OrigamiBench** | Benchmark (defines metrics, ships a dataset) | **Reuse dataset + metric definitions** | Not a method — a benchmark. Its dataset **is** Flat-Folder's `examples/instagram/` (366 `.fold` files, see `DATASET.md`), and its Query Efficiency metric is the direct ancestor of the query-efficiency claim this whole project is built around (`notes/plan/track1-surface-simulator.md`). Reuse the metric definition; the underlying agent it benchmarks is not itself a baseline for us. |
 | **OrigamiSpace** (NeurIPS'25) | semantic → CP | **Not usable — no repo** | No public repository as of the last check (`papers.md` #5). Can't run it, can't extract numbers beyond what's in the paper. Revisit if a repo appears. |
 | **GamiBench** | Benchmark (accuracy / viewpoint consistency / impossible-fold rate) | **TBD — audit format** | Full repo + HF dataset available (`papers.md` #6), unlike the others. Needs an audit to see whether its items are CP → Seq pairs we can reuse, or a different task shape (e.g. multiple-choice QA) that only lends us metric ideas, not data. |
 
 ---
 
-## 2. What actually becomes a results-table row
+## 3. The search baselines we build ourselves
 
-Per `notes/creasy-cp-to-seq.md`, the numbers worth pulling out of Creasy are already scoped:
+Random / BFS / DFS are not prior work — we implement them. They are the reference frame: without
+a pure-search row, "the LLM wins on pruning" has nothing to win against.
+
+Let `b` = branching factor (legal actions per step) and `d` = shortest solution length — group B's
+difficulty axis. The three have genuinely different profiles:
+
+| | Time | Space | Error rate |
+| --- | --- | --- | --- |
+| **BFS** | `O(b^d)` | `O(b^d)` — holds the whole frontier | **zero** |
+| **DFS** | `O(b^d)` worst case | `O(d)` — just the current path | **zero** |
+| **Random** | no bound; `O(b^d)` *in expectation* | `O(d)` | **nonzero** |
+
+BFS and DFS accept a path only once the exact verifier confirms it, and abandon a branch only
+once it is exhausted, so they cannot false-prune or mis-backtrack — the group E failure
+categories do not apply to them by construction. Their only cost is query count, never
+correctness. Running both is worth it for the space difference, not the time bound.
+
+Random has **no completeness guarantee within a finite budget**: it can exhaust its budget
+without finding a solution that exists. So it needs the same budget as every other arm *and*
+enough seeds to report that failure rate — a single run conflates "got unlucky" with "the
+baseline is weak".
+
+### ⚠️ Probe C changed what these rows report
+
+Exhaustive search solved **2 of 195** candidate CPs (`notes/probes/probe-c-screen.md`). Two data
+points is not a distribution, so there is no query-efficiency curve to put in a table.
+
+**The search rows therefore report a failure rate, not a query count.** That is the stronger
+result — direct evidence that the problem needs a heuristic, which is exactly what Akitaya's own
+future-work paragraph predicted (`notes/reading/creasy-cp-to-seq.md`). A query-efficiency curve
+is still expected on the synthesized corpus, where difficulty is controlled by construction.
+
+---
+
+## 4. What actually becomes a results-table row
+
+Per `notes/reading/creasy-cp-to-seq.md`, the numbers worth pulling out of Creasy are already scoped:
 
 - Same batch of CPs → Creasy's full step-graph **node count** and **wall-clock seconds** to build
   it, vs. our method's **simulator/tool-call count** to reach a solution. This is a
@@ -60,7 +96,7 @@ Per `notes/creasy-cp-to-seq.md`, the numbers worth pulling out of Creasy are alr
   inside/outside reverse, squash, petal; note this fidelity gap when citing it), and which ones
   blow up the step-graph before finishing. This failure list is itself evidence for why the
   problem needs a heuristic (Akitaya's own 2013 future-work paragraph says as much — quoted in
-  `notes/creasy-cp-to-seq.md`).
+  `notes/reading/creasy-cp-to-seq.md`).
 
 ⚠️ **Probe C changed what the search baselines report.** Exhaustive search solved 2 of 195
 candidate CPs (`notes/probes/probe-c-screen.md`), so there is no query-efficiency
@@ -81,12 +117,12 @@ in the related-work section of the paper, not in the results table.
 
 ---
 
-## 3. Action items
+## 5. Action items
 
 - [ ] Locate an implementation (or the original paper with enough detail to reproduce cheaply)
       of the discrete-PSO baseline.
 - [ ] Download the Creasy release jar, run it over the same CP set used elsewhere, and record
-      node count / seconds / failure list per `notes/creasy-cp-to-seq.md`.
+      node count / seconds / failure list per `notes/reading/creasy-cp-to-seq.md`.
 - [ ] Audit GamiBench's HF dataset to determine whether its items are directly reusable as
       `(CP, final result)` or `(CP, sequence)` pairs, or only reusable as metric definitions.
 - [ ] Recheck whether OrigamiSpace has published a repo since the last look.
