@@ -16,6 +16,13 @@ BUDGET="${BUDGET:-2000000}"
 DEPTH="${DEPTH:-32}"
 OUT="workspace/probe-c/stage2-log.txt"
 
+# GATE. The first stage 2 run reported EXHAUSTED ("proven not simple-foldable") for 155 of 195
+# CPs -- all of it wrong, from three geometry bugs. Never trust a run that has not passed the
+# round trip first: these CPs are built BY FOLDING, so anything but SOLVED is a solver bug.
+echo "self-test: fold forward, then ask the solver to recover the sequence..."
+node workspace/probe-c/selftest.mjs 25 300000 | tail -1
+echo
+
 echo "refreshing stage 1 verdicts..."
 node workspace/probe-c/screen.mjs | tail -3
 

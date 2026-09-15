@@ -33,6 +33,13 @@
 // top writes V when p = 0 and M when p = 1; folding it under writes the opposite. So the
 // direction is not a branch -- it is read off the target and checked for consistency.
 //
+// /!\ MODELLING RESTRICTION, stated because it weakens what EXHAUSTED means: a fold is
+// rejected the moment it creases a line against the assignment the target CP demands there.
+// Physically you may fold a crease one way and later fold it back the other, and the CP only
+// records the last direction -- this search cannot express that. So EXHAUSTED means "no
+// simple-fold sequence exists that never folds a crease against its final direction", which
+// is slightly stronger than the plain claim. Every EXHAUSTED verdict carries that asterisk.
+//
 // TERMINATION: three-way, and the three mean different things.
 //   SOLVED     a sequence was found
 //   EXHAUSTED  the search space was closed without one -> PROVEN not simple-foldable
@@ -93,8 +100,21 @@ function clip(poly, n, d, keepPositive) {
             out.push([A[0] + t * (B[0] - A[0]), A[1] + t * (B[1] - A[1])]);
         }
     }
-    return out.length >= 3 ? out : null;
+    // A vertex count is not enough: three or more COLLINEAR points survive the clip when a
+    // layer merely touches the fold line, and a zero-area sliver like that gets counted on
+    // BOTH sides. The layer is then duplicated, the same strip of paper is creased twice in
+    // one fold, and the two copies disagree about M/V because their parities differ -- which
+    // surfaces as an impossible "direction conflict" on a sequence that is real. Require area.
+    return out.length >= 3 && Math.abs(area(out)) > 1e-12 ? out : null;
 }
+const area = (poly) => {
+    let a = 0;
+    for (let i = 0; i < poly.length; i++) {
+        const p = poly[i], q = poly[(i + 1) % poly.length];
+        a += p[0] * q[1] - q[0] * p[1];
+    }
+    return a / 2;
+};
 // the segment where the infinite line cuts the polygon, as [tMin, tMax] along line.dir
 function chord(poly, line) {
     const { n, d, dir } = line;
@@ -128,7 +148,13 @@ function buildTarget(fold) {
         const k = lkey(l);
         if (!lines.has(k)) lines.set(k, { line: l, want: [] });
         const L = lines.get(k);
-        const t = (p) => l.dir[0] * p[0] + l.dir[1] * p[1];
+        // Measure along the BUCKET-S direction, not this edge-s. lineOf() canonicalises the
+        // normal but not the direction, so two edges on one line disagree by a sign whenever
+        // their vertices are listed in opposite order. Using the per-edge frame silently files
+        // half the creases in a mirrored coordinate system, and they then appear to sit
+        // somewhere else on the line -- which reads downstream as an M/V contradiction on a
+        // sequence that is perfectly real.
+        const t = (p) => L.line.dir[0] * p[0] + L.line.dir[1] * p[1];
         const t0 = t(V[u]), t1 = t(V[w]);
         L.want.push({ lo: Math.min(t0, t1), hi: Math.max(t0, t1), a, covered: false });
         total++;
@@ -181,7 +207,10 @@ function applyFold(state, line, movePositive, target) {
                 created.push({ P, Q, par: lay.par });
             }
         }
-        if (stay) next.push(lay);
+        // the half that stays is CLIPPED, not the layer it came from -- pushing the
+        // original polygon back leaves every layer at full size, so a later fold creases
+        // paper that is no longer there
+        if (stay) next.push({ ...lay, poly: stay });
         if (move) {
             const T = mul(R, lay.T);
             next.push({ poly: move.map(p => ap(R, p)), T, inv: inv(T), par: 1 - lay.par });
@@ -241,6 +270,17 @@ function solve(fold, opts) {
     const start = [{ poly: sheet, T: ID, inv: ID, par: 0 }];
     let queries = 0, best = 0;
     const seq = [];
+    // Revisiting a folded state can never help, and folds that add no new crease are NOT
+    // useless -- one can rearrange the stack so a later fold becomes legal. So cycles are cut
+    // by state identity, not by "did this cover anything new".
+    const seen = new Set();
+    const sig = (st) => st.map(l => {
+        const r = (v) => Math.round(v * 1e6) / 1e6;
+        let cx = 0, cy = 0;
+        for (const p of l.poly) { cx += p[0]; cy += p[1]; }
+        return `${r(cx / l.poly.length)},${r(cy / l.poly.length)},${l.poly.length},` +
+               `${r(l.T.a)},${r(l.T.b)},${r(l.T.e)},${r(l.T.f)},${l.par}`;
+    }).sort().join("|");
 
     const remaining = () => {
         let r = 0;
@@ -248,31 +288,53 @@ function solve(fold, opts) {
         return r;
     };
 
-    function dfs(state, depth) {
+    // ITERATIVE DEEPENING, not plain DFS. Plain DFS dives to the depth cap and "solves" CPs
+    // with 24 folds that need 4, which makes the step counts meaningless and wastes the budget
+    // in the deep end. IDDFS returns the SHORTEST sequence, and it is the shortest sequence
+    // that the query-efficiency baseline has to be measured against.
+    // `hitCap` records whether a pass was cut off by the depth limit rather than exhausted --
+    // without it, running out of depth would masquerade as proof that nothing exists.
+    let hitCap = false;
+
+    function dfs(state, depth, limit) {
         if (remaining() === 0) return true;
-        if (depth >= opts.maxDepth) return false;
+        if (depth >= limit) { hitCap = true; return false; }
+        // try the folds that finish off the most creases first
+        const moves = [];
         for (const line of candidates(state, target)) {
             for (const movePositive of [true, false]) {
                 if (queries >= opts.maxQueries) throw new Error("BUDGET");
                 queries++;
                 const r = applyFold(state, line, movePositive, target);
                 if (!r) continue;
-                const fresh = r.cover.filter(s => !s.covered);
-                if (!fresh.length) continue;                // a fold that adds nothing: a cycle
-                for (const s of fresh) s.covered = true;
-                seq.push({ line, movePositive });
-                best = Math.max(best, depth + 1);
-                if (dfs(r.state, depth + 1)) return true;
-                seq.pop();
-                for (const s of fresh) s.covered = false;
+                moves.push({ line, movePositive, r, gain: r.cover.filter(s => !s.covered).length });
             }
+        }
+        moves.sort((a, b) => b.gain - a.gain);
+        for (const m of moves) {
+            const k = sig(m.r.state);
+            if (seen.has(k)) continue;
+            seen.add(k);
+            const fresh = m.r.cover.filter(s => !s.covered);
+            for (const s of fresh) s.covered = true;
+            seq.push({ line: m.line, movePositive: m.movePositive });
+            best = Math.max(best, depth + 1);
+            if (dfs(m.r.state, depth + 1, limit)) return true;
+            seq.pop();
+            for (const s of fresh) s.covered = false;
+            seen.delete(k);
         }
         return false;
     }
 
     try {
-        const ok = dfs(start, 0);
-        return { status: ok ? "SOLVED" : "EXHAUSTED", queries, depth: ok ? seq.length : best };
+        for (let limit = 1; limit <= opts.maxDepth; limit++) {
+            hitCap = false;
+            seen.clear();
+            if (dfs(start, 0, limit)) return { status: "SOLVED", queries, depth: seq.length };
+            if (!hitCap) return { status: "EXHAUSTED", queries, depth: best };  // truly closed
+        }
+        return { status: "DEPTH_CAP", queries, depth: opts.maxDepth };
     } catch (e) {
         if (e.message === "BUDGET") return { status: "TIMEOUT", queries, depth: best };
         throw e;
@@ -299,7 +361,11 @@ function boundaryLoop(bEdges, V) {
     return loop.length >= 3 && loop.length === nb.size ? loop.map(v => V[v]) : null;
 }
 
-/* ---------- driver ----------------------------------------------------------------------- */
+export { solve, applyFold, candidates, buildTarget, boundaryLoop, lineOf, lkey, ptOn, ap, mul, inv, ID, reflectT, clip, chord };
+
+/* ---------- driver (skipped when this file is imported, e.g. by selftest.mjs) ------------- */
+const IS_MAIN = process.argv[1] && process.argv[1].endsWith("stage2.mjs");
+if (IS_MAIN) {
 const EX = path.join(os.homedir(), "Downloads/flat-folder-main/examples/instagram");
 const argv = Object.fromEntries(process.argv.slice(2).map(s => s.split("=")));
 const opts = {
@@ -349,3 +415,4 @@ if (solved.length) {
 fs.writeFileSync(path.join(HERE, "stage2-results.json"),
                  JSON.stringify(rows, null, 1));
 console.log(`\nper-CP results -> workspace/probe-c/stage2-results.json`);
+}
