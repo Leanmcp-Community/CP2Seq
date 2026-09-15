@@ -102,26 +102,7 @@ Bucket reminder:
   QA/classification task shape, which may mean its items are not raw `(CP, sequence)` pairs.
 - **Bucket**: TBD, pending audit (see `BASELINE_REPRODUCTION.md` action items).
 
----
 
-## 5. OrigamiSpace dataset
-
-- **Link**: paper at https://arxiv.org/abs/2511.18450 (NeurIPS'25) — **no public repo** as of
-  the last check (`papers.md` #5)
-- **Status**: **not accessible.** Can't audit format or extract data. Revisit if a repo is
-  published.
-
----
-
-## 6. FOLD-format example repositories (generic CP sources, unaudited)
-
-- **FOLD format spec + examples**: https://github.com/edemaine/fold
-- **Origami Simulator's model gallery**: https://origamisimulator.org/
-- These are candidate sources of *more* CPs (bucket C, mostly) beyond Flat-Folder's 366, useful
-  for expanding coverage if the audited sources above turn out too small. Not yet checked for
-  size, license, or whether any ship intermediate sequences — treat as TBD, lowest priority.
-
----
 
 ## Closed: Learn2Fold is not a data source
 
