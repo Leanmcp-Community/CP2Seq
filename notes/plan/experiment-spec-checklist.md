@@ -176,12 +176,6 @@ Every item below exists because it is needed to test, or to avoid contaminating,
 
 2026-09-14。**这是一份待填的清单，不是结论。** 每一条都由我自己拍板。
 
-> **用法**：`A` 组冻结后不许改（改了要重跑）。`B`–`G` 组里标 *pending pilot* 的，
-> 必须写明**等的是哪个 pilot 数字**。没标等谁的「待定」= 三个月后还是待定。
-
-> **当前位置：Phase 0**（见 `research-workflow.md`）。
-> Phase 0 的两个探针跑完之前，这份清单里大部分条目都还没有资格填。
-
 ---
 
 ## 这份清单服务的那句主张
