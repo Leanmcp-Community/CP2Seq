@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 600" width="940" height="600" font-family="-apple-system,Helvetica,Arial,sans-serif"><rect width="940" height="600" fill="#fff"/>
+<text x="95" y="36" font-size="19" font-weight="700">折纸越大，搜索空间和验证成本各自涨多快</text>
+<text x="95" y="58" font-size="12.5" fill="#666">Flat-Folder instagram 语料（n=366 真实折纸作品）。粗线 = 中位数，浅带 = p50–p90。两个纵轴刻度不同，要看的是斜率差。</text>
+<rect x="95" y="95" width="690" height="380" fill="none" stroke="#ddd"/>
+<line x1="95.0" y1="95" x2="95.0" y2="475" stroke="#f2f2f2"/>
+<text x="95.0" y="493" font-size="11" fill="#666" text-anchor="middle">10</text>
+<line x1="204.7" y1="95" x2="204.7" y2="475" stroke="#f2f2f2"/>
+<text x="204.7" y="493" font-size="11" fill="#666" text-anchor="middle">30</text>
+<line x1="325.0" y1="95" x2="325.0" y2="475" stroke="#f2f2f2"/>
+<text x="325.0" y="493" font-size="11" fill="#666" text-anchor="middle">100</text>
+<line x1="434.7" y1="95" x2="434.7" y2="475" stroke="#f2f2f2"/>
+<text x="434.7" y="493" font-size="11" fill="#666" text-anchor="middle">300</text>
+<line x1="555.0" y1="95" x2="555.0" y2="475" stroke="#f2f2f2"/>
+<text x="555.0" y="493" font-size="11" fill="#666" text-anchor="middle">1000</text>
+<line x1="664.7" y1="95" x2="664.7" y2="475" stroke="#f2f2f2"/>
+<text x="664.7" y="493" font-size="11" fill="#666" text-anchor="middle">3000</text>
+<line x1="785.0" y1="95" x2="785.0" y2="475" stroke="#f2f2f2"/>
+<text x="785.0" y="493" font-size="11" fill="#666" text-anchor="middle">10000</text>
+<text x="440.0" y="517" font-size="12.5" fill="#444" text-anchor="middle">折痕图大小（面数）</text>
+<line x1="95" y1="475.0" x2="785" y2="475.0" stroke="#f2f2f2"/>
+<text x="87" y="478.0" font-size="10.5" fill="#1565c0" text-anchor="end">1 个</text>
+<line x1="95" y1="405.9" x2="785" y2="405.9" stroke="#f2f2f2"/>
+<text x="87" y="408.9" font-size="10.5" fill="#1565c0" text-anchor="end">100 亿</text>
+<line x1="95" y1="336.8" x2="785" y2="336.8" stroke="#f2f2f2"/>
+<text x="87" y="339.8" font-size="10.5" fill="#1565c0" text-anchor="end">1 后 20 个零</text>
+<line x1="95" y1="267.7" x2="785" y2="267.7" stroke="#f2f2f2"/>
+<text x="87" y="270.7" font-size="10.5" fill="#1565c0" text-anchor="end">1 后 30 个零</text>
+<line x1="95" y1="198.6" x2="785" y2="198.6" stroke="#f2f2f2"/>
+<text x="87" y="201.6" font-size="10.5" fill="#1565c0" text-anchor="end">1 后 40 个零</text>
+<line x1="95" y1="129.5" x2="785" y2="129.5" stroke="#f2f2f2"/>
+<text x="87" y="132.5" font-size="10.5" fill="#1565c0" text-anchor="end">1 后 50 个零</text>
+<text x="24" y="365" font-size="12.5" font-weight="600" fill="#1565c0" transform="rotate(-90 24 365)">合法折叠终态数量</text>
+<text x="795" y="443.5" font-size="10.5" fill="#e65100">10 毫秒</text>
+<text x="795" y="374.4" font-size="10.5" fill="#e65100">0.1 秒</text>
+<text x="795" y="305.3" font-size="10.5" fill="#e65100">1 秒</text>
+<text x="795" y="236.2" font-size="10.5" fill="#e65100">10 秒</text>
+<text x="795" y="182.3" font-size="10.5" fill="#e65100">1 分钟</text>
+<text x="795" y="128.4" font-size="10.5" fill="#e65100">6 分钟</text>
+<text x="922" y="230" font-size="12.5" font-weight="600" fill="#e65100" transform="rotate(90 922 230)">Flat-Folder 求解耗时</text>
+<polygon points="135.5,475.0 265.3,468.1 380.9,461.2 495.3,447.4 609.8,405.9 734.0,336.8 734.0,115.7 609.8,281.5 495.3,412.8 380.9,440.5 265.3,461.2 135.5,461.2 " fill="#1565c0" opacity="0.14"/>
+<polygon points="135.5,454.3 265.3,413.0 380.9,352.7 495.3,279.2 609.8,216.3 734.0,169.5 734.0,106.6 609.8,142.6 495.3,229.1 380.9,301.5 265.3,383.2 135.5,423.8 " fill="#e65100" opacity="0.14"/>
+<polyline points="135.5,475.0 265.3,468.1 380.9,461.2 495.3,447.4 609.8,405.9 734.0,336.8 " fill="none" stroke="#1565c0" stroke-width="3.2"/>
+<polyline points="135.5,454.3 265.3,413.0 380.9,352.7 495.3,279.2 609.8,216.3 734.0,169.5 " fill="none" stroke="#e65100" stroke-width="3.2"/>
+<circle cx="135.5" cy="475.0" r="4.2" fill="#1565c0"/>
+<circle cx="135.5" cy="454.3" r="4.2" fill="#e65100"/>
+<circle cx="265.3" cy="468.1" r="4.2" fill="#1565c0"/>
+<circle cx="265.3" cy="413.0" r="4.2" fill="#e65100"/>
+<circle cx="380.9" cy="461.2" r="4.2" fill="#1565c0"/>
+<circle cx="380.9" cy="352.7" r="4.2" fill="#e65100"/>
+<circle cx="495.3" cy="447.4" r="4.2" fill="#1565c0"/>
+<circle cx="495.3" cy="279.2" r="4.2" fill="#e65100"/>
+<circle cx="609.8" cy="405.9" r="4.2" fill="#1565c0"/>
+<circle cx="609.8" cy="216.3" r="4.2" fill="#e65100"/>
+<circle cx="734.0" cy="336.8" r="4.2" fill="#1565c0"/>
+<circle cx="734.0" cy="169.5" r="4.2" fill="#e65100"/>
+<line x1="95" y1="302.3" x2="785" y2="302.3" stroke="#e65100" stroke-dasharray="5 4" opacity="0.5"/>
+<text x="129.5" y="125" font-size="12.5" fill="#1565c0" font-weight="600">蓝线（状态数）比橙线（耗时）陡</text>
+<text x="129.5" y="145" font-size="12.5" fill="#666">这个斜率差就是可利用的缝</text>
+<text x="95" y="554" font-size="12" fill="#c62828" font-weight="600">⚠ 典型的 101–300 面 CP 只有约 100 个终态，不是天文数字 —— 爆炸在长尾（p90 带很宽），不在中位数</text>
+<text x="95" y="574" font-size="11.5" fill="#888">⚠ 终态数 ≠ 折叠序列数。序列空间可能大得多。这张图是代理量，不是答案。</text>
+</svg>
