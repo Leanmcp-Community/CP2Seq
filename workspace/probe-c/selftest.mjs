@@ -10,6 +10,7 @@
 // folding forward is trivial, recovering the sequence is the hard inverse problem.
 import { solve, clip, chord, reflectT, ptOn, ap, mul, inv, ID, lineOf, lkey } from "./stage2.mjs";
 
+let MIN_F = 2, SPAN = 5;
 const rng = (seed) => () => (seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
 
 // Angles and offsets are kept on a coarse grid on purpose: reflections compose, and float
@@ -99,11 +100,12 @@ export function generate(steps, rand) {
 const IS_MAIN = process.argv[1] && process.argv[1].endsWith("selftest.mjs");
 if (IS_MAIN) {
 const N = Number(process.argv[2] ?? 30);
+MIN_F = Number(process.argv[4] ?? 2); SPAN = Number(process.argv[5] ?? 5);
 const opts = { maxQueries: Number(process.argv[3] ?? 500000), maxDepth: 16 };
 let pass = 0, fail = 0, skip = 0;
 for (let i = 1; i <= N; i++) {
     const rand = rng(i * 7919);
-    const steps = 2 + Math.floor(rand() * 5);
+    const steps = MIN_F + Math.floor(rand() * SPAN);
     const { fold, nCreases } = generate(steps, rand);
     if (!nCreases) { skip++; continue; }
     const r = solve(fold, opts);

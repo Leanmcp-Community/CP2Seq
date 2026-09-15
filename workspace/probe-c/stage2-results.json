@@ -1,0 +1,1367 @@
+[
+ {
+  "f": "001_traditional_Sailboat.fold",
+  "status": "EXHAUSTED",
+  "queries": 24018,
+  "depth": 4,
+  "ms": 51
+ },
+ {
+  "f": "002_traditional_Kabuto.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 6,
+  "ms": 4649
+ },
+ {
+  "f": "008_ku_Robot.fold",
+  "status": "EXHAUSTED",
+  "queries": 2144,
+  "depth": 2,
+  "ms": 3
+ },
+ {
+  "f": "009_ku_Unassigned_Triangle_Pleat.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 8,
+  "ms": 2280
+ },
+ {
+  "f": "010_chan_Beaver.fold",
+  "status": "EXHAUSTED",
+  "queries": 48768,
+  "depth": 3,
+  "ms": 66
+ },
+ {
+  "f": "012_ku_4x4_Grid_Unassigned.fold",
+  "status": "SOLVED",
+  "queries": 5940,
+  "depth": 4,
+  "ms": 18
+ },
+ {
+  "f": "013_mitanioripa_Medal.fold",
+  "status": "EXHAUSTED",
+  "queries": 260408,
+  "depth": 4,
+  "ms": 375
+ },
+ {
+  "f": "015_ku_Iso-Area_Half_Square.fold",
+  "status": "EXHAUSTED",
+  "queries": 1732,
+  "depth": 2,
+  "ms": 1
+ },
+ {
+  "f": "018_komatsu_Butterfly_Base.fold",
+  "status": "EXHAUSTED",
+  "queries": 236614,
+  "depth": 4,
+  "ms": 314
+ },
+ {
+  "f": "020_imai_Taiyaki_Fish.fold",
+  "status": "EXHAUSTED",
+  "queries": 8608,
+  "depth": 1,
+  "ms": 27
+ },
+ {
+  "f": "022_boice_Sword_Plate_Armor_40.fold",
+  "status": "EXHAUSTED",
+  "queries": 43994,
+  "depth": 2,
+  "ms": 103
+ },
+ {
+  "f": "026_furutaoripa_orihazuru.fold",
+  "status": "EXHAUSTED",
+  "queries": 1140,
+  "depth": 1,
+  "ms": 2
+ },
+ {
+  "f": "027_ku_8x8_Flippable_Pixel_Grid.fold",
+  "status": "EXHAUSTED",
+  "queries": 1169436,
+  "depth": 4,
+  "ms": 2821
+ },
+ {
+  "f": "028_chan_The_Universal_Symbol.fold",
+  "status": "EXHAUSTED",
+  "queries": 3208,
+  "depth": 1,
+  "ms": 6
+ },
+ {
+  "f": "030_tanakaoripa_fish_base.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 5,
+  "ms": 4249
+ },
+ {
+  "f": "032_komatsuoripa_Minotaur.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 5,
+  "ms": 4177
+ },
+ {
+  "f": "034_fung_Rabbit_Head_v4.fold",
+  "status": "EXHAUSTED",
+  "queries": 18856,
+  "depth": 2,
+  "ms": 40
+ },
+ {
+  "f": "038_traditionaloripa_Yakko.fold",
+  "status": "EXHAUSTED",
+  "queries": 111094,
+  "depth": 4,
+  "ms": 142
+ },
+ {
+  "f": "040_komatsu_Gentle_Dragon.fold",
+  "status": "EXHAUSTED",
+  "queries": 9244,
+  "depth": 2,
+  "ms": 14
+ },
+ {
+  "f": "043_ku_Quad_Overlap.fold",
+  "status": "EXHAUSTED",
+  "queries": 4,
+  "depth": 0,
+  "ms": 0
+ },
+ {
+  "f": "044_kei_Angel.fold",
+  "status": "EXHAUSTED",
+  "queries": 3720,
+  "depth": 1,
+  "ms": 8
+ },
+ {
+  "f": "046_imai_Prosopocoilus_Inclinatus_v3-1.fold",
+  "status": "EXHAUSTED",
+  "queries": 6960,
+  "depth": 1,
+  "ms": 16
+ },
+ {
+  "f": "047_tanakaoripa_Infinity.fold",
+  "status": "EXHAUSTED",
+  "queries": 900244,
+  "depth": 4,
+  "ms": 1659
+ },
+ {
+  "f": "048_komatsu_Dutch_Rabbit.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 5,
+  "ms": 2841
+ },
+ {
+  "f": "051_kei_CP_PLZ.fold",
+  "status": "EXHAUSTED",
+  "queries": 512,
+  "depth": 1,
+  "ms": 1
+ },
+ {
+  "f": "055_komatsu_Sheep.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 6,
+  "ms": 3871
+ },
+ {
+  "f": "057_brandon_Dragon_HP.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 4,
+  "ms": 4533
+ },
+ {
+  "f": "061_kei_koishi.fold",
+  "status": "EXHAUSTED",
+  "queries": 16208,
+  "depth": 2,
+  "ms": 31
+ },
+ {
+  "f": "062_furutaoripa_houou.fold",
+  "status": "EXHAUSTED",
+  "queries": 372,
+  "depth": 1,
+  "ms": 1
+ },
+ {
+  "f": "064_tanakaoripa_Butterfly_Base.fold",
+  "status": "EXHAUSTED",
+  "queries": 988,
+  "depth": 1,
+  "ms": 2
+ },
+ {
+  "f": "065_komatsu_Dolphin.fold",
+  "status": "EXHAUSTED",
+  "queries": 4132,
+  "depth": 2,
+  "ms": 5
+ },
+ {
+  "f": "066_brandon_Rattlesnake_HP.fold",
+  "status": "EXHAUSTED",
+  "queries": 14584,
+  "depth": 1,
+  "ms": 103
+ },
+ {
+  "f": "071_imai_Sailor_Suit.fold",
+  "status": "EXHAUSTED",
+  "queries": 916,
+  "depth": 1,
+  "ms": 2
+ },
+ {
+  "f": "072_tanakaoripa_Infinity_2.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 4,
+  "ms": 2652
+ },
+ {
+  "f": "073_komatsu_Squirrel.fold",
+  "status": "EXHAUSTED",
+  "queries": 95992,
+  "depth": 4,
+  "ms": 137
+ },
+ {
+  "f": "074_miuraoripa_Miura-ori.fold",
+  "status": "EXHAUSTED",
+  "queries": 2178,
+  "depth": 2,
+  "ms": 3
+ },
+ {
+  "f": "075_bodo_Dwarf.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 4,
+  "ms": 4597
+ },
+ {
+  "f": "078_imai_Maple_Leaf_v1.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 5,
+  "ms": 4121
+ },
+ {
+  "f": "079_imai_Maple_Leaf_v2.fold",
+  "status": "EXHAUSTED",
+  "queries": 5922,
+  "depth": 2,
+  "ms": 8
+ },
+ {
+  "f": "080_imai_Maple_Leaf_v3.fold",
+  "status": "EXHAUSTED",
+  "queries": 429322,
+  "depth": 4,
+  "ms": 946
+ },
+ {
+  "f": "081_komatsu_Lion.fold",
+  "status": "EXHAUSTED",
+  "queries": 90800,
+  "depth": 3,
+  "ms": 151
+ },
+ {
+  "f": "082_traditionaloripa_4_Birdbase.fold",
+  "status": "EXHAUSTED",
+  "queries": 1772540,
+  "depth": 5,
+  "ms": 2807
+ },
+ {
+  "f": "084_ku_4x4_Checkerboard.fold",
+  "status": "EXHAUSTED",
+  "queries": 77024,
+  "depth": 4,
+  "ms": 111
+ },
+ {
+  "f": "088_komatsu_Papillion.fold",
+  "status": "EXHAUSTED",
+  "queries": 46936,
+  "depth": 3,
+  "ms": 59
+ },
+ {
+  "f": "089_traditionaloripa_9_Birdbase.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 5,
+  "ms": 3002
+ },
+ {
+  "f": "091_ku_4_Stripes_1.fold",
+  "status": "EXHAUSTED",
+  "queries": 5108,
+  "depth": 3,
+  "ms": 6
+ },
+ {
+  "f": "097_kei_CP_THX.fold",
+  "status": "EXHAUSTED",
+  "queries": 780,
+  "depth": 1,
+  "ms": 2
+ },
+ {
+  "f": "099_katsuta_Fox_Wedding_Bride.fold",
+  "status": "EXHAUSTED",
+  "queries": 1004,
+  "depth": 1,
+  "ms": 2
+ },
+ {
+  "f": "100_kamiya_Ryujin_2-1.fold",
+  "status": "EXHAUSTED",
+  "queries": 1349452,
+  "depth": 5,
+  "ms": 8420
+ },
+ {
+  "f": "104_imai_Metallifer.fold",
+  "status": "EXHAUSTED",
+  "queries": 28996,
+  "depth": 2,
+  "ms": 66
+ },
+ {
+  "f": "105_komatsu_Rhino.fold",
+  "status": "EXHAUSTED",
+  "queries": 68864,
+  "depth": 3,
+  "ms": 98
+ },
+ {
+  "f": "106_kei_7_Segment_Display_(off).fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 6,
+  "ms": 4144
+ },
+ {
+  "f": "109_yty_Pochita.fold",
+  "status": "EXHAUSTED",
+  "queries": 1832,
+  "depth": 1,
+  "ms": 3
+ },
+ {
+  "f": "110_katsuta_Fox_Wedding_Groom.fold",
+  "status": "EXHAUSTED",
+  "queries": 920,
+  "depth": 1,
+  "ms": 1
+ },
+ {
+  "f": "111_kamiya_Wizard.fold",
+  "status": "EXHAUSTED",
+  "queries": 126432,
+  "depth": 3,
+  "ms": 208
+ },
+ {
+  "f": "112_imai_Cicada_v1.fold",
+  "status": "EXHAUSTED",
+  "queries": 26312,
+  "depth": 2,
+  "ms": 66
+ },
+ {
+  "f": "113_komatsu_Fox.fold",
+  "status": "EXHAUSTED",
+  "queries": 2174,
+  "depth": 2,
+  "ms": 3
+ },
+ {
+  "f": "114_kei_Kirby.fold",
+  "status": "EXHAUSTED",
+  "queries": 2934,
+  "depth": 2,
+  "ms": 4
+ },
+ {
+  "f": "115_tanaka_Dice_13.fold",
+  "status": "EXHAUSTED",
+  "queries": 37376,
+  "depth": 3,
+  "ms": 64
+ },
+ {
+  "f": "116_tanaka_Dice_8.fold",
+  "status": "EXHAUSTED",
+  "queries": 429126,
+  "depth": 4,
+  "ms": 1068
+ },
+ {
+  "f": "117_tanaka_Dice_15.fold",
+  "status": "EXHAUSTED",
+  "queries": 1801816,
+  "depth": 5,
+  "ms": 3062
+ },
+ {
+  "f": "118_katsuta_Fox_Wedding_Cub.fold",
+  "status": "EXHAUSTED",
+  "queries": 440,
+  "depth": 1,
+  "ms": 1
+ },
+ {
+  "f": "119_kamiya_Wasp.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 4,
+  "ms": 3542
+ },
+ {
+  "f": "121_komatsuoripa_rafflesia.fold",
+  "status": "EXHAUSTED",
+  "queries": 326152,
+  "depth": 4,
+  "ms": 443
+ },
+ {
+  "f": "122_kei_jitome.fold",
+  "status": "EXHAUSTED",
+  "queries": 900,
+  "depth": 1,
+  "ms": 2
+ },
+ {
+  "f": "124_xiao_Horse.fold",
+  "status": "EXHAUSTED",
+  "queries": 832,
+  "depth": 1,
+  "ms": 1
+ },
+ {
+  "f": "125_brown_seamless4x4.fold",
+  "status": "EXHAUSTED",
+  "queries": 13276,
+  "depth": 3,
+  "ms": 21
+ },
+ {
+  "f": "127_katsuta_Unicorn.fold",
+  "status": "EXHAUSTED",
+  "queries": 83616,
+  "depth": 3,
+  "ms": 128
+ },
+ {
+  "f": "129_komatsu_Shore_Crab.fold",
+  "status": "EXHAUSTED",
+  "queries": 10780,
+  "depth": 2,
+  "ms": 18
+ },
+ {
+  "f": "130_fung_Christmas_Tree_v2.fold",
+  "status": "EXHAUSTED",
+  "queries": 644,
+  "depth": 1,
+  "ms": 1
+ },
+ {
+  "f": "134_table_Scorpion.fold",
+  "status": "EXHAUSTED",
+  "queries": 1760,
+  "depth": 1,
+  "ms": 5
+ },
+ {
+  "f": "135_xiao_Lazy_Tiger.fold",
+  "status": "EXHAUSTED",
+  "queries": 420,
+  "depth": 1,
+  "ms": 1
+ },
+ {
+  "f": "136_katsuta_Owl.fold",
+  "status": "EXHAUSTED",
+  "queries": 2636,
+  "depth": 1,
+  "ms": 5
+ },
+ {
+  "f": "137_kamiya_Deinonychus.fold",
+  "status": "EXHAUSTED",
+  "queries": 11778,
+  "depth": 2,
+  "ms": 19
+ },
+ {
+  "f": "138_komatsu_Cat.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 5,
+  "ms": 2896
+ },
+ {
+  "f": "139_imai_Red_Headed_Centipede.fold",
+  "status": "EXHAUSTED",
+  "queries": 40554,
+  "depth": 2,
+  "ms": 100
+ },
+ {
+  "f": "140_imai_Red_Headed_Centipede_40.fold",
+  "status": "EXHAUSTED",
+  "queries": 38334,
+  "depth": 2,
+  "ms": 102
+ },
+ {
+  "f": "141_kei_kitsune.fold",
+  "status": "EXHAUSTED",
+  "queries": 1957324,
+  "depth": 5,
+  "ms": 2857
+ },
+ {
+  "f": "143_shuki_Asian_Elephant.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 5,
+  "ms": 4269
+ },
+ {
+  "f": "144_xiao_Bull.fold",
+  "status": "EXHAUSTED",
+  "queries": 916,
+  "depth": 1,
+  "ms": 2
+ },
+ {
+  "f": "147_kamiya_Butterfly_NS.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 5,
+  "ms": 2702
+ },
+ {
+  "f": "148_komatsu_Wolf.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 5,
+  "ms": 3416
+ },
+ {
+  "f": "149_imai_Chilean_Stag_Beetle.fold",
+  "status": "EXHAUSTED",
+  "queries": 17836,
+  "depth": 1,
+  "ms": 50
+ },
+ {
+  "f": "150_kei_Sailor_Moon.fold",
+  "status": "EXHAUSTED",
+  "queries": 1080,
+  "depth": 1,
+  "ms": 2
+ },
+ {
+  "f": "154_shuki_Camel.fold",
+  "status": "EXHAUSTED",
+  "queries": 156816,
+  "depth": 3,
+  "ms": 287
+ },
+ {
+  "f": "156_xiao_Makima.fold",
+  "status": "EXHAUSTED",
+  "queries": 760,
+  "depth": 1,
+  "ms": 1
+ },
+ {
+  "f": "159_kamiya_Little_Bird.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 5,
+  "ms": 3274
+ },
+ {
+  "f": "160_komatsu_Little_Bird.fold",
+  "status": "EXHAUSTED",
+  "queries": 64720,
+  "depth": 3,
+  "ms": 98
+ },
+ {
+  "f": "164_ku_Pleats_Exponential.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 5,
+  "ms": 4870
+ },
+ {
+  "f": "167_fish_Desert_Tessellation.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 5,
+  "ms": 3743
+ },
+ {
+  "f": "168_xiao_Mermaid.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 5,
+  "ms": 3448
+ },
+ {
+  "f": "171_komatsu_Macaque.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 5,
+  "ms": 2796
+ },
+ {
+  "f": "175_shuki_Dragonfly.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 5,
+  "ms": 2994
+ },
+ {
+  "f": "177_chan_Mortal_Kombat_Emblem.fold",
+  "status": "EXHAUSTED",
+  "queries": 674864,
+  "depth": 4,
+  "ms": 1521
+ },
+ {
+  "f": "178_xiao_Teddy_Bear.fold",
+  "status": "EXHAUSTED",
+  "queries": 3724,
+  "depth": 2,
+  "ms": 5
+ },
+ {
+  "f": "180_kamiya_Pheonix_v2-0.fold",
+  "status": "EXHAUSTED",
+  "queries": 10378,
+  "depth": 2,
+  "ms": 17
+ },
+ {
+  "f": "181_kamiya_Pheonix_v3-0.fold",
+  "status": "EXHAUSTED",
+  "queries": 17894,
+  "depth": 2,
+  "ms": 33
+ },
+ {
+  "f": "182_kamiya_Pheonix_v3-5.fold",
+  "status": "EXHAUSTED",
+  "queries": 12338,
+  "depth": 2,
+  "ms": 23
+ },
+ {
+  "f": "183_komatsu_Panda.fold",
+  "status": "EXHAUSTED",
+  "queries": 544,
+  "depth": 1,
+  "ms": 1
+ },
+ {
+  "f": "186_kei_Sus.fold",
+  "status": "EXHAUSTED",
+  "queries": 147174,
+  "depth": 4,
+  "ms": 202
+ },
+ {
+  "f": "187_fung_Heart_in_a_House_(Flat)_v1.fold",
+  "status": "EXHAUSTED",
+  "queries": 29670,
+  "depth": 3,
+  "ms": 37
+ },
+ {
+  "f": "188_boicehanke_Square_Twist_Samurai.fold",
+  "status": "EXHAUSTED",
+  "queries": 33162,
+  "depth": 2,
+  "ms": 74
+ },
+ {
+  "f": "193_chan_Spider_Man.fold",
+  "status": "EXHAUSTED",
+  "queries": 180864,
+  "depth": 3,
+  "ms": 350
+ },
+ {
+  "f": "195_kamiya_Butterfly_TH.fold",
+  "status": "EXHAUSTED",
+  "queries": 613684,
+  "depth": 4,
+  "ms": 986
+ },
+ {
+  "f": "196_komatsu_Giraffe.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 4,
+  "ms": 2978
+ },
+ {
+  "f": "197_kei_Pray.fold",
+  "status": "EXHAUSTED",
+  "queries": 40892,
+  "depth": 3,
+  "ms": 53
+ },
+ {
+  "f": "198_imai_Cetoniinae.fold",
+  "status": "EXHAUSTED",
+  "queries": 122084,
+  "depth": 3,
+  "ms": 281
+ },
+ {
+  "f": "199_fung_Classic_Snowman_v1.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 5,
+  "ms": 3685
+ },
+ {
+  "f": "200_shuki_Zoanoid_Dragon_v1.fold",
+  "status": "EXHAUSTED",
+  "queries": 493096,
+  "depth": 4,
+  "ms": 1903
+ },
+ {
+  "f": "201_shuki_Zoanoid_Dragon_v2.fold",
+  "status": "EXHAUSTED",
+  "queries": 523072,
+  "depth": 4,
+  "ms": 1955
+ },
+ {
+  "f": "203_hanke_Archangel_Michael.fold",
+  "status": "EXHAUSTED",
+  "queries": 8292,
+  "depth": 1,
+  "ms": 35
+ },
+ {
+  "f": "204_bodo_Tiger.fold",
+  "status": "EXHAUSTED",
+  "queries": 33124,
+  "depth": 2,
+  "ms": 105
+ },
+ {
+  "f": "205_xiao_Morgan.fold",
+  "status": "EXHAUSTED",
+  "queries": 37552,
+  "depth": 3,
+  "ms": 63
+ },
+ {
+  "f": "206_kamiya_Divine_Boar.fold",
+  "status": "EXHAUSTED",
+  "queries": 10134,
+  "depth": 2,
+  "ms": 13
+ },
+ {
+  "f": "207_komatsu_Horse.fold",
+  "status": "EXHAUSTED",
+  "queries": 1788212,
+  "depth": 5,
+  "ms": 3175
+ },
+ {
+  "f": "208_kei_General_Grievous.fold",
+  "status": "EXHAUSTED",
+  "queries": 992,
+  "depth": 0,
+  "ms": 3
+ },
+ {
+  "f": "210_fung_Angel_v1.fold",
+  "status": "EXHAUSTED",
+  "queries": 1128,
+  "depth": 1,
+  "ms": 2
+ },
+ {
+  "f": "211_luibobby_Rabbit.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 5,
+  "ms": 3166
+ },
+ {
+  "f": "212_shuki_Bear_Cub.fold",
+  "status": "EXHAUSTED",
+  "queries": 3308,
+  "depth": 2,
+  "ms": 4
+ },
+ {
+  "f": "214_bodo_Ant.fold",
+  "status": "EXHAUSTED",
+  "queries": 16702,
+  "depth": 2,
+  "ms": 40
+ },
+ {
+  "f": "215_xiao_Miku_2021.fold",
+  "status": "EXHAUSTED",
+  "queries": 9878,
+  "depth": 2,
+  "ms": 14
+ },
+ {
+  "f": "216_kamiya_Minotaur.fold",
+  "status": "EXHAUSTED",
+  "queries": 219750,
+  "depth": 4,
+  "ms": 325
+ },
+ {
+  "f": "218_kei_Tanuki.fold",
+  "status": "EXHAUSTED",
+  "queries": 16436,
+  "depth": 3,
+  "ms": 22
+ },
+ {
+  "f": "219_imai_Copris_Ochus.fold",
+  "status": "EXHAUSTED",
+  "queries": 1704,
+  "depth": 1,
+  "ms": 4
+ },
+ {
+  "f": "220_fung_Portrait_of_an_Origamist_v1.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 5,
+  "ms": 3134
+ },
+ {
+  "f": "222_beber_Penrose_Triangle_#2.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 4,
+  "ms": 6166
+ },
+ {
+  "f": "223_luibobby_Discord.fold",
+  "status": "EXHAUSTED",
+  "queries": 940,
+  "depth": 1,
+  "ms": 2
+ },
+ {
+  "f": "224_bodo_Buff_doge.fold",
+  "status": "EXHAUSTED",
+  "queries": 1048,
+  "depth": 1,
+  "ms": 2
+ },
+ {
+  "f": "225_xiao_Chipmunk.fold",
+  "status": "EXHAUSTED",
+  "queries": 6710,
+  "depth": 2,
+  "ms": 11
+ },
+ {
+  "f": "227_komatsu_Rabbit.fold",
+  "status": "EXHAUSTED",
+  "queries": 426336,
+  "depth": 4,
+  "ms": 612
+ },
+ {
+  "f": "228_kei_seigaiha.fold",
+  "status": "EXHAUSTED",
+  "queries": 11200,
+  "depth": 2,
+  "ms": 18
+ },
+ {
+  "f": "230_fung_Rabbit_Head_v3.fold",
+  "status": "EXHAUSTED",
+  "queries": 13898,
+  "depth": 2,
+  "ms": 24
+ },
+ {
+  "f": "232_luibobby_MLG_Glasses.fold",
+  "status": "EXHAUSTED",
+  "queries": 233470,
+  "depth": 4,
+  "ms": 432
+ },
+ {
+  "f": "234_bodo_Dragonfly.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 4,
+  "ms": 4336
+ },
+ {
+  "f": "236_kamiya_Crane.fold",
+  "status": "EXHAUSTED",
+  "queries": 1148,
+  "depth": 1,
+  "ms": 2
+ },
+ {
+  "f": "237_komatsu_Tiger.fold",
+  "status": "EXHAUSTED",
+  "queries": 1316,
+  "depth": 1,
+  "ms": 2
+ },
+ {
+  "f": "238_kei_Danbo.fold",
+  "status": "EXHAUSTED",
+  "queries": 9418,
+  "depth": 2,
+  "ms": 21
+ },
+ {
+  "f": "242_beber_om.fold",
+  "status": "EXHAUSTED",
+  "queries": 176844,
+  "depth": 3,
+  "ms": 536
+ },
+ {
+  "f": "243_luibobby_Giraffe.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 4,
+  "ms": 4925
+ },
+ {
+  "f": "244_komatsuoripa_Smallbird_Base.fold",
+  "status": "EXHAUSTED",
+  "queries": 84,
+  "depth": 1,
+  "ms": 1
+ },
+ {
+  "f": "247_kamiya_Tenma_H-7.fold",
+  "status": "EXHAUSTED",
+  "queries": 2180,
+  "depth": 1,
+  "ms": 5
+ },
+ {
+  "f": "248_komatsu_Dog.fold",
+  "status": "EXHAUSTED",
+  "queries": 380716,
+  "depth": 4,
+  "ms": 680
+ },
+ {
+  "f": "249_kei_Poyoyo.fold",
+  "status": "EXHAUSTED",
+  "queries": 4810,
+  "depth": 2,
+  "ms": 8
+ },
+ {
+  "f": "251_fung_Kokeshi_Doll_v4.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 5,
+  "ms": 3591
+ },
+ {
+  "f": "252_imai_Chalcosoma_Chiron.fold",
+  "status": "EXHAUSTED",
+  "queries": 831690,
+  "depth": 4,
+  "ms": 1518
+ },
+ {
+  "f": "253_luibobby_Reddit.fold",
+  "status": "EXHAUSTED",
+  "queries": 10642,
+  "depth": 2,
+  "ms": 19
+ },
+ {
+  "f": "254_beber_Menger_Sponge_Level_2_I.fold",
+  "status": "EXHAUSTED",
+  "queries": 362844,
+  "depth": 3,
+  "ms": 1698
+ },
+ {
+  "f": "255_beber_Menger_Sponge_Level_2_II.fold",
+  "status": "EXHAUSTED",
+  "queries": 416550,
+  "depth": 3,
+  "ms": 1939
+ },
+ {
+  "f": "256_bodo_Ladybug.fold",
+  "status": "EXHAUSTED",
+  "queries": 11966,
+  "depth": 2,
+  "ms": 19
+ },
+ {
+  "f": "259_kei_Father_Cat.fold",
+  "status": "EXHAUSTED",
+  "queries": 996,
+  "depth": 1,
+  "ms": 1
+ },
+ {
+  "f": "261_lang_Post_Generic_Beetle_Opus_696.fold",
+  "status": "EXHAUSTED",
+  "queries": 8344,
+  "depth": 2,
+  "ms": 13
+ },
+ {
+  "f": "265_kamiya_Loggerhead_Sea_Turtle.fold",
+  "status": "EXHAUSTED",
+  "queries": 20210,
+  "depth": 2,
+  "ms": 38
+ },
+ {
+  "f": "266_kamiya_Turtle.fold",
+  "status": "EXHAUSTED",
+  "queries": 1464124,
+  "depth": 4,
+  "ms": 3809
+ },
+ {
+  "f": "267_kei_Plat.fold",
+  "status": "EXHAUSTED",
+  "queries": 60296,
+  "depth": 3,
+  "ms": 107
+ },
+ {
+  "f": "271_xiao_Raccoon.fold",
+  "status": "EXHAUSTED",
+  "queries": 49184,
+  "depth": 3,
+  "ms": 70
+ },
+ {
+  "f": "282_kei_Circus.fold",
+  "status": "EXHAUSTED",
+  "queries": 4938,
+  "depth": 2,
+  "ms": 6
+ },
+ {
+  "f": "283_imai_Dragonfly.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 4,
+  "ms": 4742
+ },
+ {
+  "f": "286_carrotkei_Keied_Keqing.fold",
+  "status": "EXHAUSTED",
+  "queries": 310436,
+  "depth": 3,
+  "ms": 773
+ },
+ {
+  "f": "289_kamiya_Kentrosaurus.fold",
+  "status": "EXHAUSTED",
+  "queries": 120000,
+  "depth": 3,
+  "ms": 165
+ },
+ {
+  "f": "290_kei_Hand.fold",
+  "status": "EXHAUSTED",
+  "queries": 43064,
+  "depth": 3,
+  "ms": 61
+ },
+ {
+  "f": "292_tanaka_Aperiodic_Monotile_1.fold",
+  "status": "EXHAUSTED",
+  "queries": 208,
+  "depth": 1,
+  "ms": 1
+ },
+ {
+  "f": "293_bodo_Aperiodic_Monotile_1.fold",
+  "status": "EXHAUSTED",
+  "queries": 392,
+  "depth": 1,
+  "ms": 0
+ },
+ {
+  "f": "294_ku_Aperiodic_Monotile_1.fold",
+  "status": "EXHAUSTED",
+  "queries": 718,
+  "depth": 2,
+  "ms": 1
+ },
+ {
+  "f": "295_tanaka_Aperiodic_Monotile_2.fold",
+  "status": "EXHAUSTED",
+  "queries": 1416,
+  "depth": 2,
+  "ms": 2
+ },
+ {
+  "f": "296_ku_Aperiodic_Monotile_2.fold",
+  "status": "EXHAUSTED",
+  "queries": 192,
+  "depth": 1,
+  "ms": 0
+ },
+ {
+  "f": "297_tanaka_Aperiodic_Monotile_3.fold",
+  "status": "EXHAUSTED",
+  "queries": 691456,
+  "depth": 5,
+  "ms": 972
+ },
+ {
+  "f": "299_brandon_Japanese_Spiny_Lobster_(jsl).fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 3,
+  "ms": 5607
+ },
+ {
+  "f": "300_imai_Japanese_Spiny_Lobster_v2.fold",
+  "status": "EXHAUSTED",
+  "queries": 110476,
+  "depth": 2,
+  "ms": 303
+ },
+ {
+  "f": "301_boxhard_Assigned_Crossover.fold",
+  "status": "SOLVED",
+  "queries": 256480,
+  "depth": 8,
+  "ms": 735
+ },
+ {
+  "f": "305_kamiya_Winged_Kirin.fold",
+  "status": "EXHAUSTED",
+  "queries": 16394,
+  "depth": 2,
+  "ms": 23
+ },
+ {
+  "f": "307_kei_Arc_Trooper_(Star_Wars).fold",
+  "status": "EXHAUSTED",
+  "queries": 114240,
+  "depth": 3,
+  "ms": 210
+ },
+ {
+  "f": "309_xiaokei_Keied_Raiden_Shogun.fold",
+  "status": "EXHAUSTED",
+  "queries": 128112,
+  "depth": 3,
+  "ms": 246
+ },
+ {
+  "f": "312_kamiya_Kzinssie_Type_2.fold",
+  "status": "EXHAUSTED",
+  "queries": 74108,
+  "depth": 3,
+  "ms": 132
+ },
+ {
+  "f": "315_kei_Marnie_(Pokemon).fold",
+  "status": "EXHAUSTED",
+  "queries": 18272,
+  "depth": 3,
+  "ms": 23
+ },
+ {
+  "f": "317_boxhard_Unassigned_Crossover.fold",
+  "status": "EXHAUSTED",
+  "queries": 568,
+  "depth": 2,
+  "ms": 1
+ },
+ {
+  "f": "320_kamiya_Unicorn.fold",
+  "status": "EXHAUSTED",
+  "queries": 1668,
+  "depth": 1,
+  "ms": 2
+ },
+ {
+  "f": "322_kei_Cerberus_(Helltaker).fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 5,
+  "ms": 4184
+ },
+ {
+  "f": "327_origamivan_Alpaca_v1.fold",
+  "status": "EXHAUSTED",
+  "queries": 3386,
+  "depth": 2,
+  "ms": 5
+ },
+ {
+  "f": "332_arisawa_Dragon_2017.fold",
+  "status": "EXHAUSTED",
+  "queries": 69312,
+  "depth": 3,
+  "ms": 124
+ },
+ {
+  "f": "333_imai_Violin_Beetle.fold",
+  "status": "EXHAUSTED",
+  "queries": 14542,
+  "depth": 2,
+  "ms": 19
+ },
+ {
+  "f": "334_jared_Green_Leaf.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 5,
+  "ms": 2877
+ },
+ {
+  "f": "335_kei_Hatsune_Miku.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 4,
+  "ms": 5550
+ },
+ {
+  "f": "337_ku_Rabbit.fold",
+  "status": "EXHAUSTED",
+  "queries": 1132,
+  "depth": 1,
+  "ms": 2
+ },
+ {
+  "f": "339_haruka_Beetle.fold",
+  "status": "TIMEOUT",
+  "queries": 2000000,
+  "depth": 4,
+  "ms": 3128
+ },
+ {
+  "f": "342_kei_Rain_Frog.fold",
+  "status": "EXHAUSTED",
+  "queries": 21272,
+  "depth": 2,
+  "ms": 30
+ },
+ {
+  "f": "345_haruka_Ayanami_Rei_3.0.fold",
+  "status": "EXHAUSTED",
+  "queries": 19676,
+  "depth": 2,
+  "ms": 35
+ },
+ {
+  "f": "347_morisawa_Raccoon.fold",
+  "status": "EXHAUSTED",
+  "queries": 150666,
+  "depth": 4,
+  "ms": 290
+ },
+ {
+  "f": "348_nakamura_Cheat_Dice.fold",
+  "status": "EXHAUSTED",
+  "queries": 20520,
+  "depth": 3,
+  "ms": 30
+ },
+ {
+  "f": "349_kei_Umbrella_2022.fold",
+  "status": "EXHAUSTED",
+  "queries": 1260,
+  "depth": 1,
+  "ms": 14
+ },
+ {
+  "f": "352_haruka_Venusaur.fold",
+  "status": "EXHAUSTED",
+  "queries": 9000,
+  "depth": 1,
+  "ms": 110
+ },
+ {
+  "f": "356_kei_Dodoco_(Genshin_Impact).fold",
+  "status": "EXHAUSTED",
+  "queries": 1252,
+  "depth": 1,
+  "ms": 2
+ },
+ {
+  "f": "359_fung_I_Heart_Cat_v2_(base).fold",
+  "status": "EXHAUSTED",
+  "queries": 6496,
+  "depth": 2,
+  "ms": 9
+ },
+ {
+  "f": "360_fung_I_Heart_Cat_v2_(shaped).fold",
+  "status": "EXHAUSTED",
+  "queries": 137506,
+  "depth": 3,
+  "ms": 289
+ },
+ {
+  "f": "362_nakamura_Tuna.fold",
+  "status": "EXHAUSTED",
+  "queries": 11178,
+  "depth": 2,
+  "ms": 20
+ },
+ {
+  "f": "364_luibobby_Cross_with_hydrangea_tessellation.fold",
+  "status": "EXHAUSTED",
+  "queries": 2536,
+  "depth": 1,
+  "ms": 5
+ }
+]
