@@ -1,0 +1,2930 @@
+[
+ {
+  "f": "001_traditional_Sailboat.fold",
+  "stage1": "IN_PLAY",
+  "faces": 20,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "002_traditional_Kabuto.fold",
+  "stage1": "IN_PLAY",
+  "faces": 18,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "003_ku_Triangle_Bird.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 176,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "004_traditional_Crane.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 72,
+  "fEdges": 20,
+  "fReal": 20,
+  "fSpan": 1
+ },
+ {
+  "f": "005_ku_Kitten.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 182,
+  "fEdges": 90,
+  "fReal": 54,
+  "fSpan": 0
+ },
+ {
+  "f": "006_ku_Thirds_Pinwheel.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 9,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "007_ku_Pinwheel_Pockets.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 17,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "008_ku_Robot.fold",
+  "stage1": "IN_PLAY",
+  "faces": 87,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "009_ku_Unassigned_Triangle_Pleat.fold",
+  "stage1": "IN_PLAY",
+  "faces": 10,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "010_chan_Beaver.fold",
+  "stage1": "IN_PLAY",
+  "faces": 106,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "011_ku_Bull.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 288,
+  "fEdges": 28,
+  "fReal": 10,
+  "fSpan": 0
+ },
+ {
+  "f": "012_ku_4x4_Grid_Unassigned.fold",
+  "stage1": "IN_PLAY",
+  "faces": 16,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "013_mitanioripa_Medal.fold",
+  "stage1": "IN_PLAY",
+  "faces": 57,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "014_ku_HJ_Girl.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 192,
+  "fEdges": 104,
+  "fReal": 89,
+  "fSpan": 3
+ },
+ {
+  "f": "015_ku_Iso-Area_Half_Square.fold",
+  "stage1": "IN_PLAY",
+  "faces": 23,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "016_tanakaoripa_enarc-crane_final.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 99,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "017_jorge_Tato_Coaster.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 129,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "018_komatsu_Butterfly_Base.fold",
+  "stage1": "IN_PLAY",
+  "faces": 86,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "019_lang_Rings8.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 545,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "020_imai_Taiyaki_Fish.fold",
+  "stage1": "IN_PLAY",
+  "faces": 1406,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "021_chan_Simple_Dragon.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 102,
+  "fEdges": 26,
+  "fReal": 18,
+  "fSpan": 0
+ },
+ {
+  "f": "022_boice_Sword_Plate_Armor_40.fold",
+  "stage1": "IN_PLAY",
+  "faces": 1716,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "023_itagaki_Motorcycle.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 1057,
+  "fEdges": 1,
+  "fReal": 1,
+  "fSpan": 0
+ },
+ {
+  "f": "024_komatsu_Girl-bp-01.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 526,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "025_lang_Golden_Weave.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 301,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "026_furutaoripa_orihazuru.fold",
+  "stage1": "IN_PLAY",
+  "faces": 90,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "027_ku_8x8_Flippable_Pixel_Grid.fold",
+  "stage1": "IN_PLAY",
+  "faces": 405,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "028_chan_The_Universal_Symbol.fold",
+  "stage1": "IN_PLAY",
+  "faces": 199,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "029_imai_Swallowtail_Butterfly_v2.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 519,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "030_tanakaoripa_fish_base.fold",
+  "stage1": "IN_PLAY",
+  "faces": 128,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "031_boice_Cat's_Eye_Tessellation.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 1121,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "032_komatsuoripa_Minotaur.fold",
+  "stage1": "IN_PLAY",
+  "faces": 403,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "033_lang_Hyperbolic_Limit.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 799,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "034_fung_Rabbit_Head_v4.fold",
+  "stage1": "IN_PLAY",
+  "faces": 266,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "035_tachioripa_kamehameha.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 62,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "036_ku_Checkerboard_26x26.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 944,
+  "fEdges": 50,
+  "fReal": 30,
+  "fSpan": 0
+ },
+ {
+  "f": "037_imai_Shrimp_v2.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 1714,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "038_traditionaloripa_Yakko.fold",
+  "stage1": "IN_PLAY",
+  "faces": 38,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "039_boice_Ara_Ara.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 318,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "040_komatsu_Gentle_Dragon.fold",
+  "stage1": "IN_PLAY",
+  "faces": 176,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "041_lang_5-Fold_2-Layer_Weave.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 181,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "042_furutaoripa_katatsumuri_(snail).fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 140,
+  "fEdges": 7,
+  "fReal": 5,
+  "fSpan": 1
+ },
+ {
+  "f": "043_ku_Quad_Overlap.fold",
+  "stage1": "IN_PLAY",
+  "faces": 9,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "044_kei_Angel.fold",
+  "stage1": "IN_PLAY",
+  "faces": 451,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "045_traditionaloripa_Pig.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 44,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "046_imai_Prosopocoilus_Inclinatus_v3-1.fold",
+  "stage1": "IN_PLAY",
+  "faces": 1426,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "047_tanakaoripa_Infinity.fold",
+  "stage1": "IN_PLAY",
+  "faces": 139,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "048_komatsu_Dutch_Rabbit.fold",
+  "stage1": "IN_PLAY",
+  "faces": 54,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "049_lang_Egg13-3_Tessellation.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 157,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "050_ku_Ryu_Zin_Jr.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 550,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "051_kei_CP_PLZ.fold",
+  "stage1": "IN_PLAY",
+  "faces": 58,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "052_traditionaloripa_House.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 9,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "053_imai_Leaf_Insect_v2.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 864,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "054_tanakaoripa_Hexagon.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 74,
+  "fEdges": 36,
+  "fReal": 25,
+  "fSpan": 2
+ },
+ {
+  "f": "055_komatsu_Sheep.fold",
+  "stage1": "IN_PLAY",
+  "faces": 100,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "056_tachioripa_Hoodman.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 34,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "057_brandon_Dragon_HP.fold",
+  "stage1": "IN_PLAY",
+  "faces": 1662,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "058_ku_Color-change_Pinwheel_1.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 44,
+  "fEdges": 20,
+  "fReal": 4,
+  "fSpan": 2
+ },
+ {
+  "f": "059_bodo_Leopard_Frog.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 504,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "060_ku_1-Piece_Star_Atarbus.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 156,
+  "fEdges": 44,
+  "fReal": 24,
+  "fSpan": 0
+ },
+ {
+  "f": "061_kei_koishi.fold",
+  "stage1": "IN_PLAY",
+  "faces": 277,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "062_furutaoripa_houou.fold",
+  "stage1": "IN_PLAY",
+  "faces": 50,
+  "fEdges": 2,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "063_imai_Japanese_Drone_v2.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 392,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "064_tanakaoripa_Butterfly_Base.fold",
+  "stage1": "IN_PLAY",
+  "faces": 201,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "065_komatsu_Dolphin.fold",
+  "stage1": "IN_PLAY",
+  "faces": 92,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "066_brandon_Rattlesnake_HP.fold",
+  "stage1": "IN_PLAY",
+  "faces": 5323,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "067_traditionaloripa_damashi_bune.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 8,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "068_bodo_Sarcosuchus.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 1589,
+  "fEdges": 384,
+  "fReal": 327,
+  "fSpan": 0
+ },
+ {
+  "f": "069_kei_Disappearing_Contrails.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 78,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "070_ku_Pygmy_Jerboa.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 70,
+  "fEdges": 6,
+  "fReal": 5,
+  "fSpan": 1
+ },
+ {
+  "f": "071_imai_Sailor_Suit.fold",
+  "stage1": "IN_PLAY",
+  "faces": 104,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "072_tanakaoripa_Infinity_2.fold",
+  "stage1": "IN_PLAY",
+  "faces": 529,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "073_komatsu_Squirrel.fold",
+  "stage1": "IN_PLAY",
+  "faces": 56,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "074_miuraoripa_Miura-ori.fold",
+  "stage1": "IN_PLAY",
+  "faces": 72,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "075_bodo_Dwarf.fold",
+  "stage1": "IN_PLAY",
+  "faces": 1254,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "076_kei_Fibonacci_Vortex.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 105,
+  "fEdges": 27,
+  "fReal": 12,
+  "fSpan": 0
+ },
+ {
+  "f": "077_ku_Lobster_1-8b.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 852,
+  "fEdges": 29,
+  "fReal": 24,
+  "fSpan": 1
+ },
+ {
+  "f": "078_imai_Maple_Leaf_v1.fold",
+  "stage1": "IN_PLAY",
+  "faces": 147,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "079_imai_Maple_Leaf_v2.fold",
+  "stage1": "IN_PLAY",
+  "faces": 120,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "080_imai_Maple_Leaf_v3.fold",
+  "stage1": "IN_PLAY",
+  "faces": 116,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "081_komatsu_Lion.fold",
+  "stage1": "IN_PLAY",
+  "faces": 202,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "082_traditionaloripa_4_Birdbase.fold",
+  "stage1": "IN_PLAY",
+  "faces": 56,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "083_kei_Cheems_Meme.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 78,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "084_ku_4x4_Checkerboard.fold",
+  "stage1": "IN_PLAY",
+  "faces": 47,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "085_imai_Flying_Grasshopper.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 2004,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "086_miwu_5x5_Flippable_Pixel_Grid_1.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 225,
+  "fEdges": 44,
+  "fReal": 40,
+  "fSpan": 4
+ },
+ {
+  "f": "087_miwu_5x5_Flippable_Pixel_Grid_2.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 225,
+  "fEdges": 26,
+  "fReal": 6,
+  "fSpan": 0
+ },
+ {
+  "f": "088_komatsu_Papillion.fold",
+  "stage1": "IN_PLAY",
+  "faces": 108,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "089_traditionaloripa_9_Birdbase.fold",
+  "stage1": "IN_PLAY",
+  "faces": 148,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "090_kei_Man.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 269,
+  "fEdges": 37,
+  "fReal": 27,
+  "fSpan": 0
+ },
+ {
+  "f": "091_ku_4_Stripes_1.fold",
+  "stage1": "IN_PLAY",
+  "faces": 34,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "092_ku_4_Stripes_2.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 82,
+  "fEdges": 65,
+  "fReal": 63,
+  "fSpan": 6
+ },
+ {
+  "f": "093_ku_4_Stripes_3.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 68,
+  "fEdges": 39,
+  "fReal": 35,
+  "fSpan": 4
+ },
+ {
+  "f": "094_ku_4_Stripes_4.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 106,
+  "fEdges": 54,
+  "fReal": 52,
+  "fSpan": 4
+ },
+ {
+  "f": "095_imai_Mantis_v2-8.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 1528,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "096_komatsu_Horned_Owl.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 38,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "097_kei_CP_THX.fold",
+  "stage1": "IN_PLAY",
+  "faces": 97,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "098_RSorigami_Inside_Out.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 77,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "099_katsuta_Fox_Wedding_Bride.fold",
+  "stage1": "IN_PLAY",
+  "faces": 126,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "100_kamiya_Ryujin_2-1.fold",
+  "stage1": "IN_PLAY",
+  "faces": 5773,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "101_ku_Turkey_2-1.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 270,
+  "fEdges": 148,
+  "fReal": 112,
+  "fSpan": 1
+ },
+ {
+  "f": "102_traditionaloripa_Pinwheel.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 9,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "103_koh_Footballer.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 96,
+  "fEdges": 31,
+  "fReal": 18,
+  "fSpan": 1
+ },
+ {
+  "f": "104_imai_Metallifer.fold",
+  "stage1": "IN_PLAY",
+  "faces": 1083,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "105_komatsu_Rhino.fold",
+  "stage1": "IN_PLAY",
+  "faces": 138,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "106_kei_7_Segment_Display_(off).fold",
+  "stage1": "IN_PLAY",
+  "faces": 105,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "107_kei_7_Segment_Display_(on).fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 115,
+  "fEdges": 10,
+  "fReal": 10,
+  "fSpan": 2
+ },
+ {
+  "f": "108_ryan_Titan_Beetle.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 808,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "109_yty_Pochita.fold",
+  "stage1": "IN_PLAY",
+  "faces": 216,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "110_katsuta_Fox_Wedding_Groom.fold",
+  "stage1": "IN_PLAY",
+  "faces": 130,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "111_kamiya_Wizard.fold",
+  "stage1": "IN_PLAY",
+  "faces": 276,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "112_imai_Cicada_v1.fold",
+  "stage1": "IN_PLAY",
+  "faces": 1157,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "113_komatsu_Fox.fold",
+  "stage1": "IN_PLAY",
+  "faces": 54,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "114_kei_Kirby.fold",
+  "stage1": "IN_PLAY",
+  "faces": 43,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "115_tanaka_Dice_13.fold",
+  "stage1": "IN_PLAY",
+  "faces": 178,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "116_tanaka_Dice_8.fold",
+  "stage1": "IN_PLAY",
+  "faces": 180,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "117_tanaka_Dice_15.fold",
+  "stage1": "IN_PLAY",
+  "faces": 87,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "118_katsuta_Fox_Wedding_Cub.fold",
+  "stage1": "IN_PLAY",
+  "faces": 52,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "119_kamiya_Wasp.fold",
+  "stage1": "IN_PLAY",
+  "faces": 426,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "120_imai_Forest_Scorpion.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 1206,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "121_komatsuoripa_rafflesia.fold",
+  "stage1": "IN_PLAY",
+  "faces": 61,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "122_kei_jitome.fold",
+  "stage1": "IN_PLAY",
+  "faces": 79,
+  "fEdges": 3,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "123_shuki_Bison.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 374,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "124_xiao_Horse.fold",
+  "stage1": "IN_PLAY",
+  "faces": 94,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "125_brown_seamless4x4.fold",
+  "stage1": "IN_PLAY",
+  "faces": 81,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "126_yuchao_Bing_Dwen_Dwen.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 650,
+  "fEdges": 232,
+  "fReal": 188,
+  "fSpan": 0
+ },
+ {
+  "f": "127_katsuta_Unicorn.fold",
+  "stage1": "IN_PLAY",
+  "faces": 158,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "128_kamiya_Sleipnir.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 112,
+  "fEdges": 6,
+  "fReal": 3,
+  "fSpan": 1
+ },
+ {
+  "f": "129_komatsu_Shore_Crab.fold",
+  "stage1": "IN_PLAY",
+  "faces": 292,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "130_fung_Christmas_Tree_v2.fold",
+  "stage1": "IN_PLAY",
+  "faces": 66,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "131_ku_Christmas_Tree.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 408,
+  "fEdges": 10,
+  "fReal": 8,
+  "fSpan": 1
+ },
+ {
+  "f": "132_shuki_Giganotosaurus_v4.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 972,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "133_txst_himeno.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 146,
+  "fEdges": 16,
+  "fReal": 14,
+  "fSpan": 1
+ },
+ {
+  "f": "134_table_Scorpion.fold",
+  "stage1": "IN_PLAY",
+  "faces": 448,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "135_xiao_Lazy_Tiger.fold",
+  "stage1": "IN_PLAY",
+  "faces": 62,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "136_katsuta_Owl.fold",
+  "stage1": "IN_PLAY",
+  "faces": 264,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "137_kamiya_Deinonychus.fold",
+  "stage1": "IN_PLAY",
+  "faces": 186,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "138_komatsu_Cat.fold",
+  "stage1": "IN_PLAY",
+  "faces": 82,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "139_imai_Red_Headed_Centipede.fold",
+  "stage1": "IN_PLAY",
+  "faces": 1314,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "140_imai_Red_Headed_Centipede_40.fold",
+  "stage1": "IN_PLAY",
+  "faces": 976,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "141_kei_kitsune.fold",
+  "stage1": "IN_PLAY",
+  "faces": 43,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "142_ku_Butterfly.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 434,
+  "fEdges": 14,
+  "fReal": 10,
+  "fSpan": 1
+ },
+ {
+  "f": "143_shuki_Asian_Elephant.fold",
+  "stage1": "IN_PLAY",
+  "faces": 278,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "144_xiao_Bull.fold",
+  "stage1": "IN_PLAY",
+  "faces": 116,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "145_beber_Hexagonal_Tessellation_of_Dodecagons_#1.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 790,
+  "fEdges": 480,
+  "fReal": 372,
+  "fSpan": 0
+ },
+ {
+  "f": "146_katsuta_Lazy_Cat.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 124,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "147_kamiya_Butterfly_NS.fold",
+  "stage1": "IN_PLAY",
+  "faces": 174,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "148_komatsu_Wolf.fold",
+  "stage1": "IN_PLAY",
+  "faces": 170,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "149_imai_Chilean_Stag_Beetle.fold",
+  "stage1": "IN_PLAY",
+  "faces": 2881,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "150_kei_Sailor_Moon.fold",
+  "stage1": "IN_PLAY",
+  "faces": 109,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "151_ku_Iso-Area_Throwing_Star_1.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 61,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "152_ku_Iso-Area_Throwing_Star_2.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 108,
+  "fEdges": 48,
+  "fReal": 36,
+  "fSpan": 2
+ },
+ {
+  "f": "153_ku_Iso-Area_Throwing_Star_3.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 77,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "154_shuki_Camel.fold",
+  "stage1": "IN_PLAY",
+  "faces": 308,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "155_fish_Man_Bat.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 714,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "156_xiao_Makima.fold",
+  "stage1": "IN_PLAY",
+  "faces": 95,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "157_beber_Square_Tessellation_of_Dodecagons_#3.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 1713,
+  "fEdges": 1008,
+  "fReal": 912,
+  "fSpan": 0
+ },
+ {
+  "f": "158_katsuta_Sparrow.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 118,
+  "fEdges": 24,
+  "fReal": 20,
+  "fSpan": 2
+ },
+ {
+  "f": "159_kamiya_Little_Bird.fold",
+  "stage1": "IN_PLAY",
+  "faces": 158,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "160_komatsu_Little_Bird.fold",
+  "stage1": "IN_PLAY",
+  "faces": 178,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "161_tanaka_star.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 1981,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "162_imai_Carp.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 1594,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "163_kei_Party_Parrot.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 38,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "164_ku_Pleats_Exponential.fold",
+  "stage1": "IN_PLAY",
+  "faces": 273,
+  "fEdges": 52,
+  "fReal": 0,
+  "fSpan": 4
+ },
+ {
+  "f": "165_shuki_Guyver_Unit_III.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 895,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "166_shuki_Guyver_Unit_I.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 1182,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "167_fish_Desert_Tessellation.fold",
+  "stage1": "IN_PLAY",
+  "faces": 328,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "168_xiao_Mermaid.fold",
+  "stage1": "IN_PLAY",
+  "faces": 119,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "169_beber_Hexagonal_Tessellation_of_Dodecagons_#2.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 1237,
+  "fEdges": 720,
+  "fReal": 720,
+  "fSpan": 0
+ },
+ {
+  "f": "170_kamiya_Bahamut.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 292,
+  "fEdges": 20,
+  "fReal": 4,
+  "fSpan": 1
+ },
+ {
+  "f": "171_komatsu_Macaque.fold",
+  "stage1": "IN_PLAY",
+  "faces": 124,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "172_tanaka_irt.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 629,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "173_imai_Canabn.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 552,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "174_kei_Steps.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 89,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "175_shuki_Dragonfly.fold",
+  "stage1": "IN_PLAY",
+  "faces": 611,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "176_fish_Hephaetus.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 834,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "177_chan_Mortal_Kombat_Emblem.fold",
+  "stage1": "IN_PLAY",
+  "faces": 342,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "178_xiao_Teddy_Bear.fold",
+  "stage1": "IN_PLAY",
+  "faces": 81,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "179_beber_Rotated_3-4-6-4.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 673,
+  "fEdges": 432,
+  "fReal": 432,
+  "fSpan": 0
+ },
+ {
+  "f": "180_kamiya_Pheonix_v2-0.fold",
+  "stage1": "IN_PLAY",
+  "faces": 288,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "181_kamiya_Pheonix_v3-0.fold",
+  "stage1": "IN_PLAY",
+  "faces": 484,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "182_kamiya_Pheonix_v3-5.fold",
+  "stage1": "IN_PLAY",
+  "faces": 356,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "183_komatsu_Panda.fold",
+  "stage1": "IN_PLAY",
+  "faces": 62,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "184_tanaka_notitle.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 2809,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "185_imai_Jack_Skellington.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 644,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "186_kei_Sus.fold",
+  "stage1": "IN_PLAY",
+  "faces": 39,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "187_fung_Heart_in_a_House_(Flat)_v1.fold",
+  "stage1": "IN_PLAY",
+  "faces": 78,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "188_boicehanke_Square_Twist_Samurai.fold",
+  "stage1": "IN_PLAY",
+  "faces": 1675,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "189_shuki_Evangelion_Unit_01_2009.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 940,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "190_shuki_Evangelion_Unit_01_2013.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 1530,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "191_fish_Arrowhead_Tessellation.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 220,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "192_beber_Dodecagon^2.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 1021,
+  "fEdges": 624,
+  "fReal": 576,
+  "fSpan": 0
+ },
+ {
+  "f": "193_chan_Spider_Man.fold",
+  "stage1": "IN_PLAY",
+  "faces": 434,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "194_xiao_DaJi_(妲己).fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 226,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "195_kamiya_Butterfly_TH.fold",
+  "stage1": "IN_PLAY",
+  "faces": 427,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "196_komatsu_Giraffe.fold",
+  "stage1": "IN_PLAY",
+  "faces": 166,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "197_kei_Pray.fold",
+  "stage1": "IN_PLAY",
+  "faces": 64,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "198_imai_Cetoniinae.fold",
+  "stage1": "IN_PLAY",
+  "faces": 862,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "199_fung_Classic_Snowman_v1.fold",
+  "stage1": "IN_PLAY",
+  "faces": 238,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "200_shuki_Zoanoid_Dragon_v1.fold",
+  "stage1": "IN_PLAY",
+  "faces": 4077,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "201_shuki_Zoanoid_Dragon_v2.fold",
+  "stage1": "IN_PLAY",
+  "faces": 6167,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "202_beber_Hexagonal_Tessellation_of_Dodecagons_#3.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 1750,
+  "fEdges": 1008,
+  "fReal": 1008,
+  "fSpan": 0
+ },
+ {
+  "f": "203_hanke_Archangel_Michael.fold",
+  "stage1": "IN_PLAY",
+  "faces": 3031,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "204_bodo_Tiger.fold",
+  "stage1": "IN_PLAY",
+  "faces": 550,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "205_xiao_Morgan.fold",
+  "stage1": "IN_PLAY",
+  "faces": 152,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "206_kamiya_Divine_Boar.fold",
+  "stage1": "IN_PLAY",
+  "faces": 146,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "207_komatsu_Horse.fold",
+  "stage1": "IN_PLAY",
+  "faces": 114,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "208_kei_General_Grievous.fold",
+  "stage1": "IN_PLAY",
+  "faces": 933,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "209_imai_Whip_Spider.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 1217,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "210_fung_Angel_v1.fold",
+  "stage1": "IN_PLAY",
+  "faces": 111,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "211_luibobby_Rabbit.fold",
+  "stage1": "IN_PLAY",
+  "faces": 124,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "212_shuki_Bear_Cub.fold",
+  "stage1": "IN_PLAY",
+  "faces": 68,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "213_beber_fractal32.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 841,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "214_bodo_Ant.fold",
+  "stage1": "IN_PLAY",
+  "faces": 523,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "215_xiao_Miku_2021.fold",
+  "stage1": "IN_PLAY",
+  "faces": 187,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "216_kamiya_Minotaur.fold",
+  "stage1": "IN_PLAY",
+  "faces": 101,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "217_komatsu_Hippopotamus.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 228,
+  "fEdges": 4,
+  "fReal": 4,
+  "fSpan": 0
+ },
+ {
+  "f": "218_kei_Tanuki.fold",
+  "stage1": "IN_PLAY",
+  "faces": 39,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "219_imai_Copris_Ochus.fold",
+  "stage1": "IN_PLAY",
+  "faces": 352,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "220_fung_Portrait_of_an_Origamist_v1.fold",
+  "stage1": "IN_PLAY",
+  "faces": 139,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "221_winston_Cardinal_Tetra.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 162,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "222_beber_Penrose_Triangle_#2.fold",
+  "stage1": "IN_PLAY",
+  "faces": 1039,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "223_luibobby_Discord.fold",
+  "stage1": "IN_PLAY",
+  "faces": 80,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "224_bodo_Buff_doge.fold",
+  "stage1": "IN_PLAY",
+  "faces": 121,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "225_xiao_Chipmunk.fold",
+  "stage1": "IN_PLAY",
+  "faces": 123,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "226_kamiya_Hermit_Crab.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 186,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "227_komatsu_Rabbit.fold",
+  "stage1": "IN_PLAY",
+  "faces": 96,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "228_kei_seigaiha.fold",
+  "stage1": "IN_PLAY",
+  "faces": 218,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "229_imai_Scorpion_v2.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 844,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "230_fung_Rabbit_Head_v3.fold",
+  "stage1": "IN_PLAY",
+  "faces": 169,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "231_beber_Dodecagon^3.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 2329,
+  "fEdges": 1224,
+  "fReal": 1200,
+  "fSpan": 0
+ },
+ {
+  "f": "232_luibobby_MLG_Glasses.fold",
+  "stage1": "IN_PLAY",
+  "faces": 336,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "233_tanaka_equalwidth.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 2253,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "234_bodo_Dragonfly.fold",
+  "stage1": "IN_PLAY",
+  "faces": 416,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "235_xiao_Tiny_Dragon.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 92,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "236_kamiya_Crane.fold",
+  "stage1": "IN_PLAY",
+  "faces": 102,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "237_komatsu_Tiger.fold",
+  "stage1": "IN_PLAY",
+  "faces": 132,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "238_kei_Danbo.fold",
+  "stage1": "IN_PLAY",
+  "faces": 298,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "239_imai_Squilla_Mantis_Shrimp.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 2278,
+  "fEdges": 61,
+  "fReal": 57,
+  "fSpan": 1
+ },
+ {
+  "f": "240_juan_Galapagos_Tortoise.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 286,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "241_fung_Amabie_v2.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 310,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "242_beber_om.fold",
+  "stage1": "IN_PLAY",
+  "faces": 2119,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "243_luibobby_Giraffe.fold",
+  "stage1": "IN_PLAY",
+  "faces": 210,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "244_komatsuoripa_Smallbird_Base.fold",
+  "stage1": "IN_PLAY",
+  "faces": 10,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "245_bodo_Batman_on_his_Bike.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 1488,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "246_xiao_Surfing_Girl.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 260,
+  "fEdges": 11,
+  "fReal": 5,
+  "fSpan": 1
+ },
+ {
+  "f": "247_kamiya_Tenma_H-7.fold",
+  "stage1": "IN_PLAY",
+  "faces": 308,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "248_komatsu_Dog.fold",
+  "stage1": "IN_PLAY",
+  "faces": 146,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "249_kei_Poyoyo.fold",
+  "stage1": "IN_PLAY",
+  "faces": 108,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "250_juan_Velociraptor.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 337,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "251_fung_Kokeshi_Doll_v4.fold",
+  "stage1": "IN_PLAY",
+  "faces": 229,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "252_imai_Chalcosoma_Chiron.fold",
+  "stage1": "IN_PLAY",
+  "faces": 736,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "253_luibobby_Reddit.fold",
+  "stage1": "IN_PLAY",
+  "faces": 125,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "254_beber_Menger_Sponge_Level_2_I.fold",
+  "stage1": "IN_PLAY",
+  "faces": 8629,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "255_beber_Menger_Sponge_Level_2_II.fold",
+  "stage1": "IN_PLAY",
+  "faces": 8701,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "256_bodo_Ladybug.fold",
+  "stage1": "IN_PLAY",
+  "faces": 488,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "257_xiao_Fairy_Doll.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 104,
+  "fEdges": 8,
+  "fReal": 3,
+  "fSpan": 1
+ },
+ {
+  "f": "258_kamiya_Cait_Sith.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 276,
+  "fEdges": 6,
+  "fReal": 4,
+  "fSpan": 0
+ },
+ {
+  "f": "259_kei_Father_Cat.fold",
+  "stage1": "IN_PLAY",
+  "faces": 96,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "260_imai_Lucanus_Maculifemoratus.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 1486,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "261_lang_Post_Generic_Beetle_Opus_696.fold",
+  "stage1": "IN_PLAY",
+  "faces": 256,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "262_beber_Square_Tessellation_of_Dodecagons_#2.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 1604,
+  "fEdges": 1056,
+  "fReal": 1008,
+  "fSpan": 0
+ },
+ {
+  "f": "263_ku_Angel.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 120,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "264_xiao_Yu(虞美人).fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 239,
+  "fEdges": 9,
+  "fReal": 5,
+  "fSpan": 0
+ },
+ {
+  "f": "265_kamiya_Loggerhead_Sea_Turtle.fold",
+  "stage1": "IN_PLAY",
+  "faces": 543,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "266_kamiya_Turtle.fold",
+  "stage1": "IN_PLAY",
+  "faces": 583,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "267_kei_Plat.fold",
+  "stage1": "IN_PLAY",
+  "faces": 113,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "268_imai_Tarantula.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 874,
+  "fEdges": 8,
+  "fReal": 6,
+  "fSpan": 0
+ },
+ {
+  "f": "269_beber_Penrose+.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 3871,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "270_ku_HJ_Rex.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 430,
+  "fEdges": 22,
+  "fReal": 11,
+  "fSpan": 0
+ },
+ {
+  "f": "271_xiao_Raccoon.fold",
+  "stage1": "IN_PLAY",
+  "faces": 99,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "272_juhobodo_Poser.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 183,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "273_kamiya_Cyclomantis_Metalifer.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 372,
+  "fEdges": 19,
+  "fReal": 10,
+  "fSpan": 1
+ },
+ {
+  "f": "274_kei_Keqing_(Genshin_Impact).fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 1243,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "275_imai_Sushi.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 349,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "276_beber_Dodecagon^3-4.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 2749,
+  "fEdges": 1992,
+  "fReal": 1980,
+  "fSpan": 0
+ },
+ {
+  "f": "277_maeng_Camel_Spider.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 916,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "278_ku_Crab_(base).fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 180,
+  "fEdges": 12,
+  "fReal": 9,
+  "fSpan": 1
+ },
+ {
+  "f": "279_ku_Crab_(shaped).fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 1714,
+  "fEdges": 20,
+  "fReal": 17,
+  "fSpan": 0
+ },
+ {
+  "f": "280_xiao_Lying_Girl.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 228,
+  "fEdges": 8,
+  "fReal": 4,
+  "fSpan": 0
+ },
+ {
+  "f": "281_kamiya_Long-Headed_Locust.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 98,
+  "fEdges": 15,
+  "fReal": 9,
+  "fSpan": 0
+ },
+ {
+  "f": "282_kei_Circus.fold",
+  "stage1": "IN_PLAY",
+  "faces": 93,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "283_imai_Dragonfly.fold",
+  "stage1": "IN_PLAY",
+  "faces": 488,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "284_beber_Sierpinski-Penrose_Triangle_#2.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 3871,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "285_maeng_Cyclommatus_Elaphus.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 720,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "286_carrotkei_Keied_Keqing.fold",
+  "stage1": "IN_PLAY",
+  "faces": 688,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "287_ku_Four_Leaf_Clover.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 214,
+  "fEdges": 21,
+  "fReal": 7,
+  "fSpan": 0
+ },
+ {
+  "f": "288_xiao_Skating_Girl.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 158,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "289_kamiya_Kentrosaurus.fold",
+  "stage1": "IN_PLAY",
+  "faces": 278,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "290_kei_Hand.fold",
+  "stage1": "IN_PLAY",
+  "faces": 110,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "291_imai_Chalcosoma_Caucasus.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 1824,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "292_tanaka_Aperiodic_Monotile_1.fold",
+  "stage1": "IN_PLAY",
+  "faces": 21,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "293_bodo_Aperiodic_Monotile_1.fold",
+  "stage1": "IN_PLAY",
+  "faces": 36,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "294_ku_Aperiodic_Monotile_1.fold",
+  "stage1": "IN_PLAY",
+  "faces": 23,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "295_tanaka_Aperiodic_Monotile_2.fold",
+  "stage1": "IN_PLAY",
+  "faces": 20,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "296_ku_Aperiodic_Monotile_2.fold",
+  "stage1": "IN_PLAY",
+  "faces": 19,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "297_tanaka_Aperiodic_Monotile_3.fold",
+  "stage1": "IN_PLAY",
+  "faces": 41,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "298_kei_TIE_Interceptor_(Star_Wars).fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 406,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "299_brandon_Japanese_Spiny_Lobster_(jsl).fold",
+  "stage1": "IN_PLAY",
+  "faces": 1711,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "300_imai_Japanese_Spiny_Lobster_v2.fold",
+  "stage1": "IN_PLAY",
+  "faces": 5381,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "301_boxhard_Assigned_Crossover.fold",
+  "stage1": "IN_PLAY",
+  "faces": 25,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "302_boxhard_Assigned_Clause.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 31,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "303_boxhard_Assigned_Split.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 31,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "304_boxhard_Assigned_Solvable.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 11859,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "305_kamiya_Winged_Kirin.fold",
+  "stage1": "IN_PLAY",
+  "faces": 476,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "306_maeng_Weta.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 1462,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "307_kei_Arc_Trooper_(Star_Wars).fold",
+  "stage1": "IN_PLAY",
+  "faces": 336,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "308_dequin_Igris.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 2296,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "309_xiaokei_Keied_Raiden_Shogun.fold",
+  "stage1": "IN_PLAY",
+  "faces": 596,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "310_imai_Dorcus_hopei_binodulosus.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 1536,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "311_ku_HJ_Dragon.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 262,
+  "fEdges": 8,
+  "fReal": 2,
+  "fSpan": 0
+ },
+ {
+  "f": "312_kamiya_Kzinssie_Type_2.fold",
+  "stage1": "IN_PLAY",
+  "faces": 270,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "313_maeng_Shrimp.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 726,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "314_minh_Butterfly.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 455,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "315_kei_Marnie_(Pokemon).fold",
+  "stage1": "IN_PLAY",
+  "faces": 46,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "316_boxhard_Unassigned_Clause.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 7,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "317_boxhard_Unassigned_Crossover.fold",
+  "stage1": "IN_PLAY",
+  "faces": 9,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "318_boxhard_Unassigned_Split.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 7,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "319_boxhard_Unassigned_Solvable.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 2231,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "320_kamiya_Unicorn.fold",
+  "stage1": "IN_PLAY",
+  "faces": 204,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "321_maeng_Dicranocephalus_wallichii.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 447,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "322_kei_Cerberus_(Helltaker).fold",
+  "stage1": "IN_PLAY",
+  "faces": 582,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "323_chan_M.O.D.O.K..fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 291,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "324_stebleton_Hammersley's_See_Saw.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 137,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "325_bernhayes_Unassigned_45˚_Crossover.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 9,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "326_imai_Flying_Mantis.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 1419,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "327_origamivan_Alpaca_v1.fold",
+  "stage1": "IN_PLAY",
+  "faces": 110,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "328_kei_Useless_Resistance.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 121,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "329_maeng_Lobster.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 932,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "330_ku_F16.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 246,
+  "fEdges": 14,
+  "fReal": 11,
+  "fSpan": 0
+ },
+ {
+  "f": "331_gyosh_Condor_v1.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 478,
+  "fEdges": 57,
+  "fReal": 47,
+  "fSpan": 0
+ },
+ {
+  "f": "332_arisawa_Dragon_2017.fold",
+  "stage1": "IN_PLAY",
+  "faces": 430,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "333_imai_Violin_Beetle.fold",
+  "stage1": "IN_PLAY",
+  "faces": 541,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "334_jared_Green_Leaf.fold",
+  "stage1": "IN_PLAY",
+  "faces": 125,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "335_kei_Hatsune_Miku.fold",
+  "stage1": "IN_PLAY",
+  "faces": 1428,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "336_maeng_Mantis.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 1158,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "337_ku_Rabbit.fold",
+  "stage1": "IN_PLAY",
+  "faces": 118,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "338_origamivan_Mouse.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 94,
+  "fEdges": 28,
+  "fReal": 19,
+  "fSpan": 1
+ },
+ {
+  "f": "339_haruka_Beetle.fold",
+  "stage1": "IN_PLAY",
+  "faces": 150,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "340_imai_new_Flying_Mantis.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 3632,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "341_jared_Bitcoin.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 47,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "342_kei_Rain_Frog.fold",
+  "stage1": "IN_PLAY",
+  "faces": 364,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "343_maeng_Orchid_Mantis.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 477,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "344_ku_Lizard.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 146,
+  "fEdges": 5,
+  "fReal": 2,
+  "fSpan": 0
+ },
+ {
+  "f": "345_haruka_Ayanami_Rei_3.0.fold",
+  "stage1": "IN_PLAY",
+  "faces": 636,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "346_origamivan_BattleTank.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 190,
+  "fEdges": 27,
+  "fReal": 19,
+  "fSpan": 1
+ },
+ {
+  "f": "347_morisawa_Raccoon.fold",
+  "stage1": "IN_PLAY",
+  "faces": 195,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "348_nakamura_Cheat_Dice.fold",
+  "stage1": "IN_PLAY",
+  "faces": 81,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "349_kei_Umbrella_2022.fold",
+  "stage1": "IN_PLAY",
+  "faces": 167,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "350_maeng_Sitophilus_oryzae_v2.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 308,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "351_ku_Three_Headed_Dragon.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 280,
+  "fEdges": 13,
+  "fReal": 6,
+  "fSpan": 1
+ },
+ {
+  "f": "352_haruka_Venusaur.fold",
+  "stage1": "IN_PLAY",
+  "faces": 1463,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "353_fukuroi_Dalmatian.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 252,
+  "fEdges": 20,
+  "fReal": 17,
+  "fSpan": 0
+ },
+ {
+  "f": "354_lang_rings4.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 273,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "355_nakamura_Octopus.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 678,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "356_kei_Dodoco_(Genshin_Impact).fold",
+  "stage1": "IN_PLAY",
+  "faces": 144,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "357_chan_8x8_Checkerboard.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 1368,
+  "fEdges": 74,
+  "fReal": 74,
+  "fSpan": 2
+ },
+ {
+  "f": "358_ku_13_Stripes.fold",
+  "stage1": "NOT_FOLDABLE_PRECREASE",
+  "faces": 154,
+  "fEdges": 58,
+  "fReal": 58,
+  "fSpan": 0
+ },
+ {
+  "f": "359_fung_I_Heart_Cat_v2_(base).fold",
+  "stage1": "IN_PLAY",
+  "faces": 78,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "360_fung_I_Heart_Cat_v2_(shaped).fold",
+  "stage1": "IN_PLAY",
+  "faces": 174,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "361_lang_Squaring_the_Circle.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 193,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "362_nakamura_Tuna.fold",
+  "stage1": "IN_PLAY",
+  "faces": 218,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "363_kei_Hatoba_Tsugu_(Vtuber).fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 553,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "364_luibobby_Cross_with_hydrangea_tessellation.fold",
+  "stage1": "IN_PLAY",
+  "faces": 601,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ },
+ {
+  "f": "365_ku_Nazgul_v8.1.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 156,
+  "fEdges": 2,
+  "fReal": 1,
+  "fSpan": 1
+ },
+ {
+  "f": "366_imai_Vinegaroon_v2.fold",
+  "stage1": "NOT_FOLDABLE_SCREEN",
+  "faces": 922,
+  "fEdges": 0,
+  "fReal": 0,
+  "fSpan": 0
+ }
+]

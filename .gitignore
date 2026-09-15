@@ -3,3 +3,6 @@ Sim-FAST-PY/
 venv/
 __pycache__/
 workspace/purelandfold/
+
+# probe C stage 2 run artifacts
+workspace/probe-c/stage2-log.txt

@@ -13,9 +13,11 @@
 | --- | --- | --- |
 | [A 爆炸曲线](probes/probe-a-explosion.md) | ✅ | 爆炸在长尾不在中位数；语料必须分层采样；只用 instagram |
 | [B 可行性判据](probes/probe-b-oracle.md) | ✅ | 传播判据免费且完美，但因为终态问题不难 → **难度在序列层** |
-| [C 纯搜索基线](probes/probe-c-screen.md) | 🟡 阶段一完成 | **34.2% 的真实折纸已证明不可 simple fold**；阶段二待写 |
+| [C 纯搜索基线](probes/probe-c-screen.md) | ✅ | **89.3% 的真实折纸已证明不可 simple fold**；确认可折仅 2 个（0.5%）。纯搜索在真实语料上不工作 |
 
 **已定**：action space = simple folding（Pureland）· 序列数据 = PurelandFold + 自己合成
 · 难度轴 = step count + non-local dependency
 
-**待定**：预折痕要不要纳入动作空间（阻塞阶段二）
+**已定**：预折痕**不纳入**动作空间 —— 它会拆掉 Probe C 的判据本身；改为当作实测的范围边界来报
+
+**待定**：37 个 TIMEOUT 要不要加大预算再判一次（搜索撑不过 ~8 折，而真实序列 5–21 步）
