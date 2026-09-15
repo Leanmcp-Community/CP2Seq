@@ -123,4 +123,4 @@ CP (.fold) ──Flat-Folder──→ 枚举合法折叠态 {s₁...sₙ}      L
 - `notes/plan/experiment-spec-checklist.md` — 跑实验前要冻结的决定 + 每条状态（中文）
 - `notes/plan/research-workflow.md` — Phase 0–5，**Phase 0 已结束**（中文）
 - `EXPERIMENTS_SETUP.md` / `DATASET.md` / `BASELINE_REPRODUCTION.md` — 怎么跑 / 数据 / 基线（英文，给同事看）
-- `workspace/probe_a.svg` — 爆炸曲线图
+- `workspace/probe-a/explosion.svg` — 爆炸曲线图
