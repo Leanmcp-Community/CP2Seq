@@ -62,6 +62,13 @@ Per `notes/creasy-cp-to-seq.md`, the numbers worth pulling out of Creasy are alr
   problem needs a heuristic (Akitaya's own 2013 future-work paragraph says as much — quoted in
   `notes/creasy-cp-to-seq.md`).
 
+⚠️ **Probe C changed what the search baselines report.** Exhaustive search solved 2 of 195
+candidate CPs (`notes/probes/probe-c-screen.md`), so there is no query-efficiency
+distribution to put in a table — two data points is not a curve. The Random / BFS / DFS rows
+therefore report a **failure rate**, not a query count. That is the stronger result: it is
+direct evidence that the problem needs a heuristic, which is exactly what Akitaya's own
+future-work paragraph says (`notes/reading/creasy-cp-to-seq.md`).
+
 So the actual baseline ladder for the results table (`EXPERIMENTS_SETUP.md` §5–6) ends up being:
 
 ```

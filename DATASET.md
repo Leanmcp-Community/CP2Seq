@@ -29,7 +29,9 @@ Bucket reminder:
 - **Difficulty control**: step count, the same axis and unit as PurelandFold's `step` — so the
   synthetic corpus and the real anchor are directly comparable.
 - **Why this exists**: the two real bucket-A candidates are 27 sequences (PurelandFold) and a
-  handful of classic models (Creasy). Neither can carry a headline number. **Synthesis is also
+  handful of classic models (Creasy). Neither can carry a headline number — and after Probe C,
+  neither can instagram: at most 39 of its 366 CPs are even solvable in our action space.
+  Synthesis is not one option among several any more, it is the only one. **Synthesis is also
   the field's normal practice, not a shortcut** — Learn2Fold's own OrigamiCode is 5,760
   sequences / 75,000 verified transitions, the bulk of it produced by their own symbolic
   simulator (`notes/plan/corpus-plan.md`).
@@ -51,11 +53,13 @@ Bucket reminder:
 - **Bucket**: C by default (CP only); can be promoted to a synthetic B by running Flat-Folder's
   solver and picking one terminal state as `FINAL RESULT` — but that pick is an experimental
   choice we make, not a ground-truth label from the source.
-- ⚠️ **Only 65.8% of it is even reachable.** Probe C stage 1
-  (`notes/probes/probe-c-screen.md`) proved **125 / 366 = 34.2%** of these CPs are **not**
-  all-layers simple-foldable, and the action space is fixed to simple folding. Any score
-  computed over all 366 is capped at 65.8% for reasons that have nothing to do with the model —
-  see `EXPERIMENTS_SETUP.md` §1.2 for the three-way stratification this forces.
+- ⚠️ **At most 10.7% of it is reachable, and only 0.5% is confirmed.** Probe C is complete
+  (`notes/probes/probe-c-screen.md`): **327 / 366 = 89.3%** of these CPs are **proven** not
+  all-layers simple-foldable — 125 by the spanning-line condition, 46 by pre-crease traces, 156
+  by a full search that exhausted the space. 37 timed out, 2 solved. The action space is fixed
+  to simple folding, so a score over all 366 is capped at 10.7% for reasons that have nothing to
+  do with the model — see `EXPERIMENTS_SETUP.md` §1.2 for the four-way stratification this
+  forces. **This source is now a scope-boundary measurement, not a corpus for scored runs.**
 - **Also note**: this is the same 366-CP set OrigamiBench uses as its dataset (`papers.md`).
 
 ---

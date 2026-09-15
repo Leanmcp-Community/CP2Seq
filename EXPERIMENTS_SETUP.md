@@ -31,34 +31,50 @@ Scope: Track 1 (CP → Seq) only, per `notes/track1-surface-simulator.md`.
   sequences for the few models it covers; not a source of new CPs (GPL-3, unmaintained since
   2022 — we don't reproduce it, see that file).
 
-### 1.2 The foldability ceiling: a third of this corpus has no solution at all
+### 1.2 The foldability ceiling: this corpus is almost entirely out of reach
 
-Probe C stage 1 (`notes/probes/probe-c-screen.md`) screened all 366 instagram CPs against an
-exact **necessary** condition for all-layers simple foldability:
+Probe C is complete (`notes/probes/probe-c-screen.md`). Three independent layers of evidence,
+each a proof rather than an estimate, rule out most of the corpus:
 
-| | |
-| --- | --- |
-| Passes the screen (upper bound on simple-foldable) | 241 / 366 = 65.8% |
-| **Provably NOT simple-foldable** | **125 / 366 = 34.2%** |
-
-The action space is fixed to simple folding (Pureland), so **those 125 CPs have no solution in
-our action space at all.** A flat "% of dataset solved" over 366 therefore has a ceiling of
-65.8%, and the missing third is a property of the task definition, not a failure of the model.
-
-⚠️ The screen is necessary, not sufficient — passing it does not prove foldable. And T4 proves
-that deciding simple foldability is NP-hard in general, so the full search will time out on
-some CPs no matter how it is implemented.
-
-**Therefore every dataset-level number in §6 is reported in three strata, never pooled:**
-
-| Stratum | Definition | How a run on it is read |
+| | | |
 | --- | --- | --- |
-| **Foldable** | the full search found a sequence | the only stratum where %solved is a model score |
-| **Proven not foldable** | fails Probe C's necessary condition | reported, never scored — a correct model should *refuse* these |
-| **Timeout** | search exceeded budget, status unknown | reported as its own fraction; it is a result, not a gap |
+| Fails the spanning-line necessary condition | 125 | 34.2% |
+| Carries a pre-crease (a flat crease simple folding cannot make) | 46 | 12.6% |
+| **Full search EXHAUSTED the space without a solution** | **156** | **42.6%** |
+| **PROVEN not simple-foldable** | **327 / 366** | **89.3%** |
+| Search timed out — status genuinely unknown | 37 | 10.1% |
+| **Confirmed foldable** | **2** | **0.5%** |
 
-This is the same three-way rule Probe C reports under. Pooling the three strata into one
-percentage is the single easiest way to make this paper indefensible.
+The action space is fixed to simple folding (Pureland), so those 327 CPs **have no solution in
+our action space at all**. A flat "% of dataset solved" over 366 has a ceiling of **10.7%**, and
+everything below that ceiling is the task definition, not the model.
+
+⚠️ **0.5% is a floor, not the true rate.** The search cannot get past roughly 8 folds, while
+real Pureland sequences run 5-21 steps, so the 37 timeouts likely contain foldable CPs. The
+honest statement is that the true share lies somewhere in **0.5%-10.7%**.
+
+⚠️ EXHAUSTED carries one asterisk, stated rather than buried: the search rejects any fold that
+creases a line against the assignment the CP demands, so it means "no simple-fold sequence that
+never folds a crease against its final direction".
+
+**Therefore every dataset-level number in §6 is reported in four strata, never pooled:**
+
+| Stratum | n | How a run on it is read |
+| --- | --- | --- |
+| **Confirmed foldable** | 2 | the only stratum where %solved is a model score |
+| **Timeout / unknown** | 37 | scored separately; a wrong answer here is not provably wrong |
+| **Proven not foldable** | 327 | reported, never scored — a correct model should *refuse* these |
+| **Pooled** | — | **never**. One percentage over 366 is the fastest way to make this indefensible |
+
+**This forces a change of plan, and it is worth more than the plan it replaces.** With 2 solved
+CPs there is no query-efficiency distribution to report, so the pure-search baseline in §5 is
+not a curve — it is a **failure rate**: exhaustive search solves 2 of 195 candidates. That is a
+stronger argument for a heuristic than any query count would have been, and it is what
+Akitaya's own future-work paragraph predicted (`notes/reading/creasy-cp-to-seq.md`).
+
+⚠️ **Consequence for §1.3: the instagram corpus cannot carry the main experiment.** 39 CPs are
+in play at the absolute best, 2 at worst. The synthesized corpus (`DATASET.md` §0) is no longer
+a supplement to it — it is the only viable source of scored samples.
 
 ### 1.3 The real shape of the data: pairs are common, sequences are rare
 
@@ -79,7 +95,7 @@ can run on every bucket:
 | B | CP + final result only, no intermediate steps | ACCEPT/REJECT loop (this doc's main experiment) |
 | C | CP only, no ground truth of any kind | Not usable for scored experiments — exploration/pilot only |
 
-These buckets are **orthogonal** to the three strata of §1.2: a CP can be bucket B *and*
+These buckets are **orthogonal** to the four strata of §1.2: a CP can be bucket B *and*
 proven-not-foldable. Bucket says what ground truth exists; stratum says whether a solution
 exists at all.
 
@@ -291,32 +307,44 @@ Track 1 paper (framing per `notes/track1-surface-simulator.md`).
   节点。可以当作它覆盖到的那几个模型的参考序列；但不是新 CP 的来源（GPL-3，2022 年后停更 ——
   我们不复现它，见那份文件）。
 
-### 1.2 语料的可折性天花板：三分之一的题根本无解
+### 1.2 语料的可折性天花板：这批语料几乎整个够不着
 
-Probe C 阶段一（`notes/probes/probe-c-screen.md`）用一个**精确的必要条件**筛过了全部 366 个
-instagram CP：
+Probe C 已完成（`notes/probes/probe-c-screen.md`）。三层独立证据，每一层都是证明而不是估计：
 
-| | |
-| --- | --- |
-| 通过筛选（simple-foldable 的上界） | 241 / 366 = 65.8% |
-| **已证明不可 simple fold** | **125 / 366 = 34.2%** |
-
-动作空间已经定为 simple folding（Pureland），所以**这 125 个 CP 在我们的动作空间里根本没有解**。
-因此在 366 上直接算「解决比例」，**天花板是 65.8%**，而缺掉的那三分之一是任务定义的性质，
-不是模型的失败。
-
-⚠️ 这个筛选是必要条件、不是充分条件 —— 通过不等于可折。而且 T4 证了一般情况下判定
-simple foldability 是 NP-hard，所以无论怎么实现，完整搜索一定会在一部分 CP 上超时。
-
-**因此第 6 节所有数据集层面的数字都按三层分别报，绝不合并：**
-
-| 分层 | 定义 | 这一层上的结果怎么读 |
+| | | |
 | --- | --- | --- |
-| **可折** | 完整搜索找到了序列 | 只有这一层的「解决比例」才是模型的分数 |
-| **已证不可折** | 没通过 Probe C 的必要条件 | 只报数、不打分 —— 正确的模型应该**拒答** |
-| **超时** | 搜索超出预算，状态未知 | 单独报它自己的占比；这是结果，不是缺口 |
+| 没通过贯穿线必要条件 | 125 | 34.2% |
+| 带预折痕（simple folding 造不出的折角为 0 的折痕） | 46 | 12.6% |
+| **完整搜索穷尽空间仍无解** | **156** | **42.6%** |
+| **已证明不可 simple fold** | **327 / 366** | **89.3%** |
+| 搜索超时 —— 状态确实未知 | 37 | 10.1% |
+| **确认可折** | **2** | **0.5%** |
 
-这和 Probe C 自己的报法是同一条规则。**把三层合成一个百分比，是让这篇论文最快变得无法辩护的做法。**
+动作空间已定为 simple folding（Pureland），所以这 327 个 CP **在我们的动作空间里根本没有解**。
+在 366 上直接算「解决比例」，**天花板是 10.7%**，天花板以下的部分是任务定义，不是模型。
+
+⚠️ **0.5% 是下界，不是真实占比。** 搜索过不了大约 8 折，而真实的 Pureland 序列是 5–21 步，
+所以那 37 个超时里很可能有可折的。诚实的说法是：真实值落在 **0.5%–10.7%** 之间。
+
+⚠️ EXHAUSTED 带一个星号，写明而不是埋掉：搜索会拒绝任何「把某条线折成与 CP 最终方向相反」的折，
+所以它的含义是「不存在任何**从不逆向折已有折痕**的 simple fold 序列」。
+
+**因此第 6 节所有数据集层面的数字都按四层分别报，绝不合并：**
+
+| 分层 | n | 这一层上的结果怎么读 |
+| --- | --- | --- |
+| **确认可折** | 2 | 只有这一层的「解决比例」才是模型的分数 |
+| **超时 / 未知** | 37 | 单独计分；这一层上答错不等于可证明的错 |
+| **已证不可折** | 327 | 只报数、不打分 —— 正确的模型应该**拒答** |
+| **合并** | — | **绝不**。在 366 上算一个百分比，是让这篇论文最快无法辩护的做法 |
+
+**这逼出了一个改计划，而且新计划比原计划更有价值。** 只有 2 个 CP 被解出，
+就没有 query efficiency 分布可报 —— 所以第 5 节的纯搜索基线不是一条曲线，而是一个**失败率**：
+穷举搜索在 195 个候选里只解出 2 个。**这比任何 query 数都更能论证「必须要有启发式」**，
+而且正是 Akitaya 自己 future-work 那段话预言的（`notes/reading/creasy-cp-to-seq.md`）。
+
+⚠️ **对 1.3 节的后果：instagram 语料撑不起主实验。** 最好情况只有 39 个 CP 在场，最坏 2 个。
+合成语料（`DATASET.md` §0）**不再是它的补充，而是唯一可行的打分样本来源**。
 
 ### 1.3 数据的真实形状：配对常见，序列稀有
 
@@ -335,7 +363,7 @@ simple foldability 是 NP-hard，所以无论怎么实现，完整搜索一定�
 | B | 只有 CP + final result，没有中间步骤 | ACCEPT/REJECT 循环（本文档的主实验） |
 | C | 只有 CP，没有任何 ground truth | 不能用于打分的实验 —— 只能做探索/pilot |
 
-这三个桶跟第 1.2 节的三个分层是**正交**的：一个 CP 可以既是 B 桶、又是已证不可折。
+这三个桶跟第 1.2 节的四个分层是**正交**的：一个 CP 可以既是 B 桶、又是已证不可折。
 桶说的是「有什么 ground truth」，分层说的是「到底有没有解」。
 
 ### 1.4 跑之前要做的事
@@ -474,7 +502,7 @@ simple foldability 是 NP-hard，所以无论怎么实现，完整搜索一定�
 > 这正是 `DATASET.md` 现在必须提供一份**合成的**、有规模的 A 桶语料的原因。
 
 **准入门槛 —— 终态匹配（ACCEPT 比例）。** 保留，但降级为准入判据（「它到底有没有产出一个合法
-终态」），按第 1.2 节的三个分层分别报，绝不合并。它不再是 headline —— Probe B 已经证明这是
+终态」），按第 1.2 节的四个分层分别报，绝不合并。它不再是 headline —— Probe B 已经证明这是
 问题里容易的那一半。
 
 **解决所需的 query 数** —— 在**全部**尝试上统计，不是只统计成功的那些。只看成功的会正好掩盖
