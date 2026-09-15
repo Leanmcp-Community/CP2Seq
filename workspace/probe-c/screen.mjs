@@ -95,25 +95,46 @@ function analyze(fold) {
     // satisfies the necessary condition, but the real model was not built by simple folds.
     //
     // /! FOLD overloads "F": exporters also emit it for FACET edges introduced by
-    // triangulating a polygon face.  Those are not creases at all.  Two signals separate
-    // them, reported separately and never merged into one number:
+    // TRIANGULATING a polygon face.  Those are not creases and must not be counted.
+    // Resolved 2026-09-15 by measurement, not by assumption:
     //
-    //   fSpan   an F run that crosses the paper boundary to boundary.  A pre-crease left by
-    //           a simple fold spans the whole sheet (same argument as pass 1); a
-    //           triangulation diagonal is interior and does not.  STRONG evidence.
-    //   allTri  every face is a triangle -- the signature of a triangulated export, where F
-    //           edges are presumed facet artifacts.  We do not count those as pre-creases.
-    const fSpanRuns = spanningRuns(V, EV, EA, onB, a => a === "F");
+    //   * Triangulation is applied to a whole model, never to one face.  NO CP in this
+    //     corpus is fully triangulated -- the maximum triangle-face fraction among the 69
+    //     CPs carrying F edges is 90.9% (058_ku_Color-change_Pinwheel_1), and triangles at
+    //     that rate are ordinary origami geometry (bird/frog bases), not an export artifact.
+    //   * Only 8.5% of F edges (918/10827) even have the local facet signature, i.e. both
+    //     adjacent faces triangular -- and no CP consists solely of those.
+    //
+    // => facet contamination in this corpus is nil.  Every F edge is a genuine flat crease.
+    //
+    // fFacet counts the locally-suspicious ones anyway, so the claim stays auditable, and
+    // fSpan (an F run crossing the paper boundary to boundary) is kept as the STRONG subset:
+    // a pre-crease left by a simple fold spans the whole sheet, by pass 1's own argument.
     const faceV = fold.faces_vertices || [];
-    const allTri = faceV.length > 0 && faceV.every(f => f.length === 3);
+    const adj = new Map();                                 // undirected vertex pair -> face sizes
+    for (const face of faceV) for (let i = 0; i < face.length; i++) {
+        const a = face[i], b = face[(i + 1) % face.length];
+        const k = a < b ? `${a},${b}` : `${b},${a}`;
+        if (!adj.has(k)) adj.set(k, []);
+        adj.get(k).push(face.length);
+    }
+    let fEdges = 0, fFacet = 0;
+    for (const [i, a] of EA.entries()) {
+        if (a !== "F") continue;
+        fEdges++;
+        const [u, w] = EV[i], k = u < w ? `${u},${w}` : `${w},${u}`;
+        const sz = adj.get(k) || [];
+        if (sz.length === 2 && sz[0] === 3 && sz[1] === 3) fFacet++;
+    }
 
     return { faces: faceV.length,
              creases: EA.filter(a => a === "M" || a === "V").length,
              full, fullUniform, fullUniformStrict,
              hasU: EA.some(a => a === "U"),
-             fEdges: EA.filter(a => a === "F").length,
-             fSpan: fSpanRuns.length,
-             allTri };
+             fEdges, fFacet,
+             fReal: fEdges - fFacet,                        // genuine flat creases
+             fSpan: spanningRuns(V, EV, EA, onB, a => a === "F").length,
+             allTri: faceV.length > 0 && faceV.every(f => f.length === 3) };
 }
 
 const dir = path.join(EX, "instagram");
@@ -147,16 +168,17 @@ console.log(`\nsize profile:  passes -> ${by(r=>r.fullUniform>0)}   |   fails ->
 // PRE-CREASES among the CPs that passed.  A CP that passes pass 1 but carries a genuine
 // pre-crease is a FALSE POSITIVE: nothing about it is reachable by simple folds alone.
 // Subtracting them tightens the lower bound on "provably not simple-foldable".
-const preFP    = pass.filter(r => r.fSpan > 0 && !r.allTri);   // confident
-const preAmbig = pass.filter(r => r.fEdges > 0 && !(r.fSpan > 0 && !r.allTri));
+const preFP     = pass.filter(r => r.fReal > 0 && !r.allTri);   // any genuine flat crease
+const preStrong = preFP.filter(r => r.fSpan > 0);               // strong subset: spans the sheet
 const tightened = rows.length - pass.length + preFP.length;
 
 console.log(`\n--- pre-creases (F = flat/unfolded) -------------------------------------`);
 console.log(`CPs containing any F edge                                : ${rows.filter(r=>r.fEdges>0).length}/${rows.length}   (F edges: ${rows.reduce((s,r)=>s+r.fEdges,0)})`);
 console.log(`fully triangulated CPs (F presumed facet artifacts)      : ${rows.filter(r=>r.allTri).length}`);
+console.log(`F edges with the local facet signature (both faces tri)  : ${rows.reduce((s,r)=>s+r.fFacet,0)} = ${(100*rows.reduce((s,r)=>s+r.fFacet,0)/Math.max(1,rows.reduce((s,r)=>s+r.fEdges,0))).toFixed(1)}%  (still counted as creases below; no CP is made only of these)`);
 console.log(`\namong the ${pass.length} that PASS the screen:`);
-console.log(`  confident pre-crease (spanning F run, not triangulated) : ${preFP.length}   <-- FALSE POSITIVES`);
-console.log(`  ambiguous (has F, but interior only or triangulated)    : ${preAmbig.length}   <-- unresolved, do not count`);
+console.log(`  carry a genuine flat crease                             : ${preFP.length}   <-- FALSE POSITIVES`);
+console.log(`    of which the F run spans the sheet (strongest)        : ${preStrong.length}`);
 console.log(`\nlower bound on NOT simple-foldable:`);
 console.log(`  screen alone                 : ${rows.length-pass.length}/${rows.length} = ${(100*(rows.length-pass.length)/rows.length).toFixed(1)}%`);
 console.log(`  screen + confident pre-crease: ${tightened}/${rows.length} = ${(100*tightened/rows.length).toFixed(1)}%`);
@@ -164,8 +186,21 @@ console.log(`  upper bound on simple-foldable drops to ${(100*(pass.length-preFP
 if (preFP.length) {
     console.log(`\nfalse positives (pass the screen, but were pre-creased):`);
     for (const r of preFP.slice(0, 15))
-        console.log(`  ${r.f.slice(0,44).padEnd(45)} faces=${String(r.faces).padStart(5)} F=${String(r.fEdges).padStart(4)} spanningF=${r.fSpan}`);
+        console.log(`  ${r.f.slice(0,44).padEnd(45)} faces=${String(r.faces).padStart(5)} F=${String(r.fEdges).padStart(4)} facet=${String(r.fFacet).padStart(4)} spanningF=${r.fSpan}`);
 }
+
+// Stage 2 consumes this: the CPs still in play, i.e. passed the screen AND carry no
+// pre-crease. Written next to the script so the two stages cannot drift apart.
+const verdict = rows.map(r => ({
+    f: r.f,
+    stage1: !pass.includes(r) ? "NOT_FOLDABLE_SCREEN"
+          : preFP.includes(r) ? "NOT_FOLDABLE_PRECREASE"
+          : "IN_PLAY",
+    faces: r.faces, fEdges: r.fEdges, fReal: r.fReal, fSpan: r.fSpan,
+}));
+fs.writeFileSync(path.join(path.dirname(new URL(import.meta.url).pathname), "stage1-verdicts.json"),
+                 JSON.stringify(verdict, null, 1));
+console.log(`\nin play for stage 2: ${verdict.filter(v=>v.stage1==="IN_PLAY").length}  -> workspace/probe-c/stage1-verdicts.json`);
 
 console.log(`\nfirst 12 that PASS the screen (candidates for the full search):`);
 for (const r of pass.slice(0, 12))

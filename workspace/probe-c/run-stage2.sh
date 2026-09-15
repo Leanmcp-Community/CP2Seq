@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Probe C stage 2 -- the full all-layers simple-fold search over the CPs stage 1 left in play.
+#
+# This is the expensive one. T4 proves deciding simple foldability is NP-hard, so a share of
+# the 195 CPs will exhaust the query budget; that TIMEOUT fraction is a reported result, not a
+# failure of the run. Expect a long wall clock on the large tessellation CPs.
+#
+#   bash workspace/probe-c/run-stage2.sh
+#
+# Tuning: --budget is queries (simulated folds) per CP -- the unit the paper's query-efficiency
+# claim is measured in, so keep it fixed once results are quoted. --depth caps sequence length.
+set -euo pipefail
+cd "$(dirname "$0")/../.."
+
+BUDGET="${BUDGET:-2000000}"
+DEPTH="${DEPTH:-32}"
+OUT="workspace/probe-c/stage2-log.txt"
+
+echo "refreshing stage 1 verdicts..."
+node workspace/probe-c/screen.mjs | tail -3
+
+echo
+echo "stage 2: budget=$BUDGET queries/CP, depth=$DEPTH -- logging to $OUT"
+node workspace/probe-c/stage2.mjs --budget="$BUDGET" --depth="$DEPTH" 2>&1 | tee "$OUT"
