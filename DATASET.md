@@ -8,6 +8,10 @@ into. This is an inventory, not a merged dataset.
 > scale, so the main corpus has to be **synthesized**. The real sources are anchors and CP
 > supply, not the primary data.
 
+**Owns: where the data comes from.** How the experiment runs is `EXPERIMENTS_SETUP.md`; who we
+compare against is `BASELINE_REPRODUCTION.md`; which decisions are frozen is
+`notes/plan/experiment-spec-checklist.md`. Nothing is restated across them.
+
 Bucket reminder:
 
 | Bucket | Has |
@@ -54,9 +58,9 @@ Bucket reminder:
   solver and picking one terminal state as `FINAL RESULT` — but that pick is an experimental
   choice we make, not a ground-truth label from the source.
 - ⚠️ **At most 10.7% of it is reachable, and only 0.5% is confirmed.** Probe C is complete
-  (`notes/probes/probe-c-screen.md`): **327 / 366 = 89.3%** of these CPs are **proven** not
-  all-layers simple-foldable — 125 by the spanning-line condition, 46 by pre-crease traces, 156
-  by a full search that exhausted the space. 37 timed out, 2 solved. The action space is fixed
+  (`notes/probes/probe-c-screen.md`): **327<!--fact:probeC.provenNot--> / 366<!--fact:corpus.instagram.total--> = 89.3%<!--fact:probeC.provenNotPct-->** of these CPs are **proven** not
+  all-layers simple-foldable — 125<!--fact:probeC.screenFail--> by the spanning-line condition, 46<!--fact:probeC.preCrease--> by pre-crease traces,
+  156<!--fact:probeC.exhausted--> by a full search that exhausted the space. 37<!--fact:probeC.timeout--> timed out, 2<!--fact:probeC.solved--> solved. The action space is fixed
   to simple folding, so a score over all 366 is capped at 10.7% for reasons that have nothing to
   do with the model — see `EXPERIMENTS_SETUP.md` §1.2 for the four-way stratification this
   forces. **This source is now a scope-boundary measurement, not a corpus for scored runs.**

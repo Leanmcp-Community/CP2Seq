@@ -29,3 +29,13 @@ node workspace/probe-c/screen.mjs | tail -3
 echo
 echo "stage 2: budget=$BUDGET queries/CP, depth=$DEPTH -- logging to $OUT"
 node workspace/probe-c/stage2.mjs --budget="$BUDGET" --depth="$DEPTH" 2>&1 | tee "$OUT"
+
+# Refresh the numbers the write-up is allowed to quote, and check every doc that cites them.
+# A result that changes here must change everywhere it is quoted, in the same commit.
+echo
+node workspace/tools/facts.mjs
+node workspace/tools/doccheck.mjs || {
+  echo
+  echo "^ docs disagree with the run you just did. 'node workspace/tools/doccheck.mjs --fix'"
+  echo "  rewrites the tagged citations; RETIRED/BROKEN/UNOWNED need a human."
+}
