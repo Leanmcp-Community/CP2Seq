@@ -15,9 +15,7 @@
 | --- | --- | --- |
 | **Track 2** | 5 个 state 的刚度方差 | 方差为零 → Track 2 立论要重做 |
 
-**Track 1 的探针不是一个，是三个** —— 因为 Flat-Folder 没有「步骤」
-（见 `flat-folder-capabilities.md`），要跑 DFS 就得先有 step semantics，
-而 step semantics 就是 surface simulator 本身。按**能多快杀死论文**排序：
+**Track 1 的探针不是一个，是三个**，按**能多快杀死论文**排序：
 
 | | 探针 | 状态 | 死法 |
 | --- | --- | --- | --- |
@@ -28,13 +26,16 @@
 **Probe B 比我原先写下的那个更紧急** —— 剪枝 ground truth、回溯距离误差里的 `j`、
 关剪枝/关回溯的消融，**全都建立在这一个判据上**。它不存在，论文核心就不存在。
 
-⚠️ **依赖倒置（2026-09-14 发现）**：checklist A 组第一项（action space 选哪个模型）
-和 Probe B，**都是 Probe C 的前置**，不是「Phase 1 再冻结」。
+⚠️ **依赖**：checklist A 组第一项（action space 选哪个模型）是 Probe C 的前置。
+**已定：simple folding**（Pureland）。选定之后每个中间态都是合法平折态，
+Flat-Folder 每步可用，不必自建 step semantics。
 
-**Probe C 怎么做到最小**：只实现一个 action space 模型（建议 all-layers simple fold，
-最受限、搜索空间最小、最快出数）；只跑 Probe A 找出的爆炸带以下的小 CP；
+**Probe C 怎么做到最小**：序列数据用 PurelandFold（27 序列 / 337 帧，带 `step` 和层序）；
 **不接 LLM、不建日志基础设施、不做缓存**（那些是 Phase 2 的事）。
 记录 queries-to-first-solution、queries-to-all-solutions、超时率。
+
+⚠️ 先查 T11：Akitaya 2013 的经典算法在蛙基上是 **22,665 节点 / 30 分钟**。
+**这可能已经是 Probe C 想要的答案，而且是已发表的。动手前先读。**
 
 Track 1 的探针要找的是一个**窗口**：
 
