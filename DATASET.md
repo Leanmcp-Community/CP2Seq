@@ -104,23 +104,6 @@ Bucket reminder:
 
 ---
 
-## 4. Creasy-generated step-graphs
-
-- **Link**: https://github.com/xkevio/Creasy (generator, not a static dataset)
-- **License**: GPL-3 (we run it, we don't vendor its code or outputs into anything we ship —
-  see `notes/reading/creasy-cp-to-seq.md`)
-- **Size / format**: not fixed — Creasy *computes* a full step-graph for any CP its 4-maneuver
-  dictionary can handle (inside/outside reverse fold, swivel ×2). For classic models it already
-  covers (crane, traditional frog base), this gives genuine bucket-A sequences, sometimes tens
-  of thousands of step-graph nodes deep.
-- **Ground truth**: bucket A, but only for the small set of models expressible in its 4 rules —
-  most real-world CPs are outside its coverage, and it can also fail expensively (the frog base
-  case took ~30 minutes and 22,665 nodes — see `notes/reading/creasy-cp-to-seq.md`).
-- **Use**: source of a handful of high-quality bucket-A reference sequences, not a bulk data
-  source. Also doubles as the Creasy baseline in `BASELINE_REPRODUCTION.md`.
-
----
-
 ## 5. OrigamiSpace dataset
 
 - **Link**: paper at https://arxiv.org/abs/2511.18450 (NeurIPS'25) — **no public repo** as of
