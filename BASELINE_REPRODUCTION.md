@@ -87,16 +87,6 @@ is still expected on the synthesized corpus, where difficulty is controlled by c
 
 Per `notes/reading/creasy-cp-to-seq.md`, the numbers worth pulling out of Creasy are already scoped:
 
-- Same batch of CPs → Creasy's full step-graph **node count** and **wall-clock seconds** to build
-  it, vs. our method's **simulator/tool-call count** to reach a solution. This is a
-  published, citable reference point for query efficiency — stronger than an unpublished
-  from-scratch baseline.
-- **Failure list**: which CPs Creasy cannot produce a sequence for at all (its maneuver
-  dictionary only has 4 rules — inside/outside reverse fold, swivel ×2 — vs. the paper's own 4:
-  inside/outside reverse, squash, petal; note this fidelity gap when citing it), and which ones
-  blow up the step-graph before finishing. This failure list is itself evidence for why the
-  problem needs a heuristic (Akitaya's own 2013 future-work paragraph says as much — quoted in
-  `notes/reading/creasy-cp-to-seq.md`).
 
 ⚠️ **Probe C changed what the search baselines report.** Exhaustive search solved 2 of 195
 candidate CPs (`notes/probes/probe-c-screen.md`), so there is no query-efficiency
@@ -108,7 +98,7 @@ future-work paragraph says (`notes/reading/creasy-cp-to-seq.md`).
 So the actual baseline ladder for the results table (`EXPERIMENTS_SETUP.md` §5–6) ends up being:
 
 ```
-Random  →  BFS  →  DFS  →  Creasy (run, cited numbers)  →  Ours (full tool belt)  →  Ours (no tools)
+Random  →  BFS  →  DFS    →  Ours (full tool belt)  →  Ours (no tools)
 ```
 
 with Flat-Folder appearing only as the terminal-state ground-truth source (`DATASET.md`), never
@@ -119,10 +109,8 @@ in the related-work section of the paper, not in the results table.
 
 ## 5. Action items
 
-- [ ] Locate an implementation (or the original paper with enough detail to reproduce cheaply)
-      of the discrete-PSO baseline.
-- [ ] Download the Creasy release jar, run it over the same CP set used elsewhere, and record
-      node count / seconds / failure list per `notes/reading/creasy-cp-to-seq.md`.
 - [ ] Audit GamiBench's HF dataset to determine whether its items are directly reusable as
-      `(CP, final result)` or `(CP, sequence)` pairs, or only reusable as metric definitions.
-- [ ] Recheck whether OrigamiSpace has published a repo since the last look.
+      `(CP, final result)` or `(CP, sequence)` pairs, or only reusable as metric definitions. - For Dheeraj
+
+- [ ] implement DFS, BFS baseline details   - for Dheeraj   
+- [ ] Recheck whether OrigamiSpace has published a repo since the last look. - For Dheeraj
