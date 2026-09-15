@@ -1,0 +1,75 @@
+---
+license: cc-by-4.0
+task_categories:
+- image-to-3d
+- other
+language:
+- en
+tags:
+- origami
+- geometry
+- crease-pattern
+- fold
+- computer-vision
+- procedural-generation
+pretty_name: PurelandFold
+size_categories:
+- n<1K
+---
+
+# PurelandFold
+
+PurelandFold is the ground-truth benchmark introduced in **FoldingAgent: Inferring Parametric Origami Procedures from Demonstration Videos** (Maya Moriya, Sigal Raab, Yael Vinker, Tali Dekel — Weizmann Institute of Science / MIT). It pairs real photos from instructional origami videos with the exact geometric state of the paper at each photographed step.
+
+- Project page: https://maya-moriya.github.io/origami-page
+
+## Why this dataset exists
+
+FoldingAgent's task is to infer a parametric, executable folding procedure directly from a sequence of video keyframes — a step-by-step reconstruction of how a flat square of paper turns into a finished origami model. Existing origami datasets provide either static crease patterns or final folded forms, but none pairs real demonstration photos with ground-truth *procedural* folding states. PurelandFold was curated to close that gap and to serve as an evaluation benchmark for this task.
+
+The scope is **Pureland origami** — a well-studied subset (Smith, 1980) in which every fold is a simple mountain or valley fold along a straight crease, combined with `unfold`, `rotate`, and `flip`. Pureland keeps the representation compact (every intermediate state is a flat-folded layout of polygonal faces) while still covering a wide range of real instructional folding sequences.
+
+## How it was collected
+
+- Sourced from the *Easy Origami* category on the [OrigamiWay](https://www.origamiway.com/) website, which offers a clean, diverse set of models; the Pureland-compatible subset was selected.
+- All 27 demonstration videos were filmed by the authors themselves (front-facing LED ring light, ambient daylight, iPhone 12, black Bristol board background) rather than scraped from noisy online sources — this avoids filtering/curation bias.
+- Keyframes marking meaningful hand-paper interactions were manually extracted from each video.
+- Each keyframe was annotated with the full ground-truth geometric state of the paper at that moment: vertex/face geometry, paper topology, crease (mountain/valley/flat/boundary) assignments, per-face front/back orientation, and the layer stacking order.
+- Sequences average 12 frames, ranging from 5 to 21.
+
+See Sec. 4.1 and Sec. 5.2.1 of the paper for the full formal state representation and dataset construction details.
+
+## Dataset structure
+
+One row per `(sequence, step)` — i.e., per annotated keyframe. 337 rows across 27 sequences.
+
+| column | type | description |
+|---|---|---|
+| `sequence` | string | Short, normalized name of the folding sequence (e.g. `ladybug`, `gift_card_holder`, `tulip_stem`) |
+| `step` | int | Keyframe index within the sequence (1 = flat starting square) |
+| `image` | image | The real photo for this keyframe |
+| `cp.svg` | string (SVG) | Rendered crease pattern (unfolded 2D layout) for this state |
+| `cp.fold` | string (JSON) | Crease pattern in [FOLD format](https://github.com/edemaine/fold) — vertices, faces, edges, mountain/valley/flat assignment, fold angles, and face stacking order |
+| `flat_folder` | string (JSON) | Diagnostic output from compiling `cp.fold` with the [Flat-Folder](https://github.com/origamimagiro/flat-folder) crease-pattern solver (Jason Ku, 2022): folded vertex/face positions, face order, and counts of the taco-taco / taco-tortilla / tortilla-tortilla / transitivity conditions used to certify flat-foldability |
+
+All rows in this release come from ground truth (ordinary photographs paired with hand-annotated geometry) rather than from any model's predictions.
+
+### `flat_folder` and Compilation Validity
+
+The paper's primary validity metric, **Compilation Validity (CV)**, checks whether a predicted geometry can be compiled by Flat-Folder into a definite, self-intersection-free folded state — i.e., whether it is syntactically valid, geometrically foldable, and produces a consistent layer ordering. The `flat_folder` column contains that same compiler's output for every ground-truth state in this dataset (all of which compile successfully, as expected for verified ground truth), so it can be used directly to reproduce or extend that metric.
+
+## Citation
+
+If you use PurelandFold, please cite the FoldingAgent paper:
+
+```bibtex
+@article{moriya2026foldingagent,
+  title   = {FoldingAgent: Inferring Parametric Origami Procedures from Demonstration Videos},
+  author  = {Moriya, Maya and Raab, Sigal and Vinker, Yael and Dekel, Tali},
+  year    = {2026},
+}
+```
+
+## License
+
+Released under CC-BY-4.0. Please provide attribution to the FoldingAgent paper and project page above.

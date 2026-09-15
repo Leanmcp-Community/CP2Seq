@@ -1,8 +1,12 @@
 # Datasets — CP / fold-state / fold-sequence sources
 
 2026-09-14. Every known source of origami data relevant to Track 1 (CP → Seq), what ground
-truth each one actually contains, and which bucket (per `EXPERIMENTS_SETUP.md` §1.2) it falls
-into. Nothing here is synthesized yet — this is an inventory, not a merged dataset.
+truth each one actually contains, and which bucket (per `EXPERIMENTS_SETUP.md` §1.3) it falls
+into. This is an inventory, not a merged dataset.
+
+> **Read §0 first.** The audit below concluded that no accessible source carries bucket A at
+> scale, so the main corpus has to be **synthesized**. The real sources are anchors and CP
+> supply, not the primary data.
 
 Bucket reminder:
 
@@ -11,6 +15,27 @@ Bucket reminder:
 | A | CP + full step-by-step sequence |
 | B | CP + final result only, no intermediate steps |
 | C | CP only, no ground truth |
+
+---
+
+## 0. Synthesized Pureland corpus — **the main data, not yet generated**
+
+- **Link**: none — we generate it. Design in `notes/plan/corpus-plan.md` (a).
+- **Method**: start from a square, apply random simple folds forward, record the sequence, unfold
+  at the end to obtain the CP. **Generation is trivial; the inverse problem (CP → Seq) is the
+  hard one** — which is exactly the structure a benchmark should have.
+- **Ground truth**: **bucket A by construction.** The (CP, sequence) pair is built, not labelled,
+  so there is nothing to annotate and nothing to trust.
+- **Difficulty control**: step count, the same axis and unit as PurelandFold's `step` — so the
+  synthetic corpus and the real anchor are directly comparable.
+- **Why this exists**: the two real bucket-A candidates are 27 sequences (PurelandFold) and a
+  handful of classic models (Creasy). Neither can carry a headline number. **Synthesis is also
+  the field's normal practice, not a shortcut** — Learn2Fold's own OrigamiCode is 5,760
+  sequences / 75,000 verified transitions, the bulk of it produced by their own symbolic
+  simulator (`notes/plan/corpus-plan.md`).
+- **Status**: not generated. Open question, deliberately not pre-designed: what distribution to
+  draw random folds from so the corpus isn't all degenerate cases (e.g. repeated halving).
+  Decide after looking at the first batch.
 
 ---
 
@@ -26,6 +51,11 @@ Bucket reminder:
 - **Bucket**: C by default (CP only); can be promoted to a synthetic B by running Flat-Folder's
   solver and picking one terminal state as `FINAL RESULT` — but that pick is an experimental
   choice we make, not a ground-truth label from the source.
+- ⚠️ **Only 65.8% of it is even reachable.** Probe C stage 1
+  (`notes/probes/probe-c-screen.md`) proved **125 / 366 = 34.2%** of these CPs are **not**
+  all-layers simple-foldable, and the action space is fixed to simple folding. Any score
+  computed over all 366 is capped at 65.8% for reasons that have nothing to do with the model —
+  see `EXPERIMENTS_SETUP.md` §1.2 for the three-way stratification this forces.
 - **Also note**: this is the same 366-CP set OrigamiBench uses as its dataset (`papers.md`).
 
 ---
@@ -35,13 +65,21 @@ Bucket reminder:
 - **Link**: https://huggingface.co/datasets/mayaweiz/PurelandFold
 - **License**: CC-BY-4.0
 - **Size / format**: 27 sequences / 337 frames. `cp.fold` contains **layer-order ground truth**.
-- **Ground truth**: this is the strongest candidate for **bucket A** we've found — it's
-  explicitly a set of *sequences* (337 frames across 27 sequences), not just endpoints.
+- **Ground truth**: genuine **bucket A** — explicitly a set of *sequences* (337 frames across
+  27 sequences), not just endpoints. The only real bucket-A source of any size we found.
+- **Role: reality anchor, not the main data — 27 sequences.** Measured 2026-09-15
+  (`notes/plan/corpus-plan.md`): its non-local-dependency spread is p50 = 0.7 against
+  instagram's p50 = 12.8, **a ~20× gap, with almost no spread inside PurelandFold at all**.
+  That is not a data defect — it is what "simple folds only" means. So the non-local-dependency
+  difficulty axis is unusable here, leaving `step` (5–21) as the only axis, and 27 sequences
+  cannot carry a headline number. It anchors the synthetic corpus (§0) to reality; it does not
+  replace it.
 - **Caveat**: restricted to Pureland origami (simple folds only, per the name) — same scope
   restriction flagged for FoldingAgent in `BASELINE_REPRODUCTION.md`. Good for validating the
   loop and for bucket-A sequence metrics; not representative of harder, compound-fold CPs.
-- **Status**: not yet audited — need to confirm exact frame format matches (or can be converted
-  to) the `.fold`-per-step shape `EXPERIMENTS_SETUP.md`'s simulator expects.
+- **Status**: partially audited. Frame-format conversion to the simulator's per-step `.fold`
+  shape is still unconfirmed. Open: **74 rows are skipped (`variables=0`)** — 27 of them are the
+  step-1 rows, the remaining ~47 are unexplained (`notes/plan/corpus-plan.md`).
 
 ---
 
@@ -58,25 +96,7 @@ Bucket reminder:
 
 ---
 
-## 4. Learn2Fold's dataset
-
-- **Link**: paper at https://arxiv.org/html/2603.29585v1 · https://www.alphaxiv.org/pdf/2603.29585
-  (repo/data link TBD)
-- **License**: TBD
-- **Size / format**: expert demonstration trajectories (procedural, step-by-step) —
-  see `notes/2026-09-11-states-and-simulator.md` Q3: because it's built from expert demos, each
-  CP effectively has exactly one recorded sequence/state, not multiple.
-- **Ground truth**: likely bucket A (full sequences) for the CPs it covers, since it's built
-  around expert trajectories — but solves a different input problem (prompt → sequence, not
-  CP → sequence — see `BASELINE_REPRODUCTION.md` §0), so even if usable as data, the *task
-  framing* has to be adapted (drop the language prompt, keep the CP-to-sequence pair, if the
-  underlying CP is recoverable from their data).
-- **Status**: not yet audited. This is the single highest-priority item to check, since it's the
-  most likely source of real bucket-A pairs at any scale.
-
----
-
-## 5. Creasy-generated step-graphs
+## 4. Creasy-generated step-graphs
 
 - **Link**: https://github.com/xkevio/Creasy (generator, not a static dataset)
 - **License**: GPL-3 (we run it, we don't vendor its code or outputs into anything we ship —
@@ -93,7 +113,7 @@ Bucket reminder:
 
 ---
 
-## 6. OrigamiSpace dataset
+## 5. OrigamiSpace dataset
 
 - **Link**: paper at https://arxiv.org/abs/2511.18450 (NeurIPS'25) — **no public repo** as of
   the last check (`papers.md` #5)
@@ -102,7 +122,7 @@ Bucket reminder:
 
 ---
 
-## 7. FOLD-format example repositories (generic CP sources, unaudited)
+## 6. FOLD-format example repositories (generic CP sources, unaudited)
 
 - **FOLD format spec + examples**: https://github.com/edemaine/fold
 - **Origami Simulator's model gallery**: https://origamisimulator.org/
@@ -112,13 +132,28 @@ Bucket reminder:
 
 ---
 
+## Closed: Learn2Fold is not a data source
+
+Previously listed here as the single highest-priority audit target ("the most likely source of
+real bucket-A scale"). **Checked — the data does not exist for us.** Its OrigamiCode corpus
+(5,760 sequences / 75,000 verified transitions) is mostly generated by their own symbolic
+simulator, and **it was never publicly released**. There is nothing to audit, download, or
+convert. Learn2Fold stays in the paper as an architectural precedent only
+(`BASELINE_REPRODUCTION.md` §1); it is not a dataset entry.
+
+---
+
 ## Action items
 
-- [ ] Run the audit script from `EXPERIMENTS_SETUP.md` §1.3 over sources 1–5 above once each is
+- [ ] **Generate the first batch of the synthetic Pureland corpus (§0)** and look at the step /
+      degeneracy distribution before fixing the sampling design. Highest priority — it is now
+      the main data path.
+- [ ] Run the audit script from `EXPERIMENTS_SETUP.md` §1.4 over sources 1–4 once each is
       confirmed accessible; report bucket sizes (A/B/C) per source.
-- [ ] Confirm Learn2Fold's actual data release format and license (source 4) — highest priority,
-      since it's the most likely source of real bucket-A scale.
+- [ ] Attach Probe C's three-way stratum label (foldable / proven-not-foldable / timeout,
+      `EXPERIMENTS_SETUP.md` §1.2) to every instagram CP, so no score can accidentally be
+      pooled over all 366.
 - [ ] Confirm PurelandFold's frame format is convertible to the simulator's expected per-step
-      `.fold` input (source 2).
+      `.fold` input, and explain the 74 skipped rows (source 2).
 - [ ] Audit GamiBench's HF dataset shape — QA-style items vs. raw CP/sequence pairs (source 3).
-- [ ] Periodically recheck OrigamiSpace for a public repo (source 6).
+- [ ] Periodically recheck OrigamiSpace for a public repo (source 5).

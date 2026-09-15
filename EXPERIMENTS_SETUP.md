@@ -16,16 +16,51 @@ Scope: Track 1 (CP → Seq) only, per `notes/track1-surface-simulator.md`.
   `notes/flat-folder-capabilities.md`, Flat-Folder has **no concept of a step at all** — it
   solves for terminal flat-folded states, not sequences. So these give us CPs and, at best, a
   terminal state — never a step-by-step ground truth.
-- **Learn2Fold** dataset — this is where a `(CP, final result)` pair is most likely to exist in
-  a form we can reuse directly. Needs an audit (below) to confirm the exact format of "final
-  result" it ships (`.fold` state, rendered image, or 3D mesh — TBD, check their repo/paper).
+- **PurelandFold** — 27 real fold *sequences* (337 frames), the only genuine bucket-A source we
+  found. Kept as a **reality anchor**, not as the main data: 27 sequences cannot carry a
+  headline, and its non-local-dependency spread is ~20× narrower than instagram's
+  (`DATASET.md` §2).
+- **Synthesized Pureland corpus** — fold forward from a square with random simple folds, record
+  the sequence, unfold to get the CP. **Bucket A by construction, difficulty controlled by step
+  count.** This is the main data path (`DATASET.md` §0, `notes/plan/corpus-plan.md`), because
+  the audit found no accessible real source with bucket A at scale. ⚠️ Learn2Fold was the last
+  candidate and **its dataset was never released** — that line of inquiry is closed.
 - **Creasy / Akitaya 2013** worked examples — per `notes/creasy-cp-to-seq.md`, a handful of
   classic models (crane, frog base) have a **fully computed step-graph**, i.e. genuine
   step-by-step ground truth, sometimes tens of thousands of nodes deep. Useful as reference
   sequences for the few models it covers; not a source of new CPs (GPL-3, unmaintained since
   2022 — we don't reproduce it, see that file).
 
-### 1.2 The real shape of the data: pairs are common, sequences are rare
+### 1.2 The foldability ceiling: a third of this corpus has no solution at all
+
+Probe C stage 1 (`notes/probes/probe-c-screen.md`) screened all 366 instagram CPs against an
+exact **necessary** condition for all-layers simple foldability:
+
+| | |
+| --- | --- |
+| Passes the screen (upper bound on simple-foldable) | 241 / 366 = 65.8% |
+| **Provably NOT simple-foldable** | **125 / 366 = 34.2%** |
+
+The action space is fixed to simple folding (Pureland), so **those 125 CPs have no solution in
+our action space at all.** A flat "% of dataset solved" over 366 therefore has a ceiling of
+65.8%, and the missing third is a property of the task definition, not a failure of the model.
+
+⚠️ The screen is necessary, not sufficient — passing it does not prove foldable. And T4 proves
+that deciding simple foldability is NP-hard in general, so the full search will time out on
+some CPs no matter how it is implemented.
+
+**Therefore every dataset-level number in §6 is reported in three strata, never pooled:**
+
+| Stratum | Definition | How a run on it is read |
+| --- | --- | --- |
+| **Foldable** | the full search found a sequence | the only stratum where %solved is a model score |
+| **Proven not foldable** | fails Probe C's necessary condition | reported, never scored — a correct model should *refuse* these |
+| **Timeout** | search exceeded budget, status unknown | reported as its own fraction; it is a result, not a gap |
+
+This is the same three-way rule Probe C reports under. Pooling the three strata into one
+percentage is the single easiest way to make this paper indefensible.
+
+### 1.3 The real shape of the data: pairs are common, sequences are rare
 
 Every sample we can use has at minimum a **`(CP, final result)` pair** — that's the
 non-negotiable minimum, since it's the ground truth the loop's ACCEPT/REJECT check needs.
@@ -44,15 +79,22 @@ can run on every bucket:
 | B | CP + final result only, no intermediate steps | ACCEPT/REJECT loop (this doc's main experiment) |
 | C | CP only, no ground truth of any kind | Not usable for scored experiments — exploration/pilot only |
 
-### 1.3 Action item before running anything
+These buckets are **orthogonal** to the three strata of §1.2: a CP can be bucket B *and*
+proven-not-foldable. Bucket says what ground truth exists; stratum says whether a solution
+exists at all.
+
+### 1.4 Action item before running anything
 
 - [ ] Write an audit script over every dataset source that buckets each CP into A/B/C above and
       records, for bucket A, exactly how many intermediate steps exist.
 - [ ] Report bucket sizes before doing the dev/test split (group G in the checklist depends on
       knowing how many samples are actually scorable).
-- [ ] For Learn2Fold specifically: confirm the exact file format of "final result" (`.fold` /
-      image / mesh) since the simulator's comparison step (§4) needs to know what it's diffing
-      against.
+- [ ] Generate the first batch of the synthetic corpus and inspect its step / degeneracy
+      distribution **before** fixing the sampling design (`notes/plan/corpus-plan.md`).
+- [ ] Label every instagram CP with its §1.2 stratum, so no score can be pooled over all 366 by
+      accident.
+- [ ] Confirm PurelandFold's frame format converts to the per-step `.fold` shape the simulator
+      (§3.1) expects, since the comparison step (§4) needs to know what it is diffing against.
 
 ---
 
@@ -143,8 +185,14 @@ PR #2): **Gemini Flash** (free credits), **Nemotron**, and other off-the-shelf V
   error on an illegal (self-intersecting) fold. Optional tools (§3.2, §3.3) sit alongside it.
 - **Loop**: images or error get folded back into the prompt for the next VLM call. This repeats
   until the VLM emits a step it marks as final.
-- **Compare**: the VLM's final `.fold` is diffed against the dataset's `FINAL RESULT` (format
-  depends on source — §1.1) → **ACCEPT** if it matches, **REJECT** if it doesn't.
+- **Compare**: ⚠️ **a CP can have many valid terminal states** (`notes/tools/flat-folder-capabilities.md`),
+  so an exact diff against the one stored `FINAL RESULT` marks correct answers wrong. ACCEPT is
+  therefore defined on the **equivalence class**, not on byte equality: the final `.fold` is
+  accepted if (a) it is a valid flat-folded state of the CP, and (b) it matches `FINAL RESULT`
+  up to the symmetries we declare in advance — paper rotation/reflection, and the layer-order
+  variants Flat-Folder itself reports as equally valid. `DATASET.md` already flags that picking
+  one terminal state is our experimental choice and not a label from the source; this is the
+  line where that choice has to be paid for.
 
 ---
 
@@ -158,17 +206,42 @@ PR #2): **Gemini Flash** (free credits), **Nemotron**, and other off-the-shelf V
 Same VLM, same CP set, same query budget across both conditions — this is the direct A/B that
 answers "how would it behave and what's the accuracy without these tools."
 
+**Protocol, fixed before the first run:**
+
+- **Input anonymization.** CP filenames in this corpus carry the model's name
+  (`009_ku_Unassigned_Triangle_Pleat`). The no-tools arm is a *memorization* control — if the
+  model can read that name it recalls instead of reasoning, and then **both** arms measure
+  recall and the A/B measures nothing. Strip filenames and all metadata; feed geometry only.
+- **Query budget.** One fixed number N of simulator/tool calls per CP, identical across arms.
+  Exhausting it is a **Timeout** (§1.2), not a REJECT — the two mean different things.
+- **Repeats and seeds.** k runs per CP with recorded seeds; report median and spread, never a
+  single run. VLM sampling is not deterministic and a single run is not a measurement.
+- **Stratified sampling.** Probe A found the explosion lives in the tail, not the median
+  (`notes/probes/probe-a-explosion.md`), so the CP set is sampled across difficulty strata
+  rather than uniformly.
+
 ---
 
 ## 6. Metrics
 
-- **% of dataset solved** — fraction of bucket-B-or-better CPs where the loop's final `.fold`
-  matches `FINAL RESULT`, computed for both conditions in §5. This is the headline number: "out
-  of the dataset, how many did the experiment actually solve."
-- **Queries to solve** — number of simulator/tool calls per solved CP (ties to the query
-  efficiency claim in `notes/experiment-spec-checklist.md`).
-- **Sequence-level metrics** (edit distance to ground-truth sequence, group F) — only computable
-  on bucket A, since it's the only bucket with a real intermediate sequence to compare against.
+**Primary — sequence-level metrics** (edit distance / step-count ratio against the ground-truth
+sequence, group F). Probe B measured that the terminal-state problem is near search-free — the
+propagation oracle has 0% false positives because reaching *a* valid state is not the hard part
+(`notes/probes/probe-b-oracle.md`). **The difficulty lives in the sequence layer**, so that is
+where the headline number has to come from.
+
+> ⚠️ Sequence metrics are computable only on bucket A. 27 real PurelandFold sequences cannot
+> carry a headline, which is exactly why `DATASET.md` now has to supply a **synthesized**
+> bucket-A corpus at scale.
+
+**Gate — terminal match (ACCEPT rate).** Retained as an admission criterion — "did it produce a
+legal terminal state at all" — reported per stratum (§1.2), never pooled. This is no longer the
+headline; Probe B showed it is the easy half of the problem.
+
+**Queries to solve** — reported over **all** attempts, not only the solved ones. Conditioning on
+success hides precisely the long-tail blowup Probe A measured. Report the full within-budget
+distribution plus the timeout fraction (ties to the query-efficiency claim in
+`notes/plan/experiment-spec-checklist.md`).
 
 ---
 
@@ -206,15 +279,46 @@ Track 1 paper (framing per `notes/track1-surface-simulator.md`).
   `notes/flat-folder-capabilities.md`，Flat-Folder **完全没有「步骤」这个概念** —— 它求解的是
   终态平折态，不是序列。所以这些示例给的是 CP，最多再加一个终态 —— 从来没有逐步的
   ground truth。
-- **Learn2Fold** 数据集 —— 这是最可能现成存在 `(CP, final result)` 对、可以直接拿来用的地方。
-  需要先做下面的审计，确认它给的「final result」到底是什么格式（`.fold` 状态 / 渲染图片 /
-  3D 网格 —— 待定，要去查它的仓库/论文）。
+- **PurelandFold** —— 27 条真实的折叠**序列**（337 帧），我们找到的唯一一个真正的 A 桶来源。
+  保留为**真实性锚点**，不作主数据：27 条撑不起 headline，而且它的非局部依赖跨度比 instagram
+  窄约 20 倍（`DATASET.md` §2）。
+- **合成 Pureland 语料** —— 从方纸出发随机施加 simple fold、记录序列、最后展开得到 CP。
+  **天然是 A 桶，难度用步数直接控制。** 这是主数据路径（`DATASET.md` §0、
+  `notes/plan/corpus-plan.md`），因为审计的结论是：没有任何可获取的真实来源能提供有规模的 A 桶。
+  ⚠️ Learn2Fold 是最后一个候选，而**它的数据集从未公开发布** —— 这条线已经关闭。
 - **Creasy / Akitaya 2013** 的现成例子 —— 根据 `notes/creasy-cp-to-seq.md`，少数几个经典模型
   （千纸鹤、蛙基）有**完整算出来的 step-graph**，也就是真正逐步的 ground truth，有的深达几万个
   节点。可以当作它覆盖到的那几个模型的参考序列；但不是新 CP 的来源（GPL-3，2022 年后停更 ——
   我们不复现它，见那份文件）。
 
-### 1.2 数据的真实形状：配对常见，序列稀有
+### 1.2 语料的可折性天花板：三分之一的题根本无解
+
+Probe C 阶段一（`notes/probes/probe-c-screen.md`）用一个**精确的必要条件**筛过了全部 366 个
+instagram CP：
+
+| | |
+| --- | --- |
+| 通过筛选（simple-foldable 的上界） | 241 / 366 = 65.8% |
+| **已证明不可 simple fold** | **125 / 366 = 34.2%** |
+
+动作空间已经定为 simple folding（Pureland），所以**这 125 个 CP 在我们的动作空间里根本没有解**。
+因此在 366 上直接算「解决比例」，**天花板是 65.8%**，而缺掉的那三分之一是任务定义的性质，
+不是模型的失败。
+
+⚠️ 这个筛选是必要条件、不是充分条件 —— 通过不等于可折。而且 T4 证了一般情况下判定
+simple foldability 是 NP-hard，所以无论怎么实现，完整搜索一定会在一部分 CP 上超时。
+
+**因此第 6 节所有数据集层面的数字都按三层分别报，绝不合并：**
+
+| 分层 | 定义 | 这一层上的结果怎么读 |
+| --- | --- | --- |
+| **可折** | 完整搜索找到了序列 | 只有这一层的「解决比例」才是模型的分数 |
+| **已证不可折** | 没通过 Probe C 的必要条件 | 只报数、不打分 —— 正确的模型应该**拒答** |
+| **超时** | 搜索超出预算，状态未知 | 单独报它自己的占比；这是结果，不是缺口 |
+
+这和 Probe C 自己的报法是同一条规则。**把三层合成一个百分比，是让这篇论文最快变得无法辩护的做法。**
+
+### 1.3 数据的真实形状：配对常见，序列稀有
 
 我们能用的每一个样本至少要有一个 **`(CP, final result)` 配对** —— 这是不可谈判的最低要求，
 因为它是循环里 ACCEPT/REJECT 判定所需要的 ground truth。
@@ -231,13 +335,19 @@ Track 1 paper (framing per `notes/track1-surface-simulator.md`).
 | B | 只有 CP + final result，没有中间步骤 | ACCEPT/REJECT 循环（本文档的主实验） |
 | C | 只有 CP，没有任何 ground truth | 不能用于打分的实验 —— 只能做探索/pilot |
 
-### 1.3 跑之前要做的事
+这三个桶跟第 1.2 节的三个分层是**正交**的：一个 CP 可以既是 B 桶、又是已证不可折。
+桶说的是「有什么 ground truth」，分层说的是「到底有没有解」。
+
+### 1.4 跑之前要做的事
 
 - [ ] 写一个审计脚本，扫描每一个数据集来源，把每个 CP 归到上面的 A/B/C 桶里，并且对 A 桶
       记录到底有多少个中间步骤。
 - [ ] 在做 dev/test 划分之前先报出各桶大小（清单里的 G 组要知道到底有多少样本能打分）。
-- [ ] 专门针对 Learn2Fold：确认它「final result」的确切文件格式（`.fold` / 图片 / 网格），
-      因为模拟器的比对步骤（第 4 节）需要知道自己在跟什么做 diff。
+- [ ] 先生成第一批合成语料，看它的步数/退化分布，**然后**再定采样设计
+      （`notes/plan/corpus-plan.md`）。
+- [ ] 给每个 instagram CP 打上第 1.2 节的分层标签，避免任何人不小心在 366 上合并计分。
+- [ ] 确认 PurelandFold 的帧格式能转成模拟器（第 3.1 节）要的逐步 `.fold` 形状 ——
+      比对步骤（第 4 节）需要知道自己在跟什么做 diff。
 
 ---
 
@@ -321,8 +431,12 @@ Track 1 paper (framing per `notes/track1-surface-simulator.md`).
   结构化错误。可选工具（第 3.2、3.3 节）跟它并列存在。
 - **循环**：图片或错误被折回 prompt，供下一次 VLM 调用使用。这个过程一直重复，直到 VLM
   发出一个它标记为 final 的步骤。
-- **比对**：VLM 的 final `.fold` 拿去跟数据集的 `FINAL RESULT` 做 diff（格式取决于来源 ——
-  第 1.1 节）—— 匹配则 **ACCEPT**，不匹配则 **REJECT**。
+- **比对**：⚠️ **一个 CP 可以有多个合法终态**（`notes/tools/flat-folder-capabilities.md`），
+  所以拿唯一存下来的 `FINAL RESULT` 做精确 diff，会把正确答案判错。因此 ACCEPT 定义在
+  **等价类**上，而不是逐字节相等：当 (a) 它是该 CP 的一个合法平折终态，且 (b) 它在我们**事先
+  声明**的对称性下与 `FINAL RESULT` 一致（纸张的旋转/翻转，以及 Flat-Folder 自己判定为同样
+  合法的层序变体），才算 ACCEPT。`DATASET.md` 已经指出「挑一个终态」是我们的实验选择、不是
+  来源给的标签 —— 这一行就是为那个选择付账的地方。
 
 ---
 
@@ -336,16 +450,36 @@ Track 1 paper (framing per `notes/track1-surface-simulator.md`).
 同一个 VLM、同一批 CP、同样的 query 预算跑这两个条件 —— 这就是直接回答「没有这些工具会怎么表现、
 准确率是多少」的那个 A/B。
 
+**开跑前必须先定死的协议：**
+
+- **输入匿名化。** 这批语料的文件名直接带着模型名（`009_ku_Unassigned_Triangle_Pleat`）。
+  无工具那一臂是**记忆性对照** —— 如果模型能读到这个名字，它就是在回忆而不是在推理，
+  于是**两臂都在测回忆**，这个 A/B 什么都测不出来。去掉文件名和所有元数据，只喂几何。
+- **query 预算。** 每个 CP 一个固定的调用次数 N，两臂完全相同。用尽预算记为**超时**
+  （第 1.2 节），不是 REJECT —— 这两件事含义不同。
+- **重复次数与随机种子。** 每个 CP 跑 k 次并记录种子；报中位数和离散度，绝不用单次结果。
+  VLM 采样不是确定性的，单次跑不构成一次测量。
+- **分层采样。** Probe A 实测爆炸在长尾、不在中位数（`notes/probes/probe-a-explosion.md`），
+  所以 CP 集合按难度分层采样，不做均匀采样。
+
 ---
 
 ## 6. 指标
 
-- **数据集解决比例** —— 在 B 桶及以上的 CP 里，循环产出的 final `.fold` 跟 `FINAL RESULT`
-  匹配的比例，第 5 节两个条件都要算。这是最重要的数字：「这批数据里，实验到底解决了多少个」。
-- **解决所需的 query 数** —— 每个成功解决的 CP 用了多少次模拟器/工具调用（对应
-  `notes/experiment-spec-checklist.md` 里的 query efficiency 主张）。
-- **序列层面的指标**（跟 ground-truth 序列的编辑距离，F 组）—— 只能在 A 桶上算，因为只有它
-  有真正的中间序列可以拿来对比。
+**主指标 —— 序列层面的指标**（跟 ground-truth 序列的编辑距离 / 步数比，F 组）。Probe B 实测
+终态问题接近无需搜索 —— 传播判据的假阳性是 0%，因为「到达**某一个**合法终态」根本不是难的
+那一半（`notes/probes/probe-b-oracle.md`）。**难度在序列层**，所以最重要的数字必须从那里出。
+
+> ⚠️ 序列指标只能在 A 桶上算。27 条真实的 PurelandFold 序列撑不起一个 headline ——
+> 这正是 `DATASET.md` 现在必须提供一份**合成的**、有规模的 A 桶语料的原因。
+
+**准入门槛 —— 终态匹配（ACCEPT 比例）。** 保留，但降级为准入判据（「它到底有没有产出一个合法
+终态」），按第 1.2 节的三个分层分别报，绝不合并。它不再是 headline —— Probe B 已经证明这是
+问题里容易的那一半。
+
+**解决所需的 query 数** —— 在**全部**尝试上统计，不是只统计成功的那些。只看成功的会正好掩盖
+Probe A 实测到的长尾爆炸。报预算内的完整分布 + 超时占比（对应
+`notes/plan/experiment-spec-checklist.md` 里的 query efficiency 主张）。
 
 ---
 
