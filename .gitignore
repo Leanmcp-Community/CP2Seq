@@ -7,8 +7,15 @@ workspace/purelandfold/
 # probe C stage 2 run artifacts
 workspace/probe-c/stage2-log.txt
 
-# synthetic corpus runs — rebuildable from the seed, not versioned
-workspace/corpus/out/
+# synthetic corpus runs — rebuildable from the seed, so scratch batches stay out...
+# (the pattern must be out/* rather than out/: git cannot re-include anything under an
+#  excluded DIRECTORY, so excluding the children is what makes the negations below work)
+workspace/corpus/out/*
+# ...but the two RELEASED batches are versioned, because a dataset nobody can point at is not
+# a dataset. Regenerating from the seed gives the same bytes; that is the argument for not
+# versioning it, and it is not an argument a reader of the paper can act on.
+!workspace/corpus/out/batch1/
+!workspace/corpus/out/layers-batch1/
 
 # PurelandFold model export — derived from the HF dataset
 workspace/purelandfold/models/
