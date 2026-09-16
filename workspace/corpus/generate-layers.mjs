@@ -1,31 +1,35 @@
-// Random corpus generator, SOME-LAYERS tier -- pilot batch.
+// Random corpus generator, SOME-LAYERS tier.
 //
-// WHAT IS DELIBERATELY NOT DECIDED HERE. How to sample "which layers does this fold move" is
-// the one new degree of freedom the tier introduces, and it is left as a knob rather than
-// designed up front. That is the same discipline the all-layers pilot followed and the reason
-// its anti-degeneracy knob is defensible: the absolute coupling cap was chosen because 556
-// samples stalled under the proportional one, not because it sounded right
-// (notes/plan/corpus-plan.md). So this run reports the distribution and decides nothing.
+// HOW MOVES ARE CHOSEN, AND WHY IT IS ENUMERATION. The first pilot proposed folds at random and
+// threw away the illegal ones. It worked, and it could not control anything: asked for partial
+// folds half the time, 9.4% of accepted folds were partial, because 88% of partial proposals
+// tear the sheet. The knob named a quantity the sampler does not own -- the same failure as the
+// all-layers pilot's proportional coupling cap, in a different costume.
 //
-// TWO THINGS THE ALL-LAYERS AXES DO NOT SURVIVE INTO THIS TIER, and they need saying before any
-// number here is read as difficulty:
+// So this enumerates every legal move at each state and samples from that set. The objection
+// raised against doing so -- that it compiles the physics into the sampler, and the corpus then
+// contains only folds the sampler knew how to build -- applies to a HEURISTIC that dodges the
+// joins. It does not apply to exact enumeration: enumerating the legal moves is not an
+// assumption about the action space, it is that space's definition. Three things follow, and
+// the third is why it is worth the cost:
 //
-//   COUPLING STOPS BEING A DIFFICULTY AXIS. In the core tier, "how many layers did this fold
-//   cut" is a CONSEQUENCE of the geometry -- the fold crosses the stack and you get what you
-//   get, which is why it works as a difficulty knob. Here it is an ARGUMENT: the sampler picks
-//   how many layers move. A quantity you set is not a measure of how hard the instance is.
+//   * sampling is uniform INSIDE the legal set, so there is no bias toward the easy partials
+//     that rejection sampling would have collected
+//   * the partial fraction is genuinely controllable, because the denominator is the legal set
+//     rather than the proposal space
+//   * the BRANCHING FACTOR falls out, which is a real difficulty statistic and the first thing
+//     a solver for this tier will need
 //
-//   THERE IS NO SOLVER FOR THIS TIER. So a sample cannot be round-trip checked, cannot carry a
-//   pure-search query baseline, and cannot supply the "was this branch still solvable" ground
-//   truth that the pruning experiment needs. This corpus is generatable and inspectable, not
-//   yet scorable. Stated here so nobody quotes a difficulty stratum off it by accident.
+// /!\ WHAT THE PILOT'S 11.9% DOES NOT MEAN. Enumeration refuted the reading that this tier's
+// legal moves are rare: they GROW with depth -- 22 legal partial folds at two layers, 332 at
+// thirty-eight, six times the all-layers moves available at the same state. What falls is the
+// hit rate of uniform random proposal, because lines x layer-runs grows faster than the legal
+// set inside it. A fact about a sampler, not about origami (notes/plan/corpus-plan.md).
 //
-// WHAT IS WORTH MEASURING, and is the actual point of the pilot: how often a randomly proposed
-// partial fold is physically impossible. Every partial fold risks tearing the sheet -- a moving
-// face joined to a stationary one along a crease that is not on the fold line -- and nobody
-// knows yet whether that makes the tier rare-and-precious or routine.
+// COST: enumeration is about O(L^3) -- O(L) candidates, each folding O(L) faces with an O(L^2)
+// tear check. 4 ms at one layer, 1.1 s at thirty-three. That is why depth is modest here.
 //
-//   node generate-layers.mjs [--n 60] [--seed 20260916] [--steps 8] [--partial 0.5]
+//   node generate-layers.mjs [--n 30] [--steps 7] [--partial 0.5] [--seed N] [--sweep]
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -38,9 +42,9 @@ const arg = (k, d) => {
     const i = process.argv.indexOf(`--${k}`);
     return i < 0 ? d : Number(process.argv[i + 1]);
 };
-const N = arg("n", 60), SEED = arg("seed", 20260916);
-const STEPS = arg("steps", 8), P_PARTIAL = arg("partial", 0.5);
-const OUT = path.join(HERE, "out/layers-pilot");
+const N = arg("n", 30), SEED = arg("seed", 20260916), STEPS = arg("steps", 7);
+const SWEEP = process.argv.includes("--sweep");
+const OUT = path.join(HERE, "out/layers-v2");
 
 const rngFrom = (seed) => {
     let a = seed >>> 0;
@@ -52,69 +56,74 @@ const rngFrom = (seed) => {
     };
 };
 
-// The four-angle grid, kept from the core generator on purpose: those reflections have integer
-// matrix entries, so a long composed sequence drifts by nothing. Authored models get the whole
-// plane because they are six folds long; a sampler running to twenty does not.
+// The four-angle grid, kept from the core generator: those reflections have integer matrix
+// entries, so a long composed sequence drifts by nothing. Authored models get the whole plane
+// because they are six folds long; a sampler running to twenty does not.
 const NORMALS = [[0, 1], [-Math.SQRT1_2, Math.SQRT1_2], [1, 0], [Math.SQRT1_2, Math.SQRT1_2]];
 
-// offsets that actually cut the current paper, on a coarse grid
 function offsetsFor(st, n) {
     let lo = Infinity, hi = -Infinity;
     for (const { poly } of currentPolys(st)) for (const p of poly) {
         const t = n[0] * p[0] + n[1] * p[1];
         lo = Math.min(lo, t); hi = Math.max(hi, t);
     }
-    const out = [];
-    for (let k = 1; k <= 7; k++) out.push(lo + (hi - lo) * k / 8);
-    return out;
+    return Array.from({ length: 7 }, (_, k) => lo + (hi - lo) * (k + 1) / 8);
 }
 
-function sample(seed) {
+// Every legal move at this state, split by tier. `over` is a real choice for an all-layers fold
+// -- the two directions write opposite M/V and are different moves -- and is forced for a
+// partial run, so it is not enumerated there.
+function legalMoves(st) {
+    const L = layerCount(st);
+    const all = [], partial = [];
+    for (const n of NORMALS) for (const d of offsetsFor(st, n)) for (const mp of [true, false]) {
+        const line = { n, d };
+        for (const over of [true, false])
+            if (!foldLayers(st, line, mp, { mode: "all" }, over).error)
+                all.push({ line, mp, sel: { mode: "all" }, over });
+        for (let k = 1; k < L; k++) {
+            if (!foldLayers(st, line, mp, { mode: "top", k }, true).error)
+                partial.push({ line, mp, sel: { mode: "top", k }, over: true });
+            if (!foldLayers(st, line, mp, { mode: "bottom", k }, false).error)
+                partial.push({ line, mp, sel: { mode: "bottom", k }, over: false });
+        }
+    }
+    return { all, partial };
+}
+
+function sample(seed, pPartial) {
     const rand = rngFrom(seed);
     let st = initSheet();
-    const creases = [], seq = [];
-    const reject = { "would-tear": 0, "no-crease": 0, "nothing-to-move": 0,
-                     "direction-impossible": 0 };
-    // Does a partial fold get harder as the stack grows? That is the question the sampler's
-    // design turns on, and it cannot be read off a total.
-    const byDepth = [];              // { layers, attempted, accepted } per partial proposal
-    let partial = 0;
+    const creases = [], seq = [], branching = [];
+    let partialUsed = 0;
 
     for (let s = 0; s < STEPS; s++) {
-        let done = null;
-        for (let tries = 0; tries < 80 && !done; tries++) {
-            const n = NORMALS[Math.floor(rand() * 4)];
-            const offs = offsetsFor(st, n);
-            const line = { n, d: offs[Math.floor(rand() * offs.length)] };
-            const movePositive = rand() < 0.5;
-            const L = layerCount(st);
+        const moves = legalMoves(st);
+        branching.push({ step: s + 1, layers: layerCount(st),
+                         all: moves.all.length, partial: moves.partial.length });
+        // Want a partial fold this step? Only if the legal set has one. Falling back to the
+        // all-layers pool rather than stalling is what keeps the realised fraction honest: it
+        // is reported, never assumed to equal pPartial.
+        const wantPartial = rand() < pPartial && moves.partial.length > 0;
+        const pool = wantPartial ? moves.partial
+                   : (moves.all.length ? moves.all : moves.partial);
+        if (!pool.length) return { ok: false, stalledAt: s, branching };
 
-            let sel = { mode: "all" }, over = rand() < 0.5;
-            if (L > 1 && rand() < P_PARTIAL) {
-                const fromTop = rand() < 0.5;
-                sel = { mode: fromTop ? "top" : "bottom",
-                        k: 1 + Math.floor(rand() * (L - 1)) };
-                over = fromTop;                       // forced by physics; see the engine
-            }
-            const r = foldLayers(st, line, movePositive, sel, over);
-            if (sel.mode !== "all") byDepth.push({ layers: L, ok: !r.error });
-            if (r.error) { reject[r.error] = (reject[r.error] ?? 0) + 1; continue; }
-            done = { line, movePositive, sel, r };
-        }
-        if (!done) return { ok: false, stalledAt: s, reject };
-
-        const { line, movePositive, sel, r } = done;
+        const m = pool[Math.floor(rand() * pool.length)];
         const before = layerCount(st);
+        const r = foldLayers(st, m.line, m.mp, m.sel, m.over);
+        if (r.error) return { ok: false, stalledAt: s, branching };
         creases.push(...r.made);
         st = r.state;
-        if (sel.mode !== "all") partial++;
-        seq.push({ step: s + 1, normal: line.n, offset: line.d,
-                   move_positive: movePositive, selection: sel, over: r.over,
-                   layers_moved: r.moved, creases_created: r.made.length,
-                   layers_before: before, layers_after: layerCount(st) });
+        if (m.sel.mode !== "all") partialUsed++;
+        seq.push({ step: s + 1, normal: m.line.n, offset: m.line.d, move_positive: m.mp,
+                   selection: m.sel, over: r.over, layers_moved: r.moved,
+                   creases_created: r.made.length,
+                   layers_before: before, layers_after: layerCount(st),
+                   legal_all: moves.all.length, legal_partial: moves.partial.length });
     }
 
-    if (!creases.length) return { ok: false, stalledAt: 0, reject };
+    if (!creases.length) return { ok: false, stalledAt: 0, branching };
     const segs = [
         { P: [0, 0], Q: [1, 0], assignment: "B" }, { P: [1, 0], Q: [1, 1], assignment: "B" },
         { P: [1, 1], Q: [0, 1], assignment: "B" }, { P: [0, 1], Q: [0, 0], assignment: "B" },
@@ -122,9 +131,12 @@ function sample(seed) {
     ];
     const pl = planarize(segs);
 
-    // How unlike each other the layers are. All-layers folding moves every layer's boundary
-    // together, so this stays low however long it runs; a partial fold is the only thing that
-    // can raise it. It is the tier's signature, not a difficulty measure.
+    // How unlike each other the layers are. /!\ This was put in as the tier's signature -- "only
+    // a partial fold can make the layers differ" -- and the sweep refutes it: the median is 18
+    // with no partial folds at all and 14 with nothing but partial folds, i.e. slightly HIGHER
+    // for pure all-layers folding, because an all-layers fold also cuts layers into pieces of
+    // different size. It is kept as a recorded covariate. A measure that actually separates the
+    // two tiers is still open.
     const areas = currentPolys(st).map(p => {
         let a = 0;
         for (let i = 0; i < p.poly.length; i++) {
@@ -134,79 +146,74 @@ function sample(seed) {
         return Math.round(Math.abs(a) / 2 * 1e4) / 1e4;
     });
 
-    return { ok: true, seq, creases, pl, reject, partial, byDepth,
+    return { ok: true, seq, creases, pl, branching, partialUsed,
              layers: layerCount(st), area: +paperArea(st).toFixed(6),
              distinctAreas: new Set(areas).size };
 }
 
-/* ---------- run the batch ---------- */
+/* ---------- run ---------- */
+const q = (xs, p) => { const s = [...xs].sort((a, b) => a - b);
+                       return s.length ? s[Math.min(s.length - 1, Math.floor(p * s.length))] : 0; };
+
+function batch(pPartial) {
+    const rows = [], branch = [];
+    let stalled = 0;
+    for (let i = 0; i < N; i++) {
+        const r = sample(SEED + i * 7919, pPartial);
+        branch.push(...r.branching);
+        if (!r.ok) { stalled++; continue; }
+        rows.push({ seed: SEED + i * 7919, steps: r.seq.length, partial: r.partialUsed,
+                    creases: (r.pl.stats.counts.M || 0) + (r.pl.stats.counts.V || 0),
+                    layers: r.layers, area: r.area, distinctAreas: r.distinctAreas,
+                    couplingMax: Math.max(...r.seq.map(s => s.creases_created)),
+                    conflicts: r.pl.stats.assignment_conflicts });
+    }
+    const folds = rows.reduce((a, r) => a + r.steps, 0);
+    return { pPartial, rows, branch, stalled,
+             realised: folds ? rows.reduce((a, r) => a + r.partial, 0) / folds : 0,
+             conflicts: rows.reduce((a, r) => a + r.conflicts, 0),
+             conserved: rows.every(r => Math.abs(r.area - 1) < 1e-6) };
+}
+
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(OUT, { recursive: true });
 
-const rows = [], rejectTotal = {}, depthStats = [];
-let stalled = 0;
-for (let i = 0; i < N; i++) {
-    const r = sample(SEED + i * 7919);
-    for (const [k, v] of Object.entries(r.reject)) rejectTotal[k] = (rejectTotal[k] ?? 0) + v;
-    if (r.byDepth) depthStats.push(...r.byDepth);
-    if (!r.ok) { stalled++; continue; }
-    rows.push({ seed: SEED + i * 7919, steps: r.seq.length, partial: r.partial,
-                creases: (r.pl.stats.counts.M || 0) + (r.pl.stats.counts.V || 0),
-                layers: r.layers, area: r.area, distinctAreas: r.distinctAreas,
-                couplingMax: Math.max(...r.seq.map(s => s.creases_created)),
-                conflicts: r.pl.stats.assignment_conflicts });
+const settings = SWEEP ? [0, 0.25, 0.5, 0.75, 1] : [arg("partial", 0.5)];
+console.log(`some-layers v2, enumerated sampler: n=${N} steps=${STEPS} seed=${SEED}\n`);
+console.log(`${"asked".padStart(6)} ${"got".padStart(7)} ${"stalled".padStart(8)} ` +
+            `${"layers p50".padStart(11)} ${"creases p50".padStart(12)} ` +
+            `${"distinct areas".padStart(15)} ${"conserved".padStart(10)}`);
+
+const results = [];
+for (const p of settings) {
+    const b = batch(p);
+    results.push(b);
+    console.log(`${p.toFixed(2).padStart(6)} ${((100 * b.realised).toFixed(1) + "%").padStart(7)} ` +
+                `${String(b.stalled).padStart(8)} ` +
+                `${String(q(b.rows.map(r => r.layers), .5)).padStart(11)} ` +
+                `${String(q(b.rows.map(r => r.creases), .5)).padStart(12)} ` +
+                `${String(q(b.rows.map(r => r.distinctAreas), .5)).padStart(15)} ` +
+                `${String(b.conserved).padStart(10)}`);
+    if (b.conflicts) console.log(`  /!\\ ${b.conflicts} M/V conflicts`);
 }
 
-const q = (xs, p) => { const s = [...xs].sort((a, b) => a - b);
-                       return s.length ? s[Math.min(s.length - 1, Math.floor(p * s.length))] : 0; };
-const col = (f) => rows.map(f);
-const acceptedFolds = rows.reduce((a, r) => a + r.steps, 0);
-const rejects = Object.values(rejectTotal).reduce((a, b) => a + b, 0);
-
-console.log(`some-layers pilot: n=${N} seed=${SEED} steps=${STEPS} p(partial)=${P_PARTIAL}\n`);
-console.log(`built ${rows.length}, stalled ${stalled}`);
-console.log(`paper conserved in all: ${rows.every(r => Math.abs(r.area - 1) < 1e-6)}`);
-console.log(`M/V conflicts: ${rows.reduce((a, r) => a + r.conflicts, 0)}`);
-console.log(`\nper sample          p10   p50   p90   max`);
-for (const [name, f] of [["folds that were partial", r => r.partial],
-                         ["layers", r => r.layers],
-                         ["creases", r => r.creases],
-                         ["distinct layer areas", r => r.distinctAreas],
-                         ["max creases in one fold", r => r.couplingMax]])
-    console.log(`  ${name.padEnd(24)} ${String(q(col(f), .1)).padStart(4)} ` +
-                `${String(q(col(f), .5)).padStart(5)} ${String(q(col(f), .9)).padStart(5)} ` +
-                `${String(Math.max(...col(f))).padStart(5)}`);
-
-console.log(`\nproposals rejected: ${rejects} against ${acceptedFolds} accepted folds ` +
-            `(${(100 * rejects / (rejects + acceptedFolds)).toFixed(1)}% of all proposals)`);
-for (const [k, v] of Object.entries(rejectTotal).sort((a, b) => b[1] - a[1]))
-    console.log(`  ${k.padEnd(22)} ${String(v).padStart(6)}  ` +
-                `${(100 * v / rejects).toFixed(1)}% of rejects`);
-
-fs.writeFileSync(path.join(OUT, "pilot.json"), JSON.stringify(
-    { generated: new Date().toISOString(), n: N, seed: SEED, steps: STEPS,
-      p_partial: P_PARTIAL, built: rows.length, stalled,
-      rejects: rejectTotal, samples: rows }, null, 1) + "\n");
-console.log(`\n-> ${path.relative(process.cwd(), path.join(OUT, "pilot.json"))}`);
-
-// The number the sampler's design turns on: does a partial fold get harder as the stack grows?
-const buckets = [[1, 2], [3, 4], [5, 8], [9, 16], [17, 32], [33, 1e9]];
-console.log(`\npartial folds, by how many layers were on the stack when proposed:`);
-console.log(`  ${"layers".padEnd(10)} ${"proposed".padStart(9)} ${"accepted".padStart(9)}  rate`);
-for (const [lo, hi] of buckets) {
-    const b = depthStats.filter(d => d.layers >= lo && d.layers <= hi);
+// the branching factor, which is the other reason to enumerate
+const all = results.flatMap(r => r.branch);
+console.log(`\nlegal moves per state (median), by stack thickness:`);
+console.log(`  ${"layers".padEnd(9)} ${"states".padStart(7)} ${"all-layers".padStart(11)} ` +
+            `${"partial".padStart(9)}`);
+for (const [lo, hi] of [[1, 1], [2, 3], [4, 7], [8, 15], [16, 31], [32, 1e9]]) {
+    const b = all.filter(x => x.layers >= lo && x.layers <= hi);
     if (!b.length) continue;
-    const ok = b.filter(d => d.ok).length;
-    console.log(`  ${(hi > 1e8 ? `${lo}+` : `${lo}-${hi}`).padEnd(10)} ` +
-                `${String(b.length).padStart(9)} ${String(ok).padStart(9)}  ` +
-                `${(100 * ok / b.length).toFixed(1)}%`);
+    const label = hi > 1e8 ? lo + "+" : lo + "-" + hi;
+    console.log(`  ${label.padEnd(9)} ${String(b.length).padStart(7)} ` +
+                `${String(q(b.map(x => x.all), .5)).padStart(11)} ` +
+                `${String(q(b.map(x => x.partial), .5)).padStart(9)}`);
 }
-const okPartial = depthStats.filter(d => d.ok).length;
-console.log(`  ${"overall".padEnd(10)} ${String(depthStats.length).padStart(9)} ` +
-            `${String(okPartial).padStart(9)}  ${(100 * okPartial / depthStats.length).toFixed(1)}%`);
-console.log(`\nasked for partial ${(100 * P_PARTIAL).toFixed(0)}% of the time; ` +
-            `${(100 * rows.reduce((a, r) => a + r.partial, 0) / acceptedFolds).toFixed(1)}% ` +
-            `of ACCEPTED folds are partial -- the gap is the tear rate, not the knob.`);
 
-console.log(`Nothing is decided from this run by itself. The question it is here to answer is`);
-console.log(`whether a random partial fold is usually possible or usually a tear.`);
+fs.writeFileSync(path.join(OUT, "sweep.json"), JSON.stringify(
+    { generated: new Date().toISOString(), n: N, steps: STEPS, seed: SEED,
+      settings: results.map(r => ({ p_partial: r.pPartial, realised: +r.realised.toFixed(4),
+                                    stalled: r.stalled, conserved: r.conserved,
+                                    conflicts: r.conflicts, samples: r.rows })) }, null, 1) + "\n");
+console.log(`\n-> ${path.relative(process.cwd(), path.join(OUT, "sweep.json"))}`);
