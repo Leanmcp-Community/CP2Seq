@@ -6,3 +6,9 @@ workspace/purelandfold/
 
 # probe C stage 2 run artifacts
 workspace/probe-c/stage2-log.txt
+
+# synthetic corpus runs — rebuildable from the seed, not versioned
+workspace/corpus/out/
+
+# PurelandFold model export — derived from the HF dataset
+workspace/purelandfold/models/

@@ -1,0 +1,13 @@
+[
+ {"name": "s-local",  "min": 4,  "max": 10, "coupling_cap": 4},
+ {"name": "s-medium", "min": 4,  "max": 10, "coupling_cap": 16},
+ {"name": "s-global", "min": 4,  "max": 10, "coupling_cap": 64},
+
+ {"name": "m-local",  "min": 11, "max": 13, "coupling_cap": 4},
+ {"name": "m-medium", "min": 11, "max": 13, "coupling_cap": 16},
+ {"name": "m-global", "min": 11, "max": 13, "coupling_cap": 64},
+
+ {"name": "l-local",  "min": 14, "max": 19, "coupling_cap": 4},
+ {"name": "l-medium", "min": 14, "max": 19, "coupling_cap": 16},
+ {"name": "l-global", "min": 14, "max": 19, "coupling_cap": 64}
+]
