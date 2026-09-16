@@ -6,3 +6,12 @@ workspace/purelandfold/
 
 # probe C stage 2 run artifacts
 workspace/probe-c/stage2-log.txt
+
+# Flat-Folder corpus (41MB, re-downloadable: see DHEERAJ_WORKSPACE/baseline/README.md)
+DHEERAJ_WORKSPACE/data/
+DHEERAJ_WORKSPACE/baseline/results.json
+DHEERAJ_WORKSPACE/baseline/mixed-run.txt
+DHEERAJ_WORKSPACE/baseline/pureland-results.json
+DHEERAJ_WORKSPACE/baseline/pureland-run.txt
+DHEERAJ_WORKSPACE/pureland/viewer.html
+DHEERAJ_WORKSPACE/pureland/viz-data.json
