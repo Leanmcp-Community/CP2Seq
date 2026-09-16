@@ -14,8 +14,8 @@ of the stack, reinstating all three and making tearing a question about the shee
 that is decidable only in the original coordinates.
 
 Two measurements frame what the corpus is for. First, a ceiling: over an existing 366-pattern
-collection, 327 (89.3%) are proven to admit no simple-fold sequence, so a pooled "percent
-solved" on such data is capped at 10.7% and reports the task definition rather than the model.
+collection, 338 (92.3%) are proven to admit no simple-fold sequence, so a pooled "percent
+solved" on such data is capped at 7.7% and reports the task definition rather than the model.
 Second, an asymmetry that compounds: generation is linear in fold count while search is not.
 Median search cost rises 45.5x and 91.9x per two folds in the all-layers tier and 247.5x in the
 some-layers tier, whose cost relative to all-layers grows from 4.5x at three folds to 24.7x at
