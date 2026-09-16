@@ -1,0 +1,9 @@
+{
+  "name": "foldorigami-tools",
+  "private": true,
+  "type": "module",
+  "description": "Everything here runs on plain node with no dependencies EXCEPT the VLM arm of the experiment loop, which needs the Anthropic SDK. It is the only dependency in the repo and it is optional on purpose: a checkout with no node_modules must still be able to generate the corpus, run both solvers, replay-verify, and drive the loop with --model oracle.",
+  "optionalDependencies": {
+    "@anthropic-ai/sdk": "^0.70.0"
+  }
+}
