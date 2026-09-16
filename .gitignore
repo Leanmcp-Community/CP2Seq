@@ -12,3 +12,6 @@ workspace/corpus/out/
 
 # PurelandFold model export — derived from the HF dataset
 workspace/purelandfold/models/
+
+# inspector build output — rebuilt by build-showcase.mjs + build-comparison.mjs
+workspace/corpus/inspector.html

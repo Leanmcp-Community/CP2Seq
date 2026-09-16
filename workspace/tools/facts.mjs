@@ -17,6 +17,9 @@ const pct = (n, d) => +(100 * n / d).toFixed(1);
 
 const v = read("workspace/probe-c/stage1-verdicts.json");
 const s2 = read("workspace/probe-c/stage2-results.json");
+// A corpus run is gitignored (95 MB, rebuilds from its seed), so the numbers come from the
+// small summary that is committed alongside it -- `node workspace/corpus/summarize.mjs`.
+const cs = read("workspace/corpus/corpus-summary.json");
 
 const total = v.length;
 const screenFail = v.filter(x => x.stage1 === "NOT_FOLDABLE_SCREEN").length;
@@ -51,9 +54,32 @@ const facts = {
   "probeC.ceiling":                { v: solved + timeout, src: "derived" },
   "probeC.ceilingPct":             { v: pct(solved + timeout, total), unit: "%", src: "derived" },
 
+  "corpus.synth.run":              { v: cs.run, src: "derived" },
+  "corpus.synth.samples":          { v: cs.samples, src: "derived" },
+  "corpus.synth.quota":            { v: cs.quota_total, src: "derived" },
+  "corpus.synth.cellsFilled":      { v: cs.cells_filled, src: "derived" },
+  "corpus.synth.cellsTotal":       { v: cs.cells_total, src: "derived" },
+  "corpus.synth.uniqueCPs":        { v: cs.unique_cp_hashes, src: "derived" },
+  "corpus.synth.stepMin":          { v: cs.steps.min, src: "derived" },
+  "corpus.synth.stepMax":          { v: cs.steps.max, src: "derived" },
+  // one decimal, because this figure only ever appears beside PurelandFold's 0.7
+  "corpus.synth.couplingP50":      { v: +cs.coupling_mean.p50.toFixed(1), src: "derived: mean creases per fold, per sample, median over the corpus" },
+  "corpus.synth.couplingMax":      { v: cs.coupling_max.max, src: "derived" },
+  "corpus.synth.creaseP50":        { v: cs.crease_edges.p50, src: "derived" },
+  "corpus.synth.degeneratePct":    { v: pct(cs.degenerate, cs.samples), unit: "%", src: "derived: recorded, never filtered" },
+  "corpus.synth.lLocalHits":       { v: (cs.cells.find(c => c.name === "l-local") || {}).n ?? 0, src: "derived: the long/low-coupling cell" },
+
   "purelandfold.sequences":        { v: 27,  src: "manual: HF dataset mayaweiz/PurelandFold" },
   "purelandfold.frames":           { v: 337, src: "manual: same" },
-  "purelandfold.skippedRows":      { v: 74,  src: "manual: variables=0 rows, still unexplained" },
+  "purelandfold.skippedRows":      { v: 74,  src: "manual: variables=0 rows; 27 are step-1, the rest are pre-crease steps" },
+  // Answered 2026-09-16 by workspace/data/export_purelandfold_models.py. Kept `manual` because
+  // its output (workspace/purelandfold/models/) is a gitignored re-export of the HF dataset,
+  // so there is nothing committed to derive from -- but the script reprints every number here.
+  "purelandfold.precreaseFrames":  { v: 47,  src: "manual: export_purelandfold_models.py — variables=0 past step 1" },
+  "purelandfold.effStepMin":       { v: 4,   src: "manual: same — pre-crease frames merged into the step they precede" },
+  "purelandfold.effStepMax":       { v: 19,  src: "manual: same" },
+  "purelandfold.effTertileLo":     { v: 10,  src: "manual: same — the synthetic step strata are cut here" },
+  "purelandfold.effTertileHi":     { v: 13,  src: "manual: same" },
 
   // Retired values. Any of these appearing in a doc WITHOUT a fact tag is flagged: it is
   // probably a number that was right last month. Tagging it with its real key clears the flag,

@@ -1,0 +1,158 @@
+{
+ "_how": "node workspace/corpus/summarize.mjs — derived from a run's manifest.json",
+ "run": "v2",
+ "generated": "2026-09-16T03:35:11.980Z",
+ "seed0": 20260916,
+ "n_per_stratum": 40,
+ "samples": 322,
+ "quota_total": 360,
+ "cells_filled": 8,
+ "cells_total": 9,
+ "unique_cp_hashes": 322,
+ "steps": {
+  "min": 4,
+  "max": 19,
+  "p50": 11
+ },
+ "coupling_max": {
+  "p50": 11,
+  "max": 64
+ },
+ "coupling_mean": {
+  "p50": 4.182,
+  "max": 18.692
+ },
+ "crease_edges": {
+  "p50": 61,
+  "max": 388
+ },
+ "degenerate": 107,
+ "cells": [
+  {
+   "name": "s-local",
+   "steps": [
+    4,
+    10
+   ],
+   "coupling_cap": 4,
+   "n": 40,
+   "quota": 40,
+   "steps_p50": 6,
+   "coupling_max_p50": 4,
+   "crease_edges_p50": 19,
+   "degenerate": 0
+  },
+  {
+   "name": "s-medium",
+   "steps": [
+    4,
+    10
+   ],
+   "coupling_cap": 16,
+   "n": 40,
+   "quota": 40,
+   "steps_p50": 6,
+   "coupling_max_p50": 6,
+   "crease_edges_p50": 26,
+   "degenerate": 1
+  },
+  {
+   "name": "s-global",
+   "steps": [
+    4,
+    10
+   ],
+   "coupling_cap": 64,
+   "n": 40,
+   "quota": 40,
+   "steps_p50": 8,
+   "coupling_max_p50": 8,
+   "crease_edges_p50": 37,
+   "degenerate": 2
+  },
+  {
+   "name": "m-local",
+   "steps": [
+    11,
+    13
+   ],
+   "coupling_cap": 4,
+   "n": 40,
+   "quota": 40,
+   "steps_p50": 11,
+   "coupling_max_p50": 4,
+   "crease_edges_p50": 39,
+   "degenerate": 0
+  },
+  {
+   "name": "m-medium",
+   "steps": [
+    11,
+    13
+   ],
+   "coupling_cap": 16,
+   "n": 40,
+   "quota": 40,
+   "steps_p50": 12,
+   "coupling_max_p50": 14,
+   "crease_edges_p50": 88,
+   "degenerate": 16
+  },
+  {
+   "name": "m-global",
+   "steps": [
+    11,
+    13
+   ],
+   "coupling_cap": 64,
+   "n": 40,
+   "quota": 40,
+   "steps_p50": 12,
+   "coupling_max_p50": 30,
+   "crease_edges_p50": 152,
+   "degenerate": 25
+  },
+  {
+   "name": "l-local",
+   "steps": [
+    14,
+    19
+   ],
+   "coupling_cap": 4,
+   "n": 2,
+   "quota": 40,
+   "steps_p50": 14,
+   "coupling_max_p50": 4,
+   "crease_edges_p50": 52,
+   "degenerate": 0
+  },
+  {
+   "name": "l-medium",
+   "steps": [
+    14,
+    19
+   ],
+   "coupling_cap": 16,
+   "n": 40,
+   "quota": 40,
+   "steps_p50": 14,
+   "coupling_max_p50": 14,
+   "crease_edges_p50": 107,
+   "degenerate": 27
+  },
+  {
+   "name": "l-global",
+   "steps": [
+    14,
+    19
+   ],
+   "coupling_cap": 64,
+   "n": 40,
+   "quota": 40,
+   "steps_p50": 15,
+   "coupling_max_p50": 41,
+   "crease_edges_p50": 214,
+   "degenerate": 36
+  }
+ ]
+}
