@@ -9,6 +9,12 @@
 #
 # Tuning: --budget is queries (simulated folds) per CP -- the unit the paper's query-efficiency
 # claim is measured in, so keep it fixed once results are quoted. --depth caps sequence length.
+# /!\ RE-RUN PENDING as of 2026-09-16. stage2.mjs was fixed for a false-EXHAUSTED bug (noisy
+# coordinates split one crease line into two buckets). The fix loosens matching, which enlarges
+# the search space, and a spot check at a 10x smaller budget turned 27 of the 156 EXHAUSTED
+# verdicts into TIMEOUT -- none into SOLVED. At the real budget they may well close again, but
+# until this script is re-run, every probeC.* number in notes/facts.json is derived from the
+# pre-fix results. Re-run, then: node workspace/tools/facts.mjs && node workspace/tools/doccheck.mjs
 set -euo pipefail
 cd "$(dirname "$0")/../.."
 

@@ -258,7 +258,15 @@ function candidates(state, target) {
 // is the whole point: it is the pure-search baseline our method's tool-call count is measured
 // against. Budget is on queries, not on wall clock, so the number is reproducible.
 function solve(fold, opts) {
-    const target = buildTarget(fold);
+    // OPT-IN TOLERANT TARGET. Low-precision corpora (PurelandFold stores 3 decimals) split one
+    // straight crease across several exact 1e-6 line keys, and the search then refuses every
+    // fold and reports EXHAUSTED for a reason that is about rounding, not about folding. The
+    // repair belongs to the CORPUS, not to this file: instagram is stored at full precision and
+    // its EXHAUSTED verdicts depend on exact matching -- loosening it here globally cost a real
+    // verdict (`360_fung_I_Heart_Cat_v2_(shaped)` timed out instead of closing) and bought
+    // nothing. So callers that need tolerance pass one in:
+    //   solve(fold, { target: tolerantTarget(fold) })   -- DHEERAJ_WORKSPACE/baseline/tolerant.mjs
+    const target = opts?.target ?? buildTarget(fold);
     if (!target.total) return { status: "TRIVIAL", queries: 0, depth: 0 };
 
     // the flat sheet: one layer, the paper's boundary polygon, identity placement
@@ -331,7 +339,11 @@ function solve(fold, opts) {
         for (let limit = 1; limit <= opts.maxDepth; limit++) {
             hitCap = false;
             seen.clear();
-            if (dfs(start, 0, limit)) return { status: "SOLVED", queries, depth: seq.length };
+            if (dfs(start, 0, limit)) return { status: "SOLVED", queries, depth: seq.length,
+                // the sequence itself, so a SOLVED verdict can be replayed and checked against
+                // the CP independently. Reporting only the length asks the reader to trust the
+                // search; PR #13's standard is crease sets EQUAL, not merely overlapping.
+                seq: seq.map(s => ({ line: s.line, movePositive: s.movePositive })) };
             if (!hitCap) return { status: "EXHAUSTED", queries, depth: best };  // truly closed
         }
         return { status: "DEPTH_CAP", queries, depth: opts.maxDepth };

@@ -20,6 +20,9 @@ const s2 = read("workspace/probe-c/stage2-results.json");
 // A corpus run is gitignored (95 MB, rebuilds from its seed), so the numbers come from the
 // small summary that is committed alongside it -- `node workspace/corpus/summarize.mjs`.
 const cs = read("workspace/corpus/corpus-summary.json");
+// Whether PurelandFold is inside the frozen action space at all. It was assumed to be, and
+// called the reality anchor, for a month before anyone ran the check.
+const ac = read("workspace/corpus/anchor-check.json");
 
 const total = v.length;
 const screenFail = v.filter(x => x.stage1 === "NOT_FOLDABLE_SCREEN").length;
@@ -68,6 +71,17 @@ const facts = {
   "corpus.synth.creaseP50":        { v: cs.crease_edges.p50, src: "derived" },
   "corpus.synth.degeneratePct":    { v: pct(cs.degenerate, cs.samples), unit: "%", src: "derived: recorded, never filtered" },
   "corpus.synth.lLocalHits":       { v: (cs.cells.find(c => c.name === "l-local") || {}).n ?? 0, src: "derived: the long/low-coupling cell" },
+
+  // Run the all-layers solver over each real model's final CP. EXHAUSTED on a model a person
+  // demonstrably folded means their sequence is not expressible in our action space.
+  "anchor.total":                  { v: ac.length, src: "derived: check-anchor.mjs" },
+  "anchor.exhausted":              { v: ac.filter(r => r.status === "EXHAUSTED").length, src: "derived" },
+  "anchor.exhaustedPct":           { v: pct(ac.filter(r => r.status === "EXHAUSTED").length, ac.length), unit: "%", src: "derived" },
+  "anchor.solved":                 { v: ac.filter(r => r.status === "SOLVED").length, src: "derived" },
+  "anchor.timeout":                { v: ac.filter(r => r.status === "TIMEOUT").length, src: "derived" },
+  // the subset where pre-creasing cannot be the explanation, so only the layer rule is left
+  "anchor.noF":                    { v: ac.filter(r => r.F === 0).length, src: "derived: models with no F edge at all" },
+  "anchor.noFExhausted":           { v: ac.filter(r => r.F === 0 && r.status === "EXHAUSTED").length, src: "derived" },
 
   "purelandfold.sequences":        { v: 27,  src: "manual: HF dataset mayaweiz/PurelandFold" },
   "purelandfold.frames":           { v: 337, src: "manual: same" },

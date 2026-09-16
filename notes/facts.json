@@ -143,6 +143,35 @@
   "v": 2,
   "src": "derived: the long/low-coupling cell"
  },
+ "anchor.total": {
+  "v": 27,
+  "src": "derived: check-anchor.mjs"
+ },
+ "anchor.exhausted": {
+  "v": 12,
+  "src": "derived"
+ },
+ "anchor.exhaustedPct": {
+  "v": 44.4,
+  "unit": "%",
+  "src": "derived"
+ },
+ "anchor.solved": {
+  "v": 7,
+  "src": "derived"
+ },
+ "anchor.timeout": {
+  "v": 8,
+  "src": "derived"
+ },
+ "anchor.noF": {
+  "v": 4,
+  "src": "derived: models with no F edge at all"
+ },
+ "anchor.noFExhausted": {
+  "v": 2,
+  "src": "derived"
+ },
  "purelandfold.sequences": {
   "v": 27,
   "src": "manual: HF dataset mayaweiz/PurelandFold"
