@@ -1,0 +1,145 @@
+{
+ "id": "layers-0030",
+ "seed": 20490567,
+ "steps": 7,
+ "folds": [
+  {
+   "step": 1,
+   "normal": [
+    1,
+    0
+   ],
+   "offset": 0.125,
+   "move_positive": true,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "layers_moved": 1,
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "legal_all": 112,
+   "legal_partial": 0
+  },
+  {
+   "step": 2,
+   "normal": [
+    -0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": 0.9059805633952642,
+   "move_positive": true,
+   "selection": {
+    "mode": "bottom",
+    "k": 1
+   },
+   "over": false,
+   "layers_moved": 1,
+   "creases_created": 1,
+   "layers_before": 2,
+   "layers_after": 3,
+   "legal_all": 112,
+   "legal_partial": 14
+  },
+  {
+   "step": 3,
+   "normal": [
+    0,
+    1
+   ],
+   "offset": 0.3750000000000001,
+   "move_positive": false,
+   "selection": {
+    "mode": "top",
+    "k": 2
+   },
+   "over": true,
+   "layers_moved": 2,
+   "creases_created": 2,
+   "layers_before": 3,
+   "layers_after": 5,
+   "legal_all": 112,
+   "legal_partial": 33
+  },
+  {
+   "step": 4,
+   "normal": [
+    0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": 0.39774756441743303,
+   "move_positive": true,
+   "selection": {
+    "mode": "bottom",
+    "k": 3
+   },
+   "over": false,
+   "layers_moved": 3,
+   "creases_created": 3,
+   "layers_before": 5,
+   "layers_after": 8,
+   "legal_all": 112,
+   "legal_partial": 46
+  },
+  {
+   "step": 5,
+   "normal": [
+    0,
+    1
+   ],
+   "offset": 0.7167968750000003,
+   "move_positive": true,
+   "selection": {
+    "mode": "top",
+    "k": 7
+   },
+   "over": true,
+   "layers_moved": 6,
+   "creases_created": 5,
+   "layers_before": 8,
+   "layers_after": 13,
+   "legal_all": 112,
+   "legal_partial": 84
+  },
+  {
+   "step": 6,
+   "normal": [
+    -0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": 0.391878025706412,
+   "move_positive": false,
+   "selection": {
+    "mode": "bottom",
+    "k": 12
+   },
+   "over": false,
+   "layers_moved": 6,
+   "creases_created": 6,
+   "layers_before": 13,
+   "layers_after": 19,
+   "legal_all": 112,
+   "legal_partial": 138
+  },
+  {
+   "step": 7,
+   "normal": [
+    0,
+    1
+   ],
+   "offset": 0.6313476562500003,
+   "move_positive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": true,
+   "layers_moved": 17,
+   "creases_created": 14,
+   "layers_before": 19,
+   "layers_after": 33,
+   "legal_all": 112,
+   "legal_partial": 198
+  }
+ ]
+}
