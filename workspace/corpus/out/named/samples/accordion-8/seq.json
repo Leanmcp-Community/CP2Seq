@@ -1,0 +1,238 @@
+{
+ "id": "accordion-8",
+ "title": "Accordion pleat, 8 panels",
+ "steps": 7,
+ "folds": [
+  {
+   "step": 1,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 0.125
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 1,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.125,
+      0
+     ],
+     "Q": [
+      0.125,
+      1
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "paper_area": 1
+  },
+  {
+   "step": 2,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 0.25
+   },
+   "move_positive": false,
+   "over": false,
+   "layers_moved": 2,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.25,
+      0
+     ],
+     "Q": [
+      0.25,
+      1
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 2,
+   "layers_after": 3,
+   "paper_area": 1
+  },
+  {
+   "step": 3,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 0.375
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 3,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.375,
+      0
+     ],
+     "Q": [
+      0.375,
+      1
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 3,
+   "layers_after": 4,
+   "paper_area": 1
+  },
+  {
+   "step": 4,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 0.5
+   },
+   "move_positive": false,
+   "over": false,
+   "layers_moved": 4,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.5,
+      0
+     ],
+     "Q": [
+      0.5,
+      1
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 4,
+   "layers_after": 5,
+   "paper_area": 1
+  },
+  {
+   "step": 5,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 0.625
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 5,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.625,
+      0
+     ],
+     "Q": [
+      0.625,
+      1
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 5,
+   "layers_after": 6,
+   "paper_area": 1
+  },
+  {
+   "step": 6,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 0.75
+   },
+   "move_positive": false,
+   "over": false,
+   "layers_moved": 6,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.75,
+      0
+     ],
+     "Q": [
+      0.75,
+      1
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 6,
+   "layers_after": 7,
+   "paper_area": 1
+  },
+  {
+   "step": 7,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 0.875
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 7,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.875,
+      0
+     ],
+     "Q": [
+      0.875,
+      1
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 7,
+   "layers_after": 8,
+   "paper_area": 1
+  }
+ ]
+}

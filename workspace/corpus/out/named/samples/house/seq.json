@@ -1,0 +1,73 @@
+{
+ "id": "house",
+ "title": "House",
+ "steps": 2,
+ "folds": [
+  {
+   "step": 1,
+   "line": {
+    "n": [
+     -0.6689647316224497,
+     0.7432941462471664
+    ],
+    "d": 0.4088117804359415
+   },
+   "move_positive": true,
+   "over": true,
+   "layers_moved": 1,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.5,
+      1
+     ],
+     "Q": [
+      0,
+      0.5499999999999999
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "paper_area": 1
+  },
+  {
+   "step": 2,
+   "line": {
+    "n": [
+     -0.6689647316224497,
+     -0.7432941462471664
+    ],
+    "d": -1.0777765120583913
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 1,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.55
+     ],
+     "Q": [
+      0.5,
+      1
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 2,
+   "layers_after": 3,
+   "paper_area": 1
+  }
+ ]
+}

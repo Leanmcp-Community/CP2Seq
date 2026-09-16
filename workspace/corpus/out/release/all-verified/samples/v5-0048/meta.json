@@ -1,0 +1,123 @@
+{
+ "id": "v5-0048",
+ "stratum": "v5",
+ "seed": 20261164,
+ "requested_steps": 5,
+ "cp_hash": "838b00bee2449508",
+ "metrics": {
+  "steps": 5,
+  "crease_segments_raw": 13,
+  "crease_edges": 19,
+  "mountain": 8,
+  "valley": 11,
+  "border": 10,
+  "distinct_crease_lines": 10,
+  "vertices": 16,
+  "coupling_max": 4,
+  "coupling_mean": 2.6,
+  "coupling_total": 13,
+  "coupling_final_step": 2,
+  "layers_final": 14,
+  "distinct_angles": 3,
+  "bbox_area_final": 0.375,
+  "largest_face_final": 0.21875,
+  "flags": {
+   "repeated_halving": false,
+   "no_coupling": false,
+   "collapsed": false,
+   "single_angle": false
+  },
+  "degenerate": false
+ },
+ "planarize": {
+  "segments_in": 17,
+  "vertices": 16,
+  "edges": 29,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 10,
+   "V": 11,
+   "M": 8
+  }
+ },
+ "pure_search": {
+  "status": "SOLVED",
+  "queries": 1486,
+  "depth": 5,
+  "seq": [
+   {
+    "line": {
+     "n": [
+      1,
+      0
+     ],
+     "d": 0.5,
+     "dir": [
+      0,
+      1
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865468,
+      0.7071067811865481
+     ],
+     "d": 0.8838834764831845,
+     "dir": [
+      -0.7071067811865481,
+      0.7071067811865468
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067820672634,
+      -0.7071067803058315
+     ],
+     "d": -0.3535533897125575,
+     "dir": [
+      0.7071067803058315,
+      0.7071067820672634
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      1,
+      2.4910389306853643e-9
+     ],
+     "d": 0.2500000018682792,
+     "dir": [
+      2.4910389306853643e-9,
+      -1
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.707106782947978,
+      -0.707106779425117
+     ],
+     "d": -0.7071067794251168,
+     "dir": [
+      -0.707106779425117,
+      -0.707106782947978
+     ]
+    },
+    "movePositive": true
+   }
+  ],
+  "ms": 4
+ }
+}

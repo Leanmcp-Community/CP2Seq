@@ -1,0 +1,145 @@
+{
+ "id": "layers-0019",
+ "seed": 20403467,
+ "steps": 7,
+ "folds": [
+  {
+   "step": 1,
+   "normal": [
+    1,
+    0
+   ],
+   "offset": 0.5,
+   "move_positive": true,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "layers_moved": 1,
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "legal_all": 112,
+   "legal_partial": 0
+  },
+  {
+   "step": 2,
+   "normal": [
+    1,
+    0
+   ],
+   "offset": 0.0625,
+   "move_positive": false,
+   "selection": {
+    "mode": "bottom",
+    "k": 1
+   },
+   "over": false,
+   "layers_moved": 1,
+   "creases_created": 1,
+   "layers_before": 2,
+   "layers_after": 3,
+   "legal_all": 112,
+   "legal_partial": 22
+  },
+  {
+   "step": 3,
+   "normal": [
+    -0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": -0.2209708691207961,
+   "move_positive": false,
+   "selection": {
+    "mode": "top",
+    "k": 2
+   },
+   "over": true,
+   "layers_moved": 2,
+   "creases_created": 2,
+   "layers_before": 3,
+   "layers_after": 5,
+   "legal_all": 112,
+   "legal_partial": 33
+  },
+  {
+   "step": 4,
+   "normal": [
+    -0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": 0.3590776623212937,
+   "move_positive": true,
+   "selection": {
+    "mode": "bottom",
+    "k": 3
+   },
+   "over": false,
+   "layers_moved": 3,
+   "creases_created": 3,
+   "layers_before": 5,
+   "layers_after": 8,
+   "legal_all": 112,
+   "legal_partial": 74
+  },
+  {
+   "step": 5,
+   "normal": [
+    1,
+    0
+   ],
+   "offset": 0.25,
+   "move_positive": false,
+   "selection": {
+    "mode": "bottom",
+    "k": 7
+   },
+   "over": false,
+   "layers_moved": 6,
+   "creases_created": 5,
+   "layers_before": 8,
+   "layers_after": 13,
+   "legal_all": 112,
+   "legal_partial": 94
+  },
+  {
+   "step": 6,
+   "normal": [
+    -0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": -0.08631674575031095,
+   "move_positive": true,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "layers_moved": 11,
+   "creases_created": 5,
+   "layers_before": 13,
+   "layers_after": 18,
+   "legal_all": 112,
+   "legal_partial": 88
+  },
+  {
+   "step": 7,
+   "normal": [
+    1,
+    0
+   ],
+   "offset": 1.0130615234374998,
+   "move_positive": true,
+   "selection": {
+    "mode": "bottom",
+    "k": 7
+   },
+   "over": false,
+   "layers_moved": 4,
+   "creases_created": 4,
+   "layers_before": 18,
+   "layers_after": 22,
+   "legal_all": 112,
+   "legal_partial": 169
+  }
+ ]
+}

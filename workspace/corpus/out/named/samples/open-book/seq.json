@@ -1,0 +1,74 @@
+{
+ "id": "open-book",
+ "title": "Open book",
+ "steps": 2,
+ "folds": [
+  {
+   "step": 1,
+   "line": {
+    "n": [
+     -1,
+     0
+    ],
+    "d": -0.5
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 1,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.5,
+      0
+     ],
+     "Q": [
+      0.5,
+      1
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "paper_area": 1
+  },
+  {
+   "step": 2,
+   "line": {
+    "n": [
+     -1,
+     0
+    ],
+    "d": -0.22
+   },
+   "move_positive": true,
+   "over": false,
+   "layers_moved": 1,
+   "selection": {
+    "mode": "bottom",
+    "k": 1
+   },
+   "creases": [
+    {
+     "P": [
+      0.22,
+      0
+     ],
+     "Q": [
+      0.21999999999999997,
+      1
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 2,
+   "layers_after": 3,
+   "paper_area": 1
+  }
+ ]
+}

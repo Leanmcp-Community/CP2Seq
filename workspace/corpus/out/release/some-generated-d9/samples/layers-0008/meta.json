@@ -1,0 +1,85 @@
+{
+ "id": "layers-0008",
+ "tier": "some-layers",
+ "seed": 20316360,
+ "steps": 9,
+ "p_partial_asked": 0.5,
+ "partial_used": 3,
+ "cp_hash": "216111f3d8f54a25",
+ "metrics": {
+  "layers": 82,
+  "area": 1,
+  "distinct_areas": 18,
+  "coupling_max": 33,
+  "creases": 140,
+  "branching": [
+   {
+    "step": 1,
+    "layers": 1,
+    "all": 112,
+    "partial": 0
+   },
+   {
+    "step": 2,
+    "layers": 2,
+    "all": 112,
+    "partial": 14
+   },
+   {
+    "step": 3,
+    "layers": 3,
+    "all": 112,
+    "partial": 37
+   },
+   {
+    "step": 4,
+    "layers": 5,
+    "all": 112,
+    "partial": 72
+   },
+   {
+    "step": 5,
+    "layers": 7,
+    "all": 112,
+    "partial": 57
+   },
+   {
+    "step": 6,
+    "layers": 12,
+    "all": 112,
+    "partial": 86
+   },
+   {
+    "step": 7,
+    "layers": 20,
+    "all": 112,
+    "partial": 81
+   },
+   {
+    "step": 8,
+    "layers": 38,
+    "all": 112,
+    "partial": 326
+   },
+   {
+    "step": 9,
+    "layers": 49,
+    "all": 112,
+    "partial": 455
+   }
+  ]
+ },
+ "planarize": {
+  "segments_in": 85,
+  "vertices": 111,
+  "edges": 188,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 48,
+   "V": 68,
+   "M": 72
+  }
+ }
+}

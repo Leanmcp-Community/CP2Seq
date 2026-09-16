@@ -1,0 +1,74 @@
+{
+ "id": "shirt-collar",
+ "title": "Collar",
+ "steps": 2,
+ "folds": [
+  {
+   "step": 1,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 0.5
+   },
+   "move_positive": true,
+   "over": true,
+   "layers_moved": 1,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.5
+     ],
+     "Q": [
+      0,
+      0.5
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "paper_area": 1
+  },
+  {
+   "step": 2,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 0.14
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 1,
+   "selection": {
+    "mode": "top",
+    "k": 1
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.86
+     ],
+     "Q": [
+      0,
+      0.86
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 2,
+   "layers_after": 3,
+   "paper_area": 1
+  }
+ ]
+}

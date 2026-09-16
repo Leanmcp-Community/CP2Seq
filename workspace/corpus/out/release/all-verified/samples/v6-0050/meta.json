@@ -1,0 +1,123 @@
+{
+ "id": "v6-0050",
+ "stratum": "v6",
+ "seed": 20261266,
+ "requested_steps": 6,
+ "cp_hash": "da5c9798badd3c40",
+ "metrics": {
+  "steps": 6,
+  "crease_segments_raw": 15,
+  "crease_edges": 20,
+  "mountain": 12,
+  "valley": 8,
+  "border": 12,
+  "distinct_crease_lines": 10,
+  "vertices": 17,
+  "coupling_max": 6,
+  "coupling_mean": 2.5,
+  "coupling_total": 15,
+  "coupling_final_step": 6,
+  "layers_final": 16,
+  "distinct_angles": 4,
+  "bbox_area_final": 0.1875,
+  "largest_face_final": 0.15625,
+  "flags": {
+   "repeated_halving": false,
+   "no_coupling": false,
+   "collapsed": false,
+   "single_angle": false
+  },
+  "degenerate": false
+ },
+ "planarize": {
+  "segments_in": 19,
+  "vertices": 17,
+  "edges": 32,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 12,
+   "M": 12,
+   "V": 8
+  }
+ },
+ "pure_search": {
+  "status": "SOLVED",
+  "queries": 61556,
+  "depth": 5,
+  "seq": [
+   {
+    "line": {
+     "n": [
+      0.7071067811865475,
+      0.7071067811865475
+     ],
+     "d": 1.2374368670764577,
+     "dir": [
+      -0.7071067811865475,
+      0.7071067811865475
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      1,
+      0
+     ],
+     "d": 0.5,
+     "dir": [
+      0,
+      1
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      1,
+      4.440892098500626e-16
+     ],
+     "d": 0.25,
+     "dir": [
+      -4.440892098500626e-16,
+      1
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      -8.881784197001252e-16,
+      1
+     ],
+     "d": 0.7499999999999998,
+     "dir": [
+      1,
+      8.881784197001252e-16
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865462,
+      0.7071067811865487
+     ],
+     "d": 0.5303300858899116,
+     "dir": [
+      0.7071067811865487,
+      -0.7071067811865462
+     ]
+    },
+    "movePositive": true
+   }
+  ],
+  "ms": 122
+ }
+}

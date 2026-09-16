@@ -1,0 +1,304 @@
+{
+ "id": "map-fold-4x4",
+ "title": "Map fold, 4 x 4",
+ "steps": 6,
+ "folds": [
+  {
+   "step": 1,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 0.25
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 1,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.25,
+      0
+     ],
+     "Q": [
+      0.25,
+      1
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "paper_area": 1
+  },
+  {
+   "step": 2,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 0.5
+   },
+   "move_positive": false,
+   "over": false,
+   "layers_moved": 2,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.5,
+      0
+     ],
+     "Q": [
+      0.5,
+      1
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 2,
+   "layers_after": 3,
+   "paper_area": 1
+  },
+  {
+   "step": 3,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 0.75
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 3,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.75,
+      0
+     ],
+     "Q": [
+      0.75,
+      1
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 3,
+   "layers_after": 4,
+   "paper_area": 1
+  },
+  {
+   "step": 4,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 0.25
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 4,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.25
+     ],
+     "Q": [
+      0.75,
+      0.25
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.75,
+      0.25
+     ],
+     "Q": [
+      0.5,
+      0.25
+     ],
+     "assignment": "M"
+    },
+    {
+     "P": [
+      0.5,
+      0.25
+     ],
+     "Q": [
+      0.25,
+      0.25
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.25,
+      0.25
+     ],
+     "Q": [
+      0,
+      0.25
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 4,
+   "layers_before": 4,
+   "layers_after": 8,
+   "paper_area": 1
+  },
+  {
+   "step": 5,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 0.5
+   },
+   "move_positive": false,
+   "over": false,
+   "layers_moved": 8,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.5
+     ],
+     "Q": [
+      0.75,
+      0.5
+     ],
+     "assignment": "M"
+    },
+    {
+     "P": [
+      0.75,
+      0.5
+     ],
+     "Q": [
+      0.5,
+      0.5
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.5,
+      0.5
+     ],
+     "Q": [
+      0.25,
+      0.5
+     ],
+     "assignment": "M"
+    },
+    {
+     "P": [
+      0.25,
+      0.5
+     ],
+     "Q": [
+      0,
+      0.5
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 4,
+   "layers_before": 8,
+   "layers_after": 12,
+   "paper_area": 1
+  },
+  {
+   "step": 6,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 0.75
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 12,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.75
+     ],
+     "Q": [
+      0.75,
+      0.75
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.75,
+      0.75
+     ],
+     "Q": [
+      0.5,
+      0.75
+     ],
+     "assignment": "M"
+    },
+    {
+     "P": [
+      0.5,
+      0.75
+     ],
+     "Q": [
+      0.25,
+      0.75
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.25,
+      0.75
+     ],
+     "Q": [
+      0,
+      0.75
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 4,
+   "layers_before": 12,
+   "layers_after": 16,
+   "paper_area": 1
+  }
+ ]
+}

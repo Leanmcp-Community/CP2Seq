@@ -1,0 +1,33 @@
+{
+ "id": "shirt-collar",
+ "title": "Collar",
+ "family": "recognisable",
+ "note": "Halve, then turn down only the TOP layer at the fold -- the collar. Like hat-brim this is a some-layers model by necessity: the two layers finish with different outlines, and an all-layers fold moves every layer's boundary together.",
+ "authored": true,
+ "tier": "some-layers",
+ "metrics": {
+  "steps": 2,
+  "partial_folds": 1,
+  "crease_edges": 2,
+  "mountain": 1,
+  "valley": 1,
+  "vertices": 8,
+  "coupling_max": 1,
+  "layers_final": 3,
+  "paper_area_final": 1,
+  "sheet_area": 1
+ },
+ "planarize": {
+  "segments_in": 6,
+  "vertices": 8,
+  "edges": 10,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 8,
+   "V": 1,
+   "M": 1
+  }
+ }
+}

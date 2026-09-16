@@ -1,0 +1,33 @@
+{
+ "id": "bow-tie",
+ "title": "Bow tie",
+ "family": "recognisable",
+ "note": "Pinch the middle from both sides: two folds bring the long edges in to a narrow waist, and two more take the outer corners off so each wing flares.",
+ "authored": true,
+ "tier": "all-layers",
+ "metrics": {
+  "steps": 4,
+  "partial_folds": 0,
+  "crease_edges": 19,
+  "mountain": 8,
+  "valley": 11,
+  "vertices": 23,
+  "coupling_max": 8,
+  "layers_final": 16,
+  "paper_area_final": 1,
+  "sheet_area": 1
+ },
+ "planarize": {
+  "segments_in": 19,
+  "vertices": 23,
+  "edges": 37,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 18,
+   "V": 11,
+   "M": 8
+  }
+ }
+}

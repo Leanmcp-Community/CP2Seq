@@ -16,6 +16,10 @@ workspace/corpus/out/*
 # versioning it, and it is not an argument a reader of the paper can act on.
 !workspace/corpus/out/batch1/
 !workspace/corpus/out/layers-batch1/
+# the release corpus itself (eight batches, one merged manifest)
+!workspace/corpus/out/release/
+# the named models: twenty authored fold sequences, small and cited by the paper's figures
+!workspace/corpus/out/named/
 
 # PurelandFold model export — derived from the HF dataset
 workspace/purelandfold/models/

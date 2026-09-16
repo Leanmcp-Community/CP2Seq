@@ -1,0 +1,6 @@
+[
+ {"name": "v3", "min": 3, "max": 3},
+ {"name": "v4", "min": 4, "max": 4},
+ {"name": "v5", "min": 5, "max": 5},
+ {"name": "v6", "min": 6, "max": 6}
+]

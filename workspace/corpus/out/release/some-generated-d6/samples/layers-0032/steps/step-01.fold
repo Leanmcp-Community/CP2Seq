@@ -1,0 +1,1 @@
+{"file_spec":1.1,"file_creator":"FoldOrigami synthetic Pureland generator","frame_classes":["foldedForm"],"vertices_coords":[[1,0.125],[1,-0.75],[0,-0.75],[0,0.125],[0,0],[1,0]],"edges_vertices":[[0,1],[1,2],[2,3],[0,3],[4,5],[0,5],[3,4]],"edges_assignment":["U","U","U","U","U","U","U"],"faces_vertices":[[0,1,2,3],[4,5,0,3]],"fo:faces_layer":[0,1],"fo:faces_parity":[1,0]}

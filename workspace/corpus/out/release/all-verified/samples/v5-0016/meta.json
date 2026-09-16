@@ -1,0 +1,123 @@
+{
+ "id": "v5-0016",
+ "stratum": "v5",
+ "seed": 20261132,
+ "requested_steps": 5,
+ "cp_hash": "70fd64874caba147",
+ "metrics": {
+  "steps": 5,
+  "crease_segments_raw": 11,
+  "crease_edges": 16,
+  "mountain": 7,
+  "valley": 9,
+  "border": 11,
+  "distinct_crease_lines": 8,
+  "vertices": 16,
+  "coupling_max": 6,
+  "coupling_mean": 2.2,
+  "coupling_total": 11,
+  "coupling_final_step": 6,
+  "layers_final": 12,
+  "distinct_angles": 4,
+  "bbox_area_final": 0.4375,
+  "largest_face_final": 0.359375,
+  "flags": {
+   "repeated_halving": false,
+   "no_coupling": false,
+   "collapsed": false,
+   "single_angle": false
+  },
+  "degenerate": false
+ },
+ "planarize": {
+  "segments_in": 15,
+  "vertices": 16,
+  "edges": 27,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 11,
+   "M": 7,
+   "V": 9
+  }
+ },
+ "pure_search": {
+  "status": "SOLVED",
+  "queries": 3428,
+  "depth": 5,
+  "seq": [
+   {
+    "line": {
+     "n": [
+      0,
+      1
+     ],
+     "d": 0.25,
+     "dir": [
+      -1,
+      0
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865468,
+      -0.7071067811865481
+     ],
+     "d": -4.163336342344337e-16,
+     "dir": [
+      -0.7071067811865481,
+      -0.7071067811865468
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865489,
+      0.7071067811865461
+     ],
+     "d": 8.326672684688674e-17,
+     "dir": [
+      0.7071067811865461,
+      -0.7071067811865489
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      1.8873791418627665e-15,
+      1
+     ],
+     "d": 7.216449660063509e-16,
+     "dir": [
+      -1,
+      1.8873791418627665e-15
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067816269062,
+      0.7071067807461889
+     ],
+     "d": -0.17677669540672605,
+     "dir": [
+      -0.7071067807461889,
+      0.7071067816269062
+     ]
+    },
+    "movePositive": true
+   }
+  ],
+  "ms": 6
+ }
+}

@@ -1,0 +1,106 @@
+{
+ "id": "arrowhead",
+ "title": "Arrowhead",
+ "steps": 3,
+ "folds": [
+  {
+   "step": 1,
+   "line": {
+    "n": [
+     0.8320502943378436,
+     -0.554700196225229
+    ],
+    "d": -0.13867504905630723
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 1,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.5,
+      1
+     ],
+     "Q": [
+      0,
+      0.2499999999999999
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "paper_area": 1
+  },
+  {
+   "step": 2,
+   "line": {
+    "n": [
+     0.8320502943378436,
+     0.554700196225229
+    ],
+    "d": 0.9707253433941508
+   },
+   "move_positive": true,
+   "over": true,
+   "layers_moved": 1,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.24999999999999986
+     ],
+     "Q": [
+      0.5,
+      1
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 2,
+   "layers_after": 3,
+   "paper_area": 1
+  },
+  {
+   "step": 3,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 0.18
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 1,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.18
+     ],
+     "Q": [
+      0,
+      0.18
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 3,
+   "layers_after": 4,
+   "paper_area": 1
+  }
+ ]
+}

@@ -1,0 +1,150 @@
+{
+ "id": "cup",
+ "title": "Cup",
+ "steps": 3,
+ "folds": [
+  {
+   "step": 1,
+   "line": {
+    "n": [
+     0.7071067811865475,
+     0.7071067811865475
+    ],
+    "d": 0.7071067811865475
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 1,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0
+     ],
+     "Q": [
+      0,
+      1
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "paper_area": 1
+  },
+  {
+   "step": 2,
+   "line": {
+    "n": [
+     -0.4961389383568338,
+     0.8682431421244592
+    ],
+    "d": 0.24558877448663274
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 2,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.8542857142857142
+     ],
+     "Q": [
+      0.45636363636363636,
+      0.5436363636363637
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.14571428571428563,
+      0
+     ],
+     "Q": [
+      0.4563636363636364,
+      0.5436363636363636
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 2,
+   "layers_before": 2,
+   "layers_after": 4,
+   "paper_area": 1
+  },
+  {
+   "step": 3,
+   "line": {
+    "n": [
+     -0.8682431421244592,
+     0.4961389383568338
+    ],
+    "d": -0.24558877448663274
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 4,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.8542857142857143,
+      1
+     ],
+     "Q": [
+      0.66,
+      0.66
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.33999999999999997,
+      0.3399999999999999
+     ],
+     "Q": [
+      0,
+      0.14571428571428557
+     ],
+     "assignment": "M"
+    },
+    {
+     "P": [
+      0.34454198473282427,
+      0
+     ],
+     "Q": [
+      0.33999999999999997,
+      0.3399999999999999
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      1,
+      0.6554580152671756
+     ],
+     "Q": [
+      0.6600000000000001,
+      0.66
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 4,
+   "layers_before": 4,
+   "layers_after": 8,
+   "paper_area": 1
+  }
+ ]
+}

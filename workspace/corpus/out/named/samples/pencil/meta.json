@@ -1,0 +1,33 @@
+{
+ "id": "pencil",
+ "title": "Pencil",
+ "family": "recognisable",
+ "note": "A long rectangle with one end brought to a point. Halve twice the same way for the shaft -- a pencil is thin -- then take both corners off one end.",
+ "authored": true,
+ "tier": "all-layers",
+ "metrics": {
+  "steps": 4,
+  "partial_folds": 0,
+  "crease_edges": 10,
+  "mountain": 4,
+  "valley": 6,
+  "vertices": 15,
+  "coupling_max": 3,
+  "layers_final": 9,
+  "paper_area_final": 1,
+  "sheet_area": 1
+ },
+ "planarize": {
+  "segments_in": 12,
+  "vertices": 15,
+  "edges": 23,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 13,
+   "V": 6,
+   "M": 4
+  }
+ }
+}

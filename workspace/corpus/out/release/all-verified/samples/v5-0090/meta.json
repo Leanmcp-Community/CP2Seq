@@ -1,0 +1,123 @@
+{
+ "id": "v5-0090",
+ "stratum": "v5",
+ "seed": 20261206,
+ "requested_steps": 5,
+ "cp_hash": "2362c2253e1bc239",
+ "metrics": {
+  "steps": 5,
+  "crease_segments_raw": 12,
+  "crease_edges": 17,
+  "mountain": 6,
+  "valley": 11,
+  "border": 13,
+  "distinct_crease_lines": 10,
+  "vertices": 18,
+  "coupling_max": 5,
+  "coupling_mean": 2.4,
+  "coupling_total": 12,
+  "coupling_final_step": 3,
+  "layers_final": 13,
+  "distinct_angles": 2,
+  "bbox_area_final": 0.4375,
+  "largest_face_final": 0.234375,
+  "flags": {
+   "repeated_halving": false,
+   "no_coupling": false,
+   "collapsed": false,
+   "single_angle": false
+  },
+  "degenerate": false
+ },
+ "planarize": {
+  "segments_in": 16,
+  "vertices": 18,
+  "edges": 30,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 13,
+   "V": 11,
+   "M": 6
+  }
+ },
+ "pure_search": {
+  "status": "SOLVED",
+  "queries": 9202,
+  "depth": 5,
+  "seq": [
+   {
+    "line": {
+     "n": [
+      1,
+      0
+     ],
+     "d": 0.75,
+     "dir": [
+      0,
+      1
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865475,
+      -0.7071067811865475
+     ],
+     "d": 0.3535533905932738,
+     "dir": [
+      -0.7071067811865475,
+      -0.7071067811865475
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      1,
+      0
+     ],
+     "d": 0.25,
+     "dir": [
+      0,
+      1
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067807461894,
+      -0.7071067816269057
+     ],
+     "d": -0.1767766951865472,
+     "dir": [
+      0.7071067816269057,
+      0.7071067807461894
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865475,
+      -0.7071067811865476
+     ],
+     "d": -0.5303300858899107,
+     "dir": [
+      0.7071067811865476,
+      0.7071067811865475
+     ]
+    },
+    "movePositive": true
+   }
+  ],
+  "ms": 17
+ }
+}
