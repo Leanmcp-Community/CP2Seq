@@ -190,3 +190,28 @@ This is a baseline with explicit restrictions, not a complete Pureland solver:
 Tests cover search ordering, shallower DFS revisits, cycles, resource verdicts,
 known one-fold targets, crease history, fold/unfold precreasing, blocked layer
 motion, target topology, angle rejection, layer conventions, and concave faces.
+
+## 3D search playback
+
+See [the focused viewer](../viewer/README.md). Add `--trace-events 20000` to a
+new run to record exploration, rejections, backtracking and the final stop.
+Trace recording is capped at 2,000 states, 20,000 events plus the terminal event,
+and 16 MiB, whichever is reached first. These hard constants live in
+`search_trace.py`. The CLI's default search-state budget is now 20,000;
+explicit `--max-states` settings still control the search independently.
+
+## Automatic experiment saving
+
+`--out` is now optional for both solve and benchmark. Without it, every run uses
+`DHEERAJ_WORKSPACE/experiments/<target>/<timestamp>-<unique-id>/` and prints the
+absolute location. Every SOLVED algorithm always saves its complete
+`sequence.fold`, individual `frames/`, and `result.json`, even without
+`--trace-events`. Exploration tracing remains optional and bounded; it never
+truncates the final solution. Unsolved runs save their verdict, plus exploration
+when requested, but do not invent a successful sequence.
+
+The local viewer server automatically scans experiments and legacy exports.
+Its run list refreshes every ten seconds while the page is visible, preserving
+current playback. Restart an existing server after updating its Python code.
+An explicit `--out` still overrides the destination; an external destination
+can be browsed with the server's `--exports` argument.

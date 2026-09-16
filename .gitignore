@@ -25,3 +25,20 @@ DHEERAJ_WORKSPACE/baseline/pureland-run.txt
 DHEERAJ_WORKSPACE/pureland/viewer.html
 DHEERAJ_WORKSPACE/pureland/viz-data.json
 DHEERAJ_WORKSPACE/pureland/dist/
+
+# Local search artifacts; regenerate with baseline_python/run.py
+DHEERAJ_WORKSPACE/experiments/
+DHEERAJ_WORKSPACE/exports/
+
+# Python environments, caches, and local configuration
+.venv/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.env
+.env.*
+!.env.example
+
+# Local viewer logs
+DHEERAJ_WORKSPACE/viewer/*.log

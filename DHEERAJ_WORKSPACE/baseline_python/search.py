@@ -48,7 +48,7 @@ class Result:
             "actions": [a.as_dict() for a in self.actions]}
 
 
-def search(problem, algorithm="bfs", limits=None):
+def search(problem, algorithm="bfs", limits=None, observer=None):
     """Only Problem's CP and target are visible; no reference trajectory.
 
     BFS is shortest in this unit-cost discrete graph, subject to numerical
@@ -65,10 +65,18 @@ def search(problem, algorithm="bfs", limits=None):
     best_depth = {problem.key(root.state): 0}
     depth_cut = False
 
+    def emit(kind, node=None, **details):
+        if observer is not None:
+            observer(kind, node, details)
+
+    emit("root", root)
+
     def finish(status, node=None):
         result.status = status
         result.visited = len(best_depth)
         result.elapsed_seconds = monotonic() - started
+        emit("stop", node, status=status, queries=result.queries,
+             visited=result.visited, expanded=result.expanded)
         if node is not None:
             while node is not None:
                 result.states.append(node.state)
@@ -91,17 +99,23 @@ def search(problem, algorithm="bfs", limits=None):
         result.queries += 1
         state = problem.apply(node.state, action)
         if state is None:
+            if observer is not None:
+                emit("rejected", node, action=action.as_dict())
             return None
         result.generated += 1
         depth = node.depth + 1
         key = problem.key(state)
         if best_depth.get(key, float("inf")) <= depth:
+            if observer is not None:
+                emit("duplicate", node, action=action.as_dict())
             return None
         if key not in best_depth and len(best_depth) >= limits.max_states:
             raise MemoryError
         best_depth[key] = depth
         result.max_depth_reached = max(result.max_depth_reached, depth)
-        return Node(state, node, action, depth)
+        nxt = Node(state, node, action, depth)
+        emit("accepted", nxt)
+        return nxt
 
     def budget():
         if monotonic()-started >= limits.seconds:
@@ -117,7 +131,9 @@ def search(problem, algorithm="bfs", limits=None):
             queue = deque([root])
             while queue:
                 node = queue.popleft()
+                emit("select", node)
                 if node.depth >= limits.max_depth:
+                    emit("depth_limit", node)
                     depth_cut = True
                     continue
                 result.expanded += 1
@@ -141,10 +157,14 @@ def search(problem, algorithm="bfs", limits=None):
             while stack:
                 node, iterator = stack[-1]
                 if node.depth >= limits.max_depth:
+                    emit("depth_limit", node)
                     depth_cut = True
                     stack.pop()
+                    if stack:
+                        emit("backtrack", stack[-1][0])
                     continue
                 if iterator is None:
+                    emit("select", node)
                     iterator = iter(problem.actions(node.state))
                     stack[-1] = (node, iterator)
                     result.expanded += 1
@@ -155,6 +175,8 @@ def search(problem, algorithm="bfs", limits=None):
                     action = next(iterator)
                 except StopIteration:
                     stack.pop()
+                    if stack:
+                        emit("backtrack", stack[-1][0])
                     continue
                 status = budget()
                 if status:

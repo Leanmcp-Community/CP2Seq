@@ -1,17 +1,29 @@
 """Command-line Python CP + target-frame sequence baseline (stdlib only)."""
 import argparse
 from dataclasses import asdict
+from datetime import datetime
 import hashlib
 import json
 from pathlib import Path
 import sys
+from uuid import uuid4
 
 from model import Action, InputError, Problem
 from search import Limits, search
+from search_trace import Trace
 
 
 HERE = Path(__file__).resolve().parent
 DEFAULT_DATA = HERE.parent / "data" / "pureland" / "seq"
+DEFAULT_MAX_STATES = 20_000
+DEFAULT_EXPERIMENTS = HERE.parent / "experiments"
+
+
+def default_output(args):
+    target = Path(args.target) if args.command == "solve" else None
+    name = (f"{target.parent.name}-{target.stem}" if target else "benchmark")
+    stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    return DEFAULT_EXPERIMENTS / name / f"{stamp}-{uuid4().hex[:8]}"
 
 
 def read(path):
@@ -26,12 +38,12 @@ def digest(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def write(path, data):
+def write(path, data, compact=False):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     # Reject accidental overwrites of user inputs/artifacts.
     with path.open("x", encoding="utf-8") as handle:
-        json.dump(data, handle, indent=2, allow_nan=False)
+        json.dump(data, handle, indent=None if compact else 2, allow_nan=False)
         handle.write("\n")
 
 
@@ -39,12 +51,15 @@ def options(parser):
     parser.add_argument("--algorithm", choices=("bfs", "dfs", "both"), default="both")
     parser.add_argument("--max-depth", type=int, default=24)
     parser.add_argument("--max-queries", type=int, default=100000)
-    parser.add_argument("--max-states", type=int, default=50000)
+    parser.add_argument("--max-states", type=int, default=DEFAULT_MAX_STATES)
     parser.add_argument("--seconds", type=float, default=60)
+    parser.add_argument("--trace-events", type=int, default=0,
+                        help="Record up to this many search events for the 3D viewer")
     parser.add_argument("--tolerance", type=float, default=0.004,
                         help="Absolute distance in CP units; Pureland sheets are unit-sized")
     parser.add_argument("--convention", choices=("pureland", "fold"), default="pureland")
-    parser.add_argument("--out", type=Path, required=True, help="New output directory")
+    parser.add_argument("--out", type=Path,
+                        help="Optional override; default: experiments/<target>/<unique-run>")
 
 
 def limits_for(args):
@@ -57,7 +72,10 @@ def solve_one(cp_path, target_path, args, output):
     algorithms = ("bfs", "dfs") if args.algorithm == "both" else (args.algorithm,)
     rows = []
     for algorithm in algorithms:
-        result = search(problem, algorithm, limits)
+        if args.trace_events < 0:
+            raise InputError("--trace-events must be nonnegative")
+        trace = Trace(problem, args.trace_events) if args.trace_events else None
+        result = search(problem, algorithm, limits, observer=trace)
         row = result.as_dict() | {
             "cp": str(Path(cp_path).resolve()), "target": str(Path(target_path).resolve()),
             "cp_sha256": digest(cp_path), "target_sha256": digest(target_path),
@@ -68,12 +86,16 @@ def solve_one(cp_path, target_path, args, output):
             "target_layer_constraints": len(problem.orders),
             "target_geometry_resolved": problem.target_transforms is not None,
         }
-        write(output / algorithm / "result.json", row)
+        # Always save the complete solution, independently of trace recording.
         if result.status == "SOLVED":
             frames = [problem.frame(state) for state in result.states]
             write(output / algorithm / "sequence.fold", frames[0] | {"file_frames": frames[1:]})
             for i, frame in enumerate(frames):
                 write(output / algorithm / "frames" / f"step_{i:03d}.fold", frame)
+        if trace is not None:
+            write(output / algorithm / "trace.json", trace.export(result), compact=True)
+        # Publish the catalog marker only once the artifacts are ready.
+        write(output / algorithm / "result.json", row)
         rows.append(row)
         print(f"{Path(target_path).parent.name:22} {algorithm:3} {result.status:16} "
               f"steps={row['steps']} queries={result.queries} states={result.visited} "
@@ -164,8 +186,11 @@ def main():
         if args.command == "replay":
             return replay(args)
         limits_for(args).validate()
+        if args.out is None:
+            args.out = default_output(args)
         if args.out.exists():
             raise InputError(f"Output already exists: {args.out}; choose a new directory")
+        print(f"Saving experiment to: {args.out.resolve()}", flush=True)
         if args.command == "benchmark":
             return benchmark(args)
         rows = solve_one(args.cp, args.target, args, args.out)
