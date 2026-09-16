@@ -149,7 +149,7 @@ function measure(run, pl) {
 }
 
 /* ---------- one sample ------------------------------------------------------------------- */
-function build(seed, steps, opts) {
+export function build(seed, steps, opts) {
     const rand = rngFrom(seed);
     const run = foldRandom(steps, rand, {
         snapshots: opts.snapshots,
@@ -196,6 +196,12 @@ const strata = arg("strata", null)
     ? JSON.parse(fs.readFileSync(arg("strata"), "utf8"))
     : DEFAULT_STRATA;
 
+// basename, not endsWith: a sibling named test-generate.mjs would end with generate.mjs too,
+// and importing it would then generate a corpus as a side effect. The guard exists so build()
+// above can be imported -- scaling.mjs needs the all-layers sampler to put the two tiers'
+// search cost on one axis, and a second copy of the sampler would not be the same corpus.
+const IS_MAIN = process.argv[1] && path.basename(process.argv[1]) === "generate.mjs";
+if (IS_MAIN) {
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(path.join(OUT, "samples"), { recursive: true });
 
@@ -328,3 +334,4 @@ if (VERIFY) {
 fs.writeFileSync(path.join(OUT, "report.md"), rep);
 console.log(`\n${manifest.length} samples, ${Object.values(rejects).reduce((a,b)=>a+b,0)} rejected`);
 console.log(`report  -> ${path.relative(process.cwd(), path.join(OUT, "report.md"))}`);
+}

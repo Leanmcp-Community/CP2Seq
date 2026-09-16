@@ -60,7 +60,11 @@ export function tolerantTarget(fold, tol = 4e-3) {
         // half the creases land mirrored and read as a contradiction later.
         const flip = hit.line.dir[0] * bucket.line.dir[0] + hit.line.dir[1] * bucket.line.dir[1] < 0;
         for (const s of bucket.want) {
-            hit.want.push(flip ? { ...s, lo: -s.hi, hi: -s.lo } : { ...s });
+            // `cov` (the creased sub-intervals, stage2.mjs) is given a FRESH array rather than
+            // spread: a shallow copy would share the array with the segment it was copied from,
+            // and two views of one segment that disagree about what has been creased is a bug
+            // that would only appear on the deep end of a search.
+            hit.want.push(flip ? { ...s, lo: -s.hi, hi: -s.lo, cov: [] } : { ...s, cov: [] });
         }
     }
 

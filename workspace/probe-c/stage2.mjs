@@ -156,7 +156,9 @@ function buildTarget(fold) {
         // sequence that is perfectly real.
         const t = (p) => L.line.dir[0] * p[0] + L.line.dir[1] * p[1];
         const t0 = t(V[u]), t1 = t(V[w]);
-        L.want.push({ lo: Math.min(t0, t1), hi: Math.max(t0, t1), a, covered: false });
+        // `cov` is the list of sub-intervals of this segment that have actually been creased.
+        // It used to be a boolean, and that was a real defect -- see segCovered() below.
+        L.want.push({ lo: Math.min(t0, t1), hi: Math.max(t0, t1), a, cov: [] });
         total++;
     }
     return { lines, total };
@@ -177,12 +179,40 @@ function demand(target, line, lo, hi) {
     for (const s of segs) {
         if (s.lo > cursor + EPS) return null;               // a gap: not a crease there
         if (s.a !== "U") { if (want && want !== s.a) return null; want = want || s.a; }
-        touched.push(s);
+        touched.push({ seg: s, lo: Math.max(a, s.lo), hi: Math.min(b, s.hi) });
         cursor = Math.max(cursor, s.hi);
     }
     if (cursor < b - EPS) return null;                      // chord runs past the creases
     return { want, touched };                               // want === null => all wildcard
 }
+
+// IS THIS SEGMENT FULLY CREASED? -- and the reason this is not a boolean.
+//
+// A fold creases a CHORD of the paper, and that chord can cover only PART of a crease the CP
+// demands. The old bookkeeping set `covered = true` on any segment the chord touched at all, so
+// creasing 3cm of a 10cm crease retired the whole 10cm. The search could then tick off every
+// segment, declare remaining === 0 and report SOLVED, while stretches of the pattern had never
+// been creased -- and the sequence it returned did not reproduce the CP. That is not a rare
+// corner: it surfaced as replayed creases whose ENDPOINTS were short, in 2 of 10 five-fold
+// round trips.
+//
+// The three cases, which is the whole rule:
+//   shorter than the segment   -> only the part actually creased is retired
+//   exactly covering it        -> the segment is retired
+//   longer than the segment    -> either adjacent segments cover the rest (legal, and each is
+//                                 credited its own overlap) or the chord runs past the CP's
+//                                 creases entirely, which demand() already refuses
+const segCovered = (s) => {
+    if (!s.cov.length) return false;
+    const iv = [...s.cov].sort((x, y) => x[0] - y[0]);
+    let reach = s.lo;
+    for (const [lo, hi] of iv) {
+        if (lo > reach + EPS) return false;               // a gap: not creased there
+        reach = Math.max(reach, hi);
+        if (reach >= s.hi - EPS) return true;
+    }
+    return reach >= s.hi - EPS;
+};
 
 /* ---------- one fold: split every layer, reflect the moving side, collect the creases ----- */
 // Returns null if the fold is illegal (creates a crease the CP does not have, or demands two
@@ -292,7 +322,7 @@ function solve(fold, opts) {
 
     const remaining = () => {
         let r = 0;
-        for (const L of target.lines.values()) for (const s of L.want) if (!s.covered) r++;
+        for (const L of target.lines.values()) for (const s of L.want) if (!segCovered(s)) r++;
         return r;
     };
 
@@ -315,7 +345,9 @@ function solve(fold, opts) {
                 queries++;
                 const r = applyFold(state, line, movePositive, target);
                 if (!r) continue;
-                moves.push({ line, movePositive, r, gain: r.cover.filter(s => !s.covered).length });
+                // gain orders the moves; it counts segments still owed, which is a heuristic and
+                // not a measurement, so an approximate answer here costs nothing but move order.
+                moves.push({ line, movePositive, r, gain: r.cover.filter(c => !segCovered(c.seg)).length });
             }
         }
         moves.sort((a, b) => b.gain - a.gain);
@@ -323,13 +355,14 @@ function solve(fold, opts) {
             const k = sig(m.r.state);
             if (seen.has(k)) continue;
             seen.add(k);
-            const fresh = m.r.cover.filter(s => !s.covered);
-            for (const s of fresh) s.covered = true;
+            // push the creased intervals; the pop below must undo exactly these, so the two
+            // loops walk the same list rather than re-deriving what to remove
+            for (const c of m.r.cover) c.seg.cov.push([c.lo, c.hi]);
             seq.push({ line: m.line, movePositive: m.movePositive });
             best = Math.max(best, depth + 1);
             if (dfs(m.r.state, depth + 1, limit)) return true;
             seq.pop();
-            for (const s of fresh) s.covered = false;
+            for (let i = m.r.cover.length - 1; i >= 0; i--) m.r.cover[i].seg.cov.pop();
             seen.delete(k);
         }
         return false;
@@ -376,7 +409,7 @@ function boundaryLoop(bEdges, V) {
 // `demand` is exported because the some-layers solver (workspace/corpus/solve-layers.mjs) asks
 // the same question of the same target index. Reimplementing it there would give the two tiers
 // two different definitions of "this crease is in the CP", and the tiers have to be comparable.
-export { solve, applyFold, candidates, buildTarget, demand, boundaryLoop, lineOf, lkey, ptOn, ap, mul, inv, ID, reflectT, clip, chord };
+export { solve, applyFold, candidates, buildTarget, demand, segCovered, boundaryLoop, lineOf, lkey, ptOn, ap, mul, inv, ID, reflectT, clip, chord };
 
 /* ---------- driver (skipped when this file is imported, e.g. by selftest.mjs) ------------- */
 const IS_MAIN = process.argv[1] && process.argv[1].endsWith("stage2.mjs");
