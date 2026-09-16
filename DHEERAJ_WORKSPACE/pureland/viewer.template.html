@@ -1,0 +1,602 @@
+<title>Pureland Layer Scope</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --ground:   #e4e7ec;
+    --surface:  #ffffff;
+    --sunken:   #f2f4f7;
+    --edge:     #ccd2db;
+    --edge-soft:#e0e5ec;
+    --ink:      #0f1419;
+    --ink-2:    #49535f;
+    --ink-3:    #79838f;
+    --accent:   #0d6f68;
+    --accent-2: #0a5a54;
+    --mountain: #c2435a;
+    --valley:   #3a74bd;
+    --stage:    #f7f8fa;
+    --stage-2:  #e7eaef;
+    --paper:    #0f1419;
+    --ok:       #0d6f68;
+    --warn:     #9a6212;
+    --shadow:   0 1px 2px rgba(15,20,25,.06), 0 8px 24px rgba(15,20,25,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:   #090c11;
+      --surface:  #141922;
+      --sunken:   #0e1219;
+      --edge:     #262e3a;
+      --edge-soft:#1c232d;
+      --ink:      #e8ecf2;
+      --ink-2:    #9aa5b3;
+      --ink-3:    #6b7683;
+      --accent:   #3fb3a8;
+      --accent-2: #62c9bf;
+      --mountain: #e8697e;
+      --valley:   #6a9fe0;
+      --stage:    #0c1016;
+      --stage-2:  #161c26;
+      --paper:    #dfe6ef;
+      --ok:       #3fb3a8;
+      --warn:     #d19a3c;
+      --shadow:   0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:   #090c11;
+    --surface:  #141922;
+    --sunken:   #0e1219;
+    --edge:     #262e3a;
+    --edge-soft:#1c232d;
+    --ink:      #e8ecf2;
+    --ink-2:    #9aa5b3;
+    --ink-3:    #6b7683;
+    --accent:   #3fb3a8;
+    --accent-2: #62c9bf;
+    --mountain: #e8697e;
+    --valley:   #6a9fe0;
+    --stage:    #0c1016;
+    --stage-2:  #161c26;
+    --paper:    #dfe6ef;
+    --ok:       #3fb3a8;
+    --warn:     #d19a3c;
+    --shadow:   0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    font-size: 14px; line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1280px; margin: 0 auto; padding-inline: 16px; padding-block: 20px 40px; }
+
+  /* ---- masthead ---- */
+  .masthead { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; margin-bottom: 4px; }
+  h1 {
+    font-family: Archivo, ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700; font-size: clamp(22px, 3.6vw, 32px); letter-spacing: -0.02em;
+    margin: 0; text-wrap: balance;
+  }
+  .sub { color: var(--ink-2); font-size: 13.5px; max-width: 68ch; margin: 6px 0 0; }
+  .sub a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3);
+  }
+
+  /* ---- model rail ---- */
+  .rail {
+    display: flex; gap: 6px; overflow-x: auto; padding: 14px 0 12px;
+    margin-top: 18px; border-block: 1px solid var(--edge-soft);
+    scrollbar-width: thin;
+  }
+  .chip {
+    flex: 0 0 auto; border: 1px solid var(--edge); background: var(--surface);
+    color: var(--ink-2); border-radius: 2px; padding: 5px 10px; cursor: pointer;
+    font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11.5px;
+    letter-spacing: .01em; white-space: nowrap; transition: border-color .12s, color .12s;
+  }
+  .chip:hover { border-color: var(--ink-3); color: var(--ink); }
+  .chip[aria-pressed="true"] {
+    background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 500;
+  }
+  :root[data-theme="dark"] .chip[aria-pressed="true"],
+  :root:not([data-theme="light"]) .chip[aria-pressed="true"] { color: #06120f; }
+  .chip .ct { opacity: .62; margin-left: 5px; }
+  .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* ---- main grid ---- */
+  .grid { display: grid; grid-template-columns: 1fr 300px; gap: 16px; margin-top: 16px; align-items: start; }
+  @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+
+  .panel { background: var(--surface); border: 1px solid var(--edge); border-radius: 3px; }
+  .panel-hd {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 9px 12px; border-bottom: 1px solid var(--edge-soft);
+  }
+  .panel-hd h2 {
+    font-family: Archivo, sans-serif; font-size: 12px; font-weight: 600;
+    letter-spacing: .06em; text-transform: uppercase; margin: 0; color: var(--ink-2);
+  }
+
+  /* ---- stage ---- */
+  #stage {
+    position: relative; width: 100%; aspect-ratio: 16 / 10; max-width: 100%;
+    background: linear-gradient(170deg, var(--stage), var(--stage-2));
+    cursor: grab; touch-action: none; overflow: hidden;
+  }
+  #stage.drag { cursor: grabbing; }
+  #stage canvas { display: block; width: 100%; height: 100%; }
+  @media (max-width: 560px) { #stage { aspect-ratio: 4 / 3; } }
+
+  .stage-tag {
+    position: absolute; left: 10px; bottom: 9px; pointer-events: none;
+    font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: .06em;
+    color: var(--ink-3); text-transform: uppercase;
+  }
+
+  /* ---- transport ---- */
+  .transport { padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+  .tline { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  button.ctl {
+    border: 1px solid var(--edge); background: var(--sunken); color: var(--ink);
+    border-radius: 2px; padding: 6px 11px; cursor: pointer; font: inherit; font-size: 13px;
+    font-family: "IBM Plex Mono", monospace;
+  }
+  button.ctl:hover:not(:disabled) { border-color: var(--ink-3); }
+  button.ctl:disabled { opacity: .38; cursor: default; }
+  button.ctl:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button.ctl.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 500; }
+  :root[data-theme="dark"] button.ctl.primary,
+  :root:not([data-theme="light"]) button.ctl.primary { color: #06120f; }
+
+  input[type="range"] { accent-color: var(--accent); flex: 1 1 130px; min-width: 100px; }
+  label.rl {
+    font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--ink-3); white-space: nowrap;
+  }
+  .step-read {
+    font-family: "IBM Plex Mono", monospace; font-size: 13px; font-weight: 600;
+    font-variant-numeric: tabular-nums; min-width: 8ch;
+  }
+
+  /* ---- readouts ---- */
+  .reads { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--edge-soft); }
+  .read { background: var(--surface); padding: 10px 12px; }
+  .read dt {
+    font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .09em;
+    text-transform: uppercase; color: var(--ink-3); margin: 0 0 3px;
+  }
+  .read dd {
+    margin: 0; font-family: "IBM Plex Mono", monospace; font-size: 17px; font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .read dd .u { font-size: 11px; font-weight: 400; color: var(--ink-3); margin-left: 3px; }
+
+  /* ---- CP panel ---- */
+  #cp { display: block; width: 100%; height: auto; background: var(--sunken); }
+  .legend { display: flex; gap: 14px; padding: 9px 12px; border-top: 1px solid var(--edge-soft); flex-wrap: wrap; }
+  .lg { display: flex; align-items: center; gap: 6px; font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--ink-2); }
+  .sw { width: 14px; height: 2px; border-radius: 1px; }
+
+  /* ---- density scale ---- */
+  .scale { padding: 10px 12px 12px; }
+  .ramp { height: 10px; border-radius: 2px; border: 1px solid var(--edge-soft); }
+  .ramp-ax {
+    display: flex; justify-content: space-between; margin-top: 5px;
+    font-family: "IBM Plex Mono", monospace; font-size: 10px; color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .note {
+    margin-top: 18px; padding: 12px 14px; border-left: 2px solid var(--accent);
+    background: var(--sunken); color: var(--ink-2); font-size: 13px; border-radius: 0 3px 3px 0;
+  }
+  .note strong { color: var(--ink); font-weight: 600; }
+  .note code {
+    font-family: "IBM Plex Mono", monospace; font-size: 12px;
+    background: var(--ground); padding: 1px 4px; border-radius: 2px;
+  }
+  .note + .note { margin-top: 8px; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <h1>Pureland Layer Scope</h1>
+    <span class="eyebrow">PurelandFold &middot; 27 sequences &middot; 337 keyframes</span>
+  </header>
+  <p class="sub">
+    Every keyframe of a real origami folding sequence, as flat-folded geometry. Paper is drawn
+    translucent and separated by stacking order, so where sheets pile up the image darkens &mdash;
+    an X-ray of how many layers your fingers are actually going through. Geometry from
+    <a href="https://huggingface.co/datasets/mayaweiz/PurelandFold">mayaweiz/PurelandFold</a> (CC-BY-4.0),
+    layer order compiled by Flat&#8209;Folder.
+  </p>
+
+  <nav class="rail" id="rail" aria-label="Folding sequences"></nav>
+
+  <div class="grid">
+    <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+      <section class="panel">
+        <div class="panel-hd">
+          <h2 id="seqName">&nbsp;</h2>
+          <span class="eyebrow" id="stageMode">X-ray &middot; stacked</span>
+        </div>
+        <div id="stage"><div class="stage-tag">drag to orbit &middot; scroll to zoom</div></div>
+        <div class="transport">
+          <div class="tline">
+            <button class="ctl" id="prev" aria-label="Previous keyframe">&larr;</button>
+            <button class="ctl primary" id="play">Play</button>
+            <button class="ctl" id="next" aria-label="Next keyframe">&rarr;</button>
+            <span class="step-read" id="stepRead">step 1/1</span>
+            <input type="range" id="scrub" min="0" max="0" value="0" aria-label="Keyframe">
+          </div>
+          <div class="tline">
+            <label class="rl" for="sep">Layer gap</label>
+            <input type="range" id="sep" min="0" max="100" value="38" aria-label="Layer separation">
+            <label class="rl" for="opa">Sheet opacity</label>
+            <input type="range" id="opa" min="6" max="100" value="26" aria-label="Sheet opacity">
+            <button class="ctl" id="top">Top view</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <aside style="display:flex;flex-direction:column;gap:16px;min-width:0">
+      <section class="panel">
+        <div class="panel-hd"><h2>This keyframe</h2></div>
+        <dl class="reads" id="reads"></dl>
+        <div class="scale">
+          <div class="ramp" id="ramp"></div>
+          <div class="ramp-ax"><span>1 sheet</span><span id="rampMax">&nbsp;</span></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-hd"><h2>Crease pattern</h2><span class="eyebrow" id="cpCount">&nbsp;</span></div>
+        <svg id="cp" viewBox="-0.06 -0.06 1.12 1.12" role="img" aria-label="Crease pattern for this keyframe"></svg>
+        <div class="legend">
+          <span class="lg"><span class="sw" style="background:var(--mountain)"></span>mountain</span>
+          <span class="lg"><span class="sw" style="background:var(--valley)"></span>valley</span>
+          <span class="lg"><span class="sw" style="background:var(--ink-3)"></span>flat / edge</span>
+        </div>
+      </section>
+    </aside>
+  </div>
+
+  <p class="note">
+    <strong>What the darkness means.</strong> Each face is drawn at a height set by how many sheets
+    sit underneath it, taken from the <code>faceOrders</code> relation that Flat&#8209;Folder
+    computes for every ground-truth state. Translucent sheets composite, so a region covered by
+    nine layers reads nine times denser than a single sheet. Set <em>Layer&nbsp;gap</em> to zero to
+    collapse the stack back to the true flat-folded state.
+  </p>
+  <p class="note">
+    <strong>These are states, not actions.</strong> PurelandFold stores one row per
+    <code>(sequence, step)</code> &mdash; a snapshot of the paper, never the fold that produced it.
+    Nothing in the data says &ldquo;valley-fold along this line&rdquo;; the action only exists as the
+    difference between two consecutive frames.
+  </p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script id="pl-data" type="application/json">__DATA__</script>
+<script>
+(function () {
+  "use strict";
+  var DATA = JSON.parse(document.getElementById("pl-data").textContent);
+  var names = Object.keys(DATA).sort();
+
+  var css = function (v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); };
+  var isDark = function () {
+    var t = document.documentElement.getAttribute("data-theme");
+    if (t === "dark") return true;
+    if (t === "light") return false;
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  };
+
+  /* ---------- density ramp: 1 sheet -> many. Light theme darkens, dark theme brightens, so
+     "more paper" always means "more signal" against whichever ground is behind it. ---------- */
+  function rampColor(t) {
+    t = Math.max(0, Math.min(1, t));
+    if (isDark()) {
+      return new THREE.Color().setHSL(0.50 - 0.10 * t, 0.34 + 0.22 * t, 0.36 + 0.34 * t);
+    }
+    return new THREE.Color().setHSL(0.58 - 0.06 * t, 0.26 + 0.34 * t, 0.68 - 0.44 * t);
+  }
+  function rampCSS(t) { var c = rampColor(t); return "#" + c.getHexString(); }
+
+  /* ---------- three.js stage ---------- */
+  var stage = document.getElementById("stage");
+  var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  stage.appendChild(renderer.domElement);
+
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(34, 16 / 10, 0.05, 100);
+  var group = new THREE.Group();
+  scene.add(group);
+
+  var orbit = { theta: -0.62, phi: 0.92, r: 3.5, tx: 0, ty: 0 };
+  function placeCamera() {
+    var p = Math.max(0.06, Math.min(Math.PI - 0.06, orbit.phi));
+    camera.position.set(
+      orbit.r * Math.sin(p) * Math.sin(orbit.theta),
+      orbit.r * Math.cos(p),
+      orbit.r * Math.sin(p) * Math.cos(orbit.theta)
+    );
+    camera.lookAt(0, 0, 0);
+  }
+
+  function resize() {
+    var w = stage.clientWidth, h = stage.clientHeight;
+    if (!w || !h) return;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  window.addEventListener("resize", resize);
+
+  /* hand-rolled orbit: OrbitControls is an ES-module example build, not on the UMD CDN path */
+  var dragging = false, lastX = 0, lastY = 0;
+  stage.addEventListener("pointerdown", function (e) {
+    dragging = true; lastX = e.clientX; lastY = e.clientY;
+    stage.classList.add("drag"); stage.setPointerCapture(e.pointerId);
+  });
+  stage.addEventListener("pointermove", function (e) {
+    if (!dragging) return;
+    orbit.theta -= (e.clientX - lastX) * 0.008;
+    orbit.phi   -= (e.clientY - lastY) * 0.008;
+    lastX = e.clientX; lastY = e.clientY;
+    placeCamera();
+  });
+  ["pointerup", "pointercancel"].forEach(function (ev) {
+    stage.addEventListener(ev, function (e) {
+      dragging = false; stage.classList.remove("drag");
+      try { stage.releasePointerCapture(e.pointerId); } catch (err) { /* already released */ }
+    });
+  });
+  stage.addEventListener("wheel", function (e) {
+    e.preventDefault();
+    orbit.r = Math.max(1.1, Math.min(9, orbit.r * (1 + (e.deltaY > 0 ? 0.1 : -0.1))));
+    placeCamera();
+  }, { passive: false });
+
+  /* ---------- build the stack for one keyframe ---------- */
+  var cur = { seq: names[0], step: 0 };
+
+  function clearGroup() {
+    while (group.children.length) {
+      var c = group.children.pop();
+      if (c.geometry) c.geometry.dispose();
+      if (c.material) c.material.dispose();
+    }
+  }
+
+  function build() {
+    var frames = DATA[cur.seq];
+    var f = frames[cur.step];
+    clearGroup();
+
+    var Vf = f.Vf, faces = f.F, depth = f.d;
+    if (!Vf.length || !faces.length) { render(); return; }
+
+    // centre and normalise so every model frames the same way
+    var minx = Infinity, miny = Infinity, maxx = -Infinity, maxy = -Infinity;
+    for (var i = 0; i < Vf.length; i++) {
+      minx = Math.min(minx, Vf[i][0]); maxx = Math.max(maxx, Vf[i][0]);
+      miny = Math.min(miny, Vf[i][1]); maxy = Math.max(maxy, Vf[i][1]);
+    }
+    var span = Math.max(maxx - minx, maxy - miny) || 1;
+    var s = 2 / span, cx = (minx + maxx) / 2, cy = (miny + maxy) / 2;
+
+    var maxD = 0;
+    for (var d0 = 0; d0 < depth.length; d0++) maxD = Math.max(maxD, depth[d0] || 0);
+    var gap = (+document.getElementById("sep").value / 100) * 0.55;
+    var opacity = +document.getElementById("opa").value / 100;
+
+    for (var fi = 0; fi < faces.length; fi++) {
+      var poly = faces[fi];
+      if (!poly || poly.length < 3) continue;
+      var dep = depth[fi] || 0;
+      var t = maxD ? dep / maxD : 0;
+
+      // fan triangulation - flat-folded faces are convex polygons
+      var pos = [];
+      for (var k = 1; k + 1 < poly.length; k++) {
+        var tri = [poly[0], poly[k], poly[k + 1]];
+        for (var v = 0; v < 3; v++) {
+          var P = Vf[tri[v]];
+          if (!P) { pos.length = 0; break; }
+          pos.push((P[0] - cx) * s, (P[1] - cy) * s, 0);
+        }
+        if (!pos.length) break;
+      }
+      if (pos.length < 9) continue;
+
+      var geo = new THREE.BufferGeometry();
+      geo.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
+      geo.computeVertexNormals();
+
+      var mat = new THREE.MeshBasicMaterial({
+        color: rampColor(t),
+        transparent: true,
+        opacity: opacity,
+        side: THREE.DoubleSide,
+        depthWrite: false          // let sheets composite instead of occluding
+      });
+      var mesh = new THREE.Mesh(geo, mat);
+      mesh.position.y = dep * gap * (maxD ? 1 / Math.max(1, maxD) : 0) * maxD * 0.1;
+      mesh.rotation.x = -Math.PI / 2;
+      group.add(mesh);
+
+      // hairline outline so individual sheets stay readable inside the stack
+      var eg = new THREE.EdgesGeometry(geo, 1);
+      var em = new THREE.LineBasicMaterial({
+        color: rampColor(Math.min(1, t + 0.25)),
+        transparent: true, opacity: Math.min(0.85, opacity + 0.30)
+      });
+      var line = new THREE.LineSegments(eg, em);
+      line.position.copy(mesh.position);
+      line.rotation.x = mesh.rotation.x;
+      group.add(line);
+    }
+    render();
+  }
+
+  var raf = null;
+  function render() {
+    if (raf) return;
+    raf = requestAnimationFrame(function () { raf = null; resize(); renderer.render(scene, camera); });
+  }
+
+  /* ---------- crease-pattern panel (the unfolded sheet for the same keyframe) ---------- */
+  var NS = "http://www.w3.org/2000/svg";
+  function drawCP() {
+    var f = DATA[cur.seq][cur.step];
+    var svg = document.getElementById("cp");
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    var V = f.V, EV = f.EV, EA = f.EA;
+    if (!V.length) return;
+
+    var minx = Infinity, miny = Infinity, maxx = -Infinity, maxy = -Infinity;
+    for (var i = 0; i < V.length; i++) {
+      minx = Math.min(minx, V[i][0]); maxx = Math.max(maxx, V[i][0]);
+      miny = Math.min(miny, V[i][1]); maxy = Math.max(maxy, V[i][1]);
+    }
+    var span = Math.max(maxx - minx, maxy - miny) || 1;
+    var mcol = css("--mountain"), vcol = css("--valley"), ncol = css("--ink-3");
+    var nM = 0, nV = 0;
+
+    for (var e = 0; e < EV.length; e++) {
+      var a = V[EV[e][0]], b = V[EV[e][1]];
+      if (!a || !b) continue;
+      var code = EA[e] || "B";
+      var ln = document.createElementNS(NS, "line");
+      ln.setAttribute("x1", ((a[0] - minx) / span).toFixed(4));
+      ln.setAttribute("y1", (1 - (a[1] - miny) / span).toFixed(4));
+      ln.setAttribute("x2", ((b[0] - minx) / span).toFixed(4));
+      ln.setAttribute("y2", (1 - (b[1] - miny) / span).toFixed(4));
+      ln.setAttribute("stroke", code === "M" ? mcol : code === "V" ? vcol : ncol);
+      ln.setAttribute("stroke-width", code === "B" ? 0.011 : 0.008);
+      ln.setAttribute("stroke-linecap", "round");
+      if (code === "F") ln.setAttribute("stroke-dasharray", "0.022 0.022");
+      if (code === "B") ln.setAttribute("opacity", "0.85");
+      svg.appendChild(ln);
+      if (code === "M") nM++; else if (code === "V") nV++;
+    }
+    document.getElementById("cpCount").textContent = nM + "M / " + nV + "V";
+  }
+
+  /* ---------- readouts ---------- */
+  function readouts() {
+    var frames = DATA[cur.seq], f = frames[cur.step];
+    var maxD = 0, sum = 0;
+    for (var i = 0; i < f.d.length; i++) { maxD = Math.max(maxD, f.d[i]); sum += f.d[i]; }
+    var creases = 0;
+    for (var e = 0; e < f.EA.length; e++) if (f.EA[e] === "M" || f.EA[e] === "V") creases++;
+
+    var items = [
+      ["Keyframe", f.n + "<span class='u'>/ " + frames[frames.length - 1].n + "</span>"],
+      ["Deepest stack", (maxD + 1) + "<span class='u'>sheets</span>"],
+      ["Faces", f.F.length],
+      ["Creases", creases],
+      ["Vertices", f.V.length],
+      ["Mean depth", f.d.length ? (sum / f.d.length + 1).toFixed(1) + "<span class='u'>sheets</span>" : "&mdash;"]
+    ];
+    var dl = document.getElementById("reads");
+    dl.innerHTML = items.map(function (it) {
+      return "<div class='read'><dt>" + it[0] + "</dt><dd>" + it[1] + "</dd></div>";
+    }).join("");
+
+    var stops = [];
+    for (var g = 0; g <= 10; g++) stops.push(rampCSS(g / 10) + " " + (g * 10) + "%");
+    document.getElementById("ramp").style.background = "linear-gradient(90deg," + stops.join(",") + ")";
+    document.getElementById("rampMax").textContent = (maxD + 1) + " sheets";
+  }
+
+  /* ---------- wiring ---------- */
+  var scrub = document.getElementById("scrub");
+
+  function setStep(i, rebuild) {
+    var frames = DATA[cur.seq];
+    cur.step = Math.max(0, Math.min(frames.length - 1, i));
+    scrub.value = cur.step;
+    document.getElementById("stepRead").textContent =
+      "step " + frames[cur.step].n + "/" + frames[frames.length - 1].n;
+    document.getElementById("prev").disabled = cur.step === 0;
+    document.getElementById("next").disabled = cur.step === frames.length - 1;
+    if (rebuild !== false) build();
+    drawCP();
+    readouts();
+  }
+
+  function setSeq(name) {
+    cur.seq = name;
+    var frames = DATA[name];
+    scrub.max = frames.length - 1;
+    document.getElementById("seqName").textContent = name.replace(/_/g, " ");
+    Array.prototype.forEach.call(document.querySelectorAll(".chip"), function (c) {
+      c.setAttribute("aria-pressed", String(c.dataset.n === name));
+    });
+    setStep(frames.length - 1);     // open on the finished model, not a blank square
+  }
+
+  var rail = document.getElementById("rail");
+  names.forEach(function (n) {
+    var b = document.createElement("button");
+    b.className = "chip";
+    b.dataset.n = n;
+    b.setAttribute("aria-pressed", "false");
+    b.innerHTML = n.replace(/_/g, " ") + "<span class='ct'>" + DATA[n].length + "</span>";
+    b.addEventListener("click", function () { stop(); setSeq(n); });
+    rail.appendChild(b);
+  });
+
+  document.getElementById("prev").addEventListener("click", function () { stop(); setStep(cur.step - 1); });
+  document.getElementById("next").addEventListener("click", function () { stop(); setStep(cur.step + 1); });
+  scrub.addEventListener("input", function () { stop(); setStep(+scrub.value); });
+  document.getElementById("sep").addEventListener("input", build);
+  document.getElementById("opa").addEventListener("input", build);
+  document.getElementById("top").addEventListener("click", function () {
+    orbit.theta = 0; orbit.phi = 0.10; orbit.r = 3.2; placeCamera(); render();
+  });
+
+  var timer = null;
+  function stop() {
+    if (timer) { clearInterval(timer); timer = null; document.getElementById("play").textContent = "Play"; }
+  }
+  document.getElementById("play").addEventListener("click", function () {
+    if (timer) { stop(); return; }
+    document.getElementById("play").textContent = "Pause";
+    if (cur.step === DATA[cur.seq].length - 1) setStep(0);
+    timer = setInterval(function () {
+      if (cur.step >= DATA[cur.seq].length - 1) { stop(); return; }
+      setStep(cur.step + 1);
+    }, 620);
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.target && /input|textarea/i.test(e.target.tagName)) return;
+    if (e.key === "ArrowLeft") { stop(); setStep(cur.step - 1); }
+    else if (e.key === "ArrowRight") { stop(); setStep(cur.step + 1); }
+  });
+
+  if (window.matchMedia) {
+    var mq = window.matchMedia("(prefers-color-scheme: dark)");
+    var onTheme = function () { build(); drawCP(); readouts(); };
+    if (mq.addEventListener) mq.addEventListener("change", onTheme);
+    else if (mq.addListener) mq.addListener(onTheme);
+  }
+
+  placeCamera();
+  resize();
+  setSeq("crane" in DATA ? "crane" : (names.indexOf("cup") >= 0 ? "cup" : names[0]));
+  new ResizeObserver(function () { resize(); render(); }).observe(stage);
+})();
+</script>
