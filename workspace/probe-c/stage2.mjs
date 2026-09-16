@@ -339,7 +339,11 @@ function solve(fold, opts) {
         for (let limit = 1; limit <= opts.maxDepth; limit++) {
             hitCap = false;
             seen.clear();
-            if (dfs(start, 0, limit)) return { status: "SOLVED", queries, depth: seq.length };
+            if (dfs(start, 0, limit)) return { status: "SOLVED", queries, depth: seq.length,
+                // the sequence itself, so a SOLVED verdict can be replayed and checked against
+                // the CP independently. Reporting only the length asks the reader to trust the
+                // search; PR #13's standard is crease sets EQUAL, not merely overlapping.
+                seq: seq.map(s => ({ line: s.line, movePositive: s.movePositive })) };
             if (!hitCap) return { status: "EXHAUSTED", queries, depth: best };  // truly closed
         }
         return { status: "DEPTH_CAP", queries, depth: opts.maxDepth };
