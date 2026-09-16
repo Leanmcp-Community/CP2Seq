@@ -296,7 +296,7 @@ function exportBatch(dir, pPartial, exportSteps, verify, verifyBudget) {
     if (verify) {
         const t = {};
         for (const m of manifest) t[m.pure_search.status] = (t[m.pure_search.status] || 0) + 1;
-        console.log(`round trip: ` + Object.entries(t).map(([k, v]) => ` `).join("  "));
+        console.log(`round trip: ` + Object.entries(t).map(([k, v]) => `${k} ${v}`).join("  "));
     }
     if (Object.keys(rejects).length)
         console.log(`rejected: ${Object.entries(rejects).map(([k, v]) => `${k} x${v}`).join(", ")}`);
