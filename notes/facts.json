@@ -172,6 +172,10 @@
   "v": 2,
   "src": "derived"
  },
+ "anchor.solvedVerified": {
+  "v": 6,
+  "src": "derived: replay-anchor.mjs — crease sets equal, second engine"
+ },
  "purelandfold.sequences": {
   "v": 27,
   "src": "manual: HF dataset mayaweiz/PurelandFold"

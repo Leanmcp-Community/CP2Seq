@@ -5,7 +5,8 @@ truth each one actually contains, and which bucket (per `EXPERIMENTS_SETUP.md` �
 into. This is an inventory, not a merged dataset.
 
 > **Read §0 first.** The audit below concluded that no accessible source carries bucket A at
-> scale, so the main corpus has to be **synthesized**. The real sources are anchors and CP
+> scale — the closest, PurelandFold, has the states but not the action labels (§2) — so the
+> main corpus has to be **synthesized**. The real sources are anchors and CP
 > supply, not the primary data.
 
 **Owns: where the data comes from.** How the experiment runs is `EXPERIMENTS_SETUP.md`; who we
@@ -58,7 +59,8 @@ Bucket reminder:
 - **Degeneracy**: 33.2%<!--fact:corpus.synth.degeneratePct--> of samples carry a flag, almost all `collapsed`. **Recorded, never
   filtered**: the flag rate tracks the coupling cap monotonically, so filtering on it would
   delete the high end of the axis we deliberately vary.
-- **Why this exists**: the only real bucket-A source is 27<!--fact:purelandfold.sequences--> sequences (PurelandFold), which
+- **Why this exists**: the closest real source is 27<!--fact:purelandfold.sequences--> sequences (PurelandFold) — and it carries
+  states rather than action labels (§2), which
   cannot carry a headline number — and after Probe C, neither can instagram: at most 39 of its
   366<!--fact:corpus.instagram.total--> CPs are even solvable in our action space. Synthesis is not one option among several
   any more, it is the only one. **Synthesis is also the field's normal practice, not a
@@ -95,8 +97,15 @@ Bucket reminder:
 - **Link**: https://huggingface.co/datasets/mayaweiz/PurelandFold
 - **License**: CC-BY-4.0
 - **Size / format**: 27 sequences / 337 frames. `cp.fold` contains **layer-order ground truth**.
-- **Ground truth**: genuine **bucket A** — explicitly a set of *sequences* (337 frames across
-  27 sequences), not just endpoints. The only real bucket-A source of any size we found.
+- **Ground truth**: **state trajectory, not action labels — "bucket A" was a shade too strong.**
+  Corrected 2026-09-16 from `DHEERAJ_WORKSPACE/pureland/ANALYSIS.md` §1, and it is right: the
+  sequence lives *relationally*, in the parquet's `(sequence, step)` columns, and **no `.fold`
+  file carries a `step`, `action` or ordering field**. Each row is a *snapshot*, so
+  "valley-fold along this line" exists only as the difference between two consecutive frames.
+  That is more than bucket B (we have every intermediate state, 337<!--fact:purelandfold.frames--> frames) and less than
+  bucket A (the actions are never stated). Sequence-level metrics that compare *states* are
+  available; ones that compare *actions* require deriving them first, and that derivation is
+  ours, not the source's.
 - ⚠️ **Partly inside our action space, partly outside — measured, not assumed.** It was called a
   "reality anchor" for a month on no evidence. Running the all-layers solver over each model's
   final CP (`workspace/corpus/check-anchor.mjs`, budget 200k):

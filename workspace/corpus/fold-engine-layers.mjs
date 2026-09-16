@@ -1,9 +1,10 @@
 // Forward folding engine, SOME-LAYERS tier.
 //
 // The all-layers engine (fold-engine.mjs) stays the core. This is the extension tier decided
-// 2026-09-16, and it exists because the core cannot express any real model: 74.1% of
-// PurelandFold is proven outside it, and all-layers folding can only ever produce symmetric,
-// repetitive patterns, because a fold can never move part of the stack and leave the rest.
+// 2026-09-16, and it exists because the core cannot express most real models: 44.4% of
+// PurelandFold is proven outside it and only 7 of 27 are inside, and all-layers folding tends
+// to symmetric, repetitive patterns, because a fold can never move part of the stack and leave
+// the rest -- an asymmetric outline needs a partial fold.
 //
 // WHAT CHANGES, AND WHY IT IS A REWRITE RATHER THAN A FLAG
 // -------------------------------------------------------
@@ -114,13 +115,17 @@ export const paperArea = (st) => st.faces.reduce((a, f) => a + Math.abs(areaOf(f
  * @param line  { n, d } in CURRENT-PLANE coordinates (n need not be unit)
  * @param movePositive  move the side with n·p > d
  * @param sel   { mode: "all" } | { mode: "top", k } | { mode: "bottom", k }
+ * @param over  the moving part lands on top of what stays. Free for mode "all"; for a partial
+ *              selection it is forced by physics (top run over, bottom run under) and a
+ *              contradicting value is refused as "direction-impossible" rather than ignored.
  *
  * Returns { state, made, moved } or { error } -- and the error cases are the point, so they
  * are named rather than collapsed into null:
  *   "nothing-to-move"  the line misses the selected layers
  *   "would-tear"       a moving face is joined to a stationary face somewhere off the fold line
+ *   "direction-impossible"  the requested over/under cannot be done with that layer selection
  */
-export function foldLayers(st, line, movePositive, sel = { mode: "all" }) {
+export function foldLayers(st, line, movePositive, sel = { mode: "all" }, over = true) {
     const L = Math.hypot(line.n[0], line.n[1]);
     const n = [line.n[0] / L, line.n[1] / L], d = line.d / L;
     const sgn = movePositive ? 1 : -1;
@@ -132,9 +137,19 @@ export function foldLayers(st, line, movePositive, sel = { mode: "all" }) {
     if (sel.mode === "bottom") hi = Math.min(N, sel.k);
     if (sel.mode !== "all" && (sel.k ?? 0) <= 0) return { error: "nothing-to-move" };
 
-    // A run taken from the top can only go over; a run from the bottom, under. Anything else
-    // drives the paper through the layers it left behind.
-    const over = sel.mode === "bottom" ? false : true;
+    // Direction is free for an all-layers fold and forced for a partial one, and conflating the
+    // two was a real defect here: `over` used to be derived from the selection alone, so every
+    // all-layers fold was forced over and wrote V where the caller wanted M. That made this
+    // engine useless as an independent check on a solver that picks the direction per fold.
+    //
+    // Physically: a run taken from the TOP can only go over, a run from the BOTTOM only under --
+    // anything else drives the paper through the layers it left behind. With the whole stack
+    // moving there is nothing left behind, so both directions are available.
+    if (sel.mode !== "all") {
+        const forced = sel.mode === "bottom" ? false : true;
+        if (over !== forced) return { error: "direction-impossible", forced };
+        over = forced;
+    }
 
     const faces = st.faces.map(f => ({ ...f }));
     const order = [...st.order];

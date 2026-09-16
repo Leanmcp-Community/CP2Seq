@@ -160,6 +160,46 @@ Solved and **verified by replay**:
 | `girl` | **8 folds** | 20 | −12 |
 | `shield` | **8 folds** | 14 | −6 |
 
+### ⚠️ Reconciled against `notes/facts.json`, 2026-09-16 — the table above is not the canonical one
+
+`check-anchor.mjs` measures the same question and gets **7 solved / 12 exhausted / 8 timeout**
+against the 4 / 22 / 1 above. The repo adopts 7 as canonical (`anchor.solved` in
+`notes/facts.json`); this section is kept because the measurement is correct *for its
+configuration*, and because the gap is informative. Two independent causes, both measured:
+
+**1. Coordinate snapping, which `tolerant.mjs` does not do.** A 2×2 over all 27 models, raw vs
+snapped coordinates × exact vs tolerant target:
+
+| | exhausted | solved | timeout |
+| --- | --- | --- | --- |
+| raw + exact | 21 | 1 | 5 |
+| raw + tolerant | 21 | 1 | 5 |
+| **snapped** + exact | 12 | 7 | 8 |
+| snapped + tolerant | 12 | 7 | 8 |
+
+**The tolerant target changes no verdict**, and it is not mis-wired — on `bird` it merges 8 line
+buckets into 6 and restores the full 1.414-long diagonal, exactly as its header describes. The
+failure simply moves downstream, to `demand()`'s 1e-7 coverage test and to the clipping, which
+still do exact arithmetic on coordinates that are wrong. Snapping to the 1e-4 lattice the source
+stores repairs the geometry itself, so the exact checks downstream pass too. **So this file's
+open item "re-run Pureland at relaxed epsilon" is genuinely still open, and tolerance alone will
+not close it.**
+
+**2. Search algorithm.** The numbers above are plain DFS; `check-anchor.mjs` calls `stage2`'s
+iterative deepening. This file's own finding applies — DFS reaches deeper within budget — and it
+explains 1 → 4 on raw coordinates.
+
+**The `bird` claim below needs revising.** It is listed as exhausting at depth 1, and the
+"action-space mismatch" mechanism rests partly on it. On snapped coordinates `bird` **solves in
+3 folds**, and that solution is replay-confirmed by a second engine (`replay-anchor.mjs`: every
+fold legal from the flat square, crease sets *equal*). Its CP does carry the full anti-diagonal
+as four contiguous M segments totalling 1.4142, which is exactly what the first fold creases.
+**6 of the 7 solved verdicts are replay-confirmed**; `cat` is unconfirmed for a stated limitation
+of the replay harness, not disproved.
+
+The mismatch conclusion itself may well survive on the models that still exhaust — 12 of 27 is
+still the largest group. It needs restating on the 12, not on `bird`.
+
 ### Why the other 23 close — now properly established
 
 `walrus` **does** have a legal first fold now (the diagonal, covering 6 of its 34 creases). It
