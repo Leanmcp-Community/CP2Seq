@@ -365,6 +365,77 @@ counts; most runs were capped and the numerical discrepancy remains unresolved.
 - **Next correctness priority:** make state equivalence and transitions
   consistent, then validate moves independently before scaling search budgets.
 
+## 13. All Pureland models: measured search size versus a loose bound
+
+**Read “depth / states” as maximum path length reached / distinct keys visited
+in the recorded run.** Depth is not the number of simulated moves (queries),
+nor a solution length. Human transitions are snapshots minus one, not verified
+fold counts. V/E/C/F count the terminal CP's vertices/edges/crease segments/faces.
+
+**L** = state limit; **E** = implementation exhausted; **S** = solved.
+Both algorithms had depth cap **1,000** and state cap **20,000**.
+Only yacht/BFS returned a solution here: **3 actions**. All other solution
+lengths are unknown. Unsupported rows were rejected for a zero-length edge.
+
+| Model | V | E | C | F | Human transitions | BFS depth / states | DFS depth / states | Ideal bound U ≈ |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| bird | 11 | 18 | 10 | 8 | 6 | 13 / 1,553 E | 57 / 20,000 L | 4.23e+10 |
+| car | 16 | 26 | 13 | 11 | 12 | 6 / 20,000 L | 55 / 20,000 L | 2.68e+15 |
+| cat | 15 | 26 | 14 | 12 | 8 | 6 / 20,000 L | 59 / 20,000 L | 1.29e+17 |
+| cat_face | 30 | 55 | 39 | 26 | 14 | 5 / 20,000 L | 55 / 20,000 L | 1.22e+50 |
+| cup | 11 | 20 | 12 | 10 | 9 | 9 / 20,000 L | 59 / 20,000 L | 6.09e+13 |
+| dog | 23 | 42 | 30 | 20 | 11 | 7 / 20,000 L | 56 / 20,000 L | 2.80e+36 |
+| fox_head | 7 | 14 | 10 | 8 | 7 | 11 / 1,817 E | 56 / 20,000 L | 4.23e+10 |
+| gift_card_holder | 20 | 35 | 21 | 16 | 16 | 5 / 20,000 L | 57 / 20,000 L | 9.20e+25 |
+| girl | 39 | 74 | 54 | 36 | 20 | 5 / 20,000 L | 161 / 20,000 L | 1.21e+74 |
+| heart | 27 | 48 | 30 | 22 | 16 | 5 / 20,000 L | 59 / 20,000 L | 1.30e+39 |
+| horse_head | 29 | 52 | 36 | 24 | 18 | 5 / 20,000 L | 56 / 20,000 L | 2.93e+45 |
+| ladybug | 37 | 68 | 52 | 32 | 12 | 8 / 20,000 L | 55 / 20,000 L | 5.34e+66 |
+| paper_bird | 21 | 36 | 24 | 16 | 10 | 6 / 20,000 L | 54 / 20,000 L | 5.89e+27 |
+| penguin | 17 | 30 | 20 | 14 | 12 | 8 / 20,000 L | 55 / 20,000 L | 9.59e+22 |
+| pig | 28 | 49 | 35 | 22 | 12 | unsupported | unsupported | 1.33e+42 |
+| rabbit_head_v1 | 23 | 42 | 26 | 20 | 13 | unsupported | unsupported | 1.10e+34 |
+| rabbit_head_v2 | 23 | 42 | 26 | 20 | 9 | 5 / 20,000 L | 56 / 20,000 L | 1.10e+34 |
+| rocket | 24 | 39 | 21 | 16 | 13 | 6 / 20,000 L | 58 / 20,000 L | 9.20e+25 |
+| santa_hat | 31 | 54 | 32 | 24 | 12 | 5 / 20,000 L | 57 / 20,000 L | 1.14e+43 |
+| shield | 35 | 58 | 34 | 24 | 14 | 4 / 20,000 L | 1000 / 20,000 L | 1.83e+44 |
+| sloth | 14 | 21 | 11 | 8 | 5 | 13 / 1,221 E | 58 / 20,000 L | 1.69e+11 |
+| snake | 35 | 66 | 46 | 32 | 20 | 4 / 20,000 L | 57 / 20,000 L | 1.30e+63 |
+| sunflower | 17 | 28 | 12 | 12 | 13 | 4 / 20,000 L | 56 / 20,000 L | 8.04e+15 |
+| tulip | 9 | 16 | 8 | 8 | 6 | 14 / 13,353 E | 58 / 20,000 L | 2.64e+9 |
+| tulip_stem | 9 | 16 | 10 | 8 | 8 | 6 / 221 E | 55 / 20,000 L | 4.23e+10 |
+| walrus | 23 | 46 | 38 | 24 | 10 | 5 / 41 E | 29 / 41 E | 4.69e+46 |
+| yacht | 9 | 14 | 7 | 6 | 4 | 3 / 24 S | 56 / 20,000 L | 1.18e+7 |
+
+The last column is the approximate scientific-notation value of
+\(U=4^C F!\), under the exact-model assumptions in §6. It is the **same
+combinatorial bound for BFS and DFS**, not the measured reachable-state count.
+For invalid/unsupported meshes it is only an arithmetic label-space comparison;
+applicability of the geometric bound is not established.
+
+### What can “maximum steps” mean?
+
+- **Configured maximum path length:** 1,000 for every search above.
+- **Observed maximum path length:** the depth column; this can describe a failed
+  branch, not a successful folding procedure.
+- **Shortest solution length:** unknown except the current model's reported
+  three-action BFS solution for yacht; numerical consistency remains unverified.
+- **Maximum sequence length with repetitions:** no finite bound when repeatable
+  cycles lie on a route to the target.
+- **Cycle-free solution length in an exact finite graph:** at most \(N-1\),
+  where \(N\) is the reachable-state count, hence at most \(U-1\) if that bound
+  applies. This is a bound, not a claim that either algorithm takes that many steps.
+- **Total search effort:** queries/expansions, not path depth. In an exact graph,
+  BFS expands each visited state at most once; this depth-limited DFS can reopen
+  shallower visits. Neither algorithm's actual effort follows from C and F alone.
+
+**Is 20,000 “nothing”?** It is tiny compared with these loose combinatorial
+bounds, but that does not establish it is tiny compared with the reachable graph.
+For yacht, BFS already succeeded after 24 visited keys. Conversely, 18 BFS runs
+and 24 DFS runs hit the cap: those runs were truncated, and their remaining search
+size is unknown. The bounds do not justify assuming all models need more RAM.
+Resolve the numerical/model discrepancies before interpreting larger searches.
+
 ## Sources in this repository
 
 - [Python implementation and usage](../baseline_python/README.md)
