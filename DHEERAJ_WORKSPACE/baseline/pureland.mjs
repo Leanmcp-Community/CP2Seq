@@ -31,6 +31,10 @@ const opts = {
     maxQueries: Number(argv["--budget"] ?? 400000),
     maxDepth: Number(argv["--depth"] ?? 24),
     maxNodes: Number(argv["--nodes"] ?? 300000),
+    // PurelandFold stores coordinates at 3 decimals, which shatters each crease line into
+    // fragments under an exact 1e-6 line key. See tolerant.mjs -- without this every run
+    // reports EXHAUSTED for a reason that is about rounding, not about folding.
+    tolerance: argv["--exact"] ? undefined : Number(argv["--tol"] ?? 4e-3),
 };
 const ALGO_NAMES = String(argv["--algos"] ?? "dfs,bfs,iddfs").split(",");
 

@@ -96,19 +96,62 @@ So the restriction bites on **9 transitions, not 1,679**. The honest statement i
 sequences contain a fold that reverses an existing crease*, and those six are out of the
 search's reach by construction.
 
-## 4. Running DFS / BFS / IDDFS on it
+## 4. ⚠️ A precision bug that had to be fixed first
 
-`node DHEERAJ_WORKSPACE/baseline/pureland.mjs --budget=300000 --depth=24`, targeting each
-sequence's final CP:
+The first run of this reported **21/27 EXHAUSTED**, several closing in under 70 queries, and I
+wrote it up as "Pureland folds a subset of layers, we fold all of them". **The number was right
+for the wrong reason, and the reason was a bug in our tooling.**
+
+`walrus`'s final CP has its main diagonal creased end to end, all mountain, as six collinear
+fragments:
+
+```
+(0,0)-(.25,.25)  (.25,.25)-(.346,.346)  (.346,.346)-(.5,.5)
+(.5,.5)-(.654,.654)  (.654,.654)-(.75,.75)  (.75,.75)-(1,1)
+```
+
+Because vertices are stored at 3 decimals, those fragments compute normals of **−45.0002°,
+−45.0000° and −44.9999°** — about 5e-6 radians apart. `stage2.mjs`'s `lkey()` rounds normals at
+**1e-6**, so six pieces of one crease landed in six different line buckets. The search saw stubs
+of length ≤ 0.476 instead of one crease of length 1.414, refused every candidate fold with *"the
+chord extends past the CP's creases on this line"*, and reported `EXHAUSTED` — which reads
+exactly like *proven not foldable* but actually meant *the coordinates were rounded*.
+
+| walrus, 34 creases | lines | longest run |
+| --- | --- | --- |
+| exact 1e-6 key | 33 | 0.476 |
+| **clustered at 4e-3** | **19** | **1.414** ← the first fold |
+
+**The fix** is `baseline/tolerant.mjs`. I first tried repairing the data — re-fit each line by
+total least squares, move each vertex to the least-squares meet of the lines through it. That
+leaves a residual around 1e-6, because a shared vertex is a compromise between several lines,
+which is precisely the scale `lkey` rounds at. Repairing the coordinates cannot beat the key.
+
+So the geometry is left alone and the **lookup** is made tolerant instead. `buildTarget` returns
+`{ lines: Map, total }`, and `lines` is only ever used as `.get(lkey(line))` by `demand()` and
+`.values()` by `candidates()`. `tolerantTarget` clusters the exact buckets into real lines and
+returns an object with those two methods, where `get()` resolves to the nearest cluster within
+tolerance. `applyFold`, `candidates` and all three searches are untouched and never learn about
+it. Opt-in via `opts.tolerance`; **off by default**, because the instagram corpus is full
+precision and probe C's EXHAUSTED verdicts depend on exact keys. Regression-checked: instagram
+anchors still return 5,940 and 256,480 queries exactly, round trip still 36/36.
+
+## 5. Results, after the fix
+
+`node DHEERAJ_WORKSPACE/baseline/pureland.mjs --budget=400000 --depth=24` (add `--exact` to
+reproduce the broken run):
 
 | algo | solved | exhausted | timeout | median queries |
 | --- | --- | --- | --- | --- |
-| **DFS** | **4** / 27 | 21 | 2 | 1,148 |
-| **BFS** | **4** / 27 | 23 | 0 | 884 |
-| IDDFS | 1 / 27 | 21 | 5 | 1,586 |
+| **DFS** | **4** / 27 | 22 | 1 | 2,178 |
+| **BFS** | **4** / 27 | 23 | 0 | 2,064 |
+| IDDFS | 1 / 27 | 22 | 4 | 4,796 |
 
-Solved and **independently verified by replay** (`verify.mjs` — every fold legal from the flat
-square, and the crease sets equal, not merely overlapping):
+**The solved count did not change.** The precision bug was real and had to be fixed, but it was
+not what was blocking the other 23. Query counts roughly doubled (median 1,148 → 2,178) because
+the search now actually explores instead of dying at the root.
+
+Solved and **verified by replay**:
 
 | sequence | search | human keyframes | |
 | --- | --- | --- | --- |
@@ -117,21 +160,32 @@ square, and the crease sets equal, not merely overlapping):
 | `girl` | **8 folds** | 20 | −12 |
 | `shield` | **8 folds** | 14 | −6 |
 
-### Two findings from that table
+### Why the other 23 close — now properly established
 
-**(a) The search's sequences are far shorter than the human's, and both are correct.**
-`girl` has 36 crease segments; the search reaches all of them in 8 all-layers folds, layers
-climbing 2→21. An all-layers fold creases *every* layer it crosses at once — one fold covered 6
-creases — whereas a person folds a few layers at a time. Same CP, radically different procedure.
-This is the clearest evidence yet for the project's own *states ≠ sequences* note: **the CP
-massively under-determines the sequence.** ⚠️ It also means our 8-fold route almost certainly
-reaches a *different layer ordering* than the human's — same crease pattern, different finished
-object. Worth checking against the stored `faceOrders` before leaning on this.
+`walrus` **does** have a legal first fold now (the diagonal, covering 6 of its 34 creases). It
+still exhausts, and the depth it reaches before closing is the whole story:
 
-**(b) 21/27 exhaust almost immediately** — `walrus` closes out in 66 queries against 34 creases.
-The search finds no legal first fold at all. That is the all-layers restriction: **Pureland folds
-a subset of the layers; our action space folds all of them.** These are different action spaces,
-and no budget fixes that.
+| sequence | creases | depth reached | queries |
+| --- | --- | --- | --- |
+| `bird` | 10 | **1** | 12 |
+| `sloth` | 11 | **1** | 14 |
+| `walrus` | 34 | **2** | 186 |
+| `ladybug` | 46 | **2** | 202 |
+| `horse_head` | 28 | 3 | 752 |
+| `cup` | 10 | 4 | 2,178 |
+
+The search makes one to four all-layers folds and then has **no legal move left**, with 30–46
+creases still uncovered. That is the action-space mismatch, and the mechanism is concrete: after
+two all-layers folds the stack has four layers, and the human's next fold turns only one or two
+of them. An all-layers fold there creases all four, producing creases the CP does not contain —
+so it is refused. No budget fixes this; the sequence is not in the search graph.
+
+> **This is what `EXHAUSTED` means, and why it is not a failure of DFS or BFS.** Both are
+> complete: they find a path whenever one exists *in the graph they are searching*. `EXHAUSTED`
+> is the search graph closing — a **proof that no all-layers simple-fold sequence produces this
+> CP**. The human's sequence exists, but it uses a different action space, so it was never a
+> path in this graph to begin with. `TIMEOUT` is the only verdict that means "we ran out of
+> budget", and it is reported separately for exactly this reason.
 
 ## 5. What this corpus is actually good for
 
@@ -146,10 +200,10 @@ and no budget fixes that.
 
 ## 6. Limitations to carry
 
-1. **3-decimal coordinates.** Coarser than the 1e-7 epsilon the geometry runs at. This biases
-   toward false `EXHAUSTED` (a real crease gets rejected as not-in-target), never toward false
-   `SOLVED` — so the 4 solved are trustworthy and the 21 exhausted deserve a re-run at relaxed
-   epsilon before being quoted as proof.
+1. **3-decimal coordinates — handled, see §4.** Mitigated by `tolerantTarget` at 4e-3. The
+   remaining bias still runs toward false `EXHAUSTED`, never false `SOLVED`, so the 4 solved are
+   trustworthy. Worth a sensitivity sweep over the tolerance before the 22 exhausted are quoted
+   as proof.
 2. **Keyframes ≠ folds.** 34 of 211 transitions are flips. "Human took 20 steps" over-counts.
 3. **No action labels** (§1) — any step-level metric needs a derivation we define ourselves.
 4. **n = 27.** Too small for tiered difficulty claims on its own.

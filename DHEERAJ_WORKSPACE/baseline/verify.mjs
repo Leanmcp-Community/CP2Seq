@@ -26,12 +26,12 @@ const full = fs.existsSync(file) ? file : path.join(IG, file);
 const fold = JSON.parse(fs.readFileSync(full, "utf8"));
 
 console.log(`${path.basename(full)}  algo=${algo} budget=${budget.toLocaleString()} depth=${depth}\n`);
-const r = ALGOS[algo](fold, { maxQueries: budget, maxDepth: depth, maxNodes: 300000 });
+const r = ALGOS[algo](fold, { maxQueries: budget, maxDepth: depth, maxNodes: 300000, tolerance: process.env.SNAP_TOL ? Number(process.env.SNAP_TOL) : undefined });
 console.log(`search: ${r.status}  queries=${r.queries.toLocaleString()}  steps=${r.steps}`);
 if (r.status !== "SOLVED") { console.log("\nnothing to verify."); process.exit(0); }
 
 // --- replay, from the flat sheet, using only the recorded (line, direction) pairs -----------
-const p = prepare(fold);
+const p = prepare(fold, { tolerance: process.env.SNAP_TOL ? Number(process.env.SNAP_TOL) : undefined });
 let state = p.start;
 const covered = new Set();
 console.log(`\nreplaying ${r.seq.length} folds from the flat square:`);

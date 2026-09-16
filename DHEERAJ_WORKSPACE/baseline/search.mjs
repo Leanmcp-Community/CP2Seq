@@ -25,6 +25,7 @@
 import {
     buildTarget, applyFold, candidates, boundaryLoop, ID,
 } from "../../workspace/probe-c/stage2.mjs";
+import { tolerantTarget } from "./tolerant.mjs";
 
 class Budget extends Error { constructor() { super("BUDGET"); } }
 class NodeCap extends Error { constructor() { super("NODECAP"); } }
@@ -32,8 +33,12 @@ class NodeCap extends Error { constructor() { super("NODECAP"); } }
 /* ---------------------------------------------------------------- shared setup ---------- */
 
 // Index every target crease segment so coverage can be a set of small integers.
-export function prepare(fold) {
-    const target = buildTarget(fold);
+//
+// `opts.tolerance` swaps in the clustered target from tolerant.mjs, for corpora whose
+// coordinates are stored at low precision (PurelandFold: 3 decimals). Off by default -- the
+// instagram corpus is full precision and probe C's EXHAUSTED verdicts depend on exact keys.
+export function prepare(fold, opts = {}) {
+    const target = opts.tolerance ? tolerantTarget(fold, opts.tolerance) : buildTarget(fold);
     if (!target.total) return { err: "TRIVIAL" };
     let i = 0;
     for (const L of target.lines.values()) for (const s of L.want) s.idx = i++;
@@ -122,7 +127,7 @@ const report = (status, ctx, node) => ({
 // Memory: O(depth) for the path, but the visited set is path-local (added on descent, removed
 // on backtrack) exactly as in stage2, so peak memory is the recursion depth, not the tree.
 export function dfs(fold, opts = {}) {
-    const p = prepare(fold);
+    const p = prepare(fold, opts);
     if (p.err) return { status: p.err, queries: 0, expanded: 0, generated: 0, peak: 0, steps: 0, seq: null };
     const ctx = newCtx(p, opts);
     const seen = new Set();
@@ -164,7 +169,7 @@ export function dfs(fold, opts = {}) {
 // makes its shortest-path guarantee hold; it also means BFS and DFS are not doing identical
 // bookkeeping. That asymmetry is inherent to the two algorithms, not a thumb on the scale.
 export function bfs(fold, opts = {}) {
-    const p = prepare(fold);
+    const p = prepare(fold, opts);
     if (p.err) return { status: p.err, queries: 0, expanded: 0, generated: 0, peak: 0, steps: 0, seq: null };
     const ctx = newCtx(p, opts);
 
@@ -213,7 +218,7 @@ export function bfs(fold, opts = {}) {
 // from a pass that closed the space, and "ran out of depth" would be reported as "proven
 // unfoldable".
 export function iddfs(fold, opts = {}) {
-    const p = prepare(fold);
+    const p = prepare(fold, opts);
     if (p.err) return { status: p.err, queries: 0, expanded: 0, generated: 0, peak: 0, steps: 0, seq: null };
     const ctx = newCtx(p, opts);
     let found = null, hitCap = false;

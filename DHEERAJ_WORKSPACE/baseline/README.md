@@ -205,6 +205,33 @@ The pitch is that an LLM earns its keep through **pruning** and **backtracking**
 - **Depth is the wall, not breadth.** Everything that failed, failed by not getting deep enough
   within budget. That is where a heuristic has room to pay for itself.
 
+## ⚠️ Correction: a precision bug in the PurelandFold run
+
+The first PurelandFold run reported 21/27 `EXHAUSTED` and I attributed it to the action-space
+mismatch. The attribution was right; **the run that produced it was not.**
+
+PurelandFold stores vertices at 3 decimals. A crease subdivided into collinear fragments then
+computes normals ~5e-6 radians apart, and `stage2.mjs`'s `lkey()` rounds normals at 1e-6 — so
+one crease shattered into several unrelated "lines". `walrus`'s full diagonal (span 1.414)
+appeared as 33 stubs of length ≤ 0.476, and the search refused every fold for a reason that was
+about rounding, not folding.
+
+Fixed in `tolerant.mjs` by making the *lookup* tolerant rather than altering the geometry —
+`buildTarget`'s `lines` Map is only used via `.get()` and `.values()`, so a clustered stand-in
+drops in without `applyFold`, `candidates` or any search knowing. **Opt-in, off by default**;
+instagram is full precision and probe C's verdicts depend on exact keys. Regression-checked:
+instagram anchors unchanged at 5,940 / 256,480, round trip 36/36.
+
+After the fix the solved count is **unchanged at 4/27** — the bug was real but was not the
+blocker. Details and the corrected table: `../pureland/ANALYSIS.md` §4–5.
+
+**Why DFS and BFS can "fail" at all**, since both are complete: `EXHAUSTED` is not the search
+giving up. It is the search graph closing — a *proof* that no sequence exists **in this action
+space**. The human's sequence exists but uses subset-of-layers folds, so it was never a path in
+this graph. `TIMEOUT` is the only verdict meaning "ran out of budget", reported separately for
+exactly that reason. `diagnose.mjs <file.fold>` prints, for any CP, every candidate first fold
+and why it was refused.
+
 ## Files
 
 | | |
@@ -212,6 +239,9 @@ The pitch is that an LLM earns its keep through **pruning** and **backtracking**
 | `search.mjs` | the three searches + shared instrumented `expand()` |
 | `run.mjs` | dev sets, both gates, the report |
 | `verify.mjs` | independent replay check for a found sequence |
+| `tolerant.mjs` | clustered target for low-precision corpora (see correction above) |
+| `diagnose.mjs` | why a search closed: every first-fold candidate and its rejection reason |
+| `pureland.mjs` | the 27 PurelandFold sequences |
 | `results.json` | per-run rows (gitignored) |
 
 ## Not done yet
