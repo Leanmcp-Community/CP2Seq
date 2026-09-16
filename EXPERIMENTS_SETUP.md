@@ -294,19 +294,24 @@ into a diagnosis instead of a dead end.
   debate (group D of the checklist).
 - A **measured scope boundary**: 89.3%<!--fact:probeC.provenNotPct--> of real crease patterns provably lie outside
   all-layers simple folding (§1.2). The action space is bounded by evidence, not by assertion.
-- **A partial fold is almost never available at random, and that is a finding about origami,
-  not about our sampler.** Allowing a fold to move only some layers sounds like a loosening of
-  the action space; measured, it is a tightening. A randomly proposed partial fold succeeds
-  **11.9%** of the time, and the rate falls as the stack thickens — 20.0% at one or two layers,
-  **3.8% at seventeen to thirty-two** — because a thicker stack pins each sheet in more places,
-  and moving a run of layers that is pinned elsewhere tears the paper. **81.3% of every rejected
-  proposal is a tear** (`notes/plan/corpus-plan.md`, pilot of 2026-09-16).
-  **Read the other way, this is the substantive claim: the partial folds in real origami are not
-  arbitrary — they are the small set that does not tear.** Connectivity constrains this action
-  space far more tightly than "some layers may move" suggests, and an agent working in it
-  searches a space whose legal moves are rare and get rarer with depth. That is a property of
-  the problem, not of our code, and it is also why a corpus for this tier cannot simply dial up
-  the fraction of partial folds it contains.
+- **Tearing is a third property the all-layers restriction buys, alongside no self-intersection
+  and no layer ordering — and it is the one nobody names.** An all-layers fold moves everything
+  on one side of the line as a rigid body, so no two connected pieces of paper ever move
+  relative to each other except at the fold line itself, where paper is allowed to bend.
+  Tearing is therefore not rare in that tier, it is **impossible by construction**. The moment a
+  fold may move only some layers it becomes the binding constraint: a moving run that is joined
+  to a stationary face anywhere off the fold line rips the sheet.
+  The measurement shows it directly — enumerating every candidate at each state, the count of
+  legal **all-layers** folds is constant (every line and direction is always legal), while legal
+  **partial** folds have to be found among the ones that do not tear.
+- ⚠️ **Do not state this as "legal moves are rare".** It was written that way first and the
+  enumeration refutes it: legal partial folds *grow* with depth — 22 at two layers, 156 at
+  eighteen, **332 at thirty-eight, six times the 56 all-layers folds available at the same
+  state**. What falls is the hit rate of *uniform random proposal* (11.9%, and 3.8% by
+  seventeen layers), because the space being sampled — lines × layer-runs — grows faster than
+  the legal set inside it. That is a fact about a sampler, not about origami, and conflating
+  the two would put a false claim about branching factor in the paper
+  (`notes/plan/corpus-plan.md`, 2026-09-16).
 
 > ⚠️ **No model is trained or fine-tuned.** Every arm is an off-the-shelf VLM driven by prompting
 > and tool-calling. The contribution is the harness — tools, verifier, ablation design — not a model.
