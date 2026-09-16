@@ -1,5 +1,5 @@
 {
- "_generated": "2026-09-15",
+ "_generated": "2026-09-16",
  "_how": "node workspace/tools/facts.mjs — derived from workspace/probe-c/*.json",
  "corpus.instagram.total": {
   "v": 366,
@@ -90,6 +90,59 @@
   "unit": "%",
   "src": "derived"
  },
+ "corpus.synth.run": {
+  "v": "v2",
+  "src": "derived"
+ },
+ "corpus.synth.samples": {
+  "v": 322,
+  "src": "derived"
+ },
+ "corpus.synth.quota": {
+  "v": 360,
+  "src": "derived"
+ },
+ "corpus.synth.cellsFilled": {
+  "v": 8,
+  "src": "derived"
+ },
+ "corpus.synth.cellsTotal": {
+  "v": 9,
+  "src": "derived"
+ },
+ "corpus.synth.uniqueCPs": {
+  "v": 322,
+  "src": "derived"
+ },
+ "corpus.synth.stepMin": {
+  "v": 4,
+  "src": "derived"
+ },
+ "corpus.synth.stepMax": {
+  "v": 19,
+  "src": "derived"
+ },
+ "corpus.synth.couplingP50": {
+  "v": 4.2,
+  "src": "derived: mean creases per fold, per sample, median over the corpus"
+ },
+ "corpus.synth.couplingMax": {
+  "v": 64,
+  "src": "derived"
+ },
+ "corpus.synth.creaseP50": {
+  "v": 61,
+  "src": "derived"
+ },
+ "corpus.synth.degeneratePct": {
+  "v": 33.2,
+  "unit": "%",
+  "src": "derived: recorded, never filtered"
+ },
+ "corpus.synth.lLocalHits": {
+  "v": 2,
+  "src": "derived: the long/low-coupling cell"
+ },
  "purelandfold.sequences": {
   "v": 27,
   "src": "manual: HF dataset mayaweiz/PurelandFold"
@@ -100,7 +153,27 @@
  },
  "purelandfold.skippedRows": {
   "v": 74,
-  "src": "manual: variables=0 rows, still unexplained"
+  "src": "manual: variables=0 rows; 27 are step-1, the rest are pre-crease steps"
+ },
+ "purelandfold.precreaseFrames": {
+  "v": 47,
+  "src": "manual: export_purelandfold_models.py — variables=0 past step 1"
+ },
+ "purelandfold.effStepMin": {
+  "v": 4,
+  "src": "manual: same — pre-crease frames merged into the step they precede"
+ },
+ "purelandfold.effStepMax": {
+  "v": 19,
+  "src": "manual: same"
+ },
+ "purelandfold.effTertileLo": {
+  "v": 10,
+  "src": "manual: same — the synthetic step strata are cut here"
+ },
+ "purelandfold.effTertileHi": {
+  "v": 13,
+  "src": "manual: same"
  },
  "_retired": [
   {
