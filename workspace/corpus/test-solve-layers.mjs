@@ -25,6 +25,7 @@ import { solveLayers } from "./solve-layers.mjs";
 import { foldLayers } from "./fold-engine-layers.mjs";
 import { planarize } from "./planarize.mjs";
 import { boundaryLoop, ID } from "../probe-c/stage2.mjs";
+import { tolerantTarget } from "../../DHEERAJ_WORKSPACE/baseline/tolerant.mjs";
 
 const arg = (k, d) => {
     const i = process.argv.indexOf(`--${k}`);
@@ -33,32 +34,76 @@ const arg = (k, d) => {
 const N = arg("n", 8), STEPS = arg("steps", 4), SEED = arg("seed", 20260916);
 const PARTIAL = arg("partial", 0.5), BUDGET = arg("budget", 200000);
 
-// A CP as a comparable set of creases: rounded endpoints, unordered within an edge, with the
-// assignment. Boundary edges are dropped -- they are the paper, not the folding.
+// A CP's creases as GEOMETRY, not as an edge list.
 //
-// /!\ ROUND BEFORE ORDERING THE ENDPOINTS, not after. Ordering on raw coordinates and rounding
-// only on the way out makes two endpoints that agree to 1e-6 but differ in the last bit sort
-// into opposite orders, so the same crease is written two ways and the comparison reports it as
-// one missing and one extra. That is not a difference between the CPs, it is a difference
-// between two float comparisons, and it cost a FAIL on a sequence that was perfectly correct.
+// /!\ COMPARING EDGE LISTS IS THE WRONG TEST, and it cost two false failures before this was
+// understood. planarize() subdivides a crease wherever another crease crosses it, so the same
+// physical fold line comes back as one edge in one CP and two in another purely because the
+// folds were made in a different order. The two crease patterns are identical as PAPER and
+// differ as graphs. What has to match is the set of creased SEGMENTS, so this projects every
+// crease onto its own line, merges collinear pieces that touch, and compares the unions.
 //
-// Zero-length edges are dropped and COUNTED rather than silently ignored: a crease of no length
-// is not a crease, but it is also not supposed to exist, so it is reported alongside the verdict.
-function creaseSet(fold) {
-    const r = (v) => Math.round(v * 1e6) / 1e6;
-    const out = [];
+// The line key is rounded coarser than lkey's 1e-6 for the reason recorded above the imports:
+// dyadic coordinates land exactly on 1e-6 rounding ties, and a key that flips there would split
+// one line into two and defeat the merge it is there to enable.
+import { lineOf } from "../probe-c/stage2.mjs";
+
+const TOL = 2e-6;
+const GAP = 1e-5;                                   // pieces closer than this are one crease
+
+function creaseGeometry(fold) {
+    const byLine = new Map();
     let degenerate = 0;
     for (const [i, [u, w]] of fold.edges_vertices.entries()) {
         const a = fold.edges_assignment[i];
         if (a !== "M" && a !== "V") continue;
-        const A = fold.vertices_coords[u].map(r), B = fold.vertices_coords[w].map(r);
-        if (A[0] === B[0] && A[1] === B[1]) { degenerate++; continue; }
-        const [p, q] = (A[0] < B[0] || (A[0] === B[0] && A[1] < B[1])) ? [A, B] : [B, A];
-        out.push(`${p[0]},${p[1]},${q[0]},${q[1]},${a}`);
+        const A = fold.vertices_coords[u], B = fold.vertices_coords[w];
+        const l = lineOf(A, B);
+        if (!l) { degenerate++; continue; }
+        const r4 = (v) => Math.round(v * 1e4) / 1e4;
+        const key = `${r4(l.n[0])},${r4(l.n[1])},${r4(l.d)},${a}`;
+        if (!byLine.has(key)) byLine.set(key, { dir: l.dir, segs: [] });
+        const L = byLine.get(key);
+        // measure along the BUCKET's direction, not this edge's -- lineOf canonicalises the
+        // normal but not the direction, so two edges on one line can disagree by a sign
+        const t = (p) => L.dir[0] * p[0] + L.dir[1] * p[1];
+        const t0 = t(A), t1 = t(B);
+        if (Math.abs(t1 - t0) < TOL) { degenerate++; continue; }
+        L.segs.push([Math.min(t0, t1), Math.max(t0, t1)]);
+    }
+    const out = [];
+    for (const [key, L] of byLine) {
+        L.segs.sort((x, y) => x[0] - y[0]);
+        let cur = null;
+        for (const s of L.segs) {
+            if (cur && s[0] <= cur[1] + GAP) { cur[1] = Math.max(cur[1], s[1]); continue; }
+            if (cur) out.push(`${key}|${cur[0]}|${cur[1]}`);
+            cur = [...s];
+        }
+        if (cur) out.push(`${key}|${cur[0]}|${cur[1]}`);
     }
     out.sort();
     out.degenerate = degenerate;
     return out;
+}
+
+// Every merged crease in `a` matched to a distinct one in `b`: same line key and assignment,
+// endpoints within TOL. TOL exceeds the quantisation rather than equalling it -- two roundings
+// of one coordinate can differ by a full 1e-6, and in floating point by a hair more.
+function pairsUp(a, b) {
+    const parse = (s) => { const p = s.split("|"); return { key: p[0], lo: +p[1], hi: +p[2] }; };
+    const B = b.map(parse);
+    const used = new Array(B.length).fill(false);
+    for (const x of a.map(parse)) {
+        let hit = -1;
+        for (let j = 0; j < B.length; j++) {
+            if (used[j] || B[j].key !== x.key) continue;
+            if (Math.abs(B[j].lo - x.lo) <= TOL && Math.abs(B[j].hi - x.hi) <= TOL) { hit = j; break; }
+        }
+        if (hit < 0) { pairsUp.unmatched = `${x.key} [${x.lo.toFixed(6)}, ${x.hi.toFixed(6)}]`; return false; }
+        used[hit] = true;
+    }
+    return true;
 }
 
 // Replay a solver answer through the engine and planarise what it creases.
@@ -92,9 +137,24 @@ for (let i = 0; i < N; i++) {
     const s = sample(seed, PARTIAL, STEPS);
     if (!s.ok) { skipped++; console.log(`  skip  seed ${seed}: sampler stalled at ${s.stalledAt}`); continue; }
 
-    const want = creaseSet(s.pl.fold);
+    const want = creaseGeometry(s.pl.fold);
     const t0 = Date.now();
-    const r = solveLayers(s.pl.fold, { maxQueries: BUDGET, maxDepth: STEPS, maxLayers: 64 });
+// /!\ THE TARGET LOOKUP MUST BE TOLERANT, AND THE REASON IS NOT "the data is noisy".
+// Paper coordinates are DYADIC -- folding halves things, so intersections land on values like
+// 0.1484375 = 19/128, exact in binary. lkey rounds on a DECIMAL 1e-6 grid, and 19/128 x 1e6 is
+// 148437.5: exactly a rounding tie. Two computations of the same line then round in opposite
+// directions, the line gets two keys, every fold is refused, and the search reports EXHAUSTED --
+// a PROOF OF UNFOLDABILITY, on a crease pattern that was produced by folding. Measured on seed
+// 20268835: 8 of its 58 coordinates sit on a tie; exact target EXHAUSTED in 10,800 queries,
+// tolerant target SOLVED in 12,748.
+//
+// Using the opt-in injection point rather than loosening lkey, because that decision was already
+// made and reverted once (3d4f350): a global tolerance cost a real verdict on the instagram
+// corpus, whose EXHAUSTED results depend on exact matching. The repair belongs to the corpus.
+// The deeper fix -- quantising on a BINARY grid, where dyadic coordinates cannot tie -- would
+// remove the whole class, and it is not attempted here because it changes the shared key.
+    const r = solveLayers(s.pl.fold, { maxQueries: BUDGET, maxDepth: STEPS, maxLayers: 64,
+                                       target: tolerantTarget(s.pl.fold) });
     const ms = Date.now() - t0;
     const tag = `seed ${seed} (${STEPS} folds, ${s.partialUsed} partial, ${want.length} creases)`;
 
@@ -111,8 +171,13 @@ for (let i = 0; i < N; i++) {
 
     const rep = replay(s.pl.fold, r.seq);
     if (rep.error) { fail++; console.log(`  FAIL  ${tag}: replay refused -- ${rep.error}`); continue; }
-    const got = creaseSet(rep.fold);
-    const same = got.length === want.length && got.every((x, k) => x === want[k]);
+    const got = creaseGeometry(rep.fold);
+    // Compare with a TOLERANCE, not by string equality. Same root cause as above: 0.1484375
+    // rounds to 0.148438 on one side and 0.148437 on the other, and the identical crease is
+    // then reported as one missing plus one extra. The standard is still crease sets EQUAL --
+    // same count, and every crease paired with one that agrees to 1e-6 on all four endpoints
+    // and EXACTLY on M/V. Only the coordinate match is loosened.
+    const same = got.length === want.length && pairsUp(got, want);
     if (!same) {
         fail++;
         console.log(`  FAIL  ${tag}: replayed CP differs (${got.length} creases vs ${want.length})`);
@@ -120,6 +185,7 @@ for (let i = 0; i < N; i++) {
             console.log(`          zero-length edges dropped: ${got.degenerate} replayed, ${want.degenerate} original`);
         const missing = want.filter(x => !got.includes(x)).slice(0, 3);
         const extra = got.filter(x => !want.includes(x)).slice(0, 3);
+        if (pairsUp.unmatched) console.log(`          unmatched by tolerance: ${pairsUp.unmatched}`);
         if (missing.length) console.log(`          missing: ${missing.join("  ")}`);
         if (extra.length) console.log(`          extra:   ${extra.join("  ")}`);
         continue;

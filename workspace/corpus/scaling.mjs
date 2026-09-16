@@ -29,6 +29,22 @@ import { solve } from "../probe-c/stage2.mjs";
 import { solveLayers } from "./solve-layers.mjs";
 import { build } from "./generate.mjs";
 import { sample } from "./generate-layers.mjs";
+import { tolerantTarget } from "../../DHEERAJ_WORKSPACE/baseline/tolerant.mjs";
+
+// /!\ THE TARGET LOOKUP MUST BE TOLERANT, AND THE REASON IS NOT "the data is noisy".
+// Paper coordinates are DYADIC -- folding halves things, so intersections land on values like
+// 0.1484375 = 19/128, exact in binary. lkey rounds on a DECIMAL 1e-6 grid, and 19/128 x 1e6 is
+// 148437.5: exactly a rounding tie. Two computations of the same line then round in opposite
+// directions, the line gets two keys, every fold is refused, and the search reports EXHAUSTED --
+// a PROOF OF UNFOLDABILITY, on a crease pattern that was produced by folding. Measured on seed
+// 20268835: 8 of its 58 coordinates sit on a tie; exact target EXHAUSTED in 10,800 queries,
+// tolerant target SOLVED in 12,748.
+//
+// Using the opt-in injection point rather than loosening lkey, because that decision was already
+// made and reverted once (3d4f350): a global tolerance cost a real verdict on the instagram
+// corpus, whose EXHAUSTED results depend on exact matching. The repair belongs to the corpus.
+// The deeper fix -- quantising on a BINARY grid, where dyadic coordinates cannot tie -- would
+// remove the whole class, and it is not attempted here because it changes the shared key.
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i < 0 ? d : process.argv[i + 1]; };
@@ -49,14 +65,18 @@ function runOne(tier, seed, depth) {
         const r = build(seed, depth, { reject: [], snapshots: false });
         if (r.reject) return { skip: r.reject };
         const t0 = Date.now();
-        const v = solve(r.fold, { maxQueries: BUDGET, maxDepth: depth });
+// Both solvers get a TOLERANT target; see the note above the imports for why an exact
+        // lookup turns a rounding tie into a false EXHAUSTED.
+                const v = solve(r.fold, { maxQueries: BUDGET, maxDepth: depth,
+                                  target: tolerantTarget(r.fold) });
         return { ...v, ms: Date.now() - t0,
                  creases: r.metrics.crease_edges, layers: r.metrics.layers_final };
     }
     const s = sample(seed, PARTIAL, depth);
     if (!s.ok) return { skip: `stalled at ${s.stalledAt}` };
     const t0 = Date.now();
-    const v = solveLayers(s.pl.fold, { maxQueries: BUDGET, maxDepth: depth, maxLayers: 4096 });
+    const v = solveLayers(s.pl.fold, { maxQueries: BUDGET, maxDepth: depth, maxLayers: 4096,
+                                      target: tolerantTarget(s.pl.fold) });
     return { ...v, ms: Date.now() - t0,
              creases: (s.pl.stats.counts.M || 0) + (s.pl.stats.counts.V || 0), layers: s.layers };
 }

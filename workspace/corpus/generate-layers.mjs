@@ -37,6 +37,7 @@ import { initSheet, foldLayers, currentPolys, paperArea, layerCount }
     from "./fold-engine-layers.mjs";
 import { planarize, foldedState } from "./planarize.mjs";
 import { solveLayers } from "./solve-layers.mjs";
+import { tolerantTarget } from "../../DHEERAJ_WORKSPACE/baseline/tolerant.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const arg = (k, d) => {
@@ -247,7 +248,11 @@ function exportBatch(dir, pPartial, exportSteps, verify, verifyBudget) {
         if (verify) {
             const t0 = Date.now();
             let v;
-            try { v = solveLayers(s.pl.fold, { maxQueries: verifyBudget, maxDepth: s.seq.length }); }
+            // tolerant target: see the note in test-solve-layers.mjs -- an exact lookup turns a
+            // dyadic coordinate sitting on a 1e-6 rounding tie into a false EXHAUSTED, which in
+            // this field would be a PROOF OF UNFOLDABILITY written into the corpus metadata.
+            try { v = solveLayers(s.pl.fold, { maxQueries: verifyBudget, maxDepth: s.seq.length,
+                                               target: tolerantTarget(s.pl.fold) }); }
             catch (e) { v = { status: "ERROR", queries: 0, depth: 0, err: e.message }; }
             verdict = { status: v.status, queries: v.queries, depth: v.depth, ms: Date.now() - t0 };
         }
