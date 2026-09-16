@@ -35,7 +35,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { initSheet, foldLayers, currentPolys, paperArea, layerCount }
     from "./fold-engine-layers.mjs";
-import { planarize } from "./planarize.mjs";
+import { planarize, foldedState } from "./planarize.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const arg = (k, d) => {
@@ -73,7 +73,7 @@ function offsetsFor(st, n) {
 // Every legal move at this state, split by tier. `over` is a real choice for an all-layers fold
 // -- the two directions write opposite M/V and are different moves -- and is forced for a
 // partial run, so it is not enumerated there.
-function legalMoves(st) {
+export function legalMoves(st) {
     const L = layerCount(st);
     const all = [], partial = [];
     for (const n of NORMALS) for (const d of offsetsFor(st, n)) for (const mp of [true, false]) {
@@ -91,13 +91,14 @@ function legalMoves(st) {
     return { all, partial };
 }
 
-function sample(seed, pPartial) {
+export function sample(seed, pPartial, steps = STEPS, opts = {}) {
     const rand = rngFrom(seed);
     let st = initSheet();
-    const creases = [], seq = [], branching = [];
+    const creases = [], seq = [], branching = [], states = [];
+    if (opts.snapshots) states.push(currentPolys(st));
     let partialUsed = 0;
 
-    for (let s = 0; s < STEPS; s++) {
+    for (let s = 0; s < steps; s++) {
         const moves = legalMoves(st);
         branching.push({ step: s + 1, layers: layerCount(st),
                          all: moves.all.length, partial: moves.partial.length });
@@ -116,6 +117,7 @@ function sample(seed, pPartial) {
         creases.push(...r.made);
         st = r.state;
         if (m.sel.mode !== "all") partialUsed++;
+        if (opts.snapshots) states.push(currentPolys(st));
         seq.push({ step: s + 1, normal: m.line.n, offset: m.line.d, move_positive: m.mp,
                    selection: m.sel, over: r.over, layers_moved: r.moved,
                    creases_created: r.made.length,
@@ -146,7 +148,7 @@ function sample(seed, pPartial) {
         return Math.round(Math.abs(a) / 2 * 1e4) / 1e4;
     });
 
-    return { ok: true, seq, creases, pl, branching, partialUsed,
+    return { ok: true, seq, creases, pl, branching, partialUsed, states,
              layers: layerCount(st), area: +paperArea(st).toFixed(6),
              distinctAreas: new Set(areas).size };
 }
@@ -175,6 +177,119 @@ function batch(pPartial) {
              conserved: rows.every(r => Math.abs(r.area - 1) < 1e-6) };
 }
 
+/* ---------- dataset export (--out), same shape the all-layers generator writes ------------ */
+// /!\ `canonical` is a copy of the one in generate.mjs rather than an import: that file runs its
+// whole driver at import time (it has no IS_MAIN guard), so importing it here would generate a
+// corpus as a side effect. Giving it the same guard and sharing this function is the follow-up.
+const SYMS = [
+    (p) => [p[0], p[1]],         (p) => [1 - p[0], p[1]],
+    (p) => [p[0], 1 - p[1]],     (p) => [1 - p[0], 1 - p[1]],
+    (p) => [p[1], p[0]],         (p) => [1 - p[1], p[0]],
+    (p) => [p[1], 1 - p[0]],     (p) => [1 - p[1], 1 - p[0]],
+];
+function canonical(fold) {
+    const r = (v) => Math.round(v * 1e6) / 1e6;
+    let best = null;
+    for (const S of SYMS) {
+        const rows = fold.edges_vertices.map(([u, w], i) => {
+            const A = S(fold.vertices_coords[u]), B = S(fold.vertices_coords[w]);
+            const [p, q] = (A[0] < B[0] || (A[0] === B[0] && A[1] <= B[1])) ? [A, B] : [B, A];
+            return `${r(p[0])},${r(p[1])},${r(q[0])},${r(q[1])},${fold.edges_assignment[i]}`;
+        }).sort();
+        const s = rows.join(";");
+        if (best === null || s < best) best = s;
+    }
+    let h1 = 0x811c9dc5, h2 = 0x01000193;
+    for (let i = 0; i < best.length; i++) {
+        h1 = Math.imul(h1 ^ best.charCodeAt(i), 0x01000193);
+        h2 = Math.imul(h2 + best.charCodeAt(i), 0x85ebca6b);
+    }
+    return ((h1 >>> 0).toString(16).padStart(8, "0")) + ((h2 >>> 0).toString(16).padStart(8, "0"));
+}
+
+function exportBatch(dir, pPartial, exportSteps) {
+    fs.mkdirSync(path.join(dir, "samples"), { recursive: true });
+    const manifest = [], rejects = {};
+    const seen = new Set();
+    let made = 0, attempts = 0;
+    console.log(`some-layers corpus -> ${path.relative(process.cwd(), dir)}`);
+    console.log(`n=${N} steps=${STEPS} p(partial)=${pPartial} seed0=${SEED}\n`);
+
+    while (made < N && attempts < N * 8) {
+        const seed = SEED + attempts * 7919;
+        attempts++;
+        const s = sample(seed, pPartial, STEPS, { snapshots: exportSteps });
+        if (!s.ok) { const k = `stalled at step ${s.stalledAt}`; rejects[k] = (rejects[k] || 0) + 1; continue; }
+        const hash = canonical(s.pl.fold);
+        // Isomorphic duplicates are dropped for the same reason the all-layers generator drops
+        // them: two samples that are the same CP up to a square symmetry are one data point.
+        if (seen.has(hash)) { rejects["duplicate CP (isomorphic)"] = (rejects["duplicate CP (isomorphic)"] || 0) + 1; continue; }
+        seen.add(hash);
+
+        const id = `layers-${String(made + 1).padStart(4, "0")}`;
+        const sdir = path.join(dir, "samples", id);
+        fs.mkdirSync(sdir, { recursive: true });
+        fs.writeFileSync(path.join(sdir, "cp.fold"), JSON.stringify(s.pl.fold));
+        fs.writeFileSync(path.join(sdir, "seq.json"), JSON.stringify(
+            { id, seed, steps: s.seq.length, folds: s.seq }, null, 1));
+        // /!\ planarize.foldedState()'s own header says the layer order "is determined by the
+        // fold history, not a choice we made". That is an ALL-LAYERS statement. Here the order is
+        // a real degree of freedom the sampler exercised, so `fo:faces_layer` in these step files
+        // records a choice, and a reader must not take it for a derived fact.
+        if (exportSteps) {
+            fs.mkdirSync(path.join(sdir, "steps"), { recursive: true });
+            s.states.forEach((layers, k) => fs.writeFileSync(
+                path.join(sdir, "steps", `step-${String(k).padStart(2, "0")}.fold`),
+                JSON.stringify(foldedState(layers))));
+        }
+        const meta = { id, tier: "some-layers", seed, steps: s.seq.length,
+                       p_partial_asked: pPartial, partial_used: s.partialUsed,
+                       cp_hash: hash,
+                       metrics: { layers: s.layers, area: s.area,
+                                  distinct_areas: s.distinctAreas,
+                                  coupling_max: Math.max(...s.seq.map(f => f.creases_created)),
+                                  creases: (s.pl.stats.counts.M || 0) + (s.pl.stats.counts.V || 0),
+                                  branching: s.branching },
+                       planarize: s.pl.stats,
+                       // /!\ no pure_search verdict. The all-layers generator round-trips every
+                       // sample through its solver; this tier's solver (solve-layers.mjs) has not
+                       // been run over a batch yet, so the field is absent rather than null-filled
+                       // to look verified.
+                       pure_search: undefined };
+        fs.writeFileSync(path.join(sdir, "meta.json"), JSON.stringify(meta, null, 1));
+        manifest.push(meta);
+        made++;
+        process.stdout.write(`\r  ${made}/${N}   (${attempts} attempts)      `);
+    }
+    console.log(made < N ? `\r  ${made}/${N}  <-- QUOTA NOT FILLED in ${attempts} attempts`
+                         : `\r  ${made}/${N}   (${attempts} attempts)      `);
+
+    fs.writeFileSync(path.join(dir, "manifest.json"), JSON.stringify(
+        { generated: new Date().toISOString(), tier: "some-layers", seed0: SEED,
+          n: N, steps: STEPS, p_partial: pPartial, rejects, samples: manifest }, null, 1) + "\n");
+    const conserved = manifest.every(m => Math.abs(m.metrics.area - 1) < 1e-6);
+    const conflicts = manifest.reduce((a, m) => a + m.planarize.assignment_conflicts, 0);
+    const folds = manifest.reduce((a, m) => a + m.steps, 0);
+    console.log(`\npartial folds realised: ${(100 * manifest.reduce((a, m) => a + m.partial_used, 0) / folds).toFixed(1)}%`);
+    console.log(`paper conserved: ${conserved}   M/V conflicts: ${conflicts}`);
+    if (Object.keys(rejects).length)
+        console.log(`rejected: ${Object.entries(rejects).map(([k, v]) => `${k} x${v}`).join(", ")}`);
+    console.log(`\n-> ${path.relative(process.cwd(), path.join(dir, "manifest.json"))}`);
+}
+
+// The driver is skipped on import, so the sampler above can be reused as a library -- the
+// round-trip gate (test-solve-layers.mjs) folds with exactly the sampler the corpus uses,
+// rather than with a second copy of it that could drift out of step.
+// basename, not endsWith: `test-generate-layers.mjs` ends with `generate-layers.mjs` too, so an endsWith test
+// makes importing the test run this driver, which then reads an argument as a filename.
+const IS_MAIN = process.argv[1] && path.basename(process.argv[1]) === "generate-layers.mjs";
+const OUT_DIR = (() => { const i = process.argv.indexOf("--out"); return i < 0 ? null : process.argv[i + 1]; })();
+
+if (IS_MAIN && OUT_DIR) {
+    // dataset mode: one directory per sample, the same layout generate.mjs writes
+    exportBatch(path.isAbsolute(OUT_DIR) ? OUT_DIR : path.join(HERE, OUT_DIR),
+                arg("partial", 0.5), process.argv.includes("--export-steps"));
+} else if (IS_MAIN) {
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(OUT, { recursive: true });
 
@@ -217,3 +332,4 @@ fs.writeFileSync(path.join(OUT, "sweep.json"), JSON.stringify(
                                     stalled: r.stalled, conserved: r.conserved,
                                     conflicts: r.conflicts, samples: r.rows })) }, null, 1) + "\n");
 console.log(`\n-> ${path.relative(process.cwd(), path.join(OUT, "sweep.json"))}`);
+}

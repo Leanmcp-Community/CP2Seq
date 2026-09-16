@@ -373,7 +373,10 @@ function boundaryLoop(bEdges, V) {
     return loop.length >= 3 && loop.length === nb.size ? loop.map(v => V[v]) : null;
 }
 
-export { solve, applyFold, candidates, buildTarget, boundaryLoop, lineOf, lkey, ptOn, ap, mul, inv, ID, reflectT, clip, chord };
+// `demand` is exported because the some-layers solver (workspace/corpus/solve-layers.mjs) asks
+// the same question of the same target index. Reimplementing it there would give the two tiers
+// two different definitions of "this crease is in the CP", and the tiers have to be comparable.
+export { solve, applyFold, candidates, buildTarget, demand, boundaryLoop, lineOf, lkey, ptOn, ap, mul, inv, ID, reflectT, clip, chord };
 
 /* ---------- driver (skipped when this file is imported, e.g. by selftest.mjs) ------------- */
 const IS_MAIN = process.argv[1] && process.argv[1].endsWith("stage2.mjs");
