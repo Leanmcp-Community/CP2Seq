@@ -23,6 +23,8 @@ const cs = read("workspace/corpus/corpus-summary.json");
 // Whether PurelandFold is inside the frozen action space at all. It was assumed to be, and
 // called the reality anchor, for a month before anyone ran the check.
 const ac = read("workspace/corpus/anchor-check.json");
+// SOLVED verdicts replayed through a second engine and checked crease-set-equal against the CP
+const ar = read("workspace/corpus/anchor-replay.json");
 
 const total = v.length;
 const screenFail = v.filter(x => x.stage1 === "NOT_FOLDABLE_SCREEN").length;
@@ -82,6 +84,7 @@ const facts = {
   // the subset where pre-creasing cannot be the explanation, so only the layer rule is left
   "anchor.noF":                    { v: ac.filter(r => r.F === 0).length, src: "derived: models with no F edge at all" },
   "anchor.noFExhausted":           { v: ac.filter(r => r.F === 0 && r.status === "EXHAUSTED").length, src: "derived" },
+  "anchor.solvedVerified":         { v: ar.verified, src: "derived: replay-anchor.mjs — crease sets equal, second engine" },
 
   "purelandfold.sequences":        { v: 27,  src: "manual: HF dataset mayaweiz/PurelandFold" },
   "purelandfold.frames":           { v: 337, src: "manual: same" },
