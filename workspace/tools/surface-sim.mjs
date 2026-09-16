@@ -52,6 +52,7 @@ import fs from "fs";
 import { foldLayers, currentPolys, paperArea, layerCount } from "../corpus/fold-engine-layers.mjs";
 import { planarize, foldedState } from "../corpus/planarize.mjs";
 import { ID, inv, lineOf } from "../probe-c/stage2.mjs";
+import { Canvas, fitter } from "./raster.mjs";
 
 const SQUARE = [[0, 0], [1, 0], [1, 1], [0, 1]];
 
@@ -217,7 +218,96 @@ function creasesView(st, made) {
     return s + "</g></svg>";
 }
 
-export function views(st, madeSoFar = []) {
+/* ---------- the same three views, as real pixels ------------------------------------------ */
+// A VLM sees pixels or it sees nothing: the Messages API takes PNG/JPEG/GIF/WebP, and SVG is not
+// among them. Handing a model SVG SOURCE as text is not a substitute either -- it would be
+// reading markup rather than looking at paper, and the "with vision" arm of the ablation would
+// quietly be measuring something else. raster.mjs does this with no dependency.
+//
+// The SVG views stay: they are what browser.html and the atlases draw, where vectors scale and
+// a human is doing the looking.
+const INK = [27, 29, 33], PAPER_FILL = [43, 77, 143], MOUNTAIN = [184, 64, 43], VALLEY = [47, 95, 168];
+
+function xrayPNG(st, size = 448) {
+    const polys = currentPolys(st);
+    const c = new Canvas(size, size);
+    const f = fitter(polys.flatMap(p => p.poly), size, size);
+    // One translucent pass per layer: n overlapping sheets reach 1-(1-a)^n, so thickness reads
+    // as darkness. Same visual idea as Flat-Folder's and Fold Studio's X-ray.
+    for (const { poly } of polys) {
+        c.fillPolygon(poly.map(f), [...PAPER_FILL, 52]);
+        const P = poly.map(f);
+        for (let i = 0; i < P.length; i++) c.strokeSegment(P[i], P[(i + 1) % P.length], [...INK, 120], 1.4);
+    }
+    return c.toBase64();
+}
+
+function explodedPNG(st, size = 360) {
+    const polys = currentPolys(st);
+    const n = polys.length;
+    // /!\ SPACE THE LAYERS BY THEIR OWN HEIGHTS, cumulatively. The first version offset each
+    // layer by a fixed fraction of the WHOLE silhouette's height, which is wrong as soon as the
+    // layers differ in size -- and after a partial fold they always do. Small layers ended up
+    // with gaps and large ones overlapped their neighbours, so the picture said nothing about
+    // the stack, which is the one thing this view exists to show.
+    const GAP = 0.12;
+    const hs = polys.map(({ poly }) => {
+        let lo = Infinity, hi = -Infinity;
+        for (const p of poly) { lo = Math.min(lo, p[1]); hi = Math.max(hi, p[1]); }
+        return (hi - lo) || 0.02;
+    });
+    const unit = Math.max(...hs);
+    // Each layer is also moved so its own BOTTOM edge sits at the cumulative offset. Without
+    // that, a layer whose paper happens to live high in the plane starts high in the stack too,
+    // and neighbours overlap however generous the gap is.
+    const los = polys.map(({ poly }) => Math.min(...poly.map(p => p[1])));
+    const offs = [];
+    let y = 0;
+    for (let k = 0; k < n; k++) { offs.push(y - los[k]); y += hs[k] + unit * GAP; }
+
+    const spread = polys.flatMap(({ poly }, k) => poly.map(p => [p[0], p[1] + offs[k]]));
+    let lo = Infinity, hi = -Infinity, xlo = Infinity, xhi = -Infinity;
+    for (const p of spread) {
+        lo = Math.min(lo, p[1]); hi = Math.max(hi, p[1]);
+        xlo = Math.min(xlo, p[0]); xhi = Math.max(xhi, p[0]);
+    }
+    // Height follows the content's aspect ratio, so a tall stack gets a tall image instead of
+    // being squeezed into a square with empty margins.
+    const H = Math.max(size, Math.min(1400, Math.round(size * (hi - lo) / ((xhi - xlo) || 1))));
+    const c = new Canvas(size, H);
+    const f = fitter(spread, size, H, 0.04);
+    polys.forEach(({ poly }, k) => {
+        const P = poly.map(p => f([p[0], p[1] + offs[k]]));
+        c.fillPolygon(P, [...PAPER_FILL, 46]);
+        for (let i = 0; i < P.length; i++) c.strokeSegment(P[i], P[(i + 1) % P.length], [...INK, 170], 1.5);
+    });
+    return c.toBase64();
+}
+
+function creasesPNG(made, size = 360) {
+    const c = new Canvas(size, size);
+    const f = fitter(SQUARE, size, size);
+    const S = SQUARE.map(f);
+    for (let i = 0; i < S.length; i++) c.strokeSegment(S[i], S[(i + 1) % S.length], [154, 160, 166, 255], 2);
+    for (const m of made) {
+        const A = f(m.P), B = f(m.Q);
+        // Mountain solid, valley dashed -- the convention every origami diagram uses, and the one
+        // that still works if the picture is seen without colour.
+        if (m.a === "M") c.strokeSegment(A, B, [...MOUNTAIN, 255], 2.4);
+        else c.strokeDashed(A, B, [...VALLEY, 255], 2.4, 9, 6);
+    }
+    return c.toBase64();
+}
+
+export function views(st, madeSoFar = [], format = "svg") {
+    if (format === "png") return [
+        { name: "xray", format: "png", media_type: "image/png",
+          caption: "top view, overlapping layers darker", data: xrayPNG(st) },
+        { name: "exploded", format: "png", media_type: "image/png",
+          caption: "the stack pulled apart, bottom layer first", data: explodedPNG(st) },
+        ...(madeSoFar.length ? [{ name: "creases", format: "png", media_type: "image/png",
+          caption: "creases made so far, in the flat sheet", data: creasesPNG(madeSoFar) }] : []),
+    ];
     return [
         { name: "xray", format: "svg", caption: "top view, overlapping layers darker", content: xray(st) },
         { name: "exploded", format: "svg", caption: "the stack pulled apart, bottom layer first", content: exploded(st) },

@@ -11,18 +11,19 @@
 // between them is what comes back from the simulator.
 //
 // ============================================================================================
-// /!\ THE VISION CHANNEL IS NOT WIRED, AND THIS IS THE HONEST REASON
+// TWO FEEDBACK CHANNELS, WHICH ARE THE TWO ARMS
 // ============================================================================================
-// surface-sim renders SVG. The Messages API accepts image blocks as PNG / JPEG / GIF / WebP —
-// not SVG. So sending the model a picture needs a rasteriser, which needs a dependency this
-// repo does not have. Rather than pretend, the loop ships with two feedback channels:
+//   text     the state in words and numbers: silhouette, layer count, the stack layer by layer,
+//            creases made so far. This is the NO-VISION CONTROL of §5 — a condition worth
+//            measuring in its own right, not a fallback.
+//   images   real PNGs of the same three views, rendered by raster.mjs. SVG was not an option:
+//            the Messages API takes PNG/JPEG/GIF/WebP, and handing a model SVG SOURCE as text
+//            would have it reading markup rather than looking at paper — the "with vision" arm
+//            would quietly have been measuring something else.
 //
-//   text     the state described in words and numbers: silhouette, layer count, stack, creases
-//            made so far. This is the NO-VISION CONTROL of §5, a condition we want to run
-//            anyway, not a placeholder.
-//   images   present in the interface, refused at run time until a rasteriser is configured.
-//            The failure is loud on purpose: a silent fallback to text would produce a "vision"
-//            arm whose numbers are actually the control's, and nobody would notice.
+// Everything else is held identical between the arms. That is the point: the only difference
+// between a `--feedback text` run and a `--feedback images` run is what comes back from the
+// simulator, so a difference in the numbers is attributable to the channel.
 //
 // ============================================================================================
 // /!\ HOW ACCEPT IS DECIDED, AND WHERE THIS DEPARTS FROM §4
@@ -48,7 +49,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { newSession, step, encodeState, decodeState, creasePattern } from "./surface-sim.mjs";
+import { newSession, step, encodeState, decodeState, creasePattern, views } from "./surface-sim.mjs";
 import { currentPolys } from "../corpus/fold-engine-layers.mjs";
 import { creaseGeometry, pairsUp } from "../corpus/crease-compare.mjs";
 
@@ -213,17 +214,26 @@ export function accepts(builtCP, targetCP) {
     return false;
 }
 
+// One place decides what the model gets back, so the two arms cannot drift apart by accident.
+// Under --no-tools neither channel is used: the model is told only whether the fold was taken.
+function feedbackContent(st, made, text, channel) {
+    if (channel !== "images") return text;
+    const blocks = [];
+    for (const v of views(st, made, "png")) {
+        blocks.push({ type: "image", source: { type: "base64", media_type: v.media_type, data: v.data } });
+        // The caption rides with the picture: three unlabelled images of the same paper are a
+        // puzzle, and solving that puzzle is not what is being measured here.
+        blocks.push({ type: "text", text: v.caption });
+    }
+    blocks.push({ type: "text", text });
+    return blocks;
+}
+
 /* ---------- the loop -------------------------------------------------------------------------- */
 export async function runEpisode({ sampleDir, model, feedback = "text", maxSteps = 16, noTools = false }) {
     const cp = JSON.parse(fs.readFileSync(path.join(sampleDir, "cp.fold"), "utf8"));
     const meta = JSON.parse(fs.readFileSync(path.join(sampleDir, "meta.json"), "utf8"));
     const tier = meta.tier ?? (meta.stratum ? "all-layers" : "some-layers");
-
-    if (feedback === "images")
-        throw new Error("the image channel needs a rasteriser: surface-sim renders SVG and the " +
-                        "Messages API takes PNG/JPEG/GIF/WebP. Run --feedback text (the §5 " +
-                        "no-vision control) until one is configured. Refusing rather than " +
-                        "silently falling back, which would mislabel the control as the vision arm.");
 
     let st = newSession();
     const made = [];
@@ -257,8 +267,10 @@ export async function runEpisode({ sampleDir, model, feedback = "text", maxSteps
             // that differs between the arms.
             messages.push({ role: "user", content: noTools
                 ? `That fold was refused. Propose a different one.`
-                : `That fold was refused: ${r.error}. ${r.hint ?? ""}` +
-                  `${r.detail ? ` (${r.detail})` : ""}\nThe paper has not moved.\n\n${describe(st, made)}` });
+                : feedbackContent(st, made,
+                    `That fold was refused: ${r.error}. ${r.hint ?? ""}` +
+                    `${r.detail ? ` (${r.detail})` : ""}\nThe paper has not moved.` +
+                    (feedback === "images" ? "" : `\n\n${describe(st, made)}`), feedback) });
             continue;
         }
 
@@ -267,9 +279,11 @@ export async function runEpisode({ sampleDir, model, feedback = "text", maxSteps
         trace[trace.length - 1].result = { ok: true, metrics: r.metrics, made: r.made };
         messages.push({ role: "user", content: noTools
             ? `Fold accepted. Propose the next one, or {"final": true}.`
-            : `Fold accepted: ${r.metrics.creases_made} crease(s), ` +
-              `${r.metrics.layers_moved} layer(s) moved, now ${r.metrics.layers} layers.\n\n` +
-              `${describe(st, made)}\n\nPropose the next fold, or {"final": true}.` });
+            : feedbackContent(st, made,
+                `Fold accepted: ${r.metrics.creases_made} crease(s), ` +
+                `${r.metrics.layers_moved} layer(s) moved, now ${r.metrics.layers} layers.` +
+                (feedback === "images" ? "" : `\n\n${describe(st, made)}`) +
+                `\n\nPropose the next fold, or {"final": true}.`, feedback) });
     }
 
     // Scored on what the model actually built, whether or not it said it was finished -- a model
