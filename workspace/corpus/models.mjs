@@ -74,6 +74,23 @@ const pleat = (lineAt, offsets, over0 = true) =>
     offsets.map((off, k) => f(lineAt(off), false, (k % 2 === 0) === over0));
 const evenly = (n) => Array.from({ length: n - 1 }, (_, k) => (k + 1) / n);
 
+// The sheet a model starts from. Default is the unit square, the same one the sampled corpus
+// uses. A model may name its own -- `DIAMOND` is that same square held rotated 45 degrees,
+// which is not a different piece of paper, it is the diagram's "now turn the paper round".
+// It matters because a fold along a diagonal makes the spine a 45-degree line, so a model whose
+// conventional drawing has a horizontal spine cannot be produced from an axis-aligned square,
+// however the folds are chosen.
+const SQUARE = [[0, 0], [1, 0], [1, 1], [0, 1]];
+const polyArea = (poly) => {
+    let a = 0;
+    for (let i = 0; i < poly.length; i++) {
+        const p = poly[i], q = poly[(i + 1) % poly.length];
+        a += p[0] * q[1] - q[0] * p[1];
+    }
+    return Math.abs(a) / 2;
+};
+const DIAMOND = [[0.5, 0], [1, 0.5], [0.5, 1], [0, 0.5]];
+
 const MODELS = [
     {
         id: "accordion-8", title: "Accordion pleat, 8 panels", family: "useful",
@@ -100,21 +117,23 @@ const MODELS = [
     },
     {
         id: "dog-head", title: "Dog head", family: "recognisable",
-        note: "The classic four-fold model, and the one that exposed the angle restriction: " +
-              "an ear is a slanted line across a corner, and with only 0/45/90/135 available " +
-              "the first version could merely trim corners off, which reads as a blob. " +
-              "Halve on the diagonal, turn both top corners forward for ears, tip the chin up.",
+        sheet: DIAMOND,
+        note: "The classic four-fold model, and the one that took three tries. Folding a square " +
+              "on its diagonal always leaves the spine at 45 degrees, so the head came out " +
+              "tilted however the later folds were chosen -- the paper has to be held turned, " +
+              "which is what DIAMOND is. Then: halve to a triangle with the spine level and the " +
+              "snout down, drop both top corners for ears, tip the chin up.",
         folds: [
-            // halve on the anti-diagonal: the (1,1) corner goes over, leaving the triangle
-            // (0,0),(1,0),(0,1) with its spine along x + y = 1
-            fold([1, 0], [0, 1], [1, 1]),
-            // Ears. The first version cut from the spine down to the far edge, which does not
-            // fold an ear -- it trims the corner off, and the silhouette reads as a blob. An ear
-            // is a SHORT line close to the corner, so the corner flips over and lies on the face
-            // as a visible triangular flap while the head keeps its outline.
-            fold([0.70, 0], [0.92, 0.12], [1, 0]),   // right ear flips back over the face
-            fold([0, 0.70], [0.12, 0.92], [0, 1]),   // left ear, mirrored
-            fold([0.30, 0], [0, 0.30], [0, 0]),      // chin: tip the apex up for the snout
+            // halve: the top half drops, leaving the triangle (0,0.5),(0.5,0),(1,0.5) --
+            // spine level along y = 0.5, snout at the bottom
+            fold([0, 0.5], [1, 0.5], [0.5, 1]),
+            // Ears. An earlier version cut from the spine right down to the far edge, which does
+            // not fold an ear -- it trims the corner off, and the silhouette reads as a blob. An
+            // ear is a SHORT line close to the corner, so the corner flips over and lies on the
+            // face as a visible triangular flap while the head keeps its outline.
+            fold([0.66, 0.5], [0.85, 0.28], [1, 0.5]),   // right ear drops over the face
+            fold([0.34, 0.5], [0.15, 0.28], [0, 0.5]),   // left ear, mirrored
+            fold([0, 0.10], [1, 0.10], [0.5, 0]),        // chin: tip the snout up
         ],
     },
     {
@@ -144,7 +163,8 @@ const MODELS = [
 
 /* ---------- run one model ---------- */
 function run(model) {
-    let st = initSheet();
+    const sheet = model.sheet ?? SQUARE;
+    let st = initSheet(sheet);
     const creases = [], seq = [], states = [st];
     for (const [i, fd] of model.folds.entries()) {
         const before = layerCount(st);
@@ -189,9 +209,9 @@ for (const m of MODELS) {
         continue;
     }
 
+    const sheet = m.sheet ?? SQUARE;
     const segs = [
-        { P: [0, 0], Q: [1, 0], assignment: "B" }, { P: [1, 0], Q: [1, 1], assignment: "B" },
-        { P: [1, 1], Q: [0, 1], assignment: "B" }, { P: [0, 1], Q: [0, 0], assignment: "B" },
+        ...sheet.map((P, i) => ({ P, Q: sheet[(i + 1) % sheet.length], assignment: "B" })),
         ...r.creases.map(c => ({ P: c.P, Q: c.Q, assignment: c.a })),
     ];
     const pl = planarize(segs);
@@ -219,14 +239,18 @@ for (const m of MODELS) {
             coupling_max: Math.max(...r.seq.map(s => s.creases_created)),
             layers_final: layerCount(r.st),
             paper_area_final: +paperArea(r.st).toFixed(6),
+            sheet_area: +polyArea(m.sheet ?? SQUARE).toFixed(6),
         },
         planarize: pl.stats,
     };
     fs.writeFileSync(path.join(dir, "meta.json"), JSON.stringify(meta, null, 1));
     manifest.push({ ...meta, ok: true });
 
+    // Conservation is against THIS model's sheet, not against 1. DIAMOND is the unit square
+    // held rotated, so its area is 0.5 in these coordinates -- the first run of the rotated dog
+    // was flagged DEFECT by a check that had 1 hard-coded, which is the check working.
     const bad = pl.stats.assignment_conflicts || pl.stats.non_bmv_edges
-        || Math.abs(meta.metrics.paper_area_final - 1) > 1e-6;
+        || Math.abs(meta.metrics.paper_area_final - meta.metrics.sheet_area) > 1e-6;
     console.log(`${m.id.padEnd(16)} ${m.family.padEnd(13)} ${String(r.seq.length).padStart(5)} ` +
                 `${String(meta.metrics.crease_edges).padStart(7)} ` +
                 `${String(meta.metrics.layers_final).padStart(6)} ` +
