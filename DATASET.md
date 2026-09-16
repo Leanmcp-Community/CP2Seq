@@ -81,11 +81,11 @@ Bucket reminder:
 - **Bucket**: C by default (CP only); can be promoted to a synthetic B by running Flat-Folder's
   solver and picking one terminal state as `FINAL RESULT` — but that pick is an experimental
   choice we make, not a ground-truth label from the source.
-- ⚠️ **At most 10.7% of it is reachable, and only 0.5% is confirmed.** Probe C is complete
-  (`notes/probes/probe-c-screen.md`): **327<!--fact:probeC.provenNot--> / 366<!--fact:corpus.instagram.total--> = 89.3%<!--fact:probeC.provenNotPct-->** of these CPs are **proven** not
+- ⚠️ **At most 7.7% of it is reachable, and only 1.1% is confirmed.** Probe C is complete
+  (`notes/probes/probe-c-screen.md`): **338<!--fact:probeC.provenNot--> / 366<!--fact:corpus.instagram.total--> = 92.3%<!--fact:probeC.provenNotPct-->** of these CPs are **proven** not
   all-layers simple-foldable — 125<!--fact:probeC.screenFail--> by the spanning-line condition, 46<!--fact:probeC.preCrease--> by pre-crease traces,
-  156<!--fact:probeC.exhausted--> by a full search that exhausted the space. 37<!--fact:probeC.timeout--> timed out, 2<!--fact:probeC.solved--> solved. The action space is fixed
-  to simple folding, so a score over all 366 is capped at 10.7% for reasons that have nothing to
+  167<!--fact:probeC.exhausted--> by a full search that exhausted the space. 24<!--fact:probeC.timeout--> timed out, 4<!--fact:probeC.solved--> solved. The action space is fixed
+  to simple folding, so a score over all 366 is capped at 7.7% for reasons that have nothing to
   do with the model — see `EXPERIMENTS_SETUP.md` §1.2 for the four-way stratification this
   forces. **This source is now a scope-boundary measurement, not a corpus for scored runs.**
 - **Also note**: this is the same 366-CP set OrigamiBench uses as its dataset (`papers.md`).
@@ -147,7 +147,7 @@ Bucket reminder:
   `workspace/data/export_purelandfold_models.py` (output gitignored, it is a re-export).
   ⚠️ It is also where the ceiling of the action space becomes visible: **21 steps of simple
   folding produces a blocky flat shape, not a crane.** Cranes and frogs need reverse and petal
-  folds, which is the same fact Probe C measured as 89.3%<!--fact:probeC.provenNotPct--> from the other direction.
+  folds, which is the same fact Probe C measured as 92.3%<!--fact:probeC.provenNotPct--> from the other direction.
 - **Caveat**: restricted to Pureland origami (simple folds only, per the name) — same scope
   restriction flagged for FoldingAgent in `BASELINE_REPRODUCTION.md`. Good for validating the
   loop and for bucket-A sequence metrics; not representative of harder, compound-fold CPs.

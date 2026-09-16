@@ -4,8 +4,8 @@
 
 ## 结论
 
-> **至少 89.3% 的真实折纸作品，已被证明无法用 all-layers simple fold 折出。
-> 确认可折的只有 2 个（0.5%），上界 10.7%。**
+> **至少 92.3% 的真实折纸作品，已被证明无法用 all-layers simple fold 折出。
+> 确认可折的只有 4 个（1.1%），上界 7.7%。**
 
 三层独立证据叠加：
 
@@ -13,10 +13,10 @@
 | --- | --- | --- |
 | 贯穿线判据说不可折 | 125<!--fact:probeC.screenFail--> | 34.2%<!--fact:probeC.screenFailPct--> |
 | 预折痕痕迹说不可折 | 46<!--fact:probeC.preCrease--> | 12.6%<!--fact:probeC.preCreasePct--> |
-| **完整搜索穷尽仍无解** | **156**<!--fact:probeC.exhausted--> | **42.6%**<!--fact:probeC.exhaustedPct--> |
-| **合计已证不可折** | **327**<!--fact:probeC.provenNot-->**/366**<!--fact:corpus.instagram.total--> | **89.3%**<!--fact:probeC.provenNotPct--> |
-| 搜索超时（状态未知） | 37<!--fact:probeC.timeout--> | 10.1%<!--fact:probeC.timeoutPct--> |
-| **确认可折** | **2**<!--fact:probeC.solved--> | **0.5%**<!--fact:probeC.solvedPct--> |
+| **完整搜索穷尽仍无解** | **167**<!--fact:probeC.exhausted--> | **45.6%**<!--fact:probeC.exhaustedPct--> |
+| **合计已证不可折** | **338**<!--fact:probeC.provenNot-->**/366**<!--fact:corpus.instagram.total--> | **92.3%**<!--fact:probeC.provenNotPct--> |
+| 搜索超时（状态未知） | 24<!--fact:probeC.timeout--> | 6.6%<!--fact:probeC.timeoutPct--> |
+| **确认可折** | **4**<!--fact:probeC.solved--> | **1.1%**<!--fact:probeC.solvedPct--> |
 
 > ✅ **这张表用的是精确匹配，2026-09-16 确认它是对的 —— 中间绕了一圈，值得记下来。**
 >
@@ -25,11 +25,11 @@
 > 我把容差**全局**加进了 `stage2.mjs`，然后按完整预算重跑了这张表。
 >
 > **代价实测出来了：366 个里 1 个判定变坏** —— `360_fung_I_Heart_Cat_v2_(shaped)`
-> 由 EXHAUSTED 变 TIMEOUT，89.3% 掉到 89.1%。**收益是零**：没有任何一个 CP 因此被解出。
+> 由 EXHAUSTED 变 TIMEOUT，92.3% 掉到 89.1%。**收益是零**：没有任何一个 CP 因此被解出。
 > 原因很简单 —— **instagram 是全精度存储的，它根本没有这个 bug**，放宽匹配只是白白
 > 把搜索空间撑大，让一个本来能封闭的 CP 超时。
 >
-> 所以全局改动**已回退**，这张表回到 89.3%<!--fact:probeC.provenNotPct-->。容差改成
+> 所以全局改动**已回退**，这张表回到 92.3%<!--fact:probeC.provenNotPct-->。容差改成
 > **按语料 opt-in**：`solve(fold, { target })` 接一个外部构造的目标，只有低精度语料才传
 > （`DHEERAJ_WORKSPACE/baseline/tolerant.mjs`，PR #13）。
 > **精确匹配是这份语料的正确口径，不是历史包袱。**
@@ -96,10 +96,10 @@ simple fold 折出来的。
 | --- | --- |
 | 仅判据 | 125/366 = 34.2%<!--fact:probeC.screenFailPct--> |
 | **判据 + 预折痕** | **171/366** |
-| → 可折的上界 | 65.8%<!--fact:probeC.passScreenPct--> **降到 53.3%**<!--fact:probeC.stage1CeilingPct-->（阶段二后为 10.7%<!--fact:probeC.ceilingPct-->） |
+| → 可折的上界 | 65.8%<!--fact:probeC.passScreenPct--> **降到 53.3%**<!--fact:probeC.stage1CeilingPct-->（阶段二后为 7.7%<!--fact:probeC.ceilingPct-->） |
 
 > 📌 这一节是**阶段一结束时**的中间数。阶段二跑完之后，下界是
-> **89.3%**<!--fact:probeC.provenNotPct-->、上界 **10.7%**<!--fact:probeC.ceilingPct-->。
+> **92.3%**<!--fact:probeC.provenNotPct-->、上界 **7.7%**<!--fact:probeC.ceilingPct-->。
 > 中间数保留是为了让「每一层各贡献多少」可追溯，**引用时用最终数**。
 
 代表性案例：`092_ku_4_Stripes_2`（6 条贯穿 F 线）、`164_ku_Pleats_Exponential`（4 条）——
@@ -225,8 +225,10 @@ DFS 换**迭代加深**（原来一头扎到深度上限，把 4 折的 CP「解
 而**搜索在深序列上会力竭**是已知且诚实的弱点。
 
 ⚠️ **37 个 TIMEOUT 里很可能有可折的。** 往返测试显示搜索撑不过 ~8 折，
-而 PurelandFold 的真实序列是 5–21 步。所以 **0.5% 是「确认可折」的下界，不是真实占比**；
-可折的真实比例在 0.5% 和 10.7% 之间。
+而 PurelandFold 的真实序列是 5–21 步。所以 **1.1% 是「确认可折」的下界，不是真实占比**；
+
+📌 **2026-09-17 更新**：原批次每个 CP 预算 200 万 query，剩 37 个未定。按「超时是预算的陈述、不是问题的陈述」这个意见，把那 37 个用 25 倍预算重跑（`workspace/probe-c/budget-probe.mjs`）。**13 个定了，而且全部需要超过旧预算**（中位 1460 万）。预算确实是约束 —— 但结论往相反方向走了：13 个里 11 个关闭为 EXHAUSTED、只有 2 个找到序列，已证明不可折从 89.3% 升到 **92.3%**，上界从 10.7% 降到 **7.7%**。仍有 24 个在 5000 万预算下未定，而已转化的最高用到 4930 万 —— 就贴在预算边缘，**再加预算还会定掉更多**。
+可折的真实比例在 1.1% 和 7.7% 之间。
 
 ## ⚠️ query 基线这条产出没拿到
 

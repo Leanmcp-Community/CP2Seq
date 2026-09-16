@@ -51,7 +51,7 @@
       **扩展档：some-layers simple fold。** 新增，还没做。
 
       ⚠️ **加扩展档是因为核心档装不下大部分真实作品。**
-      实测：instagram 里 89.3%<!--fact:probeC.provenNotPct--> 落在核心档之外（`../probes/probe-c-screen.md`），
+      实测：instagram 里 92.3%<!--fact:probeC.provenNotPct--> 落在核心档之外（`../probes/probe-c-screen.md`），
       PurelandFold 的 27 条里 44.4%<!--fact:anchor.exhaustedPct--> 已证明不可折、7<!--fact:anchor.solved--> 条可折
       （`check-anchor.mjs`，详见 `corpus-plan.md`）。
       核心档里能折出来的东西**倾向于对称重复的网格**，因为一次折不可能只动一部分层 ——
