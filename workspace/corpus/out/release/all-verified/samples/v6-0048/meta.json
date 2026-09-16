@@ -1,0 +1,137 @@
+{
+ "id": "v6-0048",
+ "stratum": "v6",
+ "seed": 20261264,
+ "requested_steps": 6,
+ "cp_hash": "b1e2a20fd0cb751b",
+ "metrics": {
+  "steps": 6,
+  "crease_segments_raw": 19,
+  "crease_edges": 25,
+  "mountain": 11,
+  "valley": 14,
+  "border": 16,
+  "distinct_crease_lines": 14,
+  "vertices": 22,
+  "coupling_max": 7,
+  "coupling_mean": 3.167,
+  "coupling_total": 19,
+  "coupling_final_step": 4,
+  "layers_final": 20,
+  "distinct_angles": 3,
+  "bbox_area_final": 0.25,
+  "largest_face_final": 0.125,
+  "flags": {
+   "repeated_halving": false,
+   "no_coupling": false,
+   "collapsed": false,
+   "single_angle": false
+  },
+  "degenerate": false
+ },
+ "planarize": {
+  "segments_in": 23,
+  "vertices": 22,
+  "edges": 41,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 16,
+   "V": 14,
+   "M": 11
+  }
+ },
+ "pure_search": {
+  "status": "SOLVED",
+  "queries": 728262,
+  "depth": 6,
+  "seq": [
+   {
+    "line": {
+     "n": [
+      0.7071067811865476,
+      0.7071067811865475
+     ],
+     "d": 0.8838834764831842,
+     "dir": [
+      -0.7071067811865475,
+      0.7071067811865476
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      -4.19507761861837e-10,
+      1
+     ],
+     "d": 0.49999999989512284,
+     "dir": [
+      1,
+      4.19507761861837e-10
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067789663671,
+      0.7071067834067278
+     ],
+     "d": 0.35355338992813856,
+     "dir": [
+      0.7071067834067278,
+      -0.7071067789663671
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      -5.02109442912513e-9,
+      1
+     ],
+     "d": -0.2500000023007933,
+     "dir": [
+      1,
+      5.02109442912513e-9
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067838470866,
+      -0.7071067785260086
+     ],
+     "d": 0.5303300876651358,
+     "dir": [
+      0.7071067785260086,
+      0.7071067838470866
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      1,
+      4.182078017223035e-9
+     ],
+     "d": 9.438931228938696e-10,
+     "dir": [
+      -4.182078017223035e-9,
+      1
+     ]
+    },
+    "movePositive": true
+   }
+  ],
+  "ms": 1447
+ }
+}

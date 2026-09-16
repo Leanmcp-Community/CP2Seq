@@ -1,0 +1,33 @@
+{
+ "id": "envelope",
+ "title": "Envelope",
+ "family": "recognisable",
+ "note": "Bottom edge up, both sides in, top flap down -- the order a real envelope is assembled in, and the reason the last fold lies on top of the other three.",
+ "authored": true,
+ "tier": "all-layers",
+ "metrics": {
+  "steps": 4,
+  "partial_folds": 0,
+  "crease_edges": 12,
+  "mountain": 4,
+  "valley": 8,
+  "vertices": 16,
+  "coupling_max": 3,
+  "layers_final": 9,
+  "paper_area_final": 1,
+  "sheet_area": 1
+ },
+ "planarize": {
+  "segments_in": 12,
+  "vertices": 16,
+  "edges": 24,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 12,
+   "V": 8,
+   "M": 4
+  }
+ }
+}

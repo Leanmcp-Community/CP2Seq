@@ -1,0 +1,33 @@
+{
+ "id": "pine-tree",
+ "title": "Pine tree",
+ "family": "recognisable",
+ "note": "A tapered triangle with a trunk: bring both lower sides in to a narrow base, then take the very bottom corners off so a trunk is left standing below the foliage.",
+ "authored": true,
+ "tier": "all-layers",
+ "metrics": {
+  "steps": 4,
+  "partial_folds": 0,
+  "crease_edges": 9,
+  "mountain": 3,
+  "valley": 6,
+  "vertices": 14,
+  "coupling_max": 2,
+  "layers_final": 8,
+  "paper_area_final": 1,
+  "sheet_area": 1
+ },
+ "planarize": {
+  "segments_in": 11,
+  "vertices": 14,
+  "edges": 21,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 12,
+   "V": 6,
+   "M": 3
+  }
+ }
+}

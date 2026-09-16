@@ -1,0 +1,33 @@
+{
+ "id": "fan",
+ "title": "Fan",
+ "family": "useful",
+ "note": "Six panels pleated across, then the handle end pinched so the pleats splay from a point rather than running parallel.",
+ "authored": true,
+ "tier": "all-layers",
+ "metrics": {
+  "steps": 6,
+  "partial_folds": 0,
+  "crease_edges": 16,
+  "mountain": 7,
+  "valley": 9,
+  "vertices": 24,
+  "coupling_max": 6,
+  "layers_final": 12,
+  "paper_area_final": 1,
+  "sheet_area": 1
+ },
+ "planarize": {
+  "segments_in": 15,
+  "vertices": 24,
+  "edges": 32,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 16,
+   "V": 9,
+   "M": 7
+  }
+ }
+}

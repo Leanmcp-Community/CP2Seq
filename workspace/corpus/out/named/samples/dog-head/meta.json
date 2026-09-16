@@ -1,0 +1,33 @@
+{
+ "id": "dog-head",
+ "title": "Dog head",
+ "family": "recognisable",
+ "note": "The classic four-fold model, and the one that took three tries. Folding a square on its diagonal always leaves the spine at 45 degrees, so the head came out tilted however the later folds were chosen -- the paper has to be held turned, which is what DIAMOND is. Then: halve to a triangle with the spine level and the snout down, drop both top corners for ears, tip the chin up.",
+ "authored": true,
+ "tier": "all-layers",
+ "metrics": {
+  "steps": 4,
+  "partial_folds": 0,
+  "crease_edges": 9,
+  "mountain": 3,
+  "valley": 6,
+  "vertices": 17,
+  "coupling_max": 2,
+  "layers_final": 8,
+  "paper_area_final": 0.5,
+  "sheet_area": 0.5
+ },
+ "planarize": {
+  "segments_in": 11,
+  "vertices": 17,
+  "edges": 21,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 12,
+   "V": 6,
+   "M": 3
+  }
+ }
+}

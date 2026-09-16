@@ -1,0 +1,84 @@
+{
+ "id": "bookmark-corner",
+ "title": "Corner bookmark",
+ "steps": 2,
+ "folds": [
+  {
+   "step": 1,
+   "line": {
+    "n": [
+     -0.7071067811865475,
+     0.7071067811865475
+    ],
+    "d": 0
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 1,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0,
+      0
+     ],
+     "Q": [
+      1,
+      1
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "paper_area": 1
+  },
+  {
+   "step": 2,
+   "line": {
+    "n": [
+     0.7071067811865475,
+     0.7071067811865475
+    ],
+    "d": 0.7071067811865475
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 2,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.5,
+      0.5
+     ],
+     "Q": [
+      0,
+      1
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      1,
+      0
+     ],
+     "Q": [
+      0.5,
+      0.5
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 2,
+   "layers_before": 2,
+   "layers_after": 4,
+   "paper_area": 1
+  }
+ ]
+}

@@ -1,0 +1,137 @@
+{
+ "id": "v6-0003",
+ "stratum": "v6",
+ "seed": 20261219,
+ "requested_steps": 6,
+ "cp_hash": "5ee680e7bce20c79",
+ "metrics": {
+  "steps": 6,
+  "crease_segments_raw": 15,
+  "crease_edges": 21,
+  "mountain": 15,
+  "valley": 6,
+  "border": 14,
+  "distinct_crease_lines": 11,
+  "vertices": 20,
+  "coupling_max": 4,
+  "coupling_mean": 2.5,
+  "coupling_total": 15,
+  "coupling_final_step": 3,
+  "layers_final": 16,
+  "distinct_angles": 4,
+  "bbox_area_final": 0.46875,
+  "largest_face_final": 0.125,
+  "flags": {
+   "repeated_halving": false,
+   "no_coupling": false,
+   "collapsed": false,
+   "single_angle": false
+  },
+  "degenerate": false
+ },
+ "planarize": {
+  "segments_in": 19,
+  "vertices": 20,
+  "edges": 35,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 14,
+   "M": 15,
+   "V": 6
+  }
+ },
+ "pure_search": {
+  "status": "SOLVED",
+  "queries": 80824,
+  "depth": 6,
+  "seq": [
+   {
+    "line": {
+     "n": [
+      1,
+      0
+     ],
+     "d": 0.75,
+     "dir": [
+      0,
+      1
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865475,
+      0.7071067811865475
+     ],
+     "d": 0.5303300858899107,
+     "dir": [
+      -0.7071067811865475,
+      0.7071067811865475
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865468,
+      -0.7071067811865481
+     ],
+     "d": -0.5303300858899107,
+     "dir": [
+      0.7071067811865481,
+      0.7071067811865468
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.707106781186549,
+      0.7071067811865461
+     ],
+     "d": 0.3535533905932726,
+     "dir": [
+      -0.7071067811865461,
+      0.707106781186549
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      1.9984014443252826e-15,
+      1
+     ],
+     "d": 0.7499999999999996,
+     "dir": [
+      -1,
+      1.9984014443252826e-15
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865462,
+      -0.7071067811865487
+     ],
+     "d": -0.7071067811865488,
+     "dir": [
+      -0.7071067811865487,
+      -0.7071067811865462
+     ]
+    },
+    "movePositive": true
+   }
+  ],
+  "ms": 128
+ }
+}

@@ -1,0 +1,123 @@
+{
+ "id": "v5-0037",
+ "stratum": "v5",
+ "seed": 20261153,
+ "requested_steps": 5,
+ "cp_hash": "d7c098feeaaf15b8",
+ "metrics": {
+  "steps": 5,
+  "crease_segments_raw": 21,
+  "crease_edges": 32,
+  "mountain": 14,
+  "valley": 18,
+  "border": 16,
+  "distinct_crease_lines": 14,
+  "vertices": 27,
+  "coupling_max": 8,
+  "coupling_mean": 4.2,
+  "coupling_total": 21,
+  "coupling_final_step": 8,
+  "layers_final": 22,
+  "distinct_angles": 3,
+  "bbox_area_final": 0.3125,
+  "largest_face_final": 0.09375,
+  "flags": {
+   "repeated_halving": false,
+   "no_coupling": false,
+   "collapsed": false,
+   "single_angle": false
+  },
+  "degenerate": false
+ },
+ "planarize": {
+  "segments_in": 25,
+  "vertices": 27,
+  "edges": 48,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 16,
+   "V": 18,
+   "M": 14
+  }
+ },
+ "pure_search": {
+  "status": "SOLVED",
+  "queries": 10806,
+  "depth": 5,
+  "seq": [
+   {
+    "line": {
+     "n": [
+      0.7071067811865472,
+      0.7071067811865478
+     ],
+     "d": 0.7071067811865472,
+     "dir": [
+      -0.7071067811865478,
+      0.7071067811865472
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067823730958,
+      -0.7071067799999993
+     ],
+     "d": -0.17677669381345196,
+     "dir": [
+      0.7071067799999993,
+      0.7071067823730958
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067796941668,
+      0.7071067826789282
+     ],
+     "d": 0.3535533907461893,
+     "dir": [
+      -0.7071067826789282,
+      0.7071067796941668
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.707106781541251,
+      0.7071067808318442
+     ],
+     "d": 0.17677669428441797,
+     "dir": [
+      -0.7071067808318442,
+      0.707106781541251
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      1,
+      -2.7072939445815787e-9
+     ],
+     "d": -0.250000000304878,
+     "dir": [
+      2.7072939445815787e-9,
+      1
+     ]
+    },
+    "movePositive": true
+   }
+  ],
+  "ms": 22
+ }
+}
