@@ -22,26 +22,46 @@ Bucket reminder:
 
 ---
 
-## 0. Synthesized Pureland corpus — **the main data, not yet generated**
+## 0. Synthesized Pureland corpus — **the main data, generated**
 
-- **Link**: none — we generate it. Design in `notes/plan/corpus-plan.md` (a).
+- **Link**: none — we generate it. `workspace/corpus/`, design in `notes/plan/corpus-plan.md` (a).
 - **Method**: start from a square, apply random simple folds forward, record the sequence, unfold
   at the end to obtain the CP. **Generation is trivial; the inverse problem (CP → Seq) is the
   hard one** — which is exactly the structure a benchmark should have.
 - **Ground truth**: **bucket A by construction.** The (CP, sequence) pair is built, not labelled,
   so there is nothing to annotate and nothing to trust.
-- **Difficulty control**: step count, the same axis and unit as PurelandFold's `step` — so the
-  synthetic corpus and the real anchor are directly comparable.
-- **Why this exists**: the two real bucket-A candidates are 27 sequences (PurelandFold) and a
-  handful of classic models (Creasy). Neither can carry a headline number — and after Probe C,
-  neither can instagram: at most 39 of its 366 CPs are even solvable in our action space.
-  Synthesis is not one option among several any more, it is the only one. **Synthesis is also
-  the field's normal practice, not a shortcut** — Learn2Fold's own OrigamiCode is 5,760
-  sequences / 75,000 verified transitions, the bulk of it produced by their own symbolic
-  simulator (`notes/plan/corpus-plan.md`).
-- **Status**: not generated. Open question, deliberately not pre-designed: what distribution to
-  draw random folds from so the corpus isn't all degenerate cases (e.g. repeated halving).
-  Decide after looking at the first batch.
+- **Size**: run `v2`<!--fact:corpus.synth.run--> — **322**<!--fact:corpus.synth.samples--> samples across **8**<!--fact:corpus.synth.cellsFilled--> of 9<!--fact:corpus.synth.cellsTotal--> difficulty cells,
+  322<!--fact:corpus.synth.uniqueCPs--> distinct CPs after deduplicating the square's 8 symmetries. Steps 4<!--fact:corpus.synth.stepMin-->–19<!--fact:corpus.synth.stepMax-->,
+  median 61<!--fact:corpus.synth.creaseP50--> creases. **Not committed** — 95 MB that rebuilds byte-identically from its
+  seed; `workspace/corpus/corpus-summary.json` carries the numbers this file cites.
+- **Difficulty control**: two axes, both set by the sampler rather than measured afterwards.
+  **Steps** is the frozen main axis. **Coupling** — creases made per fold, i.e. how many layers
+  one fold cuts — is capped per stratum, and is simultaneously Learn2Fold's non-local dependency
+  and the closest measurable proxy for by-hand difficulty.
+- ⚠️ **The step cut points are PurelandFold's, counted in action-space steps.** 47<!--fact:purelandfold.precreaseFrames--> of its
+  337<!--fact:purelandfold.frames--> frames are pre-crease steps, which the frozen action space has no operation for
+  (§2). Merged into the step they precede, its range is 4<!--fact:purelandfold.effStepMin-->–19<!--fact:purelandfold.effStepMax--> with tertiles
+  ≤10<!--fact:purelandfold.effTertileLo--> / 11–13<!--fact:purelandfold.effTertileHi--> / >13. Calibrating against the raw 5–21 would have meant our
+  12 folds and PurelandFold's 12 folds were not the same quantity.
+- ⚠️ **The coupling axis deliberately overshoots the real anchor** — median 4.2<!--fact:corpus.synth.couplingP50--> against
+  PurelandFold's 0.7, up to 64<!--fact:corpus.synth.couplingMax-->. Real Pureland's coupling spans 0.0–3.4, too narrow to
+  be a difficulty axis at all, so **span was chosen over distribution match** (2026-09-16).
+  Report it beside the circularity risk in `notes/plan/corpus-plan.md`, not buried.
+- ⚠️ **One cell is empty by measurement**: long sequences at low coupling yield 2<!--fact:corpus.synth.lLocalHits--> hits in
+  16,000 attempts. Every all-layers simple fold thickens the stack, so a long sequence cannot
+  keep cutting few layers. Real folders reach that corner by **pre-creasing** — F-edge counts
+  across four reference CPs run 0 / 6 / 8 / 18 as the models lengthen — which is exactly the
+  operation we excluded. The longer a real Pureland model runs, the more of it sits outside the
+  action space.
+- **Degeneracy**: 33.2%<!--fact:corpus.synth.degeneratePct--> of samples carry a flag, almost all `collapsed`. **Recorded, never
+  filtered**: the flag rate tracks the coupling cap monotonically, so filtering on it would
+  delete the high end of the axis we deliberately vary.
+- **Why this exists**: the only real bucket-A source is 27<!--fact:purelandfold.sequences--> sequences (PurelandFold), which
+  cannot carry a headline number — and after Probe C, neither can instagram: at most 39 of its
+  366<!--fact:corpus.instagram.total--> CPs are even solvable in our action space. Synthesis is not one option among several
+  any more, it is the only one. **Synthesis is also the field's normal practice, not a
+  shortcut** — Learn2Fold's own OrigamiCode is 5,760 sequences / 75,000 verified transitions,
+  the bulk of it produced by their own symbolic simulator (`notes/plan/corpus-plan.md`).
 
 ---
 
@@ -79,15 +99,32 @@ Bucket reminder:
   (`notes/plan/corpus-plan.md`): its non-local-dependency spread is p50 = 0.7 against
   instagram's p50 = 12.8, **a ~20× gap, with almost no spread inside PurelandFold at all**.
   That is not a data defect — it is what "simple folds only" means. So the non-local-dependency
-  difficulty axis is unusable here, leaving `step` (5–21) as the only axis, and 27 sequences
+  difficulty axis is unusable here, leaving `step` as the only axis, and 27 sequences
   cannot carry a headline number. It anchors the synthetic corpus (§0) to reality; it does not
   replace it.
+- **27 named, recognisable models, with video frames of a person folding them** — bird, cat,
+  penguin, horse_head, snake, girl, yacht, tulip, and so on. This is the corpus's only
+  recognisable anchor: synthetic samples are unnamed random patterns, so nothing else here
+  answers "does any of this look like origami". Export with
+  `workspace/data/export_purelandfold_models.py` (output gitignored, it is a re-export).
+  ⚠️ It is also where the ceiling of the action space becomes visible: **21 steps of simple
+  folding produces a blocky flat shape, not a crane.** Cranes and frogs need reverse and petal
+  folds, which is the same fact Probe C measured as 89.3%<!--fact:probeC.provenNotPct--> from the other direction.
 - **Caveat**: restricted to Pureland origami (simple folds only, per the name) — same scope
   restriction flagged for FoldingAgent in `BASELINE_REPRODUCTION.md`. Good for validating the
   loop and for bucket-A sequence metrics; not representative of harder, compound-fold CPs.
-- **Status**: partially audited. Frame-format conversion to the simulator's per-step `.fold`
-  shape is still unconfirmed. Open: **74 rows are skipped (`variables=0`)** — 27 of them are the
-  step-1 rows, the remaining ~47 are unexplained (`notes/plan/corpus-plan.md`).
+- **Status**: audited 2026-09-16. Frame format converts: every row carries a per-step `cp.fold`
+  with `faceOrders`, i.e. layer-order ground truth, in the same unit square our CPs use.
+  **The 74<!--fact:purelandfold.skippedRows--> skipped rows are explained** — 27<!--fact:purelandfold.sequences--> are the step-1 rows (a flat square has no
+  layer-ordering problem), and the remaining 47<!--fact:purelandfold.precreaseFrames--> are **pre-crease steps**: fold, unfold,
+  leave a crease. Confirmed by their signature (`variables=0` past step 1) and visible directly
+  as `F` edges in the CPs — 0 / 6 / 8 / 18 across bird / dog / horse_head / girl.
+- ⚠️ **Rule, decided 2026-09-16: pre-crease frames merge into the step they precede** — not
+  dropped. Pre-creasing is outside the frozen action space so those frames cannot stand as steps
+  of their own, but dropping them leaves the neighbouring states geometrically inconsistent,
+  while merging keeps the sequence continuous and charges the preparation to the step it serves.
+  Trailing pre-crease frames have no following step and attach to the previous one. Implemented
+  in `export_purelandfold_models.py`; this is what makes §0's step cut points comparable.
 
 ---
 
@@ -117,15 +154,21 @@ convert. Learn2Fold stays in the paper as an architectural precedent only
 
 ## Action items
 
-- [ ] **Generate the first batch of the synthetic Pureland corpus (§0)** and look at the step /
-      degeneracy distribution before fixing the sampling design. Highest priority — it is now
-      the main data path.
-- [ ] Run the audit script from `EXPERIMENTS_SETUP.md` §1.4 over sources 1–4 once each is
+- [x] **Generate the first batch of the synthetic Pureland corpus (§0)** and look at the step /
+      degeneracy distribution before fixing the sampling design. Done — the pilot batch, not a
+      prior design, chose the anti-degeneracy knob (absolute per-stratum coupling cap), ruled
+      `collapsed` out as a filter, and set the step cut points.
+- [x] Confirm PurelandFold's frame format is convertible to the simulator's expected per-step
+      `.fold` input, and explain the 74<!--fact:purelandfold.skippedRows--> skipped rows (source 2). Done — pre-crease steps,
+      with a stated merge rule.
+- [ ] Run the audit script from `EXPERIMENTS_SETUP.md` §1.4 over sources 1–3 once each is
       confirmed accessible; report bucket sizes (A/B/C) per source.
 - [ ] Attach Probe C's three-way stratum label (foldable / proven-not-foldable / timeout,
       `EXPERIMENTS_SETUP.md` §1.2) to every instagram CP, so no score can accidentally be
-      pooled over all 366.
-- [ ] Confirm PurelandFold's frame format is convertible to the simulator's expected per-step
-      `.fold` input, and explain the 74 skipped rows (source 2).
+      pooled over all 366<!--fact:corpus.instagram.total-->.
 - [ ] Audit GamiBench's HF dataset shape — QA-style items vs. raw CP/sequence pairs (source 3).
-- [ ] Periodically recheck OrigamiSpace for a public repo (source 5).
+- [ ] Verify the pre-crease judgement by eye. `variables=0` past step 1 is the *signature* of a
+      pre-crease step, not proof; the totals match the independently recorded 74<!--fact:purelandfold.skippedRows-->/47<!--fact:purelandfold.precreaseFrames--> and the
+      F edges corroborate it, but 47 frames is a small enough set to check before publication.
+- [ ] Draw the pure-search baseline curve on the controlled corpus (`v2`<!--fact:corpus.synth.run-->). The `--verify` run
+      so far used the uncapped pilot strata.
