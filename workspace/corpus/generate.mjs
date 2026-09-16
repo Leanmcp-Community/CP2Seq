@@ -38,7 +38,8 @@
 // WHAT COMES OUT. Every sample keeps both endpoints and the whole middle:
 //   cp.fold          the crease pattern, planarised
 //   seq.json         every fold: line, direction, the creases it made, its coupling
-//   steps/*.fold     the folded state after each step (--export-steps)
+//   steps.fold       CP + the folded state after every step, one multi-frame FOLD file
+//                    (--export-steps). Order is the file_frames array order; see planarize.mjs
 //   meta.json        difficulty metrics, degeneracy flags, provenance
 // Given the seed the whole sample rebuilds, so the corpus is reproducible without shipping it.
 //
@@ -53,7 +54,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { foldRandom, polyArea, bbox } from "./fold-engine.mjs";
-import { planarize, foldedState } from "./planarize.mjs";
+import { planarize, foldedState, sequenceFile } from "./planarize.mjs";
 import { lineOf, lkey } from "../probe-c/stage2.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -236,12 +237,9 @@ for (const st of strata) {
         fs.writeFileSync(path.join(dir, "seq.json"), JSON.stringify({
             id, seed: s, steps: r.run.seq.length, folds: r.run.seq }, null, 1));
 
-        if (EXPORT_STEPS) {
-            fs.mkdirSync(path.join(dir, "steps"), { recursive: true });
-            r.run.states.forEach((st_, k) => fs.writeFileSync(
-                path.join(dir, "steps", `step-${String(k).padStart(2, "0")}.fold`),
-                JSON.stringify(foldedState(st_))));
-        }
+        if (EXPORT_STEPS)
+            fs.writeFileSync(path.join(dir, "steps.fold"),
+                             JSON.stringify(sequenceFile(r.fold, r.run.states, { id })));
 
         let verdict = null;
         if (VERIFY) {

@@ -35,7 +35,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { initSheet, foldLayers, currentPolys, paperArea, layerCount }
     from "./fold-engine-layers.mjs";
-import { planarize, foldedState } from "./planarize.mjs";
+import { planarize, sequenceFile } from "./planarize.mjs";
 import { solveLayers } from "./solve-layers.mjs";
 import { tolerantTarget } from "../../DHEERAJ_WORKSPACE/baseline/tolerant.mjs";
 
@@ -210,6 +210,11 @@ function canonical(fold) {
 }
 
 function exportBatch(dir, pPartial, exportSteps, verify, verifyBudget) {
+    // Wipe first, as generate.mjs does. Writing into a surviving directory leaves whatever the
+    // previous layout produced sitting beside the new files -- the steps/ directories from before
+    // steps.fold existed did exactly that, and a stale artefact that looks generated is worse
+    // than no artefact.
+    fs.rmSync(dir, { recursive: true, force: true });
     fs.mkdirSync(path.join(dir, "samples"), { recursive: true });
     const manifest = [], rejects = {};
     const seen = new Set();
@@ -236,14 +241,11 @@ function exportBatch(dir, pPartial, exportSteps, verify, verifyBudget) {
             { id, seed, steps: s.seq.length, folds: s.seq }, null, 1));
         // /!\ planarize.foldedState()'s own header says the layer order "is determined by the
         // fold history, not a choice we made". That is an ALL-LAYERS statement. Here the order is
-        // a real degree of freedom the sampler exercised, so `fo:faces_layer` in these step files
+        // a real degree of freedom the sampler exercised, so `fo:faces_layer` in these frames
         // records a choice, and a reader must not take it for a derived fact.
-        if (exportSteps) {
-            fs.mkdirSync(path.join(sdir, "steps"), { recursive: true });
-            s.states.forEach((layers, k) => fs.writeFileSync(
-                path.join(sdir, "steps", `step-${String(k).padStart(2, "0")}.fold`),
-                JSON.stringify(foldedState(layers))));
-        }
+        if (exportSteps)
+            fs.writeFileSync(path.join(sdir, "steps.fold"),
+                             JSON.stringify(sequenceFile(s.pl.fold, s.states, { id })));
         let verdict;
         if (verify) {
             const t0 = Date.now();
