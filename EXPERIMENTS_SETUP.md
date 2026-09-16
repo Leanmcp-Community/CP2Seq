@@ -29,10 +29,12 @@ written against.
   `notes/tools/flat-folder-capabilities.md`, Flat-Folder has **no concept of a step at all** — it
   solves for terminal flat-folded states, not sequences. So these give us CPs and, at best, a
   terminal state — never a step-by-step ground truth.
-- **PurelandFold** — 27 real fold *sequences* (337 frames), the only genuine bucket-A source we
-  found. Kept as a **reality anchor**, not as the main data: 27 sequences cannot carry a
-  headline, and its non-local-dependency spread is ~20× narrower than instagram's
-  (`DATASET.md` §2).
+- **PurelandFold** — 27<!--fact:purelandfold.sequences--> real fold *sequences* (337<!--fact:purelandfold.frames--> frames), the only genuine bucket-A
+  source we found. ⚠️ **Only partly inside this experiment's action space**, contrary to the
+  unqualified "reality anchor" this file claimed until 2026-09-16: 7<!--fact:anchor.solved--> of its models are
+  foldable under our rules, 12<!--fact:anchor.exhausted--> are *proven* not, 8<!--fact:anchor.timeout--> unknown (`DATASET.md` §2). Use the
+  foldable part as the anchor and name it; the rest is a scope-boundary measurement and
+  belongs to the some-layers extension tier.
 - **Synthesized Pureland corpus** — fold forward from a square with random simple folds, record
   the sequence, unfold to get the CP. **Bucket A by construction, difficulty controlled by step
   count.** This is the main data path (`DATASET.md` §0, `notes/plan/corpus-plan.md`), because

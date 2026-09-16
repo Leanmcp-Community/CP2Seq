@@ -15,3 +15,13 @@ workspace/purelandfold/models/
 
 # inspector build output — rebuilt by build-showcase.mjs + build-comparison.mjs
 workspace/corpus/inspector.html
+
+# Flat-Folder corpus (41MB, re-downloadable: see DHEERAJ_WORKSPACE/baseline/README.md)
+DHEERAJ_WORKSPACE/data/
+DHEERAJ_WORKSPACE/baseline/results.json
+DHEERAJ_WORKSPACE/baseline/mixed-run.txt
+DHEERAJ_WORKSPACE/baseline/pureland-results.json
+DHEERAJ_WORKSPACE/baseline/pureland-run.txt
+DHEERAJ_WORKSPACE/pureland/viewer.html
+DHEERAJ_WORKSPACE/pureland/viz-data.json
+DHEERAJ_WORKSPACE/pureland/dist/
