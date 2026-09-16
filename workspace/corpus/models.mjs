@@ -159,7 +159,176 @@ const MODELS = [
             fold([0.18, 0], [0, 0.18], [0, 0]),                        // tip a corner
         ],
     },
+    /* ======================================================================================
+     * BATCH 2, 2026-09-16. Written to answer one criticism: six named models is not enough to
+     * claim the corpus contains anything a person would fold. Everything here is restricted to
+     * SIMPLE FOLDS -- no unfolding, no pre-creases, no reverse folds or sinks -- which rules out
+     * most of the classic repertoire (cranes, frogs, anything with a petal fold) and is exactly
+     * the restriction the paper is about. What survives is silhouettes and pleated structures.
+     * ====================================================================================== */
+    {
+        id: "house", title: "House", family: "recognisable",
+        note: "Two folds. Cut both top corners along lines that meet at the top centre, so the " +
+              "peak survives and the silhouette becomes a pentagon -- a wall with a roof. The " +
+              "lines must MEET at (0.5, 1); ending them apart leaves a flat ridge and it reads " +
+              "as a tent with the top cut off.",
+        folds: [
+            fold([0, 0.55], [0.5, 1], [0, 1]),
+            fold([1, 0.55], [0.5, 1], [1, 1]),
+        ],
+    },
+    {
+        id: "envelope", title: "Envelope", family: "recognisable",
+        note: "Bottom edge up, both sides in, top flap down -- the order a real envelope is " +
+              "assembled in, and the reason the last fold lies on top of the other three.",
+        folds: [
+            fold([0, 0.28], [1, 0.28], [0.5, 0]),
+            fold([0.22, 0], [0.22, 1], [0, 0.5]),
+            fold([0.78, 0], [0.78, 1], [1, 0.5]),
+            fold([0, 0.72], [1, 0.72], [0.5, 1]),
+        ],
+    },
+    {
+        id: "paper-dart", title: "Paper dart", family: "recognisable",
+        note: "The plane everyone folds, minus the centre crease -- that crease is made by " +
+              "folding and UNFOLDING, which simple folding cannot do, so the corners are " +
+              "brought to the centre line directly. Two corners in, then the new slanted edges " +
+              "in again, and the nose is the point at the top.",
+        folds: [
+            fold([0.5, 1], [0, 0.5], [0, 1]),
+            fold([0.5, 1], [1, 0.5], [1, 1]),
+            fold([0.5, 1], [0.12, 0.12], [0.05, 0.9]),
+            fold([0.5, 1], [0.88, 0.12], [0.95, 0.9]),
+        ],
+    },
+    {
+        id: "pine-tree", title: "Pine tree", family: "recognisable",
+        note: "A tapered triangle with a trunk: bring both lower sides in to a narrow base, " +
+              "then take the very bottom corners off so a trunk is left standing below the " +
+              "foliage.",
+        folds: [
+            fold([0.5, 1], [0.12, 0], [0, 0.4]),
+            fold([0.5, 1], [0.88, 0], [1, 0.4]),
+            fold([0.3, 0.12], [0.42, 0], [0.2, 0.05]),
+            fold([0.7, 0.12], [0.58, 0], [0.8, 0.05]),
+        ],
+    },
+    {
+        id: "pencil", title: "Pencil", family: "recognisable",
+        note: "A long rectangle with one end brought to a point. Halve twice the same way for " +
+              "the shaft -- a pencil is thin -- then take both corners off one end.",
+        folds: [
+            fold([0, 0.32], [1, 0.32], [0.5, 0]),
+            fold([0, 0.68], [1, 0.68], [0.5, 1]),
+            fold([0.78, 0.32], [1, 0.5], [1, 0.35]),
+            fold([0.78, 0.68], [1, 0.5], [1, 0.65]),
+        ],
+    },
+    {
+        id: "bookmark-corner", title: "Corner bookmark", family: "recognisable",
+        note: "The triangle that slips over a page corner: fold on the diagonal, then turn the " +
+              "free tip back over the body so the pocket's mouth is visible.",
+        folds: [
+            fold([0, 0], [1, 1], [1, 0]),
+            fold([0.3, 0.7], [0.7, 0.3], [0.2, 0.2]),
+        ],
+    },
+    {
+        id: "arrowhead", title: "Arrowhead", family: "recognisable",
+        note: "Point up, then notch the base by folding the bottom edge up between the two " +
+              "barbs -- the notch is what separates an arrowhead from a plain triangle.",
+        folds: [
+            fold([0.5, 1], [0, 0.25], [0, 1]),
+            fold([0.5, 1], [1, 0.25], [1, 1]),
+            fold([0.32, 0.18], [0.68, 0.18], [0.5, 0]),
+        ],
+    },
+    {
+        id: "bow-tie", title: "Bow tie", family: "recognisable",
+        note: "Pinch the middle from both sides: two folds bring the long edges in to a narrow " +
+              "waist, and two more take the outer corners off so each wing flares.",
+        folds: [
+            fold([0, 0.38], [1, 0.38], [0.5, 0]),
+            fold([0, 0.62], [1, 0.62], [0.5, 1]),
+            // /!\ The first attempt gave these two the SAME line -- both written through
+            // (0.5, 0.5) at 45 degrees -- so the second found the paper entirely on one side and
+            // refused with no-crease. Two lines that pinch a waist have to LEAN TOWARDS each
+            // other, not lie on top of one another.
+            fold([0.40, 0.38], [0.50, 0.62], [0.2, 0.5]),
+            fold([0.60, 0.38], [0.50, 0.62], [0.8, 0.5]),
+        ],
+    },
+    {
+        id: "cup", title: "Cup", family: "recognisable",
+        note: "Diagonal first, so the paper is a triangle with a horizontal top edge, then each " +
+              "bottom corner swings across to the far side. The two crossed flaps are the cup's " +
+              "walls; the top edge stays open, which is the whole point of a cup.",
+        folds: [
+            fold([0, 1], [1, 0], [0, 0]),
+            // /!\ Writing the second flap as the first line with its endpoints swapped does not
+            // mirror it -- it is the same line, and the fold then has nothing to crease. The two
+            // flaps cross, so their lines are genuinely different lines.
+            fold([0.10, 0.34], [0.66, 0.66], [0, 0]),
+            fold([0.34, 0.10], [0.66, 0.66], [1, 1]),
+        ],
+    },
+    {
+        id: "fan", title: "Fan", family: "useful",
+        note: "Six panels pleated across, then the handle end pinched so the pleats splay from " +
+              "a point rather than running parallel.",
+        folds: [...pleat(vert, evenly(6)),
+                fold([0.82, 0], [1, 0.2], [1, 0])],
+    },
+    {
+        id: "staircase", title: "Staircase", family: "useful",
+        note: "The same pleat as the accordion but read side-on: alternating over and under at " +
+              "uneven spacing gives treads and risers of different depth, which is what makes " +
+              "it read as steps rather than as a fan.",
+        folds: pleat(horiz, [0.14, 0.3, 0.42, 0.58, 0.7, 0.86]),
+    },
+    /* ---- models that NEED the some-layers tier; an all-layers sequence cannot make them ---- */
+    {
+        id: "shirt-collar", title: "Collar", family: "recognisable",
+        note: "Halve, then turn down only the TOP layer at the fold -- the collar. Like hat-brim " +
+              "this is a some-layers model by necessity: the two layers finish with different " +
+              "outlines, and an all-layers fold moves every layer's boundary together.",
+        folds: [
+            fold([0, 0.5], [1, 0.5], [0.5, 1]),
+            // /!\ The first attempt moved [0.5, 0.5] -- the SPINE side, where the top layer is
+            // joined to the one beneath -- and the engine correctly refused it as a tear. The
+            // movable half of a partial fold is the one carrying the FREE edge, which is what
+            // hat-brim does and what a hand does.
+            fold([0, 0.14], [1, 0.14], [0.5, 0], true, { mode: "top", k: 1 }),
+        ],
+    },
+    {
+        id: "open-book", title: "Open book", family: "recognisable",
+        note: "Halve for the spine, then turn one page: the top layer alone folds back, so one " +
+              "side shows two leaves and the other shows one. A whole-stack fold would turn " +
+              "both leaves at once and the book would just be a smaller rectangle.",
+        folds: [
+            fold([0.5, 0], [0.5, 1], [1, 0.5]),
+            // /!\ TWO THINGS WENT WRONG HERE AND EACH NAMED ITSELF. First, a run taken from the
+            // BOTTOM can only go under: passing over was refused as direction-impossible rather
+            // than silently corrected. Then re-using the spine line x = 0.5 left nothing on its
+            // far side, so the fold had nothing to crease. A page turns on a line INSIDE the
+            // closed book, swinging the leaf back short of the spine.
+            fold([0.22, 0], [0.22, 1], [0, 0.5], false, { mode: "bottom", k: 1 }),
+        ],
+    },
+    {
+        id: "step-pocket", title: "Stepped pocket", family: "useful",
+        note: "A pleat made in the top two layers only, leaving the ones beneath flat. The step " +
+              "is a partial fold sitting on an unfolded bed -- the configuration the some-layers " +
+              "tier exists to express, and the one the random sampler produces least often.",
+        folds: [
+            fold([0, 0.34], [1, 0.34], [0.5, 0]),
+            fold([0, 0.66], [1, 0.66], [0.5, 1]),
+            fold([0, 0.52], [1, 0.52], [0.5, 0.4], true, { mode: "top", k: 1 }),
+        ],
+    },
 ];
+
 
 /* ---------- run one model ---------- */
 function run(model) {
