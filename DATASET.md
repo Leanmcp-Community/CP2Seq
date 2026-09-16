@@ -38,12 +38,15 @@ Bucket reminder:
   **Steps** is the frozen main axis. **Coupling** — creases made per fold, i.e. how many layers
   one fold cuts — is capped per stratum, and is simultaneously Learn2Fold's non-local dependency
   and the closest measurable proxy for by-hand difficulty.
-- ⚠️ **The step cut points are PurelandFold's, counted in action-space steps.** 47<!--fact:purelandfold.precreaseFrames--> of its
-  337<!--fact:purelandfold.frames--> frames are pre-crease steps, which the frozen action space has no operation for
-  (§2). Merged into the step they precede, its range is 4<!--fact:purelandfold.effStepMin-->–19<!--fact:purelandfold.effStepMax--> with tertiles
-  ≤10<!--fact:purelandfold.effTertileLo--> / 11–13<!--fact:purelandfold.effTertileHi--> / >13. Calibrating against the raw 5–21 would have meant our
-  12 folds and PurelandFold's 12 folds were not the same quantity.
-- ⚠️ **The coupling axis deliberately overshoots the real anchor** — median 4.2<!--fact:corpus.synth.couplingP50--> against
+- **The step cut points** are PurelandFold's, counted in action-space steps: 47<!--fact:purelandfold.precreaseFrames--> of its
+  337<!--fact:purelandfold.frames--> frames are pre-crease steps, and merged into the step they precede its range is
+  4<!--fact:purelandfold.effStepMin-->–19<!--fact:purelandfold.effStepMax--> with tertiles ≤10<!--fact:purelandfold.effTertileLo--> / 11–13<!--fact:purelandfold.effTertileHi--> / >13.
+- 🛑 **That calibration does not survive §2.** PurelandFold's sequences turn out not to be
+  expressible in the all-layers action space at all (74.1%<!--fact:anchor.exhaustedPct--> proven so), so matching step
+  counts against them compares two different games. **The strata stand as a self-consistent
+  stratification of this corpus — they are not evidence of comparability to real Pureland**, and
+  will not be until the some-layers tier exists. Stated here rather than quietly relied on.
+- ⚠️ **The coupling axis deliberately overshoots real Pureland** — median 4.2<!--fact:corpus.synth.couplingP50--> against
   PurelandFold's 0.7, up to 64<!--fact:corpus.synth.couplingMax-->. Real Pureland's coupling spans 0.0–3.4, too narrow to
   be a difficulty axis at all, so **span was chosen over distribution match** (2026-09-16).
   Report it beside the circularity risk in `notes/plan/corpus-plan.md`, not buried.
@@ -95,13 +98,32 @@ Bucket reminder:
 - **Size / format**: 27 sequences / 337 frames. `cp.fold` contains **layer-order ground truth**.
 - **Ground truth**: genuine **bucket A** — explicitly a set of *sequences* (337 frames across
   27 sequences), not just endpoints. The only real bucket-A source of any size we found.
-- **Role: reality anchor, not the main data — 27 sequences.** Measured 2026-09-15
-  (`notes/plan/corpus-plan.md`): its non-local-dependency spread is p50 = 0.7 against
-  instagram's p50 = 12.8, **a ~20× gap, with almost no spread inside PurelandFold at all**.
-  That is not a data defect — it is what "simple folds only" means. So the non-local-dependency
-  difficulty axis is unusable here, leaving `step` as the only axis, and 27 sequences
-  cannot carry a headline number. It anchors the synthetic corpus (§0) to reality; it does not
-  replace it.
+- 🛑 **NOT a reality anchor for the all-layers corpus. Corrected 2026-09-16 — it was called one
+  for a month before anyone checked.** Running the all-layers solver over each model's final CP
+  (`workspace/corpus/check-anchor.mjs`): **20<!--fact:anchor.exhausted--> of 27<!--fact:anchor.total--> = 74.1%<!--fact:anchor.exhaustedPct--> EXHAUSTED**, i.e.
+  *proven* not foldable under our rules; 6<!--fact:anchor.timeout--> timed out, 1<!--fact:anchor.solved--> solved.
+  Two reasons this is not just a weak solver:
+  - **Pre-creasing cannot explain it.** Of the 4<!--fact:anchor.noF--> models carrying no `F` edge at all,
+    **4<!--fact:anchor.noFExhausted--> are EXHAUSTED** — all of them.
+  - **`bird` has an elementary disproof.** No crease in its CP runs edge to edge, but the first
+    fold on a flat sheet necessarily leaves one that does — one layer, one straight line, a
+    full chord. So no first fold exists; the search closed in 16 queries. Independently, its
+    main diagonal is **mountain on one half and valley on the other**, and one fold has one
+    direction — so that line was made by two folds that each moved only part of the paper.
+- **What it actually is: evidence that the frozen action space is narrower than real Pureland.**
+  These models are folded by moving *some* layers at a time. Ours moves every layer the line
+  crosses. They are examples of a broader game, so they belong to the **some-layers extension
+  tier** (`notes/plan/experiment-spec-checklist.md` A), not to the all-layers core.
+- ⚠️ **Consequence for §0's step cut points.** They were calibrated to these sequences' step
+  counts. Since the sequences are not expressible in our action space, that calibration compares
+  step counts across two different action spaces — the same category error the pre-crease merge
+  was meant to fix, one level up. The cut points stand as a *self-consistent* stratification of
+  the synthetic corpus; the claim they are *comparable to real Pureland* does not, until the
+  some-layers tier exists.
+- **Measured 2026-09-15**: its non-local-dependency spread is p50 = 0.7 against instagram's
+  p50 = 12.8, **a ~20× gap, with almost no spread inside PurelandFold at all**. That is not a
+  data defect — it is what "simple folds only" means. So the non-local-dependency difficulty
+  axis is unusable here, and 27<!--fact:purelandfold.sequences--> sequences cannot carry a headline number either way.
 - **27 named, recognisable models, with video frames of a person folding them** — bird, cat,
   penguin, horse_head, snake, girl, yacht, tulip, and so on. This is the corpus's only
   recognisable anchor: synthetic samples are unnamed random patterns, so nothing else here

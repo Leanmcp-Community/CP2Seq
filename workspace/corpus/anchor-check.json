@@ -1,0 +1,272 @@
+[
+ {
+  "name": "bird",
+  "eff": 6,
+  "F": 0,
+  "creases": 10,
+  "status": "EXHAUSTED",
+  "queries": 16,
+  "depth": 0,
+  "ms": 2
+ },
+ {
+  "name": "car",
+  "eff": 10,
+  "F": 4,
+  "creases": 9,
+  "status": "EXHAUSTED",
+  "queries": 42876,
+  "depth": 4,
+  "ms": 78
+ },
+ {
+  "name": "cat",
+  "eff": 8,
+  "F": 4,
+  "creases": 10,
+  "status": "EXHAUSTED",
+  "queries": 640,
+  "depth": 2,
+  "ms": 1
+ },
+ {
+  "name": "cat_face",
+  "eff": 13,
+  "F": 7,
+  "creases": 32,
+  "status": "EXHAUSTED",
+  "queries": 12224,
+  "depth": 3,
+  "ms": 17
+ },
+ {
+  "name": "cup",
+  "eff": 9,
+  "F": 2,
+  "creases": 10,
+  "status": "EXHAUSTED",
+  "queries": 812,
+  "depth": 2,
+  "ms": 1
+ },
+ {
+  "name": "dog",
+  "eff": 11,
+  "F": 6,
+  "creases": 24,
+  "status": "EXHAUSTED",
+  "queries": 1586,
+  "depth": 2,
+  "ms": 2
+ },
+ {
+  "name": "fox_head",
+  "eff": 7,
+  "F": 2,
+  "creases": 8,
+  "status": "SOLVED",
+  "queries": 78,
+  "depth": 3,
+  "ms": 1
+ },
+ {
+  "name": "gift_card_holder",
+  "eff": 15,
+  "F": 3,
+  "creases": 18,
+  "status": "TIMEOUT",
+  "queries": 50000,
+  "depth": 5,
+  "ms": 88
+ },
+ {
+  "name": "girl",
+  "eff": 19,
+  "F": 18,
+  "creases": 36,
+  "status": "TIMEOUT",
+  "queries": 50000,
+  "depth": 6,
+  "ms": 118
+ },
+ {
+  "name": "heart",
+  "eff": 14,
+  "F": 10,
+  "creases": 20,
+  "status": "TIMEOUT",
+  "queries": 50000,
+  "depth": 4,
+  "ms": 62
+ },
+ {
+  "name": "horse_head",
+  "eff": 14,
+  "F": 8,
+  "creases": 28,
+  "status": "EXHAUSTED",
+  "queries": 1500,
+  "depth": 2,
+  "ms": 2
+ },
+ {
+  "name": "ladybug",
+  "eff": 12,
+  "F": 6,
+  "creases": 46,
+  "status": "EXHAUSTED",
+  "queries": 90,
+  "depth": 0,
+  "ms": 0
+ },
+ {
+  "name": "paper_bird",
+  "eff": 10,
+  "F": 4,
+  "creases": 20,
+  "status": "EXHAUSTED",
+  "queries": 68,
+  "depth": 1,
+  "ms": 0
+ },
+ {
+  "name": "penguin",
+  "eff": 10,
+  "F": 4,
+  "creases": 16,
+  "status": "EXHAUSTED",
+  "queries": 120,
+  "depth": 1,
+  "ms": 1
+ },
+ {
+  "name": "pig",
+  "eff": 10,
+  "F": 5,
+  "creases": 30,
+  "status": "EXHAUSTED",
+  "queries": 10756,
+  "depth": 3,
+  "ms": 13
+ },
+ {
+  "name": "rabbit_head_v1",
+  "eff": 13,
+  "F": 6,
+  "creases": 20,
+  "status": "EXHAUSTED",
+  "queries": 11144,
+  "depth": 3,
+  "ms": 14
+ },
+ {
+  "name": "rabbit_head_v2",
+  "eff": 9,
+  "F": 6,
+  "creases": 20,
+  "status": "EXHAUSTED",
+  "queries": 11144,
+  "depth": 3,
+  "ms": 13
+ },
+ {
+  "name": "rocket",
+  "eff": 12,
+  "F": 5,
+  "creases": 16,
+  "status": "EXHAUSTED",
+  "queries": 19600,
+  "depth": 4,
+  "ms": 42
+ },
+ {
+  "name": "santa_hat",
+  "eff": 13,
+  "F": 3,
+  "creases": 29,
+  "status": "EXHAUSTED",
+  "queries": 13372,
+  "depth": 3,
+  "ms": 20
+ },
+ {
+  "name": "shield",
+  "eff": 13,
+  "F": 8,
+  "creases": 26,
+  "status": "TIMEOUT",
+  "queries": 50000,
+  "depth": 5,
+  "ms": 108
+ },
+ {
+  "name": "sloth",
+  "eff": 6,
+  "F": 0,
+  "creases": 11,
+  "status": "EXHAUSTED",
+  "queries": 22,
+  "depth": 0,
+  "ms": 0
+ },
+ {
+  "name": "snake",
+  "eff": 17,
+  "F": 8,
+  "creases": 38,
+  "status": "TIMEOUT",
+  "queries": 50000,
+  "depth": 4,
+  "ms": 61
+ },
+ {
+  "name": "sunflower",
+  "eff": 12,
+  "F": 4,
+  "creases": 8,
+  "status": "TIMEOUT",
+  "queries": 50000,
+  "depth": 4,
+  "ms": 83
+ },
+ {
+  "name": "tulip",
+  "eff": 6,
+  "F": 2,
+  "creases": 6,
+  "status": "EXHAUSTED",
+  "queries": 12,
+  "depth": 0,
+  "ms": 0
+ },
+ {
+  "name": "tulip_stem",
+  "eff": 7,
+  "F": 0,
+  "creases": 10,
+  "status": "EXHAUSTED",
+  "queries": 20,
+  "depth": 0,
+  "ms": 0
+ },
+ {
+  "name": "walrus",
+  "eff": 10,
+  "F": 4,
+  "creases": 34,
+  "status": "EXHAUSTED",
+  "queries": 66,
+  "depth": 0,
+  "ms": 0
+ },
+ {
+  "name": "yacht",
+  "eff": 4,
+  "F": 0,
+  "creases": 7,
+  "status": "EXHAUSTED",
+  "queries": 68,
+  "depth": 1,
+  "ms": 0
+ }
+]

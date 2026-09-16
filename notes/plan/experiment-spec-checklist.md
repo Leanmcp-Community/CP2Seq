@@ -42,9 +42,28 @@
 
 ## A. 接口层 · Frozen
 
-- [x] **action space 用哪个已命名模型** → **all-layers simple fold（Pureland），infinite line。已冻结。**
-      代价实测出来了：真实折纸里 **89.3% 落在这个动作空间之外**
-      （`../probes/probe-c-screen.md`）。这不是缺陷，是范围声明的实测边界
+- [x] **action space 用哪个已命名模型** → **两档。2026-09-16 修订。**
+
+      **核心档：all-layers simple fold，infinite line。** 保持不变，所有现有代码建立在它上面。
+      它的可辩护性来自两条性质：整叠刚性翻转**永不自穿透、无层序约束**，
+      所以可折性是纯几何问题，正向搜索才可行（`workspace/probe-c/stage2.mjs` 文件头）。
+
+      **扩展档：some-layers simple fold。** 新增，还没做。
+
+      ⚠️ **加扩展档不是为了更全，是因为核心档装不下任何真实作品。**
+      实测：instagram 里 89.3%<!--fact:probeC.provenNotPct--> 落在核心档之外（`../probes/probe-c-screen.md`），
+      而**连 PurelandFold 那 27 条也落在外面**——74.1%<!--fact:anchor.exhaustedPct--> 已证明不可折
+      （`check-anchor.mjs`，详见 `corpus-plan.md`）。
+      核心档里能折出来的东西**只能是对称重复的网格**，因为一次折不可能只动一部分层。
+
+      ❗ **扩展档的代价要提前认清，它不是"再加个参数"**：
+      - some-layers **会自穿透**，也**有层序约束** → 上面那条「正向搜索可行」的论证直接失效
+      - 求解器要重写，Probe C 的判据在扩展档上不成立，两个下界只对核心档有效
+      - 「一次折哪几层」本身是新的分支维度，动作空间大小变了
+
+      实现上的约束先定死：**只允许连续的若干层，且必须是从顶或从底数起的一段**。
+      这是人手真实能做的动作（掀起上面几层折过去），
+      同时避开「任意子集」带来的组合爆炸和物理上做不到的折法
 - [x] **预折痕纳不纳入动作空间** → **不纳入。** 允许 fold-then-unfold 会让
       「simple folding 没有展开操作」这个前提失效，Probe C 的判据和两个下界一起作废。
       改为当作实测的范围边界来报
@@ -63,7 +82,8 @@
 - [ ] **失败后允许几次重试**
 - [ ] **上下文里保留多少历史**
 - [x] **CP 数据集** → 主数据是**自己合成的 Pureland 语料**（正着随机折、记录序列、展开得 CP，
-      天然 A 桶）；PurelandFold 的 27 条当真实性锚点；instagram 366 个降级为范围边界测量。
+      天然 A 桶）；PurelandFold 的 27 条**不是锚点**（74.1%<!--fact:anchor.exhaustedPct--> 证明在核心档之外，
+      归入 some-layers 扩展档）；instagram 366<!--fact:corpus.instagram.total--> 个降级为范围边界测量。
       细节在 `DATASET.md`，理由在 `corpus-plan.md`
 
 ---
