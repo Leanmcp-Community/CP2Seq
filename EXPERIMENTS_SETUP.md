@@ -292,8 +292,21 @@ into a diagnosis instead of a dead end.
 - A **visual-feedback ablation**: does rendering the state back to the model measurably change
   pruning or backtracking quality? This speaks to the Spa3R vs. "I Know About Up!" mental-imagery
   debate (group D of the checklist).
-- A **measured scope boundary**: 89.3% of real crease patterns provably lie outside all-layers
-  simple folding (§1.2). The action space is bounded by evidence, not by assertion.
+- A **measured scope boundary**: 89.3%<!--fact:probeC.provenNotPct--> of real crease patterns provably lie outside
+  all-layers simple folding (§1.2). The action space is bounded by evidence, not by assertion.
+- **A partial fold is almost never available at random, and that is a finding about origami,
+  not about our sampler.** Allowing a fold to move only some layers sounds like a loosening of
+  the action space; measured, it is a tightening. A randomly proposed partial fold succeeds
+  **11.9%** of the time, and the rate falls as the stack thickens — 20.0% at one or two layers,
+  **3.8% at seventeen to thirty-two** — because a thicker stack pins each sheet in more places,
+  and moving a run of layers that is pinned elsewhere tears the paper. **81.3% of every rejected
+  proposal is a tear** (`notes/plan/corpus-plan.md`, pilot of 2026-09-16).
+  **Read the other way, this is the substantive claim: the partial folds in real origami are not
+  arbitrary — they are the small set that does not tear.** Connectivity constrains this action
+  space far more tightly than "some layers may move" suggests, and an agent working in it
+  searches a space whose legal moves are rare and get rarer with depth. That is a property of
+  the problem, not of our code, and it is also why a corpus for this tier cannot simply dial up
+  the fraction of partial folds it contains.
 
 > ⚠️ **No model is trained or fine-tuned.** Every arm is an off-the-shelf VLM driven by prompting
 > and tool-calling. The contribution is the harness — tools, verifier, ablation design — not a model.
