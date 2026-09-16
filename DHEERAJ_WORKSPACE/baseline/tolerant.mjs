@@ -13,7 +13,8 @@
 //   line". It reports EXHAUSTED, which reads exactly like "proven not foldable" but is really
 //   "the coordinates were rounded".
 //
-// WHY NOT JUST MOVE THE VERTICES: tried first (see git history). Re-fitting lines and snapping
+// WHY NOT JUST MOVE THE VERTICES: tried first, in a snap.mjs that has since been removed
+// because it never worked and nothing imported it. Re-fitting lines and snapping
 // each vertex to the least-squares meet of the lines through it leaves a residual around 1e-6 --
 // the vertex is a compromise between several lines -- which is exactly the scale lkey rounds at.
 // Repairing the data cannot reliably beat the key.
