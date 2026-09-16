@@ -7,8 +7,9 @@
 // candidate was rejected, and the search reported the space CLOSED. A false EXHAUSTED: the
 // strongest verdict the solver has, produced by float noise.
 //
-// Cost: 10 of PurelandFold's 27 models flipped verdict, EXHAUSTED 21 -> 11, and a claim that
-// they lie outside our action space was written into four documents before anyone checked.
+// Cost: 11 of PurelandFold's 27 models flip verdict once it is repaired, EXHAUSTED 21 -> 12,
+// and a claim that they lie outside our action space was written into four documents before
+// anyone checked.
 //
 // WHY THE EXISTING ROUND-TRIP TEST COULD NEVER CATCH IT. It folds a CP and hands it back, so
 // anything but SOLVED is a bug -- and it caught three real geometry bugs that way. But our
@@ -19,7 +20,7 @@
 // PART B is the limitation, measured rather than claimed: independent jitter on every vertex
 // produces a CP that is genuinely not exactly foldable -- folding is exact reflection, and the
 // perturbation destroys the exact relations between creases that a folding sequence creates.
-// Conditioning recovers the intended CP only when the true coordinates sit near a lattice, as
+// Snapping recovers the intended CP only when the true coordinates sit on a known lattice, as
 // PurelandFold's do. Making the solver tolerant of arbitrary noise is a different design --
 // approximate folding -- and it would weaken what EXHAUSTED means. Not a bug; a boundary.
 import fs from "fs";
@@ -27,7 +28,11 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { foldRandom } from "./fold-engine.mjs";
 import { planarize } from "./planarize.mjs";
-import { solve, conditionCP } from "../probe-c/stage2.mjs";
+import { solve } from "../probe-c/stage2.mjs";
+// Dheeraj's tolerant target (DHEERAJ_WORKSPACE/baseline/tolerant.mjs, PR #13). Imported, not
+// reimplemented. This file is what measures how far it gets on its own.
+const TOL = await import("../../DHEERAJ_WORKSPACE/baseline/tolerant.mjs")
+    .then(m => m.tolerantTarget).catch(() => null);
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const OPTS = { maxQueries: 300000, maxDepth: 20 };
@@ -40,13 +45,30 @@ if (!fs.existsSync(BIRD)) {
     console.log("   SKIPPED - run: python workspace/data/export_purelandfold_models.py\n");
 } else {
     const cp = JSON.parse(fs.readFileSync(BIRD, "utf8"));
-    const conditioned = solve(conditionCP(cp), OPTS);
-    const ok = conditioned.status === "SOLVED";
-    if (!ok) fail++;
-    console.log(`   bird, conditioned   ${conditioned.status}  (${conditioned.depth} folds, ` +
-                `${conditioned.queries} queries)   ${ok ? "ok" : "FAIL"}`);
-    console.log(`   bird is a real model a person folded on video, so anything but SOLVED here`);
-    console.log(`   is the solver calling a demonstrated fold impossible.\n`);
+    const snap = { ...cp, vertices_coords:
+        cp.vertices_coords.map(p => p.map(v => Math.round(v * 1e4) / 1e4)) };
+
+    // The 2x2 that says which repair does the work. Run here rather than asserted, because the
+    // answer is not the one either fix's author expected.
+    const cells = [
+        ["raw    + exact target", cp,   false],
+        ["raw    + tolerant    ", cp,   true ],
+        ["snapped + exact target", snap, false],
+        ["snapped + tolerant   ", snap, true ],
+    ];
+    let solvedSnapped = false;
+    for (const [label, f, useTol] of cells) {
+        if (useTol && !TOL) { console.log(`   ${label}  SKIPPED - needs PR #13`); continue; }
+        const r = solve(f, useTol ? { ...OPTS, target: TOL(f) } : OPTS);
+        console.log(`   ${label}  ${r.status.padEnd(10)} ${r.depth} folds, ${r.queries} queries`);
+        if (f === snap && r.status === "SOLVED") solvedSnapped = true;
+    }
+    if (!solvedSnapped) fail++;
+    console.log(`\n   bird is a model a person folded on video, so EXHAUSTED on it is the solver`);
+    console.log(`   calling a demonstrated fold impossible. Snapping the coordinates onto the`);
+    console.log(`   lattice they are stored on is what fixes it; the tolerant target restores the`);
+    console.log(`   line buckets exactly as designed and still changes no verdict, because the`);
+    console.log(`   failure moves downstream to exact arithmetic on coordinates that are wrong.\n`);
 }
 
 /* ---------------- PART B: the measured boundary ---------------- */
@@ -88,14 +110,14 @@ for (let i = 1; i <= N; i++) {
 
     if (solve(fold, OPTS).status === "SOLVED") clean++;
     if (solve(noisy, OPTS).status === "SOLVED") raw++;
-    if (solve(conditionCP(noisy), OPTS).status === "SOLVED") cond++;
+    if (TOL && solve(noisy, { ...OPTS, target: TOL(noisy) }).status === "SOLVED") cond++;
     if (solve(snap, OPTS).status === "SOLVED") snapped++;
 }
 
 const pc = (x) => `${x}/${clean}`;
 console.log(`   solved, exact coordinates        ${clean}`);
 console.log(`   solved, jittered, no treatment   ${pc(raw)}`);
-console.log(`   solved, jittered + conditionCP   ${pc(cond)}`);
+console.log(`   solved, jittered + tolerant tgt  ${TOL ? pc(cond) : "skipped (PR #13)"}`);
 console.log(`   solved, jittered + lattice snap  ${pc(snapped)}`);
 console.log(`   (${skipped} degenerate, skipped)`);
 console.log(`\n   Snapping recovers what conditioning alone cannot, because it restores the`);

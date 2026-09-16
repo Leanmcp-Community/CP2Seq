@@ -116,10 +116,12 @@ Bucket reminder:
   which is what a video pipeline produces, split one straight crease across two line buckets;
   neither covered the chord a fold would make, so every candidate was rejected and the search
   reported the space closed. **Ten of 27 verdicts moved when it was fixed.** Inputs from outside
-  now go through `conditionCP` (`workspace/probe-c/stage2.mjs`), and
-  `workspace/corpus/test-noise.mjs` is the regression. ⚠️ Conditioning snaps coordinates onto a
-  lattice, which assumes the source's true values are simple fractions — true here, stated
-  rather than hidden.
+  are now repaired **per corpus, at the call site** — `check-anchor.mjs` snaps coordinates onto
+  the 3-decimal lattice this source stores them on and passes a tolerant line target
+  (`DHEERAJ_WORKSPACE/baseline/tolerant.mjs`); `workspace/corpus/test-noise.mjs` is the
+  regression. ⚠️ Two things stated rather than hidden: the snap assumes the source's true values
+  are simple fractions (true here), and the repair is deliberately **not** inside the solver —
+  instagram is full precision and Probe C's EXHAUSTED verdicts depend on exact matching there.
 - ⚠️ **Consequence for §0's step cut points.** They are calibrated to these sequences' step
   counts, and 12<!--fact:anchor.exhausted--> of the sequences are not expressible in our action space. So the
   calibration is drawn from a set that only partly overlaps ours. The cut points stand as a

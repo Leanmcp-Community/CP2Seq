@@ -7,7 +7,7 @@
   "status": "SOLVED",
   "queries": 84,
   "depth": 3,
-  "ms": 10
+  "ms": 3
  },
  {
   "name": "car",
@@ -17,7 +17,7 @@
   "status": "EXHAUSTED",
   "queries": 42876,
   "depth": 4,
-  "ms": 70
+  "ms": 72
  },
  {
   "name": "cat",
@@ -27,7 +27,7 @@
   "status": "SOLVED",
   "queries": 1762,
   "depth": 4,
-  "ms": 4
+  "ms": 5
  },
  {
   "name": "cat_face",
@@ -37,7 +37,7 @@
   "status": "TIMEOUT",
   "queries": 200000,
   "depth": 6,
-  "ms": 376
+  "ms": 444
  },
  {
   "name": "cup",
@@ -45,9 +45,9 @@
   "F": 2,
   "creases": 10,
   "status": "EXHAUSTED",
-  "queries": 726,
-  "depth": 2,
-  "ms": 1
+  "queries": 16894,
+  "depth": 4,
+  "ms": 30
  },
  {
   "name": "dog",
@@ -57,7 +57,7 @@
   "status": "EXHAUSTED",
   "queries": 75080,
   "depth": 5,
-  "ms": 118
+  "ms": 145
  },
  {
   "name": "fox_head",
@@ -67,7 +67,7 @@
   "status": "SOLVED",
   "queries": 78,
   "depth": 3,
-  "ms": 1
+  "ms": 0
  },
  {
   "name": "gift_card_holder",
@@ -77,7 +77,7 @@
   "status": "TIMEOUT",
   "queries": 200000,
   "depth": 6,
-  "ms": 287
+  "ms": 335
  },
  {
   "name": "girl",
@@ -87,7 +87,7 @@
   "status": "TIMEOUT",
   "queries": 200000,
   "depth": 7,
-  "ms": 491
+  "ms": 564
  },
  {
   "name": "heart",
@@ -97,7 +97,7 @@
   "status": "TIMEOUT",
   "queries": 200000,
   "depth": 6,
-  "ms": 384
+  "ms": 447
  },
  {
   "name": "horse_head",
@@ -105,7 +105,7 @@
   "F": 8,
   "creases": 28,
   "status": "EXHAUSTED",
-  "queries": 2224,
+  "queries": 1624,
   "depth": 2,
   "ms": 2
  },
@@ -117,7 +117,7 @@
   "status": "EXHAUSTED",
   "queries": 4044,
   "depth": 3,
-  "ms": 7
+  "ms": 8
  },
  {
   "name": "paper_bird",
@@ -125,9 +125,9 @@
   "F": 4,
   "creases": 20,
   "status": "EXHAUSTED",
-  "queries": 100,
+  "queries": 44,
   "depth": 1,
-  "ms": 0
+  "ms": 1
  },
  {
   "name": "penguin",
@@ -135,9 +135,9 @@
   "F": 4,
   "creases": 16,
   "status": "EXHAUSTED",
-  "queries": 100,
+  "queries": 76,
   "depth": 1,
-  "ms": 0
+  "ms": 1
  },
  {
   "name": "pig",
@@ -147,7 +147,7 @@
   "status": "TIMEOUT",
   "queries": 200000,
   "depth": 5,
-  "ms": 280
+  "ms": 344
  },
  {
   "name": "rabbit_head_v1",
@@ -157,7 +157,7 @@
   "status": "SOLVED",
   "queries": 11780,
   "depth": 5,
-  "ms": 17
+  "ms": 20
  },
  {
   "name": "rabbit_head_v2",
@@ -167,7 +167,7 @@
   "status": "SOLVED",
   "queries": 11780,
   "depth": 5,
-  "ms": 17
+  "ms": 22
  },
  {
   "name": "rocket",
@@ -177,7 +177,7 @@
   "status": "EXHAUSTED",
   "queries": 19600,
   "depth": 4,
-  "ms": 33
+  "ms": 40
  },
  {
   "name": "santa_hat",
@@ -187,7 +187,7 @@
   "status": "TIMEOUT",
   "queries": 200000,
   "depth": 5,
-  "ms": 273
+  "ms": 334
  },
  {
   "name": "shield",
@@ -195,9 +195,9 @@
   "F": 8,
   "creases": 26,
   "status": "EXHAUSTED",
-  "queries": 156800,
+  "queries": 109144,
   "depth": 5,
-  "ms": 252
+  "ms": 225
  },
  {
   "name": "sloth",
@@ -207,7 +207,7 @@
   "status": "SOLVED",
   "queries": 578,
   "depth": 4,
-  "ms": 2
+  "ms": 1
  },
  {
   "name": "snake",
@@ -217,7 +217,7 @@
   "status": "TIMEOUT",
   "queries": 200000,
   "depth": 5,
-  "ms": 250
+  "ms": 321
  },
  {
   "name": "sunflower",
@@ -227,7 +227,7 @@
   "status": "TIMEOUT",
   "queries": 200000,
   "depth": 4,
-  "ms": 260
+  "ms": 306
  },
  {
   "name": "tulip",
@@ -237,7 +237,7 @@
   "status": "SOLVED",
   "queries": 46,
   "depth": 3,
-  "ms": 1
+  "ms": 0
  },
  {
   "name": "tulip_stem",
@@ -245,7 +245,7 @@
   "F": 0,
   "creases": 10,
   "status": "EXHAUSTED",
-  "queries": 104,
+  "queries": 132,
   "depth": 1,
   "ms": 0
  },
@@ -255,9 +255,9 @@
   "F": 4,
   "creases": 34,
   "status": "EXHAUSTED",
-  "queries": 3324,
-  "depth": 3,
-  "ms": 5
+  "queries": 98976,
+  "depth": 5,
+  "ms": 256
  },
  {
   "name": "yacht",
@@ -265,8 +265,8 @@
   "F": 0,
   "creases": 7,
   "status": "EXHAUSTED",
-  "queries": 68,
-  "depth": 1,
-  "ms": 0
+  "queries": 278,
+  "depth": 2,
+  "ms": 1
  }
 ]

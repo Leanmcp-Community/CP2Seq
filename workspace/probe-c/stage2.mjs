@@ -136,103 +136,6 @@ function chord(poly, line) {
 /* ---------- the target: every crease of the CP, indexed by the line it lies on ----------- */
 // Creases on one line are stored as 1-D intervals along that line's direction, each with the
 // assignment the CP demands there. "U" is a wildcard, exactly as in stage 1.
-//
-// /!\ LINES ARE MATCHED BY TOLERANCE, NOT BY EXACT KEY, AND THIS IS LOAD-BEARING.
-// An exact key was the original design and it produced FALSE "EXHAUSTED" verdicts on real
-// data. CPs recovered from video carry coordinate noise of order 1e-6; normalising a segment's
-// endpoints then lands collinear segments on unit normals that differ in the sixth decimal, so
-// one straight crease is filed under two keys. Neither half then covers the chord a fold would
-// make, every candidate fold is rejected, and the search reports the space as closed.
-// Measured cost of that bug: 10 of PurelandFold's 27 models flipped verdict once it was fixed,
-// EXHAUSTED 21 -> 11. The synthetic corpus has exact coordinates, so 160 round-trip tests
-// never touched it -- see workspace/corpus/test-noise.mjs, which now does.
-const LINE_TOL = 1e-5;          // well above the ~1e-6 noise seen, far below real geometry
-const COVER_TOL = 1e-5;         // same, for gaps along a line
-
-// The bucket a SEGMENT belongs to, allowing for noise, or null.
-//
-// Matching on (normal, offset) is the obvious thing and it does not work: a segment of length
-// L with endpoint noise e has an angular error of about e/L, so a short crease -- L = 0.05,
-// e = 1e-6 -- lands 2e-5 off in the normal while sitting well within a nanometre of the line
-// it belongs to. Tightening the tolerance rejects real matches, loosening it merges genuinely
-// different lines, and there is no setting that does both.
-//
-// So ask the question that is actually meant: is this segment ON that line? Perpendicular
-// distance of its two endpoints, which noise moves by e and short segments do not amplify.
-function findBucket(lines, l, P, Q) {
-    for (const [k, L] of lines) {
-        const n = L.line.n, d = L.line.d;
-        if (Math.abs(n[0] * P[0] + n[1] * P[1] - d) > LINE_TOL) continue;
-        if (Math.abs(n[0] * Q[0] + n[1] * Q[1] - d) > LINE_TOL) continue;
-        return k;
-    }
-    return null;
-}
-
-/**
- * Condition a CP that came from outside: remove coordinate noise once, at the door.
- *
- * Tolerating noise inside the geometry does not work, and the reason is worth stating because
- * it looks like a tuning problem and is not. Raise clip()'s degeneracy threshold enough to
- * discard a sliver 1e-6 wide, and you also discard the genuinely thin layers a 19-fold sequence
- * produces, whose features are around 2e-6. One threshold cannot serve both; the noise has to
- * go away before the geometry runs.
- *
- * Two passes, in order:
- *   1. merge vertices that sit within `tol` of each other, so a shared corner is one point
- *   2. project every vertex back onto the line of the creases through it, so a chain of
- *      collinear creases is EXACTLY collinear again -- which is what makes a fold line pass
- *      exactly through a vertex instead of shaving a sliver off it
- *
- * `snap`, when non-zero, additionally rounds every coordinate onto that lattice. Measured on
- * jittered CPs known to be foldable: untreated 5/24 solve, the two passes above take it to
- * 6/24, snapping takes it to 24/24 (workspace/corpus/test-noise.mjs). The gap is the point --
- * the passes above APPROXIMATE the intended coordinates, while snapping RESTORES them, and
- * folding is exact reflection, so approximately-right is not right.
- *
- * /!\ Snapping assumes the source's true coordinates lie on that lattice. PurelandFold's do
- * (simple fractions from a video pipeline), ours do (folds halve, so dyadic). It is an
- * assumption about the data, not a general repair -- state it wherever it is switched on.
- *
- * Only for third-party data. Our own generated CPs are exact and must not be perturbed.
- */
-function conditionCP(fold, tol = 1e-5, snap = 0) {
-    const V = fold.vertices_coords.map(p => [p[0], p[1]]);
-    const EV = fold.edges_vertices, EA = fold.edges_assignment;
-
-    // 1. merge near-duplicate vertices
-    const rep = V.map((_, i) => i);
-    for (let i = 0; i < V.length; i++) {
-        if (rep[i] !== i) continue;
-        for (let j = i + 1; j < V.length; j++) {
-            if (rep[j] !== j) continue;
-            if (Math.hypot(V[i][0] - V[j][0], V[i][1] - V[j][1]) <= tol) rep[j] = i;
-        }
-    }
-    for (let i = 0; i < V.length; i++) if (rep[i] !== i) V[i] = V[rep[i]];
-
-    // 2. snap collinear chains onto one line
-    const buckets = new Map();
-    for (const [i, [u, w]] of EV.entries()) {
-        if (EA[i] === "B") continue;                        // the outline is not a crease chain
-        const l = lineOf(V[u], V[w]);
-        if (!l) continue;
-        let k = findBucket(buckets, l, V[u], V[w]);
-        if (k === null) { k = lkey(l); buckets.set(k, { line: l, verts: new Set() }); }
-        buckets.get(k).verts.add(u); buckets.get(k).verts.add(w);
-    }
-    for (const { line, verts } of buckets.values()) {
-        for (const vi of verts) {
-            const p = V[vi];
-            const off = line.n[0] * p[0] + line.n[1] * p[1] - line.d;
-            V[vi] = [p[0] - off * line.n[0], p[1] - off * line.n[1]];
-        }
-    }
-    if (snap > 0) for (let i = 0; i < V.length; i++)
-        V[i] = [Math.round(V[i][0] / snap) * snap, Math.round(V[i][1] / snap) * snap];
-    return { ...fold, vertices_coords: V };
-}
-
 function buildTarget(fold) {
     const V = fold.vertices_coords, EV = fold.edges_vertices, EA = fold.edges_assignment;
     const lines = new Map();
@@ -242,8 +145,8 @@ function buildTarget(fold) {
         const [u, w] = EV[i];
         const l = lineOf(V[u], V[w]);
         if (!l) continue;
-        let k = findBucket(lines, l, V[u], V[w]);
-        if (k === null) { k = lkey(l); lines.set(k, { line: l, want: [] }); }
+        const k = lkey(l);
+        if (!lines.has(k)) lines.set(k, { line: l, want: [] });
         const L = lines.get(k);
         // Measure along the BUCKET-S direction, not this edge-s. lineOf() canonicalises the
         // normal but not the direction, so two edges on one line disagree by a sign whenever
@@ -262,9 +165,8 @@ function buildTarget(fold) {
 // Does [lo,hi] on this line lie inside target creases, and what assignment do they demand?
 // Returns null when any part of the chord is not a crease of the CP at all -> illegal fold.
 function demand(target, line, lo, hi) {
-    const bk = findBucket(target.lines, line, ptOn(line, lo), ptOn(line, hi));
-    if (bk === null) return null;
-    const L = target.lines.get(bk);
+    const L = target.lines.get(lkey(line));
+    if (!L) return null;
     // the stored intervals use the STORED line's direction; ours may be the reverse
     const flip = L.line.dir[0] * line.dir[0] + L.line.dir[1] * line.dir[1] < 0;
     let a = flip ? -hi : lo, b = flip ? -lo : hi;
@@ -273,15 +175,12 @@ function demand(target, line, lo, hi) {
     const segs = L.want.filter(s => s.hi > a + EPS && s.lo < b - EPS)
                        .sort((x, y) => x.lo - y.lo);
     for (const s of segs) {
-        // Coverage is checked at COVER_TOL, not EPS: on noisy input the endpoints of two
-        // collinear creases miss each other by ~1e-6, and at EPS that reads as a gap in the
-        // paper -- the same false-EXHAUSTED failure as the line bucketing above.
-        if (s.lo > cursor + COVER_TOL) return null;         // a gap: not a crease there
+        if (s.lo > cursor + EPS) return null;               // a gap: not a crease there
         if (s.a !== "U") { if (want && want !== s.a) return null; want = want || s.a; }
         touched.push(s);
         cursor = Math.max(cursor, s.hi);
     }
-    if (cursor < b - COVER_TOL) return null;                // chord runs past the creases
+    if (cursor < b - EPS) return null;                      // chord runs past the creases
     return { want, touched };                               // want === null => all wildcard
 }
 
@@ -359,7 +258,15 @@ function candidates(state, target) {
 // is the whole point: it is the pure-search baseline our method's tool-call count is measured
 // against. Budget is on queries, not on wall clock, so the number is reproducible.
 function solve(fold, opts) {
-    const target = buildTarget(fold);
+    // OPT-IN TOLERANT TARGET. Low-precision corpora (PurelandFold stores 3 decimals) split one
+    // straight crease across several exact 1e-6 line keys, and the search then refuses every
+    // fold and reports EXHAUSTED for a reason that is about rounding, not about folding. The
+    // repair belongs to the CORPUS, not to this file: instagram is stored at full precision and
+    // its EXHAUSTED verdicts depend on exact matching -- loosening it here globally cost a real
+    // verdict (`360_fung_I_Heart_Cat_v2_(shaped)` timed out instead of closing) and bought
+    // nothing. So callers that need tolerance pass one in:
+    //   solve(fold, { target: tolerantTarget(fold) })   -- DHEERAJ_WORKSPACE/baseline/tolerant.mjs
+    const target = opts?.target ?? buildTarget(fold);
     if (!target.total) return { status: "TRIVIAL", queries: 0, depth: 0 };
 
     // the flat sheet: one layer, the paper's boundary polygon, identity placement
@@ -462,7 +369,7 @@ function boundaryLoop(bEdges, V) {
     return loop.length >= 3 && loop.length === nb.size ? loop.map(v => V[v]) : null;
 }
 
-export { solve, conditionCP, applyFold, candidates, buildTarget, boundaryLoop, lineOf, lkey, ptOn, ap, mul, inv, ID, reflectT, clip, chord };
+export { solve, applyFold, candidates, buildTarget, boundaryLoop, lineOf, lkey, ptOn, ap, mul, inv, ID, reflectT, clip, chord };
 
 /* ---------- driver (skipped when this file is imported, e.g. by selftest.mjs) ------------- */
 const IS_MAIN = process.argv[1] && process.argv[1].endsWith("stage2.mjs");
