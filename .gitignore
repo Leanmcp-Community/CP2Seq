@@ -25,6 +25,8 @@ workspace/corpus/out/*
 workspace/purelandfold/models/
 
 # inspector build output — rebuilt by build-showcase.mjs + build-comparison.mjs
+# (superseded by browser.html, which is versioned: it loads out/release/index.json at runtime
+#  instead of inlining every sample, so it does not have to be regenerated or committed as a blob)
 workspace/corpus/inspector.html
 
 # Flat-Folder corpus (41MB, re-downloadable: see DHEERAJ_WORKSPACE/baseline/README.md)
