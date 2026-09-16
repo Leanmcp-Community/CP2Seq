@@ -23,7 +23,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { solve } from "../probe-c/stage2.mjs";
+import { solve, conditionCP } from "../probe-c/stage2.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const MODELS = path.join(HERE, "../purelandfold/models");
@@ -45,9 +45,14 @@ for (const name of fs.readdirSync(MODELS).sort()) {
     const cp = JSON.parse(fs.readFileSync(p, "utf8"));
     const c = cp.edges_assignment.reduce((m, a) => (m[a] = (m[a] || 0) + 1, m), {});
 
+    // /!\ CONDITION THE INPUT. These files come from a video pipeline and carry ~1e-6
+    // coordinate noise, which the solver reported as EXHAUSTED -- the first run of this script
+    // said 20 of 27 were proven not foldable, and that was a float bug, not a finding
+    // (workspace/corpus/test-noise.mjs). Snapping assumes the true coordinates are simple
+    // fractions, which PurelandFold's are; that assumption is stated, not hidden.
     const t0 = Date.now();
     let r;
-    try { r = solve(cp, { maxQueries: BUDGET, maxDepth: 24 }); }
+    try { r = solve(conditionCP(cp, 1e-5, 1e-4), { maxQueries: BUDGET, maxDepth: 24 }); }
     catch (e) { r = { status: "ERROR", queries: 0, depth: 0, err: e.message }; }
     r.ms = Date.now() - t0;
 
@@ -70,9 +75,15 @@ console.log(`of the ${noF.length} with no F edge: ` +
             `${noF.filter(r => r.status === "SOLVED").length} SOLVED, ` +
             `${noF.filter(r => r.status === "EXHAUSTED").length} EXHAUSTED, ` +
             `${noF.filter(r => r.status === "TIMEOUT").length} TIMEOUT`);
-console.log(`\nEXHAUSTED on a model a person demonstrably folded means the sequence they used`);
-console.log(`is not expressible as all-layers simple folds -- i.e. the anchor is outside the`);
-console.log(`frozen action space, and the abstractness of the synthetic corpus follows from`);
-console.log(`that decision rather than from random sampling.`);
+console.log(`\nEXHAUSTED on a model a person demonstrably folded means the sequence they used is`);
+console.log(`not expressible as all-layers simple folds. SOLVED means it is -- by some sequence,`);
+console.log(`not necessarily theirs, since a CP generally has many.`);
+console.log(`\nSo the answer is a split, not a verdict: part of PurelandFold is inside our action`);
+console.log(`space and part is demonstrably outside it. Neither "it is the reality anchor" nor`);
+console.log(`"it is entirely out of scope" survives this table.`);
+console.log(`\n/!\\ The first run of this script said 20 EXHAUSTED and that was a float bug, not a`);
+console.log(`finding -- noisy coordinates split one crease line into two buckets and every fold`);
+console.log(`was rejected. Ten verdicts moved when it was fixed. Any future change to the`);
+console.log(`conditioning above changes this table, so re-run it rather than quoting old numbers.`);
 
 fs.writeFileSync(path.join(HERE, "anchor-check.json"), JSON.stringify(rows, null, 1) + "\n");

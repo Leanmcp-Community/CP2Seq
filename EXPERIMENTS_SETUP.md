@@ -30,11 +30,11 @@ written against.
   solves for terminal flat-folded states, not sequences. So these give us CPs and, at best, a
   terminal state — never a step-by-step ground truth.
 - **PurelandFold** — 27<!--fact:purelandfold.sequences--> real fold *sequences* (337<!--fact:purelandfold.frames--> frames), the only genuine bucket-A
-  source we found. 🛑 **Not a reality anchor for this experiment**, contrary to what this file
-  said until 2026-09-16: 74.1%<!--fact:anchor.exhaustedPct--> of its models are *proven* not foldable in the frozen
-  all-layers action space (`DATASET.md` §2). They move some layers at a time; we move every
-  layer the line crosses. They belong to the **some-layers extension tier**, and until that
-  tier exists they are a scope-boundary measurement, not a source this experiment runs on.
+  source we found. ⚠️ **Only partly inside this experiment's action space**, contrary to the
+  unqualified "reality anchor" this file claimed until 2026-09-16: 7<!--fact:anchor.solved--> of its models are
+  foldable under our rules, 12<!--fact:anchor.exhausted--> are *proven* not, 8<!--fact:anchor.timeout--> unknown (`DATASET.md` §2). Use the
+  foldable part as the anchor and name it; the rest is a scope-boundary measurement and
+  belongs to the some-layers extension tier.
 - **Synthesized Pureland corpus** — fold forward from a square with random simple folds, record
   the sequence, unfold to get the CP. **Bucket A by construction, difficulty controlled by step
   count.** This is the main data path (`DATASET.md` §0, `notes/plan/corpus-plan.md`), because

@@ -148,20 +148,20 @@
   "src": "derived: check-anchor.mjs"
  },
  "anchor.exhausted": {
-  "v": 20,
+  "v": 12,
   "src": "derived"
  },
  "anchor.exhaustedPct": {
-  "v": 74.1,
+  "v": 44.4,
   "unit": "%",
   "src": "derived"
  },
  "anchor.solved": {
-  "v": 1,
+  "v": 7,
   "src": "derived"
  },
  "anchor.timeout": {
-  "v": 6,
+  "v": 8,
   "src": "derived"
  },
  "anchor.noF": {
@@ -169,7 +169,7 @@
   "src": "derived: models with no F edge at all"
  },
  "anchor.noFExhausted": {
-  "v": 4,
+  "v": 2,
   "src": "derived"
  },
  "purelandfold.sequences": {

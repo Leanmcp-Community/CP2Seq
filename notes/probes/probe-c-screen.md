@@ -18,6 +18,17 @@
 | 搜索超时（状态未知） | 37<!--fact:probeC.timeout--> | 10.1%<!--fact:probeC.timeoutPct--> |
 | **确认可折** | **2**<!--fact:probeC.solved--> | **0.5%**<!--fact:probeC.solvedPct--> |
 
+> 🛑 **这张表待重跑（2026-09-16）。** `stage2.mjs` 修了一个假 EXHAUSTED 的 bug ——
+> 噪声坐标会把同一条折痕线拆进两个桶，导致所有候选折被拒、搜索谎报「空间已封闭」
+> （`../plan/corpus-plan.md`）。修复放宽了匹配，**搜索空间因此变大**。
+>
+> 用十分之一预算做的抽查：156<!--fact:probeC.exhausted--> 个 EXHAUSTED 里 **27 个变成 TIMEOUT，没有一个变成 SOLVED**。
+> 按原预算很可能仍会封闭，但**在 `bash workspace/probe-c/run-stage2.sh` 重跑之前，
+> 上表每个数字都是修复前的结果**。
+>
+> ⚠️ instagram 语料坐标是干净的（366 个里只有 1 个存在线分裂，且判定不变），
+> 所以**预期变化很小**——但「预期」不是「已验证」，重跑前不要引用上表进论文。
+
 确认可折的两个：`012_ku_4x4_Grid_Unassigned`（5,940 queries / 4 步）、
 `301_boxhard_Assigned_Crossover`（256,480 queries / 8 步）。
 这不是让步，是实测出来的范围边界 —— 论文可以直接引用。

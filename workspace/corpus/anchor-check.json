@@ -4,10 +4,10 @@
   "eff": 6,
   "F": 0,
   "creases": 10,
-  "status": "EXHAUSTED",
-  "queries": 16,
-  "depth": 0,
-  "ms": 2
+  "status": "SOLVED",
+  "queries": 84,
+  "depth": 3,
+  "ms": 10
  },
  {
   "name": "car",
@@ -17,27 +17,27 @@
   "status": "EXHAUSTED",
   "queries": 42876,
   "depth": 4,
-  "ms": 78
+  "ms": 70
  },
  {
   "name": "cat",
   "eff": 8,
   "F": 4,
   "creases": 10,
-  "status": "EXHAUSTED",
-  "queries": 640,
-  "depth": 2,
-  "ms": 1
+  "status": "SOLVED",
+  "queries": 1762,
+  "depth": 4,
+  "ms": 4
  },
  {
   "name": "cat_face",
   "eff": 13,
   "F": 7,
   "creases": 32,
-  "status": "EXHAUSTED",
-  "queries": 12224,
-  "depth": 3,
-  "ms": 17
+  "status": "TIMEOUT",
+  "queries": 200000,
+  "depth": 6,
+  "ms": 376
  },
  {
   "name": "cup",
@@ -45,7 +45,7 @@
   "F": 2,
   "creases": 10,
   "status": "EXHAUSTED",
-  "queries": 812,
+  "queries": 726,
   "depth": 2,
   "ms": 1
  },
@@ -55,9 +55,9 @@
   "F": 6,
   "creases": 24,
   "status": "EXHAUSTED",
-  "queries": 1586,
-  "depth": 2,
-  "ms": 2
+  "queries": 75080,
+  "depth": 5,
+  "ms": 118
  },
  {
   "name": "fox_head",
@@ -75,9 +75,9 @@
   "F": 3,
   "creases": 18,
   "status": "TIMEOUT",
-  "queries": 50000,
-  "depth": 5,
-  "ms": 88
+  "queries": 200000,
+  "depth": 6,
+  "ms": 287
  },
  {
   "name": "girl",
@@ -85,9 +85,9 @@
   "F": 18,
   "creases": 36,
   "status": "TIMEOUT",
-  "queries": 50000,
-  "depth": 6,
-  "ms": 118
+  "queries": 200000,
+  "depth": 7,
+  "ms": 491
  },
  {
   "name": "heart",
@@ -95,9 +95,9 @@
   "F": 10,
   "creases": 20,
   "status": "TIMEOUT",
-  "queries": 50000,
-  "depth": 4,
-  "ms": 62
+  "queries": 200000,
+  "depth": 6,
+  "ms": 384
  },
  {
   "name": "horse_head",
@@ -105,7 +105,7 @@
   "F": 8,
   "creases": 28,
   "status": "EXHAUSTED",
-  "queries": 1500,
+  "queries": 2224,
   "depth": 2,
   "ms": 2
  },
@@ -115,9 +115,9 @@
   "F": 6,
   "creases": 46,
   "status": "EXHAUSTED",
-  "queries": 90,
-  "depth": 0,
-  "ms": 0
+  "queries": 4044,
+  "depth": 3,
+  "ms": 7
  },
  {
   "name": "paper_bird",
@@ -125,7 +125,7 @@
   "F": 4,
   "creases": 20,
   "status": "EXHAUSTED",
-  "queries": 68,
+  "queries": 100,
   "depth": 1,
   "ms": 0
  },
@@ -135,39 +135,39 @@
   "F": 4,
   "creases": 16,
   "status": "EXHAUSTED",
-  "queries": 120,
+  "queries": 100,
   "depth": 1,
-  "ms": 1
+  "ms": 0
  },
  {
   "name": "pig",
   "eff": 10,
   "F": 5,
   "creases": 30,
-  "status": "EXHAUSTED",
-  "queries": 10756,
-  "depth": 3,
-  "ms": 13
+  "status": "TIMEOUT",
+  "queries": 200000,
+  "depth": 5,
+  "ms": 280
  },
  {
   "name": "rabbit_head_v1",
   "eff": 13,
   "F": 6,
   "creases": 20,
-  "status": "EXHAUSTED",
-  "queries": 11144,
-  "depth": 3,
-  "ms": 14
+  "status": "SOLVED",
+  "queries": 11780,
+  "depth": 5,
+  "ms": 17
  },
  {
   "name": "rabbit_head_v2",
   "eff": 9,
   "F": 6,
   "creases": 20,
-  "status": "EXHAUSTED",
-  "queries": 11144,
-  "depth": 3,
-  "ms": 13
+  "status": "SOLVED",
+  "queries": 11780,
+  "depth": 5,
+  "ms": 17
  },
  {
   "name": "rocket",
@@ -177,37 +177,37 @@
   "status": "EXHAUSTED",
   "queries": 19600,
   "depth": 4,
-  "ms": 42
+  "ms": 33
  },
  {
   "name": "santa_hat",
   "eff": 13,
   "F": 3,
   "creases": 29,
-  "status": "EXHAUSTED",
-  "queries": 13372,
-  "depth": 3,
-  "ms": 20
+  "status": "TIMEOUT",
+  "queries": 200000,
+  "depth": 5,
+  "ms": 273
  },
  {
   "name": "shield",
   "eff": 13,
   "F": 8,
   "creases": 26,
-  "status": "TIMEOUT",
-  "queries": 50000,
+  "status": "EXHAUSTED",
+  "queries": 156800,
   "depth": 5,
-  "ms": 108
+  "ms": 252
  },
  {
   "name": "sloth",
   "eff": 6,
   "F": 0,
   "creases": 11,
-  "status": "EXHAUSTED",
-  "queries": 22,
-  "depth": 0,
-  "ms": 0
+  "status": "SOLVED",
+  "queries": 578,
+  "depth": 4,
+  "ms": 2
  },
  {
   "name": "snake",
@@ -215,9 +215,9 @@
   "F": 8,
   "creases": 38,
   "status": "TIMEOUT",
-  "queries": 50000,
-  "depth": 4,
-  "ms": 61
+  "queries": 200000,
+  "depth": 5,
+  "ms": 250
  },
  {
   "name": "sunflower",
@@ -225,19 +225,19 @@
   "F": 4,
   "creases": 8,
   "status": "TIMEOUT",
-  "queries": 50000,
+  "queries": 200000,
   "depth": 4,
-  "ms": 83
+  "ms": 260
  },
  {
   "name": "tulip",
   "eff": 6,
   "F": 2,
   "creases": 6,
-  "status": "EXHAUSTED",
-  "queries": 12,
-  "depth": 0,
-  "ms": 0
+  "status": "SOLVED",
+  "queries": 46,
+  "depth": 3,
+  "ms": 1
  },
  {
   "name": "tulip_stem",
@@ -245,8 +245,8 @@
   "F": 0,
   "creases": 10,
   "status": "EXHAUSTED",
-  "queries": 20,
-  "depth": 0,
+  "queries": 104,
+  "depth": 1,
   "ms": 0
  },
  {
@@ -255,9 +255,9 @@
   "F": 4,
   "creases": 34,
   "status": "EXHAUSTED",
-  "queries": 66,
-  "depth": 0,
-  "ms": 0
+  "queries": 3324,
+  "depth": 3,
+  "ms": 5
  },
  {
   "name": "yacht",
