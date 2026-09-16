@@ -62,6 +62,6 @@
   "status": "TIMEOUT",
   "queries": 1000000,
   "depth": 5,
-  "ms": 15259
+  "ms": 15257
  }
 }

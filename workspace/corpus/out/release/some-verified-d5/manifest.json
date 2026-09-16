@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-16T12:27:43.551Z",
+ "generated": "2026-09-16T12:51:43.976Z",
  "tier": "some-layers",
  "seed0": 20260922,
  "n": 100,
@@ -71,7 +71,7 @@
     "status": "SOLVED",
     "queries": 29316,
     "depth": 5,
-    "ms": 837
+    "ms": 839
    }
   },
   {
@@ -138,7 +138,7 @@
     "status": "SOLVED",
     "queries": 52136,
     "depth": 5,
-    "ms": 646
+    "ms": 599
    }
   },
   {
@@ -205,7 +205,7 @@
     "status": "SOLVED",
     "queries": 196972,
     "depth": 5,
-    "ms": 1544
+    "ms": 1556
    }
   },
   {
@@ -272,7 +272,7 @@
     "status": "SOLVED",
     "queries": 30004,
     "depth": 5,
-    "ms": 517
+    "ms": 520
    }
   },
   {
@@ -339,7 +339,7 @@
     "status": "SOLVED",
     "queries": 288352,
     "depth": 5,
-    "ms": 5344
+    "ms": 5319
    }
   },
   {
@@ -406,7 +406,7 @@
     "status": "SOLVED",
     "queries": 41964,
     "depth": 5,
-    "ms": 888
+    "ms": 890
    }
   },
   {
@@ -473,7 +473,7 @@
     "status": "SOLVED",
     "queries": 81396,
     "depth": 5,
-    "ms": 861
+    "ms": 857
    }
   },
   {
@@ -540,7 +540,7 @@
     "status": "SOLVED",
     "queries": 31020,
     "depth": 5,
-    "ms": 584
+    "ms": 585
    }
   },
   {
@@ -607,7 +607,7 @@
     "status": "SOLVED",
     "queries": 83600,
     "depth": 5,
-    "ms": 2158
+    "ms": 2106
    }
   },
   {
@@ -674,7 +674,7 @@
     "status": "SOLVED",
     "queries": 64364,
     "depth": 5,
-    "ms": 648
+    "ms": 656
    }
   },
   {
@@ -741,7 +741,7 @@
     "status": "SOLVED",
     "queries": 9304,
     "depth": 5,
-    "ms": 215
+    "ms": 204
    }
   },
   {
@@ -808,7 +808,7 @@
     "status": "SOLVED",
     "queries": 57336,
     "depth": 5,
-    "ms": 615
+    "ms": 610
    }
   },
   {
@@ -875,7 +875,7 @@
     "status": "SOLVED",
     "queries": 275760,
     "depth": 5,
-    "ms": 4095
+    "ms": 3959
    }
   },
   {
@@ -942,7 +942,7 @@
     "status": "SOLVED",
     "queries": 94612,
     "depth": 5,
-    "ms": 365
+    "ms": 364
    }
   },
   {
@@ -1009,7 +1009,7 @@
     "status": "SOLVED",
     "queries": 99020,
     "depth": 5,
-    "ms": 1255
+    "ms": 1246
    }
   },
   {
@@ -1076,7 +1076,7 @@
     "status": "SOLVED",
     "queries": 55292,
     "depth": 5,
-    "ms": 847
+    "ms": 843
    }
   },
   {
@@ -1143,7 +1143,7 @@
     "status": "SOLVED",
     "queries": 103808,
     "depth": 5,
-    "ms": 1378
+    "ms": 1379
    }
   },
   {
@@ -1210,7 +1210,7 @@
     "status": "SOLVED",
     "queries": 70448,
     "depth": 5,
-    "ms": 952
+    "ms": 960
    }
   },
   {
@@ -1277,7 +1277,7 @@
     "status": "SOLVED",
     "queries": 24780,
     "depth": 5,
-    "ms": 340
+    "ms": 344
    }
   },
   {
@@ -1344,7 +1344,7 @@
     "status": "SOLVED",
     "queries": 579948,
     "depth": 5,
-    "ms": 5778
+    "ms": 5831
    }
   },
   {
@@ -1411,7 +1411,7 @@
     "status": "SOLVED",
     "queries": 166728,
     "depth": 5,
-    "ms": 1704
+    "ms": 1752
    }
   },
   {
@@ -1478,7 +1478,7 @@
     "status": "SOLVED",
     "queries": 68976,
     "depth": 5,
-    "ms": 723
+    "ms": 724
    }
   },
   {
@@ -1545,7 +1545,7 @@
     "status": "SOLVED",
     "queries": 340076,
     "depth": 5,
-    "ms": 2357
+    "ms": 2389
    }
   },
   {
@@ -1612,7 +1612,7 @@
     "status": "SOLVED",
     "queries": 37104,
     "depth": 5,
-    "ms": 515
+    "ms": 522
    }
   },
   {
@@ -1679,7 +1679,7 @@
     "status": "SOLVED",
     "queries": 166064,
     "depth": 5,
-    "ms": 4157
+    "ms": 4469
    }
   },
   {
@@ -1746,7 +1746,7 @@
     "status": "SOLVED",
     "queries": 131520,
     "depth": 5,
-    "ms": 1873
+    "ms": 1782
    }
   },
   {
@@ -1813,7 +1813,7 @@
     "status": "SOLVED",
     "queries": 29628,
     "depth": 5,
-    "ms": 363
+    "ms": 347
    }
   },
   {
@@ -1880,7 +1880,7 @@
     "status": "SOLVED",
     "queries": 303156,
     "depth": 5,
-    "ms": 4276
+    "ms": 4298
    }
   },
   {
@@ -1947,7 +1947,7 @@
     "status": "SOLVED",
     "queries": 30872,
     "depth": 5,
-    "ms": 343
+    "ms": 349
    }
   },
   {
@@ -2014,7 +2014,7 @@
     "status": "SOLVED",
     "queries": 48800,
     "depth": 5,
-    "ms": 539
+    "ms": 540
    }
   },
   {
@@ -2081,7 +2081,7 @@
     "status": "SOLVED",
     "queries": 26504,
     "depth": 5,
-    "ms": 322
+    "ms": 323
    }
   },
   {
@@ -2148,7 +2148,7 @@
     "status": "SOLVED",
     "queries": 72912,
     "depth": 5,
-    "ms": 1293
+    "ms": 1303
    }
   },
   {
@@ -2215,7 +2215,7 @@
     "status": "SOLVED",
     "queries": 71476,
     "depth": 5,
-    "ms": 1291
+    "ms": 1285
    }
   },
   {
@@ -2282,7 +2282,7 @@
     "status": "SOLVED",
     "queries": 30624,
     "depth": 5,
-    "ms": 333
+    "ms": 334
    }
   },
   {
@@ -2349,7 +2349,7 @@
     "status": "SOLVED",
     "queries": 71236,
     "depth": 4,
-    "ms": 514
+    "ms": 556
    }
   },
   {
@@ -2416,7 +2416,7 @@
     "status": "SOLVED",
     "queries": 892304,
     "depth": 5,
-    "ms": 10797
+    "ms": 10828
    }
   },
   {
@@ -2483,7 +2483,7 @@
     "status": "SOLVED",
     "queries": 287924,
     "depth": 5,
-    "ms": 2715
+    "ms": 2686
    }
   },
   {
@@ -2617,7 +2617,7 @@
     "status": "SOLVED",
     "queries": 174668,
     "depth": 5,
-    "ms": 1591
+    "ms": 1556
    }
   },
   {
@@ -2684,7 +2684,7 @@
     "status": "SOLVED",
     "queries": 286768,
     "depth": 5,
-    "ms": 2281
+    "ms": 2271
    }
   },
   {
@@ -2751,7 +2751,7 @@
     "status": "SOLVED",
     "queries": 35600,
     "depth": 5,
-    "ms": 358
+    "ms": 355
    }
   },
   {
@@ -2818,7 +2818,7 @@
     "status": "SOLVED",
     "queries": 52280,
     "depth": 5,
-    "ms": 1114
+    "ms": 1118
    }
   },
   {
@@ -2885,7 +2885,7 @@
     "status": "SOLVED",
     "queries": 23584,
     "depth": 5,
-    "ms": 308
+    "ms": 306
    }
   },
   {
@@ -2952,7 +2952,7 @@
     "status": "SOLVED",
     "queries": 35308,
     "depth": 5,
-    "ms": 386
+    "ms": 385
    }
   },
   {
@@ -3019,7 +3019,7 @@
     "status": "SOLVED",
     "queries": 333836,
     "depth": 5,
-    "ms": 3155
+    "ms": 3160
    }
   },
   {
@@ -3086,7 +3086,7 @@
     "status": "SOLVED",
     "queries": 32584,
     "depth": 5,
-    "ms": 466
+    "ms": 453
    }
   },
   {
@@ -3153,7 +3153,7 @@
     "status": "SOLVED",
     "queries": 163316,
     "depth": 5,
-    "ms": 2853
+    "ms": 2800
    }
   },
   {
@@ -3220,7 +3220,7 @@
     "status": "SOLVED",
     "queries": 22720,
     "depth": 5,
-    "ms": 307
+    "ms": 311
    }
   },
   {
@@ -3287,7 +3287,7 @@
     "status": "SOLVED",
     "queries": 68656,
     "depth": 5,
-    "ms": 634
+    "ms": 638
    }
   },
   {
@@ -3354,7 +3354,7 @@
     "status": "SOLVED",
     "queries": 61476,
     "depth": 5,
-    "ms": 540
+    "ms": 538
    }
   },
   {
@@ -3421,7 +3421,7 @@
     "status": "SOLVED",
     "queries": 177636,
     "depth": 5,
-    "ms": 3165
+    "ms": 3147
    }
   },
   {
@@ -3488,7 +3488,7 @@
     "status": "SOLVED",
     "queries": 76048,
     "depth": 5,
-    "ms": 2024
+    "ms": 1884
    }
   },
   {
@@ -3555,7 +3555,7 @@
     "status": "SOLVED",
     "queries": 270568,
     "depth": 5,
-    "ms": 3199
+    "ms": 2614
    }
   },
   {
@@ -3622,7 +3622,7 @@
     "status": "SOLVED",
     "queries": 44708,
     "depth": 5,
-    "ms": 759
+    "ms": 590
    }
   },
   {
@@ -3689,7 +3689,7 @@
     "status": "SOLVED",
     "queries": 139368,
     "depth": 5,
-    "ms": 1506
+    "ms": 1379
    }
   },
   {
@@ -3756,7 +3756,7 @@
     "status": "SOLVED",
     "queries": 117488,
     "depth": 5,
-    "ms": 1502
+    "ms": 1513
    }
   },
   {
@@ -3890,7 +3890,7 @@
     "status": "SOLVED",
     "queries": 305972,
     "depth": 5,
-    "ms": 3113
+    "ms": 2580
    }
   },
   {
@@ -3957,7 +3957,7 @@
     "status": "SOLVED",
     "queries": 406748,
     "depth": 5,
-    "ms": 3766
+    "ms": 3348
    }
   },
   {
@@ -4024,7 +4024,7 @@
     "status": "SOLVED",
     "queries": 682732,
     "depth": 5,
-    "ms": 12837
+    "ms": 12255
    }
   },
   {
@@ -4091,7 +4091,7 @@
     "status": "SOLVED",
     "queries": 79472,
     "depth": 5,
-    "ms": 959
+    "ms": 822
    }
   },
   {
@@ -4158,7 +4158,7 @@
     "status": "SOLVED",
     "queries": 55192,
     "depth": 5,
-    "ms": 782
+    "ms": 739
    }
   },
   {
@@ -4225,7 +4225,7 @@
     "status": "SOLVED",
     "queries": 233852,
     "depth": 5,
-    "ms": 3915
+    "ms": 3859
    }
   },
   {
@@ -4292,7 +4292,7 @@
     "status": "SOLVED",
     "queries": 43004,
     "depth": 5,
-    "ms": 508
+    "ms": 510
    }
   },
   {
@@ -4359,7 +4359,7 @@
     "status": "SOLVED",
     "queries": 163356,
     "depth": 5,
-    "ms": 1255
+    "ms": 1250
    }
   },
   {
@@ -4426,7 +4426,7 @@
     "status": "SOLVED",
     "queries": 49504,
     "depth": 5,
-    "ms": 221
+    "ms": 225
    }
   },
   {
@@ -4493,7 +4493,7 @@
     "status": "SOLVED",
     "queries": 118708,
     "depth": 5,
-    "ms": 1690
+    "ms": 1715
    }
   },
   {
@@ -4560,7 +4560,7 @@
     "status": "SOLVED",
     "queries": 143636,
     "depth": 5,
-    "ms": 1293
+    "ms": 1312
    }
   },
   {
@@ -4627,7 +4627,7 @@
     "status": "SOLVED",
     "queries": 210176,
     "depth": 5,
-    "ms": 2322
+    "ms": 2203
    }
   },
   {
@@ -4694,7 +4694,7 @@
     "status": "SOLVED",
     "queries": 32944,
     "depth": 5,
-    "ms": 548
+    "ms": 546
    }
   },
   {
@@ -4761,7 +4761,7 @@
     "status": "SOLVED",
     "queries": 26984,
     "depth": 5,
-    "ms": 317
+    "ms": 313
    }
   },
   {
@@ -4828,7 +4828,7 @@
     "status": "SOLVED",
     "queries": 86676,
     "depth": 5,
-    "ms": 893
+    "ms": 943
    }
   },
   {
@@ -4895,7 +4895,7 @@
     "status": "SOLVED",
     "queries": 53972,
     "depth": 5,
-    "ms": 502
+    "ms": 542
    }
   },
   {
@@ -4962,7 +4962,7 @@
     "status": "SOLVED",
     "queries": 237228,
     "depth": 5,
-    "ms": 5839
+    "ms": 5882
    }
   },
   {
@@ -5029,7 +5029,7 @@
     "status": "SOLVED",
     "queries": 34696,
     "depth": 5,
-    "ms": 401
+    "ms": 402
    }
   },
   {
@@ -5096,7 +5096,7 @@
     "status": "SOLVED",
     "queries": 80564,
     "depth": 5,
-    "ms": 1292
+    "ms": 1263
    }
   },
   {
@@ -5163,7 +5163,7 @@
     "status": "SOLVED",
     "queries": 47692,
     "depth": 5,
-    "ms": 731
+    "ms": 726
    }
   },
   {
@@ -5230,7 +5230,7 @@
     "status": "SOLVED",
     "queries": 152220,
     "depth": 5,
-    "ms": 2799
+    "ms": 2765
    }
   },
   {
@@ -5297,7 +5297,7 @@
     "status": "SOLVED",
     "queries": 87096,
     "depth": 5,
-    "ms": 1077
+    "ms": 1075
    }
   },
   {
@@ -5364,7 +5364,7 @@
     "status": "SOLVED",
     "queries": 69724,
     "depth": 5,
-    "ms": 1544
+    "ms": 1550
    }
   },
   {
@@ -5431,7 +5431,7 @@
     "status": "SOLVED",
     "queries": 76948,
     "depth": 5,
-    "ms": 1606
+    "ms": 1638
    }
   },
   {
@@ -5498,7 +5498,7 @@
     "status": "SOLVED",
     "queries": 84108,
     "depth": 5,
-    "ms": 919
+    "ms": 924
    }
   },
   {
@@ -5565,7 +5565,7 @@
     "status": "SOLVED",
     "queries": 117560,
     "depth": 5,
-    "ms": 1050
+    "ms": 1049
    }
   },
   {
@@ -5632,7 +5632,7 @@
     "status": "SOLVED",
     "queries": 545580,
     "depth": 5,
-    "ms": 7377
+    "ms": 7597
    }
   },
   {
@@ -5699,7 +5699,7 @@
     "status": "SOLVED",
     "queries": 29336,
     "depth": 5,
-    "ms": 388
+    "ms": 395
    }
   },
   {
@@ -5766,7 +5766,7 @@
     "status": "SOLVED",
     "queries": 225948,
     "depth": 5,
-    "ms": 3225
+    "ms": 3226
    }
   },
   {
@@ -5833,7 +5833,7 @@
     "status": "SOLVED",
     "queries": 200744,
     "depth": 5,
-    "ms": 1848
+    "ms": 1912
    }
   },
   {
@@ -5900,7 +5900,7 @@
     "status": "SOLVED",
     "queries": 73988,
     "depth": 5,
-    "ms": 580
+    "ms": 408
    }
   },
   {
@@ -5967,7 +5967,7 @@
     "status": "SOLVED",
     "queries": 47464,
     "depth": 5,
-    "ms": 698
+    "ms": 669
    }
   },
   {
@@ -6034,7 +6034,7 @@
     "status": "SOLVED",
     "queries": 139912,
     "depth": 5,
-    "ms": 2564
+    "ms": 2646
    }
   },
   {
@@ -6101,7 +6101,7 @@
     "status": "SOLVED",
     "queries": 48588,
     "depth": 5,
-    "ms": 816
+    "ms": 813
    }
   },
   {
@@ -6168,7 +6168,7 @@
     "status": "SOLVED",
     "queries": 283692,
     "depth": 5,
-    "ms": 4704
+    "ms": 4702
    }
   },
   {
@@ -6302,7 +6302,7 @@
     "status": "SOLVED",
     "queries": 26036,
     "depth": 5,
-    "ms": 646
+    "ms": 640
    }
   },
   {
@@ -6369,7 +6369,7 @@
     "status": "TIMEOUT",
     "queries": 1000000,
     "depth": 4,
-    "ms": 12642
+    "ms": 12687
    }
   },
   {
@@ -6436,7 +6436,7 @@
     "status": "SOLVED",
     "queries": 73300,
     "depth": 5,
-    "ms": 632
+    "ms": 666
    }
   },
   {
@@ -6503,7 +6503,7 @@
     "status": "TIMEOUT",
     "queries": 1000000,
     "depth": 5,
-    "ms": 15259
+    "ms": 15257
    }
   },
   {
@@ -6570,7 +6570,7 @@
     "status": "SOLVED",
     "queries": 213616,
     "depth": 5,
-    "ms": 1113
+    "ms": 1111
    }
   },
   {
@@ -6637,7 +6637,7 @@
     "status": "SOLVED",
     "queries": 97324,
     "depth": 5,
-    "ms": 1148
+    "ms": 1134
    }
   },
   {
@@ -6704,7 +6704,7 @@
     "status": "SOLVED",
     "queries": 113368,
     "depth": 5,
-    "ms": 710
+    "ms": 711
    }
   }
  ]

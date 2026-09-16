@@ -29,7 +29,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { initSheet, foldLayers, currentPolys, paperArea, layerCount }
     from "./fold-engine-layers.mjs";
-import { planarize, foldedState } from "./planarize.mjs";
+import { planarize, sequenceFile } from "./planarize.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 
@@ -387,13 +387,16 @@ for (const m of MODELS) {
     const counts = pl.stats.counts;
 
     const dir = path.join(OUT, "samples", m.id);
-    fs.mkdirSync(path.join(dir, "steps"), { recursive: true });
+    fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(path.join(dir, "cp.fold"), JSON.stringify(pl.fold));
     fs.writeFileSync(path.join(dir, "seq.json"), JSON.stringify(
         { id: m.id, title: m.title, steps: r.seq.length, folds: r.seq }, null, 1));
-    r.states.forEach((s, k) => fs.writeFileSync(
-        path.join(dir, "steps", `step-${String(k).padStart(2, "0")}.fold`),
-        JSON.stringify(foldedState(currentPolys(s)))));
+    // One multi-frame FOLD file, the same shape the two generators write: the crease pattern as
+    // the key frame and every folded state as a child, ordered by file_frames array position.
+    // This file was left on the old per-step layout when the generators moved off it, which is
+    // how a directory of numbered files survives a decision to stop producing them.
+    fs.writeFileSync(path.join(dir, "steps.fold"),
+                     JSON.stringify(sequenceFile(pl.fold, r.states.map(currentPolys), { id: m.id })));
 
     const partial = r.seq.filter(s => s.selection.mode !== "all").length;
     const meta = {
