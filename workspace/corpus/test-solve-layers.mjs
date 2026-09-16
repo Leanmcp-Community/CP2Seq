@@ -62,10 +62,17 @@ function creaseGeometry(fold) {
         if (!l) { degenerate++; continue; }
         const r4 = (v) => Math.round(v * 1e4) / 1e4;
         const key = `${r4(l.n[0])},${r4(l.n[1])},${r4(l.d)},${a}`;
-        if (!byLine.has(key)) byLine.set(key, { dir: l.dir, segs: [] });
+        // /!\ THE DIRECTION MUST COME FROM THE NORMAL, NOT FROM AN EDGE. lineOf canonicalises
+        // the normal but NOT the direction, so taking it from "whichever edge of this line
+        // arrived first" gives opposite answers in two crease patterns that merely list an
+        // edge's endpoints in opposite order. The same crease then projects to [0.270, 0.668]
+        // in one and [-0.668, -0.270] in the other, and the comparison reports it as one
+        // missing plus one extra. stage2.mjs carries a warning about exactly this trap for
+        // edges within ONE pattern; across two patterns a per-bucket direction is not enough.
+        // n is sign-canonical, so rotating it is deterministic everywhere.
+        const dir = [-l.n[1], l.n[0]];
+        if (!byLine.has(key)) byLine.set(key, { dir, segs: [] });
         const L = byLine.get(key);
-        // measure along the BUCKET's direction, not this edge's -- lineOf canonicalises the
-        // normal but not the direction, so two edges on one line can disagree by a sign
         const t = (p) => L.dir[0] * p[0] + L.dir[1] * p[1];
         const t0 = t(A), t1 = t(B);
         if (Math.abs(t1 - t0) < TOL) { degenerate++; continue; }

@@ -99,7 +99,7 @@
 //   node solve-layers.mjs <cp.fold> [--budget 200000] [--depth 16] [--layers 64]
 import fs from "fs";
 import path from "path";
-import { buildTarget, candidates, demand, boundaryLoop, lineOf, ID }
+import { buildTarget, candidates, demand, segCovered, boundaryLoop, lineOf, ID }
     from "../probe-c/stage2.mjs";
 import { foldLayers } from "./fold-engine-layers.mjs";
 
@@ -195,7 +195,7 @@ export function solveLayers(fold, opts = {}) {
 
     const remaining = () => {
         let r = 0;
-        for (const L of target.lines.values()) for (const s of L.want) if (!s.covered) r++;
+        for (const L of target.lines.values()) for (const s of L.want) if (!segCovered(s)) r++;
         return r;
     };
 
@@ -212,7 +212,7 @@ export function solveLayers(fold, opts = {}) {
             if (!r) return;
             if (r.state.order.length > maxLayers) { hitLayers = true; return; }
             out.push({ line, mp, sel, over: r.over, r,
-                       gain: r.cover.filter(s => !s.covered).length });
+                       gain: r.cover.filter(c => !segCovered(c.seg)).length });
         };
         for (const line of candidates(st.faces, target)) {
             for (const mp of [true, false]) {
@@ -239,14 +239,16 @@ export function solveLayers(fold, opts = {}) {
             const k = sig(m.r.state);
             if (seen.has(k)) continue;
             seen.add(k);
-            const fresh = m.r.cover.filter(s => !s.covered);
-            for (const s of fresh) s.covered = true;
+            // interval-level coverage, shared with stage2 -- a fold that creases only part of a
+            // demanded crease retires only that part. See segCovered() in stage2.mjs for what
+            // the old boolean got wrong.
+            for (const c of m.r.cover) c.seg.cov.push([c.lo, c.hi]);
             seq.push({ line: { n: m.line.n, d: m.line.d }, movePositive: m.mp,
                        selection: m.sel, over: m.over, layersMoved: m.r.moved });
             best = Math.max(best, depth + 1);
             if (dfs(m.r.state, depth + 1, limit)) return true;
             seq.pop();
-            for (const s of fresh) s.covered = false;
+            for (let i = m.r.cover.length - 1; i >= 0; i--) m.r.cover[i].seg.cov.pop();
             seen.delete(k);
         }
         return false;
