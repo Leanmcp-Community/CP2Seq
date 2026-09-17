@@ -105,7 +105,7 @@ paper's IFSR number should check this first.
 ## 4. Verdict for our project
 
 **Bucket: metric definitions only. Not a data source.** This closes the open audit item in
-the historical data-source audit.
+`BASELINE_REPRODUCTION.md` §5 and `DATASET.md` §3 / action item 3.
 
 - ❌ **Cannot supply `(CP, final result)` pairs.** "Final result" here is a PNG from an arbitrary
   camera angle. Our terminal-state ground truth needs `.fold` with layer ordering (per `DATASET.md`,
@@ -128,6 +128,16 @@ the historical data-source audit.
 - ⚠️ **Related-work framing.** GamiBench evaluates *recognition* of a folded outcome from a CP.
   We evaluate *construction* of a sequence. Cite it as evidence that the CP→3D direction is hard for
   MLLMs; do not put it in the results table.
+
+### Suggested edits to existing docs
+
+- `DATASET.md` §3: replace the TBD ground-truth/bucket rows with the table at the top of this file;
+  mark bucket as **"metric ideas only — images, no geometry"**.
+- `DATASET.md` action item 3 and `BASELINE_REPRODUCTION.md` §5 item 1: tick, pointing here.
+- `BASELINE_REPRODUCTION.md` §3 GamiBench row: change **"TBD — audit format"** → **"Cite only —
+  image-only VQA benchmark, no reusable geometry"**.
+
+---
 
 ## Appendix — reproducing this audit
 

@@ -1,193 +1,337 @@
-# Experiments — tool-assisted VLM folding (CP → sequence)
+# Experiments — the operational spec for Track 1 (CP → Seq)
 
-Updated 2026-09-17.
+2026-09-14, revised 2026-09-15.
 
-**Owns: how the experiment runs** — task, action interface, feedback conditions,
-validation, metrics, and protocol. Data inventory lives in `DATASET.md`; decisions
-awaiting confirmation live in `notes/plan/experiment-spec-checklist.md`.
+**This file owns how the experiment runs**: the loop, the tools, the conditions, the metrics,
+and the protocol that has to be fixed before the first run. It is the design doc the code is
+written against.
 
-## 1. Dataset and task
+> **Scope boundary — each fact has exactly one home, so an edit is made once.**
+>
+> | File | Owns |
+> | --- | --- |
+> | **this file** | **how the experiment runs** |
+> | `DATASET.md` | where the data comes from |
+> | `BASELINE_REPRODUCTION.md` | who we compare against |
+> | `notes/plan/experiment-spec-checklist.md` | which decisions are frozen, and their status |
+> | `notes/plan/research-workflow.md` | phases, discipline, where we are |
+>
+> Repo-root docs are English (they are shared); `notes/` is Chinese (working notes). The same
+> passage is never written in both languages — that guarantees drift.
 
-### 1.1 Objective
+---
 
-Measure whether simulator feedback and rendered views help a VLM produce a legal
-folding sequence that reaches a specified target. Use an off-the-shelf VLM; no
-training or fine-tuning is part of this experiment.
+## 1. Dataset
 
-Each scored item contains an initial sheet, a crease pattern (CP), a target folded
-state, and a declared action space. Freeze whether the target is shown to the model
-and in what representation; use the same task input in every condition. The target
-used for final scoring is not a substitute for checking the intervening actions.
+### 1.1 Sources
 
-### 1.2 Admission and scope
+- **Flat-Folder** examples (`flat-folder/examples/...`) — CPs only. Per
+  `notes/tools/flat-folder-capabilities.md`, Flat-Folder has **no concept of a step at all** — it
+  solves for terminal flat-folded states, not sequences. So these give us CPs and, at best, a
+  terminal state — never a step-by-step ground truth.
+- **PurelandFold** — 27<!--fact:purelandfold.sequences--> real fold *sequences* (337<!--fact:purelandfold.frames--> frames), the only genuine bucket-A
+  source we found. ⚠️ **Only partly inside this experiment's action space**, contrary to the
+  unqualified "reality anchor" this file claimed until 2026-09-16: 7<!--fact:anchor.solved--> of its models are
+  foldable under our rules, 12<!--fact:anchor.exhausted--> are *proven* not, 8<!--fact:anchor.timeout--> unknown (`DATASET.md` §2). Use the
+  foldable part as the anchor and name it; the rest is a scope-boundary measurement and
+  belongs to the some-layers extension tier.
+- **Synthesized Pureland corpus** — fold forward from a square with random simple folds, record
+  the sequence, unfold to get the CP. **Bucket A by construction, difficulty controlled by step
+  count.** This is the main data path (`DATASET.md` §0, `notes/plan/corpus-plan.md`), because
+  the audit found no accessible real source with bucket A at scale. ⚠️ Learn2Fold was the last
+  candidate and **its dataset was never released** — that line of inquiry is closed.
+- **Creasy / Akitaya 2013** worked examples — per `notes/reading/creasy-cp-to-seq.md`, a handful of
+  classic models (crane, frog base) have a **fully computed step-graph**, i.e. genuine
+  step-by-step ground truth, sometimes tens of thousands of nodes deep. Useful as reference
+  sequences for the few models it covers; not a source of new CPs (GPL-3, unmaintained since
+  2022 — we don't reproduce it, see that file).
 
-Start with a small set carrying at least one independently replay-checked reference
-sequence under the chosen simulator rules. Synthetic data is useful for this
-purpose, but generator success alone is not independent validation. Real examples
-require the same admission checks. Missing reference actions or uncertain geometry
-are data-quality issues, not labels of physical impossibility.
+### 1.2 The foldability ceiling: this corpus is almost entirely out of reach
 
-Freeze the supported moves (all layers or selected layers, direction, unfolding,
-pre-creasing), geometric precision, and target tolerance before scoring. Restrictions
-must follow the task and validated simulator capabilities, not preserve an old
-search result. Do not label an item impossible merely because a search timed out
-or exhausted its restricted candidate graph.
+Probe C is complete (`notes/probes/probe-c-screen.md`). Three independent layers of evidence,
+each a proof rather than an estimate, rule out most of the corpus:
 
-Probe A/B/C are archived investigations, not admission gates, difficulty labels,
-selected baselines, or reasons to exclude a corpus. Their historical scope is
-recorded in `notes/probes/`. No new probe sweep is required for this experiment.
+| | | |
+| --- | --- | --- |
+| Fails the spanning-line necessary condition | 125<!--fact:probeC.screenFail--> | 34.2%<!--fact:probeC.screenFailPct--> |
+| Carries a pre-crease (a flat crease simple folding cannot make) | 46<!--fact:probeC.preCrease--> | 12.6%<!--fact:probeC.preCreasePct--> |
+| **Full search EXHAUSTED the space without a solution** | **167**<!--fact:probeC.exhausted--> | **45.6%**<!--fact:probeC.exhaustedPct--> |
+| **PROVEN not simple-foldable** | **338**<!--fact:probeC.provenNot--> **/ 366**<!--fact:corpus.instagram.total--> | **92.3%**<!--fact:probeC.provenNotPct--> |
+| Search timed out — status genuinely unknown | 24<!--fact:probeC.timeout--> | 6.6%<!--fact:probeC.timeoutPct--> |
+| **Confirmed foldable** | **4**<!--fact:probeC.solved--> | **1.1%**<!--fact:probeC.solvedPct--> |
 
-### 1.3 Available annotations
+The action space is fixed to simple folding (Pureland), so those 338 CPs **have no solution in
+our action space at all**. A flat "% of dataset solved" over 366 has a ceiling of **7.7%**, and
+everything below that ceiling is the task definition, not the model.
 
-| Data | Permitted use |
-| --- | --- |
-| CP + target + replay-checked actions | Primary scored pilot; reference is a feasible route, not a unique or shortest answer |
-| CP + target + state snapshots | Derive and validate transitions before treating them as action ground truth |
-| CP only | Exploration; not a scored target-reaching item until the target and admission evidence are supplied |
+⚠️ **1.1% is a floor, not the true rate.** 24 CPs are still undecided, and some of them are
+certainly foldable, so the honest statement is that the true share lies somewhere in
+**1.1%-7.7%**.
 
-PurelandFold supplies state trajectories without explicit action labels. Existing
-synthetic artifacts and exporters are inventoried in `DATASET.md`. Neither requires
-matching a BFS/DFS sequence for acceptance.
+📌 **These numbers were restated on 2026-09-17, and how they moved is worth keeping.** The first
+run budgeted 2M queries per CP and left 37 undecided. The objection was raised — correctly —
+that a timeout is a statement about our budget rather than about the problem, so the 37 were
+re-run at 25x that budget (`workspace/probe-c/budget-probe.mjs`). **13 of 37 resolved, and every
+one of them needed more than the old budget**, median 14.6M queries. So the budget *was* the
+binding constraint, and acting on it moved the headline the opposite way from the worry: 11 of
+the 13 closed as EXHAUSTED and only 2 found a sequence, so the proven-unfoldable share rose from
+89.3% to **92.3%** and the ceiling fell from 10.7% to **7.7%**.
 
-## 2. Model and action interface
+⚠️ 24 CPs remain undecided at 50M queries, and the converted ones ran as high as 49.3M — right
+at the budget's edge. More budget would resolve more of them. The interval above is honest
+precisely because it does not pretend otherwise.
 
-Freeze model/version, prompt, sampling parameters, and context policy. The same
-model is used across conditions; any second model is a separate replication.
+⚠️ EXHAUSTED carries one asterisk, stated rather than buried: the search rejects any fold that
+creases a line against the assignment the CP demands, so it means "no simple-fold sequence that
+never folds a crease against its final direction".
 
-The VLM proposes a structured action: fold line in a declared coordinate frame,
-movement direction, and selected layers when applicable, or a `done` declaration.
-The simulator computes the successor state. A model-authored `.fold` snapshot alone
-does not establish that the transition from the previous state is legal.
+**Therefore every dataset-level number in §6 is reported in four strata, never pooled:**
 
-## 3. Tools and verification
+| Stratum | n | How a run on it is read |
+| --- | --- | --- |
+| **Confirmed foldable** | 2 | the only stratum where %solved is a model score |
+| **Timeout / unknown** | 37 | scored separately; a wrong answer here is not provably wrong |
+| **Proven not foldable** | 327 | reported, never scored — a correct model should *refuse* these |
+| **Pooled** | — | **never**. One percentage over 366 is the fastest way to make this indefensible |
 
-### 3.1 Surface simulator
+**This forces a change of plan, and it is worth more than the plan it replaces.** With 2 solved
+CPs there is no query-efficiency distribution to report, so the pure-search baseline in §5 is
+not a curve — it is a **failure rate**: exhaustive search solves 2 of 195 candidates. That is a
+stronger argument for a heuristic than any query count would have been, and it is what
+Akitaya's own future-work paragraph predicted (`notes/reading/creasy-cp-to-seq.md`).
 
-Existing implementation entry points are `workspace/tools/surface-sim.mjs` and
-`workspace/tools/fold-loop.mjs`. Their presence does not establish that all protocol
-requirements below are implemented or validated.
+⚠️ **Consequence for §1.3: the instagram corpus cannot carry the main experiment.** 39 CPs are
+in play at the absolute best, 2 at worst. The synthesized corpus (`DATASET.md` §0) is no longer
+a supplement to it — it is the only viable source of scored samples.
 
-For each action, check schema and supported-move constraints, compute the transition,
-and return the resulting state or a structured refusal. Invalid proposals must not
-mutate the accepted state. Render views from the accepted simulator state.
+### 1.3 The real shape of the data: pairs are common, sequences are rare
 
-Document exactly which properties are checked: sheet connectivity/tearing, layer
-selection and ordering, geometric consistency, and collision during motion. A flat
-terminal-state check is not a continuous-motion collision check. Any property
-claimed to hold by construction needs a scoped justification and tests; unsupported
-physics must remain an explicit limitation of reported success.
+Every sample we can use has at minimum a **`(CP, final result)` pair** — that's the
+non-negotiable minimum, since it's the ground truth the loop's ACCEPT/REJECT check needs.
 
-Current implementation documents refusals such as `would-tear`, `no-crease`,
-`nothing-to-move`, and `direction-impossible`. Audit those paths before freezing
-an error taxonomy; do not assume Flat-Folder's terminal constraint classes are
-already the simulator's step errors.
+What's *not* guaranteed is the middle: the full `.fold`-by-`.fold` sequence connecting CP to
+final result. Some sources (Creasy's step-graphs) give sequences hundreds of steps long for a
+few classic models. Most CPs in the wild give us only the two endpoints — no intermediate
+`.fold` files exist at all.
 
-### 3.2 Final evaluator
+⚠️ **Consequence**: this splits the dataset into three usable buckets, and not every experiment
+can run on every bucket:
 
-Replay every submitted sequence from the initial sheet without relying on the
-model's claimed states or success flag. Check each transition and compare the
-replayed target against a predeclared equivalence rule. Freeze coordinate alignment,
-tolerances, crease coverage, assignment requirements, and allowed symmetries.
-Rotation, reflection, and layer-order differences are not automatically equivalent;
-allow only those justified by the task.
+| Bucket | Has | Usable for |
+| --- | --- | --- |
+| A | CP + full step sequence | Sequence-level metrics (edit distance, group F of the checklist) |
 
-Use an evaluator independent of candidate generation and feedback claims. If it
-shares geometry code with the simulator, record that dependency and supplement it
-with independently specified fixtures or cross-checks; replay alone does not remove
-shared implementation bugs. Every condition uses the same final evaluator.
 
-### 3.3 Optional ordering tool
 
-A Hamiltonian-path/crease-ordering tool remains a separate proposal. Specify its
-input, output, and relation to executable folds before including it. It must not
-block the minimal simulator experiment and is not a folding verifier.
+These buckets are **orthogonal** to the four strata of §1.2: a CP can be bucket B *and*
+proven-not-foldable. Bucket says what ground truth exists; stratum says whether a solution
+exists at all.
 
-## 4. Interaction loop
+### 1.4 Action item before running anything
 
-1. Give the VLM the fixed task input and condition-specific tool description.
-2. Parse its proposed action; apply it through the simulator where tools are enabled.
-3. Return only the feedback permitted by that condition.
-4. Continue until `done` or a fixed budget is reached.
-5. Independently replay and score the submitted sequence.
 
-In the no-tools condition, collect a complete action sequence without online
-simulator feedback, then evaluate it offline. Invalid actions, parse errors,
-timeouts, tool failures, and evaluator failures must be distinguishable in logs.
-Freeze whether the model may retry, undo, or branch, and how those operations cost
-budget. A timeout reports an unfinished attempt, not an impossible task.
+- [ ] Generate the first batch of the synthetic corpus and inspect its step / degeneracy
+      distribution **before** fixing the sampling design (`notes/plan/corpus-plan.md`). - For Lu
+      the data set will have CP(.CP) & ONE .fold (along with Sequence: Frame1, Frame 2...), 
+      Just final Steps or with all Steps.
 
-## 5. Experiment conditions and protocol
+- [ ] Confirm PurelandFold's frame format converts to the per-step `.fold` shape the simulator
+      (§3.1) expects, since the comparison step (§4) needs to know what it is diffing against.
 
-| Condition | Online feedback |
-| --- | --- |
-| Full feedback | Simulator state, structured errors, and rendered views |
-| No vision | Same state/error information, without rendered views |
-| Verifier only | Action accepted/rejected only, without state detail or images |
-| No tools | No online simulator feedback; final offline evaluation remains identical |
+---
 
-Keep the action space, initial input, model, and final acceptance rule fixed. For
-the full/no-vision contrast, use identical text feedback and add images only to the
-full condition. The existing text/images implementation must be checked for this
-before claiming a visual-feedback effect. Add optional tools in a separate ablation.
+## 2. The model under test: a VLM 
 
-Freeze before running:
+**VLM = an LLM with vision input.** Nothing more exotic than that — the same text context (CP
+description, prompt, history) as a plain LLM, plus the images the simulator renders. **Every
+"LLM" in this file means a VLM** the moment the visual feedback channel is on, because a
+text-only model cannot read a rendered fold-state image.
 
-- Dataset version, splits, anonymization, and held-out items. Strip names and metadata
-  that reveal an answer. Do not expose reference actions to scored model runs.
-- Common model-call and token limits (with separate image-token accounting), action
-  limits, and wall-time limit; tool-call counts are reported separately. Equal tool
-  budgets alone cannot make a no-tools comparison fair.
-- Repeats, seeds where supported, model version, retry policy, and context truncation.
-- Sampling strata based on recorded task features, with the sampled distribution
-  reported. Reference length is not a certified minimum or a proven difficulty score.
-- Evaluation tolerances, allowed symmetries, and handling of infrastructure failures.
+⚠️ **No model is trained or fine-tuned** — inference and tool-calling only. Candidates:
+**Gemini Flash** (free credits), **Nemotron**, other off-the-shelf VLMs opportunistically. The
+model is held fixed between the tool-augmented arm and the no-tools control; comparing across
+models would confound the ablation. Running the whole pipeline on two models tells us whether
+the effect is model-specific or general.
 
-This comparison measures the benefit of tools and feedback. It does not by itself
-separate reasoning from memorization; that requires additional exposure controls.
+- [ ] We need to list the models and tests
+---
+
+## 3. Tools given to the VLM
+
+### 3.1 Surface simulator — the core tool, must be built - for Dheeraj
+
+- **Input**: a `.fold` file — either a full state, or the previous state plus one candidate next
+  fold applied to it.
+- **Output on success**: a 3D representation of that state — either (a) a three.js scene, or
+  (b) 3–4 static images rendered from different camera angles. X ray
+- **Output on failure**: a structured **error**, not images — the candidate fold is illegal
+  because the paper would have to pass through itself ("penetrate"). This is the same class of
+  check as Flat-Folder's four constraint types (`taco-taco` / `taco-tortilla` /
+  `tortilla-tortilla` / `transitivity` — see `notes/tools/flat-folder-capabilities.md`), but applied to
+  **one candidate step**, not a global terminal state.
+- This is the piece the rest of the notes call the **surface simulator**. Flat-Folder does not
+  provide it — Flat-Folder has no notion or Motion of "step," full stop 
+
+### 3.2 Hamiltonian-path tool (Prof. Yi's suggestion) — to attempt - Both Dheeraj and Jialu
+
+- Intended purpose (still being scoped): search over / verify a traversal order on the crease
+  graph, to help the VLM propose an ordering instead of deriving one from scratch every step.
+- Status: **not implemented yet.** Either build a minimal version or find an existing
+  open-source implementation that does the equivalent job — needs its own short scoping note
+  before it's added to the tool belt for real. Don't let it block the surface simulator work.
+
+
+---
+
+## 4. The loop
+
+```
+   (CP, FINAL RESULT)                 ← dataset pair (§1)
+            │ CP
+            ▼
+      ┌───────────┐
+      │  PROMPT   │◄──────────────────────┐
+      └─────┬─────┘                       │
+            ▼                             │
+      ┌───────────┐                       │
+      │    VLM    │                       │
+      └─────┬─────┘                       │
+            │ candidate next .fold step   │
+            ▼                             │
+      ┌────────────────────┐              │
+      │  SURFACE SIMULATOR  │              │
+      │   (+ optional tools)│              │
+      └─────────┬───────────┘              │
+           ok   │   illegal fold           │
+           ▼    ▼                          │
+         3D    ERROR ──────────────────────┘
+           │
+           │  (VLM marks its own step "final")
+           ▼
+      FINAL .fold  ──►  compare to FINAL RESULT  ──►  ACCEPT / REJECT
+```
+
+- **Dataset pair**: `(CP, FINAL RESULT)` from a bucket-B-or-better sample (§1.2).
+- **PROMPT**: the running context — CP, task instructions, and the full history of
+  step → images/error exchanges so far. This is what actually grows each iteration; the VLM box
+  itself is stateless per call.
+- **VLM**: proposes the next `.fold` step, or declares the sequence complete.
+- **Surface simulator**: the verifier (§3.1) — renders images on success, returns a structured
+  error on an illegal (self-intersecting) fold. Optional tools (§3.2, §3.3) sit alongside it.
+- **Loop**: images or error get folded back into the prompt for the next VLM call. This repeats
+  until the VLM emits a step it marks as final.
+- **Compare**: ⚠️ **a CP can have many valid terminal states** (`notes/tools/flat-folder-capabilities.md`),
+  so an exact diff against the one stored `FINAL RESULT` marks correct answers wrong. ACCEPT is
+  therefore defined on the **equivalence class**, not on byte equality: the final `.fold` is
+  accepted if (a) it is a valid flat-folded state of the CP, and (b) it matches `FINAL RESULT`
+  up to the symmetries we declare in advance — paper rotation/reflection, and the layer-order
+  variants Flat-Folder itself reports as equally valid. `DATASET.md` already flags that picking
+  one terminal state is our experimental choice and not a label from the source; this is the
+  line where that choice has to be paid for.
+
+---
+
+## 5. Experiment conditions
+
+| Condition | Tools available | What it measures |
+| --- | --- | --- |
+| **Full tool belt** | surface simulator + 3D + Hamiltonian tool (if ready) | upper bound — how well the loop does with everything |
+| **No vision** | same tools, the rendered-image channel dropped | the value of visual/geometric feedback specifically |
+| **Verifier only** | pass/fail from the simulator; no filter | the value of the filter step on top of raw verification |
+| **No tools, prompt-only** | none — plain VLM prompting, no simulator calls | memorization control — is the model reasoning through the loop, or recalling the fold from pretraining/dataset exposure |
+
+> If the no-vision or no-tools arm performs nearly as well as the full arm, **that is a finding,
+> not a failed experiment** — it means the gain is not where we assumed.
+
+Same VLM, same CP set, same query budget across both conditions — this is the direct A/B that
+answers "how would it behave and what's the accuracy without these tools."
+
+**Protocol, fixed before the first run:**
+
+- **Input anonymization.** CP filenames in this corpus carry the model's name
+  (`009_ku_Unassigned_Triangle_Pleat`). The no-tools arm is a *memorization* control — if the
+  model can read that name it recalls instead of reasoning, and then **both** arms measure
+  recall and the A/B measures nothing. Strip filenames and all metadata; feed geometry only.
+- **Query budget.** One fixed number N of simulator/tool calls per CP, identical across arms.
+  Exhausting it is a **Timeout** (§1.2), not a REJECT — the two mean different things.
+- **Repeats and seeds.** k runs per CP with recorded seeds; report median and spread, never a
+  single run. VLM sampling is not deterministic and a single run is not a measurement.
+- **Stratified sampling.** Probe A found the explosion lives in the tail, not the median
+  (`notes/probes/probe-a-explosion.md`), so the CP set is sampled across difficulty strata
+  rather than uniformly.
+
+---
 
 ## 6. Metrics
 
-**Primary:** fraction of attempts whose complete replayed sequence is legal under
-the declared model and reaches the target equivalence class within budget. Report
-counts and uncertainty across items/repeats. Do not substitute terminal validity
-alone for sequence validity.
+**Primary — sequence-level metrics** (edit distance / step-count ratio against the ground-truth
+sequence, group F). Probe B measured that the terminal-state problem is near search-free — the
+propagation oracle has 0% false positives because reaching *a* valid state is not the hard part
+(`notes/probes/probe-b-oracle.md`). **The difficulty lives in the sequence layer**, so that is
+where the headline number has to come from.
 
-**Secondary:** invalid proposal rate (with its denominator), parse-error rate,
-timeout rate, model/tool calls, token use, wall time, and length of valid successful
-sequences. Report all-attempt resource use and failures, with success-only summaries
-clearly labelled. Paired per-item comparisons make the feedback effect assessable.
+> ⚠️ Sequence metrics are computable only on bucket A. 27 real PurelandFold sequences cannot
+> carry a headline, which is exactly why `DATASET.md` now has to supply a **synthesized**
+> bucket-A corpus at scale.
 
-A CP may have many valid sequences. Edit distance to one reference is descriptive,
-not a correctness score. A length ratio compares against that reference route;
-without a separate optimality certificate it is not a shortest-path ratio.
-BFS/DFS are not selected experimental baselines or verifiers. Search-generated
-candidates, if used for development, face the same replay checks as any other route.
+**Gate — terminal match (ACCEPT rate).** Retained as an admission criterion — "did it produce a
+legal terminal state at all" — reported per stratum (§1.2), never pooled. This is no longer the
+headline; Probe B showed it is the easy half of the problem.
+
+**Queries to solve** — reported over **all** attempts, not only the solved ones. Conditioning on
+success hides precisely the long-tail blowup Probe A measured. Report the full within-budget
+distribution plus the timeout fraction (ties to the query-efficiency claim in
+`notes/plan/experiment-spec-checklist.md`).
+
+---
 
 ## 7. Error analysis
 
-Separate malformed actions, unsupported actions, transition refusals, legal but
-wrong targets, budget exhaustion, and infrastructure/evaluator errors. Attribute
-failures to the checks actually performed. Log the accepted state, proposed action,
-feedback, budget counters, and evaluator outcome so a failure can be reproduced.
-Do not infer a need for subset-of-layers folds from an unsuccessful search alone.
+Every simulator rejection already comes labeled with which constraint class it violated
+(Flat-Folder's four types, §3.1) — reuse the failure taxonomy in group E of
+`notes/plan/experiment-spec-checklist.md` rather than inventing a new one. This is what turns a REJECT
+into a diagnosis instead of a dead end.
 
-## 8. Execution order
+---
 
-1. Freeze the action schema and simulator's tested scope.
-2. Validate legal/illegal transition fixtures and the independent final evaluator.
-3. Admit a small replay-checked dataset and inspect target renderings.
-4. Smoke-test logging and each feedback condition; confirm no reference leakage.
-5. Freeze budgets and scoring, then run the paired pilot under user control.
-6. Inspect failures, fix implementation defects, version the changes, and rerun
-   affected pilot cases before scaling to the held-out experiment.
+## 9. Contributions this is meant to produce
 
-Existing generators, replay tools, and loop code may be reused after this audit.
-The presence of an implementation is not a completed experimental result.
+- A reproducible **baseline ladder** on one CP set and one query definition (`BASELINE_REPRODUCTION.md`)
+  — missing from the current literature comparison.
+- A tool-augmented VLM loop scored on **query efficiency and pruning/backtracking quality**, not
+  raw success rate.
+- A **memorization control** — same model, same CPs, tools removed — separating "reasons better
+  with tools" from "already knew the answer". Most LLM-for-planning papers skip this.
+- A **visual-feedback ablation**: does rendering the state back to the model measurably change
+  pruning or backtracking quality? This speaks to the Spa3R vs. "I Know About Up!" mental-imagery
+  debate (group D of the checklist).
+- A **measured scope boundary**: 92.3%<!--fact:probeC.provenNotPct--> of real crease patterns provably lie outside
+  all-layers simple folding (§1.2). The action space is bounded by evidence, not by assertion.
+- **Tearing is a third property the all-layers restriction buys, alongside no self-intersection
+  and no layer ordering — and it is the one nobody names.** An all-layers fold moves everything
+  on one side of the line as a rigid body, so no two connected pieces of paper ever move
+  relative to each other except at the fold line itself, where paper is allowed to bend.
+  Tearing is therefore not rare in that tier, it is **impossible by construction**. The moment a
+  fold may move only some layers it becomes the binding constraint: a moving run that is joined
+  to a stationary face anywhere off the fold line rips the sheet.
+  The measurement shows it directly — enumerating every candidate at each state, the count of
+  legal **all-layers** folds is constant (every line and direction is always legal), while legal
+  **partial** folds have to be found among the ones that do not tear.
+- ⚠️ **Do not state this as "legal moves are rare".** It was written that way first and the
+  enumeration refutes it: legal partial folds *grow* with depth — 22 at two layers, 156 at
+  eighteen, **332 at thirty-eight, six times the 56 all-layers folds available at the same
+  state**. What falls is the hit rate of *uniform random proposal* (11.9%, and 3.8% by
+  seventeen layers), because the space being sampled — lines × layer-runs — grows faster than
+  the legal set inside it. That is a fact about a sampler, not about origami, and conflating
+  the two would put a false claim about branching factor in the paper
+  (`notes/plan/corpus-plan.md`, 2026-09-16).
 
-## 9. Outputs
+> ⚠️ **No model is trained or fine-tuned.** Every arm is an off-the-shelf VLM driven by prompting
+> and tool-calling. The contribution is the harness — tools, verifier, ablation design — not a model.
 
-Deliver the frozen protocol, dataset manifest, versioned prompts and tools,
-anonymized per-attempt logs, validity/success and resource metrics for each condition,
-and error analysis. Claims concern measured tool and visual-feedback effects under
-the declared simulator model. They do not include a general real-origami
-impossibility percentage, search optimality, or untested physical feasibility.
+---
+
+## 10. Output
+
+Numbers from §6 + the error breakdown from §7, for both conditions in §5, get written up as the
+Track 1 paper (framing per `notes/plan/track1-surface-simulator.md`).

@@ -1,6 +1,3 @@
-> Archived investigation: historical search counts and action-space conclusions below
-> are not current dataset labels. Use `../../EXPERIMENTS_SETUP.md` for admission and scoring.
-
 # PurelandFold — where the sequence lives, and what the search does with it
 
 Audited 2026-09-16 against HF revision of 2026-09-01. **27 sequences · 337 keyframes · 32.6 MB

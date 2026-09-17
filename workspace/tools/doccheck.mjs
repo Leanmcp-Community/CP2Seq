@@ -27,7 +27,7 @@ const docs = [];
 
 // planning docs must declare what they own; probe results and reading notes need not
 const MUST_DECLARE = [
-    "EXPERIMENTS_SETUP.md", "DATASET.md",
+    "EXPERIMENTS_SETUP.md", "DATASET.md", "BASELINE_REPRODUCTION.md",
     "notes/plan/experiment-spec-checklist.md", "notes/plan/research-workflow.md",
 ];
 
