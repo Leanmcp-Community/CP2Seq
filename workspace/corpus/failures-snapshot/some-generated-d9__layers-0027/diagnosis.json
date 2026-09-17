@@ -1,0 +1,193 @@
+{
+ "counts": {
+  "replayed": 82,
+  "stored": 81,
+  "matched": 80,
+  "unmatchedReplayed": 2,
+  "unmatchedStored": 1
+ },
+ "verdict": "82 creases replayed vs 81 stored",
+ "tolerance": 0.000002,
+ "perFold": [
+  {
+   "fold": 1,
+   "line": {
+    "n": [
+     0.7071067811865476,
+     0.7071067811865476
+    ],
+    "d": 1.0606601717798214
+   },
+   "movePositive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": true,
+   "made": 1
+  },
+  {
+   "fold": 2,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 0.875
+   },
+   "movePositive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "made": 2
+  },
+  {
+   "fold": 3,
+   "line": {
+    "n": [
+     0.7071067811865476,
+     0.7071067811865476
+    ],
+    "d": 1.7235727791422095
+   },
+   "movePositive": true,
+   "selection": {
+    "mode": "all"
+   },
+   "over": true,
+   "made": 2
+  },
+  {
+   "fold": 4,
+   "line": {
+    "n": [
+     0.7071067811865476,
+     0.7071067811865476
+    ],
+    "d": 1.6407087032219112
+   },
+   "movePositive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "made": 4
+  },
+  {
+   "fold": 5,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 1.7021484375
+   },
+   "movePositive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "made": 2
+  },
+  {
+   "fold": 6,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 1.2451171875
+   },
+   "movePositive": false,
+   "selection": {
+    "mode": "bottom",
+    "k": 11
+   },
+   "over": false,
+   "made": 10
+  },
+  {
+   "fold": 7,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 2.2191162109375
+   },
+   "movePositive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": true,
+   "made": 14
+  },
+  {
+   "fold": 8,
+   "line": {
+    "n": [
+     0.7071067811865476,
+     0.7071067811865476
+    ],
+    "d": 2.865791486062856
+   },
+   "movePositive": true,
+   "selection": {
+    "mode": "all"
+   },
+   "over": true,
+   "made": 10
+  },
+  {
+   "fold": 9,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 1.2887792587280273
+   },
+   "movePositive": true,
+   "selection": {
+    "mode": "all"
+   },
+   "over": true,
+   "made": 30
+  }
+ ],
+ "onlyReplayed": [
+  "0,1,0.36474609375,M|-0.4684667595222928|-0.4248046880222929",
+  "0,1,0.364990234375,M|-0.6249999990632294|-0.46846675806322946"
+ ],
+ "onlyStored": [
+  "0,1,0.364990234375,M|-0.6249999990632301|-0.4248046860632302"
+ ],
+ "nearestPairs": [
+  {
+   "replayed": "0,1,0.36474609375,M|-0.4684667595222928|-0.4248046880222929",
+   "nearestStored": "0,1,0.364990234375,M|-0.6249999990632301|-0.4248046860632302",
+   "sameLineKey": false,
+   "delta": {
+    "nx": 0,
+    "ny": 0,
+    "d": -0.000244140625,
+    "lo": 0.15653323954093734,
+    "hi": -1.9590626898491337e-9,
+    "assignmentSame": true
+   }
+  },
+  {
+   "replayed": "0,1,0.364990234375,M|-0.6249999990632294|-0.46846675806322946",
+   "nearestStored": "0,1,0.364990234375,M|-0.6249999990632301|-0.4248046860632302",
+   "sameLineKey": true,
+   "delta": {
+    "nx": 0,
+    "ny": 0,
+    "d": 0,
+    "lo": 6.661338147750939e-16,
+    "hi": -0.043662071999999275,
+    "assignmentSame": true
+   }
+  }
+ ]
+}

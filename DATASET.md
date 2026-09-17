@@ -64,13 +64,30 @@ Bucket reminder:
 
 ### The release corpus (2026-09-17)
 
+`workspace/corpus/out/release/`, 600 samples in five batches under one merged manifest, 40MB over
+2,410 files. Rebuild end to end — clear, generate, merge, verify, index — with
+`bash workspace/corpus/run-regenerate.sh`.
+
+| | n | with a SOLVED verdict | folds |
+| --- | --- | --- | --- |
+| all-layers / generated | 400 | 0 | 4–19 |
+| some-layers / **verified** | 100 | 100 | 3–4 |
+| some-layers / generated | 100 | 0 | 5–6 |
+
+The all-layers 400 are stratified easy 200 / mid 100 / hard 100 on PurelandFold's action-space
+tertiles (4–10 / 11–13 / 14–19), with the quotas carried per stratum in `strata-release.json` so
+that one invocation covers all three — the isomorphic-duplicate table is per-invocation, and
+splitting the run would stop duplicates across strata being caught.
+
+⚠️ **The deep some-layers end (7–9 folds) is not in this corpus, and its absence is a loss rather
+than a tidy-up.** Earlier releases ran that tier to nine folds precisely because the difficulty
+the benchmark is about lives past the depth the solver reaches. It is also where nearly all the
+generation time went — hours, against minutes for everything else. Restoring it is four lines in
+`run-regenerate.sh` and a long wall-clock, not a redesign.
 `workspace/corpus/out/release/`, ~1,050 samples in nine batches under one merged manifest.
+
 Rebuild: `bash workspace/corpus/run-release.sh` then `node workspace/corpus/merge-release.mjs`.
 
-| tier | n | folds |
-| --- | --- | --- |
-| all-layers | 550 | 3–19 |
-| some-layers | 500 | 3–9 |
 
 - **Every sample is correct by construction** — produced by folding, and the pattern is what the
   folding left behind. There is no verified/generated split. The previous one recorded whether a
@@ -83,10 +100,15 @@ Rebuild: `bash workspace/corpus/run-release.sh` then `node workspace/corpus/merg
 
 ### 🛑 HOW TO SCORE THIS CORPUS — the recorded sequence is **a** solution, not **the** solution
 
-**Measured on the release batch: 30 samples have a sequence one fold SHORTER than the one that
-built them**, and the share rises with depth — 1/100 at three folds, 4/100 at four, **11/100 at
-five, 10/99 at six**. The generator does not search; it folds, so nothing makes its sequence
-minimal.
+**Measured on the release batch: 2 of the 100 verified samples have a sequence one fold SHORTER
+than the one that built them** — 1/50 at three folds, 1/50 at four. The generator does not search;
+it folds, so nothing makes its sequence minimal.
+
+⚠️ **Two is a floor set by how little of this corpus is verified, not a rate.** The check needs the
+solver, so it can only run on the 100 verified samples; the other 500 have never been looked at.
+An earlier, larger release verified 700 samples and found 30, with the share rising steeply with
+depth — 1/100 at three folds, 11/100 at five, 10/99 at six. The rule below is written for that
+behaviour, not for the two instances that happen to be visible here.
 
 Three rules follow, and the first is the one that silently corrupts results:
 
@@ -103,9 +125,38 @@ Three rules follow, and the first is the one that silently corrupts results:
 ### On the corpus's scale, one prediction that was wrong
 
 Deduplicating the square's eight symmetries was expected to exhaust the shallow end — there are
-only so many distinct three-fold patterns. It does not: **100 distinct patterns in 100 attempts
-at depth three, and zero isomorphic duplicates across all eight batches.** Recorded because it
-was asserted as a constraint on corpus design and the data refused it.
+only so many distinct three-fold patterns. It does not: the shallow strata fill essentially on
+first attempt, and there are **zero isomorphic duplicates across the five batches**. Recorded
+because it was asserted as a constraint on corpus design and the data refused it.
+
+The one duplicate the sampler now rejects is at depth three (50 samples in 51 attempts), and it
+appeared only after `planarize` stopped snapping coordinates to a 1e-9 lattice: the dedup key
+rounds coordinates to 1e-6, so two patterns that used to hash apart now hash together. Which is
+the correct behaviour — they were always the same pattern.
+
+### How a sample is checked
+
+`node workspace/corpus/verify-exact.mjs out/release` replays every recorded sequence and compares
+what it creases against the stored pattern. **600 of 600 reproduce it.**
+
+What it compares is the set of **maximal creased intervals per line**, not the subdivided edge
+list. Subdivision is unstable under floating point — a vertex a few ULP away can fall on the other
+side of another crease's endpoint, so one side gets a cut the other does not and the two edge
+lists have different *lengths*. That is a count mismatch, not a distance, so no tolerance of any
+size reaches it: raising the budget from 8 ULP per fold to 100,000 changed almost nothing.
+Merging each line's pieces first makes the question "does this line carry a crease from here to
+here", which does not depend on how many pieces it was recorded in.
+
+⚠️ **The comparison's floor is 1e-9, and that number is the corpus's own, not a tuned tolerance.**
+`planarize` treats two points within 1e-9 as one vertex and keeps the first one's coordinates, so
+a stored vertex can sit that far from the point the fold produced. **No verifier can resolve this
+corpus more finely than the generator recorded it.** Actual agreement is far tighter — most
+samples match to within a handful of ULP — and the per-sample figure is reported so the margin
+used is visible rather than assumed.
+
+The older `verify-replay.mjs` still exists and applies a looser comparison through
+`crease-compare.mjs`. Where the two disagree, `verify-exact` is the one the numbers above are
+stated in.
 
 ---
 

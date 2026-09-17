@@ -48,8 +48,15 @@ for (const b of batches) {
 
 // The replay result per sample, when it has been run. A viewer that cannot show which samples
 // failed their own check is hiding the thing a reader most needs to see.
-const rp = path.join(ROOT, "replay-check.json");
-if (fs.existsSync(rp)) {
+//
+// exact-check.json is preferred over replay-check.json because verify-exact is the stricter of
+// the two and is the one whose verdict the corpus is now stated in: it compares maximal crease
+// intervals against the generator's own vertex-merge radius, where verify-replay compares through
+// crease-compare.mjs's tolerance. Whichever file is present, a FAIL here means that sample's
+// recorded sequence did not reproduce its stored pattern.
+const rp = [path.join(ROOT, "exact-check.json"), path.join(ROOT, "replay-check.json")]
+    .find(p => fs.existsSync(p));
+if (rp) {
     const failed = new Map((JSON.parse(fs.readFileSync(rp, "utf8")).failures ?? [])
         .map(f => [f.sample, f.why]));
     for (const s of samples) {

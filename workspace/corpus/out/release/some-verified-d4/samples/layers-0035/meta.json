@@ -41,7 +41,7 @@
  },
  "planarize": {
   "segments_in": 9,
-  "vertices": 16,
+  "vertices": 13,
   "edges": 18,
   "overlaps_merged": 0,
   "assignment_conflicts": 0,
@@ -56,6 +56,6 @@
   "status": "SOLVED",
   "queries": 5672,
   "depth": 4,
-  "ms": 50
+  "ms": 51
  }
 }

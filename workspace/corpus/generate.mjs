@@ -198,11 +198,16 @@ const manifest = [], rejects = {}, seen = new Map();
 let seed = SEED0;
 
 console.log(`synthetic Pureland corpus -> ${path.relative(process.cwd(), OUT)}`);
-console.log(`strata: ${strata.map(s => `${s.name}[${s.min}-${s.max}]`).join("  ")}   n=${N} each\n`);
+console.log(`strata: ${strata.map(s => `${s.name}[${s.min}-${s.max}]n=${s.n ?? N}`).join("  ")}\n`);
 
 for (const st of strata) {
+    // A stratum may set its own quota. --n stays the default for any that does not, so the two
+    // ways of asking are the same mechanism. This is one invocation rather than one per stratum
+    // deliberately: `seen` is what rejects isomorphic duplicates, and splitting the run would
+    // split that table, so duplicates ACROSS strata would stop being caught.
+    const quota = st.n ?? N;
     let made = 0, attempts = 0;
-    while (made < N && attempts < MAX_ATTEMPTS) {
+    while (made < quota && attempts < MAX_ATTEMPTS) {
         attempts++;
         const s = seed++;
         const steps = st.min + Math.floor(rngFrom(s ^ 0x9e3779b9)() * (st.max - st.min + 1));
@@ -231,14 +236,14 @@ for (const st of strata) {
         fs.writeFileSync(path.join(dir, "meta.json"), JSON.stringify(meta, null, 1));
         manifest.push(meta);
         made++;
-        process.stdout.write(`\r  ${st.name}: ${made}/${N}   (${attempts} attempts)      `);
+        process.stdout.write(`\r  ${st.name}: ${made}/${quota}   (${attempts} attempts)      `);
     }
-    console.log(made < N ? `\r  ${st.name}: ${made}/${N}  <-- QUOTA NOT FILLED in ${attempts} attempts` 
-                         : `\r  ${st.name}: ${made}/${N}   (${attempts} attempts)      `);
+    console.log(made < quota ? `\r  ${st.name}: ${made}/${quota}  <-- QUOTA NOT FILLED in ${attempts} attempts` 
+                         : `\r  ${st.name}: ${made}/${quota}   (${attempts} attempts)      `);
 }
 
 fs.writeFileSync(path.join(OUT, "manifest.json"), JSON.stringify(
-    { generated: new Date().toISOString(), seed0: SEED0, strata, n_per_stratum: N,
+    { generated: new Date().toISOString(), seed0: SEED0, strata, n_per_stratum: N, n_by_stratum: Object.fromEntries(strata.map(s => [s.name, s.n ?? N])),
       reject_filters: REJECT, coupling_cap: COUPLING_CAP ?? null,
       coupling_frac: COUPLING_FRAC ?? null, samples: manifest }, null, 1));
 

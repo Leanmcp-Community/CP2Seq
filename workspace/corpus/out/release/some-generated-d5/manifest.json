@@ -1,0 +1,3061 @@
+{
+ "generated": "2026-09-17T06:47:33.594Z",
+ "tier": "some-layers",
+ "seed0": 20260923,
+ "n": 50,
+ "steps": 5,
+ "p_partial": 0.5,
+ "rejects": {},
+ "samples": [
+  {
+   "id": "layers-0001",
+   "tier": "some-layers",
+   "seed": 20260923,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "ad67a1ef7f11f4c5",
+   "metrics": {
+    "layers": 11,
+    "area": 1,
+    "distinct_areas": 9,
+    "coupling_max": 4,
+    "creases": 15,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 19
+     },
+     {
+      "step": 5,
+      "layers": 9,
+      "all": 112,
+      "partial": 105
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 14,
+    "vertices": 19,
+    "edges": 29,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "M": 10,
+     "V": 5
+    }
+   }
+  },
+  {
+   "id": "layers-0002",
+   "tier": "some-layers",
+   "seed": 20268842,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "04374105c354c10f",
+   "metrics": {
+    "layers": 12,
+    "area": 1,
+    "distinct_areas": 12,
+    "coupling_max": 4,
+    "creases": 16,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 30
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 90
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 128
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 15,
+    "vertices": 21,
+    "edges": 32,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 7,
+     "M": 9
+    }
+   }
+  },
+  {
+   "id": "layers-0003",
+   "tier": "some-layers",
+   "seed": 20276761,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "5cd6b858897833ec",
+   "metrics": {
+    "layers": 9,
+    "area": 1,
+    "distinct_areas": 9,
+    "coupling_max": 3,
+    "creases": 11,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 52
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 47
+     },
+     {
+      "step": 5,
+      "layers": 6,
+      "all": 112,
+      "partial": 63
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 12,
+    "vertices": 17,
+    "edges": 25,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "V": 4,
+     "M": 7
+    }
+   }
+  },
+  {
+   "id": "layers-0004",
+   "tier": "some-layers",
+   "seed": 20284680,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "8dc7110f8f8b018f",
+   "metrics": {
+    "layers": 12,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 3,
+    "creases": 16,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 22
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 54
+     },
+     {
+      "step": 5,
+      "layers": 9,
+      "all": 112,
+      "partial": 46
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 15,
+    "vertices": 21,
+    "edges": 32,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 12,
+     "M": 4
+    }
+   }
+  },
+  {
+   "id": "layers-0005",
+   "tier": "some-layers",
+   "seed": 20292599,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 4,
+   "cp_hash": "00039b3058ba41a8",
+   "metrics": {
+    "layers": 6,
+    "area": 1,
+    "distinct_areas": 5,
+    "coupling_max": 1,
+    "creases": 5,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 58
+     },
+     {
+      "step": 5,
+      "layers": 5,
+      "all": 112,
+      "partial": 78
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 9,
+    "vertices": 14,
+    "edges": 19,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "V": 3,
+     "M": 2
+    }
+   }
+  },
+  {
+   "id": "layers-0006",
+   "tier": "some-layers",
+   "seed": 20300518,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "e1af0b06d83d4174",
+   "metrics": {
+    "layers": 9,
+    "area": 1,
+    "distinct_areas": 9,
+    "coupling_max": 2,
+    "creases": 8,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 42
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 52
+     },
+     {
+      "step": 5,
+      "layers": 7,
+      "all": 112,
+      "partial": 76
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 12,
+    "vertices": 20,
+    "edges": 28,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 20,
+     "V": 4,
+     "M": 4
+    }
+   }
+  },
+  {
+   "id": "layers-0007",
+   "tier": "some-layers",
+   "seed": 20308437,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "880a24e406fe093c",
+   "metrics": {
+    "layers": 12,
+    "area": 1,
+    "distinct_areas": 10,
+    "coupling_max": 4,
+    "creases": 17,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 52
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 64
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 108
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 15,
+    "vertices": 20,
+    "edges": 31,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "M": 11,
+     "V": 6
+    }
+   }
+  },
+  {
+   "id": "layers-0008",
+   "tier": "some-layers",
+   "seed": 20316356,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "55edac6f6bd52847",
+   "metrics": {
+    "layers": 11,
+    "area": 1,
+    "distinct_areas": 9,
+    "coupling_max": 3,
+    "creases": 15,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 34
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 60
+     },
+     {
+      "step": 5,
+      "layers": 9,
+      "all": 112,
+      "partial": 83
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 14,
+    "vertices": 19,
+    "edges": 29,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "V": 8,
+     "M": 7
+    }
+   }
+  },
+  {
+   "id": "layers-0009",
+   "tier": "some-layers",
+   "seed": 20324275,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "4e09bf01f70f058d",
+   "metrics": {
+    "layers": 11,
+    "area": 1,
+    "distinct_areas": 11,
+    "coupling_max": 3,
+    "creases": 15,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 36
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 53
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 72
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 14,
+    "vertices": 19,
+    "edges": 29,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "M": 8,
+     "V": 7
+    }
+   }
+  },
+  {
+   "id": "layers-0010",
+   "tier": "some-layers",
+   "seed": 20332194,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "5daee783ac07d8db",
+   "metrics": {
+    "layers": 12,
+    "area": 1,
+    "distinct_areas": 10,
+    "coupling_max": 4,
+    "creases": 16,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 56
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 99
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 72
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 15,
+    "vertices": 21,
+    "edges": 32,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 9,
+     "M": 7
+    }
+   }
+  },
+  {
+   "id": "layers-0011",
+   "tier": "some-layers",
+   "seed": 20340113,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "f304cb3a2cdc6d54",
+   "metrics": {
+    "layers": 10,
+    "area": 1,
+    "distinct_areas": 10,
+    "coupling_max": 3,
+    "creases": 13,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 49
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 81
+     },
+     {
+      "step": 5,
+      "layers": 7,
+      "all": 112,
+      "partial": 86
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 13,
+    "vertices": 18,
+    "edges": 27,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "V": 8,
+     "M": 5
+    }
+   }
+  },
+  {
+   "id": "layers-0012",
+   "tier": "some-layers",
+   "seed": 20348032,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "69b0bcd663b65af2",
+   "metrics": {
+    "layers": 9,
+    "area": 1,
+    "distinct_areas": 9,
+    "coupling_max": 3,
+    "creases": 11,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 45
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 53
+     },
+     {
+      "step": 5,
+      "layers": 6,
+      "all": 112,
+      "partial": 57
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 12,
+    "vertices": 16,
+    "edges": 24,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 13,
+     "V": 4,
+     "M": 7
+    }
+   }
+  },
+  {
+   "id": "layers-0013",
+   "tier": "some-layers",
+   "seed": 20355951,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "0c9d0f8f8c194951",
+   "metrics": {
+    "layers": 10,
+    "area": 1,
+    "distinct_areas": 10,
+    "coupling_max": 4,
+    "creases": 13,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 28
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 40
+     },
+     {
+      "step": 5,
+      "layers": 6,
+      "all": 112,
+      "partial": 52
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 13,
+    "vertices": 17,
+    "edges": 26,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 13,
+     "M": 5,
+     "V": 8
+    }
+   }
+  },
+  {
+   "id": "layers-0014",
+   "tier": "some-layers",
+   "seed": 20363870,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "8d691f3c06deac06",
+   "metrics": {
+    "layers": 13,
+    "area": 1,
+    "distinct_areas": 13,
+    "coupling_max": 5,
+    "creases": 18,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 33
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 64
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 94
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 16,
+    "vertices": 22,
+    "edges": 34,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "M": 10,
+     "V": 8
+    }
+   }
+  },
+  {
+   "id": "layers-0015",
+   "tier": "some-layers",
+   "seed": 20371789,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "3aa2a29cbbb846e6",
+   "metrics": {
+    "layers": 11,
+    "area": 1,
+    "distinct_areas": 10,
+    "coupling_max": 3,
+    "creases": 14,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 22
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 59
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 106
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 14,
+    "vertices": 20,
+    "edges": 30,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "M": 8,
+     "V": 6
+    }
+   }
+  },
+  {
+   "id": "layers-0016",
+   "tier": "some-layers",
+   "seed": 20379708,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "3ef6eb83b4546bdd",
+   "metrics": {
+    "layers": 15,
+    "area": 1,
+    "distinct_areas": 15,
+    "coupling_max": 5,
+    "creases": 21,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 20
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 67
+     },
+     {
+      "step": 5,
+      "layers": 10,
+      "all": 112,
+      "partial": 122
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 18,
+    "vertices": 25,
+    "edges": 39,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 18,
+     "M": 11,
+     "V": 10
+    }
+   }
+  },
+  {
+   "id": "layers-0017",
+   "tier": "some-layers",
+   "seed": 20387627,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "506b5edfafb7c6d1",
+   "metrics": {
+    "layers": 11,
+    "area": 1,
+    "distinct_areas": 11,
+    "coupling_max": 3,
+    "creases": 14,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 18
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 44
+     },
+     {
+      "step": 5,
+      "layers": 9,
+      "all": 112,
+      "partial": 95
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 14,
+    "vertices": 20,
+    "edges": 30,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 10,
+     "M": 4
+    }
+   }
+  },
+  {
+   "id": "layers-0018",
+   "tier": "some-layers",
+   "seed": 20395546,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "5655adc699b13dc6",
+   "metrics": {
+    "layers": 10,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 3,
+    "creases": 11,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 32
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 56
+     },
+     {
+      "step": 5,
+      "layers": 7,
+      "all": 112,
+      "partial": 119
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 13,
+    "vertices": 20,
+    "edges": 29,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 18,
+     "M": 5,
+     "V": 6
+    }
+   }
+  },
+  {
+   "id": "layers-0019",
+   "tier": "some-layers",
+   "seed": 20403465,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "fee76df80f4ab3ec",
+   "metrics": {
+    "layers": 13,
+    "area": 1,
+    "distinct_areas": 10,
+    "coupling_max": 4,
+    "creases": 18,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 40
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 31
+     },
+     {
+      "step": 5,
+      "layers": 9,
+      "all": 112,
+      "partial": 95
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 16,
+    "vertices": 22,
+    "edges": 34,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "M": 10,
+     "V": 8
+    }
+   }
+  },
+  {
+   "id": "layers-0020",
+   "tier": "some-layers",
+   "seed": 20411384,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "601f27a3e7821773",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 2,
+    "creases": 6,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 42
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 43
+     },
+     {
+      "step": 5,
+      "layers": 6,
+      "all": 112,
+      "partial": 92
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 15,
+    "edges": 21,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 15,
+     "V": 4,
+     "M": 2
+    }
+   }
+  },
+  {
+   "id": "layers-0021",
+   "tier": "some-layers",
+   "seed": 20419303,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "451b92fa534fc188",
+   "metrics": {
+    "layers": 18,
+    "area": 1,
+    "distinct_areas": 9,
+    "coupling_max": 8,
+    "creases": 27,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 61
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 73
+     },
+     {
+      "step": 5,
+      "layers": 10,
+      "all": 112,
+      "partial": 65
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 21,
+    "vertices": 28,
+    "edges": 45,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 18,
+     "V": 16,
+     "M": 11
+    }
+   }
+  },
+  {
+   "id": "layers-0022",
+   "tier": "some-layers",
+   "seed": 20427222,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "633a7e193177edc7",
+   "metrics": {
+    "layers": 16,
+    "area": 1,
+    "distinct_areas": 15,
+    "coupling_max": 8,
+    "creases": 22,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 30
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 40
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 105
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 19,
+    "vertices": 27,
+    "edges": 42,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 20,
+     "V": 11,
+     "M": 11
+    }
+   }
+  },
+  {
+   "id": "layers-0023",
+   "tier": "some-layers",
+   "seed": 20435141,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "982d4888b403e6ac",
+   "metrics": {
+    "layers": 14,
+    "area": 1,
+    "distinct_areas": 5,
+    "coupling_max": 4,
+    "creases": 21,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 38
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 54
+     },
+     {
+      "step": 5,
+      "layers": 10,
+      "all": 112,
+      "partial": 120
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 17,
+    "vertices": 22,
+    "edges": 35,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "M": 14,
+     "V": 7
+    }
+   }
+  },
+  {
+   "id": "layers-0024",
+   "tier": "some-layers",
+   "seed": 20443060,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "613b672223648aae",
+   "metrics": {
+    "layers": 14,
+    "area": 1,
+    "distinct_areas": 5,
+    "coupling_max": 4,
+    "creases": 19,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 52
+     },
+     {
+      "step": 4,
+      "layers": 8,
+      "all": 112,
+      "partial": 102
+     },
+     {
+      "step": 5,
+      "layers": 10,
+      "all": 112,
+      "partial": 124
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 17,
+    "vertices": 20,
+    "edges": 33,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "M": 11,
+     "V": 8
+    }
+   }
+  },
+  {
+   "id": "layers-0025",
+   "tier": "some-layers",
+   "seed": 20450979,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "716ce8d4c1260ffa",
+   "metrics": {
+    "layers": 9,
+    "area": 1,
+    "distinct_areas": 9,
+    "coupling_max": 3,
+    "creases": 11,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 43
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 64
+     },
+     {
+      "step": 5,
+      "layers": 6,
+      "all": 112,
+      "partial": 36
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 12,
+    "vertices": 17,
+    "edges": 25,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "V": 7,
+     "M": 4
+    }
+   }
+  },
+  {
+   "id": "layers-0026",
+   "tier": "some-layers",
+   "seed": 20458898,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "9b2b2e7e15bf98c8",
+   "metrics": {
+    "layers": 20,
+    "area": 1,
+    "distinct_areas": 19,
+    "coupling_max": 10,
+    "creases": 29,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 27
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 42
+     },
+     {
+      "step": 5,
+      "layers": 10,
+      "all": 112,
+      "partial": 77
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 23,
+    "vertices": 32,
+    "edges": 51,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 22,
+     "V": 13,
+     "M": 16
+    }
+   }
+  },
+  {
+   "id": "layers-0027",
+   "tier": "some-layers",
+   "seed": 20466817,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "e9fc1f44bbdcb72c",
+   "metrics": {
+    "layers": 8,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 2,
+    "creases": 8,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 40
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 42
+     },
+     {
+      "step": 5,
+      "layers": 6,
+      "all": 112,
+      "partial": 68
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 16,
+    "edges": 23,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 15,
+     "M": 5,
+     "V": 3
+    }
+   }
+  },
+  {
+   "id": "layers-0028",
+   "tier": "some-layers",
+   "seed": 20474736,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "8f72298b27e7bd8b",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 2,
+    "creases": 6,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 25
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 46
+     },
+     {
+      "step": 5,
+      "layers": 5,
+      "all": 112,
+      "partial": 71
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 16,
+    "edges": 22,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 4,
+     "M": 2
+    }
+   }
+  },
+  {
+   "id": "layers-0029",
+   "tier": "some-layers",
+   "seed": 20482655,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "dc2426d5606679a9",
+   "metrics": {
+    "layers": 11,
+    "area": 1,
+    "distinct_areas": 10,
+    "coupling_max": 4,
+    "creases": 14,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 36
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 71
+     },
+     {
+      "step": 5,
+      "layers": 7,
+      "all": 112,
+      "partial": 89
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 14,
+    "vertices": 20,
+    "edges": 30,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 7,
+     "M": 7
+    }
+   }
+  },
+  {
+   "id": "layers-0030",
+   "tier": "some-layers",
+   "seed": 20490574,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "ac3213d47249a092",
+   "metrics": {
+    "layers": 10,
+    "area": 1,
+    "distinct_areas": 5,
+    "coupling_max": 2,
+    "creases": 13,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 36
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 54
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 102
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 13,
+    "vertices": 16,
+    "edges": 25,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 9,
+     "M": 4
+    }
+   }
+  },
+  {
+   "id": "layers-0031",
+   "tier": "some-layers",
+   "seed": 20498493,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "16b5d13316da24f1",
+   "metrics": {
+    "layers": 15,
+    "area": 1,
+    "distinct_areas": 9,
+    "coupling_max": 6,
+    "creases": 20,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 38
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 61
+     },
+     {
+      "step": 5,
+      "layers": 9,
+      "all": 112,
+      "partial": 119
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 18,
+    "vertices": 26,
+    "edges": 40,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 20,
+     "V": 8,
+     "M": 12
+    }
+   }
+  },
+  {
+   "id": "layers-0032",
+   "tier": "some-layers",
+   "seed": 20506412,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "212b3bd53f6d7e6d",
+   "metrics": {
+    "layers": 13,
+    "area": 1,
+    "distinct_areas": 11,
+    "coupling_max": 4,
+    "creases": 17,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 34
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 92
+     },
+     {
+      "step": 5,
+      "layers": 9,
+      "all": 112,
+      "partial": 144
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 16,
+    "vertices": 23,
+    "edges": 35,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 18,
+     "V": 8,
+     "M": 9
+    }
+   }
+  },
+  {
+   "id": "layers-0033",
+   "tier": "some-layers",
+   "seed": 20514331,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "59effc73150b7f01",
+   "metrics": {
+    "layers": 10,
+    "area": 1,
+    "distinct_areas": 10,
+    "coupling_max": 3,
+    "creases": 13,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 36
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 55
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 78
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 13,
+    "vertices": 18,
+    "edges": 27,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "M": 7,
+     "V": 6
+    }
+   }
+  },
+  {
+   "id": "layers-0034",
+   "tier": "some-layers",
+   "seed": 20522250,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "a8cc33c6e13d0546",
+   "metrics": {
+    "layers": 10,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 4,
+    "creases": 12,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 22
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 39
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 60
+     },
+     {
+      "step": 5,
+      "layers": 6,
+      "all": 112,
+      "partial": 58
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 13,
+    "vertices": 19,
+    "edges": 28,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "M": 7,
+     "V": 5
+    }
+   }
+  },
+  {
+   "id": "layers-0035",
+   "tier": "some-layers",
+   "seed": 20530169,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "535713b9398605e7",
+   "metrics": {
+    "layers": 8,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 3,
+    "creases": 9,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 22
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 37
+     },
+     {
+      "step": 5,
+      "layers": 7,
+      "all": 112,
+      "partial": 58
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 16,
+    "edges": 23,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "M": 6,
+     "V": 3
+    }
+   }
+  },
+  {
+   "id": "layers-0036",
+   "tier": "some-layers",
+   "seed": 20538088,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "d152e83ace6df842",
+   "metrics": {
+    "layers": 18,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 6,
+    "creases": 26,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 38
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 46
+     },
+     {
+      "step": 5,
+      "layers": 12,
+      "all": 112,
+      "partial": 166
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 21,
+    "vertices": 29,
+    "edges": 46,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 20,
+     "V": 15,
+     "M": 11
+    }
+   }
+  },
+  {
+   "id": "layers-0037",
+   "tier": "some-layers",
+   "seed": 20546007,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "7ab9b76a1dce0b14",
+   "metrics": {
+    "layers": 13,
+    "area": 1,
+    "distinct_areas": 12,
+    "coupling_max": 5,
+    "creases": 18,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 34
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 59
+     },
+     {
+      "step": 5,
+      "layers": 11,
+      "all": 112,
+      "partial": 166
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 16,
+    "vertices": 22,
+    "edges": 34,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "M": 9,
+     "V": 9
+    }
+   }
+  },
+  {
+   "id": "layers-0038",
+   "tier": "some-layers",
+   "seed": 20553926,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "a079d246b2e065ac",
+   "metrics": {
+    "layers": 18,
+    "area": 1,
+    "distinct_areas": 12,
+    "coupling_max": 8,
+    "creases": 26,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 23
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 71
+     },
+     {
+      "step": 5,
+      "layers": 10,
+      "all": 112,
+      "partial": 149
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 21,
+    "vertices": 26,
+    "edges": 43,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 17,
+     "M": 15,
+     "V": 11
+    }
+   }
+  },
+  {
+   "id": "layers-0039",
+   "tier": "some-layers",
+   "seed": 20561845,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "4c58c18f095a01bf",
+   "metrics": {
+    "layers": 12,
+    "area": 1,
+    "distinct_areas": 11,
+    "coupling_max": 4,
+    "creases": 17,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 34
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 97
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 15,
+    "vertices": 19,
+    "edges": 30,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 13,
+     "M": 10,
+     "V": 7
+    }
+   }
+  },
+  {
+   "id": "layers-0040",
+   "tier": "some-layers",
+   "seed": 20569764,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "4c2fdf250f4b55d1",
+   "metrics": {
+    "layers": 8,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 3,
+    "creases": 9,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 28
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 50
+     },
+     {
+      "step": 5,
+      "layers": 5,
+      "all": 112,
+      "partial": 78
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 15,
+    "edges": 22,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 13,
+     "V": 5,
+     "M": 4
+    }
+   }
+  },
+  {
+   "id": "layers-0041",
+   "tier": "some-layers",
+   "seed": 20577683,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 4,
+   "cp_hash": "0a963e3dc6933199",
+   "metrics": {
+    "layers": 8,
+    "area": 1,
+    "distinct_areas": 5,
+    "coupling_max": 2,
+    "creases": 9,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 34
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 69
+     },
+     {
+      "step": 5,
+      "layers": 6,
+      "all": 112,
+      "partial": 91
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 16,
+    "edges": 23,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "M": 6,
+     "V": 3
+    }
+   }
+  },
+  {
+   "id": "layers-0042",
+   "tier": "some-layers",
+   "seed": 20585602,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "e5bae22896443f6a",
+   "metrics": {
+    "layers": 9,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 3,
+    "creases": 11,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 27
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 44
+     },
+     {
+      "step": 5,
+      "layers": 7,
+      "all": 112,
+      "partial": 55
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 12,
+    "vertices": 14,
+    "edges": 22,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 11,
+     "M": 5,
+     "V": 6
+    }
+   }
+  },
+  {
+   "id": "layers-0043",
+   "tier": "some-layers",
+   "seed": 20593521,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "2b2d6ca49ff219f8",
+   "metrics": {
+    "layers": 10,
+    "area": 1,
+    "distinct_areas": 10,
+    "coupling_max": 4,
+    "creases": 13,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 23
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 46
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 131
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 13,
+    "vertices": 18,
+    "edges": 27,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "M": 8,
+     "V": 5
+    }
+   }
+  },
+  {
+   "id": "layers-0044",
+   "tier": "some-layers",
+   "seed": 20601440,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "572cd6263ed53ea4",
+   "metrics": {
+    "layers": 9,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 4,
+    "creases": 9,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 40
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 52
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 98
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 12,
+    "vertices": 19,
+    "edges": 27,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 18,
+     "V": 4,
+     "M": 5
+    }
+   }
+  },
+  {
+   "id": "layers-0045",
+   "tier": "some-layers",
+   "seed": 20609359,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 0,
+   "cp_hash": "e070fd79c1be1f47",
+   "metrics": {
+    "layers": 18,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 8,
+    "creases": 25,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 22
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 52
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 62
+     },
+     {
+      "step": 5,
+      "layers": 10,
+      "all": 112,
+      "partial": 72
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 21,
+    "vertices": 30,
+    "edges": 47,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 22,
+     "V": 14,
+     "M": 11
+    }
+   }
+  },
+  {
+   "id": "layers-0046",
+   "tier": "some-layers",
+   "seed": 20617278,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "88c1d7c337adc18f",
+   "metrics": {
+    "layers": 9,
+    "area": 1,
+    "distinct_areas": 9,
+    "coupling_max": 3,
+    "creases": 11,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 39
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 38
+     },
+     {
+      "step": 5,
+      "layers": 6,
+      "all": 112,
+      "partial": 85
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 12,
+    "vertices": 17,
+    "edges": 25,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "M": 8,
+     "V": 3
+    }
+   }
+  },
+  {
+   "id": "layers-0047",
+   "tier": "some-layers",
+   "seed": 20625197,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "a6586686ec29fb40",
+   "metrics": {
+    "layers": 8,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 2,
+    "creases": 9,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 34
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 58
+     },
+     {
+      "step": 5,
+      "layers": 6,
+      "all": 112,
+      "partial": 76
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 16,
+    "edges": 23,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "M": 5,
+     "V": 4
+    }
+   }
+  },
+  {
+   "id": "layers-0048",
+   "tier": "some-layers",
+   "seed": 20633116,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "1d65af1416ce10a8",
+   "metrics": {
+    "layers": 15,
+    "area": 1,
+    "distinct_areas": 12,
+    "coupling_max": 5,
+    "creases": 21,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 15
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 36
+     },
+     {
+      "step": 5,
+      "layers": 10,
+      "all": 112,
+      "partial": 133
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 18,
+    "vertices": 25,
+    "edges": 39,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 18,
+     "M": 13,
+     "V": 8
+    }
+   }
+  },
+  {
+   "id": "layers-0049",
+   "tier": "some-layers",
+   "seed": 20641035,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "2da942fb09fe4a41",
+   "metrics": {
+    "layers": 15,
+    "area": 1,
+    "distinct_areas": 13,
+    "coupling_max": 7,
+    "creases": 21,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 40
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 53
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 91
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 18,
+    "vertices": 25,
+    "edges": 39,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 18,
+     "M": 13,
+     "V": 8
+    }
+   }
+  },
+  {
+   "id": "layers-0050",
+   "tier": "some-layers",
+   "seed": 20648954,
+   "steps": 5,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "d4f012fb46427409",
+   "metrics": {
+    "layers": 15,
+    "area": 1,
+    "distinct_areas": 12,
+    "coupling_max": 5,
+    "creases": 21,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 59
+     },
+     {
+      "step": 4,
+      "layers": 7,
+      "all": 112,
+      "partial": 98
+     },
+     {
+      "step": 5,
+      "layers": 10,
+      "all": 112,
+      "partial": 135
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 18,
+    "vertices": 24,
+    "edges": 38,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 17,
+     "V": 12,
+     "M": 9
+    }
+   }
+  }
+ ]
+}
