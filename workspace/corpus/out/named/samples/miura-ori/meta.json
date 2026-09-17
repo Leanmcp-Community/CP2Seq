@@ -1,0 +1,33 @@
+{
+ "id": "miura-ori",
+ "title": "Miura-ori, skewed pleat",
+ "family": "useful",
+ "note": "Accordion in one direction, then pleat the strip along slanted lines. The skew gives Miura-ori its single degree of freedom and its use in solar arrays and stents. After the vertical pleat the paper is a strip at x in [0.75, 1], so the slanted offsets are chosen to fall inside THAT strip's own range, not the square's.",
+ "authored": true,
+ "tier": "all-layers",
+ "metrics": {
+  "steps": 6,
+  "partial_folds": 0,
+  "crease_edges": 29,
+  "mountain": 13,
+  "valley": 16,
+  "vertices": 37,
+  "coupling_max": 8,
+  "layers_final": 20,
+  "paper_area_final": 1,
+  "sheet_area": 1
+ },
+ "planarize": {
+  "segments_in": 23,
+  "vertices": 37,
+  "edges": 51,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 22,
+   "V": 16,
+   "M": 13
+  }
+ }
+}

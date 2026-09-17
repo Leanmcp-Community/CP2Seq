@@ -1,0 +1,65 @@
+{
+ "id": "layers-0090",
+ "seed": 20973630,
+ "steps": 3,
+ "folds": [
+  {
+   "step": 1,
+   "normal": [
+    0,
+    1
+   ],
+   "offset": 0.75,
+   "move_positive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": true,
+   "layers_moved": 1,
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "legal_all": 112,
+   "legal_partial": 0
+  },
+  {
+   "step": 2,
+   "normal": [
+    -0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": 0.9059805633952643,
+   "move_positive": true,
+   "selection": {
+    "mode": "top",
+    "k": 1
+   },
+   "over": true,
+   "layers_moved": 1,
+   "creases_created": 1,
+   "layers_before": 2,
+   "layers_after": 3,
+   "legal_all": 112,
+   "legal_partial": 17
+  },
+  {
+   "step": 3,
+   "normal": [
+    -0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": 0.49994659138580133,
+   "move_positive": true,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "layers_moved": 3,
+   "creases_created": 2,
+   "layers_before": 3,
+   "layers_after": 5,
+   "legal_all": 112,
+   "legal_partial": 40
+  }
+ ]
+}

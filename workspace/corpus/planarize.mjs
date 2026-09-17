@@ -160,3 +160,42 @@ export function foldedState(layers) {
         "fo:faces_parity": layers.map(l => l.par),
     };
 }
+
+/**
+ * The whole sample as ONE multi-frame FOLD file: the crease pattern, then the folded state
+ * after every step, in order.
+ *
+ * WHY THIS REPLACED steps/step-NN.fold. A fold sequence is one object, and FOLD says how to
+ * store one: `file_frames` holds frames 1..n while the key frame sits at the top level, and
+ * `file_classes: ["diagrams"]` is the spec's own name for a sequence of folding steps. Writing
+ * a directory of numbered files instead re-invented that ordering in the filenames, where
+ * nothing can validate it and no FOLD reader can follow it, and split the crease pattern away
+ * from the states it produced so a consumer had to reassemble the pair by convention.
+ *
+ * /!\ THERE IS NO `frame_order` FIELD. The order is the ARRAY ORDER of file_frames -- that is
+ * the entire mechanism, per the spec. Nothing may reorder that array.
+ *
+ * The key frame is the crease pattern, because it is the thing the sample is ABOUT; the folded
+ * states are its children. `frame_inherit` is false on every frame and said so explicitly
+ * rather than omitted: a folded state has its own vertices, its own edge list and its own face
+ * list, so inheriting the parent's geometry would be wrong, and a reader that assumes the
+ * default should not have to guess which way we meant it.
+ */
+export function sequenceFile(cp, states, info = {}) {
+    return {
+        ...cp,                                   // the crease pattern IS the key frame
+        file_classes: ["diagrams"],
+        file_frames: states.map((layers, k) => {
+            // file_spec and file_creator are FILE-level fields. foldedState() emits them because
+            // it was written to produce a standalone file; inside file_frames they are repeated
+            // noise at best and a reader's contradiction at worst, so they are stripped here
+            // rather than fixed there -- foldedState() still has standalone callers.
+            const { file_spec, file_creator, ...frame } = foldedState(layers);
+            return { ...frame,
+                     frame_parent: 0,
+                     frame_inherit: false,
+                     frame_title: k === 0 ? "step 0 (flat sheet)" : `step ${k}` };
+        }),
+        ...(info.id ? { frame_title: info.id } : {}),
+    };
+}

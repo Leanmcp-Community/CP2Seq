@@ -1,0 +1,220 @@
+{
+ "generated": "2026-09-16T08:05:04.445Z",
+ "batch": "batch1",
+ "policy": {
+  "bottom_quantile_of_bbox_within_each_fold_bin": 0.1,
+  "min_bin": 10,
+  "bins": [
+   {
+    "folds": [
+     4,
+     5
+    ],
+    "n": 10
+   },
+   {
+    "folds": [
+     6,
+     7
+    ],
+    "n": 15
+   },
+   {
+    "folds": [
+     8,
+     10
+    ],
+    "n": 15
+   },
+   {
+    "folds": [
+     11,
+     11
+    ],
+    "n": 16
+   },
+   {
+    "folds": [
+     12,
+     12
+    ],
+    "n": 16
+   },
+   {
+    "folds": [
+     13,
+     14
+    ],
+    "n": 19
+   },
+   {
+    "folds": [
+     15,
+     16
+    ],
+    "n": 12
+   },
+   {
+    "folds": [
+     17,
+     19
+    ],
+    "n": 17
+   }
+  ],
+  "hard_flags": [
+   "repeated_halving",
+   "no_coupling",
+   "single_angle"
+  ]
+ },
+ "note": "collapsed is deliberately NOT used as a filter: it is an absolute bbox threshold and therefore a depth proxy -- it flags 0/17 of 4-6 fold samples and 40/40 of the hard stratum.",
+ "released": [
+  "easy-0001",
+  "easy-0002",
+  "easy-0003",
+  "easy-0004",
+  "easy-0005",
+  "easy-0007",
+  "easy-0008",
+  "easy-0010",
+  "easy-0011",
+  "easy-0013",
+  "easy-0014",
+  "easy-0015",
+  "easy-0016",
+  "easy-0017",
+  "easy-0018",
+  "easy-0019",
+  "easy-0020",
+  "easy-0021",
+  "easy-0022",
+  "easy-0023",
+  "easy-0024",
+  "easy-0025",
+  "easy-0026",
+  "easy-0027",
+  "easy-0028",
+  "easy-0029",
+  "easy-0030",
+  "easy-0031",
+  "easy-0032",
+  "easy-0033",
+  "easy-0034",
+  "easy-0035",
+  "easy-0036",
+  "easy-0037",
+  "easy-0038",
+  "easy-0039",
+  "easy-0040",
+  "mid-0001",
+  "mid-0002",
+  "mid-0003",
+  "mid-0004",
+  "mid-0005",
+  "mid-0007",
+  "mid-0008",
+  "mid-0009",
+  "mid-0011",
+  "mid-0012",
+  "mid-0013",
+  "mid-0014",
+  "mid-0015",
+  "mid-0017",
+  "mid-0018",
+  "mid-0019",
+  "mid-0020",
+  "mid-0021",
+  "mid-0022",
+  "mid-0023",
+  "mid-0024",
+  "mid-0025",
+  "mid-0026",
+  "mid-0027",
+  "mid-0028",
+  "mid-0029",
+  "mid-0030",
+  "mid-0031",
+  "mid-0032",
+  "mid-0033",
+  "mid-0034",
+  "mid-0035",
+  "mid-0036",
+  "mid-0037",
+  "mid-0038",
+  "mid-0039",
+  "mid-0040",
+  "hard-0001",
+  "hard-0003",
+  "hard-0004",
+  "hard-0005",
+  "hard-0006",
+  "hard-0007",
+  "hard-0008",
+  "hard-0009",
+  "hard-0011",
+  "hard-0012",
+  "hard-0013",
+  "hard-0014",
+  "hard-0015",
+  "hard-0016",
+  "hard-0017",
+  "hard-0018",
+  "hard-0019",
+  "hard-0020",
+  "hard-0021",
+  "hard-0022",
+  "hard-0023",
+  "hard-0024",
+  "hard-0025",
+  "hard-0026",
+  "hard-0027",
+  "hard-0028",
+  "hard-0029",
+  "hard-0030",
+  "hard-0031",
+  "hard-0032",
+  "hard-0033",
+  "hard-0034",
+  "hard-0035",
+  "hard-0036",
+  "hard-0037",
+  "hard-0038",
+  "hard-0039",
+  "hard-0040"
+ ],
+ "held_back": [
+  {
+   "id": "easy-0006",
+   "reason": "bottom 10% of bbox at 4-5 folds"
+  },
+  {
+   "id": "easy-0012",
+   "reason": "bottom 10% of bbox at 6-7 folds"
+  },
+  {
+   "id": "easy-0009",
+   "reason": "bottom 10% of bbox at 8-10 folds"
+  },
+  {
+   "id": "mid-0016",
+   "reason": "bottom 10% of bbox at 11 folds"
+  },
+  {
+   "id": "mid-0006",
+   "reason": "bottom 10% of bbox at 12 folds"
+  },
+  {
+   "id": "mid-0010",
+   "reason": "bottom 10% of bbox at 13-14 folds"
+  },
+  {
+   "id": "hard-0010",
+   "reason": "bottom 10% of bbox at 15-16 folds"
+  },
+  {
+   "id": "hard-0002",
+   "reason": "bottom 10% of bbox at 17-19 folds"
+  }
+ ]
+}

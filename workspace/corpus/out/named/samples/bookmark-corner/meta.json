@@ -1,0 +1,33 @@
+{
+ "id": "bookmark-corner",
+ "title": "Corner bookmark",
+ "family": "recognisable",
+ "note": "The triangle that slips over a page corner: fold on the diagonal, then turn the free tip back over the body so the pocket's mouth is visible.",
+ "authored": true,
+ "tier": "all-layers",
+ "metrics": {
+  "steps": 2,
+  "partial_folds": 0,
+  "crease_edges": 4,
+  "mountain": 1,
+  "valley": 3,
+  "vertices": 5,
+  "coupling_max": 2,
+  "layers_final": 4,
+  "paper_area_final": 1,
+  "sheet_area": 1
+ },
+ "planarize": {
+  "segments_in": 7,
+  "vertices": 5,
+  "edges": 8,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 4,
+   "V": 3,
+   "M": 1
+  }
+ }
+}

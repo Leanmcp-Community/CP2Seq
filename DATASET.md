@@ -5,7 +5,8 @@ truth each one actually contains, and which bucket (per `EXPERIMENTS_SETUP.md` �
 into. This is an inventory, not a merged dataset.
 
 > **Read §0 first.** The audit below concluded that no accessible source carries bucket A at
-> scale, so the main corpus has to be **synthesized**. The real sources are anchors and CP
+> scale — the closest, PurelandFold, has the states but not the action labels (§2) — so the
+> main corpus has to be **synthesized**. The real sources are anchors and CP
 > supply, not the primary data.
 
 **Owns: where the data comes from.** How the experiment runs is `EXPERIMENTS_SETUP.md`; who we
@@ -58,16 +59,69 @@ Bucket reminder:
 - **Degeneracy**: 33.2%<!--fact:corpus.synth.degeneratePct--> of samples carry a flag, almost all `collapsed`. **Recorded, never
   filtered**: the flag rate tracks the coupling cap monotonically, so filtering on it would
   delete the high end of the axis we deliberately vary.
-- **Why this exists**: the only real bucket-A source is 27<!--fact:purelandfold.sequences--> sequences (PurelandFold), which
+- **Why this exists**: the closest real source is 27<!--fact:purelandfold.sequences--> sequences (PurelandFold) — and it carries
+  states rather than action labels (§2), which
   cannot carry a headline number — and after Probe C, neither can instagram: at most 39 of its
   366<!--fact:corpus.instagram.total--> CPs are even solvable in our action space. Synthesis is not one option among several
   any more, it is the only one. **Synthesis is also the field's normal practice, not a
   shortcut** — Learn2Fold's own OrigamiCode is 5,760 sequences / 75,000 verified transitions,
   the bulk of it produced by their own symbolic simulator (`notes/plan/corpus-plan.md`).
 
+### The release corpus (2026-09-17) — two splits, and how it must be scored
+
+`workspace/corpus/out/release/`, 1,050 samples in eight batches under one merged manifest.
+Rebuild: `bash workspace/corpus/run-release.sh` then `node workspace/corpus/merge-release.mjs`.
+
+| | n | with a SOLVED verdict | folds |
+| --- | --- | --- | --- |
+| all-layers / **verified** | 400 | 399 | 3–6 |
+| all-layers / generated | 150 | 0 | 4–19 |
+| some-layers / **verified** | 300 | 298 | 3–5 |
+| some-layers / generated | 200 | 0 | 6–9 |
+
+- **verified** — the tier's own solver was run on the pattern and returned a verdict, so an
+  independent search reproduced a sequence for it. ⚠️ This checks the **generator**, not the
+  physics: both share the fold engine, so it catches a broken sampler and would **not** catch a
+  wrong model of paper.
+- **generated** — deeper samples, correct **by construction** (they were produced by folding, and
+  the pattern is what the folding left behind), with no verdict because the solver cannot close
+  those depths in reasonable time. The split is labelled rather than the corpus being stopped at
+  the depth the solver reaches — **the difficulty the benchmark is about lives past that depth.**
+- A **TIMEOUT stays in the corpus**, marked. Dropping it would bias the verified split toward the
+  instances the solver finds easy, which is the one bias a difficulty-graded corpus cannot afford.
+- Scale ~1,000 was chosen against the published comparables (GamiBench 372, OrigamiSpace 350),
+  not against OrigamiCode's 5,760, which was never released.
+
+### 🛑 HOW TO SCORE THIS CORPUS — the recorded sequence is **a** solution, not **the** solution
+
+**Measured on the release batch: 30 samples have a sequence one fold SHORTER than the one that
+built them**, and the share rises with depth — 1/100 at three folds, 4/100 at four, **11/100 at
+five, 10/99 at six**. The generator does not search; it folds, so nothing makes its sequence
+minimal.
+
+Three rules follow, and the first is the one that silently corrupts results:
+
+1. **Never compare a proposed sequence step-by-step against the recorded one.** A model that
+   finds a shorter correct sequence would be marked WRONG. Judge by **replaying** the proposed
+   sequence through the engine and comparing **crease sets** — the standard PR #13 set, equal
+   rather than overlapping.
+2. **Step-count metrics belong against the shortest KNOWN sequence**, carried per sample as
+   `shorter_known` (null when nothing shorter is known — which is not the same as "none exists",
+   since an unverified sample has simply not been looked at).
+3. **`shorter_known` is a floor, not the optimum.** It is whatever our iterative-deepening solver
+   found within budget. On `generated` samples nobody has looked at all.
+
+### On the corpus's scale, one prediction that was wrong
+
+Deduplicating the square's eight symmetries was expected to exhaust the shallow end — there are
+only so many distinct three-fold patterns. It does not: **100 distinct patterns in 100 attempts
+at depth three, and zero isomorphic duplicates across all eight batches.** Recorded because it
+was asserted as a constraint on corpus design and the data refused it.
+
 ---
 
 ## 1. Flat-Folder `examples/instagram/`
+
 
 - **Link**: https://github.com/origamimagiro/flat-folder (repo) · `examples/instagram/` (data)
 - **License**: MIT
@@ -79,11 +133,11 @@ Bucket reminder:
 - **Bucket**: C by default (CP only); can be promoted to a synthetic B by running Flat-Folder's
   solver and picking one terminal state as `FINAL RESULT` — but that pick is an experimental
   choice we make, not a ground-truth label from the source.
-- ⚠️ **At most 10.7% of it is reachable, and only 0.5% is confirmed.** Probe C is complete
-  (`notes/probes/probe-c-screen.md`): **327<!--fact:probeC.provenNot--> / 366<!--fact:corpus.instagram.total--> = 89.3%<!--fact:probeC.provenNotPct-->** of these CPs are **proven** not
+- ⚠️ **At most 7.7% of it is reachable, and only 1.1% is confirmed.** Probe C is complete
+  (`notes/probes/probe-c-screen.md`): **338<!--fact:probeC.provenNot--> / 366<!--fact:corpus.instagram.total--> = 92.3%<!--fact:probeC.provenNotPct-->** of these CPs are **proven** not
   all-layers simple-foldable — 125<!--fact:probeC.screenFail--> by the spanning-line condition, 46<!--fact:probeC.preCrease--> by pre-crease traces,
-  156<!--fact:probeC.exhausted--> by a full search that exhausted the space. 37<!--fact:probeC.timeout--> timed out, 2<!--fact:probeC.solved--> solved. The action space is fixed
-  to simple folding, so a score over all 366 is capped at 10.7% for reasons that have nothing to
+  167<!--fact:probeC.exhausted--> by a full search that exhausted the space. 24<!--fact:probeC.timeout--> timed out, 4<!--fact:probeC.solved--> solved. The action space is fixed
+  to simple folding, so a score over all 366 is capped at 7.7% for reasons that have nothing to
   do with the model — see `EXPERIMENTS_SETUP.md` §1.2 for the four-way stratification this
   forces. **This source is now a scope-boundary measurement, not a corpus for scored runs.**
 - **Also note**: this is the same 366-CP set OrigamiBench uses as its dataset (`papers.md`).
@@ -95,8 +149,15 @@ Bucket reminder:
 - **Link**: https://huggingface.co/datasets/mayaweiz/PurelandFold
 - **License**: CC-BY-4.0
 - **Size / format**: 27 sequences / 337 frames. `cp.fold` contains **layer-order ground truth**.
-- **Ground truth**: genuine **bucket A** — explicitly a set of *sequences* (337 frames across
-  27 sequences), not just endpoints. The only real bucket-A source of any size we found.
+- **Ground truth**: **state trajectory, not action labels — "bucket A" was a shade too strong.**
+  Corrected 2026-09-16 from `DHEERAJ_WORKSPACE/pureland/ANALYSIS.md` §1, and it is right: the
+  sequence lives *relationally*, in the parquet's `(sequence, step)` columns, and **no `.fold`
+  file carries a `step`, `action` or ordering field**. Each row is a *snapshot*, so
+  "valley-fold along this line" exists only as the difference between two consecutive frames.
+  That is more than bucket B (we have every intermediate state, 337<!--fact:purelandfold.frames--> frames) and less than
+  bucket A (the actions are never stated). Sequence-level metrics that compare *states* are
+  available; ones that compare *actions* require deriving them first, and that derivation is
+  ours, not the source's.
 - ⚠️ **Partly inside our action space, partly outside — measured, not assumed.** It was called a
   "reality anchor" for a month on no evidence. Running the all-layers solver over each model's
   final CP (`workspace/corpus/check-anchor.mjs`, budget 200k):
@@ -138,7 +199,7 @@ Bucket reminder:
   `workspace/data/export_purelandfold_models.py` (output gitignored, it is a re-export).
   ⚠️ It is also where the ceiling of the action space becomes visible: **21 steps of simple
   folding produces a blocky flat shape, not a crane.** Cranes and frogs need reverse and petal
-  folds, which is the same fact Probe C measured as 89.3%<!--fact:probeC.provenNotPct--> from the other direction.
+  folds, which is the same fact Probe C measured as 92.3%<!--fact:probeC.provenNotPct--> from the other direction.
 - **Caveat**: restricted to Pureland origami (simple folds only, per the name) — same scope
   restriction flagged for FoldingAgent in `BASELINE_REPRODUCTION.md`. Good for validating the
   loop and for bucket-A sequence metrics; not representative of harder, compound-fold CPs.

@@ -1,0 +1,33 @@
+{
+ "id": "cup",
+ "title": "Cup",
+ "family": "recognisable",
+ "note": "Diagonal first, so the paper is a triangle with a horizontal top edge, then each bottom corner swings across to the far side. The two crossed flaps are the cup's walls; the top edge stays open, which is the whole point of a cup.",
+ "authored": true,
+ "tier": "all-layers",
+ "metrics": {
+  "steps": 3,
+  "partial_folds": 0,
+  "crease_edges": 10,
+  "mountain": 4,
+  "valley": 6,
+  "vertices": 15,
+  "coupling_max": 4,
+  "layers_final": 8,
+  "paper_area_final": 1,
+  "sheet_area": 1
+ },
+ "planarize": {
+  "segments_in": 11,
+  "vertices": 15,
+  "edges": 20,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 10,
+   "V": 6,
+   "M": 4
+  }
+ }
+}

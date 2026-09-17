@@ -1,0 +1,142 @@
+{
+ "id": "layers-0007",
+ "seed": 20308430,
+ "steps": 7,
+ "folds": [
+  {
+   "step": 1,
+   "normal": [
+    1,
+    0
+   ],
+   "offset": 0.875,
+   "move_positive": true,
+   "selection": {
+    "mode": "all"
+   },
+   "over": true,
+   "layers_moved": 1,
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "legal_all": 112,
+   "legal_partial": 0
+  },
+  {
+   "step": 2,
+   "normal": [
+    1,
+    0
+   ],
+   "offset": 0.765625,
+   "move_positive": true,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "layers_moved": 2,
+   "creases_created": 2,
+   "layers_before": 2,
+   "layers_after": 4,
+   "legal_all": 112,
+   "legal_partial": 14
+  },
+  {
+   "step": 3,
+   "normal": [
+    -0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": 0.23892475223686083,
+   "move_positive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": true,
+   "layers_moved": 4,
+   "creases_created": 3,
+   "layers_before": 4,
+   "layers_after": 7,
+   "legal_all": 112,
+   "legal_partial": 39
+  },
+  {
+   "step": 4,
+   "normal": [
+    0,
+    1
+   ],
+   "offset": 0.720703125,
+   "move_positive": false,
+   "selection": {
+    "mode": "top",
+    "k": 5
+   },
+   "over": true,
+   "layers_moved": 2,
+   "creases_created": 2,
+   "layers_before": 7,
+   "layers_after": 9,
+   "legal_all": 112,
+   "legal_partial": 90
+  },
+  {
+   "step": 5,
+   "normal": [
+    0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": 1.1262608985500577,
+   "move_positive": false,
+   "selection": {
+    "mode": "top",
+    "k": 8
+   },
+   "over": true,
+   "layers_moved": 7,
+   "creases_created": 5,
+   "layers_before": 9,
+   "layers_after": 14,
+   "legal_all": 112,
+   "legal_partial": 102
+  },
+  {
+   "step": 6,
+   "normal": [
+    0,
+    1
+   ],
+   "offset": 1.80999755859375,
+   "move_positive": true,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "layers_moved": 5,
+   "creases_created": 5,
+   "layers_before": 14,
+   "layers_after": 19,
+   "legal_all": 112,
+   "legal_partial": 196
+  },
+  {
+   "step": 7,
+   "normal": [
+    0,
+    1
+   ],
+   "offset": 1.1764984130859375,
+   "move_positive": true,
+   "selection": {
+    "mode": "all"
+   },
+   "over": true,
+   "layers_moved": 12,
+   "creases_created": 5,
+   "layers_before": 19,
+   "layers_after": 24,
+   "legal_all": 112,
+   "legal_partial": 99
+  }
+ ]
+}

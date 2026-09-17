@@ -1,0 +1,32 @@
+{
+ "id": "arrowhead",
+ "title": "Arrowhead",
+ "family": "recognisable",
+ "note": "Point up, then notch the base by folding the bottom edge up between the two barbs -- the notch is what separates an arrowhead from a plain triangle.",
+ "authored": true,
+ "tier": "all-layers",
+ "metrics": {
+  "steps": 3,
+  "partial_folds": 0,
+  "crease_edges": 3,
+  "mountain": 0,
+  "valley": 3,
+  "vertices": 9,
+  "coupling_max": 1,
+  "layers_final": 4,
+  "paper_area_final": 1,
+  "sheet_area": 1
+ },
+ "planarize": {
+  "segments_in": 7,
+  "vertices": 9,
+  "edges": 12,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 9,
+   "V": 3
+  }
+ }
+}

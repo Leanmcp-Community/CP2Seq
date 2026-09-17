@@ -1,0 +1,33 @@
+{
+ "id": "step-pocket",
+ "title": "Stepped pocket",
+ "family": "useful",
+ "note": "A pleat made in the top two layers only, leaving the ones beneath flat. The step is a partial fold sitting on an unfolded bed -- the configuration the some-layers tier exists to express, and the one the random sampler produces least often.",
+ "authored": true,
+ "tier": "some-layers",
+ "metrics": {
+  "steps": 3,
+  "partial_folds": 1,
+  "crease_edges": 4,
+  "mountain": 2,
+  "valley": 2,
+  "vertices": 12,
+  "coupling_max": 2,
+  "layers_final": 5,
+  "paper_area_final": 1,
+  "sheet_area": 1
+ },
+ "planarize": {
+  "segments_in": 8,
+  "vertices": 12,
+  "edges": 16,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 12,
+   "V": 2,
+   "M": 2
+  }
+ }
+}

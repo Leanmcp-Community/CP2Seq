@@ -1,0 +1,144 @@
+{
+ "id": "v4-0090",
+ "seed": 20261106,
+ "steps": 4,
+ "folds": [
+  {
+   "step": 1,
+   "angle_deg": 0,
+   "angle_index": 0,
+   "offset": 0.5,
+   "move_positive": false,
+   "over": true,
+   "creases": [
+    {
+     "P": [
+      1,
+      0.5
+     ],
+     "Q": [
+      0,
+      0.5
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "silhouette_bbox_area": 0.5,
+   "largest_face_area": 0.5
+  },
+  {
+   "step": 2,
+   "angle_deg": 45,
+   "angle_index": 1,
+   "offset": 0.75,
+   "move_positive": true,
+   "over": false,
+   "creases": [
+    {
+     "P": [
+      0.24999999999999994,
+      0.9999999999999998
+     ],
+     "Q": [
+      0,
+      0.7499999999999999
+     ],
+     "assignment": "M"
+    },
+    {
+     "P": [
+      0.24999999999999994,
+      2.220446049250313e-16
+     ],
+     "Q": [
+      0,
+      0.2500000000000001
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 2,
+   "layers_before": 2,
+   "layers_after": 4,
+   "silhouette_bbox_area": 0.5,
+   "largest_face_area": 0.46875
+  },
+  {
+   "step": 3,
+   "angle_deg": 135,
+   "angle_index": 3,
+   "offset": 0.75,
+   "move_positive": true,
+   "over": true,
+   "creases": [
+    {
+     "P": [
+      0.24999999999999997,
+      0.4999999999999999
+     ],
+     "Q": [
+      0,
+      0.7499999999999999
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.24999999999999997,
+      0.5000000000000001
+     ],
+     "Q": [
+      0,
+      0.2500000000000001
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 2,
+   "layers_before": 4,
+   "layers_after": 6,
+   "silhouette_bbox_area": 0.5,
+   "largest_face_area": 0.4375
+  },
+  {
+   "step": 4,
+   "angle_deg": 0,
+   "angle_index": 0,
+   "offset": 0.25,
+   "move_positive": false,
+   "over": true,
+   "creases": [
+    {
+     "P": [
+      0.5,
+      0.5
+     ],
+     "Q": [
+      0.5,
+      0
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.5,
+      0.5
+     ],
+     "Q": [
+      0.5,
+      1
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 2,
+   "layers_before": 6,
+   "layers_after": 8,
+   "silhouette_bbox_area": 0.25,
+   "largest_face_area": 0.25
+  }
+ ]
+}

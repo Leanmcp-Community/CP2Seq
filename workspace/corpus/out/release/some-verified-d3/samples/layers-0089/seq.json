@@ -1,0 +1,66 @@
+{
+ "id": "layers-0089",
+ "seed": 20965711,
+ "steps": 3,
+ "folds": [
+  {
+   "step": 1,
+   "normal": [
+    0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": 0.8838834764831844,
+   "move_positive": true,
+   "selection": {
+    "mode": "all"
+   },
+   "over": true,
+   "layers_moved": 1,
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "legal_all": 112,
+   "legal_partial": 0
+  },
+  {
+   "step": 2,
+   "normal": [
+    -0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": 0.5303300858899106,
+   "move_positive": true,
+   "selection": {
+    "mode": "bottom",
+    "k": 1
+   },
+   "over": false,
+   "layers_moved": 1,
+   "creases_created": 1,
+   "layers_before": 2,
+   "layers_after": 3,
+   "legal_all": 112,
+   "legal_partial": 17
+  },
+  {
+   "step": 3,
+   "normal": [
+    0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": 0.4419417382415922,
+   "move_positive": false,
+   "selection": {
+    "mode": "top",
+    "k": 1
+   },
+   "over": true,
+   "layers_moved": 1,
+   "creases_created": 1,
+   "layers_before": 3,
+   "layers_after": 4,
+   "legal_all": 112,
+   "legal_partial": 40
+  }
+ ]
+}

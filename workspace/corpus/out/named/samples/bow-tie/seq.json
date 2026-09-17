@@ -1,0 +1,260 @@
+{
+ "id": "bow-tie",
+ "title": "Bow tie",
+ "steps": 4,
+ "folds": [
+  {
+   "step": 1,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 0.38
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 1,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.38
+     ],
+     "Q": [
+      0,
+      0.38
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "paper_area": 1
+  },
+  {
+   "step": 2,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 0.62
+   },
+   "move_positive": true,
+   "over": true,
+   "layers_moved": 2,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.62
+     ],
+     "Q": [
+      0,
+      0.62
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      1,
+      0.14
+     ],
+     "Q": [
+      0,
+      0.14
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 2,
+   "layers_before": 2,
+   "layers_after": 4,
+   "paper_area": 1
+  },
+  {
+   "step": 3,
+   "line": {
+    "n": [
+     -0.9230769230769232,
+     0.3846153846153846
+    ],
+    "d": -0.22307692307692317
+   },
+   "move_positive": true,
+   "over": true,
+   "layers_moved": 4,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.5,
+      0.62
+     ],
+     "Q": [
+      0.4000000000000001,
+      0.38
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.4,
+      0.38
+     ],
+     "Q": [
+      0.49999999999999994,
+      0.14
+     ],
+     "assignment": "M"
+    },
+    {
+     "P": [
+      0.4416666666666667,
+      0
+     ],
+     "Q": [
+      0.5,
+      0.14
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.3416666666666667,
+      1
+     ],
+     "Q": [
+      0.5000000000000001,
+      0.62
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 4,
+   "layers_before": 4,
+   "layers_after": 8,
+   "paper_area": 1
+  },
+  {
+   "step": 4,
+   "line": {
+    "n": [
+     -0.9230769230769232,
+     -0.3846153846153846
+    ],
+    "d": -0.7
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 8,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.5,
+      0.62
+     ],
+     "Q": [
+      0.5999999999999998,
+      0.38
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.5999999999999999,
+      0.38
+     ],
+     "Q": [
+      0.49999999999999994,
+      0.14
+     ],
+     "assignment": "M"
+    },
+    {
+     "P": [
+      0.5583333333333331,
+      0
+     ],
+     "Q": [
+      0.5,
+      0.14
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.6583333333333331,
+      1
+     ],
+     "Q": [
+      0.5000000000000001,
+      0.62
+     ],
+     "assignment": "M"
+    },
+    {
+     "P": [
+      0,
+      0.8234398034398036
+     ],
+     "Q": [
+      0.5000000000000001,
+      0.62
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.15591787439613602,
+      0
+     ],
+     "Q": [
+      0.5,
+      0.14
+     ],
+     "assignment": "M"
+    },
+    {
+     "P": [
+      0,
+      0.3434398034398037
+     ],
+     "Q": [
+      0.49999999999999994,
+      0.14
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.5,
+      0.62
+     ],
+     "Q": [
+      0,
+      0.41656019656019605
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 8,
+   "layers_before": 8,
+   "layers_after": 16,
+   "paper_area": 1
+  }
+ ]
+}

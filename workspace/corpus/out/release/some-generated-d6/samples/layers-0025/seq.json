@@ -1,0 +1,121 @@
+{
+ "id": "layers-0025",
+ "seed": 20450980,
+ "steps": 6,
+ "folds": [
+  {
+   "step": 1,
+   "normal": [
+    -0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": 0,
+   "move_positive": true,
+   "selection": {
+    "mode": "all"
+   },
+   "over": true,
+   "layers_moved": 1,
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "legal_all": 112,
+   "legal_partial": 0
+  },
+  {
+   "step": 2,
+   "normal": [
+    1,
+    0
+   ],
+   "offset": 0.75,
+   "move_positive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": true,
+   "layers_moved": 2,
+   "creases_created": 2,
+   "layers_before": 2,
+   "layers_after": 4,
+   "legal_all": 112,
+   "legal_partial": 14
+  },
+  {
+   "step": 3,
+   "normal": [
+    0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": 1.082757258691901,
+   "move_positive": true,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "layers_moved": 2,
+   "creases_created": 2,
+   "layers_before": 4,
+   "layers_after": 6,
+   "legal_all": 112,
+   "legal_partial": 36
+  },
+  {
+   "step": 4,
+   "normal": [
+    1,
+    0
+   ],
+   "offset": 0.6523437500000002,
+   "move_positive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "layers_moved": 2,
+   "creases_created": 2,
+   "layers_before": 6,
+   "layers_after": 8,
+   "legal_all": 112,
+   "legal_partial": 70
+  },
+  {
+   "step": 5,
+   "normal": [
+    1,
+    0
+   ],
+   "offset": 0.7583007812500001,
+   "move_positive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": true,
+   "layers_moved": 8,
+   "creases_created": 8,
+   "layers_before": 8,
+   "layers_after": 16,
+   "legal_all": 112,
+   "legal_partial": 122
+  },
+  {
+   "step": 6,
+   "normal": [
+    0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": 0.6045193288623031,
+   "move_positive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "layers_moved": 8,
+   "creases_created": 8,
+   "layers_before": 16,
+   "layers_after": 24,
+   "legal_all": 112,
+   "legal_partial": 256
+  }
+ ]
+}

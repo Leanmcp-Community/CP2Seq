@@ -25,7 +25,7 @@
 | --- | --- | --- |
 | [A 爆炸曲线](probes/probe-a-explosion.md) | ✅ | 爆炸在长尾不在中位数；语料必须分层采样；只用 instagram |
 | [B 可行性判据](probes/probe-b-oracle.md) | ✅ | 传播判据免费且完美，但因为终态问题不难 → **难度在序列层** |
-| [C 纯搜索基线](probes/probe-c-screen.md) | ✅ | **89.3% 的真实折纸已证明不可 simple fold**；确认可折仅 2 个（0.5%）。纯搜索在真实语料上不工作 |
+| [C 纯搜索基线](probes/probe-c-screen.md) | ✅ | **92.3% 的真实折纸已证明不可 simple fold**；确认可折仅 4 个（1.1%）。纯搜索在真实语料上不工作 |
 
 **已定**：action space = simple folding（Pureland）· 序列数据 = PurelandFold + 自己合成
 · 难度轴 = step count + non-local dependency

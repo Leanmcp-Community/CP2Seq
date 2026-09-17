@@ -1,0 +1,172 @@
+{
+ "id": "dog-head",
+ "title": "Dog head",
+ "steps": 4,
+ "folds": [
+  {
+   "step": 1,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 0.5
+   },
+   "move_positive": true,
+   "over": true,
+   "layers_moved": 1,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.5
+     ],
+     "Q": [
+      0,
+      0.5
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "paper_area": 0.5
+  },
+  {
+   "step": 2,
+   "line": {
+    "n": [
+     0.7568230077691596,
+     0.6536198703460923
+    ],
+    "d": 0.8263131203006915
+   },
+   "move_positive": true,
+   "over": true,
+   "layers_moved": 2,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.8175609756097562,
+      0.31756097560975616
+     ],
+     "Q": [
+      0.66,
+      0.5
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.8175609756097562,
+      0.6824390243902438
+     ],
+     "Q": [
+      0.66,
+      0.5
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 2,
+   "layers_before": 2,
+   "layers_after": 4,
+   "paper_area": 0.5
+  },
+  {
+   "step": 3,
+   "line": {
+    "n": [
+     0.7568230077691595,
+     -0.6536198703460925
+    ],
+    "d": -0.06949011253153203
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 2,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.34,
+      0.5
+     ],
+     "Q": [
+      0.18243902439024387,
+      0.31756097560975616
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.1824390243902439,
+      0.6824390243902438
+     ],
+     "Q": [
+      0.3399999999999999,
+      0.5
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 2,
+   "layers_before": 4,
+   "layers_after": 6,
+   "paper_area": 0.5
+  },
+  {
+   "step": 4,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 0.1
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 2,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.6,
+      0.1
+     ],
+     "Q": [
+      0.4,
+      0.10000000000000003
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.6,
+      0.9
+     ],
+     "Q": [
+      0.4,
+      0.9
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 2,
+   "layers_before": 6,
+   "layers_after": 8,
+   "paper_area": 0.5
+  }
+ ]
+}

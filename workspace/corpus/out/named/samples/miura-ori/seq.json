@@ -1,0 +1,348 @@
+{
+ "id": "miura-ori",
+ "title": "Miura-ori, skewed pleat",
+ "steps": 6,
+ "folds": [
+  {
+   "step": 1,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 0.25
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 1,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.25,
+      0
+     ],
+     "Q": [
+      0.25,
+      1
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "paper_area": 1
+  },
+  {
+   "step": 2,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 0.5
+   },
+   "move_positive": false,
+   "over": false,
+   "layers_moved": 2,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.5,
+      0
+     ],
+     "Q": [
+      0.5,
+      1
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 2,
+   "layers_after": 3,
+   "paper_area": 1
+  },
+  {
+   "step": 3,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 0.75
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 3,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.75,
+      0
+     ],
+     "Q": [
+      0.75,
+      1
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 3,
+   "layers_after": 4,
+   "paper_area": 1
+  },
+  {
+   "step": 4,
+   "line": {
+    "n": [
+     -0.7071067811865475,
+     0.7071067811865476
+    ],
+    "d": -0.5
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 4,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.29289321881345237
+     ],
+     "Q": [
+      0.75,
+      0.04289321881345243
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.75,
+      0.042893218813452406
+     ],
+     "Q": [
+      0.5,
+      0.2928932188134523
+     ],
+     "assignment": "M"
+    },
+    {
+     "P": [
+      0.5,
+      0.29289321881345237
+     ],
+     "Q": [
+      0.25,
+      0.04289321881345243
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.25,
+      0.042893218813452406
+     ],
+     "Q": [
+      0,
+      0.2928932188134523
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 4,
+   "layers_before": 4,
+   "layers_after": 8,
+   "paper_area": 1
+  },
+  {
+   "step": 5,
+   "line": {
+    "n": [
+     -0.7071067811865475,
+     0.7071067811865476
+    ],
+    "d": -0.32
+   },
+   "move_positive": false,
+   "over": false,
+   "layers_moved": 8,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.5474516600406094
+     ],
+     "Q": [
+      0.75,
+      0.2974516600406095
+     ],
+     "assignment": "M"
+    },
+    {
+     "P": [
+      0.75,
+      0.29745166004060947
+     ],
+     "Q": [
+      0.5,
+      0.5474516600406093
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.5,
+      0.5474516600406094
+     ],
+     "Q": [
+      0.25,
+      0.2974516600406095
+     ],
+     "assignment": "M"
+    },
+    {
+     "P": [
+      0.25,
+      0.2974516600406095
+     ],
+     "Q": [
+      0,
+      0.5474516600406094
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.038334777586295214,
+      0
+     ],
+     "Q": [
+      0,
+      0.03833477758629522
+     ],
+     "assignment": "M"
+    },
+    {
+     "P": [
+      0.46166522241370467,
+      0
+     ],
+     "Q": [
+      0.5,
+      0.038334777586295284
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.5383347775862953,
+      0
+     ],
+     "Q": [
+      0.5,
+      0.03833477758629528
+     ],
+     "assignment": "M"
+    },
+    {
+     "P": [
+      0.9616652224137047,
+      0
+     ],
+     "Q": [
+      1,
+      0.03833477758629537
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 8,
+   "layers_before": 8,
+   "layers_after": 16,
+   "paper_area": 1
+  },
+  {
+   "step": 6,
+   "line": {
+    "n": [
+     -0.7071067811865475,
+     0.7071067811865476
+    ],
+    "d": -0.14
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 16,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.8020101012677665
+     ],
+     "Q": [
+      0.75,
+      0.5520101012677665
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.75,
+      0.5520101012677666
+     ],
+     "Q": [
+      0.5,
+      0.8020101012677664
+     ],
+     "assignment": "M"
+    },
+    {
+     "P": [
+      0.5,
+      0.8020101012677665
+     ],
+     "Q": [
+      0.25,
+      0.5520101012677665
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.25,
+      0.5520101012677665
+     ],
+     "Q": [
+      0,
+      0.8020101012677665
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 4,
+   "layers_before": 16,
+   "layers_after": 20,
+   "paper_area": 1
+  }
+ ]
+}

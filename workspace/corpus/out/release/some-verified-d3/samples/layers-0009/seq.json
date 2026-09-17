@@ -1,0 +1,65 @@
+{
+ "id": "layers-0009",
+ "seed": 20324272,
+ "steps": 3,
+ "folds": [
+  {
+   "step": 1,
+   "normal": [
+    1,
+    0
+   ],
+   "offset": 0.875,
+   "move_positive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "layers_moved": 1,
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "legal_all": 112,
+   "legal_partial": 0
+  },
+  {
+   "step": 2,
+   "normal": [
+    1,
+    0
+   ],
+   "offset": 0.984375,
+   "move_positive": true,
+   "selection": {
+    "mode": "bottom",
+    "k": 1
+   },
+   "over": false,
+   "layers_moved": 1,
+   "creases_created": 1,
+   "layers_before": 2,
+   "layers_after": 3,
+   "legal_all": 112,
+   "legal_partial": 14
+  },
+  {
+   "step": 3,
+   "normal": [
+    1,
+    0
+   ],
+   "offset": 0.90234375,
+   "move_positive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": true,
+   "layers_moved": 3,
+   "creases_created": 3,
+   "layers_before": 3,
+   "layers_after": 6,
+   "legal_all": 112,
+   "legal_partial": 28
+  }
+ ]
+}

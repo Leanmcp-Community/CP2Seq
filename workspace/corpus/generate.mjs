@@ -38,7 +38,8 @@
 // WHAT COMES OUT. Every sample keeps both endpoints and the whole middle:
 //   cp.fold          the crease pattern, planarised
 //   seq.json         every fold: line, direction, the creases it made, its coupling
-//   steps/*.fold     the folded state after each step (--export-steps)
+//   steps.fold       CP + the folded state after every step, one multi-frame FOLD file
+//                    (--export-steps). Order is the file_frames array order; see planarize.mjs
 //   meta.json        difficulty metrics, degeneracy flags, provenance
 // Given the seed the whole sample rebuilds, so the corpus is reproducible without shipping it.
 //
@@ -53,7 +54,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { foldRandom, polyArea, bbox } from "./fold-engine.mjs";
-import { planarize, foldedState } from "./planarize.mjs";
+import { planarize, foldedState, sequenceFile } from "./planarize.mjs";
 import { lineOf, lkey } from "../probe-c/stage2.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -149,7 +150,7 @@ function measure(run, pl) {
 }
 
 /* ---------- one sample ------------------------------------------------------------------- */
-function build(seed, steps, opts) {
+export function build(seed, steps, opts) {
     const rand = rngFrom(seed);
     const run = foldRandom(steps, rand, {
         snapshots: opts.snapshots,
@@ -196,6 +197,12 @@ const strata = arg("strata", null)
     ? JSON.parse(fs.readFileSync(arg("strata"), "utf8"))
     : DEFAULT_STRATA;
 
+// basename, not endsWith: a sibling named test-generate.mjs would end with generate.mjs too,
+// and importing it would then generate a corpus as a side effect. The guard exists so build()
+// above can be imported -- scaling.mjs needs the all-layers sampler to put the two tiers'
+// search cost on one axis, and a second copy of the sampler would not be the same corpus.
+const IS_MAIN = process.argv[1] && path.basename(process.argv[1]) === "generate.mjs";
+if (IS_MAIN) {
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(path.join(OUT, "samples"), { recursive: true });
 
@@ -230,12 +237,9 @@ for (const st of strata) {
         fs.writeFileSync(path.join(dir, "seq.json"), JSON.stringify({
             id, seed: s, steps: r.run.seq.length, folds: r.run.seq }, null, 1));
 
-        if (EXPORT_STEPS) {
-            fs.mkdirSync(path.join(dir, "steps"), { recursive: true });
-            r.run.states.forEach((st_, k) => fs.writeFileSync(
-                path.join(dir, "steps", `step-${String(k).padStart(2, "0")}.fold`),
-                JSON.stringify(foldedState(st_))));
-        }
+        if (EXPORT_STEPS)
+            fs.writeFileSync(path.join(dir, "steps.fold"),
+                             JSON.stringify(sequenceFile(r.fold, r.run.states, { id })));
 
         let verdict = null;
         if (VERIFY) {
@@ -328,3 +332,4 @@ if (VERIFY) {
 fs.writeFileSync(path.join(OUT, "report.md"), rep);
 console.log(`\n${manifest.length} samples, ${Object.values(rejects).reduce((a,b)=>a+b,0)} rejected`);
 console.log(`report  -> ${path.relative(process.cwd(), path.join(OUT, "report.md"))}`);
+}

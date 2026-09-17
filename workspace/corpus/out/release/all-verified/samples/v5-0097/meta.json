@@ -1,0 +1,123 @@
+{
+ "id": "v5-0097",
+ "stratum": "v5",
+ "seed": 20261213,
+ "requested_steps": 5,
+ "cp_hash": "8a7f854a15353fc4",
+ "metrics": {
+  "steps": 5,
+  "crease_segments_raw": 31,
+  "crease_edges": 40,
+  "mountain": 22,
+  "valley": 18,
+  "border": 16,
+  "distinct_crease_lines": 12,
+  "vertices": 25,
+  "coupling_max": 16,
+  "coupling_mean": 6.2,
+  "coupling_total": 31,
+  "coupling_final_step": 16,
+  "layers_final": 32,
+  "distinct_angles": 4,
+  "bbox_area_final": 0.0625,
+  "largest_face_final": 0.03125,
+  "flags": {
+   "repeated_halving": false,
+   "no_coupling": false,
+   "collapsed": false,
+   "single_angle": false
+  },
+  "degenerate": false
+ },
+ "planarize": {
+  "segments_in": 35,
+  "vertices": 25,
+  "edges": 56,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 16,
+   "M": 22,
+   "V": 18
+  }
+ },
+ "pure_search": {
+  "status": "SOLVED",
+  "queries": 36384,
+  "depth": 5,
+  "seq": [
+   {
+    "line": {
+     "n": [
+      1,
+      0
+     ],
+     "d": 0.5,
+     "dir": [
+      0,
+      1
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0,
+      1
+     ],
+     "d": 0.5,
+     "dir": [
+      -1,
+      0
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865477,
+      0.7071067811865474
+     ],
+     "d": 0.35355339059327384,
+     "dir": [
+      -0.7071067811865474,
+      0.7071067811865477
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865471,
+      -0.7071067811865478
+     ],
+     "d": -1.6653345369377348e-16,
+     "dir": [
+      0.7071067811865478,
+      0.7071067811865471
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      -5.276354908545501e-10,
+      1
+     ],
+     "d": 0.2500000000000002,
+     "dir": [
+      -1,
+      -5.276354908545501e-10
+     ]
+    },
+    "movePositive": true
+   }
+  ],
+  "ms": 88
+ }
+}

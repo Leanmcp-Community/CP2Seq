@@ -1,0 +1,4261 @@
+{
+ "generated": "2026-09-16T12:56:13.930Z",
+ "tier": "some-layers",
+ "seed0": 20260927,
+ "n": 50,
+ "steps": 9,
+ "p_partial": 0.5,
+ "rejects": {},
+ "samples": [
+  {
+   "id": "layers-0001",
+   "tier": "some-layers",
+   "seed": 20260927,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 7,
+   "cp_hash": "c82ae67c86c42612",
+   "metrics": {
+    "layers": 28,
+    "area": 1,
+    "distinct_areas": 24,
+    "coupling_max": 7,
+    "creases": 44,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 36
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 50
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 69
+     },
+     {
+      "step": 6,
+      "layers": 11,
+      "all": 112,
+      "partial": 134
+     },
+     {
+      "step": 7,
+      "layers": 15,
+      "all": 112,
+      "partial": 152
+     },
+     {
+      "step": 8,
+      "layers": 18,
+      "all": 112,
+      "partial": 210
+     },
+     {
+      "step": 9,
+      "layers": 21,
+      "all": 112,
+      "partial": 243
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 31,
+    "vertices": 44,
+    "edges": 68,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 24,
+     "M": 19,
+     "V": 25
+    }
+   }
+  },
+  {
+   "id": "layers-0002",
+   "tier": "some-layers",
+   "seed": 20268846,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "5d494a5bf30b8f85",
+   "metrics": {
+    "layers": 27,
+    "area": 1,
+    "distinct_areas": 20,
+    "coupling_max": 8,
+    "creases": 40,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 52
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 75
+     },
+     {
+      "step": 5,
+      "layers": 7,
+      "all": 112,
+      "partial": 65
+     },
+     {
+      "step": 6,
+      "layers": 10,
+      "all": 112,
+      "partial": 97
+     },
+     {
+      "step": 7,
+      "layers": 13,
+      "all": 112,
+      "partial": 74
+     },
+     {
+      "step": 8,
+      "layers": 16,
+      "all": 112,
+      "partial": 115
+     },
+     {
+      "step": 9,
+      "layers": 19,
+      "all": 112,
+      "partial": 74
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 30,
+    "vertices": 45,
+    "edges": 67,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 27,
+     "V": 17,
+     "M": 23
+    }
+   }
+  },
+  {
+   "id": "layers-0003",
+   "tier": "some-layers",
+   "seed": 20276765,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "dc0217101095c8da",
+   "metrics": {
+    "layers": 94,
+    "area": 1,
+    "distinct_areas": 21,
+    "coupling_max": 30,
+    "creases": 161,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 22
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 44
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 54
+     },
+     {
+      "step": 5,
+      "layers": 12,
+      "all": 112,
+      "partial": 120
+     },
+     {
+      "step": 6,
+      "layers": 24,
+      "all": 112,
+      "partial": 214
+     },
+     {
+      "step": 7,
+      "layers": 32,
+      "all": 112,
+      "partial": 264
+     },
+     {
+      "step": 8,
+      "layers": 56,
+      "all": 112,
+      "partial": 850
+     },
+     {
+      "step": 9,
+      "layers": 86,
+      "all": 112,
+      "partial": 1516
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 97,
+    "vertices": 135,
+    "edges": 209,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 48,
+     "V": 84,
+     "M": 77
+    }
+   }
+  },
+  {
+   "id": "layers-0004",
+   "tier": "some-layers",
+   "seed": 20284684,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 5,
+   "cp_hash": "9e4e621786ebf38b",
+   "metrics": {
+    "layers": 24,
+    "area": 1,
+    "distinct_areas": 16,
+    "coupling_max": 8,
+    "creases": 37,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 42
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 51
+     },
+     {
+      "step": 5,
+      "layers": 6,
+      "all": 112,
+      "partial": 67
+     },
+     {
+      "step": 6,
+      "layers": 8,
+      "all": 112,
+      "partial": 98
+     },
+     {
+      "step": 7,
+      "layers": 10,
+      "all": 112,
+      "partial": 94
+     },
+     {
+      "step": 8,
+      "layers": 12,
+      "all": 112,
+      "partial": 87
+     },
+     {
+      "step": 9,
+      "layers": 16,
+      "all": 112,
+      "partial": 143
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 27,
+    "vertices": 46,
+    "edges": 61,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 24,
+     "M": 14,
+     "V": 23
+    }
+   }
+  },
+  {
+   "id": "layers-0005",
+   "tier": "some-layers",
+   "seed": 20292603,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "afc9bafb27a65cb9",
+   "metrics": {
+    "layers": 60,
+    "area": 1,
+    "distinct_areas": 28,
+    "coupling_max": 21,
+    "creases": 105,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 12
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 49
+     },
+     {
+      "step": 5,
+      "layers": 10,
+      "all": 112,
+      "partial": 122
+     },
+     {
+      "step": 6,
+      "layers": 13,
+      "all": 112,
+      "partial": 140
+     },
+     {
+      "step": 7,
+      "layers": 21,
+      "all": 112,
+      "partial": 179
+     },
+     {
+      "step": 8,
+      "layers": 25,
+      "all": 112,
+      "partial": 246
+     },
+     {
+      "step": 9,
+      "layers": 39,
+      "all": 112,
+      "partial": 520
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 63,
+    "vertices": 89,
+    "edges": 135,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 30,
+     "M": 57,
+     "V": 48
+    }
+   }
+  },
+  {
+   "id": "layers-0006",
+   "tier": "some-layers",
+   "seed": 20300522,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 5,
+   "cp_hash": "253ad8a5def1f37f",
+   "metrics": {
+    "layers": 36,
+    "area": 1,
+    "distinct_areas": 30,
+    "coupling_max": 9,
+    "creases": 57,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 33
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 36
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 76
+     },
+     {
+      "step": 6,
+      "layers": 11,
+      "all": 112,
+      "partial": 132
+     },
+     {
+      "step": 7,
+      "layers": 14,
+      "all": 112,
+      "partial": 99
+     },
+     {
+      "step": 8,
+      "layers": 23,
+      "all": 112,
+      "partial": 203
+     },
+     {
+      "step": 9,
+      "layers": 30,
+      "all": 112,
+      "partial": 256
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 39,
+    "vertices": 64,
+    "edges": 87,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 30,
+     "M": 30,
+     "V": 27
+    }
+   }
+  },
+  {
+   "id": "layers-0007",
+   "tier": "some-layers",
+   "seed": 20308441,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "c996f7225f56daca",
+   "metrics": {
+    "layers": 70,
+    "area": 1,
+    "distinct_areas": 27,
+    "coupling_max": 24,
+    "creases": 118,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 22
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 38
+     },
+     {
+      "step": 4,
+      "layers": 8,
+      "all": 112,
+      "partial": 80
+     },
+     {
+      "step": 5,
+      "layers": 12,
+      "all": 112,
+      "partial": 148
+     },
+     {
+      "step": 6,
+      "layers": 14,
+      "all": 112,
+      "partial": 136
+     },
+     {
+      "step": 7,
+      "layers": 20,
+      "all": 112,
+      "partial": 188
+     },
+     {
+      "step": 8,
+      "layers": 32,
+      "all": 112,
+      "partial": 206
+     },
+     {
+      "step": 9,
+      "layers": 46,
+      "all": 112,
+      "partial": 254
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 73,
+    "vertices": 91,
+    "edges": 160,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 42,
+     "M": 63,
+     "V": 55
+    }
+   }
+  },
+  {
+   "id": "layers-0008",
+   "tier": "some-layers",
+   "seed": 20316360,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "216111f3d8f54a25",
+   "metrics": {
+    "layers": 82,
+    "area": 1,
+    "distinct_areas": 18,
+    "coupling_max": 33,
+    "creases": 140,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 37
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 72
+     },
+     {
+      "step": 5,
+      "layers": 7,
+      "all": 112,
+      "partial": 57
+     },
+     {
+      "step": 6,
+      "layers": 12,
+      "all": 112,
+      "partial": 86
+     },
+     {
+      "step": 7,
+      "layers": 20,
+      "all": 112,
+      "partial": 81
+     },
+     {
+      "step": 8,
+      "layers": 38,
+      "all": 112,
+      "partial": 326
+     },
+     {
+      "step": 9,
+      "layers": 49,
+      "all": 112,
+      "partial": 455
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 85,
+    "vertices": 111,
+    "edges": 188,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 48,
+     "V": 68,
+     "M": 72
+    }
+   }
+  },
+  {
+   "id": "layers-0009",
+   "tier": "some-layers",
+   "seed": 20324279,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 4,
+   "cp_hash": "8a49c8db8d4e839d",
+   "metrics": {
+    "layers": 24,
+    "area": 1,
+    "distinct_areas": 21,
+    "coupling_max": 7,
+    "creases": 34,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 22
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 39
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 50
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 82
+     },
+     {
+      "step": 6,
+      "layers": 11,
+      "all": 112,
+      "partial": 147
+     },
+     {
+      "step": 7,
+      "layers": 12,
+      "all": 112,
+      "partial": 91
+     },
+     {
+      "step": 8,
+      "layers": 15,
+      "all": 112,
+      "partial": 125
+     },
+     {
+      "step": 9,
+      "layers": 17,
+      "all": 112,
+      "partial": 118
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 27,
+    "vertices": 40,
+    "edges": 62,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 28,
+     "M": 14,
+     "V": 20
+    }
+   }
+  },
+  {
+   "id": "layers-0010",
+   "tier": "some-layers",
+   "seed": 20332198,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "dc87f9c8f77de202",
+   "metrics": {
+    "layers": 84,
+    "area": 1,
+    "distinct_areas": 27,
+    "coupling_max": 26,
+    "creases": 148,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 40
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 68
+     },
+     {
+      "step": 5,
+      "layers": 7,
+      "all": 112,
+      "partial": 55
+     },
+     {
+      "step": 6,
+      "layers": 11,
+      "all": 112,
+      "partial": 92
+     },
+     {
+      "step": 7,
+      "layers": 20,
+      "all": 112,
+      "partial": 207
+     },
+     {
+      "step": 8,
+      "layers": 34,
+      "all": 112,
+      "partial": 207
+     },
+     {
+      "step": 9,
+      "layers": 60,
+      "all": 112,
+      "partial": 504
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 87,
+    "vertices": 128,
+    "edges": 188,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 40,
+     "M": 74,
+     "V": 74
+    }
+   }
+  },
+  {
+   "id": "layers-0011",
+   "tier": "some-layers",
+   "seed": 20340117,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 5,
+   "cp_hash": "72475da70eaaed3b",
+   "metrics": {
+    "layers": 47,
+    "area": 1,
+    "distinct_areas": 30,
+    "coupling_max": 19,
+    "creases": 80,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 43
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 38
+     },
+     {
+      "step": 5,
+      "layers": 6,
+      "all": 112,
+      "partial": 78
+     },
+     {
+      "step": 6,
+      "layers": 9,
+      "all": 112,
+      "partial": 104
+     },
+     {
+      "step": 7,
+      "layers": 11,
+      "all": 112,
+      "partial": 122
+     },
+     {
+      "step": 8,
+      "layers": 14,
+      "all": 112,
+      "partial": 148
+     },
+     {
+      "step": 9,
+      "layers": 28,
+      "all": 112,
+      "partial": 228
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 50,
+    "vertices": 68,
+    "edges": 107,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 27,
+     "M": 37,
+     "V": 43
+    }
+   }
+  },
+  {
+   "id": "layers-0012",
+   "tier": "some-layers",
+   "seed": 20348036,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "40191dc9b63a0aed",
+   "metrics": {
+    "layers": 41,
+    "area": 1,
+    "distinct_areas": 29,
+    "coupling_max": 13,
+    "creases": 68,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 44
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 59
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 57
+     },
+     {
+      "step": 6,
+      "layers": 11,
+      "all": 112,
+      "partial": 95
+     },
+     {
+      "step": 7,
+      "layers": 16,
+      "all": 112,
+      "partial": 147
+     },
+     {
+      "step": 8,
+      "layers": 23,
+      "all": 112,
+      "partial": 250
+     },
+     {
+      "step": 9,
+      "layers": 36,
+      "all": 112,
+      "partial": 476
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 44,
+    "vertices": 56,
+    "edges": 96,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 28,
+     "V": 38,
+     "M": 30
+    }
+   }
+  },
+  {
+   "id": "layers-0013",
+   "tier": "some-layers",
+   "seed": 20355955,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "2fb1126a4e185b62",
+   "metrics": {
+    "layers": 48,
+    "area": 1,
+    "distinct_areas": 35,
+    "coupling_max": 15,
+    "creases": 81,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 28
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 53
+     },
+     {
+      "step": 5,
+      "layers": 9,
+      "all": 112,
+      "partial": 81
+     },
+     {
+      "step": 6,
+      "layers": 14,
+      "all": 112,
+      "partial": 184
+     },
+     {
+      "step": 7,
+      "layers": 19,
+      "all": 112,
+      "partial": 232
+     },
+     {
+      "step": 8,
+      "layers": 34,
+      "all": 112,
+      "partial": 418
+     },
+     {
+      "step": 9,
+      "layers": 37,
+      "all": 112,
+      "partial": 464
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 51,
+    "vertices": 79,
+    "edges": 113,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "V": 45,
+     "M": 36
+    }
+   }
+  },
+  {
+   "id": "layers-0014",
+   "tier": "some-layers",
+   "seed": 20363874,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 4,
+   "cp_hash": "ff7287e3d954d12f",
+   "metrics": {
+    "layers": 23,
+    "area": 1,
+    "distinct_areas": 21,
+    "coupling_max": 9,
+    "creases": 34,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 39
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 66
+     },
+     {
+      "step": 5,
+      "layers": 5,
+      "all": 112,
+      "partial": 43
+     },
+     {
+      "step": 6,
+      "layers": 7,
+      "all": 112,
+      "partial": 51
+     },
+     {
+      "step": 7,
+      "layers": 9,
+      "all": 112,
+      "partial": 65
+     },
+     {
+      "step": 8,
+      "layers": 12,
+      "all": 112,
+      "partial": 134
+     },
+     {
+      "step": 9,
+      "layers": 14,
+      "all": 112,
+      "partial": 177
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 26,
+    "vertices": 40,
+    "edges": 58,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 24,
+     "V": 19,
+     "M": 15
+    }
+   }
+  },
+  {
+   "id": "layers-0015",
+   "tier": "some-layers",
+   "seed": 20371793,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "11ba990546702331",
+   "metrics": {
+    "layers": 62,
+    "area": 1,
+    "distinct_areas": 34,
+    "coupling_max": 17,
+    "creases": 107,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 29
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 67
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 91
+     },
+     {
+      "step": 6,
+      "layers": 12,
+      "all": 112,
+      "partial": 140
+     },
+     {
+      "step": 7,
+      "layers": 21,
+      "all": 112,
+      "partial": 253
+     },
+     {
+      "step": 8,
+      "layers": 38,
+      "all": 112,
+      "partial": 347
+     },
+     {
+      "step": 9,
+      "layers": 50,
+      "all": 112,
+      "partial": 615
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 65,
+    "vertices": 94,
+    "edges": 141,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 34,
+     "M": 59,
+     "V": 48
+    }
+   }
+  },
+  {
+   "id": "layers-0016",
+   "tier": "some-layers",
+   "seed": 20379712,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 6,
+   "cp_hash": "2949a05517cde9c1",
+   "metrics": {
+    "layers": 33,
+    "area": 1,
+    "distinct_areas": 24,
+    "coupling_max": 8,
+    "creases": 54,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 34
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 46
+     },
+     {
+      "step": 5,
+      "layers": 7,
+      "all": 112,
+      "partial": 80
+     },
+     {
+      "step": 6,
+      "layers": 11,
+      "all": 112,
+      "partial": 76
+     },
+     {
+      "step": 7,
+      "layers": 15,
+      "all": 112,
+      "partial": 178
+     },
+     {
+      "step": 8,
+      "layers": 19,
+      "all": 112,
+      "partial": 225
+     },
+     {
+      "step": 9,
+      "layers": 25,
+      "all": 112,
+      "partial": 359
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 36,
+    "vertices": 51,
+    "edges": 78,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 24,
+     "V": 29,
+     "M": 25
+    }
+   }
+  },
+  {
+   "id": "layers-0017",
+   "tier": "some-layers",
+   "seed": 20387631,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 6,
+   "cp_hash": "1b56b94032ccbf48",
+   "metrics": {
+    "layers": 43,
+    "area": 1,
+    "distinct_areas": 30,
+    "coupling_max": 12,
+    "creases": 71,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 36
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 34
+     },
+     {
+      "step": 5,
+      "layers": 6,
+      "all": 112,
+      "partial": 44
+     },
+     {
+      "step": 6,
+      "layers": 8,
+      "all": 112,
+      "partial": 66
+     },
+     {
+      "step": 7,
+      "layers": 16,
+      "all": 112,
+      "partial": 150
+     },
+     {
+      "step": 8,
+      "layers": 21,
+      "all": 112,
+      "partial": 255
+     },
+     {
+      "step": 9,
+      "layers": 33,
+      "all": 112,
+      "partial": 301
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 46,
+    "vertices": 66,
+    "edges": 101,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 30,
+     "V": 32,
+     "M": 39
+    }
+   }
+  },
+  {
+   "id": "layers-0018",
+   "tier": "some-layers",
+   "seed": 20395550,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "5a5627f749262ba1",
+   "metrics": {
+    "layers": 30,
+    "area": 1,
+    "distinct_areas": 24,
+    "coupling_max": 8,
+    "creases": 49,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 36
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 75
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 116
+     },
+     {
+      "step": 6,
+      "layers": 11,
+      "all": 112,
+      "partial": 144
+     },
+     {
+      "step": 7,
+      "layers": 19,
+      "all": 112,
+      "partial": 271
+     },
+     {
+      "step": 8,
+      "layers": 23,
+      "all": 112,
+      "partial": 185
+     },
+     {
+      "step": 9,
+      "layers": 27,
+      "all": 112,
+      "partial": 259
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 33,
+    "vertices": 43,
+    "edges": 71,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 22,
+     "M": 28,
+     "V": 21
+    }
+   }
+  },
+  {
+   "id": "layers-0019",
+   "tier": "some-layers",
+   "seed": 20403469,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 5,
+   "cp_hash": "83d4e45b1481b8e3",
+   "metrics": {
+    "layers": 35,
+    "area": 1,
+    "distinct_areas": 26,
+    "coupling_max": 9,
+    "creases": 56,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 22
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 29
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 54
+     },
+     {
+      "step": 5,
+      "layers": 6,
+      "all": 112,
+      "partial": 74
+     },
+     {
+      "step": 6,
+      "layers": 11,
+      "all": 112,
+      "partial": 155
+     },
+     {
+      "step": 7,
+      "layers": 18,
+      "all": 112,
+      "partial": 273
+     },
+     {
+      "step": 8,
+      "layers": 24,
+      "all": 112,
+      "partial": 332
+     },
+     {
+      "step": 9,
+      "layers": 26,
+      "all": 112,
+      "partial": 301
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 38,
+    "vertices": 56,
+    "edges": 84,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 28,
+     "M": 30,
+     "V": 26
+    }
+   }
+  },
+  {
+   "id": "layers-0020",
+   "tier": "some-layers",
+   "seed": 20411388,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "2d1c1747c5dfd07f",
+   "metrics": {
+    "layers": 63,
+    "area": 1,
+    "distinct_areas": 36,
+    "coupling_max": 19,
+    "creases": 110,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 45
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 57
+     },
+     {
+      "step": 5,
+      "layers": 10,
+      "all": 112,
+      "partial": 145
+     },
+     {
+      "step": 6,
+      "layers": 18,
+      "all": 112,
+      "partial": 232
+     },
+     {
+      "step": 7,
+      "layers": 27,
+      "all": 112,
+      "partial": 291
+     },
+     {
+      "step": 8,
+      "layers": 40,
+      "all": 112,
+      "partial": 681
+     },
+     {
+      "step": 9,
+      "layers": 44,
+      "all": 112,
+      "partial": 115
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 66,
+    "vertices": 93,
+    "edges": 142,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 59,
+     "V": 51
+    }
+   }
+  },
+  {
+   "id": "layers-0021",
+   "tier": "some-layers",
+   "seed": 20419307,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 4,
+   "cp_hash": "36513de1c7a1099f",
+   "metrics": {
+    "layers": 35,
+    "area": 1,
+    "distinct_areas": 28,
+    "coupling_max": 11,
+    "creases": 59,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 44
+     },
+     {
+      "step": 5,
+      "layers": 7,
+      "all": 112,
+      "partial": 76
+     },
+     {
+      "step": 6,
+      "layers": 9,
+      "all": 112,
+      "partial": 129
+     },
+     {
+      "step": 7,
+      "layers": 12,
+      "all": 112,
+      "partial": 160
+     },
+     {
+      "step": 8,
+      "layers": 20,
+      "all": 112,
+      "partial": 301
+     },
+     {
+      "step": 9,
+      "layers": 24,
+      "all": 112,
+      "partial": 266
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 38,
+    "vertices": 47,
+    "edges": 79,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 20,
+     "M": 32,
+     "V": 27
+    }
+   }
+  },
+  {
+   "id": "layers-0022",
+   "tier": "some-layers",
+   "seed": 20427226,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "142af25a12fd06e0",
+   "metrics": {
+    "layers": 73,
+    "area": 1,
+    "distinct_areas": 34,
+    "coupling_max": 29,
+    "creases": 128,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 29
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 57
+     },
+     {
+      "step": 5,
+      "layers": 9,
+      "all": 112,
+      "partial": 116
+     },
+     {
+      "step": 6,
+      "layers": 17,
+      "all": 112,
+      "partial": 188
+     },
+     {
+      "step": 7,
+      "layers": 19,
+      "all": 112,
+      "partial": 175
+     },
+     {
+      "step": 8,
+      "layers": 34,
+      "all": 112,
+      "partial": 327
+     },
+     {
+      "step": 9,
+      "layers": 44,
+      "all": 112,
+      "partial": 382
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 76,
+    "vertices": 106,
+    "edges": 164,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 36,
+     "V": 69,
+     "M": 59
+    }
+   }
+  },
+  {
+   "id": "layers-0023",
+   "tier": "some-layers",
+   "seed": 20435145,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "5a61abd9f74a4701",
+   "metrics": {
+    "layers": 45,
+    "area": 1,
+    "distinct_areas": 37,
+    "coupling_max": 13,
+    "creases": 70,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 64
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 98
+     },
+     {
+      "step": 6,
+      "layers": 12,
+      "all": 112,
+      "partial": 158
+     },
+     {
+      "step": 7,
+      "layers": 19,
+      "all": 112,
+      "partial": 237
+     },
+     {
+      "step": 8,
+      "layers": 25,
+      "all": 112,
+      "partial": 200
+     },
+     {
+      "step": 9,
+      "layers": 32,
+      "all": 112,
+      "partial": 244
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 48,
+    "vertices": 74,
+    "edges": 110,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 40,
+     "V": 38,
+     "M": 32
+    }
+   }
+  },
+  {
+   "id": "layers-0024",
+   "tier": "some-layers",
+   "seed": 20443064,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "dd3ca23afa9321dc",
+   "metrics": {
+    "layers": 49,
+    "area": 1,
+    "distinct_areas": 37,
+    "coupling_max": 19,
+    "creases": 81,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 48
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 69
+     },
+     {
+      "step": 5,
+      "layers": 7,
+      "all": 112,
+      "partial": 49
+     },
+     {
+      "step": 6,
+      "layers": 11,
+      "all": 112,
+      "partial": 82
+     },
+     {
+      "step": 7,
+      "layers": 19,
+      "all": 112,
+      "partial": 171
+     },
+     {
+      "step": 8,
+      "layers": 21,
+      "all": 112,
+      "partial": 125
+     },
+     {
+      "step": 9,
+      "layers": 30,
+      "all": 112,
+      "partial": 226
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 52,
+    "vertices": 67,
+    "edges": 115,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 34,
+     "M": 45,
+     "V": 36
+    }
+   }
+  },
+  {
+   "id": "layers-0025",
+   "tier": "some-layers",
+   "seed": 20450983,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "dd1747e718feab71",
+   "metrics": {
+    "layers": 48,
+    "area": 1,
+    "distinct_areas": 32,
+    "coupling_max": 18,
+    "creases": 79,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 24
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 60
+     },
+     {
+      "step": 5,
+      "layers": 7,
+      "all": 112,
+      "partial": 75
+     },
+     {
+      "step": 6,
+      "layers": 13,
+      "all": 112,
+      "partial": 183
+     },
+     {
+      "step": 7,
+      "layers": 19,
+      "all": 112,
+      "partial": 156
+     },
+     {
+      "step": 8,
+      "layers": 22,
+      "all": 112,
+      "partial": 224
+     },
+     {
+      "step": 9,
+      "layers": 30,
+      "all": 112,
+      "partial": 303
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 51,
+    "vertices": 64,
+    "edges": 111,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 42,
+     "V": 37
+    }
+   }
+  },
+  {
+   "id": "layers-0026",
+   "tier": "some-layers",
+   "seed": 20458902,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "7bac8116c3689fc2",
+   "metrics": {
+    "layers": 43,
+    "area": 1,
+    "distinct_areas": 35,
+    "coupling_max": 10,
+    "creases": 71,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 64
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 108
+     },
+     {
+      "step": 6,
+      "layers": 11,
+      "all": 112,
+      "partial": 97
+     },
+     {
+      "step": 7,
+      "layers": 16,
+      "all": 112,
+      "partial": 132
+     },
+     {
+      "step": 8,
+      "layers": 23,
+      "all": 112,
+      "partial": 181
+     },
+     {
+      "step": 9,
+      "layers": 33,
+      "all": 112,
+      "partial": 199
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 46,
+    "vertices": 67,
+    "edges": 101,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 30,
+     "V": 41,
+     "M": 30
+    }
+   }
+  },
+  {
+   "id": "layers-0027",
+   "tier": "some-layers",
+   "seed": 20466821,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "be5e65509a02639e",
+   "metrics": {
+    "layers": 76,
+    "area": 1,
+    "distinct_areas": 41,
+    "coupling_max": 30,
+    "creases": 133,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 48
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 56
+     },
+     {
+      "step": 5,
+      "layers": 10,
+      "all": 112,
+      "partial": 95
+     },
+     {
+      "step": 6,
+      "layers": 12,
+      "all": 112,
+      "partial": 84
+     },
+     {
+      "step": 7,
+      "layers": 22,
+      "all": 112,
+      "partial": 191
+     },
+     {
+      "step": 8,
+      "layers": 36,
+      "all": 112,
+      "partial": 473
+     },
+     {
+      "step": 9,
+      "layers": 46,
+      "all": 112,
+      "partial": 549
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 79,
+    "vertices": 119,
+    "edges": 171,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 38,
+     "V": 68,
+     "M": 65
+    }
+   }
+  },
+  {
+   "id": "layers-0028",
+   "tier": "some-layers",
+   "seed": 20474740,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 5,
+   "cp_hash": "4cc0722bd2fe4227",
+   "metrics": {
+    "layers": 40,
+    "area": 1,
+    "distinct_areas": 17,
+    "coupling_max": 16,
+    "creases": 64,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 40
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 46
+     },
+     {
+      "step": 5,
+      "layers": 10,
+      "all": 112,
+      "partial": 80
+     },
+     {
+      "step": 6,
+      "layers": 12,
+      "all": 112,
+      "partial": 114
+     },
+     {
+      "step": 7,
+      "layers": 14,
+      "all": 112,
+      "partial": 152
+     },
+     {
+      "step": 8,
+      "layers": 22,
+      "all": 112,
+      "partial": 120
+     },
+     {
+      "step": 9,
+      "layers": 24,
+      "all": 112,
+      "partial": 152
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 43,
+    "vertices": 70,
+    "edges": 94,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 30,
+     "V": 36,
+     "M": 28
+    }
+   }
+  },
+  {
+   "id": "layers-0029",
+   "tier": "some-layers",
+   "seed": 20482659,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "5da10a86dede4486",
+   "metrics": {
+    "layers": 23,
+    "area": 1,
+    "distinct_areas": 21,
+    "coupling_max": 5,
+    "creases": 35,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 27
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 35
+     },
+     {
+      "step": 5,
+      "layers": 6,
+      "all": 112,
+      "partial": 81
+     },
+     {
+      "step": 6,
+      "layers": 9,
+      "all": 112,
+      "partial": 89
+     },
+     {
+      "step": 7,
+      "layers": 11,
+      "all": 112,
+      "partial": 63
+     },
+     {
+      "step": 8,
+      "layers": 14,
+      "all": 112,
+      "partial": 129
+     },
+     {
+      "step": 9,
+      "layers": 18,
+      "all": 112,
+      "partial": 200
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 26,
+    "vertices": 38,
+    "edges": 57,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 22,
+     "V": 24,
+     "M": 11
+    }
+   }
+  },
+  {
+   "id": "layers-0030",
+   "tier": "some-layers",
+   "seed": 20490578,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 6,
+   "cp_hash": "1ea767cb677f0763",
+   "metrics": {
+    "layers": 32,
+    "area": 1,
+    "distinct_areas": 27,
+    "coupling_max": 10,
+    "creases": 47,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 40
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 45
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 71
+     },
+     {
+      "step": 6,
+      "layers": 10,
+      "all": 112,
+      "partial": 99
+     },
+     {
+      "step": 7,
+      "layers": 17,
+      "all": 112,
+      "partial": 105
+     },
+     {
+      "step": 8,
+      "layers": 18,
+      "all": 112,
+      "partial": 126
+     },
+     {
+      "step": 9,
+      "layers": 28,
+      "all": 112,
+      "partial": 387
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 35,
+    "vertices": 62,
+    "edges": 80,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 33,
+     "V": 23,
+     "M": 24
+    }
+   }
+  },
+  {
+   "id": "layers-0031",
+   "tier": "some-layers",
+   "seed": 20498497,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 6,
+   "cp_hash": "0cef614413f4891c",
+   "metrics": {
+    "layers": 66,
+    "area": 1,
+    "distinct_areas": 30,
+    "coupling_max": 16,
+    "creases": 116,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 22
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 40
+     },
+     {
+      "step": 4,
+      "layers": 7,
+      "all": 112,
+      "partial": 92
+     },
+     {
+      "step": 5,
+      "layers": 11,
+      "all": 112,
+      "partial": 120
+     },
+     {
+      "step": 6,
+      "layers": 18,
+      "all": 112,
+      "partial": 141
+     },
+     {
+      "step": 7,
+      "layers": 28,
+      "all": 112,
+      "partial": 250
+     },
+     {
+      "step": 8,
+      "layers": 44,
+      "all": 112,
+      "partial": 346
+     },
+     {
+      "step": 9,
+      "layers": 56,
+      "all": 112,
+      "partial": 459
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 69,
+    "vertices": 104,
+    "edges": 148,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 65,
+     "V": 51
+    }
+   }
+  },
+  {
+   "id": "layers-0032",
+   "tier": "some-layers",
+   "seed": 20506416,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "a2c52bb3b5edc8e3",
+   "metrics": {
+    "layers": 43,
+    "area": 1,
+    "distinct_areas": 29,
+    "coupling_max": 13,
+    "creases": 73,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 28
+     },
+     {
+      "step": 5,
+      "layers": 5,
+      "all": 112,
+      "partial": 32
+     },
+     {
+      "step": 6,
+      "layers": 10,
+      "all": 112,
+      "partial": 102
+     },
+     {
+      "step": 7,
+      "layers": 16,
+      "all": 112,
+      "partial": 153
+     },
+     {
+      "step": 8,
+      "layers": 26,
+      "all": 112,
+      "partial": 245
+     },
+     {
+      "step": 9,
+      "layers": 39,
+      "all": 112,
+      "partial": 460
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 46,
+    "vertices": 67,
+    "edges": 101,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 28,
+     "V": 38,
+     "M": 35
+    }
+   }
+  },
+  {
+   "id": "layers-0033",
+   "tier": "some-layers",
+   "seed": 20514335,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "d97805bdadfddd73",
+   "metrics": {
+    "layers": 42,
+    "area": 1,
+    "distinct_areas": 26,
+    "coupling_max": 10,
+    "creases": 73,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 48
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 75
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 46
+     },
+     {
+      "step": 6,
+      "layers": 16,
+      "all": 112,
+      "partial": 162
+     },
+     {
+      "step": 7,
+      "layers": 22,
+      "all": 112,
+      "partial": 300
+     },
+     {
+      "step": 8,
+      "layers": 28,
+      "all": 112,
+      "partial": 310
+     },
+     {
+      "step": 9,
+      "layers": 32,
+      "all": 112,
+      "partial": 363
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 45,
+    "vertices": 58,
+    "edges": 97,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 24,
+     "M": 42,
+     "V": 31
+    }
+   }
+  },
+  {
+   "id": "layers-0034",
+   "tier": "some-layers",
+   "seed": 20522254,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 4,
+   "cp_hash": "c41bfde52d8d320b",
+   "metrics": {
+    "layers": 54,
+    "area": 1,
+    "distinct_areas": 38,
+    "coupling_max": 14,
+    "creases": 93,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 40
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 78
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 116
+     },
+     {
+      "step": 6,
+      "layers": 15,
+      "all": 112,
+      "partial": 246
+     },
+     {
+      "step": 7,
+      "layers": 20,
+      "all": 112,
+      "partial": 241
+     },
+     {
+      "step": 8,
+      "layers": 32,
+      "all": 112,
+      "partial": 220
+     },
+     {
+      "step": 9,
+      "layers": 46,
+      "all": 112,
+      "partial": 315
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 57,
+    "vertices": 77,
+    "edges": 125,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 47,
+     "V": 46
+    }
+   }
+  },
+  {
+   "id": "layers-0035",
+   "tier": "some-layers",
+   "seed": 20530173,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "48315fa4b4e2f03c",
+   "metrics": {
+    "layers": 58,
+    "area": 1,
+    "distinct_areas": 18,
+    "coupling_max": 16,
+    "creases": 95,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 22
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 31
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 49
+     },
+     {
+      "step": 5,
+      "layers": 8,
+      "all": 112,
+      "partial": 66
+     },
+     {
+      "step": 6,
+      "layers": 16,
+      "all": 112,
+      "partial": 158
+     },
+     {
+      "step": 7,
+      "layers": 18,
+      "all": 112,
+      "partial": 194
+     },
+     {
+      "step": 8,
+      "layers": 34,
+      "all": 112,
+      "partial": 318
+     },
+     {
+      "step": 9,
+      "layers": 42,
+      "all": 112,
+      "partial": 406
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 61,
+    "vertices": 86,
+    "edges": 137,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 42,
+     "V": 45,
+     "M": 50
+    }
+   }
+  },
+  {
+   "id": "layers-0036",
+   "tier": "some-layers",
+   "seed": 20538092,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 5,
+   "cp_hash": "0e8a9e5d178c7301",
+   "metrics": {
+    "layers": 34,
+    "area": 1,
+    "distinct_areas": 25,
+    "coupling_max": 9,
+    "creases": 55,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 28
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 44
+     },
+     {
+      "step": 5,
+      "layers": 7,
+      "all": 112,
+      "partial": 84
+     },
+     {
+      "step": 6,
+      "layers": 8,
+      "all": 112,
+      "partial": 49
+     },
+     {
+      "step": 7,
+      "layers": 13,
+      "all": 112,
+      "partial": 133
+     },
+     {
+      "step": 8,
+      "layers": 18,
+      "all": 112,
+      "partial": 53
+     },
+     {
+      "step": 9,
+      "layers": 27,
+      "all": 112,
+      "partial": 222
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 37,
+    "vertices": 50,
+    "edges": 81,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 26,
+     "V": 31,
+     "M": 24
+    }
+   }
+  },
+  {
+   "id": "layers-0037",
+   "tier": "some-layers",
+   "seed": 20546011,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "b21d80511400a219",
+   "metrics": {
+    "layers": 90,
+    "area": 1,
+    "distinct_areas": 35,
+    "coupling_max": 33,
+    "creases": 162,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 40
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 42
+     },
+     {
+      "step": 5,
+      "layers": 9,
+      "all": 112,
+      "partial": 118
+     },
+     {
+      "step": 6,
+      "layers": 15,
+      "all": 112,
+      "partial": 143
+     },
+     {
+      "step": 7,
+      "layers": 21,
+      "all": 112,
+      "partial": 235
+     },
+     {
+      "step": 8,
+      "layers": 30,
+      "all": 112,
+      "partial": 257
+     },
+     {
+      "step": 9,
+      "layers": 57,
+      "all": 112,
+      "partial": 488
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 93,
+    "vertices": 135,
+    "edges": 197,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 35,
+     "V": 83,
+     "M": 79
+    }
+   }
+  },
+  {
+   "id": "layers-0038",
+   "tier": "some-layers",
+   "seed": 20553930,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "9ac3774bb9692887",
+   "metrics": {
+    "layers": 43,
+    "area": 1,
+    "distinct_areas": 26,
+    "coupling_max": 10,
+    "creases": 72,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 23
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 40
+     },
+     {
+      "step": 5,
+      "layers": 5,
+      "all": 112,
+      "partial": 61
+     },
+     {
+      "step": 6,
+      "layers": 9,
+      "all": 112,
+      "partial": 91
+     },
+     {
+      "step": 7,
+      "layers": 17,
+      "all": 112,
+      "partial": 245
+     },
+     {
+      "step": 8,
+      "layers": 23,
+      "all": 112,
+      "partial": 325
+     },
+     {
+      "step": 9,
+      "layers": 33,
+      "all": 112,
+      "partial": 457
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 46,
+    "vertices": 65,
+    "edges": 100,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 28,
+     "M": 38,
+     "V": 34
+    }
+   }
+  },
+  {
+   "id": "layers-0039",
+   "tier": "some-layers",
+   "seed": 20561849,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "4c8a0da169772335",
+   "metrics": {
+    "layers": 96,
+    "area": 1,
+    "distinct_areas": 18,
+    "coupling_max": 36,
+    "creases": 168,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 22
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 30
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 54
+     },
+     {
+      "step": 5,
+      "layers": 12,
+      "all": 112,
+      "partial": 102
+     },
+     {
+      "step": 6,
+      "layers": 18,
+      "all": 112,
+      "partial": 208
+     },
+     {
+      "step": 7,
+      "layers": 24,
+      "all": 112,
+      "partial": 212
+     },
+     {
+      "step": 8,
+      "layers": 48,
+      "all": 112,
+      "partial": 340
+     },
+     {
+      "step": 9,
+      "layers": 60,
+      "all": 112,
+      "partial": 402
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 99,
+    "vertices": 156,
+    "edges": 216,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 48,
+     "V": 88,
+     "M": 80
+    }
+   }
+  },
+  {
+   "id": "layers-0040",
+   "tier": "some-layers",
+   "seed": 20569768,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 5,
+   "cp_hash": "31a70634b08e473c",
+   "metrics": {
+    "layers": 42,
+    "area": 1,
+    "distinct_areas": 32,
+    "coupling_max": 14,
+    "creases": 70,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 28
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 64
+     },
+     {
+      "step": 5,
+      "layers": 11,
+      "all": 112,
+      "partial": 149
+     },
+     {
+      "step": 6,
+      "layers": 13,
+      "all": 112,
+      "partial": 181
+     },
+     {
+      "step": 7,
+      "layers": 17,
+      "all": 112,
+      "partial": 180
+     },
+     {
+      "step": 8,
+      "layers": 24,
+      "all": 112,
+      "partial": 215
+     },
+     {
+      "step": 9,
+      "layers": 38,
+      "all": 112,
+      "partial": 326
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 45,
+    "vertices": 57,
+    "edges": 98,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 28,
+     "M": 34,
+     "V": 36
+    }
+   }
+  },
+  {
+   "id": "layers-0041",
+   "tier": "some-layers",
+   "seed": 20577687,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 7,
+   "cp_hash": "f8994acabc71fa68",
+   "metrics": {
+    "layers": 25,
+    "area": 1,
+    "distinct_areas": 19,
+    "coupling_max": 8,
+    "creases": 37,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 38
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 38
+     },
+     {
+      "step": 5,
+      "layers": 5,
+      "all": 112,
+      "partial": 60
+     },
+     {
+      "step": 6,
+      "layers": 8,
+      "all": 112,
+      "partial": 108
+     },
+     {
+      "step": 7,
+      "layers": 12,
+      "all": 112,
+      "partial": 175
+     },
+     {
+      "step": 8,
+      "layers": 13,
+      "all": 112,
+      "partial": 155
+     },
+     {
+      "step": 9,
+      "layers": 17,
+      "all": 112,
+      "partial": 223
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 28,
+    "vertices": 38,
+    "edges": 60,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 23,
+     "V": 21,
+     "M": 16
+    }
+   }
+  },
+  {
+   "id": "layers-0042",
+   "tier": "some-layers",
+   "seed": 20585606,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 4,
+   "cp_hash": "7cc6f5ff6f32e109",
+   "metrics": {
+    "layers": 41,
+    "area": 1,
+    "distinct_areas": 23,
+    "coupling_max": 10,
+    "creases": 66,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 51
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 66
+     },
+     {
+      "step": 5,
+      "layers": 7,
+      "all": 112,
+      "partial": 111
+     },
+     {
+      "step": 6,
+      "layers": 9,
+      "all": 112,
+      "partial": 99
+     },
+     {
+      "step": 7,
+      "layers": 17,
+      "all": 112,
+      "partial": 201
+     },
+     {
+      "step": 8,
+      "layers": 25,
+      "all": 112,
+      "partial": 301
+     },
+     {
+      "step": 9,
+      "layers": 31,
+      "all": 112,
+      "partial": 362
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 44,
+    "vertices": 64,
+    "edges": 98,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "V": 37,
+     "M": 29
+    }
+   }
+  },
+  {
+   "id": "layers-0043",
+   "tier": "some-layers",
+   "seed": 20593525,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 4,
+   "cp_hash": "468c9c87fc6ad299",
+   "metrics": {
+    "layers": 39,
+    "area": 1,
+    "distinct_areas": 22,
+    "coupling_max": 9,
+    "creases": 66,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 27
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 34
+     },
+     {
+      "step": 5,
+      "layers": 5,
+      "all": 112,
+      "partial": 58
+     },
+     {
+      "step": 6,
+      "layers": 8,
+      "all": 112,
+      "partial": 86
+     },
+     {
+      "step": 7,
+      "layers": 14,
+      "all": 112,
+      "partial": 132
+     },
+     {
+      "step": 8,
+      "layers": 23,
+      "all": 112,
+      "partial": 232
+     },
+     {
+      "step": 9,
+      "layers": 31,
+      "all": 112,
+      "partial": 374
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 42,
+    "vertices": 51,
+    "edges": 89,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 23,
+     "M": 32,
+     "V": 34
+    }
+   }
+  },
+  {
+   "id": "layers-0044",
+   "tier": "some-layers",
+   "seed": 20601444,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "83c5d3cb37b70e55",
+   "metrics": {
+    "layers": 32,
+    "area": 1,
+    "distinct_areas": 20,
+    "coupling_max": 7,
+    "creases": 52,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 28
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 91
+     },
+     {
+      "step": 5,
+      "layers": 12,
+      "all": 112,
+      "partial": 174
+     },
+     {
+      "step": 6,
+      "layers": 18,
+      "all": 112,
+      "partial": 199
+     },
+     {
+      "step": 7,
+      "layers": 20,
+      "all": 112,
+      "partial": 179
+     },
+     {
+      "step": 8,
+      "layers": 27,
+      "all": 112,
+      "partial": 142
+     },
+     {
+      "step": 9,
+      "layers": 31,
+      "all": 112,
+      "partial": 196
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 35,
+    "vertices": 47,
+    "edges": 76,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 24,
+     "M": 23,
+     "V": 29
+    }
+   }
+  },
+  {
+   "id": "layers-0045",
+   "tier": "some-layers",
+   "seed": 20609363,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "d9f9c5fba9ed0761",
+   "metrics": {
+    "layers": 67,
+    "area": 1,
+    "distinct_areas": 38,
+    "coupling_max": 14,
+    "creases": 116,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 33
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 61
+     },
+     {
+      "step": 5,
+      "layers": 10,
+      "all": 112,
+      "partial": 128
+     },
+     {
+      "step": 6,
+      "layers": 19,
+      "all": 112,
+      "partial": 228
+     },
+     {
+      "step": 7,
+      "layers": 33,
+      "all": 112,
+      "partial": 312
+     },
+     {
+      "step": 8,
+      "layers": 44,
+      "all": 112,
+      "partial": 320
+     },
+     {
+      "step": 9,
+      "layers": 55,
+      "all": 112,
+      "partial": 507
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 70,
+    "vertices": 105,
+    "edges": 152,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 36,
+     "M": 58,
+     "V": 58
+    }
+   }
+  },
+  {
+   "id": "layers-0046",
+   "tier": "some-layers",
+   "seed": 20617282,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 5,
+   "cp_hash": "08111340bc9a25e8",
+   "metrics": {
+    "layers": 50,
+    "area": 1,
+    "distinct_areas": 25,
+    "coupling_max": 20,
+    "creases": 83,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 29
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 28
+     },
+     {
+      "step": 5,
+      "layers": 6,
+      "all": 112,
+      "partial": 83
+     },
+     {
+      "step": 6,
+      "layers": 8,
+      "all": 112,
+      "partial": 110
+     },
+     {
+      "step": 7,
+      "layers": 13,
+      "all": 112,
+      "partial": 171
+     },
+     {
+      "step": 8,
+      "layers": 18,
+      "all": 112,
+      "partial": 178
+     },
+     {
+      "step": 9,
+      "layers": 30,
+      "all": 112,
+      "partial": 251
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 53,
+    "vertices": 70,
+    "edges": 117,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 34,
+     "V": 42,
+     "M": 41
+    }
+   }
+  },
+  {
+   "id": "layers-0047",
+   "tier": "some-layers",
+   "seed": 20625201,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 5,
+   "cp_hash": "77d759c980a3319f",
+   "metrics": {
+    "layers": 47,
+    "area": 1,
+    "distinct_areas": 26,
+    "coupling_max": 15,
+    "creases": 77,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 22
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 45
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 59
+     },
+     {
+      "step": 5,
+      "layers": 7,
+      "all": 112,
+      "partial": 86
+     },
+     {
+      "step": 6,
+      "layers": 10,
+      "all": 112,
+      "partial": 110
+     },
+     {
+      "step": 7,
+      "layers": 15,
+      "all": 112,
+      "partial": 181
+     },
+     {
+      "step": 8,
+      "layers": 21,
+      "all": 112,
+      "partial": 171
+     },
+     {
+      "step": 9,
+      "layers": 32,
+      "all": 112,
+      "partial": 202
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 50,
+    "vertices": 63,
+    "edges": 109,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 37,
+     "V": 40
+    }
+   }
+  },
+  {
+   "id": "layers-0048",
+   "tier": "some-layers",
+   "seed": 20633120,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 4,
+   "cp_hash": "853865861badea5c",
+   "metrics": {
+    "layers": 40,
+    "area": 1,
+    "distinct_areas": 30,
+    "coupling_max": 9,
+    "creases": 66,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 50
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 100
+     },
+     {
+      "step": 5,
+      "layers": 9,
+      "all": 112,
+      "partial": 149
+     },
+     {
+      "step": 6,
+      "layers": 14,
+      "all": 112,
+      "partial": 265
+     },
+     {
+      "step": 7,
+      "layers": 22,
+      "all": 112,
+      "partial": 300
+     },
+     {
+      "step": 8,
+      "layers": 24,
+      "all": 112,
+      "partial": 261
+     },
+     {
+      "step": 9,
+      "layers": 31,
+      "all": 112,
+      "partial": 223
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 43,
+    "vertices": 61,
+    "edges": 92,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 26,
+     "V": 38,
+     "M": 28
+    }
+   }
+  },
+  {
+   "id": "layers-0049",
+   "tier": "some-layers",
+   "seed": 20641039,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 5,
+   "cp_hash": "2c4dbee0d6a7c79e",
+   "metrics": {
+    "layers": 50,
+    "area": 1,
+    "distinct_areas": 27,
+    "coupling_max": 14,
+    "creases": 84,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 22
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 45
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 61
+     },
+     {
+      "step": 5,
+      "layers": 10,
+      "all": 112,
+      "partial": 130
+     },
+     {
+      "step": 6,
+      "layers": 14,
+      "all": 112,
+      "partial": 167
+     },
+     {
+      "step": 7,
+      "layers": 20,
+      "all": 112,
+      "partial": 239
+     },
+     {
+      "step": 8,
+      "layers": 32,
+      "all": 112,
+      "partial": 398
+     },
+     {
+      "step": 9,
+      "layers": 36,
+      "all": 112,
+      "partial": 409
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 53,
+    "vertices": 75,
+    "edges": 116,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "V": 42,
+     "M": 42
+    }
+   }
+  },
+  {
+   "id": "layers-0050",
+   "tier": "some-layers",
+   "seed": 20648958,
+   "steps": 9,
+   "p_partial_asked": 0.5,
+   "partial_used": 4,
+   "cp_hash": "82e6bcbc1a69724e",
+   "metrics": {
+    "layers": 55,
+    "area": 1,
+    "distinct_areas": 33,
+    "coupling_max": 25,
+    "creases": 96,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 38
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 42
+     },
+     {
+      "step": 5,
+      "layers": 6,
+      "all": 112,
+      "partial": 61
+     },
+     {
+      "step": 6,
+      "layers": 8,
+      "all": 112,
+      "partial": 80
+     },
+     {
+      "step": 7,
+      "layers": 12,
+      "all": 112,
+      "partial": 102
+     },
+     {
+      "step": 8,
+      "layers": 21,
+      "all": 112,
+      "partial": 180
+     },
+     {
+      "step": 9,
+      "layers": 30,
+      "all": 112,
+      "partial": 361
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 58,
+    "vertices": 92,
+    "edges": 127,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 31,
+     "M": 50,
+     "V": 46
+    }
+   }
+  }
+ ]
+}
