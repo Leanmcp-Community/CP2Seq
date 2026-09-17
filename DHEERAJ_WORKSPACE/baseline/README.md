@@ -1,7 +1,14 @@
+# Archived search exploration
+
+2026-09-17: This tooling is retained for historical investigation, not a selected
+VLM baseline, verifier, admission gate, or main-experiment prerequisite. Historical
+claims below do not define current scoring or physical impossibility labels.
+The active protocol is `../../EXPERIMENTS_SETUP.md`.
+
 # DFS / BFS / IDDFS baseline for CP → folding sequence
 
 The uninformed-search baseline the query-efficiency claim gets measured against. Closes the
-`implement DFS, BFS baseline details` action item in `BASELINE_REPRODUCTION.md` §5.
+historical search-comparison action item (now retired).
 
 ```bash
 node DHEERAJ_WORKSPACE/baseline/run.mjs                        # mixed dev set, 400k queries
