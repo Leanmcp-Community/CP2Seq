@@ -1,35 +1,22 @@
 # notes 索引
 
-## 文件分工（每件事只有一个出处）
-
-| 文件 | 只负责 | 语言 |
-| --- | --- | --- |
-| `../BASELINE_REPRODUCTION.md` | 跟谁比：已发表方法 + 自建搜索基线 | 英文 |
-| `../DATASET.md` | 数据从哪来 | 英文 |
-| `../EXPERIMENTS_SETUP.md` | 怎么跑：循环、工具、条件、指标、协议 | 英文 |
-| `plan/experiment-spec-checklist.md` | 要冻结哪些决定 + 每条状态 | 中文 |
-| `plan/research-workflow.md` | 阶段、纪律、现在走到哪 | 中文 |
-
-**根目录是给同事看的（英文），`notes/` 是我的工作笔记（中文）。同一段不写两遍。**
-
-| 目录 | 放什么 |
+| 文件 | 职责 |
 | --- | --- |
-| **`plan/`** | 两条 track 的方案、研究流程、语料方案、实验 spec 清单 |
-| **`probes/`** | Phase 0 探针的**结果**（结论 + 数字 + caveat，不写过程） |
-| **`reading/`** | 读论文的笔记 |
-| **`tools/`** | 工具能力核实（Flat-Folder、Sim-FAST-PY） |
+| `../EXPERIMENTS_SETUP.md` | 主实验：VLM 闭环、工具消融、验证、指标与步骤 |
+| `../DATASET.md` | 数据来源与现有注释 |
+| `plan/experiment-spec-checklist.md` | 跑实验前待冻结的决定 |
+| `plan/research-workflow.md` | 执行阶段与纪律 |
+| `plan/corpus-plan.md` | 小规模实验语料准备 |
 
-## Phase 0 · 已结束
+## 已归档的探针
 
-| 探针 | 状态 | 一句话结论 |
+2026-09-17：ABC 不再作为主实验前提、评分标签或基线。原代码与工件保留用于追溯。
+
+| 笔记 | 原问题 | 当前处理 |
 | --- | --- | --- |
-| [A 爆炸曲线](probes/probe-a-explosion.md) | ✅ | 爆炸在长尾不在中位数；语料必须分层采样；只用 instagram |
-| [B 可行性判据](probes/probe-b-oracle.md) | ✅ | 传播判据免费且完美，但因为终态问题不难 → **难度在序列层** |
-| [C 纯搜索基线](probes/probe-c-screen.md) | ✅ | **92.3% 的真实折纸已证明不可 simple fold**；确认可折仅 4 个（1.1%）。纯搜索在真实语料上不工作 |
+| [Probe A](probes/probe-a-explosion.md) | 终态枚举数量与成本 | 归档；不作为序列难度依据 |
+| [Probe B](probes/probe-b-oracle.md) | 终态层序传播 | 归档；不当作动作验证器 |
+| [Probe C](probes/probe-c-screen.md) | 受限动作空间搜索 | 归档；不提供物理不可折标签 |
 
-**已定**：action space = simple folding（Pureland）· 序列数据 = PurelandFold + 自己合成
-· 难度轴 = step count + non-local dependency
-
-**已定**：预折痕**不纳入**动作空间 —— 它会拆掉 Probe C 的判据本身；改为当作实测的范围边界来报
-
-**待定**：37 个 TIMEOUT 要不要加大预算再判一次（搜索撑不过 ~8 折，而真实序列 5–21 步）
+`reading/` 保留论文阅读记录，`tools/` 保留工具调查。
+旧笔记中的研究假设不覆盖主实验规范；历史详细结果可从 Git 历史恢复。
