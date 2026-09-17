@@ -1,0 +1,161 @@
+{
+ "id": "paper-dart",
+ "title": "Paper dart",
+ "steps": 4,
+ "folds": [
+  {
+   "step": 1,
+   "line": {
+    "n": [
+     0.7071067811865475,
+     -0.7071067811865475
+    ],
+    "d": -0.35355339059327373
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 1,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.5,
+      1
+     ],
+     "Q": [
+      0,
+      0.5
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "paper_area": 1
+  },
+  {
+   "step": 2,
+   "line": {
+    "n": [
+     0.7071067811865475,
+     0.7071067811865475
+    ],
+    "d": 1.0606601717798212
+   },
+   "move_positive": true,
+   "over": true,
+   "layers_moved": 1,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.5
+     ],
+     "Q": [
+      0.5,
+      1
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 2,
+   "layers_after": 3,
+   "paper_area": 1
+  },
+  {
+   "step": 3,
+   "line": {
+    "n": [
+     0.9180623535361906,
+     -0.3964360162997187
+    ],
+    "d": 0.0625951604683766
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 2,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.06818181818181815,
+      0
+     ],
+     "Q": [
+      0.5,
+      1
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.5,
+      1
+     ],
+     "Q": [
+      0,
+      0.7840909090909092
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 2,
+   "layers_before": 3,
+   "layers_after": 5,
+   "paper_area": 1
+  },
+  {
+   "step": 4,
+   "line": {
+    "n": [
+     0.9180623535361906,
+     0.3964360162997187
+    ],
+    "d": 0.8554671930678139
+   },
+   "move_positive": true,
+   "over": true,
+   "layers_moved": 2,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.9318181818181818,
+      0
+     ],
+     "Q": [
+      0.5,
+      1
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      1,
+      0.7840909090909096
+     ],
+     "Q": [
+      0.5,
+      1
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 2,
+   "layers_before": 5,
+   "layers_after": 7,
+   "paper_area": 1
+  }
+ ]
+}

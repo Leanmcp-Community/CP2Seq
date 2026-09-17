@@ -1,0 +1,123 @@
+{
+ "id": "v6-0082",
+ "stratum": "v6",
+ "seed": 20261298,
+ "requested_steps": 6,
+ "cp_hash": "264e92ccc52fd05c",
+ "metrics": {
+  "steps": 6,
+  "crease_segments_raw": 10,
+  "crease_edges": 13,
+  "mountain": 10,
+  "valley": 3,
+  "border": 14,
+  "distinct_crease_lines": 7,
+  "vertices": 17,
+  "coupling_max": 3,
+  "coupling_mean": 1.667,
+  "coupling_total": 10,
+  "coupling_final_step": 2,
+  "layers_final": 11,
+  "distinct_angles": 4,
+  "bbox_area_final": 0.375,
+  "largest_face_final": 0.25,
+  "flags": {
+   "repeated_halving": false,
+   "no_coupling": false,
+   "collapsed": false,
+   "single_angle": false
+  },
+  "degenerate": false
+ },
+ "planarize": {
+  "segments_in": 14,
+  "vertices": 17,
+  "edges": 27,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 14,
+   "M": 10,
+   "V": 3
+  }
+ },
+ "pure_search": {
+  "status": "SOLVED",
+  "queries": 16582,
+  "depth": 5,
+  "seq": [
+   {
+    "line": {
+     "n": [
+      0,
+      1
+     ],
+     "d": 0.25,
+     "dir": [
+      1,
+      0
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865474,
+      0.7071067811865477
+     ],
+     "d": -2.7755575615628914e-17,
+     "dir": [
+      -0.7071067811865477,
+      0.7071067811865474
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      -2.6381841156108976e-10,
+      1
+     ],
+     "d": -0.2499999999340456,
+     "dir": [
+      -1,
+      -2.6381841156108976e-10
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      1,
+      1.0552720919321246e-9
+     ],
+     "d": 0.24999999960427316,
+     "dir": [
+      -1.0552720919321246e-9,
+      1
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067796941677,
+      0.7071067826789273
+     ],
+     "d": -0.5303300868226475,
+     "dir": [
+      -0.7071067826789273,
+      0.7071067796941677
+     ]
+    },
+    "movePositive": true
+   }
+  ],
+  "ms": 31
+ }
+}

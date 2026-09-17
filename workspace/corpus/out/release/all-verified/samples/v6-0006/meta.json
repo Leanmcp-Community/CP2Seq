@@ -1,0 +1,137 @@
+{
+ "id": "v6-0006",
+ "stratum": "v6",
+ "seed": 20261222,
+ "requested_steps": 6,
+ "cp_hash": "40d0cf9622c02bd0",
+ "metrics": {
+  "steps": 6,
+  "crease_segments_raw": 19,
+  "crease_edges": 25,
+  "mountain": 14,
+  "valley": 11,
+  "border": 14,
+  "distinct_crease_lines": 12,
+  "vertices": 20,
+  "coupling_max": 4,
+  "coupling_mean": 3.167,
+  "coupling_total": 19,
+  "coupling_final_step": 4,
+  "layers_final": 20,
+  "distinct_angles": 4,
+  "bbox_area_final": 0.25,
+  "largest_face_final": 0.09375,
+  "flags": {
+   "repeated_halving": false,
+   "no_coupling": false,
+   "collapsed": false,
+   "single_angle": false
+  },
+  "degenerate": false
+ },
+ "planarize": {
+  "segments_in": 23,
+  "vertices": 20,
+  "edges": 39,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 14,
+   "M": 14,
+   "V": 11
+  }
+ },
+ "pure_search": {
+  "status": "SOLVED",
+  "queries": 695876,
+  "depth": 6,
+  "seq": [
+   {
+    "line": {
+     "n": [
+      1,
+      0
+     ],
+     "d": 0.5,
+     "dir": [
+      0,
+      1
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      1,
+      0
+     ],
+     "d": 0.25,
+     "dir": [
+      0,
+      1
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865475,
+      -0.7071067811865475
+     ],
+     "d": -0.5303300858899106,
+     "dir": [
+      -0.7071067811865475,
+      -0.7071067811865475
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865476,
+      0.7071067811865474
+     ],
+     "d": 0.5303300858899104,
+     "dir": [
+      -0.7071067811865474,
+      0.7071067811865476
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865478,
+      0.7071067811865472
+     ],
+     "d": 0.17677669529663675,
+     "dir": [
+      0.7071067811865472,
+      -0.7071067811865478
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      6.661338147750941e-16,
+      1
+     ],
+     "d": 0.75,
+     "dir": [
+      -1,
+      6.661338147750941e-16
+     ]
+    },
+    "movePositive": true
+   }
+  ],
+  "ms": 1798
+ }
+}

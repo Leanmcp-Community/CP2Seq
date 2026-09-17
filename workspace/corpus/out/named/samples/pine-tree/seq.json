@@ -1,0 +1,172 @@
+{
+ "id": "pine-tree",
+ "title": "Pine tree",
+ "steps": 4,
+ "folds": [
+  {
+   "step": 1,
+   "line": {
+    "n": [
+     0.9347835805883489,
+     -0.3552177606235726
+    ],
+    "d": 0.11217402967060186
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 1,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.12,
+      0
+     ],
+     "Q": [
+      0.5,
+      1
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "paper_area": 1
+  },
+  {
+   "step": 2,
+   "line": {
+    "n": [
+     0.9347835805883489,
+     0.3552177606235726
+    ],
+    "d": 0.822609550917747
+   },
+   "move_positive": true,
+   "over": true,
+   "layers_moved": 2,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.88,
+      0
+     ],
+     "Q": [
+      0.5,
+      1
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.5,
+      1
+     ],
+     "Q": [
+      0,
+      0.738832653843602
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 2,
+   "layers_before": 2,
+   "layers_after": 4,
+   "paper_area": 1
+  },
+  {
+   "step": 3,
+   "line": {
+    "n": [
+     0.7071067811865475,
+     0.7071067811865475
+    ],
+    "d": 0.2969848480983499
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 2,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.42000000000000004,
+      0
+     ],
+     "Q": [
+      0.20260869565217393,
+      0.21739130434782616
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.20260869565217388,
+      0.21739130434782603
+     ],
+     "Q": [
+      0,
+      0.20540232730873975
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 2,
+   "layers_before": 4,
+   "layers_after": 6,
+   "paper_area": 1
+  },
+  {
+   "step": 4,
+   "line": {
+    "n": [
+     0.7071067811865475,
+     -0.7071067811865475
+    ],
+    "d": 0.4101219330881975
+   },
+   "move_positive": true,
+   "over": true,
+   "layers_moved": 2,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.58,
+      0
+     ],
+     "Q": [
+      0.7973913043478261,
+      0.21739130434782605
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      1,
+      0.2054023273087399
+     ],
+     "Q": [
+      0.797391304347826,
+      0.21739130434782616
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 2,
+   "layers_before": 6,
+   "layers_after": 8,
+   "paper_area": 1
+  }
+ ]
+}

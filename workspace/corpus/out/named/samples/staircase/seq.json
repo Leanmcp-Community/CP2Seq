@@ -1,0 +1,271 @@
+{
+ "id": "staircase",
+ "title": "Staircase",
+ "steps": 6,
+ "folds": [
+  {
+   "step": 1,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 0.14
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 1,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.14
+     ],
+     "Q": [
+      0,
+      0.14
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "paper_area": 1
+  },
+  {
+   "step": 2,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 0.3
+   },
+   "move_positive": false,
+   "over": false,
+   "layers_moved": 2,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.30000000000000004
+     ],
+     "Q": [
+      0,
+      0.29999999999999993
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 2,
+   "layers_after": 3,
+   "paper_area": 1
+  },
+  {
+   "step": 3,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 0.42
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 3,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.10000000000000003
+     ],
+     "Q": [
+      0,
+      0.10000000000000003
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      1,
+      0.18
+     ],
+     "Q": [
+      0,
+      0.18
+     ],
+     "assignment": "M"
+    },
+    {
+     "P": [
+      1,
+      0.42
+     ],
+     "Q": [
+      0,
+      0.42000000000000004
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 3,
+   "layers_before": 3,
+   "layers_after": 6,
+   "paper_area": 1
+  },
+  {
+   "step": 4,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 0.58
+   },
+   "move_positive": false,
+   "over": false,
+   "layers_moved": 6,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.58
+     ],
+     "Q": [
+      0,
+      0.58
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 6,
+   "layers_after": 7,
+   "paper_area": 1
+  },
+  {
+   "step": 5,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 0.7
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 5,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.06000000000000005
+     ],
+     "Q": [
+      0,
+      0.06000000000000005
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      1,
+      0.21999999999999997
+     ],
+     "Q": [
+      0,
+      0.21999999999999997
+     ],
+     "assignment": "M"
+    },
+    {
+     "P": [
+      1,
+      0.38
+     ],
+     "Q": [
+      0,
+      0.38
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      1,
+      0.45999999999999996
+     ],
+     "Q": [
+      0,
+      0.45999999999999996
+     ],
+     "assignment": "M"
+    },
+    {
+     "P": [
+      1,
+      0.7
+     ],
+     "Q": [
+      0,
+      0.7
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 5,
+   "layers_before": 7,
+   "layers_after": 12,
+   "paper_area": 1
+  },
+  {
+   "step": 6,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 0.86
+   },
+   "move_positive": false,
+   "over": false,
+   "layers_moved": 12,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.86
+     ],
+     "Q": [
+      0,
+      0.86
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 12,
+   "layers_after": 13,
+   "paper_area": 1
+  }
+ ]
+}

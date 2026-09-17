@@ -1,0 +1,46 @@
+{
+ "id": "mid-0039",
+ "stratum": "mid",
+ "seed": 20260999,
+ "requested_steps": 11,
+ "cp_hash": "09323bf9783f4e99",
+ "metrics": {
+  "steps": 11,
+  "crease_segments_raw": 113,
+  "crease_edges": 155,
+  "mountain": 72,
+  "valley": 83,
+  "border": 32,
+  "distinct_crease_lines": 27,
+  "vertices": 74,
+  "coupling_max": 57,
+  "coupling_mean": 10.273,
+  "coupling_total": 113,
+  "coupling_final_step": 57,
+  "layers_final": 114,
+  "distinct_angles": 4,
+  "bbox_area_final": 0.03125,
+  "largest_face_final": 0.015625,
+  "flags": {
+   "repeated_halving": false,
+   "no_coupling": false,
+   "collapsed": true,
+   "single_angle": false
+  },
+  "degenerate": true
+ },
+ "planarize": {
+  "segments_in": 117,
+  "vertices": 74,
+  "edges": 187,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 32,
+   "V": 83,
+   "M": 72
+  }
+ },
+ "pure_search": null
+}

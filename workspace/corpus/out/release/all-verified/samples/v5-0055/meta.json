@@ -1,0 +1,123 @@
+{
+ "id": "v5-0055",
+ "stratum": "v5",
+ "seed": 20261171,
+ "requested_steps": 5,
+ "cp_hash": "c3ab947060a34558",
+ "metrics": {
+  "steps": 5,
+  "crease_segments_raw": 13,
+  "crease_edges": 17,
+  "mountain": 10,
+  "valley": 7,
+  "border": 10,
+  "distinct_crease_lines": 7,
+  "vertices": 14,
+  "coupling_max": 5,
+  "coupling_mean": 2.6,
+  "coupling_total": 13,
+  "coupling_final_step": 5,
+  "layers_final": 14,
+  "distinct_angles": 3,
+  "bbox_area_final": 0.25,
+  "largest_face_final": 0.125,
+  "flags": {
+   "repeated_halving": false,
+   "no_coupling": false,
+   "collapsed": false,
+   "single_angle": false
+  },
+  "degenerate": false
+ },
+ "planarize": {
+  "segments_in": 17,
+  "vertices": 14,
+  "edges": 27,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 10,
+   "M": 10,
+   "V": 7
+  }
+ },
+ "pure_search": {
+  "status": "SOLVED",
+  "queries": 3308,
+  "depth": 5,
+  "seq": [
+   {
+    "line": {
+     "n": [
+      1,
+      0
+     ],
+     "d": 0.25,
+     "dir": [
+      0,
+      1
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865472,
+      0.7071067811865478
+     ],
+     "d": 0.35355339059327373,
+     "dir": [
+      -0.7071067811865478,
+      0.7071067811865472
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.707106781186548,
+      -0.7071067811865469
+     ],
+     "d": 4.440892098500626e-16,
+     "dir": [
+      0.7071067811865469,
+      0.707106781186548
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067813730956,
+      -0.7071067809999995
+     ],
+     "d": -0.35355339031345195,
+     "dir": [
+      -0.7071067809999995,
+      -0.7071067813730956
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      -5.276368231221796e-10,
+      1
+     ],
+     "d": 0.49999999973618137,
+     "dir": [
+      1,
+      5.276368231221796e-10
+     ]
+    },
+    "movePositive": true
+   }
+  ],
+  "ms": 12
+ }
+}

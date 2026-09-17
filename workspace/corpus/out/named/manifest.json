@@ -1,0 +1,684 @@
+{
+ "generated": "2026-09-16T12:47:37.784Z",
+ "authored": true,
+ "samples": [
+  {
+   "id": "accordion-8",
+   "title": "Accordion pleat, 8 panels",
+   "family": "useful",
+   "note": "The canonical deployable fold. Every crease is a full-width parallel line and every fold crosses the whole stack, so it sits in the middle of the all-layers action space rather than at its edge.",
+   "authored": true,
+   "tier": "all-layers",
+   "metrics": {
+    "steps": 7,
+    "partial_folds": 0,
+    "crease_edges": 7,
+    "mountain": 3,
+    "valley": 4,
+    "vertices": 18,
+    "coupling_max": 1,
+    "layers_final": 8,
+    "paper_area_final": 1,
+    "sheet_area": 1
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 18,
+    "edges": 25,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 18,
+     "V": 4,
+     "M": 3
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "map-fold-4x4",
+   "title": "Map fold, 4 x 4",
+   "family": "useful",
+   "note": "Accordion one way, then accordion the folded strip the other way -- how a road map actually folds. This is the shape the theory is named after: Arkin et al., 'When Can You Fold a Map?' is the complexity result this action space inherits.",
+   "authored": true,
+   "tier": "all-layers",
+   "metrics": {
+    "steps": 6,
+    "partial_folds": 0,
+    "crease_edges": 24,
+    "mountain": 10,
+    "valley": 14,
+    "vertices": 25,
+    "coupling_max": 4,
+    "layers_final": 16,
+    "paper_area_final": 1,
+    "sheet_area": 1
+   },
+   "planarize": {
+    "segments_in": 19,
+    "vertices": 25,
+    "edges": 40,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 14,
+     "M": 10
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "miura-ori",
+   "title": "Miura-ori, skewed pleat",
+   "family": "useful",
+   "note": "Accordion in one direction, then pleat the strip along slanted lines. The skew gives Miura-ori its single degree of freedom and its use in solar arrays and stents. After the vertical pleat the paper is a strip at x in [0.75, 1], so the slanted offsets are chosen to fall inside THAT strip's own range, not the square's.",
+   "authored": true,
+   "tier": "all-layers",
+   "metrics": {
+    "steps": 6,
+    "partial_folds": 0,
+    "crease_edges": 29,
+    "mountain": 13,
+    "valley": 16,
+    "vertices": 37,
+    "coupling_max": 8,
+    "layers_final": 20,
+    "paper_area_final": 1,
+    "sheet_area": 1
+   },
+   "planarize": {
+    "segments_in": 23,
+    "vertices": 37,
+    "edges": 51,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 22,
+     "V": 16,
+     "M": 13
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "dog-head",
+   "title": "Dog head",
+   "family": "recognisable",
+   "note": "The classic four-fold model, and the one that took three tries. Folding a square on its diagonal always leaves the spine at 45 degrees, so the head came out tilted however the later folds were chosen -- the paper has to be held turned, which is what DIAMOND is. Then: halve to a triangle with the spine level and the snout down, drop both top corners for ears, tip the chin up.",
+   "authored": true,
+   "tier": "all-layers",
+   "metrics": {
+    "steps": 4,
+    "partial_folds": 0,
+    "crease_edges": 9,
+    "mountain": 3,
+    "valley": 6,
+    "vertices": 17,
+    "coupling_max": 2,
+    "layers_final": 8,
+    "paper_area_final": 0.5,
+    "sheet_area": 0.5
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 17,
+    "edges": 21,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 6,
+     "M": 3
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "sailboat",
+   "title": "Sailboat",
+   "family": "recognisable",
+   "note": "Halve on the diagonal for the sail, turn the bottom band up for the hull, trim the stern corner.",
+   "authored": true,
+   "tier": "all-layers",
+   "metrics": {
+    "steps": 3,
+    "partial_folds": 0,
+    "crease_edges": 11,
+    "mountain": 4,
+    "valley": 7,
+    "vertices": 12,
+    "coupling_max": 4,
+    "layers_final": 8,
+    "paper_area_final": 1,
+    "sheet_area": 1
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 12,
+    "edges": 19,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 8,
+     "V": 7,
+     "M": 4
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "hat-brim",
+   "title": "Hat with a turned brim",
+   "family": "recognisable",
+   "note": "The model that needs the SOME-LAYERS tier, and the point of including it. Halve the paper, then turn up only the TOP layer's edge -- the brim. The two layers now have different outlines, which no all-layers sequence can produce however long it runs, because a fold that moves the whole stack moves every layer's boundary with it.",
+   "authored": true,
+   "tier": "some-layers",
+   "metrics": {
+    "steps": 3,
+    "partial_folds": 1,
+    "crease_edges": 6,
+    "mountain": 3,
+    "valley": 3,
+    "vertices": 13,
+    "coupling_max": 3,
+    "layers_final": 6,
+    "paper_area_final": 1,
+    "sheet_area": 1
+   },
+   "planarize": {
+    "segments_in": 9,
+    "vertices": 13,
+    "edges": 18,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 3,
+     "M": 3
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "house",
+   "title": "House",
+   "family": "recognisable",
+   "note": "Two folds. Cut both top corners along lines that meet at the top centre, so the peak survives and the silhouette becomes a pentagon -- a wall with a roof. The lines must MEET at (0.5, 1); ending them apart leaves a flat ridge and it reads as a tent with the top cut off.",
+   "authored": true,
+   "tier": "all-layers",
+   "metrics": {
+    "steps": 2,
+    "partial_folds": 0,
+    "crease_edges": 2,
+    "mountain": 0,
+    "valley": 2,
+    "vertices": 7,
+    "coupling_max": 1,
+    "layers_final": 3,
+    "paper_area_final": 1,
+    "sheet_area": 1
+   },
+   "planarize": {
+    "segments_in": 6,
+    "vertices": 7,
+    "edges": 9,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 7,
+     "V": 2
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "envelope",
+   "title": "Envelope",
+   "family": "recognisable",
+   "note": "Bottom edge up, both sides in, top flap down -- the order a real envelope is assembled in, and the reason the last fold lies on top of the other three.",
+   "authored": true,
+   "tier": "all-layers",
+   "metrics": {
+    "steps": 4,
+    "partial_folds": 0,
+    "crease_edges": 12,
+    "mountain": 4,
+    "valley": 8,
+    "vertices": 16,
+    "coupling_max": 3,
+    "layers_final": 9,
+    "paper_area_final": 1,
+    "sheet_area": 1
+   },
+   "planarize": {
+    "segments_in": 12,
+    "vertices": 16,
+    "edges": 24,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 8,
+     "M": 4
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "paper-dart",
+   "title": "Paper dart",
+   "family": "recognisable",
+   "note": "The plane everyone folds, minus the centre crease -- that crease is made by folding and UNFOLDING, which simple folding cannot do, so the corners are brought to the centre line directly. Two corners in, then the new slanted edges in again, and the nose is the point at the top.",
+   "authored": true,
+   "tier": "all-layers",
+   "metrics": {
+    "steps": 4,
+    "partial_folds": 0,
+    "crease_edges": 6,
+    "mountain": 2,
+    "valley": 4,
+    "vertices": 11,
+    "coupling_max": 2,
+    "layers_final": 7,
+    "paper_area_final": 1,
+    "sheet_area": 1
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 11,
+    "edges": 17,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 11,
+     "V": 4,
+     "M": 2
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "pine-tree",
+   "title": "Pine tree",
+   "family": "recognisable",
+   "note": "A tapered triangle with a trunk: bring both lower sides in to a narrow base, then take the very bottom corners off so a trunk is left standing below the foliage.",
+   "authored": true,
+   "tier": "all-layers",
+   "metrics": {
+    "steps": 4,
+    "partial_folds": 0,
+    "crease_edges": 9,
+    "mountain": 3,
+    "valley": 6,
+    "vertices": 14,
+    "coupling_max": 2,
+    "layers_final": 8,
+    "paper_area_final": 1,
+    "sheet_area": 1
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 14,
+    "edges": 21,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 6,
+     "M": 3
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "pencil",
+   "title": "Pencil",
+   "family": "recognisable",
+   "note": "A long rectangle with one end brought to a point. Halve twice the same way for the shaft -- a pencil is thin -- then take both corners off one end.",
+   "authored": true,
+   "tier": "all-layers",
+   "metrics": {
+    "steps": 4,
+    "partial_folds": 0,
+    "crease_edges": 10,
+    "mountain": 4,
+    "valley": 6,
+    "vertices": 15,
+    "coupling_max": 3,
+    "layers_final": 9,
+    "paper_area_final": 1,
+    "sheet_area": 1
+   },
+   "planarize": {
+    "segments_in": 12,
+    "vertices": 15,
+    "edges": 23,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 13,
+     "V": 6,
+     "M": 4
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "bookmark-corner",
+   "title": "Corner bookmark",
+   "family": "recognisable",
+   "note": "The triangle that slips over a page corner: fold on the diagonal, then turn the free tip back over the body so the pocket's mouth is visible.",
+   "authored": true,
+   "tier": "all-layers",
+   "metrics": {
+    "steps": 2,
+    "partial_folds": 0,
+    "crease_edges": 4,
+    "mountain": 1,
+    "valley": 3,
+    "vertices": 5,
+    "coupling_max": 2,
+    "layers_final": 4,
+    "paper_area_final": 1,
+    "sheet_area": 1
+   },
+   "planarize": {
+    "segments_in": 7,
+    "vertices": 5,
+    "edges": 8,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 4,
+     "V": 3,
+     "M": 1
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "arrowhead",
+   "title": "Arrowhead",
+   "family": "recognisable",
+   "note": "Point up, then notch the base by folding the bottom edge up between the two barbs -- the notch is what separates an arrowhead from a plain triangle.",
+   "authored": true,
+   "tier": "all-layers",
+   "metrics": {
+    "steps": 3,
+    "partial_folds": 0,
+    "crease_edges": 3,
+    "mountain": 0,
+    "valley": 3,
+    "vertices": 9,
+    "coupling_max": 1,
+    "layers_final": 4,
+    "paper_area_final": 1,
+    "sheet_area": 1
+   },
+   "planarize": {
+    "segments_in": 7,
+    "vertices": 9,
+    "edges": 12,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 9,
+     "V": 3
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "bow-tie",
+   "title": "Bow tie",
+   "family": "recognisable",
+   "note": "Pinch the middle from both sides: two folds bring the long edges in to a narrow waist, and two more take the outer corners off so each wing flares.",
+   "authored": true,
+   "tier": "all-layers",
+   "metrics": {
+    "steps": 4,
+    "partial_folds": 0,
+    "crease_edges": 19,
+    "mountain": 8,
+    "valley": 11,
+    "vertices": 23,
+    "coupling_max": 8,
+    "layers_final": 16,
+    "paper_area_final": 1,
+    "sheet_area": 1
+   },
+   "planarize": {
+    "segments_in": 19,
+    "vertices": 23,
+    "edges": 37,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 18,
+     "V": 11,
+     "M": 8
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "cup",
+   "title": "Cup",
+   "family": "recognisable",
+   "note": "Diagonal first, so the paper is a triangle with a horizontal top edge, then each bottom corner swings across to the far side. The two crossed flaps are the cup's walls; the top edge stays open, which is the whole point of a cup.",
+   "authored": true,
+   "tier": "all-layers",
+   "metrics": {
+    "steps": 3,
+    "partial_folds": 0,
+    "crease_edges": 10,
+    "mountain": 4,
+    "valley": 6,
+    "vertices": 15,
+    "coupling_max": 4,
+    "layers_final": 8,
+    "paper_area_final": 1,
+    "sheet_area": 1
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 15,
+    "edges": 20,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 10,
+     "V": 6,
+     "M": 4
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "fan",
+   "title": "Fan",
+   "family": "useful",
+   "note": "Six panels pleated across, then the handle end pinched so the pleats splay from a point rather than running parallel.",
+   "authored": true,
+   "tier": "all-layers",
+   "metrics": {
+    "steps": 6,
+    "partial_folds": 0,
+    "crease_edges": 16,
+    "mountain": 7,
+    "valley": 9,
+    "vertices": 24,
+    "coupling_max": 6,
+    "layers_final": 12,
+    "paper_area_final": 1,
+    "sheet_area": 1
+   },
+   "planarize": {
+    "segments_in": 15,
+    "vertices": 24,
+    "edges": 32,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 9,
+     "M": 7
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "staircase",
+   "title": "Staircase",
+   "family": "useful",
+   "note": "The same pleat as the accordion but read side-on: alternating over and under at uneven spacing gives treads and risers of different depth, which is what makes it read as steps rather than as a fan.",
+   "authored": true,
+   "tier": "all-layers",
+   "metrics": {
+    "steps": 6,
+    "partial_folds": 0,
+    "crease_edges": 12,
+    "mountain": 6,
+    "valley": 6,
+    "vertices": 28,
+    "coupling_max": 5,
+    "layers_final": 13,
+    "paper_area_final": 1,
+    "sheet_area": 1
+   },
+   "planarize": {
+    "segments_in": 16,
+    "vertices": 28,
+    "edges": 40,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 28,
+     "V": 6,
+     "M": 6
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "shirt-collar",
+   "title": "Collar",
+   "family": "recognisable",
+   "note": "Halve, then turn down only the TOP layer at the fold -- the collar. Like hat-brim this is a some-layers model by necessity: the two layers finish with different outlines, and an all-layers fold moves every layer's boundary together.",
+   "authored": true,
+   "tier": "some-layers",
+   "metrics": {
+    "steps": 2,
+    "partial_folds": 1,
+    "crease_edges": 2,
+    "mountain": 1,
+    "valley": 1,
+    "vertices": 8,
+    "coupling_max": 1,
+    "layers_final": 3,
+    "paper_area_final": 1,
+    "sheet_area": 1
+   },
+   "planarize": {
+    "segments_in": 6,
+    "vertices": 8,
+    "edges": 10,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 8,
+     "V": 1,
+     "M": 1
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "open-book",
+   "title": "Open book",
+   "family": "recognisable",
+   "note": "Halve for the spine, then turn one page: the top layer alone folds back, so one side shows two leaves and the other shows one. A whole-stack fold would turn both leaves at once and the book would just be a smaller rectangle.",
+   "authored": true,
+   "tier": "some-layers",
+   "metrics": {
+    "steps": 2,
+    "partial_folds": 1,
+    "crease_edges": 2,
+    "mountain": 1,
+    "valley": 1,
+    "vertices": 8,
+    "coupling_max": 1,
+    "layers_final": 3,
+    "paper_area_final": 1,
+    "sheet_area": 1
+   },
+   "planarize": {
+    "segments_in": 6,
+    "vertices": 8,
+    "edges": 10,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 8,
+     "V": 1,
+     "M": 1
+    }
+   },
+   "ok": true
+  },
+  {
+   "id": "step-pocket",
+   "title": "Stepped pocket",
+   "family": "useful",
+   "note": "A pleat made in the top two layers only, leaving the ones beneath flat. The step is a partial fold sitting on an unfolded bed -- the configuration the some-layers tier exists to express, and the one the random sampler produces least often.",
+   "authored": true,
+   "tier": "some-layers",
+   "metrics": {
+    "steps": 3,
+    "partial_folds": 1,
+    "crease_edges": 4,
+    "mountain": 2,
+    "valley": 2,
+    "vertices": 12,
+    "coupling_max": 2,
+    "layers_final": 5,
+    "paper_area_final": 1,
+    "sheet_area": 1
+   },
+   "planarize": {
+    "segments_in": 8,
+    "vertices": 12,
+    "edges": 16,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 2,
+     "M": 2
+    }
+   },
+   "ok": true
+  }
+ ]
+}

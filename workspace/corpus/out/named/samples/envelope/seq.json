@@ -1,0 +1,183 @@
+{
+ "id": "envelope",
+ "title": "Envelope",
+ "steps": 4,
+ "folds": [
+  {
+   "step": 1,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 0.28
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 1,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.28
+     ],
+     "Q": [
+      0,
+      0.28
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "paper_area": 1
+  },
+  {
+   "step": 2,
+   "line": {
+    "n": [
+     -1,
+     0
+    ],
+    "d": -0.22
+   },
+   "move_positive": true,
+   "over": true,
+   "layers_moved": 2,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.21999999999999997,
+      1
+     ],
+     "Q": [
+      0.22,
+      0.28
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.22,
+      0
+     ],
+     "Q": [
+      0.21999999999999997,
+      0.28
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 2,
+   "layers_before": 2,
+   "layers_after": 4,
+   "paper_area": 1
+  },
+  {
+   "step": 3,
+   "line": {
+    "n": [
+     -1,
+     0
+    ],
+    "d": -0.78
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 2,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.78,
+      1
+     ],
+     "Q": [
+      0.78,
+      0.28
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.78,
+      0
+     ],
+     "Q": [
+      0.78,
+      0.28
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 2,
+   "layers_before": 4,
+   "layers_after": 6,
+   "paper_area": 1
+  },
+  {
+   "step": 4,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 0.72
+   },
+   "move_positive": true,
+   "over": true,
+   "layers_moved": 3,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      0.21999999999999997,
+      0.72
+     ],
+     "Q": [
+      0.78,
+      0.72
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0,
+      0.72
+     ],
+     "Q": [
+      0.21999999999999997,
+      0.72
+     ],
+     "assignment": "M"
+    },
+    {
+     "P": [
+      1,
+      0.72
+     ],
+     "Q": [
+      0.78,
+      0.72
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 3,
+   "layers_before": 6,
+   "layers_after": 9,
+   "paper_area": 1
+  }
+ ]
+}

@@ -1,0 +1,118 @@
+{
+ "id": "step-pocket",
+ "title": "Stepped pocket",
+ "steps": 3,
+ "folds": [
+  {
+   "step": 1,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 0.34
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 1,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.34
+     ],
+     "Q": [
+      0,
+      0.3400000000000001
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "paper_area": 1
+  },
+  {
+   "step": 2,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 0.66
+   },
+   "move_positive": true,
+   "over": true,
+   "layers_moved": 2,
+   "selection": {
+    "mode": "all"
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.66
+     ],
+     "Q": [
+      0,
+      0.66
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      1,
+      0.020000000000000018
+     ],
+     "Q": [
+      0,
+      0.020000000000000018
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 2,
+   "layers_before": 2,
+   "layers_after": 4,
+   "paper_area": 1
+  },
+  {
+   "step": 3,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 0.52
+   },
+   "move_positive": false,
+   "over": true,
+   "layers_moved": 1,
+   "selection": {
+    "mode": "top",
+    "k": 1
+   },
+   "creases": [
+    {
+     "P": [
+      1,
+      0.8
+     ],
+     "Q": [
+      0,
+      0.8
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 4,
+   "layers_after": 5,
+   "paper_area": 1
+  }
+ ]
+}

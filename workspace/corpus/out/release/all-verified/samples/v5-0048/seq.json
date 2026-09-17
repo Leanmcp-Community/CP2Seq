@@ -1,0 +1,225 @@
+{
+ "id": "v5-0048",
+ "seed": 20261164,
+ "steps": 5,
+ "folds": [
+  {
+   "step": 1,
+   "angle_deg": 90,
+   "angle_index": 2,
+   "offset": 0.5,
+   "move_positive": true,
+   "over": true,
+   "creases": [
+    {
+     "P": [
+      0.5,
+      0
+     ],
+     "Q": [
+      0.5,
+      1
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "silhouette_bbox_area": 0.5,
+   "largest_face_area": 0.5
+  },
+  {
+   "step": 2,
+   "angle_deg": 135,
+   "angle_index": 3,
+   "offset": 1.25,
+   "move_positive": true,
+   "over": false,
+   "creases": [
+    {
+     "P": [
+      0.4999999999999999,
+      0.7499999999999999
+     ],
+     "Q": [
+      0.24999999999999994,
+      0.9999999999999998
+     ],
+     "assignment": "M"
+    },
+    {
+     "P": [
+      0.5000000000000001,
+      0.7499999999999999
+     ],
+     "Q": [
+      0.75,
+      0.9999999999999998
+     ],
+     "assignment": "V"
+    }
+   ],
+   "creases_created": 2,
+   "layers_before": 2,
+   "layers_after": 4,
+   "silhouette_bbox_area": 0.5,
+   "largest_face_area": 0.46875
+  },
+  {
+   "step": 3,
+   "angle_deg": 45,
+   "angle_index": 1,
+   "offset": 0.5,
+   "move_positive": false,
+   "over": true,
+   "creases": [
+    {
+     "P": [
+      0.6249999999999998,
+      0.8750000000000002
+     ],
+     "Q": [
+      0.4999999999999998,
+      1
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.3750000000000002,
+      0.8750000000000002
+     ],
+     "Q": [
+      0.5000000000000002,
+      1
+     ],
+     "assignment": "M"
+    },
+    {
+     "P": [
+      0.37499999999999983,
+      0.8749999999999998
+     ],
+     "Q": [
+      0,
+      0.4999999999999999
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.6250000000000002,
+      0.8749999999999998
+     ],
+     "Q": [
+      1,
+      0.4999999999999999
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 4,
+   "layers_before": 4,
+   "layers_after": 8,
+   "silhouette_bbox_area": 0.4375,
+   "largest_face_area": 0.359375
+  },
+  {
+   "step": 4,
+   "angle_deg": 90,
+   "angle_index": 2,
+   "offset": 0.25,
+   "move_positive": false,
+   "over": true,
+   "creases": [
+    {
+     "P": [
+      0.25,
+      0.75
+     ],
+     "Q": [
+      0.25,
+      1
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.75,
+      0.75
+     ],
+     "Q": [
+      0.75,
+      1
+     ],
+     "assignment": "M"
+    },
+    {
+     "P": [
+      0.75,
+      0.75
+     ],
+     "Q": [
+      0.5,
+      0.75
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      0.25,
+      0.75
+     ],
+     "Q": [
+      0.5,
+      0.75
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 4,
+   "layers_before": 8,
+   "layers_after": 12,
+   "silhouette_bbox_area": 0.375,
+   "largest_face_area": 0.34375
+  },
+  {
+   "step": 5,
+   "angle_deg": 135,
+   "angle_index": 3,
+   "offset": 1.5,
+   "move_positive": true,
+   "over": true,
+   "creases": [
+    {
+     "P": [
+      -5.551115123125783e-17,
+      2.220446049250313e-16
+     ],
+     "Q": [
+      0.4999999999999998,
+      0.5
+     ],
+     "assignment": "V"
+    },
+    {
+     "P": [
+      1,
+      2.220446049250313e-16
+     ],
+     "Q": [
+      0.5000000000000002,
+      0.5
+     ],
+     "assignment": "M"
+    }
+   ],
+   "creases_created": 2,
+   "layers_before": 12,
+   "layers_after": 14,
+   "silhouette_bbox_area": 0.375,
+   "largest_face_area": 0.21875
+  }
+ ]
+}

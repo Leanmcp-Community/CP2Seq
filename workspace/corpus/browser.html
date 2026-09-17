@@ -1,0 +1,231 @@
+<title>Pureland Corpus Browser</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#f7f6f3; --surface:#fff; --sunk:#efeee9; --ink:#1b1d21; --ink-soft:#5a6068;
+  --rule:#d9d6cf; --rule-soft:#eceae5;
+  --mountain:#b8402b; --valley:#2f5fa8; --edge:#9aa0a6; --accent:#1b4d8f; --face:#2f5fa8;
+  --ok:#2f7d55; --bad:#b8402b;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#15171a; --surface:#1d2024; --sunk:#111316; --ink:#e8e6e1; --ink-soft:#9aa0a6;
+  --rule:#333940; --rule-soft:#262b31;
+  --mountain:#e4674d; --valley:#6b9ee0; --edge:#5c646c; --accent:#7fb0f0; --face:#6b9ee0;
+  --ok:#5fb387; --bad:#e4674d;
+}}
+:root[data-theme="dark"]{
+  --paper:#15171a; --surface:#1d2024; --sunk:#111316; --ink:#e8e6e1; --ink-soft:#9aa0a6;
+  --rule:#333940; --rule-soft:#262b31;
+  --mountain:#e4674d; --valley:#6b9ee0; --edge:#5c646c; --accent:#7fb0f0; --face:#6b9ee0;
+  --ok:#5fb387; --bad:#e4674d;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;
+     line-height:1.5;margin:0;font-size:14px}
+.shell{display:grid;grid-template-columns:230px minmax(0,1fr);height:100%}
+@media(max-width:760px){.shell{grid-template-columns:1fr;height:auto}}
+aside{background:var(--sunk);border-right:1px solid var(--rule);padding:18px 16px;overflow-y:auto}
+main{overflow-y:auto;padding:18px 16px 60px}
+h1{font-size:17px;font-weight:600;margin:0 0 2px;letter-spacing:-.01em}
+.sub{color:var(--ink-soft);font-size:12px;margin:0 0 18px}
+.grp{margin-bottom:16px}
+.grp h2{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);
+        font-weight:500;margin:0 0 6px}
+label.f{display:flex;align-items:center;gap:7px;padding:2px 0;cursor:pointer;font-size:13px}
+label.f span.n{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-soft)}
+input[type=checkbox]{accent-color:var(--accent)}
+.count{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-soft);margin-bottom:12px}
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th{text-align:left;font-weight:500;color:var(--ink-soft);font-size:10.5px;letter-spacing:.06em;
+   text-transform:uppercase;padding:7px 8px;border-bottom:1px solid var(--rule);
+   position:sticky;top:0;background:var(--paper)}
+td{padding:5px 8px;border-bottom:1px solid var(--rule-soft);white-space:nowrap;
+   font-variant-numeric:tabular-nums}
+tr.row{cursor:pointer}
+tr.row:hover td{background:var(--surface)}
+td.id{font-family:"IBM Plex Mono",monospace;color:var(--accent)}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:10.5px;border:1px solid var(--rule);
+     border-radius:2px;padding:0 5px;color:var(--ink-soft)}
+.tag.v{color:var(--ok);border-color:currentColor}
+.tag.g{color:var(--ink-soft)}
+.bad{color:var(--bad);font-weight:600}
+.detail{background:var(--surface);border:1px solid var(--rule);border-radius:3px;padding:14px;margin:6px 0 14px}
+.cols{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start}
+.cpbox{flex:0 0 auto;width:190px}
+.cap{font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
+.box{background:var(--paper);border:1px solid var(--rule);border-radius:3px;padding:7px}
+.strip{display:flex;gap:9px;overflow-x:auto;padding-bottom:6px;flex:1 1 320px;min-width:0}
+.frame{flex:0 0 auto;width:96px}
+.frame figcaption{font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--ink-soft);margin-top:4px}
+.meta{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-soft);margin-top:10px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--ink-soft);margin-bottom:12px}
+.sw{width:20px;border-top:2px solid;display:inline-block;margin-right:5px;vertical-align:middle}
+.err{color:var(--bad);font-size:13px}
+button.more{font:inherit;font-size:12.5px;padding:6px 14px;border:1px solid var(--rule);
+            background:var(--surface);color:var(--ink);border-radius:3px;cursor:pointer;margin-top:12px}
+</style>
+
+<div class="shell">
+<aside>
+  <h1>Corpus Browser</h1>
+  <p class="sub" id="root">loading index…</p>
+  <div id="filters"></div>
+</aside>
+<main>
+  <div class="legend">
+    <span><i class="sw" style="border-color:var(--mountain)"></i>mountain</span>
+    <span><i class="sw" style="border-color:var(--valley);border-top-style:dashed"></i>valley</span>
+    <span><i class="sw" style="border-color:var(--edge)"></i>paper edge</span>
+    <span>click a row to fold it</span>
+  </div>
+  <div class="count" id="count"></div>
+  <div id="err"></div>
+  <table><thead><tr>
+    <th>id</th><th>tier</th><th>split</th><th>band</th><th>folds</th><th>creases</th>
+    <th>layers</th><th>partial</th><th>verdict</th><th>queries</th><th>replay</th>
+  </tr></thead><tbody id="rows"></tbody></table>
+  <div style="text-align:center"><button class="more" id="more" hidden>show more</button></div>
+</main>
+</div>
+
+<script>
+const PAGE = 60;
+let INDEX = null, shown = PAGE, openId = null;
+const state = { tier:new Set(), split:new Set(), band:new Set(), verdict:new Set(), replay:new Set() };
+
+fetch("out/release/index.json").then(r => {
+  if (!r.ok) throw new Error(r.status + " " + r.statusText);
+  return r.json();
+}).then(j => { INDEX = j; boot(); }).catch(e => {
+  document.getElementById("err").innerHTML =
+    `<p class="err">Could not load <code>out/release/index.json</code> — ${e.message}.<br>
+     This page reads the corpus from disk, so it must be SERVED, not opened as a file:
+     run <code>python3 -m http.server 8000</code> in <code>workspace/corpus/</code> and open
+     <code>http://localhost:8000/browser.html</code>. Rebuild the index with
+     <code>node build-index.mjs out/release &gt; out/release/index.json</code>.</p>`;
+});
+
+const facets = [
+  ["tier","tier",s=>s.tier], ["split","split",s=>s.split], ["difficulty","band",s=>s.band],
+  ["solver verdict","verdict",s=>s.verdict ?? "none"], ["replay check","replay",s=>s.replay ?? "not run"],
+];
+
+function boot(){
+  document.getElementById("root").textContent =
+    `${INDEX.samples.length} samples · ${INDEX.root} · bands from ${INDEX.bands.source}`;
+  const box = document.getElementById("filters");
+  for (const [title,key,get] of facets){
+    const vals = {};
+    for (const s of INDEX.samples){ const v = get(s); vals[v] = (vals[v]||0)+1; }
+    const g = document.createElement("div"); g.className = "grp";
+    g.innerHTML = `<h2>${title}</h2>` + Object.keys(vals).sort().map(v =>
+      `<label class="f"><input type="checkbox" data-k="${key}" value="${v}">
+       <span>${v}</span><span class="n">${vals[v]}</span></label>`).join("");
+    box.appendChild(g);
+  }
+  box.addEventListener("change", e => {
+    const k = e.target.dataset.k, v = e.target.value;
+    e.target.checked ? state[k].add(v) : state[k].delete(v);
+    shown = PAGE; render();
+  });
+  document.getElementById("more").addEventListener("click", () => { shown += PAGE; render(); });
+  render();
+}
+
+const match = (s) => facets.every(([,key,get]) =>
+  state[key].size === 0 || state[key].has(String(get(s) ?? (key==="verdict"?"none":"not run"))));
+
+function render(){
+  const list = INDEX.samples.filter(match);
+  document.getElementById("count").textContent =
+    `${list.length} matching${list.length > shown ? `, showing ${shown}` : ""}`;
+  const tb = document.getElementById("rows");
+  tb.innerHTML = "";
+  for (const s of list.slice(0, shown)){
+    const tr = document.createElement("tr");
+    tr.className = "row";
+    tr.innerHTML =
+      `<td class="id">${s.id}</td><td>${s.tier}</td>
+       <td><span class="tag ${s.split==="verified"?"v":"g"}">${s.split}</span></td>
+       <td>${s.band}</td><td>${s.folds}</td><td>${s.creases ?? "—"}</td>
+       <td>${s.layers ?? "—"}</td><td>${s.partial || ""}</td>
+       <td>${s.verdict ?? "—"}</td><td>${s.queries?.toLocaleString() ?? "—"}</td>
+       <td class="${s.replay==="FAIL"?"bad":""}">${s.replay ?? "—"}</td>`;
+    tr.addEventListener("click", () => open(s, tr));
+    tb.appendChild(tr);
+    if (openId === s.dir) open(s, tr, true);
+  }
+  document.getElementById("more").hidden = list.length <= shown;
+}
+
+async function open(s, tr, reopen){
+  const next = tr.nextElementSibling;
+  if (!reopen && next && next.classList.contains("det")){ next.remove(); openId = null; return; }
+  document.querySelectorAll("tr.det").forEach(n => n.remove());
+  openId = s.dir;
+  const row = document.createElement("tr"); row.className = "det";
+  const td = document.createElement("td"); td.colSpan = 11;
+  td.innerHTML = `<div class="detail">loading ${s.dir}…</div>`;
+  row.appendChild(td); tr.after(row);
+  try {
+    const [cp, steps] = await Promise.all([
+      fetch(`out/release/${s.dir}/cp.fold`).then(r => r.json()),
+      fetch(`out/release/${s.dir}/steps.fold`).then(r => r.json()),
+    ]);
+    td.innerHTML = detail(s, cp, steps);
+  } catch (e) {
+    td.innerHTML = `<div class="detail err">could not load ${s.dir}: ${e.message}</div>`;
+  }
+}
+
+function bbox(pts){let a=1e9,b=1e9,c=-1e9,d=-1e9;
+  for(const p of pts){a=Math.min(a,p[0]);b=Math.min(b,p[1]);c=Math.max(c,p[0]);d=Math.max(d,p[1]);}
+  const w=c-a||1,h=d-b||1,s=Math.max(w,h),mx=(s-w)/2,my=(s-h)/2,m=s*0.07;
+  return [a-mx-m,b-my-m,s+2*m,s+2*m];}
+const flipG = vb => `<g transform="translate(0,${2*vb[1]+vb[3]}) scale(1,-1)">`;
+
+function svgCP(cp){
+  const vb=bbox(cp.vertices_coords), sw=vb[2]*0.007;
+  let s=`<svg viewBox="${vb.join(" ")}" width="100%" style="aspect-ratio:1;display:block">`+flipG(vb);
+  for(const[i,[u,w]]of cp.edges_vertices.entries()){
+    const a=cp.edges_assignment[i],A=cp.vertices_coords[u],B=cp.vertices_coords[w];
+    let col="var(--edge)",dash="",width=sw;
+    if(a==="M"){col="var(--mountain)";width=sw*1.2;}
+    else if(a==="V"){col="var(--valley)";dash=`stroke-dasharray="${sw*4} ${sw*3}"`;width=sw*1.2;}
+    else if(a!=="B")continue;
+    s+=`<line x1="${A[0]}" y1="${A[1]}" x2="${B[0]}" y2="${B[1]}" stroke="${col}" stroke-width="${width}" ${dash} stroke-linecap="round"/>`;}
+  return s+"</g></svg>";}
+
+function svgFolded(fr){
+  const vb=bbox(fr.vertices_coords), sw=vb[2]*0.009;
+  const order=fr["fo:faces_layer"]||fr.faces_vertices.map((_,i)=>i);
+  let s=`<svg viewBox="${vb.join(" ")}" width="100%" style="aspect-ratio:1;display:block">`+flipG(vb);
+  const n=order.length;
+  order.forEach((fi,k)=>{const f=fr.faces_vertices[fi];if(!f)return;
+    const pts=f.map(v=>fr.vertices_coords[v].join(",")).join(" ");
+    s+=`<polygon points="${pts}" fill="var(--face)" fill-opacity="${(0.15+0.5*(k/Math.max(1,n-1))).toFixed(3)}" stroke="var(--ink)" stroke-opacity="0.45" stroke-width="${sw}" stroke-linejoin="round"/>`;});
+  return s+"</g></svg>";}
+
+function detail(s, cp, steps){
+  const frames = steps.file_frames ?? [];
+  const strip = frames.map((fr,k)=>`<figure class="frame"><div class="box">${svgFolded(fr)}</div>
+    <figcaption>${k===0?"flat":"fold "+k}<br>${(fr["fo:faces_layer"]||[]).length}L</figcaption></figure>`).join("");
+  const warn = s.replay === "FAIL"
+    ? `<p class="err">replay FAILED: ${s.replay_why} — the stored sequence does not reproduce this
+       pattern, so this sample's ground truth is wrong.</p>` : "";
+  const shorter = s.shorter
+    ? `<br>a ${s.shorter}-fold solution exists — the recorded ${s.folds} is not minimal` : "";
+  return `<div class="detail">${warn}
+    <div class="cols">
+      <div class="cpbox"><div class="cap">crease pattern — the solver's input</div>
+        <div class="box">${svgCP(cp)}</div></div>
+      <div style="flex:1 1 320px;min-width:0"><div class="cap">the sequence that built it</div>
+        <div class="strip">${strip}</div></div>
+    </div>
+    <div class="meta">${s.dir} · ${s.folds} folds · ${s.creases} creases · ${s.layers} layers
+      ${s.partial ? "· "+s.partial+" partial" : ""}
+      ${s.verdict ? "· solver "+s.verdict+(s.queries?" in "+s.queries.toLocaleString()+" queries":"") : "· no solver verdict"}
+      ${shorter}</div></div>`;
+}
+</script>

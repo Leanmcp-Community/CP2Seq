@@ -1,0 +1,6111 @@
+{
+ "generated": "2026-09-16T12:48:20.797Z",
+ "tier": "some-layers",
+ "seed0": 20260921,
+ "n": 100,
+ "steps": 4,
+ "p_partial": 0.5,
+ "rejects": {},
+ "samples": [
+  {
+   "id": "layers-0001",
+   "tier": "some-layers",
+   "seed": 20260921,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "4eec273844d71760",
+   "metrics": {
+    "layers": 10,
+    "area": 1,
+    "distinct_areas": 4,
+    "coupling_max": 5,
+    "creases": 9,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 42
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 48
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 13,
+    "vertices": 22,
+    "edges": 31,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 22,
+     "V": 5,
+     "M": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 73816,
+    "depth": 4,
+    "ms": 662
+   }
+  },
+  {
+   "id": "layers-0002",
+   "tier": "some-layers",
+   "seed": 20268840,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 0,
+   "cp_hash": "8fb4fb1ed1ef5c9a",
+   "metrics": {
+    "layers": 12,
+    "area": 1,
+    "distinct_areas": 9,
+    "coupling_max": 4,
+    "creases": 18,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 42
+     },
+     {
+      "step": 4,
+      "layers": 8,
+      "all": 112,
+      "partial": 83
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 15,
+    "vertices": 19,
+    "edges": 30,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 11,
+     "V": 7
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 2384,
+    "depth": 4,
+    "ms": 50
+   }
+  },
+  {
+   "id": "layers-0003",
+   "tier": "some-layers",
+   "seed": 20276759,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 0,
+   "cp_hash": "99a8c7ca6c426646",
+   "metrics": {
+    "layers": 10,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 4,
+    "creases": 13,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 35
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 73
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 13,
+    "vertices": 18,
+    "edges": 27,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "V": 9,
+     "M": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 3728,
+    "depth": 4,
+    "ms": 58
+   }
+  },
+  {
+   "id": "layers-0004",
+   "tier": "some-layers",
+   "seed": 20284678,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "365d5f0434ec8230",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 2,
+    "creases": 8,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 16
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 36
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 13,
+    "edges": 19,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 11,
+     "V": 6,
+     "M": 2
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 6716,
+    "depth": 4,
+    "ms": 54
+   }
+  },
+  {
+   "id": "layers-0005",
+   "tier": "some-layers",
+   "seed": 20292597,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "6105d8edf63ec2a1",
+   "metrics": {
+    "layers": 6,
+    "area": 1,
+    "distinct_areas": 6,
+    "coupling_max": 2,
+    "creases": 6,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 39
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 37
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 9,
+    "vertices": 13,
+    "edges": 18,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 4,
+     "V": 2
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 432,
+    "depth": 3,
+    "ms": 3
+   }
+  },
+  {
+   "id": "layers-0006",
+   "tier": "some-layers",
+   "seed": 20300516,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "7fd410cb67647207",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 3,
+    "creases": 8,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 22
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 27
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 51
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 14,
+    "edges": 20,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 4,
+     "V": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 4088,
+    "depth": 4,
+    "ms": 46
+   }
+  },
+  {
+   "id": "layers-0007",
+   "tier": "some-layers",
+   "seed": 20308435,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "11efd41cd5ceec64",
+   "metrics": {
+    "layers": 11,
+    "area": 1,
+    "distinct_areas": 10,
+    "coupling_max": 5,
+    "creases": 14,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 44
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 68
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 14,
+    "vertices": 19,
+    "edges": 29,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 15,
+     "V": 6,
+     "M": 8
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 32656,
+    "depth": 4,
+    "ms": 286
+   }
+  },
+  {
+   "id": "layers-0008",
+   "tier": "some-layers",
+   "seed": 20316354,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "fa55c3eb914baaf7",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 3,
+    "creases": 8,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 36
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 23
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 14,
+    "edges": 20,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 4,
+     "V": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 2512,
+    "depth": 4,
+    "ms": 23
+   }
+  },
+  {
+   "id": "layers-0009",
+   "tier": "some-layers",
+   "seed": 20324273,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "0c3bc4980ac4283a",
+   "metrics": {
+    "layers": 6,
+    "area": 1,
+    "distinct_areas": 5,
+    "coupling_max": 2,
+    "creases": 5,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 36
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 47
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 9,
+    "vertices": 14,
+    "edges": 19,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "M": 2,
+     "V": 3
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 14932,
+    "depth": 4,
+    "ms": 67
+   }
+  },
+  {
+   "id": "layers-0010",
+   "tier": "some-layers",
+   "seed": 20332192,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "2c21a94b0d01060b",
+   "metrics": {
+    "layers": 10,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 4,
+    "creases": 12,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 36
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 38
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 13,
+    "vertices": 19,
+    "edges": 28,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 6,
+     "M": 6
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 34736,
+    "depth": 4,
+    "ms": 443
+   }
+  },
+  {
+   "id": "layers-0011",
+   "tier": "some-layers",
+   "seed": 20340111,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "a109450386213e5d",
+   "metrics": {
+    "layers": 9,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 3,
+    "creases": 10,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 29
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 42
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 12,
+    "vertices": 17,
+    "edges": 25,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 15,
+     "M": 4,
+     "V": 6
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 25080,
+    "depth": 4,
+    "ms": 254
+   }
+  },
+  {
+   "id": "layers-0012",
+   "tier": "some-layers",
+   "seed": 20348030,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "b49d0ad36c4c0a3b",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 6,
+    "coupling_max": 3,
+    "creases": 8,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 22
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 29
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 71
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 14,
+    "edges": 20,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 4,
+     "M": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 2760,
+    "depth": 4,
+    "ms": 20
+   }
+  },
+  {
+   "id": "layers-0013",
+   "tier": "some-layers",
+   "seed": 20355949,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "26fb69f3ae2222c7",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 2,
+    "creases": 7,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 30
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 40
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 15,
+    "edges": 21,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "V": 5,
+     "M": 2
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 19772,
+    "depth": 4,
+    "ms": 164
+   }
+  },
+  {
+   "id": "layers-0014",
+   "tier": "some-layers",
+   "seed": 20363868,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "f71370ef7699d75d",
+   "metrics": {
+    "layers": 8,
+    "area": 1,
+    "distinct_areas": 4,
+    "coupling_max": 2,
+    "creases": 8,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 40
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 76
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 13,
+    "edges": 20,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 5,
+     "V": 3
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 13664,
+    "depth": 4,
+    "ms": 55
+   }
+  },
+  {
+   "id": "layers-0015",
+   "tier": "some-layers",
+   "seed": 20371787,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 0,
+   "cp_hash": "1223c232104504bc",
+   "metrics": {
+    "layers": 10,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 4,
+    "creases": 13,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 29
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 55
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 13,
+    "vertices": 17,
+    "edges": 26,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 13,
+     "V": 5,
+     "M": 8
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 5800,
+    "depth": 4,
+    "ms": 49
+   }
+  },
+  {
+   "id": "layers-0016",
+   "tier": "some-layers",
+   "seed": 20379706,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "92981f522ed4579e",
+   "metrics": {
+    "layers": 5,
+    "area": 1,
+    "distinct_areas": 5,
+    "coupling_max": 1,
+    "creases": 4,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 25
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 54
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 8,
+    "vertices": 12,
+    "edges": 16,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 2,
+     "V": 2
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 6068,
+    "depth": 4,
+    "ms": 32
+   }
+  },
+  {
+   "id": "layers-0017",
+   "tier": "some-layers",
+   "seed": 20387625,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "eb4afcb16949c467",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 6,
+    "coupling_max": 3,
+    "creases": 7,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 32
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 68
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 15,
+    "edges": 21,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "V": 4,
+     "M": 3
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 19040,
+    "depth": 4,
+    "ms": 121
+   }
+  },
+  {
+   "id": "layers-0018",
+   "tier": "some-layers",
+   "seed": 20395544,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "edc9656a6e6b649e",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 2,
+    "creases": 8,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 58
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 70
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 13,
+    "edges": 19,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 11,
+     "V": 6,
+     "M": 2
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 3156,
+    "depth": 4,
+    "ms": 19
+   }
+  },
+  {
+   "id": "layers-0019",
+   "tier": "some-layers",
+   "seed": 20403463,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "2bd43febea3fd22d",
+   "metrics": {
+    "layers": 5,
+    "area": 1,
+    "distinct_areas": 5,
+    "coupling_max": 1,
+    "creases": 4,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 48
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 55
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 8,
+    "vertices": 12,
+    "edges": 16,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 1,
+     "M": 3
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 5720,
+    "depth": 4,
+    "ms": 21
+   }
+  },
+  {
+   "id": "layers-0020",
+   "tier": "some-layers",
+   "seed": 20411382,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 0,
+   "cp_hash": "581a4d12237815d0",
+   "metrics": {
+    "layers": 12,
+    "area": 1,
+    "distinct_areas": 6,
+    "coupling_max": 6,
+    "creases": 17,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 52
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 34
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 15,
+    "vertices": 18,
+    "edges": 29,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 11,
+     "V": 6
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 4304,
+    "depth": 4,
+    "ms": 57
+   }
+  },
+  {
+   "id": "layers-0021",
+   "tier": "some-layers",
+   "seed": 20419301,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "41425f1df3658c25",
+   "metrics": {
+    "layers": 8,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 3,
+    "creases": 10,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 40
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 63
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 15,
+    "edges": 22,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 6,
+     "V": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 2820,
+    "depth": 4,
+    "ms": 28
+   }
+  },
+  {
+   "id": "layers-0022",
+   "tier": "some-layers",
+   "seed": 20427220,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "1ec41f3055d7682e",
+   "metrics": {
+    "layers": 5,
+    "area": 1,
+    "distinct_areas": 4,
+    "coupling_max": 1,
+    "creases": 4,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 39
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 42
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 8,
+    "vertices": 12,
+    "edges": 16,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 1,
+     "V": 3
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 5968,
+    "depth": 4,
+    "ms": 26
+   }
+  },
+  {
+   "id": "layers-0023",
+   "tier": "some-layers",
+   "seed": 20435139,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "9e3771b1b30c01f5",
+   "metrics": {
+    "layers": 9,
+    "area": 1,
+    "distinct_areas": 5,
+    "coupling_max": 4,
+    "creases": 9,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 40
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 58
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 12,
+    "vertices": 12,
+    "edges": 20,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 11,
+     "V": 6,
+     "M": 3
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 5816,
+    "depth": 4,
+    "ms": 44
+   }
+  },
+  {
+   "id": "layers-0024",
+   "tier": "some-layers",
+   "seed": 20443058,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "f857a90946bc81b5",
+   "metrics": {
+    "layers": 8,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 2,
+    "creases": 9,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 43
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 82
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 15,
+    "edges": 22,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 13,
+     "V": 6,
+     "M": 3
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 5312,
+    "depth": 4,
+    "ms": 31
+   }
+  },
+  {
+   "id": "layers-0025",
+   "tier": "some-layers",
+   "seed": 20450977,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "df18e45cb43a25e2",
+   "metrics": {
+    "layers": 8,
+    "area": 1,
+    "distinct_areas": 4,
+    "coupling_max": 4,
+    "creases": 10,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 35
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 64
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 13,
+    "edges": 20,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 10,
+     "M": 4,
+     "V": 6
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 4956,
+    "depth": 4,
+    "ms": 27
+   }
+  },
+  {
+   "id": "layers-0026",
+   "tier": "some-layers",
+   "seed": 20458896,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "eff0c0d9c5162387",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 6,
+    "coupling_max": 2,
+    "creases": 8,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 70
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 77
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 14,
+    "edges": 20,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 4,
+     "V": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 3240,
+    "depth": 4,
+    "ms": 30
+   }
+  },
+  {
+   "id": "layers-0027",
+   "tier": "some-layers",
+   "seed": 20466815,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "cf7e662e62a5a172",
+   "metrics": {
+    "layers": 9,
+    "area": 1,
+    "distinct_areas": 9,
+    "coupling_max": 3,
+    "creases": 12,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 61
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 85
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 12,
+    "vertices": 16,
+    "edges": 24,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 9,
+     "M": 3
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 2620,
+    "depth": 4,
+    "ms": 40
+   }
+  },
+  {
+   "id": "layers-0028",
+   "tier": "some-layers",
+   "seed": 20474734,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "4e7092baba158d6a",
+   "metrics": {
+    "layers": 12,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 4,
+    "creases": 17,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 35
+     },
+     {
+      "step": 4,
+      "layers": 8,
+      "all": 112,
+      "partial": 103
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 15,
+    "vertices": 20,
+    "edges": 31,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "V": 10,
+     "M": 7
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 1984,
+    "depth": 4,
+    "ms": 31
+   }
+  },
+  {
+   "id": "layers-0029",
+   "tier": "some-layers",
+   "seed": 20482653,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "1b4944d87d05dd04",
+   "metrics": {
+    "layers": 10,
+    "area": 1,
+    "distinct_areas": 5,
+    "coupling_max": 4,
+    "creases": 13,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 22
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 32
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 54
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 13,
+    "vertices": 18,
+    "edges": 27,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "M": 8,
+     "V": 5
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 2344,
+    "depth": 4,
+    "ms": 33
+   }
+  },
+  {
+   "id": "layers-0030",
+   "tier": "some-layers",
+   "seed": 20490572,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "84d2c7f9e05a182f",
+   "metrics": {
+    "layers": 8,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 3,
+    "creases": 10,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 39
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 80
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 15,
+    "edges": 22,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 6,
+     "M": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 2508,
+    "depth": 4,
+    "ms": 21
+   }
+  },
+  {
+   "id": "layers-0031",
+   "tier": "some-layers",
+   "seed": 20498491,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "4405dc8881c32a78",
+   "metrics": {
+    "layers": 8,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 2,
+    "creases": 9,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 50
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 82
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 16,
+    "edges": 23,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "M": 5,
+     "V": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 8568,
+    "depth": 4,
+    "ms": 81
+   }
+  },
+  {
+   "id": "layers-0032",
+   "tier": "some-layers",
+   "seed": 20506410,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "d962956c4122a140",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 6,
+    "coupling_max": 3,
+    "creases": 7,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 22
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 39
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 53
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 15,
+    "edges": 21,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "V": 4,
+     "M": 3
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 13116,
+    "depth": 4,
+    "ms": 103
+   }
+  },
+  {
+   "id": "layers-0033",
+   "tier": "some-layers",
+   "seed": 20514329,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "82c1493054a47c8e",
+   "metrics": {
+    "layers": 6,
+    "area": 1,
+    "distinct_areas": 5,
+    "coupling_max": 2,
+    "creases": 6,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 61
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 46
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 9,
+    "vertices": 13,
+    "edges": 18,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 3,
+     "V": 3
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 5268,
+    "depth": 4,
+    "ms": 40
+   }
+  },
+  {
+   "id": "layers-0034",
+   "tier": "some-layers",
+   "seed": 20522248,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 0,
+   "cp_hash": "f6ccdadb432a8f15",
+   "metrics": {
+    "layers": 6,
+    "area": 1,
+    "distinct_areas": 6,
+    "coupling_max": 2,
+    "creases": 6,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 25
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 28
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 9,
+    "vertices": 13,
+    "edges": 18,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 5,
+     "M": 1
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 16636,
+    "depth": 4,
+    "ms": 130
+   }
+  },
+  {
+   "id": "layers-0035",
+   "tier": "some-layers",
+   "seed": 20530167,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "278fafc8799c36b8",
+   "metrics": {
+    "layers": 6,
+    "area": 1,
+    "distinct_areas": 5,
+    "coupling_max": 2,
+    "creases": 6,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 28
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 27
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 9,
+    "vertices": 16,
+    "edges": 18,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 2,
+     "V": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 5672,
+    "depth": 4,
+    "ms": 50
+   }
+  },
+  {
+   "id": "layers-0036",
+   "tier": "some-layers",
+   "seed": 20538086,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 0,
+   "cp_hash": "a7dc584d8a5288e9",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 2,
+    "creases": 8,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 54
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 52
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 14,
+    "edges": 20,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 6,
+     "M": 2
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 3824,
+    "depth": 4,
+    "ms": 31
+   }
+  },
+  {
+   "id": "layers-0037",
+   "tier": "some-layers",
+   "seed": 20546005,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "a259b486c8f1976c",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 6,
+    "coupling_max": 2,
+    "creases": 8,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 57
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 36
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 14,
+    "edges": 20,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 5,
+     "M": 3
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 3544,
+    "depth": 4,
+    "ms": 30
+   }
+  },
+  {
+   "id": "layers-0038",
+   "tier": "some-layers",
+   "seed": 20553924,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "3f6998006114e286",
+   "metrics": {
+    "layers": 8,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 2,
+    "creases": 10,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 54
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 97
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 15,
+    "edges": 22,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 6,
+     "V": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 2128,
+    "depth": 4,
+    "ms": 30
+   }
+  },
+  {
+   "id": "layers-0039",
+   "tier": "some-layers",
+   "seed": 20561843,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "038de117e5620f0d",
+   "metrics": {
+    "layers": 8,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 3,
+    "creases": 10,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 34
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 48
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 15,
+    "edges": 22,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 6,
+     "M": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 2940,
+    "depth": 4,
+    "ms": 21
+   }
+  },
+  {
+   "id": "layers-0040",
+   "tier": "some-layers",
+   "seed": 20569762,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "8189848019737ba2",
+   "metrics": {
+    "layers": 5,
+    "area": 1,
+    "distinct_areas": 5,
+    "coupling_max": 1,
+    "creases": 4,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 24
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 50
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 8,
+    "vertices": 11,
+    "edges": 15,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 11,
+     "M": 3,
+     "V": 1
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 5960,
+    "depth": 4,
+    "ms": 23
+   }
+  },
+  {
+   "id": "layers-0041",
+   "tier": "some-layers",
+   "seed": 20577681,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "6b4c554586b139c3",
+   "metrics": {
+    "layers": 6,
+    "area": 1,
+    "distinct_areas": 4,
+    "coupling_max": 2,
+    "creases": 6,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 42
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 65
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 9,
+    "vertices": 13,
+    "edges": 18,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 3,
+     "M": 3
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 5388,
+    "depth": 4,
+    "ms": 29
+   }
+  },
+  {
+   "id": "layers-0042",
+   "tier": "some-layers",
+   "seed": 20585600,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "a35156a5c9507675",
+   "metrics": {
+    "layers": 10,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 4,
+    "creases": 14,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 34
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 76
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 13,
+    "vertices": 17,
+    "edges": 26,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 6,
+     "M": 8
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 3276,
+    "depth": 4,
+    "ms": 26
+   }
+  },
+  {
+   "id": "layers-0043",
+   "tier": "some-layers",
+   "seed": 20593519,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "0a7e202181ad1487",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 2,
+    "creases": 8,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 27
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 56
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 14,
+    "edges": 20,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 4,
+     "M": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 4196,
+    "depth": 4,
+    "ms": 36
+   }
+  },
+  {
+   "id": "layers-0044",
+   "tier": "some-layers",
+   "seed": 20601438,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "29eb1da7a75758fb",
+   "metrics": {
+    "layers": 8,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 4,
+    "creases": 9,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 45
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 38
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 15,
+    "edges": 22,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 13,
+     "M": 4,
+     "V": 5
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 12580,
+    "depth": 4,
+    "ms": 91
+   }
+  },
+  {
+   "id": "layers-0045",
+   "tier": "some-layers",
+   "seed": 20609357,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "403611762b1d9e44",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 6,
+    "coupling_max": 2,
+    "creases": 8,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 32
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 74
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 14,
+    "edges": 20,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 4,
+     "M": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 4828,
+    "depth": 4,
+    "ms": 51
+   }
+  },
+  {
+   "id": "layers-0046",
+   "tier": "some-layers",
+   "seed": 20617276,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "a8f4532bdb5528cb",
+   "metrics": {
+    "layers": 5,
+    "area": 1,
+    "distinct_areas": 5,
+    "coupling_max": 1,
+    "creases": 4,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 30
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 44
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 8,
+    "vertices": 12,
+    "edges": 16,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 3,
+     "M": 1
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 6156,
+    "depth": 4,
+    "ms": 28
+   }
+  },
+  {
+   "id": "layers-0047",
+   "tier": "some-layers",
+   "seed": 20625195,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 0,
+   "cp_hash": "98c9d036e4c43a14",
+   "metrics": {
+    "layers": 8,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 3,
+    "creases": 10,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 34
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 15,
+    "edges": 22,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 8,
+     "M": 2
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 2500,
+    "depth": 4,
+    "ms": 19
+   }
+  },
+  {
+   "id": "layers-0048",
+   "tier": "some-layers",
+   "seed": 20633114,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "a76a62af187ad117",
+   "metrics": {
+    "layers": 8,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 3,
+    "creases": 8,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 40
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 46
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 17,
+    "edges": 24,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "M": 4,
+     "V": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 23800,
+    "depth": 4,
+    "ms": 184
+   }
+  },
+  {
+   "id": "layers-0049",
+   "tier": "some-layers",
+   "seed": 20641033,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "e2fef0f85193051e",
+   "metrics": {
+    "layers": 6,
+    "area": 1,
+    "distinct_areas": 5,
+    "coupling_max": 2,
+    "creases": 6,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 60
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 9,
+    "vertices": 13,
+    "edges": 18,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 4,
+     "M": 2
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 19988,
+    "depth": 4,
+    "ms": 137
+   }
+  },
+  {
+   "id": "layers-0050",
+   "tier": "some-layers",
+   "seed": 20648952,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "10685f20b0956fea",
+   "metrics": {
+    "layers": 6,
+    "area": 1,
+    "distinct_areas": 6,
+    "coupling_max": 2,
+    "creases": 6,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 44
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 38
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 9,
+    "vertices": 13,
+    "edges": 18,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 2,
+     "M": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 5364,
+    "depth": 4,
+    "ms": 53
+   }
+  },
+  {
+   "id": "layers-0051",
+   "tier": "some-layers",
+   "seed": 20656871,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "795325896c075719",
+   "metrics": {
+    "layers": 9,
+    "area": 1,
+    "distinct_areas": 6,
+    "coupling_max": 4,
+    "creases": 11,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 22
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 45
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 55
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 12,
+    "vertices": 17,
+    "edges": 25,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "V": 6,
+     "M": 5
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 2872,
+    "depth": 4,
+    "ms": 24
+   }
+  },
+  {
+   "id": "layers-0052",
+   "tier": "some-layers",
+   "seed": 20664790,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "85ddd6a5d35cc5b9",
+   "metrics": {
+    "layers": 5,
+    "area": 1,
+    "distinct_areas": 5,
+    "coupling_max": 1,
+    "creases": 4,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 25
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 48
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 8,
+    "vertices": 11,
+    "edges": 15,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 11,
+     "V": 2,
+     "M": 2
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 5624,
+    "depth": 4,
+    "ms": 20
+   }
+  },
+  {
+   "id": "layers-0053",
+   "tier": "some-layers",
+   "seed": 20672709,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "20b14f0ba29e7a0f",
+   "metrics": {
+    "layers": 11,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 5,
+    "creases": 14,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 47
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 76
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 14,
+    "vertices": 20,
+    "edges": 30,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "M": 7,
+     "V": 7
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 3392,
+    "depth": 4,
+    "ms": 46
+   }
+  },
+  {
+   "id": "layers-0054",
+   "tier": "some-layers",
+   "seed": 20680628,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "ef61e96253523a70",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 6,
+    "coupling_max": 3,
+    "creases": 8,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 28
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 43
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 14,
+    "edges": 20,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 3,
+     "M": 5
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 5036,
+    "depth": 4,
+    "ms": 29
+   }
+  },
+  {
+   "id": "layers-0055",
+   "tier": "some-layers",
+   "seed": 20688547,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "ebb0586e3432a70a",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 2,
+    "creases": 8,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 25
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 39
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 14,
+    "edges": 20,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 6,
+     "V": 2
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 3824,
+    "depth": 4,
+    "ms": 37
+   }
+  },
+  {
+   "id": "layers-0056",
+   "tier": "some-layers",
+   "seed": 20696466,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "3cf978f73962a3fd",
+   "metrics": {
+    "layers": 9,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 3,
+    "creases": 11,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 32
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 62
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 12,
+    "vertices": 17,
+    "edges": 25,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "V": 5,
+     "M": 6
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 8624,
+    "depth": 4,
+    "ms": 89
+   }
+  },
+  {
+   "id": "layers-0057",
+   "tier": "some-layers",
+   "seed": 20704385,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 0,
+   "cp_hash": "09713a51c06273cb",
+   "metrics": {
+    "layers": 10,
+    "area": 1,
+    "distinct_areas": 9,
+    "coupling_max": 5,
+    "creases": 14,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 61
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 34
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 13,
+    "vertices": 18,
+    "edges": 26,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 7,
+     "M": 7
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 3164,
+    "depth": 4,
+    "ms": 31
+   }
+  },
+  {
+   "id": "layers-0058",
+   "tier": "some-layers",
+   "seed": 20712304,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "08cf0b0db8efb761",
+   "metrics": {
+    "layers": 8,
+    "area": 1,
+    "distinct_areas": 4,
+    "coupling_max": 4,
+    "creases": 7,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 35
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 64
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 16,
+    "edges": 23,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 3,
+     "M": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 40388,
+    "depth": 4,
+    "ms": 190
+   }
+  },
+  {
+   "id": "layers-0059",
+   "tier": "some-layers",
+   "seed": 20720223,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "b456b77f10f55e95",
+   "metrics": {
+    "layers": 9,
+    "area": 1,
+    "distinct_areas": 9,
+    "coupling_max": 3,
+    "creases": 12,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 34
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 64
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 12,
+    "vertices": 16,
+    "edges": 24,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 6,
+     "V": 6
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 2112,
+    "depth": 4,
+    "ms": 30
+   }
+  },
+  {
+   "id": "layers-0060",
+   "tier": "some-layers",
+   "seed": 20728142,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "a7edd5e2f85a2f52",
+   "metrics": {
+    "layers": 6,
+    "area": 1,
+    "distinct_areas": 6,
+    "coupling_max": 2,
+    "creases": 7,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 30
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 48
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 9,
+    "vertices": 14,
+    "edges": 19,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 5,
+     "V": 2
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 5576,
+    "depth": 4,
+    "ms": 41
+   }
+  },
+  {
+   "id": "layers-0061",
+   "tier": "some-layers",
+   "seed": 20736061,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "6b8e30911294c915",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 3,
+    "creases": 8,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 38
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 30
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 13,
+    "edges": 19,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 11,
+     "M": 5,
+     "V": 3
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 4924,
+    "depth": 4,
+    "ms": 31
+   }
+  },
+  {
+   "id": "layers-0062",
+   "tier": "some-layers",
+   "seed": 20743980,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 0,
+   "cp_hash": "500867d6193257e0",
+   "metrics": {
+    "layers": 12,
+    "area": 1,
+    "distinct_areas": 4,
+    "coupling_max": 6,
+    "creases": 17,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 40
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 76
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 15,
+    "vertices": 16,
+    "edges": 27,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 10,
+     "V": 10,
+     "M": 7
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 5592,
+    "depth": 4,
+    "ms": 58
+   }
+  },
+  {
+   "id": "layers-0063",
+   "tier": "some-layers",
+   "seed": 20751899,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "21a21191f26022df",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 5,
+    "coupling_max": 3,
+    "creases": 8,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 27
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 39
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 13,
+    "edges": 19,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 11,
+     "M": 5,
+     "V": 3
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 5020,
+    "depth": 4,
+    "ms": 31
+   }
+  },
+  {
+   "id": "layers-0064",
+   "tier": "some-layers",
+   "seed": 20759818,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "f91fe01e1e3f56fc",
+   "metrics": {
+    "layers": 5,
+    "area": 1,
+    "distinct_areas": 5,
+    "coupling_max": 1,
+    "creases": 4,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 52
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 41
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 8,
+    "vertices": 12,
+    "edges": 16,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 3,
+     "V": 1
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 6272,
+    "depth": 4,
+    "ms": 21
+   }
+  },
+  {
+   "id": "layers-0065",
+   "tier": "some-layers",
+   "seed": 20767737,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "2e10d13b1e16c5db",
+   "metrics": {
+    "layers": 6,
+    "area": 1,
+    "distinct_areas": 4,
+    "coupling_max": 2,
+    "creases": 6,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 37
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 64
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 9,
+    "vertices": 13,
+    "edges": 18,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 2,
+     "V": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 928,
+    "depth": 3,
+    "ms": 7
+   }
+  },
+  {
+   "id": "layers-0066",
+   "tier": "some-layers",
+   "seed": 20775656,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "158c1830bc339fe2",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 3,
+    "creases": 8,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 28
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 61
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 14,
+    "edges": 20,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 4,
+     "V": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 2512,
+    "depth": 4,
+    "ms": 24
+   }
+  },
+  {
+   "id": "layers-0067",
+   "tier": "some-layers",
+   "seed": 20783575,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "6e91ea84de9557f6",
+   "metrics": {
+    "layers": 8,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 3,
+    "creases": 10,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 44
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 14,
+    "edges": 21,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 11,
+     "M": 7,
+     "V": 3
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 3008,
+    "depth": 4,
+    "ms": 29
+   }
+  },
+  {
+   "id": "layers-0068",
+   "tier": "some-layers",
+   "seed": 20791494,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "cbd664cd669ed065",
+   "metrics": {
+    "layers": 5,
+    "area": 1,
+    "distinct_areas": 4,
+    "coupling_max": 1,
+    "creases": 4,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 41
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 63
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 8,
+    "vertices": 12,
+    "edges": 16,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 1,
+     "M": 3
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 6900,
+    "depth": 4,
+    "ms": 27
+   }
+  },
+  {
+   "id": "layers-0069",
+   "tier": "some-layers",
+   "seed": 20799413,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "551d610c23541466",
+   "metrics": {
+    "layers": 5,
+    "area": 1,
+    "distinct_areas": 5,
+    "coupling_max": 1,
+    "creases": 4,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 32
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 56
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 8,
+    "vertices": 12,
+    "edges": 16,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 3,
+     "M": 1
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 6144,
+    "depth": 4,
+    "ms": 29
+   }
+  },
+  {
+   "id": "layers-0070",
+   "tier": "some-layers",
+   "seed": 20807332,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "2f865b1a2103e706",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 2,
+    "creases": 8,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 36
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 28
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 14,
+    "edges": 20,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 5,
+     "V": 3
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 3056,
+    "depth": 4,
+    "ms": 15
+   }
+  },
+  {
+   "id": "layers-0071",
+   "tier": "some-layers",
+   "seed": 20815251,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 0,
+   "cp_hash": "db9b88f9573703e7",
+   "metrics": {
+    "layers": 12,
+    "area": 1,
+    "distinct_areas": 11,
+    "coupling_max": 6,
+    "creases": 17,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 27
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 69
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 15,
+    "vertices": 22,
+    "edges": 31,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "V": 8,
+     "M": 9
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 3308,
+    "depth": 4,
+    "ms": 38
+   }
+  },
+  {
+   "id": "layers-0072",
+   "tier": "some-layers",
+   "seed": 20823170,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "c559a780379b06fe",
+   "metrics": {
+    "layers": 9,
+    "area": 1,
+    "distinct_areas": 6,
+    "coupling_max": 3,
+    "creases": 11,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 48
+     },
+     {
+      "step": 4,
+      "layers": 7,
+      "all": 112,
+      "partial": 95
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 12,
+    "vertices": 15,
+    "edges": 23,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 7,
+     "V": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 4096,
+    "depth": 4,
+    "ms": 37
+   }
+  },
+  {
+   "id": "layers-0073",
+   "tier": "some-layers",
+   "seed": 20831089,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "eec85d9cb84e7216",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 2,
+    "creases": 8,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 47
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 72
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 14,
+    "edges": 20,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 3,
+     "M": 5
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 4400,
+    "depth": 4,
+    "ms": 33
+   }
+  },
+  {
+   "id": "layers-0074",
+   "tier": "some-layers",
+   "seed": 20839008,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "5766f3e03256edf0",
+   "metrics": {
+    "layers": 5,
+    "area": 1,
+    "distinct_areas": 5,
+    "coupling_max": 1,
+    "creases": 4,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 38
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 51
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 8,
+    "vertices": 11,
+    "edges": 15,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 11,
+     "V": 2,
+     "M": 2
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 7584,
+    "depth": 4,
+    "ms": 25
+   }
+  },
+  {
+   "id": "layers-0075",
+   "tier": "some-layers",
+   "seed": 20846927,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "e969b6e328dc3fcf",
+   "metrics": {
+    "layers": 9,
+    "area": 1,
+    "distinct_areas": 9,
+    "coupling_max": 3,
+    "creases": 11,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 56
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 43
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 12,
+    "vertices": 17,
+    "edges": 25,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "V": 6,
+     "M": 5
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 6560,
+    "depth": 4,
+    "ms": 43
+   }
+  },
+  {
+   "id": "layers-0076",
+   "tier": "some-layers",
+   "seed": 20854846,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "83334bbaa76da7cc",
+   "metrics": {
+    "layers": 9,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 3,
+    "creases": 11,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 41
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 56
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 12,
+    "vertices": 17,
+    "edges": 25,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "V": 5,
+     "M": 6
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 13960,
+    "depth": 4,
+    "ms": 140
+   }
+  },
+  {
+   "id": "layers-0077",
+   "tier": "some-layers",
+   "seed": 20862765,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "c9d1e806fe6c2efe",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 2,
+    "creases": 7,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 44
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 52
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 15,
+    "edges": 21,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "M": 4,
+     "V": 3
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 35600,
+    "depth": 4,
+    "ms": 293
+   }
+  },
+  {
+   "id": "layers-0078",
+   "tier": "some-layers",
+   "seed": 20870684,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "733f59f0760e2eb0",
+   "metrics": {
+    "layers": 12,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 6,
+    "creases": 16,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 54
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 77
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 15,
+    "vertices": 17,
+    "edges": 28,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 10,
+     "V": 6
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 1736,
+    "depth": 4,
+    "ms": 22
+   }
+  },
+  {
+   "id": "layers-0079",
+   "tier": "some-layers",
+   "seed": 20878603,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 0,
+   "cp_hash": "c3fd6e32fd297634",
+   "metrics": {
+    "layers": 10,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 4,
+    "creases": 13,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 36
+     },
+     {
+      "step": 4,
+      "layers": 8,
+      "all": 112,
+      "partial": 92
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 13,
+    "vertices": 18,
+    "edges": 27,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "V": 9,
+     "M": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 3344,
+    "depth": 4,
+    "ms": 64
+   }
+  },
+  {
+   "id": "layers-0080",
+   "tier": "some-layers",
+   "seed": 20886522,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 0,
+   "cp_hash": "09d79e78ceb464e8",
+   "metrics": {
+    "layers": 14,
+    "area": 1,
+    "distinct_areas": 12,
+    "coupling_max": 7,
+    "creases": 19,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 50
+     },
+     {
+      "step": 4,
+      "layers": 7,
+      "all": 112,
+      "partial": 76
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 17,
+    "vertices": 24,
+    "edges": 37,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 18,
+     "V": 12,
+     "M": 7
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 12860,
+    "depth": 4,
+    "ms": 132
+   }
+  },
+  {
+   "id": "layers-0081",
+   "tier": "some-layers",
+   "seed": 20894441,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "6014e2e8fc8080a8",
+   "metrics": {
+    "layers": 6,
+    "area": 1,
+    "distinct_areas": 6,
+    "coupling_max": 2,
+    "creases": 5,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 44
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 9,
+    "vertices": 14,
+    "edges": 19,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "M": 3,
+     "V": 2
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 9552,
+    "depth": 4,
+    "ms": 72
+   }
+  },
+  {
+   "id": "layers-0082",
+   "tier": "some-layers",
+   "seed": 20902360,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 0,
+   "cp_hash": "db995815be5a1abd",
+   "metrics": {
+    "layers": 9,
+    "area": 1,
+    "distinct_areas": 6,
+    "coupling_max": 3,
+    "creases": 12,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 42
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 60
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 12,
+    "vertices": 16,
+    "edges": 24,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 5,
+     "M": 7
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 1528,
+    "depth": 4,
+    "ms": 13
+   }
+  },
+  {
+   "id": "layers-0083",
+   "tier": "some-layers",
+   "seed": 20910279,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "7e2f36d91bb002dd",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 3,
+    "creases": 8,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 28
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 40
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 14,
+    "edges": 20,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 4,
+     "M": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 5336,
+    "depth": 4,
+    "ms": 50
+   }
+  },
+  {
+   "id": "layers-0084",
+   "tier": "some-layers",
+   "seed": 20918198,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "0d46bbce30bc192e",
+   "metrics": {
+    "layers": 8,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 4,
+    "creases": 10,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 30
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 34
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 15,
+    "edges": 22,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 4,
+     "V": 6
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 3248,
+    "depth": 4,
+    "ms": 18
+   }
+  },
+  {
+   "id": "layers-0085",
+   "tier": "some-layers",
+   "seed": 20926117,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "ea543aba813b43e6",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 6,
+    "coupling_max": 2,
+    "creases": 8,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 35
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 52
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 14,
+    "edges": 20,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 5,
+     "M": 3
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 3212,
+    "depth": 4,
+    "ms": 15
+   }
+  },
+  {
+   "id": "layers-0086",
+   "tier": "some-layers",
+   "seed": 20934036,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "52a7d7fe847e9504",
+   "metrics": {
+    "layers": 5,
+    "area": 1,
+    "distinct_areas": 5,
+    "coupling_max": 1,
+    "creases": 4,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 35
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 26
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 8,
+    "vertices": 11,
+    "edges": 15,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 11,
+     "V": 3,
+     "M": 1
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 6428,
+    "depth": 4,
+    "ms": 24
+   }
+  },
+  {
+   "id": "layers-0087",
+   "tier": "some-layers",
+   "seed": 20941955,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "76141776627bfe42",
+   "metrics": {
+    "layers": 9,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 4,
+    "creases": 11,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 40
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 72
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 12,
+    "vertices": 17,
+    "edges": 25,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "V": 5,
+     "M": 6
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 3352,
+    "depth": 4,
+    "ms": 31
+   }
+  },
+  {
+   "id": "layers-0088",
+   "tier": "some-layers",
+   "seed": 20949874,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "ad4836defafcd19a",
+   "metrics": {
+    "layers": 8,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 4,
+    "creases": 10,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 34
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 43
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 15,
+    "edges": 22,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 6,
+     "M": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 3632,
+    "depth": 4,
+    "ms": 21
+   }
+  },
+  {
+   "id": "layers-0089",
+   "tier": "some-layers",
+   "seed": 20957793,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "656eb6d24ba15bfc",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 2,
+    "creases": 8,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 26
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 30
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 70
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 14,
+    "edges": 20,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 5,
+     "V": 3
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 2760,
+    "depth": 4,
+    "ms": 25
+   }
+  },
+  {
+   "id": "layers-0090",
+   "tier": "some-layers",
+   "seed": 20965712,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "a1a5b1c4f71b245c",
+   "metrics": {
+    "layers": 10,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 5,
+    "creases": 13,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 32
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 50
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 13,
+    "vertices": 18,
+    "edges": 27,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "M": 7,
+     "V": 6
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 2684,
+    "depth": 4,
+    "ms": 26
+   }
+  },
+  {
+   "id": "layers-0091",
+   "tier": "some-layers",
+   "seed": 20973631,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "ca973479e91a4bd5",
+   "metrics": {
+    "layers": 9,
+    "area": 1,
+    "distinct_areas": 9,
+    "coupling_max": 3,
+    "creases": 11,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 46
+     },
+     {
+      "step": 4,
+      "layers": 7,
+      "all": 112,
+      "partial": 60
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 12,
+    "vertices": 17,
+    "edges": 25,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "M": 7,
+     "V": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 6388,
+    "depth": 4,
+    "ms": 68
+   }
+  },
+  {
+   "id": "layers-0092",
+   "tier": "some-layers",
+   "seed": 20981550,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "79cbc715aedd5f9b",
+   "metrics": {
+    "layers": 9,
+    "area": 1,
+    "distinct_areas": 8,
+    "coupling_max": 3,
+    "creases": 12,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 52
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 70
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 12,
+    "vertices": 16,
+    "edges": 24,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 8,
+     "V": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 2420,
+    "depth": 4,
+    "ms": 31
+   }
+  },
+  {
+   "id": "layers-0093",
+   "tier": "some-layers",
+   "seed": 20989469,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 0,
+   "cp_hash": "3486fa69201697bb",
+   "metrics": {
+    "layers": 8,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 3,
+    "creases": 9,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 15
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 58
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 19,
+    "edges": 23,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "M": 6,
+     "V": 3
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 8400,
+    "depth": 4,
+    "ms": 81
+   }
+  },
+  {
+   "id": "layers-0094",
+   "tier": "some-layers",
+   "seed": 20997388,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "776c1d247af80abc",
+   "metrics": {
+    "layers": 8,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 3,
+    "creases": 10,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 29
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 79
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 14,
+    "edges": 21,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 11,
+     "M": 6,
+     "V": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 2524,
+    "depth": 4,
+    "ms": 23
+   }
+  },
+  {
+   "id": "layers-0095",
+   "tier": "some-layers",
+   "seed": 21005307,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "07e7fb0de793c605",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 3,
+    "creases": 6,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 40
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 48
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 15,
+    "edges": 21,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 15,
+     "M": 4,
+     "V": 2
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 21112,
+    "depth": 4,
+    "ms": 156
+   }
+  },
+  {
+   "id": "layers-0096",
+   "tier": "some-layers",
+   "seed": 21013226,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 0,
+   "cp_hash": "8fbe5acb14ea05bd",
+   "metrics": {
+    "layers": 11,
+    "area": 1,
+    "distinct_areas": 9,
+    "coupling_max": 5,
+    "creases": 15,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 58
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 55
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 14,
+    "vertices": 19,
+    "edges": 29,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "M": 8,
+     "V": 7
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 1928,
+    "depth": 4,
+    "ms": 32
+   }
+  },
+  {
+   "id": "layers-0097",
+   "tier": "some-layers",
+   "seed": 21021145,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "82d0f5ddfc1534ad",
+   "metrics": {
+    "layers": 11,
+    "area": 1,
+    "distinct_areas": 10,
+    "coupling_max": 5,
+    "creases": 15,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 21
+     },
+     {
+      "step": 3,
+      "layers": 4,
+      "all": 112,
+      "partial": 39
+     },
+     {
+      "step": 4,
+      "layers": 6,
+      "all": 112,
+      "partial": 56
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 14,
+    "vertices": 19,
+    "edges": 29,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "V": 9,
+     "M": 6
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 5600,
+    "depth": 4,
+    "ms": 74
+   }
+  },
+  {
+   "id": "layers-0098",
+   "tier": "some-layers",
+   "seed": 21029064,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 1,
+   "cp_hash": "674745bfa4fba8ab",
+   "metrics": {
+    "layers": 8,
+    "area": 1,
+    "distinct_areas": 7,
+    "coupling_max": 3,
+    "creases": 10,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 40
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 57
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 11,
+    "vertices": 14,
+    "edges": 21,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 11,
+     "M": 6,
+     "V": 4
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 3440,
+    "depth": 4,
+    "ms": 30
+   }
+  },
+  {
+   "id": "layers-0099",
+   "tier": "some-layers",
+   "seed": 21036983,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 3,
+   "cp_hash": "a39dc5ecf994b5e4",
+   "metrics": {
+    "layers": 7,
+    "area": 1,
+    "distinct_areas": 6,
+    "coupling_max": 3,
+    "creases": 6,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 14
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 4,
+      "layers": 4,
+      "all": 112,
+      "partial": 39
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 10,
+    "vertices": 14,
+    "edges": 20,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "V": 3,
+     "M": 3
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 12736,
+    "depth": 4,
+    "ms": 161
+   }
+  },
+  {
+   "id": "layers-0100",
+   "tier": "some-layers",
+   "seed": 21044902,
+   "steps": 4,
+   "p_partial_asked": 0.5,
+   "partial_used": 2,
+   "cp_hash": "8c41594473af53b0",
+   "metrics": {
+    "layers": 6,
+    "area": 1,
+    "distinct_areas": 6,
+    "coupling_max": 2,
+    "creases": 6,
+    "branching": [
+     {
+      "step": 1,
+      "layers": 1,
+      "all": 112,
+      "partial": 0
+     },
+     {
+      "step": 2,
+      "layers": 2,
+      "all": 112,
+      "partial": 17
+     },
+     {
+      "step": 3,
+      "layers": 3,
+      "all": 112,
+      "partial": 38
+     },
+     {
+      "step": 4,
+      "layers": 5,
+      "all": 112,
+      "partial": 80
+     }
+    ]
+   },
+   "planarize": {
+    "segments_in": 9,
+    "vertices": 13,
+    "edges": 18,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 3,
+     "V": 3
+    }
+   },
+   "pure_search": {
+    "status": "SOLVED",
+    "queries": 5252,
+    "depth": 4,
+    "ms": 42
+   }
+  }
+ ]
+}

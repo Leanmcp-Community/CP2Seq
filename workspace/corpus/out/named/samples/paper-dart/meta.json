@@ -1,0 +1,33 @@
+{
+ "id": "paper-dart",
+ "title": "Paper dart",
+ "family": "recognisable",
+ "note": "The plane everyone folds, minus the centre crease -- that crease is made by folding and UNFOLDING, which simple folding cannot do, so the corners are brought to the centre line directly. Two corners in, then the new slanted edges in again, and the nose is the point at the top.",
+ "authored": true,
+ "tier": "all-layers",
+ "metrics": {
+  "steps": 4,
+  "partial_folds": 0,
+  "crease_edges": 6,
+  "mountain": 2,
+  "valley": 4,
+  "vertices": 11,
+  "coupling_max": 2,
+  "layers_final": 7,
+  "paper_area_final": 1,
+  "sheet_area": 1
+ },
+ "planarize": {
+  "segments_in": 10,
+  "vertices": 11,
+  "edges": 17,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 11,
+   "V": 4,
+   "M": 2
+  }
+ }
+}
