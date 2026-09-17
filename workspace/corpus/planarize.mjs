@@ -16,8 +16,58 @@
 //     the independent check that it worked.
 import { lineOf, lkey } from "../probe-c/stage2.mjs";
 
+// EPS is the "are these the same point" radius, and nothing else. It is not a precision limit
+// and must never move a coordinate.
+//
+// The value is safe by a wide margin: paper coordinates are dyadic, so the finest spacing the
+// action space can produce is one halving per fold, of order 2^-19 ~ 1.9e-6 at the deepest
+// samples in this corpus -- three orders above this radius. Two points closer than 1e-9 are the
+// same intersection computed twice, not two intersections.
 const EPS = 1e-9;
-const key = (p) => `${Math.round(p[0] / EPS)},${Math.round(p[1] / EPS)}`;
+
+// /!\ THIS IS NOT A GRID, AND IT USED TO BE. Hashing a point to `Math.round(p/EPS)` looks like
+// the same decision and is not: a grid has boundaries, and two points 1e-16 apart that straddle
+// one are placed in different cells and become two vertices. That is the third occurrence in
+// this project of one bug -- a rounding grid used where a radius was meant -- after two in the
+// crease comparison. Measured consequence here: replaying a recorded sequence reproduced the
+// creases exactly and still disagreed with the stored pattern, because the two runs claimed
+// cells in a different order.
+//
+// A point is looked up against the nine cells around it, so a neighbour within EPS is found
+// whichever side of a cell line it fell on, and the FIRST point to arrive keeps its own exact
+// coordinates. Cell size is EPS, so nothing within EPS can be further away than one cell.
+const cell = (v) => Math.round(v / EPS);
+function makeVertexIndex() {
+    const byCell = new Map();                               // "cx,cy" -> [vertex ids]
+    const verts = [];
+    const vid = (p) => {
+        const cx = cell(p[0]), cy = cell(p[1]);
+        for (let dx = -1; dx <= 1; dx++) for (let dy = -1; dy <= 1; dy++) {
+            const bucket = byCell.get(`${cx + dx},${cy + dy}`);
+            if (!bucket) continue;
+            for (const i of bucket)
+                if (Math.abs(verts[i][0] - p[0]) <= EPS && Math.abs(verts[i][1] - p[1]) <= EPS)
+                    return i;
+        }
+        const id = verts.length;
+        verts.push([p[0], p[1]]);                           // exact, as it arrived
+        const k = `${cx},${cy}`;
+        if (!byCell.has(k)) byCell.set(k, []);
+        byCell.get(k).push(id);
+        return id;
+    };
+    return { vid, verts };
+}
+
+// The same decision in one dimension, for cut positions along a segment. Sorting first means one
+// pass merges a run of near-identical values, and the value KEPT is the first one, unrounded --
+// see the cut site for why rounding them was doing real damage.
+function mergeSorted(vals, eps) {
+    const out = [];
+    for (const v of [...vals].sort((x, y) => x - y))
+        if (!out.length || v - out[out.length - 1] > eps) out.push(v);
+    return out;
+}
 
 // intersection of two infinite lines given as point+direction; null when parallel
 function meet(p, dp, q, dq) {
@@ -72,20 +122,22 @@ export function planarize(segs) {
     }
 
     // 3. cut every segment at those points and register the pieces
-    const vIndex = new Map(), verts = [];
-    const vid = (p) => {
-        const k = key(p);
-        if (!vIndex.has(k)) { vIndex.set(k, verts.length); verts.push([p[0], p[1]]); }
-        return vIndex.get(k);
-    };
+    const { vid, verts } = makeVertexIndex();
     const edges = new Map();                                // "u,w" -> assignment
     let conflict = 0, overlapMerged = 0;
 
     for (const s of S) {
-        const ts = [...new Set(s.cuts.map(v => Math.round(v / EPS) * EPS))].sort((x, y) => x - y);
+        // /!\ DO NOT ROUND THE CUT POSITIONS. This line used to be
+        //     s.cuts.map(v => Math.round(v / EPS) * EPS)
+        // which snapped every cut onto a 1e-9 lattice and then built the vertex FROM the snapped
+        // parameter -- so the coordinate written into the crease pattern was displaced by up to
+        // EPS/2. That displacement is not a comparison artefact, it is in the stored corpus: it
+        // is why replaying a sequence that made exactly the right creases still produced a
+        // pattern differing from the stored one at ~3e-10 to ~5e-10, the observed band. Merging
+        // near-equal cuts is still needed, and keeps the first value rather than a lattice point.
+        const ts = mergeSorted(s.cuts, EPS);
         for (let i = 0; i + 1 < ts.length; i++) {
             const t0 = ts[i], t1 = ts[i + 1];
-            if (t1 - t0 < EPS) continue;
             const P = [s.l.n[0] * s.l.d + s.l.dir[0] * t0, s.l.n[1] * s.l.d + s.l.dir[1] * t0];
             const Q = [s.l.n[0] * s.l.d + s.l.dir[0] * t1, s.l.n[1] * s.l.d + s.l.dir[1] * t1];
             const u = vid(P), w = vid(Q);
@@ -135,12 +187,10 @@ export function planarize(segs) {
  * about the state, not a choice we made (workspace/probe-c/stage2.mjs header).
  */
 export function foldedState(layers) {
-    const vIndex = new Map(), verts = [];
-    const vid = (p) => {
-        const k = key(p);
-        if (!vIndex.has(k)) { vIndex.set(k, verts.length); verts.push([p[0], p[1]]); }
-        return vIndex.get(k);
-    };
+    // Same radius lookup as planarize: a folded state's vertices arrive from several layers'
+    // polygons and two layers meeting at a point compute it separately, so the "same point"
+    // decision is the same decision and must not be a grid here either.
+    const { vid, verts } = makeVertexIndex();
     const faces = layers.map(l => l.poly.map(vid));
     const eset = new Map();
     for (const f of faces) for (let i = 0; i < f.length; i++) {

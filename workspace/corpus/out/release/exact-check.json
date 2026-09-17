@@ -1,0 +1,41 @@
+{
+ "generated": "2026-09-17T08:17:07.619Z",
+ "root": "release",
+ "pass": 600,
+ "fail": 0,
+ "seconds": 594.1,
+ "note": "exact multiset comparison of creased segments after planarizing both sides; no tolerance, no merging. shares the fold engine with the generator, so it cannot catch a wrong model of paper",
+ "batches": [
+  {
+   "batch": "all-layers",
+   "n": 400,
+   "pass": 400,
+   "fail": 0
+  },
+  {
+   "batch": "some-generated-d5",
+   "n": 50,
+   "pass": 50,
+   "fail": 0
+  },
+  {
+   "batch": "some-generated-d6",
+   "n": 50,
+   "pass": 50,
+   "fail": 0
+  },
+  {
+   "batch": "some-verified-d3",
+   "n": 50,
+   "pass": 50,
+   "fail": 0
+  },
+  {
+   "batch": "some-verified-d4",
+   "n": 50,
+   "pass": 50,
+   "fail": 0
+  }
+ ],
+ "failures": []
+}

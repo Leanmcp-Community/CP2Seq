@@ -1,0 +1,5 @@
+[
+ {"name": "easy", "min": 4,  "max": 10, "n": 200},
+ {"name": "mid",  "min": 11, "max": 13, "n": 100},
+ {"name": "hard", "min": 14, "max": 19, "n": 100}
+]

@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-16T12:51:53.476Z",
+ "generated": "2026-09-17T06:47:43.605Z",
  "tier": "some-layers",
  "seed0": 20260924,
  "n": 50,
@@ -14,7 +14,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 3,
-   "cp_hash": "7da51df4fa0ed376",
+   "cp_hash": "f60ea2cbe2e5fd8d",
    "metrics": {
     "layers": 22,
     "area": 1,
@@ -62,7 +62,7 @@
    },
    "planarize": {
     "segments_in": 25,
-    "vertices": 42,
+    "vertices": 34,
     "edges": 55,
     "overlaps_merged": 0,
     "assignment_conflicts": 0,
@@ -81,7 +81,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 3,
-   "cp_hash": "501a7930d366560e",
+   "cp_hash": "d95c856842d01926",
    "metrics": {
     "layers": 14,
     "area": 1,
@@ -196,7 +196,7 @@
    },
    "planarize": {
     "segments_in": 17,
-    "vertices": 30,
+    "vertices": 25,
     "edges": 38,
     "overlaps_merged": 0,
     "assignment_conflicts": 0,
@@ -263,7 +263,7 @@
    },
    "planarize": {
     "segments_in": 20,
-    "vertices": 31,
+    "vertices": 29,
     "edges": 45,
     "overlaps_merged": 0,
     "assignment_conflicts": 0,
@@ -282,7 +282,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 2,
-   "cp_hash": "25b1741089e85f16",
+   "cp_hash": "62714b599fab1b69",
    "metrics": {
     "layers": 16,
     "area": 1,
@@ -349,7 +349,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 2,
-   "cp_hash": "7ad7b6bbbed16665",
+   "cp_hash": "1eca9512071c7008",
    "metrics": {
     "layers": 12,
     "area": 1,
@@ -397,7 +397,7 @@
    },
    "planarize": {
     "segments_in": 15,
-    "vertices": 25,
+    "vertices": 22,
     "edges": 33,
     "overlaps_merged": 0,
     "assignment_conflicts": 0,
@@ -416,7 +416,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 2,
-   "cp_hash": "4fbb13f1df37d13f",
+   "cp_hash": "684807392699208f",
    "metrics": {
     "layers": 11,
     "area": 1,
@@ -483,7 +483,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 3,
-   "cp_hash": "78158bdb71d0da43",
+   "cp_hash": "6af66d2b40781f03",
    "metrics": {
     "layers": 19,
     "area": 1,
@@ -550,7 +550,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 2,
-   "cp_hash": "36d5036755be234f",
+   "cp_hash": "e9a341cbc4033717",
    "metrics": {
     "layers": 14,
     "area": 1,
@@ -617,7 +617,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 4,
-   "cp_hash": "49d9e01854f7c40e",
+   "cp_hash": "005072d8e3ced222",
    "metrics": {
     "layers": 10,
     "area": 1,
@@ -684,7 +684,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 2,
-   "cp_hash": "fc3d438f9b5bf01d",
+   "cp_hash": "8ed3b621be83dfbf",
    "metrics": {
     "layers": 18,
     "area": 1,
@@ -751,7 +751,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 3,
-   "cp_hash": "727b3c94656f7108",
+   "cp_hash": "6e08015045e08fe0",
    "metrics": {
     "layers": 13,
     "area": 1,
@@ -818,7 +818,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 1,
-   "cp_hash": "d0ccc7b6e072b55e",
+   "cp_hash": "615827d0cb855388",
    "metrics": {
     "layers": 21,
     "area": 1,
@@ -885,7 +885,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 4,
-   "cp_hash": "d809641ce77d1bda",
+   "cp_hash": "0b84961cd928fd2a",
    "metrics": {
     "layers": 14,
     "area": 1,
@@ -952,7 +952,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 0,
-   "cp_hash": "feec166423345ef2",
+   "cp_hash": "1a29c85e9c3a2f48",
    "metrics": {
     "layers": 42,
     "area": 1,
@@ -1019,7 +1019,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 3,
-   "cp_hash": "550eb1e40c8e94d6",
+   "cp_hash": "69cffa4259f6a340",
    "metrics": {
     "layers": 20,
     "area": 1,
@@ -1086,7 +1086,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 4,
-   "cp_hash": "fda9d0616d67b1c5",
+   "cp_hash": "a4a364997dd61a6d",
    "metrics": {
     "layers": 16,
     "area": 1,
@@ -1153,7 +1153,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 1,
-   "cp_hash": "b1d97c651f3382b9",
+   "cp_hash": "6252f37fe9be339b",
    "metrics": {
     "layers": 24,
     "area": 1,
@@ -1220,7 +1220,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 3,
-   "cp_hash": "6b31d903c4646353",
+   "cp_hash": "8d031a8551c742c7",
    "metrics": {
     "layers": 16,
     "area": 1,
@@ -1287,7 +1287,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 2,
-   "cp_hash": "5d1a8f852258d369",
+   "cp_hash": "3c1498856e977101",
    "metrics": {
     "layers": 15,
     "area": 1,
@@ -1402,7 +1402,7 @@
    },
    "planarize": {
     "segments_in": 19,
-    "vertices": 36,
+    "vertices": 29,
     "edges": 44,
     "overlaps_merged": 0,
     "assignment_conflicts": 0,
@@ -1421,7 +1421,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 2,
-   "cp_hash": "c81d714dcf91407f",
+   "cp_hash": "7eafa45b908492a1",
    "metrics": {
     "layers": 20,
     "area": 1,
@@ -1469,7 +1469,7 @@
    },
    "planarize": {
     "segments_in": 23,
-    "vertices": 35,
+    "vertices": 32,
     "edges": 51,
     "overlaps_merged": 0,
     "assignment_conflicts": 0,
@@ -1488,7 +1488,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 3,
-   "cp_hash": "75f834fbb47dba43",
+   "cp_hash": "1757f3f2e2d1f532",
    "metrics": {
     "layers": 17,
     "area": 1,
@@ -1555,7 +1555,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 1,
-   "cp_hash": "86bfca00ac929d08",
+   "cp_hash": "e795f05f058c3d89",
    "metrics": {
     "layers": 14,
     "area": 1,
@@ -1622,7 +1622,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 0,
-   "cp_hash": "6cef734efd5a2488",
+   "cp_hash": "9de74f30e3b8a652",
    "metrics": {
     "layers": 24,
     "area": 1,
@@ -1670,7 +1670,7 @@
    },
    "planarize": {
     "segments_in": 27,
-    "vertices": 40,
+    "vertices": 35,
     "edges": 58,
     "overlaps_merged": 0,
     "assignment_conflicts": 0,
@@ -1689,7 +1689,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 3,
-   "cp_hash": "3ea8d0782acea000",
+   "cp_hash": "26cf2f4e2af66512",
    "metrics": {
     "layers": 14,
     "area": 1,
@@ -1756,7 +1756,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 4,
-   "cp_hash": "12820ba13947ca7b",
+   "cp_hash": "21e6721fcb9dc881",
    "metrics": {
     "layers": 19,
     "area": 1,
@@ -1804,7 +1804,7 @@
    },
    "planarize": {
     "segments_in": 22,
-    "vertices": 32,
+    "vertices": 29,
     "edges": 47,
     "overlaps_merged": 0,
     "assignment_conflicts": 0,
@@ -1871,7 +1871,7 @@
    },
    "planarize": {
     "segments_in": 23,
-    "vertices": 33,
+    "vertices": 30,
     "edges": 49,
     "overlaps_merged": 0,
     "assignment_conflicts": 0,
@@ -1938,7 +1938,7 @@
    },
    "planarize": {
     "segments_in": 16,
-    "vertices": 25,
+    "vertices": 23,
     "edges": 35,
     "overlaps_merged": 0,
     "assignment_conflicts": 0,
@@ -2005,7 +2005,7 @@
    },
    "planarize": {
     "segments_in": 19,
-    "vertices": 33,
+    "vertices": 27,
     "edges": 42,
     "overlaps_merged": 0,
     "assignment_conflicts": 0,
@@ -2024,7 +2024,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 3,
-   "cp_hash": "278524ea2e2155de",
+   "cp_hash": "4c55d6f5c4be9e43",
    "metrics": {
     "layers": 20,
     "area": 1,
@@ -2139,7 +2139,7 @@
    },
    "planarize": {
     "segments_in": 19,
-    "vertices": 30,
+    "vertices": 27,
     "edges": 42,
     "overlaps_merged": 0,
     "assignment_conflicts": 0,
@@ -2158,13 +2158,13 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 1,
-   "cp_hash": "341bef9aeb249bf4",
+   "cp_hash": "c66be87318b95363",
    "metrics": {
     "layers": 18,
     "area": 1,
     "distinct_areas": 15,
     "coupling_max": 8,
-    "creases": 27,
+    "creases": 26,
     "branching": [
      {
       "step": 1,
@@ -2206,15 +2206,15 @@
    },
    "planarize": {
     "segments_in": 21,
-    "vertices": 37,
-    "edges": 46,
+    "vertices": 28,
+    "edges": 45,
     "overlaps_merged": 0,
     "assignment_conflicts": 0,
     "non_bmv_edges": 0,
     "counts": {
      "B": 19,
      "M": 15,
-     "V": 12
+     "V": 11
     }
    }
   },
@@ -2225,13 +2225,13 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 1,
-   "cp_hash": "b0ccfa3fac661e03",
+   "cp_hash": "fe9c74e6e00465b6",
    "metrics": {
     "layers": 17,
     "area": 1,
     "distinct_areas": 15,
     "coupling_max": 5,
-    "creases": 26,
+    "creases": 25,
     "branching": [
      {
       "step": 1,
@@ -2273,15 +2273,15 @@
    },
    "planarize": {
     "segments_in": 20,
-    "vertices": 32,
-    "edges": 44,
+    "vertices": 27,
+    "edges": 43,
     "overlaps_merged": 0,
     "assignment_conflicts": 0,
     "non_bmv_edges": 0,
     "counts": {
      "B": 18,
      "M": 11,
-     "V": 15
+     "V": 14
     }
    }
   },
@@ -2292,7 +2292,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 1,
-   "cp_hash": "4ea43f375f71431f",
+   "cp_hash": "983b85be43d0db3c",
    "metrics": {
     "layers": 14,
     "area": 1,
@@ -2359,7 +2359,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 3,
-   "cp_hash": "e7fbf194feffd2ee",
+   "cp_hash": "ec024e9844176676",
    "metrics": {
     "layers": 12,
     "area": 1,
@@ -2426,7 +2426,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 3,
-   "cp_hash": "d2f89b8458b9f542",
+   "cp_hash": "b6acf8bc0c5acdee",
    "metrics": {
     "layers": 21,
     "area": 1,
@@ -2474,7 +2474,7 @@
    },
    "planarize": {
     "segments_in": 24,
-    "vertices": 36,
+    "vertices": 35,
     "edges": 55,
     "overlaps_merged": 0,
     "assignment_conflicts": 0,
@@ -2493,7 +2493,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 3,
-   "cp_hash": "1304395beffe21f7",
+   "cp_hash": "d3a1e57dac6929f5",
    "metrics": {
     "layers": 20,
     "area": 1,
@@ -2560,7 +2560,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 3,
-   "cp_hash": "bc274a074e949297",
+   "cp_hash": "3507706976472989",
    "metrics": {
     "layers": 13,
     "area": 1,
@@ -2627,7 +2627,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 1,
-   "cp_hash": "bfde92160680a086",
+   "cp_hash": "3ec112c4030ae90c",
    "metrics": {
     "layers": 15,
     "area": 1,
@@ -2694,7 +2694,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 2,
-   "cp_hash": "67a37d6ebca92000",
+   "cp_hash": "abf3a3ea7ff00c54",
    "metrics": {
     "layers": 14,
     "area": 1,
@@ -2761,7 +2761,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 4,
-   "cp_hash": "ec491bac295d20cc",
+   "cp_hash": "8649799e30353c3e",
    "metrics": {
     "layers": 11,
     "area": 1,
@@ -2828,7 +2828,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 1,
-   "cp_hash": "5c07bd7b2125cda7",
+   "cp_hash": "24f2097b869a0bff",
    "metrics": {
     "layers": 15,
     "area": 1,
@@ -2876,7 +2876,7 @@
    },
    "planarize": {
     "segments_in": 18,
-    "vertices": 25,
+    "vertices": 24,
     "edges": 38,
     "overlaps_merged": 0,
     "assignment_conflicts": 0,
@@ -3029,7 +3029,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 2,
-   "cp_hash": "e55e79041f5670ba",
+   "cp_hash": "77b11b9dbef9f37f",
    "metrics": {
     "layers": 14,
     "area": 1,
@@ -3163,7 +3163,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 2,
-   "cp_hash": "a51fe7395f3db0dd",
+   "cp_hash": "f0723e79878f14a5",
    "metrics": {
     "layers": 16,
     "area": 1,
@@ -3230,7 +3230,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 2,
-   "cp_hash": "9b0f4e7eab536494",
+   "cp_hash": "59bb091cbd8d0848",
    "metrics": {
     "layers": 17,
     "area": 1,
@@ -3297,7 +3297,7 @@
    "steps": 6,
    "p_partial_asked": 0.5,
    "partial_used": 1,
-   "cp_hash": "fbb921f89e799f1e",
+   "cp_hash": "fd363600a2092b7c",
    "metrics": {
     "layers": 35,
     "area": 1,
@@ -3345,7 +3345,7 @@
    },
    "planarize": {
     "segments_in": 38,
-    "vertices": 65,
+    "vertices": 52,
     "edges": 86,
     "overlaps_merged": 0,
     "assignment_conflicts": 0,

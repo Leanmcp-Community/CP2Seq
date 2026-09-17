@@ -1,0 +1,134 @@
+{
+ "counts": {
+  "replayed": 15,
+  "stored": 16,
+  "matched": 14,
+  "unmatchedReplayed": 1,
+  "unmatchedStored": 2
+ },
+ "verdict": "15 creases replayed vs 16 stored",
+ "tolerance": 0.000002,
+ "perFold": [
+  {
+   "fold": 1,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 0.375
+   },
+   "movePositive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "made": 1
+  },
+  {
+   "fold": 2,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 0.84375
+   },
+   "movePositive": true,
+   "selection": {
+    "mode": "top",
+    "k": 1
+   },
+   "over": true,
+   "made": 1
+  },
+  {
+   "fold": 3,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 0.43359375
+   },
+   "movePositive": false,
+   "selection": {
+    "mode": "bottom",
+    "k": 2
+   },
+   "over": false,
+   "made": 2
+  },
+  {
+   "fold": 4,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 0.79248046875
+   },
+   "movePositive": true,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "made": 2
+  },
+  {
+   "fold": 5,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 0.7027587890625
+   },
+   "movePositive": false,
+   "selection": {
+    "mode": "top",
+    "k": 1
+   },
+   "over": true,
+   "made": 1
+  },
+  {
+   "fold": 6,
+   "line": {
+    "n": [
+     0.7071067811865476,
+     0.7071067811865476
+    ],
+    "d": 0.54681658432822
+   },
+   "movePositive": true,
+   "selection": {
+    "mode": "all"
+   },
+   "over": true,
+   "made": 8
+  }
+ ],
+ "onlyReplayed": [
+  "1,0,0.98486328125,M|0|1"
+ ],
+ "onlyStored": [
+  "1,0,0.984619140625,M|0.0705566410662186|1.0000000000662186",
+  "1,0,0.98486328125,M|-8.722983299063571e-10|0.07055664012770167"
+ ],
+ "nearestPairs": [
+  {
+   "replayed": "1,0,0.98486328125,M|0|1",
+   "nearestStored": "1,0,0.984619140625,M|0.0705566410662186|1.0000000000662186",
+   "sameLineKey": false,
+   "delta": {
+    "nx": 0,
+    "ny": 0,
+    "d": 0.000244140625,
+    "lo": -0.0705566410662186,
+    "hi": -6.621858616995269e-11,
+    "assignmentSame": true
+   }
+  }
+ ]
+}

@@ -54,8 +54,8 @@
  },
  "pure_search": {
   "status": "SOLVED",
-  "queries": 2344,
+  "queries": 3344,
   "depth": 4,
-  "ms": 33
+  "ms": 45
  }
 }

@@ -53,7 +53,7 @@
  },
  "planarize": {
   "segments_in": 19,
-  "vertices": 36,
+  "vertices": 29,
   "edges": 44,
   "overlaps_merged": 0,
   "assignment_conflicts": 0,

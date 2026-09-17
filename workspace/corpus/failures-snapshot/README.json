@@ -1,0 +1,48 @@
+{
+ "generated": "2026-09-17T05:09:43.407Z",
+ "why": "replay failures preserved before removal from the release corpus; see snapshot-failures.mjs",
+ "sourceCorpus": "out/release",
+ "replayCheckGenerated": "2026-09-16T13:09:36.776Z",
+ "prior": "the four previous failures of this shape were all bugs in the crease comparison, not in the data -- most recently a decimal bucketing grid splitting dyadic coordinates",
+ "samples": [
+  {
+   "sample": "some-generated-d6/layers-0021",
+   "whyAtDropTime": "15 creases replayed vs 16 stored",
+   "copiedTo": "some-generated-d6__layers-0021",
+   "counts": {
+    "replayed": 15,
+    "stored": 16,
+    "matched": 14,
+    "unmatchedReplayed": 1,
+    "unmatchedStored": 2
+   },
+   "verdict": "15 creases replayed vs 16 stored"
+  },
+  {
+   "sample": "some-generated-d9/layers-0008",
+   "whyAtDropTime": "crease mismatch: 0.70703125,0.70703125,1.230224609375,M [-0.184027, 0.086662]",
+   "copiedTo": "some-generated-d9__layers-0008",
+   "counts": {
+    "replayed": 78,
+    "stored": 78,
+    "matched": 77,
+    "unmatchedReplayed": 1,
+    "unmatchedStored": 1
+   },
+   "verdict": "crease mismatch: 0.70703125,0.70703125,1.230224609375,M [-0.184027, 0.086662]"
+  },
+  {
+   "sample": "some-generated-d9/layers-0027",
+   "whyAtDropTime": "82 creases replayed vs 81 stored",
+   "copiedTo": "some-generated-d9__layers-0027",
+   "counts": {
+    "replayed": 82,
+    "stored": 81,
+    "matched": 80,
+    "unmatchedReplayed": 2,
+    "unmatchedStored": 1
+   },
+   "verdict": "82 creases replayed vs 81 stored"
+  }
+ ]
+}

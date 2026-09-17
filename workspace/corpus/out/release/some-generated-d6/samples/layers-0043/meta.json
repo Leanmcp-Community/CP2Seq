@@ -5,7 +5,7 @@
  "steps": 6,
  "p_partial_asked": 0.5,
  "partial_used": 1,
- "cp_hash": "5c07bd7b2125cda7",
+ "cp_hash": "24f2097b869a0bff",
  "metrics": {
   "layers": 15,
   "area": 1,
@@ -53,7 +53,7 @@
  },
  "planarize": {
   "segments_in": 18,
-  "vertices": 25,
+  "vertices": 24,
   "edges": 38,
   "overlaps_merged": 0,
   "assignment_conflicts": 0,
