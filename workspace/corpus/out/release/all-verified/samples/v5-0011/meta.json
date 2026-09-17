@@ -1,0 +1,123 @@
+{
+ "id": "v5-0011",
+ "stratum": "v5",
+ "seed": 20261127,
+ "requested_steps": 5,
+ "cp_hash": "a08eb0a874dbdf14",
+ "metrics": {
+  "steps": 5,
+  "crease_segments_raw": 12,
+  "crease_edges": 19,
+  "mountain": 9,
+  "valley": 10,
+  "border": 12,
+  "distinct_crease_lines": 10,
+  "vertices": 19,
+  "coupling_max": 4,
+  "coupling_mean": 2.4,
+  "coupling_total": 12,
+  "coupling_final_step": 2,
+  "layers_final": 13,
+  "distinct_angles": 3,
+  "bbox_area_final": 0.375,
+  "largest_face_final": 0.203125,
+  "flags": {
+   "repeated_halving": false,
+   "no_coupling": false,
+   "collapsed": false,
+   "single_angle": false
+  },
+  "degenerate": false
+ },
+ "planarize": {
+  "segments_in": 16,
+  "vertices": 19,
+  "edges": 31,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 12,
+   "M": 9,
+   "V": 10
+  }
+ },
+ "pure_search": {
+  "status": "SOLVED",
+  "queries": 1196,
+  "depth": 5,
+  "seq": [
+   {
+    "line": {
+     "n": [
+      1,
+      0
+     ],
+     "d": 0.75,
+     "dir": [
+      0,
+      1
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865476,
+      -0.7071067811865474
+     ],
+     "d": 2.220446049250313e-16,
+     "dir": [
+      0.7071067811865474,
+      0.7071067811865476
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      1,
+      -1.150395140259164e-9
+     ],
+     "d": 0.24999999884960492,
+     "dir": [
+      -1.150395140259164e-9,
+      -1
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067791192857,
+      -0.7071067832538095
+     ],
+     "d": -0.1767766976605354,
+     "dir": [
+      0.7071067832538095,
+      0.7071067791192857
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067828134522,
+      0.7071067795596429
+     ],
+     "d": 0.7071067799663688,
+     "dir": [
+      0.7071067795596429,
+      -0.7071067828134522
+     ]
+    },
+    "movePositive": true
+   }
+  ],
+  "ms": 2
+ }
+}

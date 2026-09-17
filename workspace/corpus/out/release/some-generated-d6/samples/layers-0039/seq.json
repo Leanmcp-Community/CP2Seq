@@ -1,0 +1,124 @@
+{
+ "id": "layers-0039",
+ "seed": 20561846,
+ "steps": 6,
+ "folds": [
+  {
+   "step": 1,
+   "normal": [
+    -0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": 0.17677669529663687,
+   "move_positive": true,
+   "selection": {
+    "mode": "all"
+   },
+   "over": true,
+   "layers_moved": 1,
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "legal_all": 112,
+   "legal_partial": 0
+  },
+  {
+   "step": 2,
+   "normal": [
+    0,
+    1
+   ],
+   "offset": 0.375,
+   "move_positive": true,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "layers_moved": 2,
+   "creases_created": 2,
+   "layers_before": 2,
+   "layers_after": 4,
+   "legal_all": 112,
+   "legal_partial": 17
+  },
+  {
+   "step": 3,
+   "normal": [
+    0,
+    1
+   ],
+   "offset": 0.296875,
+   "move_positive": false,
+   "selection": {
+    "mode": "top",
+    "k": 2
+   },
+   "over": true,
+   "layers_moved": 2,
+   "creases_created": 2,
+   "layers_before": 4,
+   "layers_after": 6,
+   "legal_all": 112,
+   "legal_partial": 40
+  },
+  {
+   "step": 4,
+   "normal": [
+    0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": 0.905980563395264,
+   "move_positive": true,
+   "selection": {
+    "mode": "all"
+   },
+   "over": true,
+   "layers_moved": 3,
+   "creases_created": 3,
+   "layers_before": 6,
+   "layers_after": 9,
+   "legal_all": 112,
+   "legal_partial": 57
+  },
+  {
+   "step": 5,
+   "normal": [
+    0,
+    1
+   ],
+   "offset": 0.2773437500000001,
+   "move_positive": false,
+   "selection": {
+    "mode": "bottom",
+    "k": 3
+   },
+   "over": false,
+   "layers_moved": 2,
+   "creases_created": 2,
+   "layers_before": 9,
+   "layers_after": 11,
+   "legal_all": 112,
+   "legal_partial": 128
+  },
+  {
+   "step": 6,
+   "normal": [
+    0,
+    1
+   ],
+   "offset": 0.4750976562500001,
+   "move_positive": true,
+   "selection": {
+    "mode": "bottom",
+    "k": 5
+   },
+   "over": false,
+   "layers_moved": 2,
+   "creases_created": 2,
+   "layers_before": 11,
+   "layers_after": 13,
+   "legal_all": 112,
+   "legal_partial": 161
+  }
+ ]
+}

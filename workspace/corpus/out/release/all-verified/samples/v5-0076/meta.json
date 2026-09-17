@@ -1,0 +1,123 @@
+{
+ "id": "v5-0076",
+ "stratum": "v5",
+ "seed": 20261192,
+ "requested_steps": 5,
+ "cp_hash": "b8e432571776a609",
+ "metrics": {
+  "steps": 5,
+  "crease_segments_raw": 10,
+  "crease_edges": 14,
+  "mountain": 9,
+  "valley": 5,
+  "border": 13,
+  "distinct_crease_lines": 8,
+  "vertices": 17,
+  "coupling_max": 4,
+  "coupling_mean": 2,
+  "coupling_total": 10,
+  "coupling_final_step": 4,
+  "layers_final": 11,
+  "distinct_angles": 3,
+  "bbox_area_final": 0.65625,
+  "largest_face_final": 0.328125,
+  "flags": {
+   "repeated_halving": false,
+   "no_coupling": false,
+   "collapsed": false,
+   "single_angle": false
+  },
+  "degenerate": false
+ },
+ "planarize": {
+  "segments_in": 14,
+  "vertices": 17,
+  "edges": 27,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 13,
+   "M": 9,
+   "V": 5
+  }
+ },
+ "pure_search": {
+  "status": "SOLVED",
+  "queries": 7522,
+  "depth": 5,
+  "seq": [
+   {
+    "line": {
+     "n": [
+      1,
+      0
+     ],
+     "d": 0.25,
+     "dir": [
+      0,
+      -1
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865475,
+      0.7071067811865475
+     ],
+     "d": 0.5303300858899106,
+     "dir": [
+      0.7071067811865475,
+      -0.7071067811865475
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865474,
+      0.7071067811865478
+     ],
+     "d": 0.17677669529663725,
+     "dir": [
+      0.7071067811865478,
+      -0.7071067811865474
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067795596429,
+      -0.7071067828134521
+     ],
+     "d": 8.134526663372554e-10,
+     "dir": [
+      -0.7071067828134521,
+      -0.7071067795596429
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865471,
+      0.7071067811865478
+     ],
+     "d": -0.17677669529663642,
+     "dir": [
+      0.7071067811865478,
+      -0.7071067811865471
+     ]
+    },
+    "movePositive": true
+   }
+  ],
+  "ms": 14
+ }
+}

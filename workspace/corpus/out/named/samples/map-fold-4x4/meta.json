@@ -1,0 +1,33 @@
+{
+ "id": "map-fold-4x4",
+ "title": "Map fold, 4 x 4",
+ "family": "useful",
+ "note": "Accordion one way, then accordion the folded strip the other way -- how a road map actually folds. This is the shape the theory is named after: Arkin et al., 'When Can You Fold a Map?' is the complexity result this action space inherits.",
+ "authored": true,
+ "tier": "all-layers",
+ "metrics": {
+  "steps": 6,
+  "partial_folds": 0,
+  "crease_edges": 24,
+  "mountain": 10,
+  "valley": 14,
+  "vertices": 25,
+  "coupling_max": 4,
+  "layers_final": 16,
+  "paper_area_final": 1,
+  "sheet_area": 1
+ },
+ "planarize": {
+  "segments_in": 19,
+  "vertices": 25,
+  "edges": 40,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 16,
+   "V": 14,
+   "M": 10
+  }
+ }
+}

@@ -1,0 +1,142 @@
+{
+ "id": "layers-0023",
+ "seed": 20435143,
+ "steps": 7,
+ "folds": [
+  {
+   "step": 1,
+   "normal": [
+    0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": 0.1767766952966369,
+   "move_positive": true,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "layers_moved": 1,
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "legal_all": 112,
+   "legal_partial": 0
+  },
+  {
+   "step": 2,
+   "normal": [
+    0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": -0.9059805633952636,
+   "move_positive": true,
+   "selection": {
+    "mode": "all"
+   },
+   "over": true,
+   "layers_moved": 2,
+   "creases_created": 1,
+   "layers_before": 2,
+   "layers_after": 3,
+   "legal_all": 112,
+   "legal_partial": 26
+  },
+  {
+   "step": 3,
+   "normal": [
+    0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": -1.4473591927412133,
+   "move_positive": false,
+   "selection": {
+    "mode": "top",
+    "k": 2
+   },
+   "over": true,
+   "layers_moved": 2,
+   "creases_created": 1,
+   "layers_before": 3,
+   "layers_after": 4,
+   "legal_all": 112,
+   "legal_partial": 32
+  },
+  {
+   "step": 4,
+   "normal": [
+    1,
+    0
+   ],
+   "offset": -1.2656249999999993,
+   "move_positive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": true,
+   "layers_moved": 2,
+   "creases_created": 2,
+   "layers_before": 4,
+   "layers_after": 6,
+   "legal_all": 112,
+   "legal_partial": 68
+  },
+  {
+   "step": 5,
+   "normal": [
+    0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": -1.1766698780682385,
+   "move_positive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "layers_moved": 4,
+   "creases_created": 4,
+   "layers_before": 6,
+   "layers_after": 10,
+   "legal_all": 112,
+   "legal_partial": 89
+  },
+  {
+   "step": 6,
+   "normal": [
+    0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": -0.9736528920635071,
+   "move_positive": true,
+   "selection": {
+    "mode": "bottom",
+    "k": 9
+   },
+   "over": false,
+   "layers_moved": 8,
+   "creases_created": 8,
+   "layers_before": 10,
+   "layers_after": 18,
+   "legal_all": 112,
+   "legal_partial": 134
+  },
+  {
+   "step": 7,
+   "normal": [
+    -0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": 0.06629126073623892,
+   "move_positive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": true,
+   "layers_moved": 12,
+   "creases_created": 12,
+   "layers_before": 18,
+   "layers_after": 30,
+   "legal_all": 112,
+   "legal_partial": 181
+  }
+ ]
+}

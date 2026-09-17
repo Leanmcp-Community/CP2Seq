@@ -1,0 +1,33 @@
+{
+ "id": "accordion-8",
+ "title": "Accordion pleat, 8 panels",
+ "family": "useful",
+ "note": "The canonical deployable fold. Every crease is a full-width parallel line and every fold crosses the whole stack, so it sits in the middle of the all-layers action space rather than at its edge.",
+ "authored": true,
+ "tier": "all-layers",
+ "metrics": {
+  "steps": 7,
+  "partial_folds": 0,
+  "crease_edges": 7,
+  "mountain": 3,
+  "valley": 4,
+  "vertices": 18,
+  "coupling_max": 1,
+  "layers_final": 8,
+  "paper_area_final": 1,
+  "sheet_area": 1
+ },
+ "planarize": {
+  "segments_in": 11,
+  "vertices": 18,
+  "edges": 25,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 18,
+   "V": 4,
+   "M": 3
+  }
+ }
+}

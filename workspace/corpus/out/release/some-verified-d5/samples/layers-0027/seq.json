@@ -1,0 +1,103 @@
+{
+ "id": "layers-0027",
+ "seed": 20466816,
+ "steps": 5,
+ "folds": [
+  {
+   "step": 1,
+   "normal": [
+    1,
+    0
+   ],
+   "offset": 0.25,
+   "move_positive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "layers_moved": 1,
+   "creases_created": 1,
+   "layers_before": 1,
+   "layers_after": 2,
+   "legal_all": 112,
+   "legal_partial": 0
+  },
+  {
+   "step": 2,
+   "normal": [
+    0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": 1.1048543456039805,
+   "move_positive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "layers_moved": 2,
+   "creases_created": 1,
+   "layers_before": 2,
+   "layers_after": 3,
+   "legal_all": 112,
+   "legal_partial": 17
+  },
+  {
+   "step": 3,
+   "normal": [
+    1,
+    0
+   ],
+   "offset": 0.8124999999999998,
+   "move_positive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": true,
+   "layers_moved": 3,
+   "creases_created": 3,
+   "layers_before": 3,
+   "layers_after": 6,
+   "legal_all": 112,
+   "legal_partial": 21
+  },
+  {
+   "step": 4,
+   "normal": [
+    1,
+    0
+   ],
+   "offset": 1.3749999999999998,
+   "move_positive": true,
+   "selection": {
+    "mode": "bottom",
+    "k": 4
+   },
+   "over": false,
+   "layers_moved": 2,
+   "creases_created": 2,
+   "layers_before": 6,
+   "layers_after": 8,
+   "legal_all": 112,
+   "legal_partial": 72
+  },
+  {
+   "step": 5,
+   "normal": [
+    -0.7071067811865476,
+    0.7071067811865476
+   ],
+   "offset": -0.110485434560398,
+   "move_positive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "layers_moved": 5,
+   "creases_created": 5,
+   "layers_before": 8,
+   "layers_after": 13,
+   "legal_all": 112,
+   "legal_partial": 105
+  }
+ ]
+}

@@ -1,0 +1,123 @@
+{
+ "id": "v5-0067",
+ "stratum": "v5",
+ "seed": 20261183,
+ "requested_steps": 5,
+ "cp_hash": "f8c6e5c4499e1c2a",
+ "metrics": {
+  "steps": 5,
+  "crease_segments_raw": 23,
+  "crease_edges": 32,
+  "mountain": 18,
+  "valley": 14,
+  "border": 16,
+  "distinct_crease_lines": 12,
+  "vertices": 25,
+  "coupling_max": 8,
+  "coupling_mean": 4.6,
+  "coupling_total": 23,
+  "coupling_final_step": 8,
+  "layers_final": 24,
+  "distinct_angles": 4,
+  "bbox_area_final": 0.1875,
+  "largest_face_final": 0.078125,
+  "flags": {
+   "repeated_halving": false,
+   "no_coupling": false,
+   "collapsed": false,
+   "single_angle": false
+  },
+  "degenerate": false
+ },
+ "planarize": {
+  "segments_in": 27,
+  "vertices": 25,
+  "edges": 48,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 16,
+   "M": 18,
+   "V": 14
+  }
+ },
+ "pure_search": {
+  "status": "SOLVED",
+  "queries": 11760,
+  "depth": 5,
+  "seq": [
+   {
+    "line": {
+     "n": [
+      1,
+      0
+     ],
+     "d": 0.5,
+     "dir": [
+      0,
+      1
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0,
+      1
+     ],
+     "d": 0.5,
+     "dir": [
+      -1,
+      0
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865475,
+      -0.7071067811865475
+     ],
+     "d": 0,
+     "dir": [
+      -0.7071067811865475,
+      -0.7071067811865475
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865476,
+      -0.7071067811865475
+     ],
+     "d": -0.17677669529663675,
+     "dir": [
+      -0.7071067811865475,
+      -0.7071067811865476
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067808807141,
+      0.7071067814923808
+     ],
+     "d": 0.17677669552601172,
+     "dir": [
+      0.7071067814923808,
+      -0.7071067808807141
+     ]
+    },
+    "movePositive": true
+   }
+  ],
+  "ms": 35
+ }
+}

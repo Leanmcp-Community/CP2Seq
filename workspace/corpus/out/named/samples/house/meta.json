@@ -1,0 +1,32 @@
+{
+ "id": "house",
+ "title": "House",
+ "family": "recognisable",
+ "note": "Two folds. Cut both top corners along lines that meet at the top centre, so the peak survives and the silhouette becomes a pentagon -- a wall with a roof. The lines must MEET at (0.5, 1); ending them apart leaves a flat ridge and it reads as a tent with the top cut off.",
+ "authored": true,
+ "tier": "all-layers",
+ "metrics": {
+  "steps": 2,
+  "partial_folds": 0,
+  "crease_edges": 2,
+  "mountain": 0,
+  "valley": 2,
+  "vertices": 7,
+  "coupling_max": 1,
+  "layers_final": 3,
+  "paper_area_final": 1,
+  "sheet_area": 1
+ },
+ "planarize": {
+  "segments_in": 6,
+  "vertices": 7,
+  "edges": 9,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 7,
+   "V": 2
+  }
+ }
+}

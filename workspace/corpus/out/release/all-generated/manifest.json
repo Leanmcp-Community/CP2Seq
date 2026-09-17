@@ -1,0 +1,6928 @@
+{
+ "generated": "2026-09-16T12:48:10.356Z",
+ "seed0": 20260918,
+ "strata": [
+  {
+   "name": "easy",
+   "min": 4,
+   "max": 10
+  },
+  {
+   "name": "mid",
+   "min": 11,
+   "max": 13
+  },
+  {
+   "name": "hard",
+   "min": 14,
+   "max": 19
+  }
+ ],
+ "n_per_stratum": 50,
+ "reject_filters": [],
+ "coupling_cap": null,
+ "coupling_frac": null,
+ "verified": false,
+ "samples": [
+  {
+   "id": "easy-0001",
+   "stratum": "easy",
+   "seed": 20260918,
+   "requested_steps": 4,
+   "cp_hash": "fc2db64d7eadd2c1",
+   "metrics": {
+    "steps": 4,
+    "crease_segments_raw": 8,
+    "crease_edges": 9,
+    "mountain": 6,
+    "valley": 3,
+    "border": 14,
+    "distinct_crease_lines": 7,
+    "vertices": 15,
+    "coupling_max": 4,
+    "coupling_mean": 2,
+    "coupling_total": 8,
+    "coupling_final_step": 4,
+    "layers_final": 9,
+    "distinct_angles": 2,
+    "bbox_area_final": 0.875,
+    "largest_face_final": 0.203125,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 12,
+    "vertices": 15,
+    "edges": 23,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "V": 3,
+     "M": 6
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0002",
+   "stratum": "easy",
+   "seed": 20260919,
+   "requested_steps": 7,
+   "cp_hash": "43ff0f4b5ad42f23",
+   "metrics": {
+    "steps": 7,
+    "crease_segments_raw": 23,
+    "crease_edges": 35,
+    "mountain": 15,
+    "valley": 20,
+    "border": 22,
+    "distinct_crease_lines": 16,
+    "vertices": 34,
+    "coupling_max": 6,
+    "coupling_mean": 3.286,
+    "coupling_total": 23,
+    "coupling_final_step": 6,
+    "layers_final": 24,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.1875,
+    "largest_face_final": 0.140625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 27,
+    "vertices": 34,
+    "edges": 57,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 22,
+     "V": 20,
+     "M": 15
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0003",
+   "stratum": "easy",
+   "seed": 20260920,
+   "requested_steps": 10,
+   "cp_hash": "c677d79a2beacd92",
+   "metrics": {
+    "steps": 10,
+    "crease_segments_raw": 47,
+    "crease_edges": 64,
+    "mountain": 34,
+    "valley": 30,
+    "border": 16,
+    "distinct_crease_lines": 20,
+    "vertices": 33,
+    "coupling_max": 16,
+    "coupling_mean": 4.7,
+    "coupling_total": 47,
+    "coupling_final_step": 8,
+    "layers_final": 48,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.0625,
+    "largest_face_final": 0.03125,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 51,
+    "vertices": 33,
+    "edges": 80,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 30,
+     "M": 34
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0004",
+   "stratum": "easy",
+   "seed": 20260921,
+   "requested_steps": 5,
+   "cp_hash": "fcfc9170cd50e56e",
+   "metrics": {
+    "steps": 5,
+    "crease_segments_raw": 31,
+    "crease_edges": 48,
+    "mountain": 22,
+    "valley": 26,
+    "border": 16,
+    "distinct_crease_lines": 12,
+    "vertices": 33,
+    "coupling_max": 16,
+    "coupling_mean": 6.2,
+    "coupling_total": 31,
+    "coupling_final_step": 16,
+    "layers_final": 32,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.09375,
+    "largest_face_final": 0.046875,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 35,
+    "vertices": 33,
+    "edges": 64,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 26,
+     "M": 22
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0005",
+   "stratum": "easy",
+   "seed": 20260922,
+   "requested_steps": 5,
+   "cp_hash": "04155f57b33389cf",
+   "metrics": {
+    "steps": 5,
+    "crease_segments_raw": 11,
+    "crease_edges": 14,
+    "mountain": 8,
+    "valley": 6,
+    "border": 14,
+    "distinct_crease_lines": 9,
+    "vertices": 17,
+    "coupling_max": 4,
+    "coupling_mean": 2.2,
+    "coupling_total": 11,
+    "coupling_final_step": 4,
+    "layers_final": 12,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.375,
+    "largest_face_final": 0.1875,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 15,
+    "vertices": 17,
+    "edges": 28,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "M": 8,
+     "V": 6
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0006",
+   "stratum": "easy",
+   "seed": 20260923,
+   "requested_steps": 5,
+   "cp_hash": "3019beb0812739be",
+   "metrics": {
+    "steps": 5,
+    "crease_segments_raw": 22,
+    "crease_edges": 31,
+    "mountain": 16,
+    "valley": 15,
+    "border": 15,
+    "distinct_crease_lines": 13,
+    "vertices": 24,
+    "coupling_max": 10,
+    "coupling_mean": 4.4,
+    "coupling_total": 22,
+    "coupling_final_step": 10,
+    "layers_final": 23,
+    "distinct_angles": 3,
+    "bbox_area_final": 0.375,
+    "largest_face_final": 0.125,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 26,
+    "vertices": 24,
+    "edges": 46,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 15,
+     "M": 16,
+     "V": 15
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0007",
+   "stratum": "easy",
+   "seed": 20260924,
+   "requested_steps": 8,
+   "cp_hash": "9442b97c7bf10c7e",
+   "metrics": {
+    "steps": 8,
+    "crease_segments_raw": 63,
+    "crease_edges": 88,
+    "mountain": 42,
+    "valley": 46,
+    "border": 16,
+    "distinct_crease_lines": 20,
+    "vertices": 41,
+    "coupling_max": 16,
+    "coupling_mean": 7.875,
+    "coupling_total": 63,
+    "coupling_final_step": 16,
+    "layers_final": 64,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.03125,
+    "largest_face_final": 0.015625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 67,
+    "vertices": 41,
+    "edges": 104,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 46,
+     "M": 42
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0008",
+   "stratum": "easy",
+   "seed": 20260925,
+   "requested_steps": 7,
+   "cp_hash": "9974e0dfbd693a51",
+   "metrics": {
+    "steps": 7,
+    "crease_segments_raw": 15,
+    "crease_edges": 19,
+    "mountain": 8,
+    "valley": 11,
+    "border": 14,
+    "distinct_crease_lines": 10,
+    "vertices": 18,
+    "coupling_max": 4,
+    "coupling_mean": 2.143,
+    "coupling_total": 15,
+    "coupling_final_step": 3,
+    "layers_final": 16,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.25,
+    "largest_face_final": 0.15625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 19,
+    "vertices": 18,
+    "edges": 33,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "V": 11,
+     "M": 8
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0009",
+   "stratum": "easy",
+   "seed": 20260926,
+   "requested_steps": 5,
+   "cp_hash": "f800e7bbcda051a1",
+   "metrics": {
+    "steps": 5,
+    "crease_segments_raw": 19,
+    "crease_edges": 28,
+    "mountain": 12,
+    "valley": 16,
+    "border": 16,
+    "distinct_crease_lines": 10,
+    "vertices": 25,
+    "coupling_max": 10,
+    "coupling_mean": 3.8,
+    "coupling_total": 19,
+    "coupling_final_step": 10,
+    "layers_final": 20,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.1875,
+    "largest_face_final": 0.109375,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 23,
+    "vertices": 25,
+    "edges": 44,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 16,
+     "M": 12
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0010",
+   "stratum": "easy",
+   "seed": 20260927,
+   "requested_steps": 6,
+   "cp_hash": "266426f492efa9d8",
+   "metrics": {
+    "steps": 6,
+    "crease_segments_raw": 15,
+    "crease_edges": 20,
+    "mountain": 12,
+    "valley": 8,
+    "border": 16,
+    "distinct_crease_lines": 8,
+    "vertices": 21,
+    "coupling_max": 6,
+    "coupling_mean": 2.5,
+    "coupling_total": 15,
+    "coupling_final_step": 2,
+    "layers_final": 16,
+    "distinct_angles": 3,
+    "bbox_area_final": 0.125,
+    "largest_face_final": 0.09375,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 19,
+    "vertices": 21,
+    "edges": 36,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "M": 12,
+     "V": 8
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0011",
+   "stratum": "easy",
+   "seed": 20260928,
+   "requested_steps": 7,
+   "cp_hash": "eb22fa0b143db4e1",
+   "metrics": {
+    "steps": 7,
+    "crease_segments_raw": 18,
+    "crease_edges": 26,
+    "mountain": 16,
+    "valley": 10,
+    "border": 13,
+    "distinct_crease_lines": 9,
+    "vertices": 21,
+    "coupling_max": 6,
+    "coupling_mean": 2.571,
+    "coupling_total": 18,
+    "coupling_final_step": 6,
+    "layers_final": 19,
+    "distinct_angles": 3,
+    "bbox_area_final": 0.375,
+    "largest_face_final": 0.1875,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 22,
+    "vertices": 21,
+    "edges": 39,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 13,
+     "V": 10,
+     "M": 16
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0012",
+   "stratum": "easy",
+   "seed": 20260929,
+   "requested_steps": 8,
+   "cp_hash": "96ea062ecf2b3b18",
+   "metrics": {
+    "steps": 8,
+    "crease_segments_raw": 31,
+    "crease_edges": 41,
+    "mountain": 19,
+    "valley": 22,
+    "border": 16,
+    "distinct_crease_lines": 14,
+    "vertices": 26,
+    "coupling_max": 8,
+    "coupling_mean": 3.875,
+    "coupling_total": 31,
+    "coupling_final_step": 4,
+    "layers_final": 32,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.125,
+    "largest_face_final": 0.0625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 35,
+    "vertices": 26,
+    "edges": 57,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "M": 19,
+     "V": 22
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0013",
+   "stratum": "easy",
+   "seed": 20260930,
+   "requested_steps": 7,
+   "cp_hash": "cfc738066ef6073a",
+   "metrics": {
+    "steps": 7,
+    "crease_segments_raw": 23,
+    "crease_edges": 32,
+    "mountain": 17,
+    "valley": 15,
+    "border": 16,
+    "distinct_crease_lines": 17,
+    "vertices": 25,
+    "coupling_max": 6,
+    "coupling_mean": 3.286,
+    "coupling_total": 23,
+    "coupling_final_step": 4,
+    "layers_final": 24,
+    "distinct_angles": 3,
+    "bbox_area_final": 0.1875,
+    "largest_face_final": 0.125,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 27,
+    "vertices": 25,
+    "edges": 48,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "M": 17,
+     "V": 15
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0014",
+   "stratum": "easy",
+   "seed": 20260931,
+   "requested_steps": 9,
+   "cp_hash": "b4178b52d75e0016",
+   "metrics": {
+    "steps": 9,
+    "crease_segments_raw": 55,
+    "crease_edges": 80,
+    "mountain": 38,
+    "valley": 42,
+    "border": 16,
+    "distinct_crease_lines": 19,
+    "vertices": 41,
+    "coupling_max": 12,
+    "coupling_mean": 6.111,
+    "coupling_total": 55,
+    "coupling_final_step": 12,
+    "layers_final": 56,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.0625,
+    "largest_face_final": 0.03125,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 59,
+    "vertices": 41,
+    "edges": 96,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 42,
+     "M": 38
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0015",
+   "stratum": "easy",
+   "seed": 20260932,
+   "requested_steps": 9,
+   "cp_hash": "14c33e5bdd4897fd",
+   "metrics": {
+    "steps": 9,
+    "crease_segments_raw": 71,
+    "crease_edges": 102,
+    "mountain": 53,
+    "valley": 49,
+    "border": 28,
+    "distinct_crease_lines": 27,
+    "vertices": 59,
+    "coupling_max": 16,
+    "coupling_mean": 7.889,
+    "coupling_total": 71,
+    "coupling_final_step": 16,
+    "layers_final": 72,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.046875,
+    "largest_face_final": 0.039063,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 75,
+    "vertices": 59,
+    "edges": 130,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 28,
+     "M": 53,
+     "V": 49
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0016",
+   "stratum": "easy",
+   "seed": 20260933,
+   "requested_steps": 4,
+   "cp_hash": "c6127404246fbf48",
+   "metrics": {
+    "steps": 4,
+    "crease_segments_raw": 5,
+    "crease_edges": 6,
+    "mountain": 3,
+    "valley": 3,
+    "border": 10,
+    "distinct_crease_lines": 5,
+    "vertices": 11,
+    "coupling_max": 2,
+    "coupling_mean": 1.25,
+    "coupling_total": 5,
+    "coupling_final_step": 1,
+    "layers_final": 6,
+    "distinct_angles": 3,
+    "bbox_area_final": 0.5,
+    "largest_face_final": 0.375,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 9,
+    "vertices": 11,
+    "edges": 16,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 10,
+     "V": 3,
+     "M": 3
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0017",
+   "stratum": "easy",
+   "seed": 20260934,
+   "requested_steps": 7,
+   "cp_hash": "791c52ce517e3610",
+   "metrics": {
+    "steps": 7,
+    "crease_segments_raw": 17,
+    "crease_edges": 24,
+    "mountain": 16,
+    "valley": 8,
+    "border": 15,
+    "distinct_crease_lines": 12,
+    "vertices": 22,
+    "coupling_max": 7,
+    "coupling_mean": 2.429,
+    "coupling_total": 17,
+    "coupling_final_step": 2,
+    "layers_final": 18,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.3125,
+    "largest_face_final": 0.109375,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 21,
+    "vertices": 22,
+    "edges": 39,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 15,
+     "M": 16,
+     "V": 8
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0018",
+   "stratum": "easy",
+   "seed": 20260935,
+   "requested_steps": 9,
+   "cp_hash": "9c943ba063ab8ff2",
+   "metrics": {
+    "steps": 9,
+    "crease_segments_raw": 91,
+    "crease_edges": 134,
+    "mountain": 63,
+    "valley": 71,
+    "border": 32,
+    "distinct_crease_lines": 24,
+    "vertices": 75,
+    "coupling_max": 32,
+    "coupling_mean": 10.111,
+    "coupling_total": 91,
+    "coupling_final_step": 32,
+    "layers_final": 92,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.03125,
+    "largest_face_final": 0.023438,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 95,
+    "vertices": 75,
+    "edges": 166,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "V": 71,
+     "M": 63
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0019",
+   "stratum": "easy",
+   "seed": 20260936,
+   "requested_steps": 10,
+   "cp_hash": "da1811a658ee97cc",
+   "metrics": {
+    "steps": 10,
+    "crease_segments_raw": 43,
+    "crease_edges": 66,
+    "mountain": 36,
+    "valley": 30,
+    "border": 20,
+    "distinct_crease_lines": 20,
+    "vertices": 43,
+    "coupling_max": 14,
+    "coupling_mean": 4.3,
+    "coupling_total": 43,
+    "coupling_final_step": 5,
+    "layers_final": 44,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.140625,
+    "largest_face_final": 0.0625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 47,
+    "vertices": 43,
+    "edges": 86,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 20,
+     "M": 36,
+     "V": 30
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0020",
+   "stratum": "easy",
+   "seed": 20260937,
+   "requested_steps": 6,
+   "cp_hash": "960ab4c1a47db865",
+   "metrics": {
+    "steps": 6,
+    "crease_segments_raw": 13,
+    "crease_edges": 17,
+    "mountain": 9,
+    "valley": 8,
+    "border": 14,
+    "distinct_crease_lines": 12,
+    "vertices": 18,
+    "coupling_max": 4,
+    "coupling_mean": 2.167,
+    "coupling_total": 13,
+    "coupling_final_step": 3,
+    "layers_final": 14,
+    "distinct_angles": 3,
+    "bbox_area_final": 0.5625,
+    "largest_face_final": 0.15625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 17,
+    "vertices": 18,
+    "edges": 31,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "M": 9,
+     "V": 8
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0021",
+   "stratum": "easy",
+   "seed": 20260938,
+   "requested_steps": 5,
+   "cp_hash": "57f3093cd99cced8",
+   "metrics": {
+    "steps": 5,
+    "crease_segments_raw": 9,
+    "crease_edges": 12,
+    "mountain": 6,
+    "valley": 6,
+    "border": 13,
+    "distinct_crease_lines": 7,
+    "vertices": 16,
+    "coupling_max": 3,
+    "coupling_mean": 1.8,
+    "coupling_total": 9,
+    "coupling_final_step": 2,
+    "layers_final": 10,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.375,
+    "largest_face_final": 0.25,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 13,
+    "vertices": 16,
+    "edges": 25,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 13,
+     "V": 6,
+     "M": 6
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0022",
+   "stratum": "easy",
+   "seed": 20260939,
+   "requested_steps": 7,
+   "cp_hash": "b0e5a6091b937777",
+   "metrics": {
+    "steps": 7,
+    "crease_segments_raw": 33,
+    "crease_edges": 50,
+    "mountain": 24,
+    "valley": 26,
+    "border": 16,
+    "distinct_crease_lines": 16,
+    "vertices": 33,
+    "coupling_max": 12,
+    "coupling_mean": 4.714,
+    "coupling_total": 33,
+    "coupling_final_step": 12,
+    "layers_final": 34,
+    "distinct_angles": 3,
+    "bbox_area_final": 0.1875,
+    "largest_face_final": 0.109375,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 37,
+    "vertices": 33,
+    "edges": 66,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 26,
+     "M": 24
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0023",
+   "stratum": "easy",
+   "seed": 20260940,
+   "requested_steps": 6,
+   "cp_hash": "686bef4f6af34d8b",
+   "metrics": {
+    "steps": 6,
+    "crease_segments_raw": 11,
+    "crease_edges": 14,
+    "mountain": 8,
+    "valley": 6,
+    "border": 13,
+    "distinct_crease_lines": 8,
+    "vertices": 16,
+    "coupling_max": 3,
+    "coupling_mean": 1.833,
+    "coupling_total": 11,
+    "coupling_final_step": 2,
+    "layers_final": 12,
+    "distinct_angles": 3,
+    "bbox_area_final": 0.5625,
+    "largest_face_final": 0.28125,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 15,
+    "vertices": 16,
+    "edges": 27,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 13,
+     "M": 8,
+     "V": 6
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0024",
+   "stratum": "easy",
+   "seed": 20260941,
+   "requested_steps": 7,
+   "cp_hash": "b14fd65f43e116cf",
+   "metrics": {
+    "steps": 7,
+    "crease_segments_raw": 23,
+    "crease_edges": 37,
+    "mountain": 18,
+    "valley": 19,
+    "border": 12,
+    "distinct_crease_lines": 13,
+    "vertices": 26,
+    "coupling_max": 6,
+    "coupling_mean": 3.286,
+    "coupling_total": 23,
+    "coupling_final_step": 6,
+    "layers_final": 24,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.1875,
+    "largest_face_final": 0.109375,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 27,
+    "vertices": 26,
+    "edges": 49,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "M": 18,
+     "V": 19
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0025",
+   "stratum": "easy",
+   "seed": 20260942,
+   "requested_steps": 8,
+   "cp_hash": "2ec7d4790ae2ae9f",
+   "metrics": {
+    "steps": 8,
+    "crease_segments_raw": 24,
+    "crease_edges": 38,
+    "mountain": 20,
+    "valley": 18,
+    "border": 18,
+    "distinct_crease_lines": 13,
+    "vertices": 32,
+    "coupling_max": 4,
+    "coupling_mean": 3,
+    "coupling_total": 24,
+    "coupling_final_step": 4,
+    "layers_final": 25,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.125,
+    "largest_face_final": 0.125,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 28,
+    "vertices": 32,
+    "edges": 56,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 18,
+     "M": 20,
+     "V": 18
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0026",
+   "stratum": "easy",
+   "seed": 20260943,
+   "requested_steps": 10,
+   "cp_hash": "e75af3c2fa18f2b6",
+   "metrics": {
+    "steps": 10,
+    "crease_segments_raw": 31,
+    "crease_edges": 40,
+    "mountain": 24,
+    "valley": 16,
+    "border": 16,
+    "distinct_crease_lines": 12,
+    "vertices": 25,
+    "coupling_max": 6,
+    "coupling_mean": 3.1,
+    "coupling_total": 31,
+    "coupling_final_step": 4,
+    "layers_final": 32,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.0625,
+    "largest_face_final": 0.03125,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 35,
+    "vertices": 25,
+    "edges": 56,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "M": 24,
+     "V": 16
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0027",
+   "stratum": "easy",
+   "seed": 20260944,
+   "requested_steps": 5,
+   "cp_hash": "d375bd714b48abf3",
+   "metrics": {
+    "steps": 5,
+    "crease_segments_raw": 13,
+    "crease_edges": 17,
+    "mountain": 7,
+    "valley": 10,
+    "border": 12,
+    "distinct_crease_lines": 9,
+    "vertices": 16,
+    "coupling_max": 6,
+    "coupling_mean": 2.6,
+    "coupling_total": 13,
+    "coupling_final_step": 6,
+    "layers_final": 14,
+    "distinct_angles": 3,
+    "bbox_area_final": 0.5625,
+    "largest_face_final": 0.25,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 17,
+    "vertices": 16,
+    "edges": 29,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 10,
+     "M": 7
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0028",
+   "stratum": "easy",
+   "seed": 20260945,
+   "requested_steps": 8,
+   "cp_hash": "1322e59362484995",
+   "metrics": {
+    "steps": 8,
+    "crease_segments_raw": 19,
+    "crease_edges": 27,
+    "mountain": 10,
+    "valley": 17,
+    "border": 13,
+    "distinct_crease_lines": 12,
+    "vertices": 21,
+    "coupling_max": 4,
+    "coupling_mean": 2.375,
+    "coupling_total": 19,
+    "coupling_final_step": 3,
+    "layers_final": 20,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.25,
+    "largest_face_final": 0.15625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 23,
+    "vertices": 21,
+    "edges": 40,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 13,
+     "V": 17,
+     "M": 10
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0029",
+   "stratum": "easy",
+   "seed": 20260946,
+   "requested_steps": 10,
+   "cp_hash": "1f8b877c14c7ff7a",
+   "metrics": {
+    "steps": 10,
+    "crease_segments_raw": 40,
+    "crease_edges": 59,
+    "mountain": 33,
+    "valley": 26,
+    "border": 18,
+    "distinct_crease_lines": 16,
+    "vertices": 37,
+    "coupling_max": 10,
+    "coupling_mean": 4,
+    "coupling_total": 40,
+    "coupling_final_step": 7,
+    "layers_final": 41,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.0625,
+    "largest_face_final": 0.0625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 44,
+    "vertices": 37,
+    "edges": 77,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 18,
+     "M": 33,
+     "V": 26
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0030",
+   "stratum": "easy",
+   "seed": 20260947,
+   "requested_steps": 7,
+   "cp_hash": "b36e711c3688c686",
+   "metrics": {
+    "steps": 7,
+    "crease_segments_raw": 15,
+    "crease_edges": 22,
+    "mountain": 13,
+    "valley": 9,
+    "border": 12,
+    "distinct_crease_lines": 11,
+    "vertices": 19,
+    "coupling_max": 4,
+    "coupling_mean": 2.143,
+    "coupling_total": 15,
+    "coupling_final_step": 4,
+    "layers_final": 16,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.125,
+    "largest_face_final": 0.09375,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 19,
+    "vertices": 19,
+    "edges": 34,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 12,
+     "V": 9,
+     "M": 13
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0031",
+   "stratum": "easy",
+   "seed": 20260948,
+   "requested_steps": 10,
+   "cp_hash": "0c804de3779b2dc9",
+   "metrics": {
+    "steps": 10,
+    "crease_segments_raw": 37,
+    "crease_edges": 55,
+    "mountain": 25,
+    "valley": 30,
+    "border": 16,
+    "distinct_crease_lines": 16,
+    "vertices": 34,
+    "coupling_max": 12,
+    "coupling_mean": 3.7,
+    "coupling_total": 37,
+    "coupling_final_step": 12,
+    "layers_final": 38,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.09375,
+    "largest_face_final": 0.046875,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 41,
+    "vertices": 34,
+    "edges": 71,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 30,
+     "M": 25
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0032",
+   "stratum": "easy",
+   "seed": 20260949,
+   "requested_steps": 5,
+   "cp_hash": "65cc80cfbdbe5afb",
+   "metrics": {
+    "steps": 5,
+    "crease_segments_raw": 15,
+    "crease_edges": 24,
+    "mountain": 14,
+    "valley": 10,
+    "border": 14,
+    "distinct_crease_lines": 11,
+    "vertices": 23,
+    "coupling_max": 5,
+    "coupling_mean": 3,
+    "coupling_total": 15,
+    "coupling_final_step": 5,
+    "layers_final": 16,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.25,
+    "largest_face_final": 0.09375,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 19,
+    "vertices": 23,
+    "edges": 38,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "M": 14,
+     "V": 10
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0033",
+   "stratum": "easy",
+   "seed": 20260950,
+   "requested_steps": 5,
+   "cp_hash": "af004ca524fa29b1",
+   "metrics": {
+    "steps": 5,
+    "crease_segments_raw": 9,
+    "crease_edges": 13,
+    "mountain": 4,
+    "valley": 9,
+    "border": 11,
+    "distinct_crease_lines": 6,
+    "vertices": 15,
+    "coupling_max": 4,
+    "coupling_mean": 1.8,
+    "coupling_total": 9,
+    "coupling_final_step": 4,
+    "layers_final": 10,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.375,
+    "largest_face_final": 0.25,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 13,
+    "vertices": 15,
+    "edges": 24,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 11,
+     "V": 9,
+     "M": 4
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0034",
+   "stratum": "easy",
+   "seed": 20260951,
+   "requested_steps": 8,
+   "cp_hash": "76278b6b072e378d",
+   "metrics": {
+    "steps": 8,
+    "crease_segments_raw": 37,
+    "crease_edges": 53,
+    "mountain": 28,
+    "valley": 25,
+    "border": 22,
+    "distinct_crease_lines": 20,
+    "vertices": 38,
+    "coupling_max": 14,
+    "coupling_mean": 4.625,
+    "coupling_total": 37,
+    "coupling_final_step": 6,
+    "layers_final": 38,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.234375,
+    "largest_face_final": 0.09375,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 41,
+    "vertices": 38,
+    "edges": 75,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 22,
+     "M": 28,
+     "V": 25
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0035",
+   "stratum": "easy",
+   "seed": 20260952,
+   "requested_steps": 6,
+   "cp_hash": "0cbc59439b72e6f9",
+   "metrics": {
+    "steps": 6,
+    "crease_segments_raw": 26,
+    "crease_edges": 42,
+    "mountain": 19,
+    "valley": 23,
+    "border": 20,
+    "distinct_crease_lines": 15,
+    "vertices": 36,
+    "coupling_max": 12,
+    "coupling_mean": 4.333,
+    "coupling_total": 26,
+    "coupling_final_step": 12,
+    "layers_final": 27,
+    "distinct_angles": 3,
+    "bbox_area_final": 0.1875,
+    "largest_face_final": 0.148438,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 30,
+    "vertices": 36,
+    "edges": 62,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 20,
+     "V": 23,
+     "M": 19
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0036",
+   "stratum": "easy",
+   "seed": 20260953,
+   "requested_steps": 8,
+   "cp_hash": "bb6ae6db015f0919",
+   "metrics": {
+    "steps": 8,
+    "crease_segments_raw": 61,
+    "crease_edges": 89,
+    "mountain": 44,
+    "valley": 45,
+    "border": 20,
+    "distinct_crease_lines": 19,
+    "vertices": 48,
+    "coupling_max": 30,
+    "coupling_mean": 7.625,
+    "coupling_total": 61,
+    "coupling_final_step": 30,
+    "layers_final": 62,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.140625,
+    "largest_face_final": 0.0625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 65,
+    "vertices": 48,
+    "edges": 109,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 20,
+     "M": 44,
+     "V": 45
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0037",
+   "stratum": "easy",
+   "seed": 20260954,
+   "requested_steps": 6,
+   "cp_hash": "6a1181ebfdfbd065",
+   "metrics": {
+    "steps": 6,
+    "crease_segments_raw": 13,
+    "crease_edges": 19,
+    "mountain": 13,
+    "valley": 6,
+    "border": 14,
+    "distinct_crease_lines": 10,
+    "vertices": 20,
+    "coupling_max": 5,
+    "coupling_mean": 2.167,
+    "coupling_total": 13,
+    "coupling_final_step": 2,
+    "layers_final": 14,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.375,
+    "largest_face_final": 0.3125,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 17,
+    "vertices": 20,
+    "edges": 33,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "M": 13,
+     "V": 6
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0038",
+   "stratum": "easy",
+   "seed": 20260955,
+   "requested_steps": 10,
+   "cp_hash": "deb28400fc3d5c88",
+   "metrics": {
+    "steps": 10,
+    "crease_segments_raw": 37,
+    "crease_edges": 56,
+    "mountain": 28,
+    "valley": 28,
+    "border": 19,
+    "distinct_crease_lines": 20,
+    "vertices": 38,
+    "coupling_max": 7,
+    "coupling_mean": 3.7,
+    "coupling_total": 37,
+    "coupling_final_step": 6,
+    "layers_final": 38,
+    "distinct_angles": 3,
+    "bbox_area_final": 0.140625,
+    "largest_face_final": 0.0625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 41,
+    "vertices": 38,
+    "edges": 75,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 19,
+     "V": 28,
+     "M": 28
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0039",
+   "stratum": "easy",
+   "seed": 20260956,
+   "requested_steps": 7,
+   "cp_hash": "649749da7056f2fc",
+   "metrics": {
+    "steps": 7,
+    "crease_segments_raw": 18,
+    "crease_edges": 26,
+    "mountain": 15,
+    "valley": 11,
+    "border": 16,
+    "distinct_crease_lines": 12,
+    "vertices": 24,
+    "coupling_max": 8,
+    "coupling_mean": 2.571,
+    "coupling_total": 18,
+    "coupling_final_step": 8,
+    "layers_final": 19,
+    "distinct_angles": 3,
+    "bbox_area_final": 0.3125,
+    "largest_face_final": 0.109375,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 22,
+    "vertices": 24,
+    "edges": 42,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "M": 15,
+     "V": 11
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0040",
+   "stratum": "easy",
+   "seed": 20260957,
+   "requested_steps": 9,
+   "cp_hash": "5b7f8eb79ec66aeb",
+   "metrics": {
+    "steps": 9,
+    "crease_segments_raw": 28,
+    "crease_edges": 41,
+    "mountain": 22,
+    "valley": 19,
+    "border": 15,
+    "distinct_crease_lines": 17,
+    "vertices": 28,
+    "coupling_max": 7,
+    "coupling_mean": 3.111,
+    "coupling_total": 28,
+    "coupling_final_step": 4,
+    "layers_final": 29,
+    "distinct_angles": 3,
+    "bbox_area_final": 0.28125,
+    "largest_face_final": 0.125,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 32,
+    "vertices": 28,
+    "edges": 56,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 15,
+     "M": 22,
+     "V": 19
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0041",
+   "stratum": "easy",
+   "seed": 20260958,
+   "requested_steps": 7,
+   "cp_hash": "4a6d70505f8edee0",
+   "metrics": {
+    "steps": 7,
+    "crease_segments_raw": 20,
+    "crease_edges": 31,
+    "mountain": 13,
+    "valley": 18,
+    "border": 16,
+    "distinct_crease_lines": 13,
+    "vertices": 27,
+    "coupling_max": 6,
+    "coupling_mean": 2.857,
+    "coupling_total": 20,
+    "coupling_final_step": 3,
+    "layers_final": 21,
+    "distinct_angles": 3,
+    "bbox_area_final": 0.3125,
+    "largest_face_final": 0.179688,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 24,
+    "vertices": 27,
+    "edges": 47,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 18,
+     "M": 13
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0042",
+   "stratum": "easy",
+   "seed": 20260959,
+   "requested_steps": 5,
+   "cp_hash": "78dea8d6e5e892d8",
+   "metrics": {
+    "steps": 5,
+    "crease_segments_raw": 11,
+    "crease_edges": 17,
+    "mountain": 7,
+    "valley": 10,
+    "border": 11,
+    "distinct_crease_lines": 10,
+    "vertices": 17,
+    "coupling_max": 4,
+    "coupling_mean": 2.2,
+    "coupling_total": 11,
+    "coupling_final_step": 4,
+    "layers_final": 12,
+    "distinct_angles": 3,
+    "bbox_area_final": 0.5625,
+    "largest_face_final": 0.15625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 15,
+    "vertices": 17,
+    "edges": 28,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 11,
+     "M": 7,
+     "V": 10
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0043",
+   "stratum": "easy",
+   "seed": 20260960,
+   "requested_steps": 7,
+   "cp_hash": "9b60820a0ecbcd6c",
+   "metrics": {
+    "steps": 7,
+    "crease_segments_raw": 31,
+    "crease_edges": 42,
+    "mountain": 19,
+    "valley": 23,
+    "border": 16,
+    "distinct_crease_lines": 17,
+    "vertices": 27,
+    "coupling_max": 14,
+    "coupling_mean": 4.429,
+    "coupling_total": 31,
+    "coupling_final_step": 4,
+    "layers_final": 32,
+    "distinct_angles": 3,
+    "bbox_area_final": 0.125,
+    "largest_face_final": 0.0625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 35,
+    "vertices": 27,
+    "edges": 58,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 23,
+     "M": 19
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0044",
+   "stratum": "easy",
+   "seed": 20260961,
+   "requested_steps": 5,
+   "cp_hash": "b29c8904b1489d3e",
+   "metrics": {
+    "steps": 5,
+    "crease_segments_raw": 13,
+    "crease_edges": 20,
+    "mountain": 13,
+    "valley": 7,
+    "border": 11,
+    "distinct_crease_lines": 11,
+    "vertices": 18,
+    "coupling_max": 5,
+    "coupling_mean": 2.6,
+    "coupling_total": 13,
+    "coupling_final_step": 5,
+    "layers_final": 14,
+    "distinct_angles": 2,
+    "bbox_area_final": 0.375,
+    "largest_face_final": 0.21875,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 17,
+    "vertices": 18,
+    "edges": 31,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 11,
+     "M": 13,
+     "V": 7
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0045",
+   "stratum": "easy",
+   "seed": 20260962,
+   "requested_steps": 8,
+   "cp_hash": "bb71adbdf957e213",
+   "metrics": {
+    "steps": 8,
+    "crease_segments_raw": 55,
+    "crease_edges": 78,
+    "mountain": 41,
+    "valley": 37,
+    "border": 16,
+    "distinct_crease_lines": 20,
+    "vertices": 39,
+    "coupling_max": 16,
+    "coupling_mean": 6.875,
+    "coupling_total": 55,
+    "coupling_final_step": 16,
+    "layers_final": 56,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.09375,
+    "largest_face_final": 0.046875,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 59,
+    "vertices": 39,
+    "edges": 94,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "M": 41,
+     "V": 37
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0046",
+   "stratum": "easy",
+   "seed": 20260963,
+   "requested_steps": 4,
+   "cp_hash": "c216288c75d5faac",
+   "metrics": {
+    "steps": 4,
+    "crease_segments_raw": 9,
+    "crease_edges": 12,
+    "mountain": 9,
+    "valley": 3,
+    "border": 13,
+    "distinct_crease_lines": 6,
+    "vertices": 16,
+    "coupling_max": 3,
+    "coupling_mean": 2.25,
+    "coupling_total": 9,
+    "coupling_final_step": 3,
+    "layers_final": 10,
+    "distinct_angles": 3,
+    "bbox_area_final": 0.1875,
+    "largest_face_final": 0.1875,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 13,
+    "vertices": 16,
+    "edges": 25,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 13,
+     "M": 9,
+     "V": 3
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0047",
+   "stratum": "easy",
+   "seed": 20260964,
+   "requested_steps": 5,
+   "cp_hash": "115e138cf512e04e",
+   "metrics": {
+    "steps": 5,
+    "crease_segments_raw": 9,
+    "crease_edges": 10,
+    "mountain": 4,
+    "valley": 6,
+    "border": 14,
+    "distinct_crease_lines": 6,
+    "vertices": 15,
+    "coupling_max": 2,
+    "coupling_mean": 1.8,
+    "coupling_total": 9,
+    "coupling_final_step": 2,
+    "layers_final": 10,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.375,
+    "largest_face_final": 0.21875,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 13,
+    "vertices": 15,
+    "edges": 24,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 14,
+     "V": 6,
+     "M": 4
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0048",
+   "stratum": "easy",
+   "seed": 20260965,
+   "requested_steps": 6,
+   "cp_hash": "6beb18e8d7b26c32",
+   "metrics": {
+    "steps": 6,
+    "crease_segments_raw": 13,
+    "crease_edges": 19,
+    "mountain": 13,
+    "valley": 6,
+    "border": 10,
+    "distinct_crease_lines": 8,
+    "vertices": 16,
+    "coupling_max": 4,
+    "coupling_mean": 2.167,
+    "coupling_total": 13,
+    "coupling_final_step": 4,
+    "layers_final": 14,
+    "distinct_angles": 3,
+    "bbox_area_final": 0.25,
+    "largest_face_final": 0.15625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 17,
+    "vertices": 16,
+    "edges": 29,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 10,
+     "M": 13,
+     "V": 6
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0049",
+   "stratum": "easy",
+   "seed": 20260966,
+   "requested_steps": 7,
+   "cp_hash": "69a00c645c82e682",
+   "metrics": {
+    "steps": 7,
+    "crease_segments_raw": 37,
+    "crease_edges": 57,
+    "mountain": 27,
+    "valley": 30,
+    "border": 16,
+    "distinct_crease_lines": 15,
+    "vertices": 36,
+    "coupling_max": 16,
+    "coupling_mean": 5.286,
+    "coupling_total": 37,
+    "coupling_final_step": 16,
+    "layers_final": 38,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.09375,
+    "largest_face_final": 0.046875,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 41,
+    "vertices": 36,
+    "edges": 73,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 30,
+     "M": 27
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "easy-0050",
+   "stratum": "easy",
+   "seed": 20260967,
+   "requested_steps": 8,
+   "cp_hash": "86d0851ef5c96b40",
+   "metrics": {
+    "steps": 8,
+    "crease_segments_raw": 30,
+    "crease_edges": 42,
+    "mountain": 16,
+    "valley": 26,
+    "border": 16,
+    "distinct_crease_lines": 14,
+    "vertices": 28,
+    "coupling_max": 8,
+    "coupling_mean": 3.75,
+    "coupling_total": 30,
+    "coupling_final_step": 5,
+    "layers_final": 31,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.09375,
+    "largest_face_final": 0.078125,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 34,
+    "vertices": 28,
+    "edges": 58,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 26,
+     "M": 16
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0001",
+   "stratum": "mid",
+   "seed": 20260968,
+   "requested_steps": 11,
+   "cp_hash": "4f501d59e3d8ddf3",
+   "metrics": {
+    "steps": 11,
+    "crease_segments_raw": 32,
+    "crease_edges": 44,
+    "mountain": 19,
+    "valley": 25,
+    "border": 16,
+    "distinct_crease_lines": 16,
+    "vertices": 28,
+    "coupling_max": 8,
+    "coupling_mean": 2.909,
+    "coupling_total": 32,
+    "coupling_final_step": 3,
+    "layers_final": 33,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.125,
+    "largest_face_final": 0.0625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 36,
+    "vertices": 28,
+    "edges": 60,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 25,
+     "M": 19
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0002",
+   "stratum": "mid",
+   "seed": 20260969,
+   "requested_steps": 11,
+   "cp_hash": "f53bd7b2604fe2bc",
+   "metrics": {
+    "steps": 11,
+    "crease_segments_raw": 37,
+    "crease_edges": 52,
+    "mountain": 22,
+    "valley": 30,
+    "border": 16,
+    "distinct_crease_lines": 18,
+    "vertices": 31,
+    "coupling_max": 6,
+    "coupling_mean": 3.364,
+    "coupling_total": 37,
+    "coupling_final_step": 6,
+    "layers_final": 38,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.1875,
+    "largest_face_final": 0.0625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 41,
+    "vertices": 31,
+    "edges": 68,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "M": 22,
+     "V": 30
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0003",
+   "stratum": "mid",
+   "seed": 20260971,
+   "requested_steps": 12,
+   "cp_hash": "ac3051d691a6b50e",
+   "metrics": {
+    "steps": 12,
+    "crease_segments_raw": 255,
+    "crease_edges": 368,
+    "mountain": 180,
+    "valley": 188,
+    "border": 32,
+    "distinct_crease_lines": 44,
+    "vertices": 145,
+    "coupling_max": 128,
+    "coupling_mean": 21.25,
+    "coupling_total": 255,
+    "coupling_final_step": 128,
+    "layers_final": 256,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.007813,
+    "largest_face_final": 0.003906,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 259,
+    "vertices": 145,
+    "edges": 400,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "V": 188,
+     "M": 180
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0004",
+   "stratum": "mid",
+   "seed": 20260972,
+   "requested_steps": 13,
+   "cp_hash": "403d7124c9adb6ea",
+   "metrics": {
+    "steps": 13,
+    "crease_segments_raw": 127,
+    "crease_edges": 176,
+    "mountain": 98,
+    "valley": 78,
+    "border": 32,
+    "distinct_crease_lines": 28,
+    "vertices": 81,
+    "coupling_max": 40,
+    "coupling_mean": 9.769,
+    "coupling_total": 127,
+    "coupling_final_step": 40,
+    "layers_final": 128,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.015625,
+    "largest_face_final": 0.007813,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 131,
+    "vertices": 81,
+    "edges": 208,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 98,
+     "V": 78
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0005",
+   "stratum": "mid",
+   "seed": 20260973,
+   "requested_steps": 12,
+   "cp_hash": "e085f25979d18055",
+   "metrics": {
+    "steps": 12,
+    "crease_segments_raw": 63,
+    "crease_edges": 88,
+    "mountain": 45,
+    "valley": 43,
+    "border": 16,
+    "distinct_crease_lines": 20,
+    "vertices": 41,
+    "coupling_max": 12,
+    "coupling_mean": 5.25,
+    "coupling_total": 63,
+    "coupling_final_step": 12,
+    "layers_final": 64,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.03125,
+    "largest_face_final": 0.015625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 67,
+    "vertices": 41,
+    "edges": 104,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "M": 45,
+     "V": 43
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0006",
+   "stratum": "mid",
+   "seed": 20260974,
+   "requested_steps": 11,
+   "cp_hash": "3a2e2ec6320362c2",
+   "metrics": {
+    "steps": 11,
+    "crease_segments_raw": 145,
+    "crease_edges": 228,
+    "mountain": 121,
+    "valley": 107,
+    "border": 32,
+    "distinct_crease_lines": 38,
+    "vertices": 115,
+    "coupling_max": 42,
+    "coupling_mean": 13.182,
+    "coupling_total": 145,
+    "coupling_final_step": 39,
+    "layers_final": 146,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.023438,
+    "largest_face_final": 0.019531,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 149,
+    "vertices": 115,
+    "edges": 260,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 121,
+     "V": 107
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0007",
+   "stratum": "mid",
+   "seed": 20260975,
+   "requested_steps": 11,
+   "cp_hash": "213220d326f73381",
+   "metrics": {
+    "steps": 11,
+    "crease_segments_raw": 67,
+    "crease_edges": 96,
+    "mountain": 51,
+    "valley": 45,
+    "border": 28,
+    "distinct_crease_lines": 24,
+    "vertices": 57,
+    "coupling_max": 26,
+    "coupling_mean": 6.091,
+    "coupling_total": 67,
+    "coupling_final_step": 26,
+    "layers_final": 68,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.046875,
+    "largest_face_final": 0.03125,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 71,
+    "vertices": 57,
+    "edges": 124,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 28,
+     "M": 51,
+     "V": 45
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0008",
+   "stratum": "mid",
+   "seed": 20260976,
+   "requested_steps": 11,
+   "cp_hash": "27a5b4b1b3391da9",
+   "metrics": {
+    "steps": 11,
+    "crease_segments_raw": 75,
+    "crease_edges": 106,
+    "mountain": 53,
+    "valley": 53,
+    "border": 24,
+    "distinct_crease_lines": 27,
+    "vertices": 55,
+    "coupling_max": 26,
+    "coupling_mean": 6.818,
+    "coupling_total": 75,
+    "coupling_final_step": 26,
+    "layers_final": 76,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.046875,
+    "largest_face_final": 0.03125,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 79,
+    "vertices": 55,
+    "edges": 130,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 24,
+     "V": 53,
+     "M": 53
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0009",
+   "stratum": "mid",
+   "seed": 20260977,
+   "requested_steps": 12,
+   "cp_hash": "9be3a139b3c7cd5b",
+   "metrics": {
+    "steps": 12,
+    "crease_segments_raw": 67,
+    "crease_edges": 102,
+    "mountain": 47,
+    "valley": 55,
+    "border": 22,
+    "distinct_crease_lines": 23,
+    "vertices": 57,
+    "coupling_max": 34,
+    "coupling_mean": 5.583,
+    "coupling_total": 67,
+    "coupling_final_step": 34,
+    "layers_final": 68,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.046875,
+    "largest_face_final": 0.03125,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 71,
+    "vertices": 57,
+    "edges": 124,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 22,
+     "V": 55,
+     "M": 47
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0010",
+   "stratum": "mid",
+   "seed": 20260978,
+   "requested_steps": 11,
+   "cp_hash": "7afb562bf2d10be3",
+   "metrics": {
+    "steps": 11,
+    "crease_segments_raw": 46,
+    "crease_edges": 71,
+    "mountain": 30,
+    "valley": 41,
+    "border": 18,
+    "distinct_crease_lines": 22,
+    "vertices": 43,
+    "coupling_max": 12,
+    "coupling_mean": 4.182,
+    "coupling_total": 46,
+    "coupling_final_step": 5,
+    "layers_final": 47,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.09375,
+    "largest_face_final": 0.046875,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 50,
+    "vertices": 43,
+    "edges": 89,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 18,
+     "V": 41,
+     "M": 30
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0011",
+   "stratum": "mid",
+   "seed": 20260979,
+   "requested_steps": 12,
+   "cp_hash": "cecaf9928df46172",
+   "metrics": {
+    "steps": 12,
+    "crease_segments_raw": 133,
+    "crease_edges": 213,
+    "mountain": 109,
+    "valley": 104,
+    "border": 32,
+    "distinct_crease_lines": 35,
+    "vertices": 112,
+    "coupling_max": 62,
+    "coupling_mean": 11.083,
+    "coupling_total": 133,
+    "coupling_final_step": 62,
+    "layers_final": 134,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.023438,
+    "largest_face_final": 0.011719,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 137,
+    "vertices": 112,
+    "edges": 245,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "V": 104,
+     "M": 109
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0012",
+   "stratum": "mid",
+   "seed": 20260980,
+   "requested_steps": 11,
+   "cp_hash": "5c9bcf0989321155",
+   "metrics": {
+    "steps": 11,
+    "crease_segments_raw": 63,
+    "crease_edges": 88,
+    "mountain": 41,
+    "valley": 47,
+    "border": 16,
+    "distinct_crease_lines": 20,
+    "vertices": 41,
+    "coupling_max": 16,
+    "coupling_mean": 5.727,
+    "coupling_total": 63,
+    "coupling_final_step": 14,
+    "layers_final": 64,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.03125,
+    "largest_face_final": 0.015625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 67,
+    "vertices": 41,
+    "edges": 104,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 47,
+     "M": 41
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0013",
+   "stratum": "mid",
+   "seed": 20260981,
+   "requested_steps": 13,
+   "cp_hash": "4b6cd855c3e8a717",
+   "metrics": {
+    "steps": 13,
+    "crease_segments_raw": 107,
+    "crease_edges": 146,
+    "mountain": 73,
+    "valley": 73,
+    "border": 32,
+    "distinct_crease_lines": 26,
+    "vertices": 71,
+    "coupling_max": 54,
+    "coupling_mean": 8.231,
+    "coupling_total": 107,
+    "coupling_final_step": 54,
+    "layers_final": 108,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.03125,
+    "largest_face_final": 0.015625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 111,
+    "vertices": 71,
+    "edges": 178,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 73,
+     "V": 73
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0014",
+   "stratum": "mid",
+   "seed": 20260983,
+   "requested_steps": 12,
+   "cp_hash": "0d3d95d68dcc6c76",
+   "metrics": {
+    "steps": 12,
+    "crease_segments_raw": 127,
+    "crease_edges": 176,
+    "mountain": 84,
+    "valley": 92,
+    "border": 32,
+    "distinct_crease_lines": 28,
+    "vertices": 81,
+    "coupling_max": 34,
+    "coupling_mean": 10.583,
+    "coupling_total": 127,
+    "coupling_final_step": 8,
+    "layers_final": 128,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.015625,
+    "largest_face_final": 0.007813,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 131,
+    "vertices": 81,
+    "edges": 208,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "V": 92,
+     "M": 84
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0015",
+   "stratum": "mid",
+   "seed": 20260984,
+   "requested_steps": 12,
+   "cp_hash": "3548342c2d77e5a8",
+   "metrics": {
+    "steps": 12,
+    "crease_segments_raw": 255,
+    "crease_edges": 368,
+    "mountain": 192,
+    "valley": 176,
+    "border": 32,
+    "distinct_crease_lines": 44,
+    "vertices": 145,
+    "coupling_max": 128,
+    "coupling_mean": 21.25,
+    "coupling_total": 255,
+    "coupling_final_step": 128,
+    "layers_final": 256,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.007813,
+    "largest_face_final": 0.003906,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 259,
+    "vertices": 145,
+    "edges": 400,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 192,
+     "V": 176
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0016",
+   "stratum": "mid",
+   "seed": 20260985,
+   "requested_steps": 12,
+   "cp_hash": "fbe06905927ad3a9",
+   "metrics": {
+    "steps": 12,
+    "crease_segments_raw": 40,
+    "crease_edges": 55,
+    "mountain": 26,
+    "valley": 29,
+    "border": 16,
+    "distinct_crease_lines": 17,
+    "vertices": 31,
+    "coupling_max": 12,
+    "coupling_mean": 3.333,
+    "coupling_total": 40,
+    "coupling_final_step": 5,
+    "layers_final": 41,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.09375,
+    "largest_face_final": 0.046875,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 44,
+    "vertices": 31,
+    "edges": 71,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "M": 26,
+     "V": 29
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0017",
+   "stratum": "mid",
+   "seed": 20260986,
+   "requested_steps": 12,
+   "cp_hash": "420dc89cb9e3e724",
+   "metrics": {
+    "steps": 12,
+    "crease_segments_raw": 127,
+    "crease_edges": 176,
+    "mountain": 88,
+    "valley": 88,
+    "border": 32,
+    "distinct_crease_lines": 28,
+    "vertices": 81,
+    "coupling_max": 64,
+    "coupling_mean": 10.583,
+    "coupling_total": 127,
+    "coupling_final_step": 64,
+    "layers_final": 128,
+    "distinct_angles": 3,
+    "bbox_area_final": 0.015625,
+    "largest_face_final": 0.007813,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 131,
+    "vertices": 81,
+    "edges": 208,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "V": 88,
+     "M": 88
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0018",
+   "stratum": "mid",
+   "seed": 20260987,
+   "requested_steps": 11,
+   "cp_hash": "d889f77efd84c2ae",
+   "metrics": {
+    "steps": 11,
+    "crease_segments_raw": 76,
+    "crease_edges": 113,
+    "mountain": 53,
+    "valley": 60,
+    "border": 24,
+    "distinct_crease_lines": 31,
+    "vertices": 61,
+    "coupling_max": 25,
+    "coupling_mean": 6.909,
+    "coupling_total": 76,
+    "coupling_final_step": 4,
+    "layers_final": 77,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.140625,
+    "largest_face_final": 0.046875,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 80,
+    "vertices": 61,
+    "edges": 137,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 24,
+     "V": 60,
+     "M": 53
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0019",
+   "stratum": "mid",
+   "seed": 20260989,
+   "requested_steps": 13,
+   "cp_hash": "a4fee230b0b7e05c",
+   "metrics": {
+    "steps": 13,
+    "crease_segments_raw": 423,
+    "crease_edges": 628,
+    "mountain": 306,
+    "valley": 322,
+    "border": 56,
+    "distinct_crease_lines": 59,
+    "vertices": 261,
+    "coupling_max": 208,
+    "coupling_mean": 32.538,
+    "coupling_total": 423,
+    "coupling_final_step": 208,
+    "layers_final": 424,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.007813,
+    "largest_face_final": 0.005859,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 427,
+    "vertices": 261,
+    "edges": 684,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 56,
+     "V": 322,
+     "M": 306
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0020",
+   "stratum": "mid",
+   "seed": 20260990,
+   "requested_steps": 12,
+   "cp_hash": "05bfc45cf5b12690",
+   "metrics": {
+    "steps": 12,
+    "crease_segments_raw": 255,
+    "crease_edges": 368,
+    "mountain": 184,
+    "valley": 184,
+    "border": 32,
+    "distinct_crease_lines": 44,
+    "vertices": 145,
+    "coupling_max": 128,
+    "coupling_mean": 21.25,
+    "coupling_total": 255,
+    "coupling_final_step": 128,
+    "layers_final": 256,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.007813,
+    "largest_face_final": 0.003906,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 259,
+    "vertices": 145,
+    "edges": 400,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 184,
+     "V": 184
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0021",
+   "stratum": "mid",
+   "seed": 20260991,
+   "requested_steps": 11,
+   "cp_hash": "2d4b685d350d0575",
+   "metrics": {
+    "steps": 11,
+    "crease_segments_raw": 111,
+    "crease_edges": 156,
+    "mountain": 75,
+    "valley": 81,
+    "border": 32,
+    "distinct_crease_lines": 27,
+    "vertices": 77,
+    "coupling_max": 56,
+    "coupling_mean": 10.091,
+    "coupling_total": 111,
+    "coupling_final_step": 56,
+    "layers_final": 112,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.03125,
+    "largest_face_final": 0.023438,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 115,
+    "vertices": 77,
+    "edges": 188,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 75,
+     "V": 81
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0022",
+   "stratum": "mid",
+   "seed": 20260992,
+   "requested_steps": 13,
+   "cp_hash": "a9e8e8b0ad03ae34",
+   "metrics": {
+    "steps": 13,
+    "crease_segments_raw": 87,
+    "crease_edges": 122,
+    "mountain": 68,
+    "valley": 54,
+    "border": 20,
+    "distinct_crease_lines": 26,
+    "vertices": 55,
+    "coupling_max": 24,
+    "coupling_mean": 6.692,
+    "coupling_total": 87,
+    "coupling_final_step": 8,
+    "layers_final": 88,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.03125,
+    "largest_face_final": 0.015625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 91,
+    "vertices": 55,
+    "edges": 142,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 20,
+     "M": 68,
+     "V": 54
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0023",
+   "stratum": "mid",
+   "seed": 20260993,
+   "requested_steps": 13,
+   "cp_hash": "55839bb7814d9a05",
+   "metrics": {
+    "steps": 13,
+    "crease_segments_raw": 89,
+    "crease_edges": 127,
+    "mountain": 56,
+    "valley": 71,
+    "border": 24,
+    "distinct_crease_lines": 26,
+    "vertices": 62,
+    "coupling_max": 39,
+    "coupling_mean": 6.846,
+    "coupling_total": 89,
+    "coupling_final_step": 39,
+    "layers_final": 90,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.046875,
+    "largest_face_final": 0.03125,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 93,
+    "vertices": 62,
+    "edges": 151,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 24,
+     "V": 71,
+     "M": 56
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0024",
+   "stratum": "mid",
+   "seed": 20260994,
+   "requested_steps": 11,
+   "cp_hash": "fda2937f09204a5f",
+   "metrics": {
+    "steps": 11,
+    "crease_segments_raw": 119,
+    "crease_edges": 164,
+    "mountain": 86,
+    "valley": 78,
+    "border": 32,
+    "distinct_crease_lines": 27,
+    "vertices": 77,
+    "coupling_max": 60,
+    "coupling_mean": 10.818,
+    "coupling_total": 119,
+    "coupling_final_step": 60,
+    "layers_final": 120,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.03125,
+    "largest_face_final": 0.015625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 123,
+    "vertices": 77,
+    "edges": 196,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 86,
+     "V": 78
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0025",
+   "stratum": "mid",
+   "seed": 20260995,
+   "requested_steps": 12,
+   "cp_hash": "e00268e7159f0353",
+   "metrics": {
+    "steps": 12,
+    "crease_segments_raw": 99,
+    "crease_edges": 148,
+    "mountain": 70,
+    "valley": 78,
+    "border": 32,
+    "distinct_crease_lines": 22,
+    "vertices": 81,
+    "coupling_max": 36,
+    "coupling_mean": 8.25,
+    "coupling_total": 99,
+    "coupling_final_step": 28,
+    "layers_final": 100,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.015625,
+    "largest_face_final": 0.015625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 103,
+    "vertices": 81,
+    "edges": 180,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "V": 78,
+     "M": 70
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0026",
+   "stratum": "mid",
+   "seed": 20260996,
+   "requested_steps": 12,
+   "cp_hash": "79fa943270e71928",
+   "metrics": {
+    "steps": 12,
+    "crease_segments_raw": 59,
+    "crease_edges": 85,
+    "mountain": 47,
+    "valley": 38,
+    "border": 18,
+    "distinct_crease_lines": 23,
+    "vertices": 44,
+    "coupling_max": 14,
+    "coupling_mean": 4.917,
+    "coupling_total": 59,
+    "coupling_final_step": 4,
+    "layers_final": 60,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.0625,
+    "largest_face_final": 0.039063,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 63,
+    "vertices": 44,
+    "edges": 103,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 18,
+     "M": 47,
+     "V": 38
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0027",
+   "stratum": "mid",
+   "seed": 20260997,
+   "requested_steps": 13,
+   "cp_hash": "19357304fb22b82a",
+   "metrics": {
+    "steps": 13,
+    "crease_segments_raw": 105,
+    "crease_edges": 143,
+    "mountain": 69,
+    "valley": 74,
+    "border": 32,
+    "distinct_crease_lines": 28,
+    "vertices": 70,
+    "coupling_max": 53,
+    "coupling_mean": 8.077,
+    "coupling_total": 105,
+    "coupling_final_step": 53,
+    "layers_final": 106,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.03125,
+    "largest_face_final": 0.015625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 109,
+    "vertices": 70,
+    "edges": 175,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 69,
+     "V": 74
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0028",
+   "stratum": "mid",
+   "seed": 20260998,
+   "requested_steps": 12,
+   "cp_hash": "ab21bc7ae4914c9a",
+   "metrics": {
+    "steps": 12,
+    "crease_segments_raw": 127,
+    "crease_edges": 176,
+    "mountain": 92,
+    "valley": 84,
+    "border": 32,
+    "distinct_crease_lines": 28,
+    "vertices": 81,
+    "coupling_max": 64,
+    "coupling_mean": 10.583,
+    "coupling_total": 127,
+    "coupling_final_step": 64,
+    "layers_final": 128,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.015625,
+    "largest_face_final": 0.007813,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 131,
+    "vertices": 81,
+    "edges": 208,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 92,
+     "V": 84
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0029",
+   "stratum": "mid",
+   "seed": 20260999,
+   "requested_steps": 11,
+   "cp_hash": "09323bf9783f4e99",
+   "metrics": {
+    "steps": 11,
+    "crease_segments_raw": 113,
+    "crease_edges": 155,
+    "mountain": 72,
+    "valley": 83,
+    "border": 32,
+    "distinct_crease_lines": 27,
+    "vertices": 74,
+    "coupling_max": 57,
+    "coupling_mean": 10.273,
+    "coupling_total": 113,
+    "coupling_final_step": 57,
+    "layers_final": 114,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.03125,
+    "largest_face_final": 0.015625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 117,
+    "vertices": 74,
+    "edges": 187,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "V": 83,
+     "M": 72
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0030",
+   "stratum": "mid",
+   "seed": 20261000,
+   "requested_steps": 11,
+   "cp_hash": "ba189126633077c2",
+   "metrics": {
+    "steps": 11,
+    "crease_segments_raw": 43,
+    "crease_edges": 67,
+    "mountain": 30,
+    "valley": 37,
+    "border": 18,
+    "distinct_crease_lines": 17,
+    "vertices": 42,
+    "coupling_max": 10,
+    "coupling_mean": 3.909,
+    "coupling_total": 43,
+    "coupling_final_step": 4,
+    "layers_final": 44,
+    "distinct_angles": 3,
+    "bbox_area_final": 0.09375,
+    "largest_face_final": 0.046875,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 47,
+    "vertices": 42,
+    "edges": 85,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 18,
+     "V": 37,
+     "M": 30
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0031",
+   "stratum": "mid",
+   "seed": 20261001,
+   "requested_steps": 11,
+   "cp_hash": "9078778032e9c630",
+   "metrics": {
+    "steps": 11,
+    "crease_segments_raw": 103,
+    "crease_edges": 148,
+    "mountain": 76,
+    "valley": 72,
+    "border": 32,
+    "distinct_crease_lines": 28,
+    "vertices": 77,
+    "coupling_max": 40,
+    "coupling_mean": 9.364,
+    "coupling_total": 103,
+    "coupling_final_step": 40,
+    "layers_final": 104,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.03125,
+    "largest_face_final": 0.023438,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 107,
+    "vertices": 77,
+    "edges": 180,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "V": 72,
+     "M": 76
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0032",
+   "stratum": "mid",
+   "seed": 20261002,
+   "requested_steps": 12,
+   "cp_hash": "2f2f8d8274addbc2",
+   "metrics": {
+    "steps": 12,
+    "crease_segments_raw": 159,
+    "crease_edges": 224,
+    "mountain": 108,
+    "valley": 116,
+    "border": 32,
+    "distinct_crease_lines": 32,
+    "vertices": 97,
+    "coupling_max": 32,
+    "coupling_mean": 13.25,
+    "coupling_total": 159,
+    "coupling_final_step": 28,
+    "layers_final": 160,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.015625,
+    "largest_face_final": 0.007813,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 163,
+    "vertices": 97,
+    "edges": 256,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "V": 116,
+     "M": 108
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0033",
+   "stratum": "mid",
+   "seed": 20261003,
+   "requested_steps": 13,
+   "cp_hash": "3e420aa427f39446",
+   "metrics": {
+    "steps": 13,
+    "crease_segments_raw": 311,
+    "crease_edges": 474,
+    "mountain": 230,
+    "valley": 244,
+    "border": 52,
+    "distinct_crease_lines": 54,
+    "vertices": 215,
+    "coupling_max": 80,
+    "coupling_mean": 23.923,
+    "coupling_total": 311,
+    "coupling_final_step": 80,
+    "layers_final": 312,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.023438,
+    "largest_face_final": 0.009766,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 315,
+    "vertices": 215,
+    "edges": 526,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 52,
+     "V": 244,
+     "M": 230
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0034",
+   "stratum": "mid",
+   "seed": 20261004,
+   "requested_steps": 11,
+   "cp_hash": "3c7130aed149783e",
+   "metrics": {
+    "steps": 11,
+    "crease_segments_raw": 123,
+    "crease_edges": 171,
+    "mountain": 82,
+    "valley": 89,
+    "border": 30,
+    "distinct_crease_lines": 28,
+    "vertices": 78,
+    "coupling_max": 60,
+    "coupling_mean": 11.182,
+    "coupling_total": 123,
+    "coupling_final_step": 4,
+    "layers_final": 124,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.03125,
+    "largest_face_final": 0.015625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 127,
+    "vertices": 78,
+    "edges": 201,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 30,
+     "V": 89,
+     "M": 82
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0035",
+   "stratum": "mid",
+   "seed": 20261005,
+   "requested_steps": 11,
+   "cp_hash": "d953997219adb100",
+   "metrics": {
+    "steps": 11,
+    "crease_segments_raw": 207,
+    "crease_edges": 312,
+    "mountain": 152,
+    "valley": 160,
+    "border": 32,
+    "distinct_crease_lines": 40,
+    "vertices": 137,
+    "coupling_max": 56,
+    "coupling_mean": 18.818,
+    "coupling_total": 207,
+    "coupling_final_step": 32,
+    "layers_final": 208,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.023438,
+    "largest_face_final": 0.011719,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 211,
+    "vertices": 137,
+    "edges": 344,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "V": 160,
+     "M": 152
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0036",
+   "stratum": "mid",
+   "seed": 20261006,
+   "requested_steps": 11,
+   "cp_hash": "09589ff1aecd09a1",
+   "metrics": {
+    "steps": 11,
+    "crease_segments_raw": 49,
+    "crease_edges": 67,
+    "mountain": 32,
+    "valley": 35,
+    "border": 16,
+    "distinct_crease_lines": 17,
+    "vertices": 34,
+    "coupling_max": 10,
+    "coupling_mean": 4.455,
+    "coupling_total": 49,
+    "coupling_final_step": 4,
+    "layers_final": 50,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.0625,
+    "largest_face_final": 0.03125,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 53,
+    "vertices": 34,
+    "edges": 83,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "M": 32,
+     "V": 35
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0037",
+   "stratum": "mid",
+   "seed": 20261007,
+   "requested_steps": 11,
+   "cp_hash": "e5eb46886f2a34ce",
+   "metrics": {
+    "steps": 11,
+    "crease_segments_raw": 71,
+    "crease_edges": 102,
+    "mountain": 48,
+    "valley": 54,
+    "border": 24,
+    "distinct_crease_lines": 25,
+    "vertices": 55,
+    "coupling_max": 20,
+    "coupling_mean": 6.455,
+    "coupling_total": 71,
+    "coupling_final_step": 8,
+    "layers_final": 72,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.09375,
+    "largest_face_final": 0.03125,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 75,
+    "vertices": 55,
+    "edges": 126,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 24,
+     "V": 54,
+     "M": 48
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0038",
+   "stratum": "mid",
+   "seed": 20261008,
+   "requested_steps": 12,
+   "cp_hash": "9d59ae4c730bedfc",
+   "metrics": {
+    "steps": 12,
+    "crease_segments_raw": 75,
+    "crease_edges": 110,
+    "mountain": 59,
+    "valley": 51,
+    "border": 22,
+    "distinct_crease_lines": 27,
+    "vertices": 57,
+    "coupling_max": 16,
+    "coupling_mean": 6.25,
+    "coupling_total": 75,
+    "coupling_final_step": 14,
+    "layers_final": 76,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.046875,
+    "largest_face_final": 0.03125,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 79,
+    "vertices": 57,
+    "edges": 132,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 22,
+     "M": 59,
+     "V": 51
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0039",
+   "stratum": "mid",
+   "seed": 20261009,
+   "requested_steps": 11,
+   "cp_hash": "1deec5da4bc366dc",
+   "metrics": {
+    "steps": 11,
+    "crease_segments_raw": 63,
+    "crease_edges": 88,
+    "mountain": 42,
+    "valley": 46,
+    "border": 16,
+    "distinct_crease_lines": 20,
+    "vertices": 41,
+    "coupling_max": 14,
+    "coupling_mean": 5.727,
+    "coupling_total": 63,
+    "coupling_final_step": 14,
+    "layers_final": 64,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.03125,
+    "largest_face_final": 0.015625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 67,
+    "vertices": 41,
+    "edges": 104,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 46,
+     "M": 42
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0040",
+   "stratum": "mid",
+   "seed": 20261010,
+   "requested_steps": 11,
+   "cp_hash": "b8d9030ad0b1869a",
+   "metrics": {
+    "steps": 11,
+    "crease_segments_raw": 255,
+    "crease_edges": 368,
+    "mountain": 188,
+    "valley": 180,
+    "border": 32,
+    "distinct_crease_lines": 44,
+    "vertices": 145,
+    "coupling_max": 128,
+    "coupling_mean": 23.182,
+    "coupling_total": 255,
+    "coupling_final_step": 128,
+    "layers_final": 256,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.007813,
+    "largest_face_final": 0.003906,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 259,
+    "vertices": 145,
+    "edges": 400,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 188,
+     "V": 180
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0041",
+   "stratum": "mid",
+   "seed": 20261012,
+   "requested_steps": 11,
+   "cp_hash": "0cf6d2508e97a908",
+   "metrics": {
+    "steps": 11,
+    "crease_segments_raw": 93,
+    "crease_edges": 146,
+    "mountain": 68,
+    "valley": 78,
+    "border": 32,
+    "distinct_crease_lines": 31,
+    "vertices": 85,
+    "coupling_max": 38,
+    "coupling_mean": 8.455,
+    "coupling_total": 93,
+    "coupling_final_step": 38,
+    "layers_final": 94,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.046875,
+    "largest_face_final": 0.023438,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 97,
+    "vertices": 85,
+    "edges": 178,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "V": 78,
+     "M": 68
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0042",
+   "stratum": "mid",
+   "seed": 20261013,
+   "requested_steps": 12,
+   "cp_hash": "ffb46aabd2afcb8b",
+   "metrics": {
+    "steps": 12,
+    "crease_segments_raw": 60,
+    "crease_edges": 87,
+    "mountain": 40,
+    "valley": 47,
+    "border": 24,
+    "distinct_crease_lines": 26,
+    "vertices": 51,
+    "coupling_max": 15,
+    "coupling_mean": 5,
+    "coupling_total": 60,
+    "coupling_final_step": 4,
+    "layers_final": 61,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.140625,
+    "largest_face_final": 0.054688,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 64,
+    "vertices": 51,
+    "edges": 111,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 24,
+     "V": 47,
+     "M": 40
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0043",
+   "stratum": "mid",
+   "seed": 20261014,
+   "requested_steps": 13,
+   "cp_hash": "f22814ab4a492c31",
+   "metrics": {
+    "steps": 13,
+    "crease_segments_raw": 83,
+    "crease_edges": 116,
+    "mountain": 52,
+    "valley": 64,
+    "border": 20,
+    "distinct_crease_lines": 23,
+    "vertices": 53,
+    "coupling_max": 16,
+    "coupling_mean": 6.385,
+    "coupling_total": 83,
+    "coupling_final_step": 12,
+    "layers_final": 84,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.03125,
+    "largest_face_final": 0.015625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 87,
+    "vertices": 53,
+    "edges": 136,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 20,
+     "V": 64,
+     "M": 52
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0044",
+   "stratum": "mid",
+   "seed": 20261015,
+   "requested_steps": 12,
+   "cp_hash": "bce502a32f6df125",
+   "metrics": {
+    "steps": 12,
+    "crease_segments_raw": 163,
+    "crease_edges": 248,
+    "mountain": 117,
+    "valley": 131,
+    "border": 32,
+    "distinct_crease_lines": 42,
+    "vertices": 117,
+    "coupling_max": 50,
+    "coupling_mean": 13.583,
+    "coupling_total": 163,
+    "coupling_final_step": 44,
+    "layers_final": 164,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.023438,
+    "largest_face_final": 0.019531,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 167,
+    "vertices": 117,
+    "edges": 280,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "V": 131,
+     "M": 117
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0045",
+   "stratum": "mid",
+   "seed": 20261016,
+   "requested_steps": 12,
+   "cp_hash": "14ef7649521143e5",
+   "metrics": {
+    "steps": 12,
+    "crease_segments_raw": 37,
+    "crease_edges": 53,
+    "mountain": 31,
+    "valley": 22,
+    "border": 16,
+    "distinct_crease_lines": 15,
+    "vertices": 32,
+    "coupling_max": 8,
+    "coupling_mean": 3.083,
+    "coupling_total": 37,
+    "coupling_final_step": 8,
+    "layers_final": 38,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.140625,
+    "largest_face_final": 0.09375,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": false,
+     "single_angle": false
+    },
+    "degenerate": false
+   },
+   "planarize": {
+    "segments_in": 41,
+    "vertices": 32,
+    "edges": 69,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "V": 22,
+     "M": 31
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0046",
+   "stratum": "mid",
+   "seed": 20261017,
+   "requested_steps": 11,
+   "cp_hash": "56e2781bf3cc8803",
+   "metrics": {
+    "steps": 11,
+    "crease_segments_raw": 109,
+    "crease_edges": 153,
+    "mountain": 74,
+    "valley": 79,
+    "border": 32,
+    "distinct_crease_lines": 27,
+    "vertices": 76,
+    "coupling_max": 43,
+    "coupling_mean": 9.909,
+    "coupling_total": 109,
+    "coupling_final_step": 16,
+    "layers_final": 110,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.03125,
+    "largest_face_final": 0.023438,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 113,
+    "vertices": 76,
+    "edges": 185,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 74,
+     "V": 79
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0047",
+   "stratum": "mid",
+   "seed": 20261018,
+   "requested_steps": 12,
+   "cp_hash": "a0b03428d0383b18",
+   "metrics": {
+    "steps": 12,
+    "crease_segments_raw": 127,
+    "crease_edges": 176,
+    "mountain": 92,
+    "valley": 84,
+    "border": 32,
+    "distinct_crease_lines": 28,
+    "vertices": 81,
+    "coupling_max": 64,
+    "coupling_mean": 10.583,
+    "coupling_total": 127,
+    "coupling_final_step": 64,
+    "layers_final": 128,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.015625,
+    "largest_face_final": 0.007813,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 131,
+    "vertices": 81,
+    "edges": 208,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 92,
+     "V": 84
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0048",
+   "stratum": "mid",
+   "seed": 20261019,
+   "requested_steps": 13,
+   "cp_hash": "33757c205d4d2396",
+   "metrics": {
+    "steps": 13,
+    "crease_segments_raw": 101,
+    "crease_edges": 150,
+    "mountain": 76,
+    "valley": 74,
+    "border": 32,
+    "distinct_crease_lines": 33,
+    "vertices": 81,
+    "coupling_max": 29,
+    "coupling_mean": 7.769,
+    "coupling_total": 101,
+    "coupling_final_step": 16,
+    "layers_final": 102,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.046875,
+    "largest_face_final": 0.027344,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 105,
+    "vertices": 81,
+    "edges": 182,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 76,
+     "V": 74
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0049",
+   "stratum": "mid",
+   "seed": 20261020,
+   "requested_steps": 12,
+   "cp_hash": "ed33c5ccb1a74b58",
+   "metrics": {
+    "steps": 12,
+    "crease_segments_raw": 127,
+    "crease_edges": 176,
+    "mountain": 88,
+    "valley": 88,
+    "border": 32,
+    "distinct_crease_lines": 28,
+    "vertices": 81,
+    "coupling_max": 64,
+    "coupling_mean": 10.583,
+    "coupling_total": 127,
+    "coupling_final_step": 64,
+    "layers_final": 128,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.015625,
+    "largest_face_final": 0.007813,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 131,
+    "vertices": 81,
+    "edges": 208,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 88,
+     "V": 88
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "mid-0050",
+   "stratum": "mid",
+   "seed": 20261021,
+   "requested_steps": 12,
+   "cp_hash": "9fb2c9eefa40e1b6",
+   "metrics": {
+    "steps": 12,
+    "crease_segments_raw": 63,
+    "crease_edges": 88,
+    "mountain": 48,
+    "valley": 40,
+    "border": 16,
+    "distinct_crease_lines": 20,
+    "vertices": 41,
+    "coupling_max": 14,
+    "coupling_mean": 5.25,
+    "coupling_total": 63,
+    "coupling_final_step": 6,
+    "layers_final": 64,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.03125,
+    "largest_face_final": 0.015625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 67,
+    "vertices": 41,
+    "edges": 104,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "M": 48,
+     "V": 40
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0001",
+   "stratum": "hard",
+   "seed": 20261022,
+   "requested_steps": 14,
+   "cp_hash": "fc2741918c17b78d",
+   "metrics": {
+    "steps": 14,
+    "crease_segments_raw": 279,
+    "crease_edges": 439,
+    "mountain": 218,
+    "valley": 221,
+    "border": 62,
+    "distinct_crease_lines": 50,
+    "vertices": 222,
+    "coupling_max": 140,
+    "coupling_mean": 19.929,
+    "coupling_total": 279,
+    "coupling_final_step": 140,
+    "layers_final": 280,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.007813,
+    "largest_face_final": 0.007813,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 283,
+    "vertices": 222,
+    "edges": 501,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 62,
+     "V": 221,
+     "M": 218
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0002",
+   "stratum": "hard",
+   "seed": 20261023,
+   "requested_steps": 15,
+   "cp_hash": "715f076030e53b1c",
+   "metrics": {
+    "steps": 15,
+    "crease_segments_raw": 1023,
+    "crease_edges": 1504,
+    "mountain": 760,
+    "valley": 744,
+    "border": 64,
+    "distinct_crease_lines": 92,
+    "vertices": 545,
+    "coupling_max": 512,
+    "coupling_mean": 68.2,
+    "coupling_total": 1023,
+    "coupling_final_step": 512,
+    "layers_final": 1024,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.001953,
+    "largest_face_final": 0.000977,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 1027,
+    "vertices": 545,
+    "edges": 1568,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 64,
+     "M": 760,
+     "V": 744
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0003",
+   "stratum": "hard",
+   "seed": 20261024,
+   "requested_steps": 19,
+   "cp_hash": "2c29f8d4eaf8b4ca",
+   "metrics": {
+    "steps": 19,
+    "crease_segments_raw": 695,
+    "crease_edges": 1012,
+    "mountain": 514,
+    "valley": 498,
+    "border": 64,
+    "distinct_crease_lines": 83,
+    "vertices": 381,
+    "coupling_max": 184,
+    "coupling_mean": 36.579,
+    "coupling_total": 695,
+    "coupling_final_step": 184,
+    "layers_final": 696,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.003906,
+    "largest_face_final": 0.001953,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 699,
+    "vertices": 381,
+    "edges": 1076,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 64,
+     "M": 514,
+     "V": 498
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0004",
+   "stratum": "hard",
+   "seed": 20261026,
+   "requested_steps": 15,
+   "cp_hash": "64be68c61bd1b0e8",
+   "metrics": {
+    "steps": 15,
+    "crease_segments_raw": 63,
+    "crease_edges": 88,
+    "mountain": 46,
+    "valley": 42,
+    "border": 16,
+    "distinct_crease_lines": 20,
+    "vertices": 41,
+    "coupling_max": 19,
+    "coupling_mean": 4.2,
+    "coupling_total": 63,
+    "coupling_final_step": 4,
+    "layers_final": 64,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.03125,
+    "largest_face_final": 0.015625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 67,
+    "vertices": 41,
+    "edges": 104,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "M": 46,
+     "V": 42
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0005",
+   "stratum": "hard",
+   "seed": 20261027,
+   "requested_steps": 18,
+   "cp_hash": "17e5e46f5922153f",
+   "metrics": {
+    "steps": 18,
+    "crease_segments_raw": 255,
+    "crease_edges": 368,
+    "mountain": 185,
+    "valley": 183,
+    "border": 32,
+    "distinct_crease_lines": 44,
+    "vertices": 145,
+    "coupling_max": 104,
+    "coupling_mean": 14.167,
+    "coupling_total": 255,
+    "coupling_final_step": 20,
+    "layers_final": 256,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.007813,
+    "largest_face_final": 0.003906,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 259,
+    "vertices": 145,
+    "edges": 400,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 185,
+     "V": 183
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0006",
+   "stratum": "hard",
+   "seed": 20261028,
+   "requested_steps": 17,
+   "cp_hash": "7394c9c7fda2885f",
+   "metrics": {
+    "steps": 17,
+    "crease_segments_raw": 367,
+    "crease_edges": 612,
+    "mountain": 301,
+    "valley": 311,
+    "border": 64,
+    "distinct_crease_lines": 80,
+    "vertices": 309,
+    "coupling_max": 184,
+    "coupling_mean": 21.588,
+    "coupling_total": 367,
+    "coupling_final_step": 184,
+    "layers_final": 368,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.019531,
+    "largest_face_final": 0.006836,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 371,
+    "vertices": 309,
+    "edges": 676,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 64,
+     "V": 311,
+     "M": 301
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0007",
+   "stratum": "hard",
+   "seed": 20261030,
+   "requested_steps": 15,
+   "cp_hash": "55b140c0a187e68c",
+   "metrics": {
+    "steps": 15,
+    "crease_segments_raw": 511,
+    "crease_edges": 736,
+    "mountain": 376,
+    "valley": 360,
+    "border": 64,
+    "distinct_crease_lines": 60,
+    "vertices": 289,
+    "coupling_max": 148,
+    "coupling_mean": 34.067,
+    "coupling_total": 511,
+    "coupling_final_step": 72,
+    "layers_final": 512,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.003906,
+    "largest_face_final": 0.001953,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 515,
+    "vertices": 289,
+    "edges": 800,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 64,
+     "M": 376,
+     "V": 360
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0008",
+   "stratum": "hard",
+   "seed": 20261032,
+   "requested_steps": 19,
+   "cp_hash": "ef0274f6e5fa1f06",
+   "metrics": {
+    "steps": 19,
+    "crease_segments_raw": 255,
+    "crease_edges": 368,
+    "mountain": 180,
+    "valley": 188,
+    "border": 32,
+    "distinct_crease_lines": 44,
+    "vertices": 145,
+    "coupling_max": 84,
+    "coupling_mean": 13.421,
+    "coupling_total": 255,
+    "coupling_final_step": 84,
+    "layers_final": 256,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.007813,
+    "largest_face_final": 0.003906,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 259,
+    "vertices": 145,
+    "edges": 400,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "V": 188,
+     "M": 180
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0009",
+   "stratum": "hard",
+   "seed": 20261033,
+   "requested_steps": 14,
+   "cp_hash": "be13d2eed921fc6e",
+   "metrics": {
+    "steps": 14,
+    "crease_segments_raw": 73,
+    "crease_edges": 101,
+    "mountain": 44,
+    "valley": 57,
+    "border": 20,
+    "distinct_crease_lines": 25,
+    "vertices": 48,
+    "coupling_max": 16,
+    "coupling_mean": 5.214,
+    "coupling_total": 73,
+    "coupling_final_step": 8,
+    "layers_final": 74,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.03125,
+    "largest_face_final": 0.015625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 77,
+    "vertices": 48,
+    "edges": 121,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 20,
+     "V": 57,
+     "M": 44
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0010",
+   "stratum": "hard",
+   "seed": 20261035,
+   "requested_steps": 18,
+   "cp_hash": "0386cfca99e714a8",
+   "metrics": {
+    "steps": 18,
+    "crease_segments_raw": 445,
+    "crease_edges": 670,
+    "mountain": 338,
+    "valley": 332,
+    "border": 64,
+    "distinct_crease_lines": 58,
+    "vertices": 289,
+    "coupling_max": 126,
+    "coupling_mean": 24.722,
+    "coupling_total": 445,
+    "coupling_final_step": 74,
+    "layers_final": 446,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.003906,
+    "largest_face_final": 0.003906,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 449,
+    "vertices": 289,
+    "edges": 734,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 64,
+     "V": 332,
+     "M": 338
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0011",
+   "stratum": "hard",
+   "seed": 20261036,
+   "requested_steps": 18,
+   "cp_hash": "30f2c0c8f792e48c",
+   "metrics": {
+    "steps": 18,
+    "crease_segments_raw": 148,
+    "crease_edges": 247,
+    "mountain": 117,
+    "valley": 130,
+    "border": 36,
+    "distinct_crease_lines": 49,
+    "vertices": 135,
+    "coupling_max": 31,
+    "coupling_mean": 8.222,
+    "coupling_total": 148,
+    "coupling_final_step": 31,
+    "layers_final": 149,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.035156,
+    "largest_face_final": 0.017578,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 152,
+    "vertices": 135,
+    "edges": 283,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 36,
+     "V": 130,
+     "M": 117
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0012",
+   "stratum": "hard",
+   "seed": 20261037,
+   "requested_steps": 14,
+   "cp_hash": "358c87383a35d768",
+   "metrics": {
+    "steps": 14,
+    "crease_segments_raw": 127,
+    "crease_edges": 176,
+    "mountain": 88,
+    "valley": 88,
+    "border": 32,
+    "distinct_crease_lines": 28,
+    "vertices": 81,
+    "coupling_max": 44,
+    "coupling_mean": 9.071,
+    "coupling_total": 127,
+    "coupling_final_step": 44,
+    "layers_final": 128,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.015625,
+    "largest_face_final": 0.007813,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 131,
+    "vertices": 81,
+    "edges": 208,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 88,
+     "V": 88
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0013",
+   "stratum": "hard",
+   "seed": 20261038,
+   "requested_steps": 18,
+   "cp_hash": "ab60d6a05cfa450e",
+   "metrics": {
+    "steps": 18,
+    "crease_segments_raw": 255,
+    "crease_edges": 368,
+    "mountain": 182,
+    "valley": 186,
+    "border": 32,
+    "distinct_crease_lines": 44,
+    "vertices": 145,
+    "coupling_max": 60,
+    "coupling_mean": 14.167,
+    "coupling_total": 255,
+    "coupling_final_step": 28,
+    "layers_final": 256,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.007813,
+    "largest_face_final": 0.003906,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 259,
+    "vertices": 145,
+    "edges": 400,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 182,
+     "V": 186
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0014",
+   "stratum": "hard",
+   "seed": 20261040,
+   "requested_steps": 15,
+   "cp_hash": "d727ca96fbd2f518",
+   "metrics": {
+    "steps": 15,
+    "crease_segments_raw": 511,
+    "crease_edges": 736,
+    "mountain": 374,
+    "valley": 362,
+    "border": 64,
+    "distinct_crease_lines": 60,
+    "vertices": 289,
+    "coupling_max": 256,
+    "coupling_mean": 34.067,
+    "coupling_total": 511,
+    "coupling_final_step": 256,
+    "layers_final": 512,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.003906,
+    "largest_face_final": 0.001953,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 515,
+    "vertices": 289,
+    "edges": 800,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 64,
+     "V": 362,
+     "M": 374
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0015",
+   "stratum": "hard",
+   "seed": 20261043,
+   "requested_steps": 14,
+   "cp_hash": "c2403c9ce89a5d22",
+   "metrics": {
+    "steps": 14,
+    "crease_segments_raw": 127,
+    "crease_edges": 176,
+    "mountain": 90,
+    "valley": 86,
+    "border": 32,
+    "distinct_crease_lines": 28,
+    "vertices": 81,
+    "coupling_max": 64,
+    "coupling_mean": 9.071,
+    "coupling_total": 127,
+    "coupling_final_step": 64,
+    "layers_final": 128,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.015625,
+    "largest_face_final": 0.007813,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 131,
+    "vertices": 81,
+    "edges": 208,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "V": 86,
+     "M": 90
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0016",
+   "stratum": "hard",
+   "seed": 20261045,
+   "requested_steps": 19,
+   "cp_hash": "18be5a0d4b08988b",
+   "metrics": {
+    "steps": 19,
+    "crease_segments_raw": 1439,
+    "crease_edges": 2224,
+    "mountain": 1128,
+    "valley": 1096,
+    "border": 128,
+    "distinct_crease_lines": 119,
+    "vertices": 913,
+    "coupling_max": 624,
+    "coupling_mean": 75.737,
+    "coupling_total": 1439,
+    "coupling_final_step": 192,
+    "layers_final": 1440,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.005859,
+    "largest_face_final": 0.001953,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 1443,
+    "vertices": 913,
+    "edges": 2352,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 128,
+     "M": 1128,
+     "V": 1096
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0017",
+   "stratum": "hard",
+   "seed": 20261046,
+   "requested_steps": 17,
+   "cp_hash": "f696d6b6ea1375c4",
+   "metrics": {
+    "steps": 17,
+    "crease_segments_raw": 451,
+    "crease_edges": 714,
+    "mountain": 370,
+    "valley": 344,
+    "border": 62,
+    "distinct_crease_lines": 82,
+    "vertices": 325,
+    "coupling_max": 126,
+    "coupling_mean": 26.529,
+    "coupling_total": 451,
+    "coupling_final_step": 126,
+    "layers_final": 452,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.023438,
+    "largest_face_final": 0.007813,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 455,
+    "vertices": 325,
+    "edges": 776,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 62,
+     "M": 370,
+     "V": 344
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0018",
+   "stratum": "hard",
+   "seed": 20261050,
+   "requested_steps": 15,
+   "cp_hash": "f6108f30f69f5666",
+   "metrics": {
+    "steps": 15,
+    "crease_segments_raw": 183,
+    "crease_edges": 260,
+    "mountain": 124,
+    "valley": 136,
+    "border": 32,
+    "distinct_crease_lines": 44,
+    "vertices": 109,
+    "coupling_max": 32,
+    "coupling_mean": 12.2,
+    "coupling_total": 183,
+    "coupling_final_step": 24,
+    "layers_final": 184,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.015625,
+    "largest_face_final": 0.007813,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 187,
+    "vertices": 109,
+    "edges": 292,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "V": 136,
+     "M": 124
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0019",
+   "stratum": "hard",
+   "seed": 20261051,
+   "requested_steps": 14,
+   "cp_hash": "a36d0fd3d31f0a1f",
+   "metrics": {
+    "steps": 14,
+    "crease_segments_raw": 303,
+    "crease_edges": 440,
+    "mountain": 224,
+    "valley": 216,
+    "border": 48,
+    "distinct_crease_lines": 54,
+    "vertices": 185,
+    "coupling_max": 120,
+    "coupling_mean": 21.643,
+    "coupling_total": 303,
+    "coupling_final_step": 64,
+    "layers_final": 304,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.007813,
+    "largest_face_final": 0.005859,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 307,
+    "vertices": 185,
+    "edges": 488,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 48,
+     "M": 224,
+     "V": 216
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0020",
+   "stratum": "hard",
+   "seed": 20261052,
+   "requested_steps": 18,
+   "cp_hash": "41db21fd72cf9b1b",
+   "metrics": {
+    "steps": 18,
+    "crease_segments_raw": 263,
+    "crease_edges": 407,
+    "mountain": 213,
+    "valley": 194,
+    "border": 54,
+    "distinct_crease_lines": 58,
+    "vertices": 198,
+    "coupling_max": 48,
+    "coupling_mean": 14.611,
+    "coupling_total": 263,
+    "coupling_final_step": 24,
+    "layers_final": 264,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.015625,
+    "largest_face_final": 0.009766,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 267,
+    "vertices": 198,
+    "edges": 461,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 54,
+     "M": 213,
+     "V": 194
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0021",
+   "stratum": "hard",
+   "seed": 20261056,
+   "requested_steps": 14,
+   "cp_hash": "230cd0194a44e1cd",
+   "metrics": {
+    "steps": 14,
+    "crease_segments_raw": 255,
+    "crease_edges": 404,
+    "mountain": 187,
+    "valley": 217,
+    "border": 40,
+    "distinct_crease_lines": 54,
+    "vertices": 189,
+    "coupling_max": 96,
+    "coupling_mean": 18.214,
+    "coupling_total": 255,
+    "coupling_final_step": 22,
+    "layers_final": 256,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.007813,
+    "largest_face_final": 0.007813,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 259,
+    "vertices": 189,
+    "edges": 444,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 40,
+     "V": 217,
+     "M": 187
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0022",
+   "stratum": "hard",
+   "seed": 20261057,
+   "requested_steps": 17,
+   "cp_hash": "70a9d5b4380c1e8a",
+   "metrics": {
+    "steps": 17,
+    "crease_segments_raw": 292,
+    "crease_edges": 422,
+    "mountain": 214,
+    "valley": 208,
+    "border": 42,
+    "distinct_crease_lines": 60,
+    "vertices": 172,
+    "coupling_max": 56,
+    "coupling_mean": 17.176,
+    "coupling_total": 292,
+    "coupling_final_step": 56,
+    "layers_final": 293,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.023438,
+    "largest_face_final": 0.011719,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 296,
+    "vertices": 172,
+    "edges": 464,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 42,
+     "M": 214,
+     "V": 208
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0023",
+   "stratum": "hard",
+   "seed": 20261058,
+   "requested_steps": 18,
+   "cp_hash": "7eb9dfe776efc18b",
+   "metrics": {
+    "steps": 18,
+    "crease_segments_raw": 367,
+    "crease_edges": 543,
+    "mountain": 280,
+    "valley": 263,
+    "border": 58,
+    "distinct_crease_lines": 59,
+    "vertices": 234,
+    "coupling_max": 184,
+    "coupling_mean": 20.389,
+    "coupling_total": 367,
+    "coupling_final_step": 184,
+    "layers_final": 368,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.011719,
+    "largest_face_final": 0.009766,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 371,
+    "vertices": 234,
+    "edges": 601,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 58,
+     "M": 280,
+     "V": 263
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0024",
+   "stratum": "hard",
+   "seed": 20261065,
+   "requested_steps": 18,
+   "cp_hash": "edaa1ac2aca0262a",
+   "metrics": {
+    "steps": 18,
+    "crease_segments_raw": 1023,
+    "crease_edges": 1504,
+    "mountain": 776,
+    "valley": 728,
+    "border": 64,
+    "distinct_crease_lines": 92,
+    "vertices": 545,
+    "coupling_max": 512,
+    "coupling_mean": 56.833,
+    "coupling_total": 1023,
+    "coupling_final_step": 512,
+    "layers_final": 1024,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.001953,
+    "largest_face_final": 0.000977,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 1027,
+    "vertices": 545,
+    "edges": 1568,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 64,
+     "V": 728,
+     "M": 776
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0025",
+   "stratum": "hard",
+   "seed": 20261067,
+   "requested_steps": 18,
+   "cp_hash": "c715361a80687b3a",
+   "metrics": {
+    "steps": 18,
+    "crease_segments_raw": 511,
+    "crease_edges": 736,
+    "mountain": 360,
+    "valley": 376,
+    "border": 64,
+    "distinct_crease_lines": 60,
+    "vertices": 289,
+    "coupling_max": 256,
+    "coupling_mean": 28.389,
+    "coupling_total": 511,
+    "coupling_final_step": 256,
+    "layers_final": 512,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.003906,
+    "largest_face_final": 0.001953,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 515,
+    "vertices": 289,
+    "edges": 800,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 64,
+     "V": 376,
+     "M": 360
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0026",
+   "stratum": "hard",
+   "seed": 20261068,
+   "requested_steps": 14,
+   "cp_hash": "ece578d1170e85e7",
+   "metrics": {
+    "steps": 14,
+    "crease_segments_raw": 183,
+    "crease_edges": 260,
+    "mountain": 126,
+    "valley": 134,
+    "border": 32,
+    "distinct_crease_lines": 40,
+    "vertices": 109,
+    "coupling_max": 60,
+    "coupling_mean": 13.071,
+    "coupling_total": 183,
+    "coupling_final_step": 32,
+    "layers_final": 184,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.015625,
+    "largest_face_final": 0.007813,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 187,
+    "vertices": 109,
+    "edges": 292,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "V": 134,
+     "M": 126
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0027",
+   "stratum": "hard",
+   "seed": 20261071,
+   "requested_steps": 14,
+   "cp_hash": "e33a405dd8b4a531",
+   "metrics": {
+    "steps": 14,
+    "crease_segments_raw": 109,
+    "crease_edges": 158,
+    "mountain": 75,
+    "valley": 83,
+    "border": 32,
+    "distinct_crease_lines": 27,
+    "vertices": 81,
+    "coupling_max": 40,
+    "coupling_mean": 7.786,
+    "coupling_total": 109,
+    "coupling_final_step": 12,
+    "layers_final": 110,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.015625,
+    "largest_face_final": 0.015625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 113,
+    "vertices": 81,
+    "edges": 190,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 75,
+     "V": 83
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0028",
+   "stratum": "hard",
+   "seed": 20261073,
+   "requested_steps": 14,
+   "cp_hash": "a699d04e744acf76",
+   "metrics": {
+    "steps": 14,
+    "crease_segments_raw": 223,
+    "crease_edges": 336,
+    "mountain": 164,
+    "valley": 172,
+    "border": 32,
+    "distinct_crease_lines": 44,
+    "vertices": 145,
+    "coupling_max": 40,
+    "coupling_mean": 15.929,
+    "coupling_total": 223,
+    "coupling_final_step": 40,
+    "layers_final": 224,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.015625,
+    "largest_face_final": 0.007813,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 227,
+    "vertices": 145,
+    "edges": 368,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "V": 172,
+     "M": 164
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0029",
+   "stratum": "hard",
+   "seed": 20261074,
+   "requested_steps": 15,
+   "cp_hash": "48fc9a95f7c8dd11",
+   "metrics": {
+    "steps": 15,
+    "crease_segments_raw": 139,
+    "crease_edges": 212,
+    "mountain": 104,
+    "valley": 108,
+    "border": 32,
+    "distinct_crease_lines": 38,
+    "vertices": 105,
+    "coupling_max": 48,
+    "coupling_mean": 9.267,
+    "coupling_total": 139,
+    "coupling_final_step": 48,
+    "layers_final": 140,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.023438,
+    "largest_face_final": 0.011719,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 143,
+    "vertices": 105,
+    "edges": 244,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 104,
+     "V": 108
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0030",
+   "stratum": "hard",
+   "seed": 20261075,
+   "requested_steps": 16,
+   "cp_hash": "a83cf37e27a8e16e",
+   "metrics": {
+    "steps": 16,
+    "crease_segments_raw": 2047,
+    "crease_edges": 3008,
+    "mountain": 1512,
+    "valley": 1496,
+    "border": 128,
+    "distinct_crease_lines": 124,
+    "vertices": 1089,
+    "coupling_max": 1024,
+    "coupling_mean": 127.938,
+    "coupling_total": 2047,
+    "coupling_final_step": 1024,
+    "layers_final": 2048,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.000977,
+    "largest_face_final": 0.000488,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 2051,
+    "vertices": 1089,
+    "edges": 3136,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 128,
+     "M": 1512,
+     "V": 1496
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0031",
+   "stratum": "hard",
+   "seed": 20261076,
+   "requested_steps": 15,
+   "cp_hash": "c885a12711a3e68b",
+   "metrics": {
+    "steps": 15,
+    "crease_segments_raw": 667,
+    "crease_edges": 1008,
+    "mountain": 493,
+    "valley": 515,
+    "border": 64,
+    "distinct_crease_lines": 83,
+    "vertices": 405,
+    "coupling_max": 232,
+    "coupling_mean": 44.467,
+    "coupling_total": 667,
+    "coupling_final_step": 232,
+    "layers_final": 668,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.005859,
+    "largest_face_final": 0.00293,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 671,
+    "vertices": 405,
+    "edges": 1072,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 64,
+     "V": 515,
+     "M": 493
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0032",
+   "stratum": "hard",
+   "seed": 20261079,
+   "requested_steps": 16,
+   "cp_hash": "b5d171dec85dd94a",
+   "metrics": {
+    "steps": 16,
+    "crease_segments_raw": 2047,
+    "crease_edges": 3008,
+    "mountain": 1536,
+    "valley": 1472,
+    "border": 128,
+    "distinct_crease_lines": 124,
+    "vertices": 1089,
+    "coupling_max": 1024,
+    "coupling_mean": 127.938,
+    "coupling_total": 2047,
+    "coupling_final_step": 1024,
+    "layers_final": 2048,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.000977,
+    "largest_face_final": 0.000488,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 2051,
+    "vertices": 1089,
+    "edges": 3136,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 128,
+     "M": 1536,
+     "V": 1472
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0033",
+   "stratum": "hard",
+   "seed": 20261080,
+   "requested_steps": 18,
+   "cp_hash": "e8bf75c201700876",
+   "metrics": {
+    "steps": 18,
+    "crease_segments_raw": 351,
+    "crease_edges": 523,
+    "mountain": 269,
+    "valley": 254,
+    "border": 54,
+    "distinct_crease_lines": 60,
+    "vertices": 226,
+    "coupling_max": 80,
+    "coupling_mean": 19.5,
+    "coupling_total": 351,
+    "coupling_final_step": 80,
+    "layers_final": 352,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.007813,
+    "largest_face_final": 0.005859,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 355,
+    "vertices": 226,
+    "edges": 577,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 54,
+     "M": 269,
+     "V": 254
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0034",
+   "stratum": "hard",
+   "seed": 20261082,
+   "requested_steps": 16,
+   "cp_hash": "8546e48ba35ab1e1",
+   "metrics": {
+    "steps": 16,
+    "crease_segments_raw": 287,
+    "crease_edges": 417,
+    "mountain": 212,
+    "valley": 205,
+    "border": 54,
+    "distinct_crease_lines": 51,
+    "vertices": 184,
+    "coupling_max": 108,
+    "coupling_mean": 17.938,
+    "coupling_total": 287,
+    "coupling_final_step": 44,
+    "layers_final": 288,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.035156,
+    "largest_face_final": 0.015625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 291,
+    "vertices": 184,
+    "edges": 471,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 54,
+     "M": 212,
+     "V": 205
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0035",
+   "stratum": "hard",
+   "seed": 20261084,
+   "requested_steps": 18,
+   "cp_hash": "e6633e923e472a32",
+   "metrics": {
+    "steps": 18,
+    "crease_segments_raw": 1023,
+    "crease_edges": 1504,
+    "mountain": 760,
+    "valley": 744,
+    "border": 64,
+    "distinct_crease_lines": 92,
+    "vertices": 545,
+    "coupling_max": 320,
+    "coupling_mean": 56.833,
+    "coupling_total": 1023,
+    "coupling_final_step": 80,
+    "layers_final": 1024,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.001953,
+    "largest_face_final": 0.000977,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 1027,
+    "vertices": 545,
+    "edges": 1568,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 64,
+     "M": 760,
+     "V": 744
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0036",
+   "stratum": "hard",
+   "seed": 20261085,
+   "requested_steps": 15,
+   "cp_hash": "9ffd12065aff44e2",
+   "metrics": {
+    "steps": 15,
+    "crease_segments_raw": 239,
+    "crease_edges": 371,
+    "mountain": 197,
+    "valley": 174,
+    "border": 46,
+    "distinct_crease_lines": 63,
+    "vertices": 178,
+    "coupling_max": 70,
+    "coupling_mean": 15.933,
+    "coupling_total": 239,
+    "coupling_final_step": 36,
+    "layers_final": 240,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.035156,
+    "largest_face_final": 0.015625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 243,
+    "vertices": 178,
+    "edges": 417,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 46,
+     "M": 197,
+     "V": 174
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0037",
+   "stratum": "hard",
+   "seed": 20261088,
+   "requested_steps": 18,
+   "cp_hash": "5422d1526746824e",
+   "metrics": {
+    "steps": 18,
+    "crease_segments_raw": 511,
+    "crease_edges": 736,
+    "mountain": 376,
+    "valley": 360,
+    "border": 64,
+    "distinct_crease_lines": 60,
+    "vertices": 289,
+    "coupling_max": 144,
+    "coupling_mean": 28.389,
+    "coupling_total": 511,
+    "coupling_final_step": 64,
+    "layers_final": 512,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.003906,
+    "largest_face_final": 0.001953,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 515,
+    "vertices": 289,
+    "edges": 800,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 64,
+     "M": 376,
+     "V": 360
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0038",
+   "stratum": "hard",
+   "seed": 20261093,
+   "requested_steps": 18,
+   "cp_hash": "16695e567e125a04",
+   "metrics": {
+    "steps": 18,
+    "crease_segments_raw": 263,
+    "crease_edges": 384,
+    "mountain": 186,
+    "valley": 198,
+    "border": 44,
+    "distinct_crease_lines": 53,
+    "vertices": 165,
+    "coupling_max": 76,
+    "coupling_mean": 14.611,
+    "coupling_total": 263,
+    "coupling_final_step": 42,
+    "layers_final": 264,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.015625,
+    "largest_face_final": 0.007813,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 267,
+    "vertices": 165,
+    "edges": 428,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 44,
+     "V": 198,
+     "M": 186
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0039",
+   "stratum": "hard",
+   "seed": 20261094,
+   "requested_steps": 18,
+   "cp_hash": "b638a6b10613b427",
+   "metrics": {
+    "steps": 18,
+    "crease_segments_raw": 399,
+    "crease_edges": 586,
+    "mountain": 306,
+    "valley": 280,
+    "border": 60,
+    "distinct_crease_lines": 58,
+    "vertices": 247,
+    "coupling_max": 176,
+    "coupling_mean": 22.167,
+    "coupling_total": 399,
+    "coupling_final_step": 176,
+    "layers_final": 400,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.007813,
+    "largest_face_final": 0.005859,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 403,
+    "vertices": 247,
+    "edges": 646,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 60,
+     "M": 306,
+     "V": 280
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0040",
+   "stratum": "hard",
+   "seed": 20261095,
+   "requested_steps": 14,
+   "cp_hash": "3d91b98ed9467e50",
+   "metrics": {
+    "steps": 14,
+    "crease_segments_raw": 127,
+    "crease_edges": 176,
+    "mountain": 86,
+    "valley": 90,
+    "border": 32,
+    "distinct_crease_lines": 28,
+    "vertices": 81,
+    "coupling_max": 44,
+    "coupling_mean": 9.071,
+    "coupling_total": 127,
+    "coupling_final_step": 20,
+    "layers_final": 128,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.015625,
+    "largest_face_final": 0.007813,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 131,
+    "vertices": 81,
+    "edges": 208,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "V": 90,
+     "M": 86
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0041",
+   "stratum": "hard",
+   "seed": 20261096,
+   "requested_steps": 14,
+   "cp_hash": "c2660c30d53009f6",
+   "metrics": {
+    "steps": 14,
+    "crease_segments_raw": 127,
+    "crease_edges": 176,
+    "mountain": 90,
+    "valley": 86,
+    "border": 32,
+    "distinct_crease_lines": 28,
+    "vertices": 81,
+    "coupling_max": 64,
+    "coupling_mean": 9.071,
+    "coupling_total": 127,
+    "coupling_final_step": 64,
+    "layers_final": 128,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.015625,
+    "largest_face_final": 0.007813,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 131,
+    "vertices": 81,
+    "edges": 208,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 90,
+     "V": 86
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0042",
+   "stratum": "hard",
+   "seed": 20261098,
+   "requested_steps": 18,
+   "cp_hash": "5387bda27f92c628",
+   "metrics": {
+    "steps": 18,
+    "crease_segments_raw": 511,
+    "crease_edges": 736,
+    "mountain": 378,
+    "valley": 358,
+    "border": 64,
+    "distinct_crease_lines": 60,
+    "vertices": 289,
+    "coupling_max": 144,
+    "coupling_mean": 28.389,
+    "coupling_total": 511,
+    "coupling_final_step": 52,
+    "layers_final": 512,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.003906,
+    "largest_face_final": 0.001953,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 515,
+    "vertices": 289,
+    "edges": 800,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 64,
+     "V": 358,
+     "M": 378
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0043",
+   "stratum": "hard",
+   "seed": 20261102,
+   "requested_steps": 15,
+   "cp_hash": "c4029d84afba9cba",
+   "metrics": {
+    "steps": 15,
+    "crease_segments_raw": 127,
+    "crease_edges": 176,
+    "mountain": 90,
+    "valley": 86,
+    "border": 32,
+    "distinct_crease_lines": 28,
+    "vertices": 81,
+    "coupling_max": 64,
+    "coupling_mean": 8.467,
+    "coupling_total": 127,
+    "coupling_final_step": 64,
+    "layers_final": 128,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.015625,
+    "largest_face_final": 0.007813,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 131,
+    "vertices": 81,
+    "edges": 208,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "V": 86,
+     "M": 90
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0044",
+   "stratum": "hard",
+   "seed": 20261103,
+   "requested_steps": 19,
+   "cp_hash": "2d10494f481a74ab",
+   "metrics": {
+    "steps": 19,
+    "crease_segments_raw": 121,
+    "crease_edges": 179,
+    "mountain": 90,
+    "valley": 89,
+    "border": 32,
+    "distinct_crease_lines": 34,
+    "vertices": 90,
+    "coupling_max": 19,
+    "coupling_mean": 6.368,
+    "coupling_total": 121,
+    "coupling_final_step": 12,
+    "layers_final": 122,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.023438,
+    "largest_face_final": 0.019531,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 125,
+    "vertices": 90,
+    "edges": 211,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 90,
+     "V": 89
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0045",
+   "stratum": "hard",
+   "seed": 20261104,
+   "requested_steps": 14,
+   "cp_hash": "5f7c5a05688a2143",
+   "metrics": {
+    "steps": 14,
+    "crease_segments_raw": 255,
+    "crease_edges": 368,
+    "mountain": 187,
+    "valley": 181,
+    "border": 32,
+    "distinct_crease_lines": 44,
+    "vertices": 145,
+    "coupling_max": 128,
+    "coupling_mean": 18.214,
+    "coupling_total": 255,
+    "coupling_final_step": 128,
+    "layers_final": 256,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.007813,
+    "largest_face_final": 0.003906,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 259,
+    "vertices": 145,
+    "edges": 400,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "M": 187,
+     "V": 181
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0046",
+   "stratum": "hard",
+   "seed": 20261105,
+   "requested_steps": 14,
+   "cp_hash": "25e8a874247a67a8",
+   "metrics": {
+    "steps": 14,
+    "crease_segments_raw": 127,
+    "crease_edges": 176,
+    "mountain": 92,
+    "valley": 84,
+    "border": 32,
+    "distinct_crease_lines": 28,
+    "vertices": 81,
+    "coupling_max": 62,
+    "coupling_mean": 9.071,
+    "coupling_total": 127,
+    "coupling_final_step": 62,
+    "layers_final": 128,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.015625,
+    "largest_face_final": 0.007813,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 131,
+    "vertices": 81,
+    "edges": 208,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "V": 84,
+     "M": 92
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0047",
+   "stratum": "hard",
+   "seed": 20261107,
+   "requested_steps": 15,
+   "cp_hash": "5ef3ce6dd217ff35",
+   "metrics": {
+    "steps": 15,
+    "crease_segments_raw": 143,
+    "crease_edges": 220,
+    "mountain": 107,
+    "valley": 113,
+    "border": 44,
+    "distinct_crease_lines": 45,
+    "vertices": 121,
+    "coupling_max": 26,
+    "coupling_mean": 9.533,
+    "coupling_total": 143,
+    "coupling_final_step": 24,
+    "layers_final": 144,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.03125,
+    "largest_face_final": 0.015625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 147,
+    "vertices": 121,
+    "edges": 264,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 44,
+     "M": 107,
+     "V": 113
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0048",
+   "stratum": "hard",
+   "seed": 20261109,
+   "requested_steps": 15,
+   "cp_hash": "4127ff0f418243bd",
+   "metrics": {
+    "steps": 15,
+    "crease_segments_raw": 447,
+    "crease_edges": 640,
+    "mountain": 328,
+    "valley": 312,
+    "border": 64,
+    "distinct_crease_lines": 58,
+    "vertices": 257,
+    "coupling_max": 152,
+    "coupling_mean": 29.8,
+    "coupling_total": 447,
+    "coupling_final_step": 152,
+    "layers_final": 448,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.007813,
+    "largest_face_final": 0.003906,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 451,
+    "vertices": 257,
+    "edges": 704,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 64,
+     "M": 328,
+     "V": 312
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0049",
+   "stratum": "hard",
+   "seed": 20261110,
+   "requested_steps": 17,
+   "cp_hash": "1d792f60bf6ff2f6",
+   "metrics": {
+    "steps": 17,
+    "crease_segments_raw": 255,
+    "crease_edges": 368,
+    "mountain": 186,
+    "valley": 182,
+    "border": 32,
+    "distinct_crease_lines": 44,
+    "vertices": 145,
+    "coupling_max": 128,
+    "coupling_mean": 15,
+    "coupling_total": 255,
+    "coupling_final_step": 128,
+    "layers_final": 256,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.007813,
+    "largest_face_final": 0.003906,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 259,
+    "vertices": 145,
+    "edges": 400,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 32,
+     "V": 182,
+     "M": 186
+    }
+   },
+   "pure_search": null
+  },
+  {
+   "id": "hard-0050",
+   "stratum": "hard",
+   "seed": 20261111,
+   "requested_steps": 15,
+   "cp_hash": "34a445565c531be6",
+   "metrics": {
+    "steps": 15,
+    "crease_segments_raw": 63,
+    "crease_edges": 88,
+    "mountain": 44,
+    "valley": 44,
+    "border": 16,
+    "distinct_crease_lines": 20,
+    "vertices": 41,
+    "coupling_max": 12,
+    "coupling_mean": 4.2,
+    "coupling_total": 63,
+    "coupling_final_step": 10,
+    "layers_final": 64,
+    "distinct_angles": 4,
+    "bbox_area_final": 0.03125,
+    "largest_face_final": 0.015625,
+    "flags": {
+     "repeated_halving": false,
+     "no_coupling": false,
+     "collapsed": true,
+     "single_angle": false
+    },
+    "degenerate": true
+   },
+   "planarize": {
+    "segments_in": 67,
+    "vertices": 41,
+    "edges": 104,
+    "overlaps_merged": 0,
+    "assignment_conflicts": 0,
+    "non_bmv_edges": 0,
+    "counts": {
+     "B": 16,
+     "M": 44,
+     "V": 44
+    }
+   },
+   "pure_search": null
+  }
+ ]
+}

@@ -1,0 +1,95 @@
+{
+ "id": "v3-0014",
+ "stratum": "v3",
+ "seed": 20260930,
+ "requested_steps": 3,
+ "cp_hash": "a91474fe047f6c48",
+ "metrics": {
+  "steps": 3,
+  "crease_segments_raw": 7,
+  "crease_edges": 8,
+  "mountain": 5,
+  "valley": 3,
+  "border": 14,
+  "distinct_crease_lines": 7,
+  "vertices": 15,
+  "coupling_max": 4,
+  "coupling_mean": 2.333,
+  "coupling_total": 7,
+  "coupling_final_step": 4,
+  "layers_final": 8,
+  "distinct_angles": 2,
+  "bbox_area_final": 0.5625,
+  "largest_face_final": 0.25,
+  "flags": {
+   "repeated_halving": false,
+   "no_coupling": false,
+   "collapsed": false,
+   "single_angle": false
+  },
+  "degenerate": false
+ },
+ "planarize": {
+  "segments_in": 11,
+  "vertices": 15,
+  "edges": 22,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 14,
+   "M": 5,
+   "V": 3
+  }
+ },
+ "pure_search": {
+  "status": "SOLVED",
+  "queries": 244,
+  "depth": 3,
+  "seq": [
+   {
+    "line": {
+     "n": [
+      1,
+      0
+     ],
+     "d": 0.5,
+     "dir": [
+      0,
+      1
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865475,
+      0.7071067811865475
+     ],
+     "d": 0.35355339059327373,
+     "dir": [
+      -0.7071067811865475,
+      0.7071067811865475
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865475,
+      0.7071067811865475
+     ],
+     "d": 0.17677669529663687,
+     "dir": [
+      0.7071067811865475,
+      -0.7071067811865475
+     ]
+    },
+    "movePositive": true
+   }
+  ],
+  "ms": 1
+ }
+}

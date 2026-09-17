@@ -67,9 +67,61 @@ Bucket reminder:
   shortcut** — Learn2Fold's own OrigamiCode is 5,760 sequences / 75,000 verified transitions,
   the bulk of it produced by their own symbolic simulator (`notes/plan/corpus-plan.md`).
 
+### The release corpus (2026-09-17) — two splits, and how it must be scored
+
+`workspace/corpus/out/release/`, 1,050 samples in eight batches under one merged manifest.
+Rebuild: `bash workspace/corpus/run-release.sh` then `node workspace/corpus/merge-release.mjs`.
+
+| | n | with a SOLVED verdict | folds |
+| --- | --- | --- | --- |
+| all-layers / **verified** | 400 | 399 | 3–6 |
+| all-layers / generated | 150 | 0 | 4–19 |
+| some-layers / **verified** | 300 | 298 | 3–5 |
+| some-layers / generated | 200 | 0 | 6–9 |
+
+- **verified** — the tier's own solver was run on the pattern and returned a verdict, so an
+  independent search reproduced a sequence for it. ⚠️ This checks the **generator**, not the
+  physics: both share the fold engine, so it catches a broken sampler and would **not** catch a
+  wrong model of paper.
+- **generated** — deeper samples, correct **by construction** (they were produced by folding, and
+  the pattern is what the folding left behind), with no verdict because the solver cannot close
+  those depths in reasonable time. The split is labelled rather than the corpus being stopped at
+  the depth the solver reaches — **the difficulty the benchmark is about lives past that depth.**
+- A **TIMEOUT stays in the corpus**, marked. Dropping it would bias the verified split toward the
+  instances the solver finds easy, which is the one bias a difficulty-graded corpus cannot afford.
+- Scale ~1,000 was chosen against the published comparables (GamiBench 372, OrigamiSpace 350),
+  not against OrigamiCode's 5,760, which was never released.
+
+### 🛑 HOW TO SCORE THIS CORPUS — the recorded sequence is **a** solution, not **the** solution
+
+**Measured on the release batch: 30 samples have a sequence one fold SHORTER than the one that
+built them**, and the share rises with depth — 1/100 at three folds, 4/100 at four, **11/100 at
+five, 10/99 at six**. The generator does not search; it folds, so nothing makes its sequence
+minimal.
+
+Three rules follow, and the first is the one that silently corrupts results:
+
+1. **Never compare a proposed sequence step-by-step against the recorded one.** A model that
+   finds a shorter correct sequence would be marked WRONG. Judge by **replaying** the proposed
+   sequence through the engine and comparing **crease sets** — the standard PR #13 set, equal
+   rather than overlapping.
+2. **Step-count metrics belong against the shortest KNOWN sequence**, carried per sample as
+   `shorter_known` (null when nothing shorter is known — which is not the same as "none exists",
+   since an unverified sample has simply not been looked at).
+3. **`shorter_known` is a floor, not the optimum.** It is whatever our iterative-deepening solver
+   found within budget. On `generated` samples nobody has looked at all.
+
+### On the corpus's scale, one prediction that was wrong
+
+Deduplicating the square's eight symmetries was expected to exhaust the shallow end — there are
+only so many distinct three-fold patterns. It does not: **100 distinct patterns in 100 attempts
+at depth three, and zero isomorphic duplicates across all eight batches.** Recorded because it
+was asserted as a constraint on corpus design and the data refused it.
+
 ---
 
 ## 1. Flat-Folder `examples/instagram/`
+
 
 - **Link**: https://github.com/origamimagiro/flat-folder (repo) · `examples/instagram/` (data)
 - **License**: MIT

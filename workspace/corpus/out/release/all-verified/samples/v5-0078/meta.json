@@ -1,0 +1,123 @@
+{
+ "id": "v5-0078",
+ "stratum": "v5",
+ "seed": 20261194,
+ "requested_steps": 5,
+ "cp_hash": "1284a0e1177ae409",
+ "metrics": {
+  "steps": 5,
+  "crease_segments_raw": 14,
+  "crease_edges": 20,
+  "mountain": 6,
+  "valley": 14,
+  "border": 14,
+  "distinct_crease_lines": 11,
+  "vertices": 20,
+  "coupling_max": 6,
+  "coupling_mean": 2.8,
+  "coupling_total": 14,
+  "coupling_final_step": 3,
+  "layers_final": 15,
+  "distinct_angles": 3,
+  "bbox_area_final": 0.46875,
+  "largest_face_final": 0.140625,
+  "flags": {
+   "repeated_halving": false,
+   "no_coupling": false,
+   "collapsed": false,
+   "single_angle": false
+  },
+  "degenerate": false
+ },
+ "planarize": {
+  "segments_in": 18,
+  "vertices": 20,
+  "edges": 34,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 14,
+   "V": 14,
+   "M": 6
+  }
+ },
+ "pure_search": {
+  "status": "SOLVED",
+  "queries": 17736,
+  "depth": 5,
+  "seq": [
+   {
+    "line": {
+     "n": [
+      1,
+      0
+     ],
+     "d": 0.75,
+     "dir": [
+      0,
+      1
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865471,
+      0.7071067811865479
+     ],
+     "d": 0.3535533905932736,
+     "dir": [
+      -0.7071067811865479,
+      0.7071067811865471
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865483,
+      -0.7071067811865468
+     ],
+     "d": 4.718447854656915e-16,
+     "dir": [
+      -0.7071067811865468,
+      -0.7071067811865483
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865483,
+      -0.7071067811865467
+     ],
+     "d": -0.17677669529663662,
+     "dir": [
+      -0.7071067811865467,
+      -0.7071067811865483
+     ]
+    },
+    "movePositive": true
+   },
+   {
+    "line": {
+     "n": [
+      0.7071067811865485,
+      -0.7071067811865467
+     ],
+     "d": -0.35355339059327356,
+     "dir": [
+      -0.7071067811865467,
+      -0.7071067811865485
+     ]
+    },
+    "movePositive": true
+   }
+  ],
+  "ms": 34
+ }
+}

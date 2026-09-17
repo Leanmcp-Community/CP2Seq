@@ -1,0 +1,33 @@
+{
+ "id": "sailboat",
+ "title": "Sailboat",
+ "family": "recognisable",
+ "note": "Halve on the diagonal for the sail, turn the bottom band up for the hull, trim the stern corner.",
+ "authored": true,
+ "tier": "all-layers",
+ "metrics": {
+  "steps": 3,
+  "partial_folds": 0,
+  "crease_edges": 11,
+  "mountain": 4,
+  "valley": 7,
+  "vertices": 12,
+  "coupling_max": 4,
+  "layers_final": 8,
+  "paper_area_final": 1,
+  "sheet_area": 1
+ },
+ "planarize": {
+  "segments_in": 11,
+  "vertices": 12,
+  "edges": 19,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 8,
+   "V": 7,
+   "M": 4
+  }
+ }
+}
