@@ -31,7 +31,7 @@ import { fileURLToPath } from "url";
 import { foldLayers } from "./fold-engine-layers.mjs";
 import { lineSpec } from "./fold-engine.mjs";
 import { planarize } from "./planarize.mjs";
-import { boundaryLoop, ID } from "../probe-c/stage2.mjs";
+import { boundaryLoop, ID } from "./geom.mjs";
 import { creaseGeometry, pairsUp } from "./crease-compare.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));

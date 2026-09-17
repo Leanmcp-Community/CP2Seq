@@ -1,78 +1,41 @@
 {
- "generated": "2026-09-16T13:09:36.776Z",
+ "generated": "2026-09-17T07:11:09.575Z",
  "root": "release",
- "pass": 1047,
- "fail": 3,
- "seconds": 27,
+ "pass": 600,
+ "fail": 0,
+ "seconds": 701,
  "note": "replay shares the fold engine with the generator: it catches drift between what was folded and what was recorded, NOT a wrong model of paper",
  "batches": [
   {
-   "batch": "all-generated",
-   "n": 150,
-   "pass": 150,
-   "fail": 0
-  },
-  {
-   "batch": "all-verified",
+   "batch": "all-layers",
    "n": 400,
    "pass": 400,
    "fail": 0
   },
   {
+   "batch": "some-generated-d5",
+   "n": 50,
+   "pass": 50,
+   "fail": 0
+  },
+  {
    "batch": "some-generated-d6",
    "n": 50,
-   "pass": 49,
-   "fail": 1
-  },
-  {
-   "batch": "some-generated-d7",
-   "n": 50,
    "pass": 50,
    "fail": 0
-  },
-  {
-   "batch": "some-generated-d8",
-   "n": 50,
-   "pass": 50,
-   "fail": 0
-  },
-  {
-   "batch": "some-generated-d9",
-   "n": 50,
-   "pass": 48,
-   "fail": 2
   },
   {
    "batch": "some-verified-d3",
-   "n": 100,
-   "pass": 100,
+   "n": 50,
+   "pass": 50,
    "fail": 0
   },
   {
    "batch": "some-verified-d4",
-   "n": 100,
-   "pass": 100,
-   "fail": 0
-  },
-  {
-   "batch": "some-verified-d5",
-   "n": 100,
-   "pass": 100,
+   "n": 50,
+   "pass": 50,
    "fail": 0
   }
  ],
- "failures": [
-  {
-   "sample": "some-generated-d6/layers-0021",
-   "why": "15 creases replayed vs 16 stored"
-  },
-  {
-   "sample": "some-generated-d9/layers-0008",
-   "why": "crease mismatch: 0.70703125,0.70703125,1.230224609375,M [-0.184027, 0.086662]"
-  },
-  {
-   "sample": "some-generated-d9/layers-0027",
-   "why": "82 creases replayed vs 81 stored"
-  }
- ]
+ "failures": []
 }

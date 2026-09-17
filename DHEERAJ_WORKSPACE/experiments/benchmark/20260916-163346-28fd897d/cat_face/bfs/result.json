@@ -1,0 +1,31 @@
+{
+  "status": "STATE_LIMIT",
+  "algorithm": "bfs",
+  "queries": 8807062,
+  "expanded": 299855,
+  "generated": 3602711,
+  "visited": 1000000,
+  "peak_frontier": 700145,
+  "max_depth_reached": 8,
+  "elapsed_seconds": 2780.0002683330094,
+  "replay_verified": false,
+  "steps": null,
+  "actions": [],
+  "cp": "/Users/ddod/LEANMCP/ROBOTICS/FoldOrigami/DHEERAJ_WORKSPACE/data/pureland/seq/cat_face/step_15.fold",
+  "target": "/Users/ddod/LEANMCP/ROBOTICS/FoldOrigami/DHEERAJ_WORKSPACE/data/pureland/seq/cat_face/step_15.fold",
+  "cp_sha256": "88e56fb3b5fb0bce4e10a4d3b9696549cf893d5ee4ad2d449d48f019f7070427",
+  "target_sha256": "88e56fb3b5fb0bce4e10a4d3b9696549cf893d5ee4ad2d449d48f019f7070427",
+  "limits": {
+    "max_depth": 1000,
+    "max_queries": 100000000,
+    "max_states": 1000000,
+    "seconds": 21600.0
+  },
+  "tolerance": 0.004,
+  "convention": "pureland",
+  "model_version": 1,
+  "model": "exposed same-side 180-degree flaps on final CP mesh",
+  "physical_validation": "restricted geometric model; no independent physics validation",
+  "target_layer_constraints": 592,
+  "target_geometry_resolved": true
+}

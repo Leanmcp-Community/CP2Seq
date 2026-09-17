@@ -4,8 +4,7 @@
 // Generation is trivial; recovering the sequence is the hard inverse problem. That asymmetry
 // is the whole point (notes/plan/corpus-plan.md (a)).
 //
-// This is the generator from workspace/probe-c/selftest.mjs, promoted and extended with the
-// three things a corpus needs and a round-trip test did not:
+// Extended with the three things a corpus needs that a round-trip test did not:
 //   * LAYER ORDER, tracked explicitly, so intermediate folded states can be exported
 //   * per-step DIFFICULTY METRICS, which are free at generation time (see below)
 //   * EXACT reflection matrices instead of reflectT's
@@ -20,13 +19,13 @@
 // asserts the linear part really is integral, so a regression here cannot pass silently.
 //
 // WHY THE METRICS ARE FREE. One fold cuts every layer it crosses, and each cut layer becomes
-// ONE crease in the original square (stage2.mjs header). So "creases created by this step" is
+// ONE crease in the original square. So "creases created by this step" is
 // simultaneously
 //   - the non-local coupling of the step  (Learn2Fold's second difficulty axis, papers.md #4)
 //   - how many layers of paper the fold goes through  ("it gets harder as you fold",
 //     and the closest measurable proxy for by-hand difficulty)
 // Both come out of the fold itself. Nothing has to be measured afterwards.
-import { clip, chord, ptOn, ap, mul, inv, ID, lineOf, lkey } from "../probe-c/stage2.mjs";
+import { clip, chord, ptOn, ap, mul, inv, ID, lineOf, lkey } from "./geom.mjs";
 
 export const ANGLE_DEG = [0, 45, 90, 135];
 
@@ -82,7 +81,7 @@ function bbox(layers) {
 // A crease folded one way and later folded back the other leaves ONE assignment in the CP,
 // not two -- the CP records only the last direction. The first version of this generator did
 // not check, produced self-contradictory CPs that no solver can ever satisfy, and the failure
-// looked exactly like a solver bug (notes/probes/probe-c-screen.md). Reject such folds.
+// looked exactly like a geometry bug. Reject such folds.
 function conflicts(creases, m) {
     const lm = lineOf(m.P, m.Q);
     if (!lm) return false;
