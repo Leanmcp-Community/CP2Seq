@@ -1,0 +1,87 @@
+{
+  "status": "SOLVED",
+  "algorithm": "bfs",
+  "queries": 70,
+  "expanded": 9,
+  "generated": 51,
+  "visited": 24,
+  "peak_frontier": 14,
+  "max_depth_reached": 3,
+  "elapsed_seconds": 0.006266582990065217,
+  "replay_verified": true,
+  "steps": 3,
+  "actions": [
+    {
+      "axis": [
+        0.7071070920780506,
+        0.7071064702949078,
+        0.707106470318478
+      ],
+      "moving_faces": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.9238837572746077,
+        0.38267323272493725,
+        0.38267177014177367
+      ],
+      "moving_faces": [
+        1,
+        5
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        4,
+        9
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.14142251531315195,
+        -0.989949328078211,
+        -0.19798997182195083
+      ],
+      "moving_faces": [
+        1,
+        2,
+        3
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        6,
+        8,
+        10
+      ],
+      "angle_degrees": 180
+    }
+  ],
+  "cp": "/Users/ddod/LEANMCP/ROBOTICS/FoldOrigami/DHEERAJ_WORKSPACE/data/pureland/seq/yacht/step_05.fold",
+  "target": "/Users/ddod/LEANMCP/ROBOTICS/FoldOrigami/DHEERAJ_WORKSPACE/data/pureland/seq/yacht/step_05.fold",
+  "cp_sha256": "5b7bb99d6f0f6cfa089667e679e923ca598d933147b66b4a6ca1c1dce2c339a8",
+  "target_sha256": "5b7bb99d6f0f6cfa089667e679e923ca598d933147b66b4a6ca1c1dce2c339a8",
+  "limits": {
+    "max_depth": 100,
+    "max_queries": 10000000,
+    "max_states": 200000,
+    "seconds": 1800.0
+  },
+  "tolerance": 0.004,
+  "convention": "pureland",
+  "model_version": 1,
+  "model": "exposed same-side 180-degree flaps on final CP mesh",
+  "physical_validation": "restricted geometric model; no independent physics validation",
+  "target_layer_constraints": 30,
+  "target_geometry_resolved": true
+}

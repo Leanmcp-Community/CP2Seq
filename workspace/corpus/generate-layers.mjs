@@ -36,8 +36,6 @@ import { fileURLToPath } from "url";
 import { initSheet, foldLayers, currentPolys, paperArea, layerCount }
     from "./fold-engine-layers.mjs";
 import { planarize, sequenceFile } from "./planarize.mjs";
-import { solveLayers } from "./solve-layers.mjs";
-import { tolerantTarget } from "../../DHEERAJ_WORKSPACE/baseline/tolerant.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const arg = (k, d) => {
@@ -209,7 +207,7 @@ function canonical(fold) {
     return ((h1 >>> 0).toString(16).padStart(8, "0")) + ((h2 >>> 0).toString(16).padStart(8, "0"));
 }
 
-function exportBatch(dir, pPartial, exportSteps, verify, verifyBudget) {
+function exportBatch(dir, pPartial, exportSteps) {
     // Wipe first, as generate.mjs does. Writing into a surviving directory leaves whatever the
     // previous layout produced sitting beside the new files -- the steps/ directories from before
     // steps.fold existed did exactly that, and a stale artefact that looks generated is worse
@@ -246,18 +244,6 @@ function exportBatch(dir, pPartial, exportSteps, verify, verifyBudget) {
         if (exportSteps)
             fs.writeFileSync(path.join(sdir, "steps.fold"),
                              JSON.stringify(sequenceFile(s.pl.fold, s.states, { id })));
-        let verdict;
-        if (verify) {
-            const t0 = Date.now();
-            let v;
-            // tolerant target: see the note in test-solve-layers.mjs -- an exact lookup turns a
-            // dyadic coordinate sitting on a 1e-6 rounding tie into a false EXHAUSTED, which in
-            // this field would be a PROOF OF UNFOLDABILITY written into the corpus metadata.
-            try { v = solveLayers(s.pl.fold, { maxQueries: verifyBudget, maxDepth: s.seq.length,
-                                               target: tolerantTarget(s.pl.fold) }); }
-            catch (e) { v = { status: "ERROR", queries: 0, depth: 0, err: e.message }; }
-            verdict = { status: v.status, queries: v.queries, depth: v.depth, ms: Date.now() - t0 };
-        }
         const meta = { id, tier: "some-layers", seed, steps: s.seq.length,
                        p_partial_asked: pPartial, partial_used: s.partialUsed,
                        cp_hash: hash,
@@ -267,18 +253,7 @@ function exportBatch(dir, pPartial, exportSteps, verify, verifyBudget) {
                                   creases: (s.pl.stats.counts.M || 0) + (s.pl.stats.counts.V || 0),
                                   branching: s.branching },
                        planarize: s.pl.stats,
-                       // The round trip, when --verify is on. Absent rather than null when it is
-                       // off: a null field reads as "verified, nothing found", which is the one
-                       // thing it must never be mistaken for.
-                       //
-                       // /!\ THIS HAS A DEPTH CEILING, AND IT IS LOW. Measured on the gate: 4-fold
-                       // samples solve at a median of ~6k queries, 6-fold at ~705k with half
-                       // unsolved inside a million. So beyond about five folds most samples come
-                       // back TIMEOUT, and a TIMEOUT is a statement about the budget, not about
-                       // the sample. It is recorded as such and the sample is still exported --
-                       // dropping unverified samples would quietly bias the corpus toward the
-                       // easy end, which is the opposite of what a difficulty axis is for.
-                       pure_search: verdict };
+                       };
         fs.writeFileSync(path.join(sdir, "meta.json"), JSON.stringify(meta, null, 1));
         manifest.push(meta);
         made++;
@@ -295,18 +270,13 @@ function exportBatch(dir, pPartial, exportSteps, verify, verifyBudget) {
     const folds = manifest.reduce((a, m) => a + m.steps, 0);
     console.log(`\npartial folds realised: ${(100 * manifest.reduce((a, m) => a + m.partial_used, 0) / folds).toFixed(1)}%`);
     console.log(`paper conserved: ${conserved}   M/V conflicts: ${conflicts}`);
-    if (verify) {
-        const t = {};
-        for (const m of manifest) t[m.pure_search.status] = (t[m.pure_search.status] || 0) + 1;
-        console.log(`round trip: ` + Object.entries(t).map(([k, v]) => `${k} ${v}`).join("  "));
-    }
     if (Object.keys(rejects).length)
         console.log(`rejected: ${Object.entries(rejects).map(([k, v]) => `${k} x${v}`).join(", ")}`);
     console.log(`\n-> ${path.relative(process.cwd(), path.join(dir, "manifest.json"))}`);
 }
 
 // The driver is skipped on import, so the sampler above can be reused as a library -- the
-// round-trip gate (test-solve-layers.mjs) folds with exactly the sampler the corpus uses,
+// round-trip gate (verify-replay.mjs) folds with exactly the sampler the corpus uses,
 // rather than with a second copy of it that could drift out of step.
 // basename, not endsWith: `test-generate-layers.mjs` ends with `generate-layers.mjs` too, so an endsWith test
 // makes importing the test run this driver, which then reads an argument as a filename.
@@ -316,8 +286,7 @@ const OUT_DIR = (() => { const i = process.argv.indexOf("--out"); return i < 0 ?
 if (IS_MAIN && OUT_DIR) {
     // dataset mode: one directory per sample, the same layout generate.mjs writes
     exportBatch(path.isAbsolute(OUT_DIR) ? OUT_DIR : path.join(HERE, OUT_DIR),
-                arg("partial", 0.5), process.argv.includes("--export-steps"),
-                process.argv.includes("--verify"), arg("verify-budget", 200000));
+                arg("partial", 0.5), process.argv.includes("--export-steps"));
 } else if (IS_MAIN) {
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(OUT, { recursive: true });

@@ -304,7 +304,6 @@ export async function runEpisode({ sampleDir, model, feedback = "text", maxSteps
     return {
         sample: path.basename(sampleDir), dir: sampleDir, tier,
         folds_recorded: meta.steps ?? meta.metrics?.steps,
-        solver_queries: meta.pure_search?.queries ?? null,
         accepted, stop, tool_calls: toolCalls, illegal_folds: illegal,
         folds_made: made.length ? trace.filter(t => t.result?.ok).length : 0,
         creases_built: creaseGeometry(built).length,

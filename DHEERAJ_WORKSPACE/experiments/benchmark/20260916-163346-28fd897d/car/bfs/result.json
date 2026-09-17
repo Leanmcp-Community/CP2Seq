@@ -1,0 +1,194 @@
+{
+  "status": "SOLVED",
+  "algorithm": "bfs",
+  "queries": 2143729,
+  "expanded": 95826,
+  "generated": 1255512,
+  "visited": 264382,
+  "peak_frontier": 168556,
+  "max_depth_reached": 8,
+  "elapsed_seconds": 248.21982095799467,
+  "replay_verified": true,
+  "steps": 8,
+  "actions": [
+    {
+      "axis": [
+        0.7071067811865476,
+        -0.7071067811865476,
+        -0.4419417382415922
+      ],
+      "moving_faces": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        3
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        5.921189464667499e-16,
+        1.0,
+        0.5000000000000002
+      ],
+      "moving_faces": [
+        1,
+        2,
+        4,
+        6,
+        8,
+        10
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        12,
+        14,
+        16,
+        18
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        1.1842378929334993e-15,
+        1.0,
+        0.5000000000000004
+      ],
+      "moving_faces": [
+        0,
+        3,
+        5,
+        7,
+        9
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        12,
+        14,
+        16,
+        18
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        1.0,
+        -2.2204460492503096e-16,
+        0.37499999999999967
+      ],
+      "moving_faces": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        4,
+        15
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        1.0,
+        1.3322676295501831e-15,
+        0.7500000000000016
+      ],
+      "moving_faces": [
+        0,
+        4,
+        6,
+        7
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        8,
+        19
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.8944271909999147,
+        0.4472135954999603,
+        1.1180339887498965
+      ],
+      "moving_faces": [
+        4
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        9
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.8944271909999197,
+        -0.4472135954999503,
+        0.6708203932499541
+      ],
+      "moving_faces": [
+        7
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        20
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        1.0,
+        2.5757174171302906e-14,
+        1.000000000000027
+      ],
+      "moving_faces": [
+        0,
+        2,
+        4,
+        5,
+        6,
+        7
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        6,
+        17
+      ],
+      "angle_degrees": 180
+    }
+  ],
+  "cp": "/Users/ddod/LEANMCP/ROBOTICS/FoldOrigami/DHEERAJ_WORKSPACE/data/pureland/seq/car/step_13.fold",
+  "target": "/Users/ddod/LEANMCP/ROBOTICS/FoldOrigami/DHEERAJ_WORKSPACE/data/pureland/seq/car/step_13.fold",
+  "cp_sha256": "8613f94a91a1719074db6faab429e6af9913e3f1334c7983d6937d176f780465",
+  "target_sha256": "8613f94a91a1719074db6faab429e6af9913e3f1334c7983d6937d176f780465",
+  "limits": {
+    "max_depth": 1000,
+    "max_queries": 100000000,
+    "max_states": 1000000,
+    "seconds": 21600.0
+  },
+  "tolerance": 0.004,
+  "convention": "pureland",
+  "model_version": 1,
+  "model": "exposed same-side 180-degree flaps on final CP mesh",
+  "physical_validation": "restricted geometric model; no independent physics validation",
+  "target_layer_constraints": 100,
+  "target_geometry_resolved": true
+}
