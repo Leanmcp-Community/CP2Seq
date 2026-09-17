@@ -2,15 +2,18 @@
 import argparse
 import json
 import os
+import mimetypes
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, unquote, urlsplit
+from trace_store import list_traces, trace_index, artifact_path
 
 VIEWER = Path(__file__).resolve().parent
 REPO = VIEWER.parent.parent
 DEFAULT_EXPORTS = VIEWER.parent / "exports"
 DEFAULT_EXPERIMENTS = VIEWER.parent / "experiments"
 DEFAULT_CORPUS = REPO / "workspace" / "corpus" / "out" / "release"
+DEFAULT_TRACES = VIEWER.parent / "EXPERIMENT_SETUP" / "runs"
 MAX_RUNS = 500
 MAX_SCAN_ENTRIES = 10000
 MAX_SCAN_DEPTH = 8
@@ -230,6 +233,22 @@ class Handler(SimpleHTTPRequestHandler):
     def do_GET(self):
         request = urlsplit(self.path)
         try:
+            trace_root = getattr(self.server, "traces", DEFAULT_TRACES)
+            if request.path == "/api/traces":
+                return self.json_response(200, list_traces(trace_root))
+            if request.path in ("/api/trace", "/api/trace-file"):
+                params = parse_qs(request.query)
+                run_id = params.get("run", [""])[0]
+                if request.path == "/api/trace":
+                    return self.json_response(200, trace_index(trace_root, run_id))
+                path = artifact_path(trace_root, run_id, params.get("path", [""])[0])
+                raw = path.read_bytes()
+                self.send_response(200)
+                self.send_header("Content-Type", mimetypes.guess_type(path.name)[0] or "text/plain")
+                self.send_header("Content-Length", str(len(raw)))
+                self.end_headers()
+                self.wfile.write(raw)
+                return
             if request.path == "/api/runs":
                 return self.json_response(200, catalog_roots(self.server.roots))
             if request.path == "/api/run":
@@ -249,6 +268,8 @@ class Handler(SimpleHTTPRequestHandler):
             target = unquote(request.path).lstrip("/") or "index.html"
             if target in ("corpus", "corpus/"):
                 target, self.path = "corpus.html", "/corpus.html"
+            if target in ("traces", "traces/"):
+                target, self.path = "traces.html", "/traces.html"
             path = confined(VIEWER, target)
             if not path.is_file() or path.suffix not in (".html", ".js", ".mjs", ".css"):
                 return self.send_error(404)
@@ -266,13 +287,17 @@ def main():
                         help="Browse just this folder instead of experiments and legacy exports")
     parser.add_argument("--corpus", type=Path, default=DEFAULT_CORPUS,
                         help="Dataset release folder shown under /corpus (read-only)")
+    parser.add_argument("--traces", type=Path, default=DEFAULT_TRACES,
+                        help="Tinker runs folder shown under /traces (read-only)")
     args = parser.parse_args()
     server = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)
     server.roots = ({"custom": args.exports.resolve()} if args.exports else {
         "experiments": DEFAULT_EXPERIMENTS.resolve(), "exports": DEFAULT_EXPORTS.resolve()})
     server.corpus = args.corpus.resolve()
+    server.traces = args.traces.resolve()
     print(f"Origami viewer: http://127.0.0.1:{args.port}/", flush=True)
     print(f"Dataset browser: http://127.0.0.1:{args.port}/corpus", flush=True)
+    print(f"Model traces: http://127.0.0.1:{args.port}/traces", flush=True)
     print(f"Browsing runs in: {', '.join(map(str, server.roots.values()))}", flush=True)
     print(f"Dataset samples in: {server.corpus}", flush=True)
     try:

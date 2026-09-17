@@ -1,2 +1,3 @@
 runs/
 profiles.local.json
+__pycache__/

@@ -147,3 +147,21 @@ always saves its full sequence under a unique experiment directory. Optional
 traces only control whether you can inspect explored branches. The server lists
 a run after its artifacts have been written. Select Solution path to watch the
 complete saved sequence, including when exploration recording was capped.
+# PNG capture and X-ray
+
+For model conversations, open **http://127.0.0.1:8000/traces** after starting
+`server.py`. Select a run, example and turn to inspect inputs/images, Qwen-emitted
+thinking, outputs, tool results, timing and exact token records. The page polls
+active runs every five seconds. The default trace root is
+`DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/runs`; override it with `--traces <folder>`.
+
+Both playback pages have **Capture PNG views** and **X-ray** buttons. Pause at a
+completed step, capture, and click a preview to download its PNG. Capture includes
+top and two oblique views; X-ray is a top projection where overlapping layers
+darken the image. The dataset page also includes the CP. If the slider is between
+steps, capture uses the preceding completed step.
+
+`window.captureFoldStep(step)` returns PNG data URLs for a completed step without
+moving playback. `capture.js` is shared with the Python/Tinker experiment bridge.
+See [the folding pilot guide](../EXPERIMENT_SETUP/TINKER_FOLD_USAGE.md) for local
+capture commands, image size options, generated-sequence playback, and inference.

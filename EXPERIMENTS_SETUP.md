@@ -2,6 +2,16 @@
 
 2026-09-14, revised 2026-09-17.
 
+**Runnable two-example pilot:**
+[Tinker folding loop](DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/TINKER_FOLD_USAGE.md)
+uses `Qwen/Qwen3.5-9B` on `all-layers/easy-0001` and `easy-0002`, with native
+add/remove/backtrack/image tools, CP and final-state images, and recorded traces.
+The prompt lives in
+[fold_prompt.md](DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/fold_prompt.md).
+Runtime validation and inference are pending user execution. This pilot reports
+strict terminal matching; the symmetry-equivalent ACCEPT criterion below remains
+a broader requirement, not an implemented claim of this pilot.
+
 **This file owns how the experiment runs**: the loop, the tools, the conditions, the metrics,
 and the protocol that has to be fixed before the first run. It is the design doc the code is
 written against.

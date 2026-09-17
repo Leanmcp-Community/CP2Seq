@@ -1,8 +1,8 @@
 // Reuse the corpus engine directly; no search, Python bridge, or reference-action hints.
-import { applyFold } from '../../../workspace/corpus/fold-engine.mjs';
-import { ID, boundaryLoop } from '../../../workspace/corpus/geom.mjs';
-import { planarize, sequenceFile } from '../../../workspace/corpus/planarize.mjs';
-import { creaseGeometry, pairsUp, TOL } from '../../../workspace/corpus/crease-compare.mjs';
+import { applyFold } from '../../workspace/corpus/fold-engine.mjs';
+import { ID, boundaryLoop } from '../../workspace/corpus/geom.mjs';
+import { planarize, sequenceFile } from '../../workspace/corpus/planarize.mjs';
+import { creaseGeometry, pairsUp, TOL } from '../../workspace/corpus/crease-compare.mjs';
 
 export const SAMPLE_IDS = ['easy-0194', 'easy-0016', 'easy-0052', 'easy-0058', 'easy-0061',
   'easy-0143', 'easy-0001', 'easy-0082', 'easy-0100', 'easy-0139'];

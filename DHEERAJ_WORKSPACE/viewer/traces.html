@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Origami · Model traces</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="traces.css">
+<body>
+<header><strong>Origami / Model traces</strong><nav><a href="/">Playback</a> · <a href="/corpus">Dataset</a> · <a href="/traces">Model traces</a></nav></header>
+<main>
+  <aside>
+    <h1>Model traces</h1>
+    <p>Inspect the input, images, model-emitted thinking, output, and tools for each turn.</p>
+    <button id="refresh">Refresh runs</button>
+    <label><input id="live" type="checkbox" checked> Refresh every 5 seconds</label>
+    <label>Run<select id="trace-run"></select></label>
+    <label>Example<select id="trace-sample"></select></label>
+    <label>Turn<select id="trace-turn"></select></label>
+    <div class="controls"><button id="prev-turn">← Previous</button><button id="next-turn">Next →</button></div>
+    <label><input id="follow" type="checkbox" checked> Follow newest turn</label>
+    <p id="trace-status" role="status"></p>
+    <p id="trace-error" role="alert" hidden></p>
+    <div id="trace-links"></div>
+  </aside>
+  <section id="trace-content" aria-label="Selected model turn"><p>Select a saved run.</p></section>
+</main>
+<script type="module" src="traces.js"></script>
+</body></html>

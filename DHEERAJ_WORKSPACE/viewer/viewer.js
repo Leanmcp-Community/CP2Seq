@@ -1,4 +1,5 @@
 import * as T from 'three';
+import { captureViews, mountCaptureControls } from './capture.js';
 import { OrbitControls } from './vendor/OrbitControls.js';
 const $ = id => document.getElementById(id);
 const scene = new T.Scene(); scene.background = new T.Color('#f4f3ee');
@@ -110,6 +111,16 @@ async function refreshRuns(reload = true) {
     if (token === refreshId) $('refresh').disabled = false;
   }
 }
+window.captureFoldStep = (step = Math.floor(position)) => {
+  pause();
+  if (!Number.isInteger(step) || step < 0 || step >= entries.length) throw Error('Select a valid playback step first');
+  const state = sample(entries[step]).to;
+  if (!state?.polygons?.length) throw Error('No geometry at this step');
+  const ranks = new Map(state.stack.map((f, i) => [f, i]));
+  return captureViews(state.polygons.map((poly, i) => ({par: 0,
+    pts: poly.map(p => [p[0], p[1], (p[2] || 0) + (ranks.get(i) || 0) * size * .0006])})), `Step ${step}`);
+};
+mountCaptureControls(() => window.captureFoldStep());
 $('runs').onchange = () => loadRun($('runs').value);
 $('refresh').onclick = () => refreshRuns();
 refreshRuns();

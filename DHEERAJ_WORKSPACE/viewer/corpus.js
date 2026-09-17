@@ -9,6 +9,7 @@
 import * as T from 'three';
 import { OrbitControls } from './vendor/OrbitControls.js';
 import { ANGLE_DEG, replay, swing, verify, box2 } from './fold-replay.mjs';
+import { captureViews, captureCP, layersToPieces, mountCaptureControls } from './capture.js';
 
 const $ = id => document.getElementById(id);
 
@@ -330,4 +331,11 @@ renderer.setAnimationLoop(now => {
   orbit.update();
   renderer.render(scene, camera);
 });
+// Completed sequence states, including step zero; capturing does not move playback.
+window.captureFoldStep = (step = Math.floor(position)) => {
+  pause();
+  if (!model || !Number.isInteger(step) || step < 0 || step >= model.states.length) throw Error('Select a valid fold step first');
+  return {cp: captureCP(sample.cp), ...captureViews(layersToPieces(model.states[step]), `Step ${step}`)};
+};
+mountCaptureControls(() => window.captureFoldStep());
 loadIndex();
