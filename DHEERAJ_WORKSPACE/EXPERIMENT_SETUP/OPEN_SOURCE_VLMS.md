@@ -3,6 +3,14 @@
 Checked 2026-09-17 against the primary sources linked below. This is a practical shortlist,
 not an exhaustive catalog or a claim that any model already works on origami.
 The [pilot plan](PLAN.md) owns evaluation and viewer requirements.
+See [API_HOSTING.md](API_HOSTING.md) for each model's providers, API endpoints,
+and GCP/Modal self-hosting options.
+
+## Additional proprietary API comparator
+
+**Gemini 2.5 Flash** (`gemini-2.5-flash`) is included for API testing alongside the
+open models. It accepts image and text input through Google's API; its weights are
+not available for self-hosting. [Official model page](https://ai.google.dev/gemini-api/docs/models/gemini-2.5-flash)
 
 “Permissively licensed” below means the checkpoint is published under Apache-2.0 or MIT.
 That does not establish that every training dataset or the entire training process is open.

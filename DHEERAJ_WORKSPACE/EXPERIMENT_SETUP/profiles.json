@@ -1,0 +1,69 @@
+{
+  "gemini-flash": {
+    "provider": "google", "model": "gemini-2.5-flash",
+    "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+    "key_env": "GEMINI_API_KEY", "availability": "managed API",
+    "extra_body": {"extra_body": {"google": {"thinking_config": {"thinking_budget": 1024, "include_thoughts": true}}}}
+  },
+  "together-qwen35": {
+    "provider": "together", "model": "Qwen/Qwen3.5-9B",
+    "base_url": "https://api.together.xyz/v1", "key_env": "TOGETHER_API_KEY",
+    "availability": "serverless vision API"
+  },
+  "deepinfra-qwen35": {
+    "provider": "deepinfra", "model": "Qwen/Qwen3.5-9B",
+    "base_url": "https://api.deepinfra.com/v1/openai", "key_env": "DEEPINFRA_TOKEN",
+    "availability": "public multimodal API"
+  },
+  "deepinfra-gemma4": {
+    "provider": "deepinfra", "model": "google/gemma-4-31B-it",
+    "base_url": "https://api.deepinfra.com/v1/openai", "key_env": "DEEPINFRA_TOKEN",
+    "availability": "public multimodal API"
+  },
+  "fireworks-qwen3vl": {
+    "provider": "fireworks", "checkpoint": "Qwen/Qwen3-VL-8B-Instruct",
+    "model_env": "FIREWORKS_QWEN3VL_DEPLOYMENT",
+    "base_url": "https://api.fireworks.ai/inference/v1", "key_env": "FIREWORKS_API_KEY",
+    "availability": "create dedicated deployment first"
+  },
+  "fireworks-qwen35": {
+    "provider": "fireworks", "checkpoint": "Qwen/Qwen3.5-9B",
+    "model_env": "FIREWORKS_QWEN35_DEPLOYMENT",
+    "base_url": "https://api.fireworks.ai/inference/v1", "key_env": "FIREWORKS_API_KEY",
+    "availability": "create dedicated deployment first"
+  },
+  "fireworks-gemma4": {
+    "provider": "fireworks", "checkpoint": "google/gemma-4-31B-it",
+    "model_env": "FIREWORKS_GEMMA4_DEPLOYMENT",
+    "base_url": "https://api.fireworks.ai/inference/v1", "key_env": "FIREWORKS_API_KEY",
+    "availability": "create dedicated deployment first"
+  },
+  "selfhost-qwen3vl": {
+    "provider": "selfhost", "model": "Qwen/Qwen3-VL-8B-Instruct",
+    "base_url_env": "VLM_BASE_URL", "key_env": "VLM_API_KEY", "availability": "GCP or Modal deployment required"
+  },
+  "selfhost-qwen35": {
+    "provider": "selfhost", "model": "Qwen/Qwen3.5-9B",
+    "base_url_env": "VLM_BASE_URL", "key_env": "VLM_API_KEY", "availability": "GCP or Modal deployment required"
+  },
+  "selfhost-internvl": {
+    "provider": "selfhost", "model": "OpenGVLab/InternVL3_5-8B",
+    "base_url_env": "VLM_BASE_URL", "key_env": "VLM_API_KEY", "availability": "GCP or Modal deployment required"
+  },
+  "selfhost-gemma4": {
+    "provider": "selfhost", "model": "google/gemma-4-31B-it",
+    "base_url_env": "VLM_BASE_URL", "key_env": "VLM_API_KEY", "availability": "GCP or Modal deployment required"
+  },
+  "selfhost-phi4": {
+    "provider": "selfhost", "model": "microsoft/Phi-4-multimodal-instruct",
+    "base_url_env": "VLM_BASE_URL", "key_env": "VLM_API_KEY", "availability": "GCP or Modal deployment required"
+  },
+  "selfhost-smolvlm": {
+    "provider": "selfhost", "model": "HuggingFaceTB/SmolVLM2-2.2B-Instruct",
+    "base_url_env": "VLM_BASE_URL", "key_env": "VLM_API_KEY", "availability": "GCP or Modal deployment required"
+  },
+  "selfhost-gemma3": {
+    "provider": "selfhost", "model": "google/gemma-3-4b-it",
+    "base_url_env": "VLM_BASE_URL", "key_env": "VLM_API_KEY", "availability": "GCP or Modal deployment plus Gemma terms required"
+  }
+}
