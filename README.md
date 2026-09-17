@@ -5,6 +5,14 @@ AI 折纸研究笔记。原始想法存放处。
 - `papers.md` — 论文链接 + 阅读状态
 - `notes/` — 每篇论文一个笔记文件
 
+## Python CP → sequence baseline
+
+[`DHEERAJ_WORKSPACE/baseline_python/`](DHEERAJ_WORKSPACE/baseline_python/README.md)
+implements BFS and DFS from a CP and one target FOLD snapshot, with Pureland
+batch evaluation, action/sequence export, replay checks, and regression tests.
+It uses only Python's standard library and includes a real Pureland smoke-test
+snapshot. See its README for commands and the folding model's restrictions.
+
 ## 技术路线的原始思路
 
 - Supervised learning —— 需要一套完整的数据样本去学习 Data
