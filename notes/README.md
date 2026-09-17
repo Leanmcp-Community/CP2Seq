@@ -4,7 +4,6 @@
 
 | 文件 | 只负责 | 语言 |
 | --- | --- | --- |
-| `../BASELINE_REPRODUCTION.md` | 跟谁比：已发表方法 + 自建搜索基线 | 英文 |
 | `../DATASET.md` | 数据从哪来 | 英文 |
 | `../EXPERIMENTS_SETUP.md` | 怎么跑：循环、工具、条件、指标、协议 | 英文 |
 | `plan/experiment-spec-checklist.md` | 要冻结哪些决定 + 每条状态 | 中文 |

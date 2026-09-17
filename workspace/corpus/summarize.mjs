@@ -3,7 +3,7 @@
 // WHY A SEPARATE FILE. A run is ~95 MB and is gitignored, because it rebuilds byte-identically
 // from its seed. But notes/facts.json has to be derivable on a fresh clone, so the numbers the
 // docs cite cannot live inside an artefact nobody has. This writes the small summary that does
-// get committed -- the same role workspace/probe-c/stage2-results.json plays for Probe C.
+// get committed.
 //
 //   node summarize.mjs [runDir]      -> workspace/corpus/corpus-summary.json
 import fs from "fs";

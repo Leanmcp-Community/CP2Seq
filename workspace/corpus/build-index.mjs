@@ -6,8 +6,8 @@
 // to open, impossible to publish, and re-generated in full whenever one sample changes.
 //
 // So this emits metadata only -- a few hundred KB -- and the browser fetches a sample's cp.fold
-// and steps.fold when someone actually opens it. Everything the filters need (tier, split, fold
-// count, verdict, crease and layer counts) is here; nothing that draws paper is.
+// and steps.fold when someone actually opens it. Everything the filters need (tier, fold
+// count, crease and layer counts) is here; nothing that draws paper is.
 //
 // /!\ THE DIFFICULTY BAND IS COMPUTED HERE, not stored per sample, and it uses the project's own
 // step cut points from DATASET.md: <=10 easy, 11-13 mid, >13 hard. Recomputing it in the viewer
@@ -32,17 +32,14 @@ const samples = [];
 for (const b of batches) {
     const man = JSON.parse(fs.readFileSync(path.join(ROOT, b, "manifest.json"), "utf8"));
     const tier = b.startsWith("all") ? "all-layers" : "some-layers";
-    const split = b.includes("verified") ? "verified" : "generated";
     for (const s of man.samples ?? []) {
         const folds = s.metrics?.steps ?? s.steps;
-        const ps = s.pure_search ?? null;
         samples.push({
             id: s.id, batch: b, dir: `${b}/samples/${s.id}`,
-            tier, split, folds, band: band(folds),
+            tier, folds, band: band(folds),
             creases: s.metrics?.crease_edges ?? s.metrics?.creases ?? null,
             layers: s.metrics?.layers_final ?? s.metrics?.layers ?? null,
             partial: s.partial_used ?? 0,
-            verdict: ps?.status ?? null,
             queries: ps?.queries ?? null,
             shorter: ps && ps.status === "SOLVED" && ps.depth < folds ? ps.depth : null,
         });

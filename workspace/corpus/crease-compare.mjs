@@ -4,7 +4,7 @@
 // patterns are the same paper". Two definitions is how a corpus and its checker end up
 // disagreeing about a sample that is fine.
 //
-import { lineOf } from "../probe-c/stage2.mjs";
+import { lineOf } from "./geom.mjs";
 
 // A CP's creases as GEOMETRY, not as an edge list.
 //
@@ -48,7 +48,7 @@ function creaseGeometry(fold) {
         // arrived first" gives opposite answers in two crease patterns that merely list an
         // edge's endpoints in opposite order. The same crease then projects to [0.270, 0.668]
         // in one and [-0.668, -0.270] in the other, and the comparison reports it as one
-        // missing plus one extra. stage2.mjs carries a warning about exactly this trap for
+        // missing plus one extra. The same trap applies to
         // edges within ONE pattern; across two patterns a per-bucket direction is not enough.
         // n is sign-canonical, so rotating it is deterministic everywhere.
         const dir = [-l.n[1], l.n[0]];

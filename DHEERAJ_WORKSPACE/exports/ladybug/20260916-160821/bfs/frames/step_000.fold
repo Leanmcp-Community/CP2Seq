@@ -1,0 +1,116 @@
+{
+  "file_spec": 1.2,
+  "file_creator": "baseline_python",
+  "frame_classes": [
+    "foldedForm"
+  ],
+  "frame_attributes": [
+    "2D"
+  ],
+  "vertices_coords": [
+    [
+      0.0,
+      1.0
+    ],
+    [
+      1.0,
+      1.0
+    ],
+    [
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.5,
+      0.5
+    ]
+  ],
+  "edges_vertices": [
+    [
+      0,
+      3
+    ],
+    [
+      3,
+      4
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      2,
+      4
+    ],
+    [
+      1,
+      4
+    ],
+    [
+      1,
+      2
+    ]
+  ],
+  "faces_vertices": [
+    [
+      0,
+      4,
+      3
+    ],
+    [
+      2,
+      4,
+      1
+    ],
+    [
+      4,
+      2,
+      3
+    ],
+    [
+      4,
+      0,
+      1
+    ]
+  ],
+  "edges_assignment": [
+    "B",
+    "F",
+    "B",
+    "F",
+    "B",
+    "F",
+    "F",
+    "B"
+  ],
+  "edges_foldAngle": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "faceOrders": [],
+  "baseline_creased_edges": [],
+  "baseline_stack_bottom_to_top": [
+    0,
+    1,
+    2,
+    3
+  ]
+}

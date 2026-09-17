@@ -51,7 +51,7 @@
 import fs from "fs";
 import { foldLayers, currentPolys, paperArea, layerCount } from "../corpus/fold-engine-layers.mjs";
 import { planarize, foldedState } from "../corpus/planarize.mjs";
-import { ID, inv, lineOf } from "../probe-c/stage2.mjs";
+import { ID, inv, lineOf } from "../corpus/geom.mjs";
 import { Canvas, fitter } from "./raster.mjs";
 
 const SQUARE = [[0, 0], [1, 0], [1, 1], [0, 1]];
