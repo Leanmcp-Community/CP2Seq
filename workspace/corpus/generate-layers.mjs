@@ -37,7 +37,7 @@ import { initSheet, foldLayers, currentPolys, paperArea, layerCount }
     from "./fold-engine-layers.mjs";
 import { planarize, sequenceFile } from "./planarize.mjs";
 import { solveLayers } from "./solve-layers.mjs";
-import { tolerantTarget } from "../../DHEERAJ_WORKSPACE/baseline/tolerant.mjs";
+import { tolerantTarget } from "../tools/tolerant.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const arg = (k, d) => {

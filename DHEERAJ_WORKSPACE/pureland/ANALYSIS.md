@@ -8,8 +8,10 @@ the ground-truth benchmark from **FoldingAgent** (Moriya, Raab, Vinker, Dekel �
 curl -L "https://huggingface.co/datasets/mayaweiz/PurelandFold/resolve/main/data/train-00000-of-00001.parquet?download=true" \
   -o DHEERAJ_WORKSPACE/data/pureland/train.parquet
 python3 DHEERAJ_WORKSPACE/pureland/extract.py
-node DHEERAJ_WORKSPACE/baseline/pureland.mjs
 ```
+
+> The third step used to be `node DHEERAJ_WORKSPACE/baseline/pureland.mjs`. The baseline runner
+> has been removed; the numbers below are kept as a record of that run, not as a live command.
 
 ---
 
@@ -122,7 +124,7 @@ exactly like *proven not foldable* but actually meant *the coordinates were roun
 | exact 1e-6 key | 33 | 0.476 |
 | **clustered at 4e-3** | **19** | **1.414** ← the first fold |
 
-**The fix** is `baseline/tolerant.mjs`. I first tried repairing the data — re-fit each line by
+**The fix** is `workspace/tools/tolerant.mjs`. I first tried repairing the data — re-fit each line by
 total least squares, move each vertex to the least-squares meet of the lines through it. That
 leaves a residual around 1e-6, because a shared vertex is a compromise between several lines,
 which is precisely the scale `lkey` rounds at. Repairing the coordinates cannot beat the key.
@@ -138,8 +140,7 @@ anchors still return 5,940 and 256,480 queries exactly, round trip still 36/36.
 
 ## 5. Results, after the fix
 
-`node DHEERAJ_WORKSPACE/baseline/pureland.mjs --budget=400000 --depth=24` (add `--exact` to
-reproduce the broken run):
+From the removed baseline runner at `--budget=400000 --depth=24`:
 
 | algo | solved | exhausted | timeout | median queries |
 | --- | --- | --- | --- | --- |

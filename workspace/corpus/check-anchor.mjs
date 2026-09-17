@@ -24,12 +24,12 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { solve } from "../probe-c/stage2.mjs";
-// The tolerant target is Dheeraj's (DHEERAJ_WORKSPACE/baseline/tolerant.mjs, PR #13). It is
+// The tolerant target is Dheeraj's (workspace/tools/tolerant.mjs, PR #13). It is
 // used rather than reimplemented, and rather than the vertex-snapping this script tried first:
 // his header records that re-fitting lines and snapping vertices leaves a residual around 1e-6,
 // which is exactly the scale lkey rounds at, so repairing the data cannot beat the key. The
 // lookup is what has to be tolerant.
-import { tolerantTarget } from "../../DHEERAJ_WORKSPACE/baseline/tolerant.mjs";
+import { tolerantTarget } from "../tools/tolerant.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const MODELS = path.join(HERE, "../purelandfold/models");

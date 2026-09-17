@@ -1,0 +1,815 @@
+{
+  "status": "SOLVED",
+  "algorithm": "dfs",
+  "queries": 186350,
+  "expanded": 51649,
+  "generated": 120289,
+  "visited": 51648,
+  "peak_frontier": 57,
+  "max_depth_reached": 56,
+  "elapsed_seconds": 14.280532249991666,
+  "replay_verified": true,
+  "steps": 43,
+  "actions": [
+    {
+      "axis": [
+        0.7071070920780506,
+        0.7071064702949078,
+        0.707106470318478
+      ],
+      "moving_faces": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.7071070920780503,
+        0.7071064702949079,
+        0.7071064703184777
+      ],
+      "moving_faces": [
+        0,
+        3
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.7071070920780502,
+        0.7071064702949083,
+        0.7071064703184773
+      ],
+      "moving_faces": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.70710709207805,
+        0.7071064702949084,
+        0.7071064703184763
+      ],
+      "moving_faces": [
+        0,
+        3
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.3826740451273309,
+        0.9238834207766072,
+        0.9238848834033195
+      ],
+      "moving_faces": [
+        1,
+        5
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        4,
+        9
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.7071070920780499,
+        0.7071064702949084,
+        0.7071064703184728
+      ],
+      "moving_faces": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.7071070920780499,
+        0.7071064702949085,
+        0.7071064703184685
+      ],
+      "moving_faces": [
+        0,
+        3
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.7071070920780498,
+        0.7071064702949086,
+        0.70710647031846
+      ],
+      "moving_faces": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.9238837572745991,
+        0.3826732327249575,
+        0.3826717701417573
+      ],
+      "moving_faces": [
+        1,
+        5
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        4,
+        9
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.7071070920780497,
+        0.7071064702949087,
+        0.7071064703184091
+      ],
+      "moving_faces": [
+        0,
+        3
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.7071070920780496,
+        0.7071064702949087,
+        0.7071064703183416
+      ],
+      "moving_faces": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.7071070920780496,
+        0.7071064702949087,
+        0.7071064703182066
+      ],
+      "moving_faces": [
+        0,
+        3
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.3826740451276276,
+        0.9238834207764843,
+        0.9238848834027391
+      ],
+      "moving_faces": [
+        1,
+        5
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        4,
+        9
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.38267404512792536,
+        0.923883420776361,
+        0.9238848834021568
+      ],
+      "moving_faces": [
+        0,
+        2,
+        3,
+        4
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        4,
+        9
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.7071070920780496,
+        0.7071064702949087,
+        0.7071064703163157
+      ],
+      "moving_faces": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.7071070920780497,
+        0.7071064702949087,
+        0.7071064703141549
+      ],
+      "moving_faces": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.38267404513208725,
+        0.9238834207746373,
+        0.9238848833939993
+      ],
+      "moving_faces": [
+        1,
+        5
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        4,
+        9
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.7071070920780499,
+        0.7071064702949085,
+        0.7071064703011896
+      ],
+      "moving_faces": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.1414225153033425,
+        -0.9899493280796123,
+        -0.1979899718134358
+      ],
+      "moving_faces": [
+        1,
+        2,
+        3
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        6,
+        8,
+        10
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.14142251527566937,
+        -0.9899493280835656,
+        -0.19798997181113456
+      ],
+      "moving_faces": [
+        0,
+        4,
+        5
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        6,
+        8,
+        10
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.14142251522032348,
+        -0.9899493280914722,
+        -0.19798997180653202
+      ],
+      "moving_faces": [
+        1,
+        2,
+        3
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        6,
+        8,
+        10
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.14142251510963147,
+        -0.9899493281072855,
+        -0.19798997179732714
+      ],
+      "moving_faces": [
+        0,
+        4,
+        5
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        6,
+        8,
+        10
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.7071070923310698,
+        0.7071064700418883,
+        0.7071064698664854
+      ],
+      "moving_faces": [
+        0,
+        3
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.707107092331079,
+        0.7071064700418792,
+        0.7071064693132901
+      ],
+      "moving_faces": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.7071070923310974,
+        0.7071064700418607,
+        0.7071064682068993
+      ],
+      "moving_faces": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.382674047738848,
+        0.9238834196949125,
+        0.9238848787822092
+      ],
+      "moving_faces": [
+        0,
+        2,
+        3,
+        4
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        4,
+        9
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.7071070923312074,
+        0.7071064700417508,
+        0.7071064615685546
+      ],
+      "moving_faces": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.7071070923313539,
+        0.7071064700416041,
+        0.7071064527174284
+      ],
+      "moving_faces": [
+        0,
+        3
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.7071070923316473,
+        0.7071064700413109,
+        0.7071064350151766
+      ],
+      "moving_faces": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.9238837413387738,
+        0.3826732711986424,
+        0.382671738449217
+      ],
+      "moving_faces": [
+        1,
+        5
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        4,
+        9
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.7071070923334072,
+        0.707106470039551,
+        0.7071063288016741
+      ],
+      "moving_faces": [
+        0,
+        3
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.7071070923357539,
+        0.7071064700372043,
+        0.707106187183696
+      ],
+      "moving_faces": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.7071070923404477,
+        0.7071064700325105,
+        0.7071059039478257
+      ],
+      "moving_faces": [
+        0,
+        3
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.38267466868251865,
+        0.9238831624987677,
+        0.9238836615103558
+      ],
+      "moving_faces": [
+        0,
+        2,
+        3,
+        4
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        4,
+        9
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.7071070923686102,
+        0.7071064700043479,
+        0.7071042045349849
+      ],
+      "moving_faces": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.7071070924061601,
+        0.7071064699667979,
+        0.70710193865755
+      ],
+      "moving_faces": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.3826790322985482,
+        0.923881355066248,
+        0.9238751072165758
+      ],
+      "moving_faces": [
+        1,
+        5
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        4,
+        9
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.7071070926314565,
+        0.7071064697415013,
+        0.7070883435454184
+      ],
+      "moving_faces": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.707107092931844,
+        0.7071064694411137,
+        0.7070702171358438
+      ],
+      "moving_faces": [
+        0,
+        3
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.3827139394356654,
+        0.923866895478799,
+        0.9238066742339365
+      ],
+      "moving_faces": [
+        0,
+        2,
+        3,
+        4
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        4,
+        9
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.7071070947339758,
+        0.7071064676389801,
+        0.7069614684361684
+      ],
+      "moving_faces": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        1,
+        11
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.9238176597165321,
+        0.3828327723639522,
+        0.3825421961633286
+      ],
+      "moving_faces": [
+        1,
+        5
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        4,
+        9
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.14145723412676886,
+        -0.9899443675849691,
+        -0.19777790250006255
+      ],
+      "moving_faces": [
+        1,
+        2,
+        3
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        6,
+        8,
+        10
+      ],
+      "angle_degrees": 180
+    }
+  ],
+  "cp": "/Users/ddod/LEANMCP/ROBOTICS/FoldOrigami/DHEERAJ_WORKSPACE/data/pureland/seq/yacht/step_05.fold",
+  "target": "/Users/ddod/LEANMCP/ROBOTICS/FoldOrigami/DHEERAJ_WORKSPACE/data/pureland/seq/yacht/step_05.fold",
+  "cp_sha256": "5b7bb99d6f0f6cfa089667e679e923ca598d933147b66b4a6ca1c1dce2c339a8",
+  "target_sha256": "5b7bb99d6f0f6cfa089667e679e923ca598d933147b66b4a6ca1c1dce2c339a8",
+  "limits": {
+    "max_depth": 100,
+    "max_queries": 10000000,
+    "max_states": 200000,
+    "seconds": 1800.0
+  },
+  "tolerance": 0.004,
+  "convention": "pureland",
+  "model_version": 1,
+  "model": "exposed same-side 180-degree flaps on final CP mesh",
+  "physical_validation": "restricted geometric model; no independent physics validation",
+  "target_layer_constraints": 30,
+  "target_geometry_resolved": true
+}

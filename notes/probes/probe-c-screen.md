@@ -31,7 +31,7 @@
 >
 > 所以全局改动**已回退**，这张表回到 92.3%<!--fact:probeC.provenNotPct-->。容差改成
 > **按语料 opt-in**：`solve(fold, { target })` 接一个外部构造的目标，只有低精度语料才传
-> （`DHEERAJ_WORKSPACE/baseline/tolerant.mjs`，PR #13）。
+> （`workspace/tools/tolerant.mjs`，PR #13）。
 > **精确匹配是这份语料的正确口径，不是历史包袱。**
 >
 > 📌 两条可复用的教训：

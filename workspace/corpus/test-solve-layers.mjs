@@ -25,7 +25,7 @@ import { solveLayers } from "./solve-layers.mjs";
 import { foldLayers } from "./fold-engine-layers.mjs";
 import { planarize } from "./planarize.mjs";
 import { boundaryLoop, ID } from "../probe-c/stage2.mjs";
-import { tolerantTarget } from "../../DHEERAJ_WORKSPACE/baseline/tolerant.mjs";
+import { tolerantTarget } from "../tools/tolerant.mjs";
 
 const arg = (k, d) => {
     const i = process.argv.indexOf(`--${k}`);

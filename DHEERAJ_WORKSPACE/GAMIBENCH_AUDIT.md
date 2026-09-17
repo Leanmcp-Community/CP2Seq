@@ -105,7 +105,7 @@ paper's IFSR number should check this first.
 ## 4. Verdict for our project
 
 **Bucket: metric definitions only. Not a data source.** This closes the open audit item in
-`BASELINE_REPRODUCTION.md` §5 and `DATASET.md` §3 / action item 3.
+`DATASET.md` §3 / action item 3.
 
 - ❌ **Cannot supply `(CP, final result)` pairs.** "Final result" here is a PNG from an arbitrary
   camera angle. Our terminal-state ground truth needs `.fold` with layer ordering (per `DATASET.md`,
@@ -133,9 +133,7 @@ paper's IFSR number should check this first.
 
 - `DATASET.md` §3: replace the TBD ground-truth/bucket rows with the table at the top of this file;
   mark bucket as **"metric ideas only — images, no geometry"**.
-- `DATASET.md` action item 3 and `BASELINE_REPRODUCTION.md` §5 item 1: tick, pointing here.
-- `BASELINE_REPRODUCTION.md` §3 GamiBench row: change **"TBD — audit format"** → **"Cite only —
-  image-only VQA benchmark, no reusable geometry"**.
+- `DATASET.md` action item 3: tick, pointing here.
 
 ---
 

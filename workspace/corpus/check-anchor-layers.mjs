@@ -34,7 +34,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { solveLayers } from "./solve-layers.mjs";
-import { tolerantTarget } from "../../DHEERAJ_WORKSPACE/baseline/tolerant.mjs";
+import { tolerantTarget } from "../tools/tolerant.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const MODELS = path.join(HERE, "../purelandfold/models");

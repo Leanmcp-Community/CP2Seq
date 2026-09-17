@@ -3,8 +3,7 @@
 2026-09-14 起草 · 2026-09-15 按 Phase 0 结果更新
 
 **这份文件只管一件事：哪些决定必须在跑实验前定死，以及每一条现在定了没有。**
-它不写怎么跑 —— 那是 `EXPERIMENTS_SETUP.md` 的事；不写跟谁比 —— 那是
-`BASELINE_REPRODUCTION.md` 的事；不写数据从哪来 —— 那是 `DATASET.md` 的事。
+它不写怎么跑 —— 那是 `EXPERIMENTS_SETUP.md` 的事；不写数据从哪来 —— 那是 `DATASET.md` 的事。
 
 > **文件分工**（每件事只有一个出处，改一处不必改两处）
 >
@@ -13,7 +12,6 @@
 > | `research-workflow.md` | 阶段划分、纪律、现在走到哪 |
 > | **本文件** | **必须冻结的决定 A–G + 每条的状态** |
 > | `EXPERIMENTS_SETUP.md`（英文） | 怎么跑：循环、工具、条件、指标、协议 |
-> | `BASELINE_REPRODUCTION.md`（英文） | 跟谁比：已发表方法 + 我们自建的搜索基线 |
 > | `DATASET.md`（英文） | 数据从哪来 |
 >
 > 根目录三份是给同事看的，只写英文；`notes/` 是我自己的工作笔记，只写中文。
@@ -217,9 +215,8 @@
 | 原内容 | 现在在哪 |
 | --- | --- |
 | 工具腰带、循环、消融臂、结果表 | `EXPERIMENTS_SETUP.md` §3–§6 |
-| BFS/DFS/Random 的复杂度与错误率分析 | `BASELINE_REPRODUCTION.md` §3 |
 | 论文贡献列表 | `EXPERIMENTS_SETUP.md` §9 |
-| Learn2Fold 当基线复现 | **已删除** —— 它解的是另一个问题，数据也从未公开（`BASELINE_REPRODUCTION.md`） |
+| Learn2Fold 当基线复现 | **已删除** —— 它解的是另一个问题，数据也从未公开 |
 
 ## 当前卡点
 

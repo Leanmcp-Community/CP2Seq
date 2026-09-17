@@ -29,7 +29,7 @@ import { solve } from "../probe-c/stage2.mjs";
 import { solveLayers } from "./solve-layers.mjs";
 import { build } from "./generate.mjs";
 import { sample } from "./generate-layers.mjs";
-import { tolerantTarget } from "../../DHEERAJ_WORKSPACE/baseline/tolerant.mjs";
+import { tolerantTarget } from "../tools/tolerant.mjs";
 
 // /!\ THE TARGET LOOKUP MUST BE TOLERANT, AND THE REASON IS NOT "the data is noisy".
 // Paper coordinates are DYADIC -- folding halves things, so intersections land on values like

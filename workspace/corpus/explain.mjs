@@ -34,7 +34,7 @@ import { solveLayers } from "./solve-layers.mjs";
 import { foldLayers, currentPolys } from "./fold-engine-layers.mjs";
 import { sample } from "./generate-layers.mjs";
 import { build } from "./generate.mjs";
-import { tolerantTarget } from "../../DHEERAJ_WORKSPACE/baseline/tolerant.mjs";
+import { tolerantTarget } from "../tools/tolerant.mjs";
 
 const argv = process.argv.slice(2);
 const str = (k, d) => { const i = argv.indexOf(`--${k}`); return i < 0 ? d : argv[i + 1]; };

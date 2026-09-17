@@ -29,9 +29,9 @@ import { fileURLToPath } from "url";
 import { foldRandom } from "./fold-engine.mjs";
 import { planarize } from "./planarize.mjs";
 import { solve } from "../probe-c/stage2.mjs";
-// Dheeraj's tolerant target (DHEERAJ_WORKSPACE/baseline/tolerant.mjs, PR #13). Imported, not
+// Dheeraj's tolerant target (workspace/tools/tolerant.mjs, PR #13). Imported, not
 // reimplemented. This file is what measures how far it gets on its own.
-const TOL = await import("../../DHEERAJ_WORKSPACE/baseline/tolerant.mjs")
+const TOL = await import("../tools/tolerant.mjs")
     .then(m => m.tolerantTarget).catch(() => null);
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));

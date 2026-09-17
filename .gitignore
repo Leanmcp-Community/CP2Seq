@@ -29,12 +29,8 @@ workspace/purelandfold/models/
 #  instead of inlining every sample, so it does not have to be regenerated or committed as a blob)
 workspace/corpus/inspector.html
 
-# Flat-Folder corpus (41MB, re-downloadable: see DHEERAJ_WORKSPACE/baseline/README.md)
+# Flat-Folder corpus (41MB, re-downloadable from the Flat-Folder repo's examples/)
 DHEERAJ_WORKSPACE/data/
-DHEERAJ_WORKSPACE/baseline/results.json
-DHEERAJ_WORKSPACE/baseline/mixed-run.txt
-DHEERAJ_WORKSPACE/baseline/pureland-results.json
-DHEERAJ_WORKSPACE/baseline/pureland-run.txt
 DHEERAJ_WORKSPACE/pureland/viewer.html
 DHEERAJ_WORKSPACE/pureland/viz-data.json
 DHEERAJ_WORKSPACE/pureland/dist/

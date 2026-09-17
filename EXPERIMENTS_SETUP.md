@@ -12,7 +12,6 @@ written against.
 > | --- | --- |
 > | **this file** | **how the experiment runs** |
 > | `DATASET.md` | where the data comes from |
-> | `BASELINE_REPRODUCTION.md` | who we compare against |
 > | `notes/plan/experiment-spec-checklist.md` | which decisions are frozen, and their status |
 > | `notes/plan/research-workflow.md` | phases, discipline, where we are |
 >
@@ -296,7 +295,7 @@ into a diagnosis instead of a dead end.
 
 ## 9. Contributions this is meant to produce
 
-- A reproducible **baseline ladder** on one CP set and one query definition (`BASELINE_REPRODUCTION.md`)
+- A reproducible **baseline ladder** on one CP set and one query definition
   — missing from the current literature comparison.
 - A tool-augmented VLM loop scored on **query efficiency and pruning/backtracking quality**, not
   raw success rate.

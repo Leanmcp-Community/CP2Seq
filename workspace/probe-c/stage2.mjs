@@ -295,7 +295,7 @@ function solve(fold, opts) {
     // its EXHAUSTED verdicts depend on exact matching -- loosening it here globally cost a real
     // verdict (`360_fung_I_Heart_Cat_v2_(shaped)` timed out instead of closing) and bought
     // nothing. So callers that need tolerance pass one in:
-    //   solve(fold, { target: tolerantTarget(fold) })   -- DHEERAJ_WORKSPACE/baseline/tolerant.mjs
+    //   solve(fold, { target: tolerantTarget(fold) })   -- workspace/tools/tolerant.mjs
     const target = opts?.target ?? buildTarget(fold);
     if (!target.total) return { status: "TRIVIAL", queries: 0, depth: 0 };
 
