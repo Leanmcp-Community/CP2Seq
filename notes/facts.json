@@ -37,40 +37,40 @@
   "src": "derived"
  },
  "probeC.exhausted": {
-  "v": 156,
-  "src": "derived"
+  "v": 167,
+  "src": "derived: probe C at 2M queries, then budget-probe.mjs re-ran the 37 timeouts at 50M (2026-09-17)"
  },
  "probeC.exhaustedPct": {
-  "v": 42.6,
+  "v": 45.6,
   "unit": "%",
-  "src": "derived"
+  "src": "derived: probe C at 2M queries, then budget-probe.mjs re-ran the 37 timeouts at 50M (2026-09-17)"
  },
  "probeC.timeout": {
-  "v": 37,
-  "src": "derived"
+  "v": 24,
+  "src": "derived: probe C at 2M queries, then budget-probe.mjs re-ran the 37 timeouts at 50M (2026-09-17)"
  },
  "probeC.timeoutPct": {
-  "v": 10.1,
+  "v": 6.6,
   "unit": "%",
-  "src": "derived"
+  "src": "derived: probe C at 2M queries, then budget-probe.mjs re-ran the 37 timeouts at 50M (2026-09-17)"
  },
  "probeC.solved": {
-  "v": 2,
-  "src": "derived"
+  "v": 4,
+  "src": "derived: probe C at 2M queries, then budget-probe.mjs re-ran the 37 timeouts at 50M (2026-09-17)"
  },
  "probeC.solvedPct": {
-  "v": 0.5,
+  "v": 1.1,
   "unit": "%",
-  "src": "derived"
+  "src": "derived: probe C at 2M queries, then budget-probe.mjs re-ran the 37 timeouts at 50M (2026-09-17)"
  },
  "probeC.provenNot": {
-  "v": 327,
-  "src": "derived"
+  "v": 338,
+  "src": "derived: probe C at 2M queries, then budget-probe.mjs re-ran the 37 timeouts at 50M (2026-09-17)"
  },
  "probeC.provenNotPct": {
-  "v": 89.3,
+  "v": 92.3,
   "unit": "%",
-  "src": "derived"
+  "src": "derived: probe C at 2M queries, then budget-probe.mjs re-ran the 37 timeouts at 50M (2026-09-17)"
  },
  "probeC.stage1Ceiling": {
   "v": 195,
@@ -82,13 +82,13 @@
   "src": "derived"
  },
  "probeC.ceiling": {
-  "v": 39,
-  "src": "derived"
+  "v": 28,
+  "src": "derived: probe C at 2M queries, then budget-probe.mjs re-ran the 37 timeouts at 50M (2026-09-17)"
  },
  "probeC.ceilingPct": {
-  "v": 10.7,
+  "v": 7.7,
   "unit": "%",
-  "src": "derived"
+  "src": "derived: probe C at 2M queries, then budget-probe.mjs re-ran the 37 timeouts at 50M (2026-09-17)"
  },
  "corpus.synth.run": {
   "v": "v2",
@@ -239,5 +239,25 @@
    "was": "a ceiling mid-revision",
    "now": "probeC.ceilingPct"
   }
- ]
+ ],
+ "budgetProbe.rerun": {
+  "v": 37,
+  "src": "probe C's timeouts, re-run at 25x budget"
+ },
+ "budgetProbe.converted": {
+  "v": 13,
+  "src": "of 37, at 50M queries"
+ },
+ "budgetProbe.toExhausted": {
+  "v": 11,
+  "src": "converted timeouts that closed the space"
+ },
+ "budgetProbe.toSolved": {
+  "v": 2,
+  "src": "converted timeouts that found a sequence"
+ },
+ "budgetProbe.medianQueries": {
+  "v": 14615754,
+  "src": "median queries the converted instances needed"
+ }
 }

@@ -55,18 +55,31 @@ each a proof rather than an estimate, rule out most of the corpus:
 | --- | --- | --- |
 | Fails the spanning-line necessary condition | 125<!--fact:probeC.screenFail--> | 34.2%<!--fact:probeC.screenFailPct--> |
 | Carries a pre-crease (a flat crease simple folding cannot make) | 46<!--fact:probeC.preCrease--> | 12.6%<!--fact:probeC.preCreasePct--> |
-| **Full search EXHAUSTED the space without a solution** | **156**<!--fact:probeC.exhausted--> | **42.6%**<!--fact:probeC.exhaustedPct--> |
-| **PROVEN not simple-foldable** | **327**<!--fact:probeC.provenNot--> **/ 366**<!--fact:corpus.instagram.total--> | **89.3%**<!--fact:probeC.provenNotPct--> |
-| Search timed out — status genuinely unknown | 37<!--fact:probeC.timeout--> | 10.1%<!--fact:probeC.timeoutPct--> |
-| **Confirmed foldable** | **2**<!--fact:probeC.solved--> | **0.5%**<!--fact:probeC.solvedPct--> |
+| **Full search EXHAUSTED the space without a solution** | **167**<!--fact:probeC.exhausted--> | **45.6%**<!--fact:probeC.exhaustedPct--> |
+| **PROVEN not simple-foldable** | **338**<!--fact:probeC.provenNot--> **/ 366**<!--fact:corpus.instagram.total--> | **92.3%**<!--fact:probeC.provenNotPct--> |
+| Search timed out — status genuinely unknown | 24<!--fact:probeC.timeout--> | 6.6%<!--fact:probeC.timeoutPct--> |
+| **Confirmed foldable** | **4**<!--fact:probeC.solved--> | **1.1%**<!--fact:probeC.solvedPct--> |
 
-The action space is fixed to simple folding (Pureland), so those 327 CPs **have no solution in
-our action space at all**. A flat "% of dataset solved" over 366 has a ceiling of **10.7%**, and
+The action space is fixed to simple folding (Pureland), so those 338 CPs **have no solution in
+our action space at all**. A flat "% of dataset solved" over 366 has a ceiling of **7.7%**, and
 everything below that ceiling is the task definition, not the model.
 
-⚠️ **0.5% is a floor, not the true rate.** The search cannot get past roughly 8 folds, while
-real Pureland sequences run 5-21 steps, so the 37 timeouts likely contain foldable CPs. The
-honest statement is that the true share lies somewhere in **0.5%-10.7%**.
+⚠️ **1.1% is a floor, not the true rate.** 24 CPs are still undecided, and some of them are
+certainly foldable, so the honest statement is that the true share lies somewhere in
+**1.1%-7.7%**.
+
+📌 **These numbers were restated on 2026-09-17, and how they moved is worth keeping.** The first
+run budgeted 2M queries per CP and left 37 undecided. The objection was raised — correctly —
+that a timeout is a statement about our budget rather than about the problem, so the 37 were
+re-run at 25x that budget (`workspace/probe-c/budget-probe.mjs`). **13 of 37 resolved, and every
+one of them needed more than the old budget**, median 14.6M queries. So the budget *was* the
+binding constraint, and acting on it moved the headline the opposite way from the worry: 11 of
+the 13 closed as EXHAUSTED and only 2 found a sequence, so the proven-unfoldable share rose from
+89.3% to **92.3%** and the ceiling fell from 10.7% to **7.7%**.
+
+⚠️ 24 CPs remain undecided at 50M queries, and the converted ones ran as high as 49.3M — right
+at the budget's edge. More budget would resolve more of them. The interval above is honest
+precisely because it does not pretend otherwise.
 
 ⚠️ EXHAUSTED carries one asterisk, stated rather than buried: the search rejects any fold that
 creases a line against the assignment the CP demands, so it means "no simple-fold sequence that
@@ -292,7 +305,7 @@ into a diagnosis instead of a dead end.
 - A **visual-feedback ablation**: does rendering the state back to the model measurably change
   pruning or backtracking quality? This speaks to the Spa3R vs. "I Know About Up!" mental-imagery
   debate (group D of the checklist).
-- A **measured scope boundary**: 89.3%<!--fact:probeC.provenNotPct--> of real crease patterns provably lie outside
+- A **measured scope boundary**: 92.3%<!--fact:probeC.provenNotPct--> of real crease patterns provably lie outside
   all-layers simple folding (§1.2). The action space is bounded by evidence, not by assertion.
 - **Tearing is a third property the all-layers restriction buys, alongside no self-intersection
   and no layer ordering — and it is the one nobody names.** An all-layers fold moves everything
