@@ -8,32 +8,21 @@
 // DIFFICULTY IS STRATIFIED, NOT SAMPLED AND HOPED FOR.
 // Two axes, matching Learn2Fold's step count + non-local dependency (papers.md #4):
 //
-//   axis 1  STEPS -- the frozen main axis (experiment-spec-checklist.md B). Controlled
-//           directly at generation time, and the strata below are calibrated to PurelandFold
-//           so the synthetic corpus and the real anchor are read on one scale.
+//   axis 1  STEPS -- the frozen main axis (experiment-spec-checklist.md B), controlled
+//           directly at generation time. The tertiles below are 4-10 / 11-13 / 14-19.
 //
-//           /!\ The cut points are NOT PurelandFold's raw step counts. 47 of its 337 frames
-//           are PRE-CREASE steps (fold, then unfold, leaving only a crease), and pre-creasing
-//           is outside the frozen action space, so those frames are merged into the step that
-//           follows them (workspace/data/export_purelandfold_models.py applies the rule).
-//           Measured on the raw counts the range reads 5-21 with tertiles <=11 / 12-14 / >14;
-//           counting only steps that exist in the action space it is 4-19 with tertiles
-//           <=10 / 11-13 / >13, and those are the cut points below. Calibrating against the
-//           raw numbers would have meant our 12 folds and PurelandFold's 12 folds were not
-//           the same quantity.
-//
-//           Do not transcribe these by hand. export_purelandfold_models.py prints the line
-//           this file has to match, because the cut points were wrong twice already -- once
-//           from using raw counts, once from an off-by-one in the tertile index.
+//           /!\ These cut points were originally calibrated against an outside corpus of
+//           human-folded sequences. That dependency is gone: the corpus is self-contained now,
+//           so the range is ours to choose and the numbers below are simply the span the
+//           generator covers, split in three. Change them here if the spread should differ --
+//           there is no longer an external distribution they have to match.
 //
 //   axis 2  COUPLING -- creases created per fold, i.e. how many layers one fold cuts. Recorded
 //           per step and summarised per sample, NOT yet used for quotas: its cut points are
-//           "pending pilot" in the checklist, and the reason the axis was written off earlier
-//           (PurelandFold p50=0.7 vs instagram p50=12.8) was measured on 27 sequences someone
-//           else folded. We control this sampler, so the spread here is an open empirical
-//           question -- `report.md` prints the distribution so the cut points can be chosen
-//           from data rather than guessed. Pass --coupling-strata to turn it into quotas once
-//           that number exists.
+//           "pending pilot" in the checklist. We control this sampler, so the spread is an open
+//           empirical question -- `report.md` prints the distribution so the cut points can be
+//           chosen from data rather than guessed. Pass --coupling-strata to turn it into quotas
+//           once that number exists.
 //
 // WHAT COMES OUT. Every sample keeps both endpoints and the whole middle:
 //   cp.fold          the crease pattern, planarised
@@ -43,19 +32,19 @@
 //   meta.json        difficulty metrics, degeneracy flags, provenance
 // Given the seed the whole sample rebuilds, so the corpus is reproducible without shipping it.
 //
-// VERIFICATION IS OPTIONAL AND THAT IS DELIBERATE (--verify).
-// The sequence is not a claim that needs checking -- we folded it. Running the stage 2 solver
-// back over a sample only asks a different question: can pure search recover it? It cannot
-// past roughly 8 folds, so REQUIRING verification would silently delete the entire hard half
-// of the corpus and cap difficulty exactly where it starts being interesting. So: keep every
-// sample, and LABEL the solvable subset. The labelled subset is what the pure-search baseline
-// curve is drawn on; the whole corpus is what the model is scored on.
+// THERE IS NO SOLVER HERE, AND NOTHING IS "VERIFIED" BY SEARCH.
+// The sequence is not a claim that needs checking -- we folded it, and the pattern is what the
+// folding left behind. An earlier version ran a search back over each sample and labelled the
+// subset it could recover; that cost grew with depth, so it capped the corpus at the depth the
+// search could reach and made every "verified" sample an easy one. The forward check that
+// matters is verify-replay.mjs: replay the recorded sequence and confirm it reproduces the
+// pattern beside it. O(folds), same cost at nineteen folds as at three.
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { foldRandom, polyArea, bbox } from "./fold-engine.mjs";
 import { planarize, foldedState, sequenceFile } from "./planarize.mjs";
-import { lineOf, lkey } from "../probe-c/stage2.mjs";
+import { lineOf, lkey } from "./geom.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 
@@ -70,7 +59,7 @@ const rngFrom = (seed) => {
     };
 };
 
-// PurelandFold's tertiles counted in action-space steps only -- see the header note
+// step tertiles -- see the header note
 const DEFAULT_STRATA = [
     { name: "easy", min: 4,  max: 10 },
     { name: "mid",  min: 11, max: 13 },
@@ -187,8 +176,6 @@ const OUT = path.resolve(HERE, arg("out", "out/pilot"));
 const MAX_ATTEMPTS = Number(arg("max-attempts", 40)) * N;
 const EXPORT_STEPS = has("export-steps");
 const REJECT = (arg("reject", "") || "").split(",").filter(Boolean);
-const VERIFY = has("verify");
-const VERIFY_BUDGET = Number(arg("verify-budget", 200000));
 // both unset by default -- see the coupling-cap note in fold-engine.mjs
 const COUPLING_CAP = arg("coupling-cap", null) ? Number(arg("coupling-cap")) : undefined;
 const COUPLING_FRAC = arg("coupling-frac", null) ? Number(arg("coupling-frac")) : undefined;
@@ -199,15 +186,13 @@ const strata = arg("strata", null)
 
 // basename, not endsWith: a sibling named test-generate.mjs would end with generate.mjs too,
 // and importing it would then generate a corpus as a side effect. The guard exists so build()
-// above can be imported -- scaling.mjs needs the all-layers sampler to put the two tiers'
+// above can be imported -- callers need the all-layers sampler to put the two tiers'
 // search cost on one axis, and a second copy of the sampler would not be the same corpus.
 const IS_MAIN = process.argv[1] && path.basename(process.argv[1]) === "generate.mjs";
 if (IS_MAIN) {
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(path.join(OUT, "samples"), { recursive: true });
 
-let solve = null;
-if (VERIFY) ({ solve } = await import("../probe-c/stage2.mjs"));
 
 const manifest = [], rejects = {}, seen = new Map();
 let seed = SEED0;
@@ -241,17 +226,8 @@ for (const st of strata) {
             fs.writeFileSync(path.join(dir, "steps.fold"),
                              JSON.stringify(sequenceFile(r.fold, r.run.states, { id })));
 
-        let verdict = null;
-        if (VERIFY) {
-            const t0 = Date.now();
-            let v; try { v = solve(r.fold, { maxQueries: VERIFY_BUDGET, maxDepth: 24 }); }
-            catch (e) { v = { status: "ERROR", queries: 0, depth: 0, err: e.message }; }
-            verdict = { ...v, ms: Date.now() - t0 };
-        }
-
         const meta = { id, stratum: st.name, seed: s, requested_steps: steps,
-                       cp_hash: r.hash, metrics: r.metrics, planarize: r.plStats,
-                       pure_search: verdict };
+                       cp_hash: r.hash, metrics: r.metrics, planarize: r.plStats };
         fs.writeFileSync(path.join(dir, "meta.json"), JSON.stringify(meta, null, 1));
         manifest.push(meta);
         made++;
@@ -264,7 +240,7 @@ for (const st of strata) {
 fs.writeFileSync(path.join(OUT, "manifest.json"), JSON.stringify(
     { generated: new Date().toISOString(), seed0: SEED0, strata, n_per_stratum: N,
       reject_filters: REJECT, coupling_cap: COUPLING_CAP ?? null,
-      coupling_frac: COUPLING_FRAC ?? null, verified: VERIFY, samples: manifest }, null, 1));
+      coupling_frac: COUPLING_FRAC ?? null, samples: manifest }, null, 1));
 
 /* ---------- the distribution report: this is what the cut points get chosen from -------- */
 const q = (xs, p) => { const s = [...xs].sort((a, b) => a - b); return s[Math.min(s.length - 1, Math.floor(p * s.length))]; };
@@ -308,26 +284,6 @@ for (const f of ["repeated_halving", "no_coupling", "collapsed", "single_angle"]
 rep += `\n## Rejected during sampling\n\n| reason | n |\n| --- | --- |\n`;
 for (const [k, v] of Object.entries(rejects).sort((a,b)=>b[1]-a[1])) rep += `| ${k} | ${v} |\n`;
 
-if (VERIFY) {
-    rep += `\n## Pure search over the corpus (budget ${VERIFY_BUDGET} queries)\n\n`;
-    rep += `The corpus does not depend on this -- every sample is ground truth by construction.\n`;
-    rep += `This only labels the subset the pure-search baseline curve can be drawn on.\n\n`;
-    rep += `| stratum | SOLVED | TIMEOUT | EXHAUSTED | other |\n| --- | --- | --- | --- | --- |\n`;
-    for (const st of strata) {
-        const g = manifest.filter(m => m.stratum === st.name);
-        const c = (s) => g.filter(m => m.pure_search?.status === s).length;
-        rep += `| ${st.name} | ${c("SOLVED")} | ${c("TIMEOUT")} | ${c("EXHAUSTED")} | ${g.length - c("SOLVED") - c("TIMEOUT") - c("EXHAUSTED")} |\n`;
-    }
-    const sv = manifest.filter(m => m.pure_search?.status === "SOLVED");
-    if (sv.length) {
-        rep += `\nqueries to solve: p10=${q(sv.map(m=>m.pure_search.queries),.1)} `;
-        rep += `p50=${q(sv.map(m=>m.pure_search.queries),.5)} `;
-        rep += `p90=${q(sv.map(m=>m.pure_search.queries),.9)}\n`;
-        rep += `\ndeepest SOLVED sample: ${Math.max(...sv.map(m=>m.metrics.steps))} steps `;
-        rep += `-- anything past this is where pure search stops being a usable baseline.\n`;
-    }
-    rep += `\n⚠️ EXHAUSTED on a sample we folded ourselves would be a SOLVER BUG, not a finding.\n`;
-}
 
 fs.writeFileSync(path.join(OUT, "report.md"), rep);
 console.log(`\n${manifest.length} samples, ${Object.values(rejects).reduce((a,b)=>a+b,0)} rejected`);

@@ -14,7 +14,7 @@
 //   * NO CONTRADICTORY ASSIGNMENT. After splitting, two sub-edges between the same pair of
 //     vertices must agree on M/V. The engine's conflicts() already rejects such folds; this is
 //     the independent check that it worked.
-import { lineOf, lkey } from "../probe-c/stage2.mjs";
+import { lineOf, lkey } from "./geom.mjs";
 
 const EPS = 1e-9;
 const key = (p) => `${Math.round(p[0] / EPS)},${Math.round(p[1] / EPS)}`;
@@ -132,7 +132,7 @@ export function planarize(segs) {
  *
  * Layers are given bottom-to-top in `fo:faces_layer`. All-layers simple folding imposes no
  * layer-ordering freedom -- the order is determined by the fold history -- so this is a fact
- * about the state, not a choice we made (workspace/probe-c/stage2.mjs header).
+ * about the state, not a choice we made.
  */
 export function foldedState(layers) {
     const vIndex = new Map(), verts = [];
