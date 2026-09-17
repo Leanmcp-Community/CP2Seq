@@ -1,0 +1,66 @@
+{
+  "status": "SOLVED",
+  "algorithm": "bfs",
+  "queries": 14,
+  "expanded": 2,
+  "generated": 12,
+  "visited": 9,
+  "peak_frontier": 6,
+  "max_depth_reached": 2,
+  "elapsed_seconds": 0.0013201249967096373,
+  "replay_verified": true,
+  "steps": 2,
+  "actions": [
+    {
+      "axis": [
+        0.7071067811865475,
+        -0.7071067811865475,
+        -0.0
+      ],
+      "moving_faces": [
+        1,
+        2
+      ],
+      "direction": "over",
+      "hinge_edges": [
+        1,
+        6
+      ],
+      "angle_degrees": 180
+    },
+    {
+      "axis": [
+        0.7071067811865475,
+        0.7071067811865475,
+        0.7071067811865475
+      ],
+      "moving_faces": [
+        1,
+        3
+      ],
+      "direction": "under",
+      "hinge_edges": [
+        3,
+        5
+      ],
+      "angle_degrees": 180
+    }
+  ],
+  "cp": "/Users/ddod/LEANMCP/ROBOTICS/FoldOrigami/DHEERAJ_WORKSPACE/baseline_python/fixtures/ladybug_step_04.fold",
+  "target": "/Users/ddod/LEANMCP/ROBOTICS/FoldOrigami/DHEERAJ_WORKSPACE/baseline_python/fixtures/ladybug_step_04.fold",
+  "cp_sha256": "ed9734b5cf9109f15f6ebac698605ef2dd50c9afede6f769ae343fb9a807aefc",
+  "target_sha256": "ed9734b5cf9109f15f6ebac698605ef2dd50c9afede6f769ae343fb9a807aefc",
+  "limits": {
+    "max_depth": 2,
+    "max_queries": 100000,
+    "max_states": 20000,
+    "seconds": 30.0
+  },
+  "tolerance": 0.004,
+  "convention": "pureland",
+  "model_version": 1,
+  "model": "exposed same-side 180-degree flaps on final CP mesh",
+  "physical_validation": "restricted geometric model; no independent physics validation",
+  "target_layer_constraints": 12,
+  "target_geometry_resolved": true
+}

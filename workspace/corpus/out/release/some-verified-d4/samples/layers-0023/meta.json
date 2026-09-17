@@ -5,7 +5,7 @@
  "steps": 4,
  "p_partial_asked": 0.5,
  "partial_used": 2,
- "cp_hash": "9e3771b1b30c01f5",
+ "cp_hash": "a9843ff1a9b5a52d",
  "metrics": {
   "layers": 9,
   "area": 1,
@@ -56,6 +56,6 @@
   "status": "SOLVED",
   "queries": 5816,
   "depth": 4,
-  "ms": 44
+  "ms": 43
  }
 }

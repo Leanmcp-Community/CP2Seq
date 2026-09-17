@@ -1,0 +1,46 @@
+{
+ "id": "hard-0044",
+ "stratum": "hard",
+ "seed": 20261344,
+ "requested_steps": 18,
+ "cp_hash": "05cdcf21ddab1221",
+ "metrics": {
+  "steps": 18,
+  "crease_segments_raw": 367,
+  "crease_edges": 530,
+  "mountain": 256,
+  "valley": 274,
+  "border": 44,
+  "distinct_crease_lines": 59,
+  "vertices": 207,
+  "coupling_max": 108,
+  "coupling_mean": 20.389,
+  "coupling_total": 367,
+  "coupling_final_step": 40,
+  "layers_final": 368,
+  "distinct_angles": 4,
+  "bbox_area_final": 0.007813,
+  "largest_face_final": 0.003906,
+  "flags": {
+   "repeated_halving": false,
+   "no_coupling": false,
+   "collapsed": true,
+   "single_angle": false
+  },
+  "degenerate": true
+ },
+ "planarize": {
+  "segments_in": 371,
+  "vertices": 207,
+  "edges": 574,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 44,
+   "V": 274,
+   "M": 256
+  }
+ },
+ "pure_search": null
+}

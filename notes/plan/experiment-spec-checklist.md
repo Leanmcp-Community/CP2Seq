@@ -3,8 +3,7 @@
 2026-09-14 起草 · 2026-09-15 按 Phase 0 结果更新
 
 **这份文件只管一件事：哪些决定必须在跑实验前定死，以及每一条现在定了没有。**
-它不写怎么跑 —— 那是 `EXPERIMENTS_SETUP.md` 的事；不写跟谁比 —— 那是
-`BASELINE_REPRODUCTION.md` 的事；不写数据从哪来 —— 那是 `DATASET.md` 的事。
+它不写怎么跑 —— 那是 `EXPERIMENTS_SETUP.md` 的事；不写数据从哪来 —— 那是 `DATASET.md` 的事。
 
 > **文件分工**（每件事只有一个出处，改一处不必改两处）
 >
@@ -13,7 +12,6 @@
 > | `research-workflow.md` | 阶段划分、纪律、现在走到哪 |
 > | **本文件** | **必须冻结的决定 A–G + 每条的状态** |
 > | `EXPERIMENTS_SETUP.md`（英文） | 怎么跑：循环、工具、条件、指标、协议 |
-> | `BASELINE_REPRODUCTION.md`（英文） | 跟谁比：已发表方法 + 我们自建的搜索基线 |
 > | `DATASET.md`（英文） | 数据从哪来 |
 >
 > 根目录三份是给同事看的，只写英文；`notes/` 是我自己的工作笔记，只写中文。
@@ -46,12 +44,12 @@
 
       **核心档：all-layers simple fold，infinite line。** 保持不变，所有现有代码建立在它上面。
       它的可辩护性来自两条性质：整叠刚性翻转**永不自穿透、无层序约束**，
-      所以可折性是纯几何问题，正向搜索才可行（`workspace/probe-c/stage2.mjs` 文件头）。
+      所以可折性是纯几何问题，正向搜索才可行（见 `workspace/corpus/geom.mjs`）。
 
       **扩展档：some-layers simple fold。** 新增，还没做。
 
       ⚠️ **加扩展档是因为核心档装不下大部分真实作品。**
-      实测：instagram 里 92.3%<!--fact:probeC.provenNotPct--> 落在核心档之外（`../probes/probe-c-screen.md`），
+      实测：instagram 里 89.3%<!--fact:probeC.provenNotPct--> 落在核心档之外（探针已移除），
       PurelandFold 的 27 条里 44.4%<!--fact:anchor.exhaustedPct--> 已证明不可折、7<!--fact:anchor.solved--> 条可折
       （`check-anchor.mjs`，详见 `corpus-plan.md`）。
       核心档里能折出来的东西**倾向于对称重复的网格**，因为一次折不可能只动一部分层 ——
@@ -100,7 +98,7 @@
 - [ ] 分层切点 —— *pending pilot*
 - [ ] **验证单调性**：难度越高，纯搜索的 query 数确实单调上升吗？不单调 → 这个轴是坏的，换
       ⚠️ **在 instagram 上验不了** —— 纯搜索只解出 2 个，没有曲线可看
-      （`../probes/probe-c-screen.md`）。只能在合成语料上验
+      （探针已移除）。只能在合成语料上验
 
 > 难度用步数**直接生成**控制，不是事后测量。「能精确控制并测量任务难度」本身就是方法论文的贡献。
 
@@ -137,7 +135,7 @@
 
       - [x] 纯搜索用 DFS 还是 BFS？→ **迭代加深（IDDFS）**。理由：纯 DFS 会一头扎到深度上限，
             把 4 折的 CP「解」成 24 折，步数指标直接失去意义。IDDFS 返回**最短**序列
-            （实现见 `workspace/probe-c/stage2.mjs`）
+            （求解器已移除）
       - [ ] 随机基线拿到的 query 预算和 LLM 一样吗？
       - [ ] 要不要加第四行 —— 不含 LLM 的启发式搜索（比如按手写打分贪心）？
             这是抵挡「你的基线是稻草人」最便宜的办法
@@ -217,9 +215,8 @@
 | 原内容 | 现在在哪 |
 | --- | --- |
 | 工具腰带、循环、消融臂、结果表 | `EXPERIMENTS_SETUP.md` §3–§6 |
-| BFS/DFS/Random 的复杂度与错误率分析 | `BASELINE_REPRODUCTION.md` §3 |
 | 论文贡献列表 | `EXPERIMENTS_SETUP.md` §9 |
-| Learn2Fold 当基线复现 | **已删除** —— 它解的是另一个问题，数据也从未公开（`BASELINE_REPRODUCTION.md`） |
+| Learn2Fold 当基线复现 | **已删除** —— 它解的是另一个问题，数据也从未公开 |
 
 ## 当前卡点
 

@@ -1,10 +1,9 @@
 // Forward folding engine, SOME-LAYERS tier.
 //
 // The all-layers engine (fold-engine.mjs) stays the core. This is the extension tier decided
-// 2026-09-16, and it exists because the core cannot express most real models: 44.4% of
-// PurelandFold is proven outside it and only 7 of 27 are inside, and all-layers folding tends
-// to symmetric, repetitive patterns, because a fold can never move part of the stack and leave
-// the rest -- an asymmetric outline needs a partial fold.
+// 2026-09-16, and it exists because the core cannot express most real models: all-layers
+// folding tends to symmetric, repetitive patterns, because a fold can never move part of the
+// stack and leave the rest -- an asymmetric outline needs a partial fold.
 //
 // WHAT CHANGES, AND WHY IT IS A REWRITE RATHER THAN A FLAG
 // -------------------------------------------------------
@@ -38,7 +37,7 @@
 //
 // A fold is given in CURRENT-PLANE coordinates, because that is the paper as it now sits in
 // front of you -- and is how a diagram reads.
-import { lineOf, lkey, ap, mul, inv, ID } from "../probe-c/stage2.mjs";
+import { lineOf, lkey, ap, mul, inv, ID } from "./geom.mjs";
 
 const EPS = 1e-9;
 

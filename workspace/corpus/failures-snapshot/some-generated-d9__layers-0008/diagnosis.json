@@ -1,0 +1,181 @@
+{
+ "counts": {
+  "replayed": 78,
+  "stored": 78,
+  "matched": 77,
+  "unmatchedReplayed": 1,
+  "unmatchedStored": 1
+ },
+ "verdict": "crease mismatch: 0.70703125,0.70703125,1.230224609375,M [-0.184027, 0.086662]",
+ "tolerance": 0.000002,
+ "perFold": [
+  {
+   "fold": 1,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 0.125
+   },
+   "movePositive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": true,
+   "made": 1
+  },
+  {
+   "fold": 2,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 0.5625
+   },
+   "movePositive": true,
+   "selection": {
+    "mode": "bottom",
+    "k": 1
+   },
+   "over": false,
+   "made": 1
+  },
+  {
+   "fold": 3,
+   "line": {
+    "n": [
+     -0.7071067811865476,
+     0.7071067811865476
+    ],
+    "d": -0.2706893146729753
+   },
+   "movePositive": false,
+   "selection": {
+    "mode": "bottom",
+    "k": 2
+   },
+   "over": false,
+   "made": 2
+  },
+  {
+   "fold": 4,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 0.34375
+   },
+   "movePositive": true,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "made": 2
+  },
+  {
+   "fold": 5,
+   "line": {
+    "n": [
+     0,
+     1
+    ],
+    "d": 0.6249999999999999
+   },
+   "movePositive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "made": 5
+  },
+  {
+   "fold": 6,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 0.31640625
+   },
+   "movePositive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": true,
+   "made": 8
+  },
+  {
+   "fold": 7,
+   "line": {
+    "n": [
+     0.7071067811865476,
+     0.7071067811865476
+    ],
+    "d": 0.8821571415681781
+   },
+   "movePositive": false,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "made": 18
+  },
+  {
+   "fold": 8,
+   "line": {
+    "n": [
+     0.7071067811865476,
+     0.7071067811865476
+    ],
+    "d": 1.1076596398408654
+   },
+   "movePositive": true,
+   "selection": {
+    "mode": "top",
+    "k": 32
+   },
+   "over": true,
+   "made": 11
+  },
+  {
+   "fold": 9,
+   "line": {
+    "n": [
+     1,
+     0
+    ],
+    "d": 0.50775146484375
+   },
+   "movePositive": true,
+   "selection": {
+    "mode": "all"
+   },
+   "over": false,
+   "made": 33
+  }
+ ],
+ "onlyReplayed": [
+  "0.70703125,0.70703125,1.230224609375,M|-0.1840273025662208|0.0866620121067545"
+ ],
+ "onlyStored": [
+  "0.70703125,0.70703125,1.230224609375,M|-0.1840298211881457|0.08665949348426183"
+ ],
+ "nearestPairs": [
+  {
+   "replayed": "0.70703125,0.70703125,1.230224609375,M|-0.1840273025662208|0.0866620121067545",
+   "nearestStored": "0.70703125,0.70703125,1.230224609375,M|-0.1840298211881457|0.08665949348426183",
+   "sameLineKey": true,
+   "delta": {
+    "nx": 0,
+    "ny": 0,
+    "d": 0,
+    "lo": 0.0000025186219249073716,
+    "hi": 0.0000025186224926754264,
+    "assignmentSame": true
+   }
+  }
+ ]
+}

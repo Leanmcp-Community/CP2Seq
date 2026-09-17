@@ -1,0 +1,46 @@
+{
+ "id": "easy-0151",
+ "stratum": "easy",
+ "seed": 20261069,
+ "requested_steps": 8,
+ "cp_hash": "8bf57b166b3bca8a",
+ "metrics": {
+  "steps": 8,
+  "crease_segments_raw": 39,
+  "crease_edges": 52,
+  "mountain": 27,
+  "valley": 25,
+  "border": 16,
+  "distinct_crease_lines": 18,
+  "vertices": 29,
+  "coupling_max": 16,
+  "coupling_mean": 4.875,
+  "coupling_total": 39,
+  "coupling_final_step": 16,
+  "layers_final": 40,
+  "distinct_angles": 4,
+  "bbox_area_final": 0.0625,
+  "largest_face_final": 0.03125,
+  "flags": {
+   "repeated_halving": false,
+   "no_coupling": false,
+   "collapsed": false,
+   "single_angle": false
+  },
+  "degenerate": false
+ },
+ "planarize": {
+  "segments_in": 43,
+  "vertices": 29,
+  "edges": 68,
+  "overlaps_merged": 0,
+  "assignment_conflicts": 0,
+  "non_bmv_edges": 0,
+  "counts": {
+   "B": 16,
+   "V": 25,
+   "M": 27
+  }
+ },
+ "pure_search": null
+}

@@ -2,34 +2,29 @@
 Sim-FAST-PY/
 venv/
 __pycache__/
-workspace/purelandfold/
-
-# probe C stage 2 run artifacts
-workspace/probe-c/stage2-log.txt
 
 # synthetic corpus runs — rebuildable from the seed, so scratch batches stay out...
 # (the pattern must be out/* rather than out/: git cannot re-include anything under an
 #  excluded DIRECTORY, so excluding the children is what makes the negations below work)
 workspace/corpus/out/*
-# ...but the two RELEASED batches are versioned, because a dataset nobody can point at is not
+# ...but the RELEASED batches are versioned, because a dataset nobody can point at is not
 # a dataset. Regenerating from the seed gives the same bytes; that is the argument for not
 # versioning it, and it is not an argument a reader of the paper can act on.
 !workspace/corpus/out/batch1/
 !workspace/corpus/out/layers-batch1/
-# the release corpus itself (eight batches, one merged manifest)
+# the release corpus itself (one merged manifest over every batch)
 !workspace/corpus/out/release/
 # the named models: twenty authored fold sequences, small and cited by the paper's figures
 !workspace/corpus/out/named/
 
-# PurelandFold model export — derived from the HF dataset
-workspace/purelandfold/models/
-
-# inspector build output — rebuilt by build-showcase.mjs + build-comparison.mjs
+# inspector build output — rebuilt by build-showcase.mjs
 # (superseded by browser.html, which is versioned: it loads out/release/index.json at runtime
 #  instead of inlining every sample, so it does not have to be regenerated or committed as a blob)
 workspace/corpus/inspector.html
 
-# Flat-Folder corpus (41MB, re-downloadable: see DHEERAJ_WORKSPACE/baseline/README.md)
+# leftover external-data caches from before the outside sources were removed;
+# ignored so they never re-enter the repo
+workspace/purelandfold/
 DHEERAJ_WORKSPACE/data/
 DHEERAJ_WORKSPACE/baseline/results.json
 DHEERAJ_WORKSPACE/baseline/mixed-run.txt
@@ -55,3 +50,5 @@ htmlcov/
 
 # Local viewer logs
 DHEERAJ_WORKSPACE/viewer/*.log
+
+
