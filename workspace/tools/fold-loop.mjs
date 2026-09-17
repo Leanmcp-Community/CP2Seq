@@ -51,6 +51,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { newSession, step, encodeState, decodeState, creasePattern, views } from "./surface-sim.mjs";
 import { currentPolys } from "../corpus/fold-engine-layers.mjs";
+import { lineSpec } from "../corpus/fold-engine.mjs";
 import { creaseGeometry, pairsUp } from "../corpus/crease-compare.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -137,9 +138,17 @@ function oracleAdapter(seqPath) {
     return async () => {
         if (i >= folds.length) return { final: true, raw: "(oracle: sequence exhausted)" };
         const f = folds[i++];
-        const line = f.line ?? (f.normal ? { n: f.normal, d: f.offset } : null);
-        if (!line) throw new Error("oracle: this sample records folds by angle index; " +
-                                   "use --model oracle only on some-layers samples");
+        // The two generators record a fold differently, and the oracle has to read both or it is
+        // only half a harness test. The all-layers generator writes (angle_index, offset) in
+        // fold-engine.mjs's UN-NORMALISED normal frame -- at 45 degrees the normal is [-1, 1],
+        // not [-0.707, 0.707] -- which is what keeps every offset dyadic. The table is imported
+        // rather than copied, as in verify-replay.mjs: a second copy would be a second definition
+        // of what a fold line is.
+        const line = f.line
+            ?? (f.angle_index !== undefined
+                ? { n: lineSpec(f.angle_index, f.offset).n, d: f.offset }
+                : f.normal ? { n: f.normal, d: f.offset } : null);
+        if (!line) throw new Error(`oracle: fold ${i} is in a shape this adapter cannot read`);
         return { fold: { line, movePositive: f.move_positive ?? f.movePositive,
                          selection: f.selection ?? { mode: "all" }, over: f.over },
                  raw: `(oracle step ${i})` };
