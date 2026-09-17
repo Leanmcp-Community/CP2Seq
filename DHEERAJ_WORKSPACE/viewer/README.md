@@ -9,7 +9,7 @@ No upload, installation, external CDN, robotics, freeform, or physics service.
 Stop the old `python3 -m http.server` process with Ctrl+C. From FoldOrigami:
 
 ```bash
-python3 DHEERAJ_WORKSPACE/viewer/server.py
+./run_server.sh
 ```
 
 Open **http://127.0.0.1:8000/**. This replaces the old long viewer URL.
@@ -20,7 +20,7 @@ scroll to zoom, right-drag to pan. Reset camera fits the original paper.
 To browse another output directory or use another port:
 
 ```bash
-python3 DHEERAJ_WORKSPACE/viewer/server.py --port 8001 --exports DHEERAJ_WORKSPACE/data
+./run_server.sh --port 8001 --exports DHEERAJ_WORKSPACE/data
 ```
 
 The server only reads exports and serves viewer assets. It does not launch
