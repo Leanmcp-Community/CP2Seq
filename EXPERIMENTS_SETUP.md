@@ -1,6 +1,6 @@
 # Experiments — the operational spec for Track 1 (CP → Seq)
 
-2026-09-14, revised 2026-09-15.
+2026-09-14, revised 2026-09-17.
 
 **This file owns how the experiment runs**: the loop, the tools, the conditions, the metrics,
 and the protocol that has to be fixed before the first run. It is the design doc the code is
@@ -17,6 +17,22 @@ written against.
 >
 > Repo-root docs are English (they are shared); `notes/` is Chinese (working notes). The same
 > passage is never written in both languages — that guarantees drift.
+
+---
+
+## Current first run — EXPERIMENT_SETUP
+
+The active first-run procedure is maintained once in
+[EXPERIMENT_SETUP / PLAN.md](<DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/PLAN.md>), an extension
+of this operational spec. The sourced model inventory is
+[OPEN_SOURCE_VLMS.md](<DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/OPEN_SOURCE_VLMS.md>).
+
+**That pilot plan takes precedence over the sections below for the first run.**
+The remaining sections retain the broader research design for later revision; their
+multi-condition protocol, repeats, stratification, proposed tools, and paper claims are
+not prerequisites or demonstrated results of the pilot. Historical references to removed
+corpora, probes, and bucket restrictions below must be re-audited before a formal study.
+Implementation and execution have not started as part of this planning change.
 
 ---
 
@@ -78,9 +94,9 @@ failure and the one that silently corrupts ground truth.
 
 ### 1.4 Action item before running anything
 
-- [ ] Generate the first batch and inspect its step / degeneracy distribution **before** fixing
-      the sampling design (`notes/plan/corpus-plan.md`). For Lu: the dataset gives CP (`.fold`)
-      plus the sequence as frames (Frame 1, Frame 2, …) — either final step only, or all steps.
+The data already exists. Use the existing-sample selection in the active pilot plan;
+do not regenerate a batch as a prerequisite. A broader study's sampling design remains
+deferred to inspection of the full distribution.
 
 ---
 
@@ -97,7 +113,7 @@ model is held fixed between the tool-augmented arm and the no-tools control; com
 models would confound the ablation. Running the whole pipeline on two models tells us whether
 the effect is model-specific or general.
 
-- [ ] We need to list the models and tests
+Model candidates and compatibility checks are maintained in the linked pilot documents.
 ---
 
 ## 3. Tools given to the VLM
