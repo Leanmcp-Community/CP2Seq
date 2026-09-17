@@ -43,6 +43,40 @@ coordinates; it does not equate rotated/mirrored targets or alternative layer
 orders. Call finish when you are done. This ends the episode and evaluates your
 current sequence; it does not automatically claim success.
 
+Planning and recovery:
+Before proposing a fold, check its consistency with the current state:
+
+1. Treat the supplied CP as geometry in the original sheet coordinates.
+   Fold axes are specified in CURRENT folded coordinates. Account for earlier
+   reflections when relating a current fold line to the CP.
+2. An all-layers fold affects every layer on the selected side. Check the crease
+   implications for all affected layers, including their orientations and
+   mountain/valley assignments.
+3. Choose move_positive and over using both crease compatibility and the final
+   target. A locally accepted fold does not establish that the sequence can
+   reach the target.
+
+Use rejection feedback to change your plan:
+- A rejected action leaves the state unchanged.
+- Do not repeat an identical rejected action at the same revision.
+- OUTSIDE_TARGET_CP means the proposed action introduces an incompatible
+  crease segment or mountain/valley assignment.
+- ENGINE_REJECTED means the fold could not be applied; reconsider whether the
+  line intersects the paper, creates a new crease, and has a compatible direction.
+- After three consecutive rejected add_fold actions without progress, reconsider
+  the accepted prefix. Use restore_revision, go_to_step, or remove_fold to explore
+  a different branch. If the sequence is empty, reconsider the first fold instead.
+- Track rejected actions by revision. Returning to the same revision does not
+  make a previously rejected action valid. Restoring an identical sequence under
+  a new revision also does not make its rejected actions valid.
+
+Before calling finish, compare the current geometry, face orientations, and
+bottom-to-top layer order with the target. Reproducing the CP alone is
+insufficient. If the CP is reproduced but the target differs, reconsider fold
+order, moving side, and over/under choices.
+
+Return exactly one action in the existing JSON schema.
+
 Codex CLI response protocol:
 Geometry and numeric history are displayed to 10 decimal places to suppress
 floating-point arithmetic noise. Treat last-digit coordinate differences as
