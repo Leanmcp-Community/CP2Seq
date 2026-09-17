@@ -21,6 +21,7 @@ permission for every possible application. [Official non-interactive documentati
 | --- | --- |
 | `codex_fold_loop.py` | Launches Codex, validates one action, executes it, and returns feedback |
 | `codex_fold_prompt.md` | Original folding policy plus the Codex JSON response protocol |
+| `run_luna_low.sh` | Full two-sample pilot with GPT-5.6 Luna, low reasoning, and all image history |
 | `runs/` | Created when you run an experiment; holds artifacts and results |
 
 The original `DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/tinker_fold_loop.py` remains
@@ -57,7 +58,76 @@ the outer controller handles simulator actions.
 Every decision uses a fresh ephemeral Codex invocation. No session ID or
 `resume --last` is needed. This avoids mixing sample sessions, but historical
 images are not replayed beyond the initial/latest views, and startup overhead
-is paid per invocation.
+is paid per invocation. The Luna launcher enables `--image-history all`, which
+instead reattaches every earlier feedback image, preserving the visual history.
+
+## Full Luna low-reasoning pilot
+
+Sol and Terra have equivalent launchers, with the same samples, low reasoning,
+40-turn budget, all image history, and logging:
+
+```sh
+bash CODEX_HARNESS_TESTING/run_sol_low.sh
+bash CODEX_HARNESS_TESTING/run_terra_low.sh
+```
+
+Each accepts the same appended options as the Luna launcher, including
+`--samples`, `--max-turns`, and `--timeout`. They select `gpt-5.6-sol` and
+`gpt-5.6-terra`, respectively.
+
+Run from the repository root after signing in with `codex login`:
+
+```sh
+bash CODEX_HARNESS_TESTING/run_luna_low.sh
+```
+
+This launches the same default samples as the Tinker pilot (`easy-0001` and
+`easy-0002`), with 40 decisions per sample, all historical feedback images,
+`--model gpt-5.6-luna`, and `model_reasoning_effort="low"`. The model and
+reasoning settings are explicitly passed on every CLI invocation.
+[Official model identifiers](https://developers.openai.com/codex/models),
+[reasoning configuration](https://developers.openai.com/codex/config-reference).
+
+To change samples or budgets, append options:
+
+```sh
+bash CODEX_HARNESS_TESTING/run_luna_low.sh --samples easy-0001 --max-turns 60
+```
+
+Equivalent Python command:
+
+```sh
+.venv/bin/python CODEX_HARNESS_TESTING/codex_fold_loop.py \
+  --samples easy-0001 easy-0002 --max-turns 40 --timeout 300 \
+  --model gpt-5.6-luna --reasoning-effort low --image-history all
+```
+
+Logging is enabled automatically using the existing Tinker observability core.
+The run root now includes `events.jsonl`, `transcripts.jsonl`, `metrics.jsonl`,
+and `episodes/`, in addition to the complete per-turn CLI logs and PNG artifacts.
+CLI-reported token usage and exposed reasoning summaries are normalized into
+the transcripts; private reasoning and unavailable usage fields are not invented.
+The launcher uses terminal previews; set `OBS_ECHO=full` for full terminal output.
+
+Read the newest run using the existing viewer:
+
+```sh
+.venv/bin/python DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/observability/view_trace.py \
+  --roots CODEX_HARNESS_TESTING/runs --follow
+```
+
+You can compare both run roots in the existing interactive viewer:
+
+```sh
+.venv/bin/python DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/observability/view_trace_tui.py \
+  --roots CODEX_HARNESS_TESTING/runs DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/runs
+```
+
+Earlier Tinker runs already use this trace format and require no import.
+All-history image input grows with each rendered turn and can hit the service's
+image/context limits. Such failures are logged and stop the batch. Use
+`--image-history latest` if you deliberately want a smaller visual context.
+The new launcher and trace integration have been inspected, but not run.
 
 ## Account authentication and installation
 
@@ -168,6 +238,14 @@ selection, shell feature toggles, and web-search configuration.
 [Official configuration reference](https://developers.openai.com/codex/config-reference)
 
 ## Outputs and interpretation
+
+Model-facing numeric geometry/history and terminal tool previews are rounded
+to 10 decimal places. For example, `0.25000000000000017` is displayed as `0.25`.
+This only changes presentation: the simulator, executed actions, candidate
+files, evaluator, and raw `tool.json`/`history.json` retain their original values.
+Each executed turn also saves `model-feedback.json` with the cleaned feedback.
+The run configuration records `model_geometry_decimals`. This suppresses
+irrelevant decimal noise; it does not repair incorrect folds or change tolerances.
 
 The script prints its run directory, for example
 `CODEX_HARNESS_TESTING/runs/codex-<timestamp>/`. Each sample contains:

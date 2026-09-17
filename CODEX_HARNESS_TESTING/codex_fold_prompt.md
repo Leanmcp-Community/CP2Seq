@@ -44,6 +44,11 @@ orders. Call finish when you are done. This ends the episode and evaluates your
 current sequence; it does not automatically claim success.
 
 Codex CLI response protocol:
+Geometry and numeric history are displayed to 10 decimal places to suppress
+floating-point arithmetic noise. Treat last-digit coordinate differences as
+numeric noise, not extra creases. Terminal polygon matching uses a 2e-6
+coordinate tolerance. Infer fold offsets from the crease geometry; do not
+perturb an offset merely to imitate long decimal artifacts.
 Return exactly one JSON object matching the supplied output schema. For example:
 {"action":{"name":"add_fold","arguments":{"angle_index":0,"offset":0,"move_positive":true,"over":true}}}
 To finish: {"action":{"name":"finish","arguments":{}}}.
@@ -56,3 +61,5 @@ supplied geometry, action history, simulator feedback, and attached images.
 Each invocation is fresh; the controller supplies the previous action history.
 Image names are listed in attachment order. Initial views remain attached;
 current-* views show the most recent requested or automatically rendered state.
+When all image history is enabled, turn-NNN-* views contain each earlier turn's
+visual feedback; use the turn number to pair them with the textual history.

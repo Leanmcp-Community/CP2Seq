@@ -5,6 +5,7 @@ No Tinker or OpenAI SDK is imported. Run only when the user executes this file.
 """
 import argparse
 from collections import Counter
+from contextlib import closing
 from datetime import datetime, timezone
 import json
 import math
@@ -24,6 +25,26 @@ sys.path.insert(0, str(SETUP))
 from capture_fold import (BrowserSession, CORPUS, DEFAULT_SAMPLES, load_task,
                           save_images, write_json, add_image_options)
 from tool_schemas import TOOLS
+from observability.obs import Run, read_jsonl
+
+
+MODEL_GEOMETRY_DECIMALS = 10
+
+
+def model_view(value):
+    """Clean JSON numeric presentation; never mutate simulator data or actions.
+
+    Maximum absolute rounding error is 5e-11, well below the 2e-6 terminal
+    coordinate tolerance. Integers, booleans, and nonnumeric values stay intact.
+    """
+    if isinstance(value, dict):
+        return {k: model_view(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [model_view(v) for v in value]
+    if type(value) is float and math.isfinite(value):
+        rounded = round(value, MODEL_GEOMETRY_DECIMALS)
+        return 0.0 if rounded == 0 else rounded
+    return value
 
 
 def action_schema():
@@ -99,6 +120,9 @@ def ask_codex(args, prompt, manifest, turn_dir, workdir, schema_path):
                "-c", "features.shell_tool=false", "-c", "features.unified_exec=false",
                "-c", 'web_search="disabled"', "--output-schema", str(schema_path),
                "--output-last-message", str(turn_dir / "response.json")]
+    if args.reasoning_effort:
+        command += ["-c", f'model_reasoning_effort="{args.reasoning_effort}"']
+    command += ["-c", "hide_agent_reasoning=false", "-c", 'model_reasoning_summary="auto"']
     if args.model:
         command += ["--model", args.model]
     for info in manifest.values():
@@ -123,7 +147,7 @@ def ask_codex(args, prompt, manifest, turn_dir, workdir, schema_path):
     return json.loads((turn_dir / "response.json").read_text())
 
 
-def episode(args, sample_id, browser, run_dir, workdir, schema_path):
+def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
     out = run_dir / sample_id
     out.mkdir()
     cp, target = load_task(sample_id, args.corpus)
@@ -134,31 +158,55 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path):
     image_options = {"max_edge": args.max_image_edge, "max_bytes": args.max_image_bytes}
     fixed_images = save_images(initial["images"], out / "initial", **image_options)
     current_images = {}
+    historical_images = {}
+    run.system_prompt("agent", args.prompt.read_text())
     history, seen = [], Counter()
     termination, sample_calls, tool_calls = "turn_budget", 0, 0
     for turn in range(1, args.max_turns + 1):
         turn_dir = out / f"turn-{turn:03d}"
         turn_dir.mkdir()
-        manifest = {**fixed_images, **{f"current-{k}": v for k, v in current_images.items()}}
+        manifest = ({**fixed_images, **historical_images} if args.image_history == "all" else
+                    {**fixed_images, **{f"current-{k}": v for k, v in current_images.items()}})
         prompt = (args.prompt.read_text() + "\n\nFind the next action. Geometry and history:\n" +
-                  json.dumps({"cp": cp, "target": target, "current": browser.artifacts()["state"],
-                              "history": history, "turn": turn, "max_turns": args.max_turns}) +
+                  json.dumps(model_view({"cp": cp, "target": target, "current": browser.artifacts()["state"],
+                              "history": history, "turn": turn, "max_turns": args.max_turns})) +
                   "\nAttached images, in order:\n" + "\n".join(manifest))
         write_json(turn_dir / "images.json", manifest)
         print(f"{sample_id}: Codex turn {turn}/{args.max_turns}", flush=True)
         sample_calls += 1
+        run.event("codex_request", turn=turn, model=args.model, reasoning_effort=args.reasoning_effort,
+                  prompt_artifact=str(turn_dir / "prompt.md"), image_artifacts=manifest)
         response = ask_codex(args, prompt, manifest, turn_dir, workdir, schema_path)
+        cli_events = read_jsonl(turn_dir / "events.jsonl")
+        completed = [e for e in cli_events if e.get("type") == "turn.completed"]
+        cli_usage = completed[-1].get("usage", {}) if completed else {}
+        usage = {"prompt_tokens": cli_usage.get("input_tokens"),
+                 "completion_tokens": cli_usage.get("output_tokens"),
+                 "cached_input_tokens": cli_usage.get("cached_input_tokens")}
+        summaries = [e["item"].get("text", "") for e in cli_events
+                     if e.get("type") == "item.completed" and e.get("item", {}).get("type") == "reasoning"]
+        process = json.loads((turn_dir / "process.json").read_text())
+        run.sample("agent", text=json.dumps(response), content=json.dumps(response),
+                   tool_calls=[response["action"]] if isinstance(response, dict) and
+                   isinstance(response.get("action"), dict) else [],
+                   thinking="\n".join(summaries) or None, usage=usage, finish="completed",
+                   duration_s=process["duration_s"], cli_usage=cli_usage,
+                   prompt_artifact=str(turn_dir / "prompt.md"), image_artifacts=manifest,
+                   reasoning_kind="CLI-exposed summary; private reasoning unavailable")
         try:
             action = validate_action(response)
         except ValueError as exc:
             feedback = {"ok": False, "error": str(exc), "instruction": "Return one valid action; nothing executed."}
             history.append({"response": response, "result": feedback})
             write_json(turn_dir / "tool.json", feedback)
+            write_json(out / "history.json", history)
+            run.event("invalid_tool_turn", turn=turn, response=response, result=feedback)
             continue
         signature = json.dumps({"action": action, "state": browser.artifacts()["state"]}, sort_keys=True)
         seen[signature] += 1
         if seen[signature] > 3:
             termination = "repetition_detected"
+            run.event("repetition_detected", turn=turn, action=action)
             break
         tool_calls += 1
         result = browser.call(action["name"], action["arguments"])
@@ -169,6 +217,12 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path):
             images = browser.call("get_images")["images"]
         if images:
             current_images = save_images(images, turn_dir / "feedback-images", **image_options)
+            historical_images.update({f"turn-{turn:03d}-{k}": v for k, v in current_images.items()})
+        write_json(turn_dir / "feedback-images.json", current_images if images else {})
+        write_json(turn_dir / "model-feedback.json", model_view(result))
+        run.tool_result(requestor="agent", name=action["name"], error=not result.get("ok"),
+                        content=json.dumps(model_view(result)), raw_result_artifact=str(turn_dir / "tool.json"),
+                        image_artifacts=current_images if images else {})
         history.append({"action": action, "result": result})
         write_json(out / "history.json", history)
         if result.get("finished"):
@@ -180,10 +234,13 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path):
     # Reference actions are read only after the final Codex subprocess returns.
     reference = json.loads((args.corpus / sample_id / "seq.json").read_text())["folds"]
     result = {"sample_id": sample_id, "backend": "codex-cli-chatgpt", "model_requested": args.model,
+              "reasoning_effort": args.reasoning_effort, "image_history": args.image_history,
               "termination": termination, "sample_calls": sample_calls, "tool_calls": tool_calls,
               **artifacts["evaluation"], **sequence_metrics(artifacts["sequence"]["folds"], reference)}
     result["solved"] = termination == "finished" and result["pilot_match"]
     write_json(out / "result.json", result)
+    run.episode_done(reward=float(result["solved"]), **result)
+    run.artifact(result)
     return result
 
 
@@ -195,6 +252,9 @@ def main():
     parser.add_argument("--prompt", type=Path, default=HERE / "codex_fold_prompt.md")
     parser.add_argument("--codex-bin", default="codex")
     parser.add_argument("--model", help="An explicit model available to your Codex account; otherwise CLI default")
+    parser.add_argument("--reasoning-effort", choices=["low", "medium", "high", "xhigh", "max"])
+    parser.add_argument("--image-history", choices=["latest", "all"], default="latest",
+                        help="all reattaches every prior feedback image, matching Tinker's visual history")
     parser.add_argument("--max-turns", type=int, default=40)
     parser.add_argument("--timeout", type=float, default=300, help="Seconds per Codex invocation")
     add_image_options(parser)
@@ -226,11 +286,22 @@ def main():
     # CWD is outside the repository so project instructions/reference files are not auto-loaded.
     # This is context separation, not a filesystem security boundary.
     results = []
-    with tempfile.TemporaryDirectory(prefix="codex-fold-") as temporary, BrowserSession() as browser:
+    config = {k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()}
+    config["model_geometry_decimals"] = MODEL_GEOMETRY_DECIMALS
+    print(json.dumps(config, indent=2), flush=True)
+    with closing(Run("fold-pilot", config=config, root=args.out, run_name=run_dir.name)) as run, \
+            tempfile.TemporaryDirectory(prefix="codex-fold-") as temporary, BrowserSession() as browser:
         workdir = Path(temporary)
         for sample_id in args.samples:
             try:
-                results.append(episode(args, sample_id, browser, run_dir, workdir, schema_path))
+                with run.session(task=sample_id, trial=0):
+                    try:
+                        results.append(episode(args, sample_id, browser, run_dir, workdir, schema_path, run))
+                        write_json(run_dir / "results.json", results)
+                    except Exception as exc:
+                        run.event("episode_error", error=str(exc), traceback=traceback.format_exc())
+                        run.episode_done(reward=None, termination="error", error=str(exc))
+                        raise
             except Exception as exc:
                 error = {"sample_id": sample_id, "termination": "error", "error": str(exc),
                          "traceback": traceback.format_exc()}
@@ -238,6 +309,7 @@ def main():
                 folder.mkdir(exist_ok=True)
                 write_json(folder / "error.json", error)
                 results.append(error)
+                write_json(run_dir / "results.json", results)
                 print(f"{sample_id}: {exc}", flush=True)
                 # Auth/quota/CLI errors should stop the batch rather than retry every sample.
                 break
