@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Start the local origami viewer. Forward --port / --exports to the backend.
+# Start the local origami viewer. Forward --port / --exports / --corpus to the backend.
 set -euo pipefail
 
 script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"

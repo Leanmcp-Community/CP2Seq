@@ -206,6 +206,11 @@ def load_sample(root, relative):
 
 
 class Handler(SimpleHTTPRequestHandler):
+    # Browsers refuse an ES module served as anything but JavaScript, and .mjs is not in the
+    # standard mimetypes table on every machine.
+    extensions_map = SimpleHTTPRequestHandler.extensions_map | {
+        ".mjs": "text/javascript", ".js": "text/javascript"}
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(VIEWER), **kwargs)
 
@@ -245,7 +250,7 @@ class Handler(SimpleHTTPRequestHandler):
             if target in ("corpus", "corpus/"):
                 target, self.path = "corpus.html", "/corpus.html"
             path = confined(VIEWER, target)
-            if not path.is_file() or path.suffix not in (".html", ".js", ".css"):
+            if not path.is_file() or path.suffix not in (".html", ".js", ".mjs", ".css"):
                 return self.send_error(404)
             return super().do_GET()
         except FileNotFoundError as exc:

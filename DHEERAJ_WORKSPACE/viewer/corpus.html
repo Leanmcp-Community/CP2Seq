@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Origami · Dataset browser</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="corpus.css">
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
+<body class="corpus">
+<header>
+  <strong>Origami / Dataset browser</strong>
+  <nav><a href="/">Search playback</a><a href="/corpus" class="here">Dataset</a></nav>
+</header>
+<main>
+  <aside>
+    <h1>The corpus.</h1>
+    <p>Generated Pureland samples, read straight from the release folder on disk.</p>
+    <p id="connection" role="status">Loading the dataset index…</p>
+    <p id="load-error" role="alert" hidden></p>
+    <label>Search<input id="search" type="search" placeholder="easy-0001" autocomplete="off"></label>
+    <label>Tier<select id="tier"><option value="">all tiers</option></select></label>
+    <label>Difficulty<select id="band"><option value="">all bands</option></select></label>
+    <p id="count" class="note">—</p>
+    <div id="samples" role="listbox" aria-label="Dataset samples"></div>
+    <button id="refresh">Reload index</button>
+    <div id="summary">Pick a sample.</div>
+    <p class="note">Playback replays <code>seq.json</code> with the generator's own line algebra
+      (angle index + offset, exact reflections) and checks the result against the shipped
+      <code>steps.fold</code> frames. Nothing on disk is modified.</p>
+  </aside>
+  <section>
+    <div class="panes">
+      <div class="pane cp-pane">
+        <div class="cap">crease pattern — <code>cp.fold</code></div>
+        <div id="cp">Load a sample to see its crease pattern.</div>
+        <div class="legend">
+          <span><i class="sw m"></i>mountain</span>
+          <span><i class="sw v"></i>valley</span>
+          <span><i class="sw b"></i>paper edge</span>
+          <span><i class="sw a"></i>this fold</span>
+        </div>
+        <div id="cp-note" class="note"></div>
+      </div>
+      <div class="pane fold-pane">
+        <div class="cap">folded state — <code>seq.json</code> replay</div>
+        <div id="stage"><div id="empty">Loading…</div></div>
+      </div>
+    </div>
+    <div id="event" role="status" aria-live="polite">Drag to orbit · scroll to zoom · right-drag to pan</div>
+    <footer>
+      <div class="controls">
+        <button id="prev" aria-label="Previous fold">←</button>
+        <button id="play">Play</button>
+        <button id="next" aria-label="Next fold">→</button>
+        <button id="reset">Reset camera</button>
+        <label>Speed<select id="speed">
+          <option value="0.35">⅓×</option><option value="0.7" selected>1×</option>
+          <option value="1.5">2×</option><option value="3">4×</option></select></label>
+        <label>Loop<input id="loop" type="checkbox" checked></label>
+        <label>Layers<input id="layers" type="checkbox" checked></label>
+      </div>
+      <input id="timeline" aria-label="Playback position" type="range" min="0" max="0" step="0.01" value="0">
+      <output id="position">0 / 0</output>
+    </footer>
+  </section>
+</main>
+<script>window.addEventListener('error',function(e){const box=document.getElementById('load-error');box.hidden=false;box.textContent='Viewer error: '+(e.message||'Could not load a required viewer file.');});</script>
+<script type="module" src="corpus.js"></script></body></html>
