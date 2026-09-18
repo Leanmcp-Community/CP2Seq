@@ -4,7 +4,7 @@ from pathlib import Path
 import re
 
 MAX_FILE_BYTES = 64 * 1024 * 1024
-ALLOWED_SUFFIXES = {".json", ".jsonl", ".png", ".jpeg", ".jpg", ".md", ".txt", ".fold"}
+ALLOWED_SUFFIXES = {".json", ".jsonl", ".png", ".jpeg", ".jpg", ".md", ".txt", ".fold", ".log"}
 
 
 def confined(root, relative):
@@ -63,12 +63,18 @@ def trace_index(root, run):
     for sample in sorted(directory.iterdir()):
         if not sample.is_dir() or sample.is_symlink() or sample.name in ("episodes", "wire-assets"):
             continue
-        turns = sorted({int(m.group(1)) for path in sample.glob("turn-*.json")
-                        if (m := re.fullmatch(r"turn-(\d+)-[a-z]+\.json", path.name))})
+        flat_turns = {int(m.group(1)) for path in sample.glob("turn-*.json")
+                     if (m := re.fullmatch(r"turn-(\d+)-[a-z]+\.json", path.name))}
+        folder_turns = {int(m.group(1)) for path in sample.iterdir()
+                        if path.is_dir() and not path.is_symlink()
+                        and (m := re.fullmatch(r"turn-(\d+)", path.name))}
+        turns = sorted(flat_turns | folder_turns)
         if not turns and not (sample / "error.json").exists() and not (sample / "meta.json").exists():
             continue
         samples.append({"id": sample.name, "turns": turns,
-                        "modified": max((p.stat().st_mtime_ns for p in sample.iterdir() if p.is_file()), default=0),
+                        "layout": "codex" if folder_turns else "tinker",
+                        "modified": max((p.stat().st_mtime_ns for p in sample.rglob("*")
+                                         if p.is_file() and not p.is_symlink()), default=0),
                         "result": read_optional(sample / "result.json"),
                         "error": read_optional(sample / "error.json")})
     return {"id": run, "directory": str(directory), "samples": samples,

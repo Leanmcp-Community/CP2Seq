@@ -171,16 +171,27 @@ To render a saved candidate sequence at a chosen step without inference:
 ## Evaluation scope
 
 `cp_match` compares crease geometry and assignments. `terminal_reference_match`
-compares ordered layer polygons and parity at fixed coordinates, with a 2e-6
-tolerance and cyclic/collinear polygon-vertex normalization. `pilot_match`
+compares ordered layer polygons and parity under a single plane isometry, with a
+2e-6 tolerance and cyclic/collinear polygon-vertex normalization. `pilot_match`
 requires both. `solved` additionally requires an explicit `finish` call.
 
-This is a strict diagnostic metric. It does **not** implement the rotation,
-reflection, repartitioned-face or equivalent-layer-order quotient in the full
-`EXPERIMENTS_SETUP.md` specification. A different but valid solution may therefore
-fail this metric. The shared zero-thickness engine also does not independently
-verify continuous-motion collisions. Neither metric is presented as the full
-paper's ACCEPT criterion.
+The terminal comparison quotients out translation, rotation and mirroring
+(`terminal_match.mjs`). Which half of the sheet travels is decided by
+`move_positive`, so a correct sequence routinely reproduces the reference object
+somewhere else in the plane, or handed the other way; that is the same folded
+model and counts. Layer count, bottom-to-top order and per-layer parity must
+still agree exactly, and one isometry must carry every layer.
+
+The quotient stops there. Repartitioned faces and equivalent-layer-order
+identifications from the full `EXPERIMENTS_SETUP.md` specification are still not
+implemented, so a differently partitioned but valid solution can fail. The
+shared zero-thickness engine also does not independently verify continuous-motion
+collisions. Neither metric is presented as the full paper's ACCEPT criterion.
+
+Runs scored before this change used fixed coordinates and rejected correctly
+folded models that had landed elsewhere. Re-score them in place with
+`node workspace/rescore_runs.mjs`; that script writes `workspace/RESCORE_REPORT.md`
+listing every row it changed.
 
 The loop estimates cost at uncached published rates and records image-token
 counts from the renderer. These estimates are not billing totals; see

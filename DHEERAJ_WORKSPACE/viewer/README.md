@@ -165,3 +165,61 @@ steps, capture uses the preceding completed step.
 moving playback. `capture.js` is shared with the Python/Tinker experiment bridge.
 See [the folding pilot guide](../EXPERIMENT_SETUP/TINKER_FOLD_USAGE.md) for local
 capture commands, image size options, generated-sequence playback, and inference.
+
+## Complete model conversations
+
+The `/traces` page browses runs, examples, turns, and the full saved
+conversation for each turn. Each part of a turn is its own card; expand the
+sections you care about, and Refresh pulls newer content without collapsing
+what you opened. Both Tinker flat turn artifacts and
+Codex turn directories are supported. Codex turns include exact prompts, all
+attached image thumbnails and labels, exposed reasoning summaries, responses,
+tool actions/results, feedback images, CLI commands, usage events, and stderr.
+Text is not truncated. Private reasoning absent from the saved logs cannot be
+shown. Initial/final galleries and raw sample artifacts are also available.
+
+To show Codex runs, restart the viewer with:
+
+```sh
+bash run_server.sh --port 8001 --traces CODEX_HARNESS_TESTING/runs
+```
+
+Open http://127.0.0.1:8001/traces and hard-refresh after a viewer update.
+No model experiment needs to be rerun to inspect its saved conversation.
+
+The assistant has not executed Python/Node tests or started the server. To run
+the trace discovery and artifact API checks yourself:
+
+```sh
+.venv/bin/python -m unittest discover -s DHEERAJ_WORKSPACE/viewer -p 'test_trace_store.py'
+```
+
+### Layout and navigation
+
+The trace page drills down through three lists into the conversation. The left
+sidebar stacks Runs over Examples, each with its own filter box and count; a
+narrow Turns rail sits beside it; the conversation fills the rest. Nothing is a
+dropdown: click a run to populate Examples, click an example to populate Turns,
+click a turn to open it. One toggle button at the far left of the top bar opens
+and closes the Runs/Examples sidebar, the standard way, same button both ways,
+with `[` as its keyboard shortcut. There are no per-panel close buttons and no
+draggable dividers.
+
+Each example row carries an outcome badge (Solved / Unsolved / Error / Running)
+and its turn count. Prev/Next and the left/right arrow keys step turns; Collapse
+all and Expand all fold the saved input, reasoning, tool results, and CLI
+diagnostics of the open turn. The top bar keeps the run count, a Live toggle for
+the 5 second refresh, and Refresh.
+
+The page loads `style.css` and `corpus.css` first, so its palette, header, nav,
+buttons, and list rows are the same as the playback and dataset pages. On narrow
+screens the sidebar overlays the page and closes itself once you pick an example.
+
+This browser stores the selected run, the example and turn for each run, sidebar
+visibility, scroll positions of all three lists, and expanded conversation details in localStorage.
+Collapsing the sidebar does not clear selections. Reloading or reopening the page
+restores that location. Saved state is specific to the browser and URL origin,
+including port. Refresh updates saved logs while retaining your selected turn.
+
+Restart the server and hard-refresh to load these viewer changes. Python and
+Node checks have not been executed by the assistant under the workspace rule.

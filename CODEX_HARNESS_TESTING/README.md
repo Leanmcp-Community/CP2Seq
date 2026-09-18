@@ -262,7 +262,13 @@ The run root also contains `config.json`, the prompt snapshot, `tools.json`,
 `action.schema.json`, and `results.json`.
 
 The matching evaluator and action-edit-distance tolerance follow the original
-pilot. `solved` requires both a `finish` action and `pilot_match`. The reference
+pilot, except that `terminal_reference_match` now compares the final layer stack
+up to a plane isometry: the same folded model translated, rotated or mirrored
+counts, while layer count, bottom-to-top order and per-layer parity must still
+agree exactly. Older runs were scored at fixed coordinates; re-score them with
+`node workspace/rescore_runs.mjs`.
+
+`solved` requires both a `finish` action and `pilot_match`. The reference
 `seq.json` is read only after the last Codex invocation for scoring; reference
 actions are never inserted into the prompt. Accepted actions are saved after
 each simulator call, so a later CLI error leaves the candidate available.

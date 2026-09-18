@@ -1,41 +1,9 @@
 // Browser-native adapter around the existing exact all-layers engine.
 import { FoldSession, replay } from './engine.mjs';
 import { captureCP, captureViews, layersToPieces, setCaptureSize } from '../viewer/capture.js';
+export { frameLayers, strictTerminalMatch, terminalMatch, TERMINAL_METRIC } from './terminal_match.mjs';
+import { frameLayers, terminalMatch, TERMINAL_METRIC } from './terminal_match.mjs';
 
-export function frameLayers(frame) {
-  if (!frame?.faces_vertices?.length || !frame.vertices_coords?.length) throw Error('Final FOLD frame lacks geometry');
-  return frame.faces_vertices.map((face, i) => ({
-    poly: face.map(v => frame.vertices_coords[v].slice(0, 2)),
-    par: frame['fo:faces_parity']?.[i] ?? 0,
-    rank: frame['fo:faces_layer']?.[i] ?? i,
-  })).sort((a, b) => a.rank - b.rank);
-}
-
-function cleanPoly(poly) {
-  let p = poly.filter((v, i) => Math.hypot(v[0] - poly[(i + 1) % poly.length][0], v[1] - poly[(i + 1) % poly.length][1]) > 1e-7);
-  let changed = true;
-  while (changed && p.length > 3) {
-    changed = false;
-    for (let i = 0; i < p.length; i++) {
-      const a = p[(i + p.length - 1) % p.length], b = p[i], c = p[(i + 1) % p.length];
-      const cross = (b[0] - a[0]) * (c[1] - b[1]) - (b[1] - a[1]) * (c[0] - b[0]);
-      if (Math.abs(cross) < 1e-9) { p.splice(i, 1); changed = true; break; }
-    }
-  }
-  return p;
-}
-function samePolygon(a, b) {
-  a = cleanPoly(a); b = cleanPoly(b);
-  if (a.length !== b.length) return false;
-  return b.some((_, start) => [1, -1].some(sign => a.every((p, i) => {
-    const q = b[(start + sign * i + b.length) % b.length];
-    return Math.hypot(p[0] - q[0], p[1] - q[1]) <= 2e-6;
-  })));
-}
-export function strictTerminalMatch(layers, target) {
-  return layers.length === target.length && layers.every((l, i) =>
-    l.par === target[i].par && samePolygon(l.poly, target[i].poly));
-}
 
 export class ToolSession {
   constructor(cp, target) {
@@ -51,9 +19,9 @@ export class ToolSession {
     this.history.set(this.revision, structuredClone(next.actions));
   }
   evaluate() {
-    const cp = this.session.evaluate(), terminal = strictTerminalMatch(this.session.layers, this.target);
+    const cp = this.session.evaluate(), terminal = terminalMatch(this.session.layers, this.target);
     return {...cp, terminal_reference_match: terminal, pilot_match: cp.cp_match && terminal,
-      terminal_metric: 'Fixed-coordinate polygon, parity and bottom-to-top layer equality; no symmetry quotient'};
+      terminal_metric: TERMINAL_METRIC};
   }
   images(step = this.session.actions.length) {
     if (!Number.isInteger(step) || step < 0 || step >= this.session.states.length) throw Error('step must be 0..current sequence length');

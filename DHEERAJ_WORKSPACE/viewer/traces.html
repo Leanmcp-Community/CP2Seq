@@ -4,25 +4,65 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Origami · Model traces</title>
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="corpus.css">
 <link rel="stylesheet" href="traces.css">
-<body>
-<header><strong>Origami / Model traces</strong><nav><a href="/">Playback</a> · <a href="/corpus">Dataset</a> · <a href="/traces">Model traces</a></nav></header>
-<main>
-  <aside>
-    <h1>Model traces</h1>
-    <p>Inspect the input, images, model-emitted thinking, output, and tools for each turn.</p>
-    <button id="refresh">Refresh runs</button>
-    <label><input id="live" type="checkbox" checked> Refresh every 5 seconds</label>
-    <label>Run<select id="trace-run"></select></label>
-    <label>Example<select id="trace-sample"></select></label>
-    <label>Turn<select id="trace-turn"></select></label>
-    <div class="controls"><button id="prev-turn">← Previous</button><button id="next-turn">Next →</button></div>
-    <label><input id="follow" type="checkbox" checked> Follow newest turn</label>
-    <p id="trace-status" role="status"></p>
-    <p id="trace-error" role="alert" hidden></p>
-    <div id="trace-links"></div>
+<body class="traces">
+
+<header>
+  <div class="bar-left">
+    <button id="sidebar-toggle" class="icon-button" aria-controls="sidebar" aria-expanded="true" title="Toggle sidebar ( [ )">
+      <span class="icon-sidebar" aria-hidden="true"></span>
+      <span class="sr-only">Toggle sidebar</span>
+    </button>
+    <strong>Origami / Model traces</strong>
+  </div>
+  <nav>
+    <a href="/">Search playback</a>
+    <a href="/corpus">Dataset</a>
+    <a href="/traces" class="here">Model traces</a>
+  </nav>
+  <div class="bar-right">
+    <span id="trace-status" class="note" role="status">Loading…</span>
+    <label class="live" title="Reload saved logs every 5 seconds"><input id="live" type="checkbox" checked> Live</label>
+    <button id="refresh">Refresh</button>
+  </div>
+</header>
+
+<p id="trace-error" role="alert" hidden></p>
+
+<main class="workspace">
+  <aside id="sidebar" class="sidebar" aria-label="Runs and examples">
+    <section class="rail-section rail-runs" aria-label="Runs">
+      <div class="rail-head"><h2>Runs</h2><span id="runs-count" class="count"></span></div>
+      <div class="rail-filter">
+        <input id="runs-filter" type="search" placeholder="Filter runs…" autocomplete="off" aria-label="Filter runs">
+      </div>
+      <div id="runs-body" class="rail-body"><p class="note">Loading saved runs…</p></div>
+    </section>
+
+    <section class="rail-section rail-examples" aria-label="Examples">
+      <div class="rail-head"><h2 id="examples-title">Examples</h2><span id="examples-count" class="count"></span></div>
+      <div class="rail-filter">
+        <input id="examples-filter" type="search" placeholder="Filter examples…" autocomplete="off" aria-label="Filter examples">
+      </div>
+      <div id="examples-body" class="rail-body"><p class="note">Select a run.</p></div>
+    </section>
   </aside>
-  <section id="trace-content" aria-label="Selected model turn"><p>Select a saved run.</p></section>
+
+  <aside id="turns-rail" class="turns-rail" aria-label="Turns">
+    <div class="rail-head"><h2>Turns</h2><span id="turns-count" class="count"></span></div>
+    <div id="turns-body" class="rail-body"><p class="note">—</p></div>
+  </aside>
+
+  <section class="conversation" aria-label="Conversation">
+    <div class="conversation-head">
+      <h2 id="conversation-title">Conversation</h2>
+      <div id="conversation-meta" class="conversation-meta"></div>
+    </div>
+    <div id="conversation-toolbar" class="conversation-toolbar"></div>
+    <div id="conversation-body" class="conversation-body"><p class="note">Select an example to open its conversation.</p></div>
+  </section>
 </main>
+
 <script type="module" src="traces.js"></script>
 </body></html>

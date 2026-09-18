@@ -43,6 +43,20 @@ class TraceTests(unittest.TestCase):
         self.assertEqual(len(list_traces(self.root)["runs"]), 2)
         self.assertEqual(trace_index(self.root, old.name)["legacy_image"]["text"], "volcano")
 
+    def test_codex_turn_directories_and_log_artifacts(self):
+        codex = self.root / "codex-test"
+        turn = codex / "easy-0002" / "turn-001"
+        turn.mkdir(parents=True)
+        (codex / "config.json").write_text('{"model":"gpt-5.6-sol","reasoning_effort":"low"}')
+        (turn / "prompt.md").write_text("Full geometry and history")
+        (turn / "stderr.log").write_text("A saved CLI diagnostic")
+        sample = trace_index(self.root, codex.name)["samples"][0]
+        self.assertEqual(sample["id"], "easy-0002")
+        self.assertEqual(sample["turns"], [1])
+        self.assertEqual(sample["layout"], "codex")
+        self.assertEqual(sample["modified"], max(p.stat().st_mtime_ns for p in turn.iterdir()))
+        self.assertEqual(artifact_path(self.root, codex.name, "easy-0002/turn-001/stderr.log"), turn / "stderr.log")
+
     def test_artifact_traversal_and_symlink_escape_rejected(self):
         secret = self.root.parent / "outside.json"
         secret.write_text('{}')

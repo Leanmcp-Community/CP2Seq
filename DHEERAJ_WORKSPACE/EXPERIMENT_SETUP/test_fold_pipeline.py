@@ -74,6 +74,57 @@ class FoldTests(unittest.TestCase):
                 self.assertEqual(self.browser.call("get_images", {"step": 0})["image_step"], 0)
                 self.assertTrue(self.browser.call("finish")["finished"])
 
+    def test_reference_matches_when_the_target_is_moved_or_mirrored(self):
+        """A folded model is the same model wherever it sits on the table.
+
+        Which half of the sheet travels decides where the stack lands, so a
+        correct sequence routinely reproduces the reference translated, rotated
+        or mirrored. Those all count; only the shape, parity and stacking order
+        are the answer.
+        """
+        import math
+
+        def moved(frame, kind):
+            angle, (dx, dy) = math.radians(37.0), (2.5, -1.25)
+            cos, sin = math.cos(angle), math.sin(angle)
+            def place(point):
+                x, y = point[0], point[1]
+                if kind == "mirror":
+                    y = -y
+                if kind == "translate":
+                    return [x + dx, y + dy]
+                return [cos * x - sin * y + dx, sin * x + cos * y + dy]
+            return {**frame, "vertices_coords": [place(v) for v in frame["vertices_coords"]]}
+
+        sample_id = DEFAULT_SAMPLES[0]
+        folds = json.loads((CORPUS / sample_id / "seq.json").read_text())["folds"]
+        for kind in ("translate", "rotate", "mirror"):
+            with self.subTest(placement=kind):
+                cp, target = load_task(sample_id)
+                self.browser.init(cp, moved(target, kind))
+                for fold in folds:
+                    args = {k: fold[k] for k in ("angle_index", "offset", "move_positive", "over")}
+                    self.assertTrue(self.browser.call("add_fold", args)["ok"])
+                evaluation = self.browser.call("finish")["evaluation"]
+                self.assertTrue(evaluation["cp_match"])
+                self.assertTrue(evaluation["terminal_reference_match"])
+                self.assertTrue(evaluation["pilot_match"])
+
+    def test_terminal_match_still_rejects_a_different_stack(self):
+        """The isometry quotient must not turn into "anything goes"."""
+        cp, target = load_task(DEFAULT_SAMPLES[0])
+        target["faces_vertices"] = target["faces_vertices"][:-1]
+        target["fo:faces_parity"] = target["fo:faces_parity"][:-1]
+        target["fo:faces_layer"] = target["fo:faces_layer"][:-1]
+        self.browser.init(cp, target)
+        folds = json.loads((CORPUS / DEFAULT_SAMPLES[0] / "seq.json").read_text())["folds"]
+        for fold in folds:
+            self.browser.call("add_fold", {k: fold[k] for k in
+                ("angle_index", "offset", "move_positive", "over")})
+        evaluation = self.browser.call("finish")["evaluation"]
+        self.assertFalse(evaluation["terminal_reference_match"])
+        self.assertFalse(evaluation["pilot_match"])
+
     def test_cp_match_does_not_hide_wrong_terminal_parity(self):
         cp, target = load_task(DEFAULT_SAMPLES[0])
         target['fo:faces_parity'][0] = 1 - target['fo:faces_parity'][0]
