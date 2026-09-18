@@ -27,6 +27,7 @@
 //   node verify-replay.mjs <corpus-dir> [--quiet]
 import fs from "fs";
 import path from "path";
+import { resolvePath, positional } from "./paths.mjs";
 import { fileURLToPath } from "url";
 import { foldLayers } from "./fold-engine-layers.mjs";
 import { lineSpec } from "./fold-engine.mjs";
@@ -36,7 +37,7 @@ import { creaseGeometry, pairsUp } from "./crease-compare.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const argv = process.argv.slice(2);
-const ROOT = path.resolve(HERE, argv.find(a => !a.startsWith("--")) ?? "out/release");
+const ROOT = resolvePath(HERE, positional(argv, ["--out"]), "out/release");
 const QUIET = argv.includes("--quiet");
 
 // Both tiers' recorded sequences are replayed through the SOME-LAYERS engine. That is not a

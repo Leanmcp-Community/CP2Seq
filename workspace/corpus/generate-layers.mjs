@@ -32,6 +32,7 @@
 //   node generate-layers.mjs [--n 30] [--steps 7] [--partial 0.5] [--seed N] [--sweep]
 import fs from "fs";
 import path from "path";
+import { resolvePath } from "./paths.mjs";
 import { fileURLToPath } from "url";
 import { initSheet, foldLayers, currentPolys, paperArea, layerCount }
     from "./fold-engine-layers.mjs";
@@ -285,7 +286,7 @@ const OUT_DIR = (() => { const i = process.argv.indexOf("--out"); return i < 0 ?
 
 if (IS_MAIN && OUT_DIR) {
     // dataset mode: one directory per sample, the same layout generate.mjs writes
-    exportBatch(path.isAbsolute(OUT_DIR) ? OUT_DIR : path.join(HERE, OUT_DIR),
+    exportBatch(resolvePath(HERE, OUT_DIR, "out/layers-v2"),
                 arg("partial", 0.5), process.argv.includes("--export-steps"));
 } else if (IS_MAIN) {
 fs.rmSync(OUT, { recursive: true, force: true });
