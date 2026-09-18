@@ -26,6 +26,7 @@
 //   node models.mjs [--out out/named]
 import fs from "fs";
 import path from "path";
+import { resolvePath } from "./paths.mjs";
 import { fileURLToPath } from "url";
 import { initSheet, foldLayers, currentPolys, paperArea, layerCount }
     from "./fold-engine-layers.mjs";
@@ -357,8 +358,8 @@ function run(model) {
 }
 
 /* ---------- main ---------- */
-const OUT = path.resolve(HERE, process.argv.includes("--out")
-    ? process.argv[process.argv.indexOf("--out") + 1] : "out/named");
+const OUT = resolvePath(HERE, process.argv.includes("--out")
+    ? process.argv[process.argv.indexOf("--out") + 1] : null, "out/named");
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(path.join(OUT, "samples"), { recursive: true });
 

@@ -1,6 +1,6 @@
 {
  "_generated": "2026-09-17",
- "_how": "node workspace/tools/facts.mjs — derived from workspace/probe-c/*.json",
+ "_how": "hand-maintained since the probes were removed; workspace/tools/facts.mjs no longer exists. Entries marked src \"retired-release\" cannot be recomputed from anything in the repo.",
  "corpus.instagram.total": {
   "v": 366,
   "src": "derived"
@@ -207,6 +207,34 @@
  "purelandfold.effTertileHi": {
   "v": 13,
   "src": "manual: same"
+ },
+ "shorter.release.n": {
+  "v": 2,
+  "src": "workspace/corpus/out/release/manifest.json counts.shorter_sequence_known"
+ },
+ "shorter.release.outOf": {
+  "v": 100,
+  "src": "the verified split; the other 500 samples were never checked"
+ },
+ "shorter.retired.n": {
+  "v": 30,
+  "src": "retired-release, not reproducible"
+ },
+ "shorter.retired.outOf": {
+  "v": 700,
+  "src": "retired-release, not reproducible"
+ },
+ "shorter.retired.d3Rate": {
+  "v": "1/100",
+  "src": "retired-release, not reproducible"
+ },
+ "shorter.retired.d5Rate": {
+  "v": "11/100",
+  "src": "retired-release, not reproducible"
+ },
+ "shorter.retired.d6Rate": {
+  "v": "10/99",
+  "src": "retired-release, not reproducible"
  },
  "_retired": [
   {

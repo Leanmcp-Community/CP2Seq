@@ -17,10 +17,11 @@
 //   node merge-release.mjs [out/release]
 import fs from "fs";
 import path from "path";
+import { resolvePath } from "./paths.mjs";
 import { fileURLToPath } from "url";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.resolve(HERE, process.argv[2] ?? "out/release");
+const ROOT = resolvePath(HERE, process.argv[2], "out/release");
 
 const batches = fs.readdirSync(ROOT, { withFileTypes: true })
     .filter(e => e.isDirectory() && fs.existsSync(path.join(ROOT, e.name, "manifest.json")))

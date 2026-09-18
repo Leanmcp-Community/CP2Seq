@@ -41,6 +41,7 @@
 // pattern beside it. O(folds), same cost at nineteen folds as at three.
 import fs from "fs";
 import path from "path";
+import { resolvePath } from "./paths.mjs";
 import { fileURLToPath } from "url";
 import { foldRandom, polyArea, bbox } from "./fold-engine.mjs";
 import { planarize, foldedState, sequenceFile } from "./planarize.mjs";
@@ -172,7 +173,7 @@ const has = (k) => process.argv.includes(`--${k}`);
 
 const N = Number(arg("n", 30));                       // samples PER STRATUM
 const SEED0 = Number(arg("seed", 20260916));
-const OUT = path.resolve(HERE, arg("out", "out/pilot"));
+const OUT = resolvePath(HERE, arg("out", null), "out/pilot");
 const MAX_ATTEMPTS = Number(arg("max-attempts", 40)) * N;
 const EXPORT_STEPS = has("export-steps");
 const REJECT = (arg("reject", "") || "").split(",").filter(Boolean);

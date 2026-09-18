@@ -27,15 +27,16 @@
 //   node verify-exact.mjs [corpus-dir] [--quiet] [--out FILE]
 import fs from "fs";
 import path from "path";
+import { resolvePath, positional } from "./paths.mjs";
 import { fileURLToPath } from "url";
 import { foldLayers } from "./fold-engine-layers.mjs";
 import { lineSpec } from "./fold-engine.mjs";
 import { planarize } from "./planarize.mjs";
-import { boundaryLoop, ID } from "../probe-c/stage2.mjs";
+import { boundaryLoop, ID } from "./geom.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const argv = process.argv.slice(2);
-const ROOT = path.resolve(HERE, argv.find(a => !a.startsWith("--")) ?? "out/release");
+const ROOT = resolvePath(HERE, positional(argv, ["--out", "--ulp"]), "out/release");
 const QUIET = argv.includes("--quiet");
 const oi = argv.indexOf("--out");
 const OUT = oi >= 0 ? path.resolve(argv[oi + 1]) : path.join(ROOT, "exact-check.json");

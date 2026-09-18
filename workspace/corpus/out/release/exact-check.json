@@ -1,9 +1,9 @@
 {
- "generated": "2026-09-17T08:17:07.619Z",
+ "generated": "2026-09-17T09:07:07.745Z",
  "root": "release",
  "pass": 600,
  "fail": 0,
- "seconds": 594.1,
+ "seconds": 1207.9,
  "note": "exact multiset comparison of creased segments after planarizing both sides; no tolerance, no merging. shares the fold engine with the generator, so it cannot catch a wrong model of paper",
  "batches": [
   {

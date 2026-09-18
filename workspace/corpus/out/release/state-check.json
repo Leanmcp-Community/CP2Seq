@@ -1,0 +1,51 @@
+{
+ "generated": "2026-09-18T13:25:42.351Z",
+ "root": "release",
+ "pass": 600,
+ "fail": 0,
+ "skipped": 0,
+ "seconds": 591.9,
+ "note": "LEVEL 2: folded-state equality up to the declared symmetry group (8 square symmetries x arbitrary translation; reflections also reverse the stack and flip parity). On a self-replay this is near-tautological -- it checks reproducibility and that the comparator does not reject a state against itself, NOT that the comparator is right. Its purpose is scoring model proposals against a target state.",
+ "symmetries": {
+  "id": 600
+ },
+ "comparisonsWithoutFaceIdentity": 600,
+ "negativeControl": {
+  "rejected": 600,
+  "accepted": 0,
+  "na": 0
+ },
+ "batches": [
+  {
+   "batch": "all-layers",
+   "n": 400,
+   "pass": 400,
+   "fail": 0
+  },
+  {
+   "batch": "some-generated-d5",
+   "n": 50,
+   "pass": 50,
+   "fail": 0
+  },
+  {
+   "batch": "some-generated-d6",
+   "n": 50,
+   "pass": 50,
+   "fail": 0
+  },
+  {
+   "batch": "some-verified-d3",
+   "n": 50,
+   "pass": 50,
+   "fail": 0
+  },
+  {
+   "batch": "some-verified-d4",
+   "n": 50,
+   "pass": 50,
+   "fail": 0
+  }
+ ],
+ "failures": []
+}
