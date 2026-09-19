@@ -100,15 +100,26 @@ Rebuild: `bash workspace/corpus/run-release.sh` then `node workspace/corpus/merg
 
 ### 🛑 HOW TO SCORE THIS CORPUS — the recorded sequence is **a** solution, not **the** solution
 
-**Measured on the release batch: 2 of the 100 verified samples have a sequence one fold SHORTER
-than the one that built them** — 1/50 at three folds, 1/50 at four. The generator does not search;
-it folds, so nothing makes its sequence minimal.
+**Measured on the release batch: 2<!--fact:shorter.release.n--> of the 100<!--fact:shorter.release.outOf--> verified samples have a sequence one fold SHORTER
+than the one that built them** — `some-verified-d3/layers-0028` (3 folds → 2) and
+`some-verified-d4/layers-0005` (4 folds → 3), both carried in `manifest.json` as
+`counts.shorter_sequence_known`. The generator does not search; it folds, so nothing makes its
+sequence minimal.
 
 ⚠️ **Two is a floor set by how little of this corpus is verified, not a rate.** The check needs the
 solver, so it can only run on the 100 verified samples; the other 500 have never been looked at.
-An earlier, larger release verified 700 samples and found 30, with the share rising steeply with
-depth — 1/100 at three folds, 11/100 at five, 10/99 at six. The rule below is written for that
-behaviour, not for the two instances that happen to be visible here.
+
+> **The paper cites 2 of 100 and nothing else.** An earlier, larger release verified 700 and found
+> 30, with the share apparently rising steeply with depth (1/100 at three folds, 11/100 at five,
+> 10/99 at six). ⚠️ **That release has been regenerated away and the solver that produced those
+> verdicts was removed, so nothing in this repo can recompute them.** They are recorded under
+> `shorter.retired` in `notes/facts.json`, marked `not reproducible`, and are to be cited — if at
+> all — as a prior observation that motivated the rule below, never as a measured rate of this
+> corpus. Restoring the number means restoring the deep tier and a search, which is
+> `run-regenerate.sh` plus hours of wall-clock, not a citation fix.
+
+The rule below is written for the behaviour that observation suggested, and it holds regardless:
+even one shorter sequence is enough to break step-wise scoring.
 
 Three rules follow, and the first is the one that silently corrupts results:
 
@@ -121,6 +132,24 @@ Three rules follow, and the first is the one that silently corrupts results:
    folds, it does not search — and no minimal-length label is shipped, because producing one
    would mean running a search the project no longer has.
 3. **Compare crease sets, not steps.** Equal, not overlapping.
+4. **Both sides get replayed. Never score against `steps.fold`.** Decided 2026-09-18. Scoring
+   replays the model's sequence AND the recorded one through the engine, and compares the two
+   live states. `steps.fold` is for viewing and for Fold Studio playback, not for judging.
+
+   ⚠️ **The reason is a gap in the file format, not a preference.** `steps.fold` frames carry each
+   face's position in the CURRENT plane and nothing about which piece of the original sheet that
+   face is, because `planarize.foldedState()` emits current coordinates only. Deep in a stack many
+   layers are congruent triangles, so two states that differ by swapping two of them are
+   indistinguishable from the stored frames alone, and swapping them is a real difference between
+   two folded states. Measured: `verify-state.mjs --mutate` accepted 23 of 600 deliberately
+   corrupted stacks while comparing against stored frames, and rejects 600 of 600 comparing
+   replayed state against replayed state. A replayed state carries original-sheet coordinates for
+   free, because the engine needs them to decide tearing at all.
+
+   Fold Studio's format keeps a `vertices_flat` field for exactly this purpose; ours does not, and
+   adding it would mean regenerating the corpus for a path that scoring does not use. The
+   comparator reports `identifiesFaces` on every verdict, so a weakened comparison is visible in
+   the output rather than assumed away.
 
 ### On the corpus's scale, one prediction that was wrong
 

@@ -128,19 +128,58 @@ Model candidates and compatibility checks are maintained in the linked pilot doc
 
 ## 3. Tools given to the VLM
 
-### 3.1 Surface simulator — the core tool, must be built - for Dheeraj
+### 3.1 Surface simulator — the core tool, **built** (`workspace/tools/surface-sim.mjs`)
 
-- **Input**: a `.fold` file — either a full state, or the previous state plus one candidate next
-  fold applied to it.
-- **Output on success**: a 3D representation of that state — either (a) a three.js scene, or
-  (b) 3–4 static images rendered from different camera angles. X ray
-- **Output on failure**: a structured **error**, not images — the candidate fold is illegal
-  because the paper would have to pass through itself ("penetrate"). This is the same class of
-  check as Flat-Folder's four constraint types (`taco-taco` / `taco-tortilla` /
-  `tortilla-tortilla` / `transitivity` — see `notes/tools/flat-folder-capabilities.md`), but applied to
-  **one candidate step**, not a global terminal state.
+Revised 2026-09-18 against the shipped tool. The three places the original spec was wrong are
+marked; they are wrong in the specific sense that the tool cannot behave as written, and the
+reasons are properties of the action space rather than unfinished work.
+
+- **Input**: a state plus one candidate fold, over stdin or as files. Stateless: every call
+  carries the whole state back, so the loop holds no session.
+- **Output on success**: the new state, plus **SVG views — a top-down X-ray and an exploded
+  layer stack**.
+  - ⚠️ **Not the "3–4 camera angles" this spec asked for, and that is a correction rather than a
+    shortfall.** Every intermediate state in this tier is **flat**, so a second camera angle shows
+    the same silhouette rotated and carries no new information. What does carry information is
+    layer structure, hence the exploded stack. If the tier ever admits non-flat intermediate
+    states, this is the line that has to change.
+  - ⚠️ **SVG, not PNG.** The repo has no dependencies and rasterising needs one. A VLM API that
+    requires bitmaps has to rasterise these itself, with a headless browser or Fold Studio. The
+    tool renders; it does not encode images.
+- **Output on failure**: a structured error with a **named** reason, plus a hint. The names are
+  the point: a model told `would-tear` can act on it, a model told "illegal" cannot.
+
+  | error | meaning |
+  | --- | --- |
+  | `would-tear` | the moving layers are joined to stationary paper away from the fold line, so the sheet would come apart. **The binding constraint of this tier**, and decidable only in original-sheet coordinates, which is why the engine tracks them |
+  | `no-crease` | the fold moves layers without creasing anything, i.e. tears them free of the sheet rather than folding them |
+  | `nothing-to-move` | the fold line misses the selected layers entirely |
+  | `direction-impossible` | a run taken from the bottom was asked to fold over, or vice versa |
+  | `bad-line` | the fold line is malformed or names no side |
+
+- ⚠️ **There is no `penetrate` error, and there never will be in this action space.** The original
+  spec promised one. A some-layers fold may only move a **contiguous run of layers taken from the
+  top or the bottom**, and such a move cannot drive paper through the layers it left behind:
+  self-intersection is **unrepresentable**, excluded by construction rather than detected by a
+  test (`workspace/corpus/fold-engine-layers.mjs` header). Flat-Folder's four constraint types
+  (`taco-taco` / `taco-tortilla` / `tortilla-tortilla` / `transitivity`, see
+  `notes/tools/flat-folder-capabilities.md`) remain the right reference for **global terminal
+  states**; they are not what a single legal step needs checking against here.
+- **Error verbosity is an experimental variable, not a UI decision.** The richer the refusal, the
+  more of the reasoning the tool performs rather than the model; at the limit a message naming the
+  fix has solved the step. It must be frozen before the first run and reported, or the
+  tool-augmented arm is unreproducible and its comparison against the verifier-only arm (§5)
+  measures message design instead of reasoning.
+- **Coordinates in errors and states are `(x, y)` in original-sheet coordinates plus an integer
+  layer index.** There is no continuous `z` in this tier and a renderer that draws an exploded
+  stack is not evidence of one. Thickness is Track 2.
 - This is the piece the rest of the notes call the **surface simulator**. Flat-Folder does not
-  provide it — Flat-Folder has no notion or Motion of "step," full stop 
+  provide it: Flat-Folder has no notion of "step," full stop.
+- ⚠️ **Fold Studio (`Leanmcp/origami-surface-sim`) is not this tool.** It animates recorded
+  sequences in 3D and its own README states that neither collisions nor physical stack order are
+  validated. If the two are merged, **adjudication stays in the engine and Fold Studio only
+  presents**: rendering is approximate, adjudication is exact, and they do not share a code path.
+  Fold Studio's README has to be corrected at the same time, or it contradicts the paper.
 
 ### 3.2 Hamiltonian-path tool (Prof. Yi's suggestion) — to attempt - Both Dheeraj and Jialu
 
@@ -186,8 +225,9 @@ Model candidates and compatibility checks are maintained in the linked pilot doc
   step → images/error exchanges so far. This is what actually grows each iteration; the VLM box
   itself is stateless per call.
 - **VLM**: proposes the next `.fold` step, or declares the sequence complete.
-- **Surface simulator**: the verifier (§3.1) — renders images on success, returns a structured
-  error on an illegal (self-intersecting) fold. Optional tools (§3.2, §3.3) sit alongside it.
+- **Surface simulator**: the verifier (§3.1) — renders views on success, returns a structured
+  error with a named reason on an illegal fold, which in this tier means **tearing**, not
+  self-intersection (§3.1). Optional tools (§3.2, §3.3) sit alongside it.
 - **Loop**: images or error get folded back into the prompt for the next VLM call. This repeats
   until the VLM emits a step it marks as final.
 - **Compare**: ⚠️ **a CP can have many valid terminal states** (`notes/tools/flat-folder-capabilities.md`),
@@ -198,6 +238,20 @@ Model candidates and compatibility checks are maintained in the linked pilot doc
   variants Flat-Folder itself reports as equally valid. `DATASET.md` already flags that picking
   one terminal state is our experimental choice and not a label from the source; this is the
   line where that choice has to be paid for.
+
+  **Built 2026-09-18, and the group is narrower than the sentence above promises.**
+  `workspace/corpus/state-compare.mjs` implements equality up to the 8 square symmetries and an
+  arbitrary translation, where the four reflections also reverse the stack and flip every face's
+  parity, because turning a model over does all three at once. The **layer-order variants are NOT
+  in it**: those are not symmetries of one state, they are different states reachable from the
+  same CP, and deciding which orderings are valid needs a flat-foldability solver. Putting that
+  inside an equality test would hide an external dependency in what reads as arithmetic. If that
+  equivalence is wanted it needs its own check, owning the solver.
+
+  **Both sides are replayed through the engine; `steps.fold` is never the thing compared against**
+  (`DATASET.md` scoring rule 4). Stored frames carry no original-sheet coordinates, which makes
+  congruent layers interchangeable and the comparison strictly weaker; a replayed state carries
+  them for free.
 
 ---
 
