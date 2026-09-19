@@ -37,6 +37,11 @@ The result arrives under `enumeration`:
 - rejected_summary counts the candidates that failed, by error code. A large
   OUTSIDE_TARGET_CP count is normal; it is most of the search space.
 
+You do not have to spend a turn to see the list after a mistake. Every rejected
+add_fold carries `legal_folds_now`, the same enumeration for the unchanged state,
+in the same result as the error. If a fold was rejected, the fold you want is in
+that field: read it rather than guessing at another set of arguments.
+
 How to use it well:
 - Legal is not correct. Every listed fold is reproducible on paper and stays
   inside the CP, but only some of them lie on a path to the target's layer

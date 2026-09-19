@@ -169,6 +169,45 @@ export function segmentCovered(segment, cp) {
   return Boolean(info) && !gapsIn(info.edges.filter(e => e.assignment === segment.a), info.length).length;
 }
 
+// Whether flipping this fold actually repairs it, decided over the WHOLE fold rather than
+// one crease at a time.
+//
+// Each per-crease diagnosis says, correctly for that crease, "the line is right and the M/V
+// is wrong: flip over". Read as advice for the fold, that is only true when EVERY crease the
+// fold makes is an assignment conflict, because `over` flips all of them together. When some
+// creases are already on target, flipping repairs the conflicts and breaks the rest, and the
+// fold cannot be made right by any choice of over or moving side -- the selection or the line
+// has to change. Repeating the per-crease advice in that case sends a planner around a loop:
+// flip, fail the other way, flip back. Observed on easy-0003, six of eight creases conflicting.
+function repairVerdict(offending, proposed, action) {
+  const conflicts = offending.filter(o => o.problem === 'assignment_conflict').length;
+  if (conflicts !== offending.length) {
+    return {message: offending.find(o => o.problem !== 'assignment_conflict').message,
+            fields: {flip_repairs_all: false}};
+  }
+  if (offending.length < proposed) {
+    return {
+      message: `All ${offending.length} are the right line with the wrong M/V, but the other ` +
+        `${proposed - offending.length} crease${proposed - offending.length === 1 ? ' is' : 's are'} ` +
+        'already on target, and over flips every crease together. Flipping would repair these and ' +
+        'break those, so NO choice of over or moving side makes this fold on-target. Change the ' +
+        'layer selection so the conflicting creases move on their own, or fold a different line.',
+      fields: {flip_repairs_all: false,
+               creases_already_on_target: proposed - offending.length}};
+  }
+  const {tool, ...args} = action;
+  // Only for an all-layers fold: there `over` is free and reversing it remakes the same creases
+  // with every assignment flipped. For a partial run `over` is forced by the selection, and
+  // moving the other side selects different paper, so no corrected action can be promised.
+  const corrected = (args.selection_mode ?? 'all') === 'all' ? {...args, over: !args.over} : null;
+  return {
+    message: 'Every crease this fold makes is the right line with the wrong M/V, so reversing the ' +
+      'fold direction repairs all of them at once.' +
+      (corrected ? ' Retry this action with over flipped.' : ' over is forced by this layer' +
+        ' selection, so move the other side of the line or fold this run from the other end.'),
+    fields: {flip_repairs_all: true, ...(corrected ? {corrected_action: corrected} : {})}};
+}
+
 // The whole fold verifier, as a pure function of (paper state, CP, action).
 //
 // This is deliberately the ONLY place a fold is judged. FoldSession.apply is this plus a
@@ -201,11 +240,13 @@ export function tryFold(paper, cp, action) {
     return d && {crease_index: i, ...d};
   }).filter(Boolean);
   if (offending.length) {
+    const repair = repairVerdict(offending, r.made.length, action);
     return {ok: false, error: 'OUTSIDE_TARGET_CP',
       detail: 'Candidate makes a crease segment or M/V assignment absent from the input CP. ' +
-        `${offending.length} of ${r.made.length} crease segments are off-target. ` + offending[0].message,
+        `${offending.length} of ${r.made.length} crease segments are off-target. ` + repair.message,
       creases_proposed: r.made.length, creases_off_target: offending.length,
       coordinate_frame: 'original sheet coordinates, the same frame as the supplied CP',
+      ...repair.fields,
       // Every proposed crease is listed with its own repair, not just the first failure.
       off_target_creases: offending.slice(0, 6),
       proposed_creases: r.made.map(c => ({assignment: c.a, from: c.P, to: c.Q}))};

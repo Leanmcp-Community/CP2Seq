@@ -92,6 +92,23 @@ def validate_action(response, tools):
     return {"name": action["name"], "arguments": arguments}
 
 
+RECOVERY_ACTIONS = ("remove_fold", "go_to_step", "restore_revision")
+
+
+def legal_fold_count(browser, cached=None):
+    """How many legal, on-target folds exist right now. None if the enumeration failed.
+
+    The simulator always implements list_legal_folds; --tools only decides whether the MODEL
+    is offered it. Asking here therefore works in both arms, which matters: a stuck detector
+    that only fired in one arm would make episode lengths differ for a second reason and
+    quietly spoil the comparison.
+    """
+    if cached is not None:
+        return cached.get("distinct_legal_folds")
+    listed = browser.call("list_legal_folds", {"max_results": 1})
+    return listed["enumeration"]["distinct_legal_folds"] if listed.get("ok") else None
+
+
 def save_candidate(out, artifacts):
     write_json(out / "seq.json", artifacts["sequence"])
     write_json(out / "steps.fold", artifacts["steps"])
@@ -231,6 +248,7 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
     run.system_prompt("agent", args.prompt_text)
     history, seen = [], Counter()
     termination, sample_calls, tool_calls = "turn_budget", 0, 0
+    stuck_turns = 0
     for turn in range(1, args.max_turns + 1):
         turn_dir = out / f"turn-{turn:03d}"
         turn_dir.mkdir()
@@ -279,6 +297,26 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
             break
         tool_calls += 1
         result = browser.call(action["name"], action["arguments"])
+        # A rejected fold is exactly when the legal list is worth having, and the model has
+        # repeatedly failed to ask for it: easy-0003 spent turns 60-80 guessing at one state
+        # with the tool sitting unused. Attaching it to the rejection costs no turn.
+        if (args.tools == "legal-folds" and action["name"] == "add_fold" and not result.get("ok")
+                and "enumeration" not in result):
+            listed = browser.call("list_legal_folds", {"max_results": 8})
+            if listed.get("ok"):
+                result["legal_folds_now"] = listed["enumeration"]
+        # A dead end the model will not leave. When no legal fold exists, the ONLY useful move
+        # is to back out, and a model that instead keeps proposing folds cannot recover: every
+        # one of them is rejected by construction. easy-0003 spent turns 60-80 that way. Count
+        # consecutive dead-end turns where the model neither backtracked nor made progress,
+        # and stop the episode rather than spending the budget proving the same point.
+        progressed = result.get("ok") and action["name"] == "add_fold"
+        if progressed or action["name"] in RECOVERY_ACTIONS:
+            stuck_turns = 0
+        elif legal_fold_count(browser, result.get("legal_folds_now")) == 0:
+            stuck_turns += 1
+        else:
+            stuck_turns = 0
         images = result.pop("images", {})
         write_json(turn_dir / "tool.json", {"action": action, "result": result})
         save_candidate(out, browser.artifacts())
@@ -296,6 +334,15 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
         write_json(out / "history.json", history)
         if result.get("finished"):
             termination = "finished"
+            break
+        # stuck-limit 0 disables the check; math.inf cannot be used because config.json is
+        # written with allow_nan=False.
+        if args.stuck_limit and stuck_turns >= args.stuck_limit:
+            termination = "dead_end_no_recovery"
+            run.event("dead_end_no_recovery", turn=turn, stuck_turns=stuck_turns,
+                      state_id=browser.artifacts()["state"]["state_id"])
+            print(f"{sample_id}: no legal fold for {stuck_turns} turns and no backtrack; stopping",
+                  flush=True)
             break
     artifacts = browser.artifacts()
     save_candidate(out, artifacts)
@@ -331,6 +378,9 @@ def main():
     parser.add_argument("--image-history", choices=["latest", "all"], default="latest",
                         help="all reattaches every prior feedback image, matching Tinker's visual history")
     parser.add_argument("--max-turns", type=int, default=40)
+    parser.add_argument("--stuck-limit", type=int, default=5,
+                        help="End the episode after this many consecutive turns with no legal fold "
+                             "available and no backtrack. 0 disables the check.")
     parser.add_argument("--timeout", type=float, default=300, help="Seconds per Codex invocation")
     parser.add_argument("--max-retries", type=int, default=5,
                         help="Retries per turn after a rate-limit/capacity/transient CLI failure")
@@ -342,6 +392,8 @@ def main():
     args = parser.parse_args()
     if args.max_turns < 1 or not math.isfinite(args.timeout) or args.timeout <= 0:
         parser.error("Require max-turns > 0 and finite timeout > 0")
+    if args.stuck_limit < 0:
+        parser.error("Require stuck-limit >= 0")
     if args.max_retries < 0 or args.retry_wait <= 0 or args.retry_max_wait < args.retry_wait:
         parser.error("Require max-retries >= 0, retry-wait > 0, and retry-max-wait >= retry-wait")
     if len(args.samples) != len(set(args.samples)):

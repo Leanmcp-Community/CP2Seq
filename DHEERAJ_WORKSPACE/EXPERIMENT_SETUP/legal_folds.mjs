@@ -45,6 +45,17 @@ function canonicalLine(n, d) {
   return {n: [nx, ny], d: dd, dir: [-ny, nx]};
 }
 
+// Composing reflections leaves arithmetic dust, and an offset shown to the model as
+// -1.11e-16 instead of 0 invites it to copy the dust back into an action. Snap to a 1e-9
+// grid -- three orders of magnitude below the 2e-6 tolerance.
+//
+// It has to happen on the EMITTED number, not on the internal unit-normal offset: an
+// angle_index offset lives in lineSpec's un-normalised frame, so snapping the unit offset and
+// then multiplying by |n| just puts the dust back (0.25 came out as 0.24999999958). Snapping
+// here is also what keeps the guarantee intact, since the snapped action is the one tryFold
+// judges and the one the model is handed.
+const snap = v => Math.round(v * 1e9) / 1e9;
+
 // Push an original-sheet line through an isometry T: p -> Ap + t. For orthogonal A the image
 // normal is A n, and the offset picks up the translation.
 function pushForward({n, d}, T) {
@@ -83,11 +94,12 @@ function lineArguments(line) {
     const raw = INDEXED_NORMALS[ai], L = Math.hypot(raw[0], raw[1]);
     for (const s of [1, -1]) {
       if (Math.abs(s * raw[0] / L - line.n[0]) < TOL && Math.abs(s * raw[1] / L - line.n[1]) < TOL) {
-        return {angle_index: ai, offset: s * line.d * L};
+        return {angle_index: ai, offset: snap(s * line.d * L)};
       }
     }
   }
-  return {angle_degrees: Math.atan2(-line.n[0], line.n[1]) * 180 / Math.PI, offset: line.d};
+  return {angle_degrees: snap(Math.atan2(-line.n[0], line.n[1]) * 180 / Math.PI),
+          offset: snap(line.d)};
 }
 
 // `all` first so that when several selections produce the identical folded state -- top N is

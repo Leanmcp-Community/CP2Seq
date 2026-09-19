@@ -197,6 +197,40 @@ confound, so change it for both or neither.
 - [ ] Consider measuring turns-to-first-crease and tool calls per accepted fold alongside
       `solved`, so the two arms can be compared on something the budget does not distort.
 
+## 2b. What else is failing — measured 2026-09-19 over 103 saved episodes
+
+Counted across every `CODEX_HARNESS_TESTING/runs/*/results.json`. 8 of 103 episodes solved.
+
+| termination | episodes |
+| --- | --- |
+| `turn_budget` | 51 |
+| `finished` | 26 (only 8 solved) |
+| `repetition_detected` | 17 |
+| `error` (Codex CLI exit 1) | 9 |
+
+**Thrash is the dominant cost.** 813 of 2812 turns, 29 percent, are spent AFTER an episode's last
+accepted fold. 30 episodes waste more than ten such turns; the worst wasted 39 of 39 and never
+landed a single fold. That is what `legal_folds_now` and the dead-end stop target, and easy-0003
+went from 80 turns unsolved to 20 turns solved once it landed.
+
+**A second failure the enumerator cannot see.** Of the 26 episodes that called `finish`, ten had
+`cp_match: true` with `terminal_reference_match: false`: every crease correct, every M/V correct,
+wrong layer stack. `list_legal_folds` filters on CP compatibility alone, so a fold can be legal
+and on-target and still put the model in a stack from which the target is unreachable. Nothing in
+the loop tells it so, and `finish` reports the mismatch only after the episode is over.
+
+- [ ] Decide whether the loop should expose a stack comparison against the target before
+      `finish`. The target is already in the prompt, so computing the comparison adds no
+      information the model was not given, the same argument that justifies the enumerator. It
+      is still a change to the task and needs the Lu Xian conversation in section 2.
+- [ ] Consider ranking `legal_folds` by whether the resulting stack keeps the target reachable
+      rather than only by new crease length. This is the expensive version and may be its own
+      search problem.
+- [ ] Report turns-after-last-accepted-fold alongside `solved`. It separates "could not find the
+      fold" from "found folds but stopped making progress", which `solved` alone hides.
+- [ ] Look at the 9 `error` episodes: all are `Codex exited 1`, none retried by the transient
+      classifier, so the cause is not rate limiting.
+
 ## 3. hard-0001 budget — deferred, Dheeraj to check
 
 Not done, deliberately. `hard-0001` has 5468 CP edges and 5340 M/V edges. Line deduplication
