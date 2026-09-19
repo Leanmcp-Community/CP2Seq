@@ -1,4 +1,4 @@
-// Browser-native adapter around the existing exact all-layers engine.
+// Browser-native adapter around the shared connectivity-aware folding engine.
 import { FoldSession, replay, actionLine } from './engine.mjs';
 import { captureCP, captureViews, layersToPieces, setCaptureSize } from '../viewer/capture.js';
 export { frameLayers, strictTerminalMatch, terminalMatch, TERMINAL_METRIC } from './terminal_match.mjs';

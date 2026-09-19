@@ -11,8 +11,8 @@ if [ ! -x "$fold_python" ]; then
 fi
 cd "$repo_dir"
 exec "$fold_python" "$script_dir/codex_fold_loop.py" \
-  --samples easy-0001 easy-0002 \
-  --max-turns 40 \
+  --samples easy-0001 easy-0002 easy-0003 easy-0004 easy-0005 easy-0006 easy-0007 easy-0008 mid-0001 hard-0001 \
+  --max-turns 20 \
   --timeout 300 \
   --model gpt-5.6-luna \
   --reasoning-effort low \

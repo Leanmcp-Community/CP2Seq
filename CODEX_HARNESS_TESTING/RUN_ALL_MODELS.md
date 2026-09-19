@@ -1,7 +1,7 @@
 # Run all samples with all image history
 
 Run these commands yourself from the repository root. Each model uses low
-reasoning, all image history, up to 40 decisions per sample, and the same saved
+reasoning, all image history, up to 20 decisions per sample, and the same saved
 logging. All samples means every direct sample folder in the all-layers release
 corpus. The inspected run contains 400 samples.
 
@@ -38,7 +38,7 @@ bash CODEX_HARNESS_TESTING/run_terra_low.sh --image-history all --samples \
 Run each command when you are ready for that experiment. Results are saved in
 separate timestamped folders under `CODEX_HARNESS_TESTING/runs/`. CLI/service
 errors stop a batch; the commands attempt all samples but do not guarantee
-completion if an error occurs. Add `--max-turns 60` to change the decision
+completion if an error occurs. Add `--max-turns 40` to change the decision
 budget, and record that change when comparing runs.
 
 ## What all images means

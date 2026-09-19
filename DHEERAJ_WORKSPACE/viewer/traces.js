@@ -387,8 +387,9 @@ function stepTurn(delta) {
 async function renderConversation(force = false) {
   if (!currentRun) return;
   const run = currentRun, loc = location(), sample = run.samples.find(s => s.id === loc.sample);
-  const meta = $('conversation-meta'); meta.replaceChildren();
+  const meta = $('conversation-meta');
   if (!sample) {
+    meta.replaceChildren();
     ++ticket; pausePlayback(); playbackFrames = []; $('sequence-stage').hidden = true;
     $('conversation-title').textContent = 'Conversation';
     node('span', run.id, meta);
@@ -406,6 +407,7 @@ async function renderConversation(force = false) {
   }
   const signature = JSON.stringify([run.id, sample.id, loc.turn, loc.phase, sample.modified, state.mode, state.view]);
   if (!force && signature === conversationSignature) return;
+  meta.replaceChildren();
   const renderTicket = ++ticket;
   $('conversation-title').textContent = sample.id;
   const status = outcome(sample);

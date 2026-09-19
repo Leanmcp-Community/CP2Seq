@@ -11,6 +11,7 @@ import json
 import math
 import os
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -111,7 +112,48 @@ def sequence_metrics(candidate, reference):
             "step_count_ratio": len(candidate) / len(reference) if reference else None}
 
 
-def ask_codex(args, prompt, manifest, turn_dir, workdir, schema_path):
+# Transient service conditions worth waiting out. Plan/quota exhaustion and
+# auth failures are deliberately absent: those do not clear in seconds.
+RETRY_SIGNALS = (
+    (r"\b429\b", "http 429"),
+    (r"rate[ _-]?limit", "rate limit"),
+    (r"too many requests", "too many requests"),
+    (r"(?:status|code|http|error)\W{0,12}5(?:00|02|03|29)\b", "server error"),
+    (r"internal server error", "server error"),
+    (r"overloaded|over capacity|at capacity|insufficient capacity|no capacity",
+     "capacity"),
+    (r"server_error|service unavailable|temporarily unavailable", "service unavailable"),
+    (r"connection reset|connection refused|connection closed|stream (?:error|disconnected)",
+     "connection error"),
+)
+
+
+def retry_reason(turn_dir):
+    """Name the transient condition in this attempt's logs, or None."""
+    text = ""
+    for name in ("stderr.log", "events.jsonl"):
+        path = turn_dir / name
+        if path.is_file():
+            text += path.read_text(encoding="utf-8", errors="replace")[-40000:]
+    text = text.lower()
+    for pattern, label in RETRY_SIGNALS:
+        if re.search(pattern, text):
+            return label
+    return None
+
+
+def archive_attempt(turn_dir, attempt):
+    """Move one failed attempt's artifacts aside so the retry starts clean."""
+    archive = turn_dir / f"failed-attempt-{attempt:02d}"
+    archive.mkdir(exist_ok=True)
+    for name in ("events.jsonl", "stderr.log", "process.json", "response.json"):
+        source = turn_dir / name
+        if source.exists():
+            shutil.move(str(source), str(archive / name))
+    return archive
+
+
+def ask_codex(args, prompt, manifest, turn_dir, workdir, schema_path, run=None):
     command = [args.codex_bin, "-a", "never", "exec", "--sandbox", "read-only",
                "--skip-git-repo-check", "--ephemeral", "--json", "-C", str(workdir),
                "-c", 'forced_login_method="chatgpt"', "-c", 'model_provider="openai"',
@@ -135,18 +177,43 @@ def ask_codex(args, prompt, manifest, turn_dir, workdir, schema_path):
     environment = os.environ.copy()
     for key in ("OPENAI_API_KEY", "CODEX_API_KEY", "OPENAI_BASE_URL"):
         environment.pop(key, None)
-    started = time.monotonic()
-    with (turn_dir / "events.jsonl").open("w") as stdout, (turn_dir / "stderr.log").open("w") as stderr:
-        try:
-            result = subprocess.run(command, input=prompt, text=True, env=environment,
-                                    stdout=stdout, stderr=stderr, timeout=args.timeout)
-        except subprocess.TimeoutExpired:
-            write_json(turn_dir / "process.json", {"timeout": True, "duration_s": time.monotonic()-started})
-            raise RuntimeError(f"Codex timed out; see {turn_dir / 'stderr.log'}") from None
-    write_json(turn_dir / "process.json", {"returncode": result.returncode, "duration_s": time.monotonic()-started})
-    if result.returncode:
-        raise RuntimeError(f"Codex exited {result.returncode}; see {turn_dir / 'stderr.log'}")
-    return json.loads((turn_dir / "response.json").read_text())
+    attempts_allowed = args.max_retries + 1
+    history = []
+    for attempt in range(1, attempts_allowed + 1):
+        started = time.monotonic()
+        with (turn_dir / "events.jsonl").open("w") as stdout, (turn_dir / "stderr.log").open("w") as stderr:
+            try:
+                result = subprocess.run(command, input=prompt, text=True, env=environment,
+                                        stdout=stdout, stderr=stderr, timeout=args.timeout)
+            except subprocess.TimeoutExpired:
+                write_json(turn_dir / "process.json",
+                           {"timeout": True, "attempt": attempt, "duration_s": time.monotonic()-started})
+                raise RuntimeError(f"Codex timed out; see {turn_dir / 'stderr.log'}") from None
+        duration = time.monotonic() - started
+        write_json(turn_dir / "process.json",
+                   {"returncode": result.returncode, "attempt": attempt, "duration_s": duration})
+        if not result.returncode:
+            if history:
+                write_json(turn_dir / "retries.json", history)
+            return json.loads((turn_dir / "response.json").read_text())
+        reason = retry_reason(turn_dir)
+        archive = archive_attempt(turn_dir, attempt)
+        record = {"attempt": attempt, "returncode": result.returncode, "reason": reason,
+                  "duration_s": duration, "artifacts": archive.name}
+        history.append(record)
+        write_json(turn_dir / "retries.json", history)
+        if run is not None:
+            run.event("codex_retry", turn_dir=str(turn_dir), **record)
+        if reason is None:
+            raise RuntimeError(f"Codex exited {result.returncode}; see {archive / 'stderr.log'}")
+        if attempt >= attempts_allowed:
+            raise RuntimeError(f"Codex exited {result.returncode} ({reason}) on all {attempts_allowed} "
+                               f"attempts; see {archive / 'stderr.log'}")
+        wait = min(args.retry_max_wait, args.retry_wait * (2 ** (attempt - 1)))
+        print(f"{turn_dir.parent.name}/{turn_dir.name}: codex exited {result.returncode} ({reason}); "
+              f"waiting {wait:g}s then attempt {attempt + 1}/{attempts_allowed}; log {archive / 'stderr.log'}",
+              flush=True)
+        time.sleep(wait)
 
 
 def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
@@ -178,7 +245,7 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
         sample_calls += 1
         run.event("codex_request", turn=turn, model=args.model, reasoning_effort=args.reasoning_effort,
                   prompt_artifact=str(turn_dir / "prompt.md"), image_artifacts=manifest)
-        response = ask_codex(args, prompt, manifest, turn_dir, workdir, schema_path)
+        response = ask_codex(args, prompt, manifest, turn_dir, workdir, schema_path, run)
         cli_events = read_jsonl(turn_dir / "events.jsonl")
         completed = [e for e in cli_events if e.get("type") == "turn.completed"]
         cli_usage = completed[-1].get("usage", {}) if completed else {}
@@ -259,10 +326,18 @@ def main():
                         help="all reattaches every prior feedback image, matching Tinker's visual history")
     parser.add_argument("--max-turns", type=int, default=40)
     parser.add_argument("--timeout", type=float, default=300, help="Seconds per Codex invocation")
+    parser.add_argument("--max-retries", type=int, default=5,
+                        help="Retries per turn after a rate-limit/capacity/transient CLI failure")
+    parser.add_argument("--retry-wait", type=float, default=10,
+                        help="Seconds before the first retry; doubled on each further retry")
+    parser.add_argument("--retry-max-wait", type=float, default=120,
+                        help="Upper bound on the backoff wait")
     add_image_options(parser)
     args = parser.parse_args()
     if args.max_turns < 1 or not math.isfinite(args.timeout) or args.timeout <= 0:
         parser.error("Require max-turns > 0 and finite timeout > 0")
+    if args.max_retries < 0 or args.retry_wait <= 0 or args.retry_max_wait < args.retry_wait:
+        parser.error("Require max-retries >= 0, retry-wait > 0, and retry-max-wait >= retry-wait")
     if len(args.samples) != len(set(args.samples)):
         parser.error("Sample IDs must be unique")
     if not 256 <= args.render_size <= 2048 or args.max_image_edge < 1 or args.max_image_bytes < 1:

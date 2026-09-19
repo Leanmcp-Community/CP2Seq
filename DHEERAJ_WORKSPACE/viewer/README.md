@@ -26,6 +26,16 @@ compare it with the target and inspect original-sheet connections. Check all
 cases compares actual results with explicit expectations, including expected
 rejections. Outcomes are not precomputed or presented as passing before a check.
 
+The verification workspace uses interactive Three.js scenes with OrbitControls,
+the same paper colours/lighting as the corpus viewer, and a continuous fold
+slider. Drag to orbit, scroll to zoom, and right-drag to pan. Play swings accepted
+folds around their crease using `swing` from the existing corpus playback module.
+The animation adapter uses before/after states supplied by the experiment engine;
+it does not simulate or score a different folding model. Rejected folds remain
+stationary and show a red proposed crease. Both candidate and target support 3D,
+exploded layers, top, and X-ray views, with speed and reset-camera controls.
+Original-sheet connections are also an interactive 3D view.
+
 The workspace imports the actual experiment `ToolSession`, `FoldSession`, and
 `evaluateSession`/`terminalMatch` modules via the source-asset route. It introduces
 no alternative verifier or scorer. Original-sheet diagrams highlight selected
@@ -58,11 +68,15 @@ Verification commands (not run by the assistant):
 
 ```sh
 node --test DHEERAJ_WORKSPACE/viewer/test_trace_playback.mjs DHEERAJ_WORKSPACE/viewer/test_verification_cases.mjs
+node --test DHEERAJ_WORKSPACE/viewer/test_rescore_replay.mjs
+node --test DHEERAJ_WORKSPACE/viewer/test_verified_motion.mjs
 .venv/bin/python -m unittest discover -s DHEERAJ_WORKSPACE/viewer -p 'test_trace_store.py'
+.venv/bin/python DHEERAJ_WORKSPACE/viewer/test_browser_playback.py
 ```
 
-Two pages on one backend: **`/`** plays back saved searches, **`/corpus`** browses
-the generated dataset. Neither writes anything.
+Four pages share one backend: **`/`** plays saved searches, **`/corpus`** browses
+the dataset, **`/traces`** plays model conversations, and **`/verification`**
+exercises the experiment verifier and scorer. These pages do not write files.
 
 The Python backend lists saved runs directly from `DHEERAJ_WORKSPACE/exports`.
 The browser automatically loads the newest run and offers BFS/DFS selections.

@@ -9,7 +9,9 @@ const vertical = (x, assignment) => ({P:[x,0],Q:[x,1],assignment});
 const half = {angle_index:2,offset:.5,move_positive:true,over:true};
 const prefix = [half,{...half,offset:.25}];
 const pair = {...half,offset:.125,move_positive:false,selection_mode:'top',layer_count:2};
-const cpHalf = cpFor([vertical(.5,'V')]);
+const cpCross = cpFor([vertical(.5,'V'),
+  {P:[0,.5],Q:[.5,.5],assignment:'V'}, {P:[.5,.5],Q:[1,.5],assignment:'M'}]);
+const horizontal = {angle_index:0,offset:.5,move_positive:true,over:true};
 const cpFour = cpFor([[.25,'V'],[.375,'M'],[.5,'V'],[.625,'V'],[.75,'M']].map(([x,a]) => vertical(x,a)));
 const theta = 35*Math.PI/180;
 const cpOblique = cpFor([{P:[0,.1],Q:[1,Math.tan(theta)+.1],assignment:'V'}]);
@@ -34,9 +36,9 @@ export const CASES = [
   {id:'off-target',name:'Legal movement, wrong crease',group:'Legality',cp:cpFour,
     description:'Connectivity is valid, but the crease at x=0.1 is absent from the target CP. This distinguishes target mismatch from tearing.',
     reference:[...prefix,pair],candidate:[...prefix,{...pair,offset:.1}],expected:rejected('OUTSIDE_TARGET_CP')},
-  {id:'two-sequences',name:'Different sequences, equivalent result',group:'Scoring',cp:cpHalf,
-    description:'Reference A moves the right half leftward. Candidate B moves the left half rightward. Their stacks land in different positions but match under translation.',
-    reference:[half],candidate:[{...half,move_positive:false}],expected:accepted},
+  {id:'two-sequences',name:'Different sequences, equivalent result',group:'Scoring',cp:cpCross,
+    description:'Two two-fold sequences: A folds right-to-left, then top-down over. B folds left-to-right, then bottom-up under. Both reproduce the same M/V crease pattern and an equivalent four-layer stack in different positions.',
+    reference:[half,horizontal],candidate:[{...half,move_positive:false},{...horizontal,move_positive:false,over:false}],expected:accepted},
   {id:'turnover',name:'30° rotation, translation, upside down',group:'Scoring',cp:cpOblique,
     description:'The reference target is turned upside down, rotated 30°, and translated. Its layer order and every parity are transformed together.',
     reference:[oblique],candidate:[oblique],transform:'turnover',expected:accepted},

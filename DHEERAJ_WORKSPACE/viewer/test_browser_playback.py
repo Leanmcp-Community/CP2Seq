@@ -86,6 +86,12 @@ class BrowserPlaybackTests(unittest.TestCase):
         errors = []
         page.on("pageerror", lambda error: errors.append(str(error)))
         page.goto(self.base + "/verification")
+        expect(page.locator('[data-renderer="threejs"] canvas')).to_have_count(3)
+        page.locator('#case-timeline').fill('0.5')
+        expect(page.locator('#current-caption')).to_contain_text('90°')
+        page.locator('#case-timeline').fill('2.5')
+        expect(page.locator('#case-status')).to_contain_text('would-tear')
+        expect(page.locator('#current-caption')).to_contain_text('2 accepted folds')
         page.locator("#check-all").click()
         expect(page.locator("#suite-status")).to_have_text("9/9 cases match their expected outcomes.")
         page.locator("#case-finish").click()
