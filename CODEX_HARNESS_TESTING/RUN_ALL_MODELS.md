@@ -1,7 +1,7 @@
 # Run all samples with all image history
 
 Run these commands yourself from the repository root. Each model uses low
-reasoning, all image history, up to 20 decisions per sample, and the same saved
+reasoning, all image history, up to 80 decisions per sample, and the same saved
 logging. All samples means every direct sample folder in the all-layers release
 corpus. The inspected run contains 400 samples.
 
@@ -11,35 +11,28 @@ If you have not signed into the CLI, first run:
 codex login
 ```
 
-## Luna
+## Choosing samples
+
+`--all`, `--easy`, `--mid` and `--hard` expand to the matching sample folders in
+the release corpus. They are consumed by the run script and never reach
+`codex_fold_loop.py`; the last one given wins. With none of them, the default is
+a ten-sample smoke set.
 
 ```sh
-bash CODEX_HARNESS_TESTING/run_luna_low.sh --image-history all --samples \
-  $(find workspace/corpus/out/release/all-layers/samples \
-    -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort)
+bash CODEX_HARNESS_TESTING/run_luna_low.sh --all
+bash CODEX_HARNESS_TESTING/run_sol_low.sh --easy
+bash CODEX_HARNESS_TESTING/run_terra_low.sh --all
+bash CODEX_HARNESS_TESTING/run_astra_low.sh --mid
 ```
 
-## Sol
-
-```sh
-bash CODEX_HARNESS_TESTING/run_sol_low.sh --image-history all --samples \
-  $(find workspace/corpus/out/release/all-layers/samples \
-    -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort)
-```
-
-## Terra
-
-```sh
-bash CODEX_HARNESS_TESTING/run_terra_low.sh --image-history all --samples \
-  $(find workspace/corpus/out/release/all-layers/samples \
-    -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort)
-```
+`--samples a b c` still works for an explicit list, as does exporting `SAMPLES`.
+Point `CORPUS_DIR` elsewhere to draw the expansion from a different corpus.
 
 Run each command when you are ready for that experiment. Results are saved in
 separate timestamped folders under `CODEX_HARNESS_TESTING/runs/`. CLI/service
 errors stop a batch; the commands attempt all samples but do not guarantee
-completion if an error occurs. Add `--max-turns 40` to change the decision
-budget, and record that change when comparing runs.
+completion if an error occurs. `MAX_TURNS` changes the decision budget; record
+that change when comparing runs.
 
 ## What all images means
 
@@ -117,8 +110,8 @@ existed still runs the original condition, with a byte-identical prompt and
 action schema.
 
 ```sh
-bash CODEX_HARNESS_TESTING/run_luna_low.sh --samples easy-0001 easy-0002
-bash CODEX_HARNESS_TESTING/run_luna_low_legal.sh --samples easy-0001 easy-0002
+bash CODEX_HARNESS_TESTING/run_luna_low.sh --easy
+bash CODEX_HARNESS_TESTING/run_luna_low_legal.sh --easy
 ```
 
 Overrides. Environment variables replace a default; trailing arguments are
@@ -126,12 +119,12 @@ forwarded to `codex_fold_loop.py` after the shared flags and argparse takes the
 last occurrence, so either route works:
 
 ```sh
-MAX_TURNS=40 bash CODEX_HARNESS_TESTING/run_sol_low_legal.sh
-bash CODEX_HARNESS_TESTING/run_sol_low.sh --tools legal-folds --max-turns 40
+MAX_TURNS=120 bash CODEX_HARNESS_TESTING/run_sol_low_legal.sh --all
+bash CODEX_HARNESS_TESTING/run_sol_low.sh --tools legal-folds --easy
 ```
 
 `SAMPLES`, `MAX_TURNS`, `TIMEOUT`, `REASONING_EFFORT`, `IMAGE_HISTORY`,
-`FOLD_PYTHON` and `OBS_ECHO` are all overridable this way.
+`CORPUS_DIR`, `FOLD_PYTHON` and `OBS_ECHO` are all overridable this way.
 
 ### Reading the table
 
@@ -144,8 +137,9 @@ Lu Xian before any shared reporting.
 
 One practical consequence: the enumerator arm spends one turn listing and one
 turn folding, so it needs roughly twice the turn budget to lay the same number
-of creases. Raising `MAX_TURNS` for one arm only is itself a confound. Decide
-it deliberately, apply it to both arms or neither, and record which you did.
+of creases. `MAX_TURNS` is therefore 80 for **both** arms — generous enough that
+neither is measuring its own budget. Raising it for one arm only would put two
+differences in the comparison at once, so change it for both or neither.
 
 `hard-*` samples are not yet measured for enumeration cost; keep them out of an
 unattended `--tools legal-folds` batch until they are.

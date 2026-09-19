@@ -187,9 +187,13 @@ Observed on `easy-0001` with `--tools legal-folds`: the model spends one turn on
 can call `finish`. The baseline arm does not pay that. At equal `--max-turns` the enumerator
 arm is handicapped; at unequal `--max-turns` the arms differ in two things at once.
 
-- [ ] Decide which it is, apply it to both arms or neither, and record the choice next to the
-      numbers. `MAX_TURNS` is overridable per run in `CODEX_HARNESS_TESTING/_common.sh`, so
-      this is a reporting decision, not a code one.
+Settled 2026-09-19: `MAX_TURNS` is 80 for both arms, set once in
+`CODEX_HARNESS_TESTING/_common.sh`. A budget generous enough for both keeps the comparison
+about the tool rather than about the budget. Changing it for one arm only reintroduces the
+confound, so change it for both or neither.
+
+- [ ] State the shared budget next to any published numbers, so a reader does not have to
+      infer that the arms were not budget-matched by accident.
 - [ ] Consider measuring turns-to-first-crease and tool calls per accepted fold alongside
       `solved`, so the two arms can be compared on something the budget does not distort.
 
