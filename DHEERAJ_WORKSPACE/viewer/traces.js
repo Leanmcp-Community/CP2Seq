@@ -29,6 +29,24 @@ function block(parent, title, value, open = true) {
 function badge(parent, text, tone = '') {
   const el = node('span', text, parent); el.className = 'badge' + (tone ? ' ' + tone : ''); return el;
 }
+// Which action set the run gave the model. That decides whether two runs are comparable at
+// all, so it belongs on the row rather than three clicks away. Hover text is the native
+// title attribute: no tooltip of our own to position, and nothing to clip in a scrolling rail.
+const TOOL_MARKS = {
+  'legal-folds': {icon: '≡', tone: 'legal',
+    text: 'Enumerator arm: list_legal_folds available. The model could ask for the legal folds at each state and pick from the list. Not comparable with a base run.'},
+  base: {icon: '○', tone: 'base',
+    text: 'Baseline arm: no enumeration. The model derived every fold from the CP geometry and images.'},
+};
+function toolMark(parent, tools) {
+  const mark = TOOL_MARKS[tools] ?? {icon: '?', tone: 'unknown',
+    text: tools ? `Unrecognised action set: ${tools}`
+                : 'No tools field in config.json: this run predates the --tools flag and used the baseline action set.'};
+  const el = node('span', mark.icon, parent);
+  el.className = `tool-mark ${mark.tone}`;
+  el.title = mark.text;
+  return el;
+}
 function images(parent, run, manifest) {
   const group = node('div', undefined, parent); group.className = 'trace-images';
   for (const [label, info] of Object.entries(manifest || {})) {
@@ -276,14 +294,15 @@ function bindDetails(parent) {
     d.addEventListener('toggle', () => { state.expanded[key] = d.open; persist(); });
   }
 }
-function listRow(parent, {title, meta = [], status, chosen, action}) {
+function listRow(parent, {title, meta = [], status, chosen, action, mark}) {
   const b = node('button', undefined, parent);
   b.className = 'row-item';
   b.type = 'button';
   b.setAttribute('aria-current', String(!!chosen));
   node('span', title, b).className = 'row-title';
-  if (status || meta.length) {
+  if (status || meta.length || mark) {
     const line = node('span', undefined, b); line.className = 'row-meta';
+    if (mark) mark(line);
     if (status) badge(line, status.text, status.tone);
     meta.filter(Boolean).forEach(text => node('span', text, line));
   }
@@ -300,13 +319,16 @@ function renderRuns(runs = lastRuns) {
   lastRuns = runs;
   const parent = $('runs-body'); parent.replaceChildren();
   const query = $('runs-filter').value.trim().toLowerCase();
-  const visible = runs.filter(run => matches(run.id, query) || matches(run.model, query));
+  // Filtering on the arm too, so "legal" narrows the rail to the enumerator runs.
+  const visible = runs.filter(run => matches(run.id, query) || matches(run.model, query) ||
+      matches(run.tools, query));
   $('runs-count').textContent = visible.length === runs.length ? String(runs.length) : `${visible.length}/${runs.length}`;
   if (!visible.length) { node('p', runs.length ? 'No run matches this filter.' : 'No saved runs yet.', parent).className = 'note'; return; }
   const list = node('div', undefined, parent); list.className = 'row-list';
   for (const run of visible) listRow(list, {
     title: run.id,
     meta: [run.model],
+    mark: line => toolMark(line, run.tools),
     chosen: run.id === state.run,
     action: () => selectRun(run.id).catch(fail),
   });

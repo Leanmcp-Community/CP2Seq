@@ -200,6 +200,26 @@ body.sidebar-collapsed .sidebar {
 .badge.bad { background: #fae7e3; color: #812e25; }
 .row-item[aria-current="true"] .badge { background: rgba(255, 255, 255, .92); }
 
+/* Which action set a run used. Hover gives the full explanation via the title attribute. */
+.tool-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: help;
+  background: #eef1ec;
+  color: #7b8785;
+}
+.tool-mark.legal { background: #dce8f4; color: #1d4f7c; }
+.tool-mark.unknown { background: #f6ecd8; color: #7c5309; }
+.row-item[aria-current="true"] .tool-mark { background: rgba(255, 255, 255, .92); }
+
 .rail-footer { margin-top: 14px; }
 
 .artifact-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
