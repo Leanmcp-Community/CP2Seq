@@ -15,6 +15,7 @@ from image_assets import check_prompt_assets
 from observability.obs import Run
 from tinker_describe_image import MODEL, progress, response_record
 from tool_schemas import TOOLS
+from action_compare import same_action
 from repetition_guard import detect_repetition, MAX_OCCURRENCES
 
 
@@ -83,14 +84,11 @@ def record_prompt(prompt, directory, tokenizer):
 
 
 def sequence_metrics(candidate, reference):
-    keys = ("angle_index", "offset", "move_positive", "over")
-    def equal(a, b):
-        return all(abs(a[k] - b[k]) < 2e-6 if k == "offset" else a[k] == b[k] for k in keys)
     row = list(range(len(reference) + 1))
     for i, a in enumerate(candidate, 1):
         nxt = [i]
         for j, b in enumerate(reference, 1):
-            nxt.append(min(nxt[-1] + 1, row[j] + 1, row[j - 1] + (not equal(a, b))))
+            nxt.append(min(nxt[-1] + 1, row[j] + 1, row[j - 1] + (not same_action(a, b))))
         row = nxt
     return {"action_edit_distance": row[-1], "reference_steps": len(reference),
             "candidate_steps": len(candidate),

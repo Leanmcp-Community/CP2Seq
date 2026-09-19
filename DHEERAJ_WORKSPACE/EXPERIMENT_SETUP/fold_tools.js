@@ -1,5 +1,5 @@
 // Browser-native adapter around the existing exact all-layers engine.
-import { FoldSession, replay } from './engine.mjs';
+import { FoldSession, replay, actionLine } from './engine.mjs';
 import { captureCP, captureViews, layersToPieces, setCaptureSize } from '../viewer/capture.js';
 export { frameLayers, strictTerminalMatch, terminalMatch, TERMINAL_METRIC } from './terminal_match.mjs';
 import { frameLayers, terminalMatch, TERMINAL_METRIC } from './terminal_match.mjs';
@@ -30,7 +30,7 @@ export class ToolSession {
   call(name, args = {}) {
     try {
       if (!args || typeof args !== 'object' || Array.isArray(args)) throw Error('arguments must be an object');
-      const keys = {add_fold: ['angle_index', 'offset', 'move_positive', 'over'], remove_fold: ['step'],
+      const keys = {add_fold: ['angle_index', 'angle_degrees', 'selection_mode', 'layer_count', 'offset', 'move_positive', 'over'], remove_fold: ['step'],
         go_to_step: ['step'], restore_revision: ['revision'], get_images: ['step'], get_state: [], finish: []}[name];
       if (!keys || Object.keys(args).some(k => !keys.includes(k))) throw Error('Unknown tool or argument');
       let info = {};
@@ -61,8 +61,10 @@ export class ToolSession {
     for (const {tool, ...action} of this.session.actions) {
       const before = trace.layers.length, n = trace.creases.length;
       trace.apply({tool: 'apply_fold', ...action});
-      folds.push({step: folds.length + 1, angle_deg: [0, 45, 90, 135][action.angle_index], ...action,
-        selection: {mode: 'all'}, layers_before: before, layers_after: trace.layers.length,
+      const mode = action.selection_mode ?? 'all';
+      folds.push({step: folds.length + 1, angle_deg: action.angle_degrees ?? [0, 45, 90, 135][action.angle_index], ...action,
+        line: actionLine(action), selection: mode === 'all' ? {mode} : {mode, k: action.layer_count},
+        layers_before: before, layers_after: trace.layers.length,
         creases_created: trace.creases.length - n,
         creases: trace.creases.slice(n).map(c => ({P: c.P, Q: c.Q, assignment: c.a}))});
     }

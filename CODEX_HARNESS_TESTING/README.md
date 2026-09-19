@@ -55,6 +55,20 @@ These actions are returned as structured decisions. They are not registered as
 native Codex tools. The CLI harness handles inference and structured output;
 the outer controller handles simulator actions.
 
+`add_fold` now uses the shared `fold-engine-layers.mjs` engine. Existing
+`angle_index` actions remain valid. Alternatively, `angle_degrees` permits any
+crease-line angle, using the unit normal `(-sin(theta), cos(theta))` and signed
+perpendicular `offset`. The fold motion remains a flat 180-degree fold.
+`selection_mode` defaults to `all`; `top` or `bottom` requires `layer_count`.
+Top runs fold over, bottom runs fold under. Original-sheet connectivity is
+checked before target-CP compatibility: separating a moving/stationary connection
+away from the hinge returns `would-tear` without changing the session. This is
+a zero-thickness geometric check, not continuous collision/contact simulation.
+Saved sequences include the full line and selection for replay; edit distance
+compares normalized moving half-planes, over/under, and selected runs.
+The launcher still defaults to the same two all-layers corpus samples; this
+change expands the available actions, not the default dataset.
+
 Every decision uses a fresh ephemeral Codex invocation. No session ID or
 `resume --last` is needed. This avoids mixing sample sessions, but historical
 images are not replayed beyond the initial/latest views, and startup overhead
@@ -271,9 +285,14 @@ The run root also contains `config.json`, the prompt snapshot, `tools.json`,
 
 The matching evaluator and action-edit-distance tolerance follow the original
 pilot, except that `terminal_reference_match` now compares the final layer stack
-up to a plane isometry: the same folded model translated, rotated or mirrored
-counts, while layer count, bottom-to-top order and per-layer parity must still
-agree exactly. Older runs were scored at fixed coordinates; re-score them with
+up to a plane isometry: any translation or rotation angle counts. Turning the
+model over reflects its geometry, reverses the bottom-to-top layer order, and
+flips every face parity. A coordinate-only mirror with unchanged order/parity
+does not represent a turnover. Every layer must match under one shared
+transformation. Original-sheet face identity is not checked by this metric.
+Initial inputs include an exploded target view; successful edits produce an
+exploded current-state view for the next decision, alongside the existing views.
+Older runs retain their saved scores until explicitly re-scored with
 `node workspace/rescore_runs.mjs`.
 
 `solved` requires both a `finish` action and `pilot_match`. The reference

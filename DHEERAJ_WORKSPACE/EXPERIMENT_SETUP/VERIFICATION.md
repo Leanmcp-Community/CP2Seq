@@ -1,5 +1,14 @@
 # Where a tool call gets verified
 
+Update, 2026-09-19: the experiment now uses `fold-engine-layers.mjs` through
+`FoldSession`. It accepts indexed or arbitrary-angle lines and all/top/bottom
+layer selections. Original-sheet connectivity is checked first; `would-tear`,
+`direction-impossible`, `nothing-to-move`, and `no-crease` are distinct errors.
+Target-CP compatibility is checked only after fold legality succeeds. Failed
+actions do not commit state or revisions. Exploded target/current PNGs are now
+part of the model inputs. The older source excerpts and line numbers below
+describe the September 18 implementation, not the expanded action space.
+
 Every action the model emits passes through four independent checks before it
 becomes a score. This file names each one, its file, and its exact failure
 modes. Nothing here is a proposal; it documents the code as it stands on
@@ -132,11 +141,13 @@ Three fields, tightening:
 ### The isometry quotient
 
 `terminalMatch` compares the stack **up to a single plane isometry**: translation,
-rotation or mirror. Layer count, bottom-to-top order and per-layer parity must
-still agree exactly, and one transform must carry every layer polygon onto its
-reference counterpart. Candidate transforms come from every alignment of the
-first layer's vertex cycle, direct and mirrored; a candidate counts only if it
-carries all layers.
+rotation at any angle, or physical turnover. Rotations preserve layer order and
+parity; reflections reverse the entire stack and flip every parity. One transform
+must carry every layer polygon onto its reference counterpart. Candidate
+transforms come from every alignment of the corresponding first layer's vertex
+cycle, in both turnover branches; a candidate counts only if it carries all
+layers. The metric does not compare original-sheet face identity. Historical
+results below predate this turnover correction and are not new validation.
 
 This replaced a fixed-coordinate comparison. `move_positive` decides which half
 of the sheet travels, so a correct sequence routinely reproduces the reference

@@ -25,6 +25,7 @@ sys.path.insert(0, str(SETUP))
 from capture_fold import (BrowserSession, CORPUS, DEFAULT_SAMPLES, load_task,
                           save_images, write_json, add_image_options)
 from tool_schemas import TOOLS
+from action_compare import same_action
 from observability.obs import Run, read_jsonl
 
 
@@ -80,7 +81,7 @@ def validate_action(response):
     for key, value in arguments.items():
         spec = params["properties"][key]
         valid = {"integer": type(value) is int, "number": type(value) in (int, float),
-                 "boolean": type(value) is bool}[spec["type"]]
+                 "boolean": type(value) is bool, "string": type(value) is str}[spec["type"]]
         if not valid or (type(value) in (int, float) and not math.isfinite(value)):
             raise ValueError(f"Invalid type or nonfinite value: {key}")
         if "enum" in spec and value not in spec["enum"]:
@@ -99,14 +100,11 @@ def save_candidate(out, artifacts):
 
 
 def sequence_metrics(candidate, reference):
-    def equal(a, b):
-        return all(abs(a[k] - b[k]) < 2e-6 if k == "offset" else a[k] == b[k]
-                   for k in ("angle_index", "offset", "move_positive", "over"))
     row = list(range(len(reference) + 1))
     for i, a in enumerate(candidate, 1):
         nxt = [i]
         for j, b in enumerate(reference, 1):
-            nxt.append(min(nxt[-1] + 1, row[j] + 1, row[j-1] + (not equal(a, b))))
+            nxt.append(min(nxt[-1] + 1, row[j] + 1, row[j-1] + (not same_action(a, b))))
         row = nxt
     return {"action_edit_distance": row[-1], "candidate_steps": len(candidate),
             "reference_steps": len(reference),

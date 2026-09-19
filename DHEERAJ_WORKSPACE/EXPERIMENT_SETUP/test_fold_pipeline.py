@@ -43,13 +43,16 @@ class FoldTests(unittest.TestCase):
         for sample_id in DEFAULT_SAMPLES:
             with self.subTest(sample=sample_id):
                 cp, target = load_task(sample_id)
-                self.browser.init(cp, target)
+                initial = self.browser.init(cp, target)
+                self.assertIn("target-exploded", initial["images"])
+                self.assertIn("initial-exploded", initial["images"])
                 folds = json.loads((CORPUS / sample_id / "seq.json").read_text())["folds"]
                 for fold in folds:
                     args = {k: fold[k] for k in ("angle_index", "offset", "move_positive", "over")}
                     result = self.browser.call("add_fold", args)
                     self.assertTrue(result["ok"], result)
                 end = self.browser.call("get_state")
+                self.assertIn("exploded", self.browser.call("get_images")["images"])
                 self.assertTrue(self.browser.artifacts()["evaluation"]["pilot_match"])
                 bad = self.browser.call("add_fold", {"angle_index": 0, "offset": 100,
                                                     "move_positive": True, "over": True})
@@ -79,8 +82,7 @@ class FoldTests(unittest.TestCase):
 
         Which half of the sheet travels decides where the stack lands, so a
         correct sequence routinely reproduces the reference translated, rotated
-        or mirrored. Those all count; only the shape, parity and stacking order
-        are the answer.
+        or turned upside down. A turnover reverses the stack and flips parity.
         """
         import math
 
@@ -94,7 +96,12 @@ class FoldTests(unittest.TestCase):
                 if kind == "translate":
                     return [x + dx, y + dy]
                 return [cos * x - sin * y + dx, sin * x + cos * y + dy]
-            return {**frame, "vertices_coords": [place(v) for v in frame["vertices_coords"]]}
+            result = {**frame, "vertices_coords": [place(v) for v in frame["vertices_coords"]]}
+            if kind == "mirror":
+                result["fo:faces_layer"] = [len(frame["faces_vertices"]) - 1 - rank
+                                             for rank in frame["fo:faces_layer"]]
+                result["fo:faces_parity"] = [1 - par for par in frame["fo:faces_parity"]]
+            return result
 
         sample_id = DEFAULT_SAMPLES[0]
         folds = json.loads((CORPUS / sample_id / "seq.json").read_text())["folds"]
@@ -147,7 +154,7 @@ class FoldTests(unittest.TestCase):
         }""")
         means = []
         for views in images:
-            self.assertEqual(set(views), {"top", "oblique", "reverse", "xray"})
+            self.assertEqual(set(views), {"top", "oblique", "reverse", "xray", "exploded"})
             for name, url in views.items():
                 data = base64.b64decode(url.split(",", 1)[1])
                 self.assertTrue(data.startswith(b"\x89PNG"))
@@ -157,6 +164,44 @@ class FoldTests(unittest.TestCase):
                     if name == "xray":
                         means.append(sum(im.convert("RGB").getpixel((256, 280))))
         self.assertLess(means[1], means[0])
+
+    def test_partial_fold_tearing_revision_and_export(self):
+        result = self.browser.page.evaluate("""async () => {
+          const {planarize} = await import('../../workspace/corpus/planarize.mjs');
+          const square = [[0,0],[1,0],[1,1],[0,1]];
+          const cp = planarize([
+            ...square.map((P,i) => ({P,Q:square[(i+1)%4],assignment:'B'})),
+            ...[[.25,'V'],[.375,'M'],[.5,'V'],[.625,'V'],[.75,'M']]
+              .map(([x,assignment]) => ({P:[x,0],Q:[x,1],assignment}))
+          ]).fold;
+          const target = {vertices_coords:square,faces_vertices:[[0,1,2,3]],
+            'fo:faces_layer':[0],'fo:faces_parity':[0]};
+          window.foldTools.init(cp,target);
+          const base = {angle_index:2,offset:.5,move_positive:true,over:true};
+          const first = window.foldTools.call('add_fold',base);
+          const second = window.foldTools.call('add_fold',{...base,offset:.25});
+          const before = window.foldTools.call('get_state');
+          const tear = window.foldTools.call('add_fold',{angle_degrees:35,offset:.3,
+            move_positive:true,over:true,selection_mode:'top',layer_count:3});
+          const unchanged = JSON.stringify(before) === JSON.stringify(window.foldTools.call('get_state'));
+          const good = window.foldTools.call('add_fold',{...base,offset:.125,
+            move_positive:false,selection_mode:'top',layer_count:2});
+          const artifacts = window.foldTools.artifacts();
+          const restored = window.foldTools.call('restore_revision',{revision:second.revision});
+          return {first,second,tear,unchanged,good,artifacts,restored};
+        }""")
+        self.assertTrue(result["first"]["ok"])
+        self.assertTrue(result["second"]["ok"])
+        self.assertEqual(result["tear"]["error"], "would-tear")
+        self.assertTrue(result["unchanged"])
+        self.assertTrue(result["good"]["ok"])
+        self.assertEqual(result["artifacts"]["sequence"]["folds"][-1]["selection"],
+                         {"mode": "top", "k": 2})
+        self.assertEqual(result["artifacts"]["sequence"]["folds"][-1]["line"],
+                         {"n": [1, 0], "d": .125})
+        self.assertTrue(result["artifacts"]["evaluation"]["cp_match"])
+        self.assertTrue(result["restored"]["ok"])
+        self.assertEqual(len(result["restored"]["sequence"]), 2)
 
 
 if __name__ == "__main__":
