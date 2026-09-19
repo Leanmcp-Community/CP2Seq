@@ -25,7 +25,7 @@ SETUP = ROOT / "DHEERAJ_WORKSPACE/EXPERIMENT_SETUP"
 sys.path.insert(0, str(SETUP))
 from capture_fold import (BrowserSession, CORPUS, DEFAULT_SAMPLES, load_task,
                           save_images, write_json, add_image_options)
-from tool_schemas import TOOLS
+from tool_schemas import tools_for
 from action_compare import same_action
 from observability.obs import Run, read_jsonl
 
@@ -49,9 +49,9 @@ def model_view(value):
     return value
 
 
-def action_schema():
+def action_schema(tools):
     variants = []
-    for tool in TOOLS:
+    for tool in tools:
         function = tool["function"]
         parameters = json.loads(json.dumps(function["parameters"]))
         for key in parameters["properties"]:
@@ -66,13 +66,13 @@ def action_schema():
             "required": ["action"], "additionalProperties": False}
 
 
-def validate_action(response):
+def validate_action(response, tools):
     if not isinstance(response, dict) or set(response) != {"action"}:
         raise ValueError("Response must contain exactly action")
     action = response["action"]
     if not isinstance(action, dict) or set(action) != {"name", "arguments"}:
         raise ValueError("Action must contain name and arguments")
-    function = next((t["function"] for t in TOOLS if t["function"]["name"] == action["name"]), None)
+    function = next((t["function"] for t in tools if t["function"]["name"] == action["name"]), None)
     if function is None or not isinstance(action["arguments"], dict):
         raise ValueError("Unknown action or invalid arguments")
     arguments = {k: v for k, v in action["arguments"].items() if v is not None}
@@ -228,7 +228,7 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
     fixed_images = save_images(initial["images"], out / "initial", **image_options)
     current_images = {}
     historical_images = {}
-    run.system_prompt("agent", args.prompt.read_text())
+    run.system_prompt("agent", args.prompt_text)
     history, seen = [], Counter()
     termination, sample_calls, tool_calls = "turn_budget", 0, 0
     for turn in range(1, args.max_turns + 1):
@@ -236,7 +236,7 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
         turn_dir.mkdir()
         manifest = ({**fixed_images, **historical_images} if args.image_history == "all" else
                     {**fixed_images, **{f"current-{k}": v for k, v in current_images.items()}})
-        prompt = (args.prompt.read_text() + "\n\nFind the next action. Geometry and history:\n" +
+        prompt = (args.prompt_text + "\n\nFind the next action. Geometry and history:\n" +
                   json.dumps(model_view({"cp": cp, "target": target, "current": browser.artifacts()["state"],
                               "history": history, "turn": turn, "max_turns": args.max_turns})) +
                   "\nAttached images, in order:\n" + "\n".join(manifest))
@@ -263,7 +263,7 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
                    prompt_artifact=str(turn_dir / "prompt.md"), image_artifacts=manifest,
                    reasoning_kind="CLI-exposed summary; private reasoning unavailable")
         try:
-            action = validate_action(response)
+            action = validate_action(response, args.tool_specs)
         except ValueError as exc:
             feedback = {"ok": False, "error": str(exc), "instruction": "Return one valid action; nothing executed."}
             history.append({"response": response, "result": feedback})
@@ -304,6 +304,7 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
     reference = json.loads((args.corpus / sample_id / "seq.json").read_text())["folds"]
     result = {"sample_id": sample_id, "backend": "codex-cli-chatgpt", "model_requested": args.model,
               "reasoning_effort": args.reasoning_effort, "image_history": args.image_history,
+              "tools": args.tools,
               "termination": termination, "sample_calls": sample_calls, "tool_calls": tool_calls,
               **artifacts["evaluation"], **sequence_metrics(artifacts["sequence"]["folds"], reference)}
     result["solved"] = termination == "finished" and result["pilot_match"]
@@ -320,6 +321,11 @@ def main():
     parser.add_argument("--out", type=Path, default=HERE / "runs")
     parser.add_argument("--prompt", type=Path, default=HERE / "codex_fold_prompt.md")
     parser.add_argument("--codex-bin", default="codex")
+    parser.add_argument("--tools", choices=["base", "legal-folds"], default="base",
+                        help="base keeps the original action set; legal-folds adds list_legal_folds "
+                             "and its prompt appendix, which is a different experimental condition")
+    parser.add_argument("--prompt-appendix", type=Path, default=HERE / "codex_fold_prompt_legal_folds.md",
+                        help="Appended to --prompt only when --tools legal-folds")
     parser.add_argument("--model", help="An explicit model available to your Codex account; otherwise CLI default")
     parser.add_argument("--reasoning-effort", choices=["low", "medium", "high", "xhigh", "max"])
     parser.add_argument("--image-history", choices=["latest", "all"], default="latest",
@@ -349,21 +355,31 @@ def main():
     args.out = args.out.expanduser().resolve()
     args.corpus = args.corpus.expanduser().resolve()
     args.prompt = args.prompt.expanduser().resolve()
-    args.prompt.read_text()
+    args.tool_specs = tools_for(args.tools)
+    # The baseline prompt stays byte-identical under --tools base, so base runs remain
+    # comparable with every run recorded before the enumerator existed.
+    args.prompt_text = args.prompt.read_text()
+    if args.tools == "legal-folds":
+        args.prompt_appendix = args.prompt_appendix.expanduser().resolve()
+        args.prompt_text += "\n" + args.prompt_appendix.read_text()
     for sample_id in args.samples:
         load_task(sample_id, args.corpus)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
     run_dir = args.out / f"codex-{stamp}"
     run_dir.mkdir(parents=True)
-    write_json(run_dir / "config.json", {k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()})
-    (run_dir / "prompt.md").write_text(args.prompt.read_text())
+    # The resolved schemas and prompt are saved whole as tools.json and prompt.md; repeating
+    # them inline would bury the settings the config file exists to show.
+    config_view = {k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()
+                   if k not in ("tool_specs", "prompt_text")}
+    write_json(run_dir / "config.json", config_view)
+    (run_dir / "prompt.md").write_text(args.prompt_text)
     schema_path = run_dir / "action.schema.json"
-    write_json(schema_path, action_schema())
-    write_json(run_dir / "tools.json", TOOLS)
+    write_json(schema_path, action_schema(args.tool_specs))
+    write_json(run_dir / "tools.json", args.tool_specs)
     # CWD is outside the repository so project instructions/reference files are not auto-loaded.
     # This is context separation, not a filesystem security boundary.
     results = []
-    config = {k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()}
+    config = dict(config_view)
     config["model_geometry_decimals"] = MODEL_GEOMETRY_DECIMALS
     print(json.dumps(config, indent=2), flush=True)
     with closing(Run("fold-pilot", config=config, root=args.out, run_name=run_dir.name)) as run, \

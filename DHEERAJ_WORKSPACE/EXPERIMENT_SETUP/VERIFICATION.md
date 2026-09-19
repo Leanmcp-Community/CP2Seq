@@ -1,5 +1,28 @@
 # Where a tool call gets verified
 
+Update, 2026-09-19 (branch `dheeraj/legal-fold-enumeration`): layer 3 is now a
+pure function, `tryFold(paper, cp, action)` in `engine.mjs`, and it is the only
+place a fold is judged. `FoldSession.apply` is `tryFold` plus a commit. The new
+enumerator, `legal_folds.mjs`, is `tryFold` run over candidates generated from
+the CP's own crease lines, and the `list_legal_folds` tool returns its result.
+
+That sharing is the point, not an implementation detail. If the enumerator had
+its own legality logic it could list a fold that `add_fold` then rejects, and
+the model would be told something false by the environment. With one verifier
+there is no second opinion available to disagree, so the guarantee the tool
+states — *any listed action is accepted verbatim by `add_fold` while `state_id`
+is unchanged* — holds by construction rather than by agreement between two
+implementations. The enumerator therefore reports the full existing error
+vocabulary in `rejected_summary`: `nothing-to-move`, `no-crease`,
+`direction-impossible`, `would-tear`, `invalid-selection`, `OUTSIDE_TARGET_CP`.
+`tryFold` does not mutate `paper` (`foldLayers` copies faces and order), so
+thousands of candidates can be probed against a live state without cloning it.
+
+The tool is off by default. `codex_fold_loop.py --tools base`, the default, has
+a byte-identical prompt and action schema to every run recorded before this
+branch; `--tools legal-folds` adds the tool and its prompt appendix and is a
+different experimental condition. See TODO.md.
+
 Update, 2026-09-19: the experiment now uses `fold-engine-layers.mjs` through
 `FoldSession`. It accepts indexed or arbitrary-angle lines and all/top/bottom
 layer selections. Original-sheet connectivity is checked first; `would-tear`,
@@ -20,7 +43,8 @@ modes. Nothing here is a proposal; it documents the code as it stands on
 | --- | --- | --- | --- |
 | 1 | Schema and types | `CODEX_HARNESS_TESTING/codex_fold_loop.py` | `validate_action`, line 67 |
 | 2 | Tool dispatch and rollback | `DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/fold_tools.js` | `ToolSession.call`, line 30 |
-| 3 | **Fold verifier** | `DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/engine.mjs` | `FoldSession.apply`, line 85 |
+| 3 | **Fold verifier** | `DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/engine.mjs` | `tryFold` (was `FoldSession.apply`, line 85) |
+| 3b | Enumerator over layer 3 | `DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/legal_folds.mjs` | `enumerateLegalFolds` |
 | 4 | Terminal verifier | `DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/terminal_match.mjs` | `terminalMatch`, line 68 |
 
 Absolute paths:

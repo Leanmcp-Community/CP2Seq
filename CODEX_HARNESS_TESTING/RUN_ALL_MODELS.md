@@ -96,3 +96,56 @@ For a specific run, replace RUN_DIRECTORY with its actual path:
 ```
 
 These commands have not been executed by the assistant.
+
+## The two arms
+
+Every `run_<model>_low*.sh` script is four lines: it sets `MODEL`, optionally
+`TOOLS`, and sources `_common.sh`, which holds the samples, turn budget,
+timeout, reasoning effort and image history. Sharing that body is deliberate --
+the only difference between the two arms is the `--tools` value, so a results
+table can attribute a difference to the tool and not to a flag that drifted in
+one script.
+
+| arm | scripts | `--tools` | `result.json` records |
+| --- | --- | --- | --- |
+| baseline | `run_<model>_low.sh` | `base` | `"tools": "base"` |
+| enumerator | `run_<model>_low_legal.sh` | `legal-folds` | `"tools": "legal-folds"` |
+
+`base` is the default everywhere. `list_legal_folds` is exposed only when a
+script or a caller names it, so every command that worked before the enumerator
+existed still runs the original condition, with a byte-identical prompt and
+action schema.
+
+```sh
+bash CODEX_HARNESS_TESTING/run_luna_low.sh --samples easy-0001 easy-0002
+bash CODEX_HARNESS_TESTING/run_luna_low_legal.sh --samples easy-0001 easy-0002
+```
+
+Overrides. Environment variables replace a default; trailing arguments are
+forwarded to `codex_fold_loop.py` after the shared flags and argparse takes the
+last occurrence, so either route works:
+
+```sh
+MAX_TURNS=40 bash CODEX_HARNESS_TESTING/run_sol_low_legal.sh
+bash CODEX_HARNESS_TESTING/run_sol_low.sh --tools legal-folds --max-turns 40
+```
+
+`SAMPLES`, `MAX_TURNS`, `TIMEOUT`, `REASONING_EFFORT`, `IMAGE_HISTORY`,
+`FOLD_PYTHON` and `OBS_ECHO` are all overridable this way.
+
+### Reading the table
+
+The enumerator arm is a different task, not a better attempt at the same one.
+The baseline model must derive a legal fold from CP geometry and images; the
+enumerator model selects from a list already known to be legal and on-target.
+Report them as separate conditions and say so in words, not only in a column.
+TODO.md carries the full note, including that this has to be explained to
+Lu Xian before any shared reporting.
+
+One practical consequence: the enumerator arm spends one turn listing and one
+turn folding, so it needs roughly twice the turn budget to lay the same number
+of creases. Raising `MAX_TURNS` for one arm only is itself a confound. Decide
+it deliberately, apply it to both arms or neither, and record which you did.
+
+`hard-*` samples are not yet measured for enumeration cost; keep them out of an
+unattended `--tools legal-folds` batch until they are.

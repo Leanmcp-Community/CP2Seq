@@ -113,7 +113,7 @@ function collinearEdges(segment, cp) {
 }
 
 // The parts of [0, length] that the given intervals leave uncovered.
-function gapsIn(intervals, length) {
+export function gapsIn(intervals, length) {
   const spans = intervals.map(({lo, hi}) => [Math.max(0, lo), Math.min(length, hi)])
       .filter(([lo, hi]) => hi > lo + TOL).sort((a, b) => a[0] - b[0]);
   const gaps = [];
@@ -169,6 +169,50 @@ export function segmentCovered(segment, cp) {
   return Boolean(info) && !gapsIn(info.edges.filter(e => e.assignment === segment.a), info.length).length;
 }
 
+// The whole fold verifier, as a pure function of (paper state, CP, action).
+//
+// This is deliberately the ONLY place a fold is judged. FoldSession.apply is this plus a
+// commit, and the enumerator in legal_folds.mjs is this run over generated candidates, so a
+// listed fold cannot be one that add_fold would then reject: there is no second opinion to
+// disagree with. Nothing here mutates `paper` -- foldLayers copies faces and order -- so a
+// caller may probe thousands of candidates against a live state without cloning it.
+//
+// Returns the rejection object verbatim, ok:false, in the shape the model already sees, or
+// {ok: true, fold} carrying foldLayers' {state, made, moved, over} for the caller to commit.
+export function tryFold(paper, cp, action) {
+  parseAction(JSON.stringify(action));
+  if (action.tool !== 'apply_fold') throw Error('apply expects apply_fold');
+  const mode = action.selection_mode ?? 'all';
+  const stackSize = paper.order.length;
+  if (mode !== 'all' && action.layer_count > stackSize)
+    return {ok: false, error: 'invalid-selection',
+      detail: `layer_count exceeds the current stack size: asked for ${action.layer_count} ${mode} layers, the stack has ${stackSize}`,
+      requested_layer_count: action.layer_count, stack_size: stackSize};
+  const selection = mode === 'all' ? {mode} : {mode, k: action.layer_count};
+  // Check material connectivity before target-CP compatibility. A tear must
+  // remain a tear diagnostic even when the requested crease is also off-target.
+  const r = foldLayers(paper, actionLine(action), action.move_positive, selection, action.over);
+  if (r.error) return {ok: false, error: r.error,
+    detail: [LEGALITY_DETAILS[r.error] ?? r.error, r.diagnostic?.why].filter(Boolean).join(' '),
+    ...(r.between ? {between_faces: r.between} : {}),
+    ...(r.diagnostic ? {diagnostic: r.diagnostic} : {})};
+  const offending = r.made.map((c, i) => {
+    const d = diagnoseSegment(c, cp);
+    return d && {crease_index: i, ...d};
+  }).filter(Boolean);
+  if (offending.length) {
+    return {ok: false, error: 'OUTSIDE_TARGET_CP',
+      detail: 'Candidate makes a crease segment or M/V assignment absent from the input CP. ' +
+        `${offending.length} of ${r.made.length} crease segments are off-target. ` + offending[0].message,
+      creases_proposed: r.made.length, creases_off_target: offending.length,
+      coordinate_frame: 'original sheet coordinates, the same frame as the supplied CP',
+      // Every proposed crease is listed with its own repair, not just the first failure.
+      off_target_creases: offending.slice(0, 6),
+      proposed_creases: r.made.map(c => ({assignment: c.a, from: c.P, to: c.Q}))};
+  }
+  return {ok: true, fold: r};
+}
+
 export class FoldSession {
   constructor(cp) {
     this.cp = cp;
@@ -181,35 +225,9 @@ export class FoldSession {
     this.states = [this.layers];
   }
   apply(action) {
-    parseAction(JSON.stringify(action));
-    if (action.tool !== 'apply_fold') throw Error('apply expects apply_fold');
-    const mode = action.selection_mode ?? 'all';
-    if (mode !== 'all' && action.layer_count > this.layers.length)
-      return {ok: false, error: 'invalid-selection',
-        detail: `layer_count exceeds the current stack size: asked for ${action.layer_count} ${mode} layers, the stack has ${this.layers.length}`,
-        requested_layer_count: action.layer_count, stack_size: this.layers.length};
-    const selection = mode === 'all' ? {mode} : {mode, k: action.layer_count};
-    // Check material connectivity before target-CP compatibility. A tear must
-    // remain a tear diagnostic even when the requested crease is also off-target.
-    const r = foldLayers(this.paper, actionLine(action), action.move_positive, selection, action.over);
-    if (r.error) return {ok: false, error: r.error,
-      detail: [LEGALITY_DETAILS[r.error] ?? r.error, r.diagnostic?.why].filter(Boolean).join(' '),
-      ...(r.between ? {between_faces: r.between} : {}),
-      ...(r.diagnostic ? {diagnostic: r.diagnostic} : {})};
-    const offending = r.made.map((c, i) => {
-      const d = diagnoseSegment(c, this.cp);
-      return d && {crease_index: i, ...d};
-    }).filter(Boolean);
-    if (offending.length) {
-      return {ok: false, error: 'OUTSIDE_TARGET_CP',
-        detail: 'Candidate makes a crease segment or M/V assignment absent from the input CP. ' +
-          `${offending.length} of ${r.made.length} crease segments are off-target. ` + offending[0].message,
-        creases_proposed: r.made.length, creases_off_target: offending.length,
-        coordinate_frame: 'original sheet coordinates, the same frame as the supplied CP',
-        // Every proposed crease is listed with its own repair, not just the first failure.
-        off_target_creases: offending.slice(0, 6),
-        proposed_creases: r.made.map(c => ({assignment: c.a, from: c.P, to: c.Q}))};
-    }
+    const verdict = tryFold(this.paper, this.cp, action);
+    if (!verdict.ok) return verdict;
+    const r = verdict.fold;
     this.paper = r.state;
     this.layers = currentPolys(this.paper);
     this.creases.push(...r.made);

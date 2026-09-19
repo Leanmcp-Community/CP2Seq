@@ -14,9 +14,13 @@ from capture_fold import (HERE, CORPUS, DEFAULT_SAMPLES, BrowserSession, load_ta
 from image_assets import check_prompt_assets
 from observability.obs import Run
 from tinker_describe_image import MODEL, progress, response_record
-from tool_schemas import TOOLS
+from tool_schemas import tools_for
 from action_compare import same_action
 from repetition_guard import detect_repetition, MAX_OCCURRENCES
+
+# The Tinker condition keeps the original action set; the enumerator is a Codex-side
+# experiment for now, so it stays out until the Tinker loop grows the same flag. See TODO.md.
+TOOLS = tools_for("base")
 
 
 def parsed_text(message):

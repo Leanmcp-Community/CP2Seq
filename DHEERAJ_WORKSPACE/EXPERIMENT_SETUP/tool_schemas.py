@@ -24,5 +24,22 @@ TOOLS = [
     tool("get_images", "Render top, two oblique, X-ray, and exploded-stack PNGs at a completed step.",
          {"step": {"type": "integer", "minimum": 0}}),
     tool("get_state", "Inspect the current sequence and bottom-to-top layer polygons."),
+    tool("list_legal_folds", "List the folds that are legal in the current state and on-target for the CP. "
+         "Read-only. Every listed action is accepted verbatim by add_fold while the state is unchanged.", {
+        "max_results": {"type": "integer", "minimum": 1},
+        "selection_filter": {"type": "string", "enum": ["any", "all", "top", "bottom"]},
+        "include_rejected": {"type": "boolean"}}),
     tool("finish", "End this episode and evaluate the current sequence."),
 ]
+
+# The Codex loop exposes only a subset in its baseline condition; the enumerator changes
+# what the benchmark measures, so it must be requested explicitly. See TODO.md.
+ENUMERATION_TOOLS = ("list_legal_folds",)
+
+
+def tools_for(mode):
+    if mode == "base":
+        return [t for t in TOOLS if t["function"]["name"] not in ENUMERATION_TOOLS]
+    if mode == "legal-folds":
+        return list(TOOLS)
+    raise ValueError(f"Unknown tool mode: {mode}")

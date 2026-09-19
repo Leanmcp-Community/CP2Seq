@@ -117,3 +117,93 @@ The spoken note said the final `.fold` is generated "using the AR" — that did 
 clearly and I have not guessed at it. If it names a specific library, script, or representation
 for the assembly step, say which and this section becomes a work item; otherwise the assembly
 is just `sequenceFile()` extended as in 3.1.
+
+---
+
+# TODO — legal-fold enumeration (`list_legal_folds`)
+
+2026-09-19, branch `dheeraj/legal-fold-enumeration`. Owns: the follow-up work on the
+enumerator added in `DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/legal_folds.mjs`. What was built and
+why is in `EXPERIMENT_SETUP/VERIFICATION.md`; the model-facing contract is in
+`CODEX_HARNESS_TESTING/codex_fold_prompt_legal_folds.md`.
+
+## What landed
+
+`engine.mjs` now exposes `tryFold(paper, cp, action)`, the whole fold verifier as a pure
+function. `FoldSession.apply` is `tryFold` plus a commit, and `enumerateLegalFolds` is
+`tryFold` run over candidates generated from the CP's own crease lines. One verifier, so a
+listed fold cannot be one that `add_fold` then rejects. The Codex loop gates the tool behind
+`--tools legal-folds`; `--tools base` is the untouched original condition.
+
+## 1. Soundness test — not yet written
+
+This is the test that decides whether anything above is true, and it does not exist yet.
+
+- [ ] For `easy-0001` through `easy-0008`, walk the reference sequence. At every prefix
+      state, call `enumerateLegalFolds`, then apply **every** listed action to a freshly
+      replayed session and assert each one is accepted. A listed fold that `add_fold`
+      rejects means the enumerator and the verifier have drifted apart, which is the one
+      failure mode the shared-`tryFold` design exists to prevent.
+- [ ] At the same prefixes, assert the reference's own next action appears in the list, up
+      to the effect-deduplication (compare resulting folded states, not argument spellings:
+      the enumerator may legitimately return an equivalent action with different arguments).
+      If the reference fold is missing, candidate generation has a gap and every downstream
+      claim about the list being complete is false.
+- [ ] Assert `list_legal_folds` leaves `revision`, `state_id`, and the accepted sequence
+      unchanged.
+- [ ] Place it next to `test_partial_folds.mjs` as `test_legal_folds.mjs`, same node:test
+      style, and add it to whatever runs the `.mjs` tests.
+
+## 2. Benchmark comparability — explain to Lu Xian before any shared numbers
+
+**Talk to Lu Xian about this before putting `--tools legal-folds` results next to existing
+results.** The enumerator changes what the benchmark measures, and the change is easy to miss
+from a results table.
+
+Baseline condition: the model must *derive* a legal fold from CP geometry and images. It has
+to relate a current-coordinate fold line back through earlier reflections to the original
+sheet, and get the M/V consequence right. That derivation is most of the task, and
+`OUTSIDE_TARGET_CP` at 86 percent of tool calls is mostly that derivation failing.
+
+Enumerator condition: the model *selects* from a menu that is already known to be legal and
+on-target. It isolates search and planning — which of the legal folds leads to the target's
+layer order — from the geometric reasoning. That is a legitimate and interesting ablation.
+It is not the same task, and its numbers are not comparable to the baseline's.
+
+- [ ] Explain the above to Lu Xian, including that `--tools base` is byte-identical in
+      prompt and action schema to every run recorded before this branch, so old runs stay
+      valid as the baseline arm.
+- [ ] Decide how the two arms are reported: `result.json` now carries `tools`, so they are
+      separable, but the write-up has to name the distinction explicitly rather than leave
+      it to a column.
+- [ ] Decide whether the Tinker loop gets the same flag. Right now `tinker_fold_loop.py` and
+      `check_tinker_protocol.py` are pinned to `tools_for("base")` so the Tinker condition is
+      unchanged by this branch.
+
+### 2a. The turn budget is a confound in its own right
+
+Observed on `easy-0001` with `--tools legal-folds`: the model spends one turn on
+`list_legal_folds` and one on `add_fold`, so a four-fold sample needs eight turns before it
+can call `finish`. The baseline arm does not pay that. At equal `--max-turns` the enumerator
+arm is handicapped; at unequal `--max-turns` the arms differ in two things at once.
+
+- [ ] Decide which it is, apply it to both arms or neither, and record the choice next to the
+      numbers. `MAX_TURNS` is overridable per run in `CODEX_HARNESS_TESTING/_common.sh`, so
+      this is a reporting decision, not a code one.
+- [ ] Consider measuring turns-to-first-crease and tool calls per accepted fold alongside
+      `solved`, so the two arms can be compared on something the budget does not distort.
+
+## 3. hard-0001 budget — deferred, Dheeraj to check
+
+Not done, deliberately. `hard-0001` has 5468 CP edges and 5340 M/V edges. Line deduplication
+should collapse those to a manageable number of distinct lines, but that is an expectation,
+not a measurement.
+
+- [ ] Measure `enumerateLegalFolds` wall time on `hard-0001` at several prefix depths,
+      where the state carries hundreds of faces and `foldLayers`' tearing check is O(faces²),
+      all inside one Playwright `page.evaluate` round trip.
+- [ ] If it is slow, add a wall-clock budget that returns partial results with
+      `truncated: true` rather than hanging the turn. The result shape already carries
+      `truncated`, so only the enumerator loop needs to change.
+- [ ] Until then, do not enable `--tools legal-folds` on `hard-*` samples in an unattended
+      batch.
