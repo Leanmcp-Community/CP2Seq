@@ -95,6 +95,18 @@ def validate_action(response, tools):
 RECOVERY_ACTIONS = ("remove_fold", "go_to_step", "restore_revision")
 
 
+def position_key(browser):
+    """The paper itself, as a comparable key: polygons, parity, and sheet provenance.
+
+    Deliberately not the sequence or the revision. Two different routes to the same folded
+    paper are the same position, exactly as in chess, and it is returning to a POSITION that
+    means an episode is going in circles. Rounded through model_view so float noise cannot
+    make one position look like two.
+    """
+    layers = browser.artifacts()["state"]["layers_bottom_to_top"]
+    return json.dumps(model_view(layers), sort_keys=True)
+
+
 def legal_fold_count(browser, cached=None):
     """How many legal, on-target folds exist right now. None if the enumeration failed.
 
@@ -249,6 +261,13 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
     history, seen = [], Counter()
     termination, sample_calls, tool_calls = "turn_budget", 0, 0
     stuck_turns = 0
+    # Threefold-repetition counting. A visit is recorded only when the paper actually MOVES
+    # into a position, so turns that change nothing -- a rejected fold, get_state, get_images,
+    # list_legal_folds -- never advance a count. What this catches is the other thing:
+    # exploring forward, backtracking, and arriving at the same position again, which
+    # easy-0007 did from turn 46 to 80 while almost every individual action succeeded.
+    position = position_key(browser)
+    visits = Counter({position: 1})
     for turn in range(1, args.max_turns + 1):
         turn_dir = out / f"turn-{turn:03d}"
         turn_dir.mkdir()
@@ -335,6 +354,19 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
         if result.get("finished"):
             termination = "finished"
             break
+        # Only a real move counts as a visit; an unchanged position is a turn the model spent
+        # without going anywhere, which the dead-end check above already covers.
+        moved_to = position_key(browser)
+        if moved_to != position:
+            position = moved_to
+            visits[position] += 1
+            if args.cycle_limit and visits[position] >= args.cycle_limit:
+                termination = "state_cycling"
+                run.event("state_cycling", turn=turn, visits=visits[position],
+                          state_id=browser.artifacts()["state"]["state_id"])
+                print(f"{sample_id}: arrived at the same folded position {visits[position]} times; stopping",
+                      flush=True)
+                break
         # stuck-limit 0 disables the check; math.inf cannot be used because config.json is
         # written with allow_nan=False.
         if args.stuck_limit and stuck_turns >= args.stuck_limit:
@@ -381,6 +413,10 @@ def main():
     parser.add_argument("--stuck-limit", type=int, default=5,
                         help="End the episode after this many consecutive turns with no legal fold "
                              "available and no backtrack. 0 disables the check.")
+    parser.add_argument("--cycle-limit", type=int, default=5,
+                        help="End the episode after the paper ARRIVES at the same folded position "
+                             "this many times. Only moves count, so turns that change nothing "
+                             "never advance it. 0 disables the check.")
     parser.add_argument("--timeout", type=float, default=300, help="Seconds per Codex invocation")
     parser.add_argument("--max-retries", type=int, default=5,
                         help="Retries per turn after a rate-limit/capacity/transient CLI failure")
@@ -392,8 +428,8 @@ def main():
     args = parser.parse_args()
     if args.max_turns < 1 or not math.isfinite(args.timeout) or args.timeout <= 0:
         parser.error("Require max-turns > 0 and finite timeout > 0")
-    if args.stuck_limit < 0:
-        parser.error("Require stuck-limit >= 0")
+    if args.stuck_limit < 0 or args.cycle_limit < 0:
+        parser.error("Require stuck-limit >= 0 and cycle-limit >= 0")
     if args.max_retries < 0 or args.retry_wait <= 0 or args.retry_max_wait < args.retry_wait:
         parser.error("Require max-retries >= 0, retry-wait > 0, and retry-max-wait >= retry-wait")
     if len(args.samples) != len(set(args.samples)):
