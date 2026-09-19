@@ -84,12 +84,26 @@ Use rejection feedback to change your plan:
 - A rejected action leaves the state unchanged.
 - Do not repeat an identical rejected action at the same revision.
 - OUTSIDE_TARGET_CP means the proposed action introduces an incompatible
-  crease segment or mountain/valley assignment.
+  crease segment or mountain/valley assignment. The rejection names the offence:
+  `off_target_creases` lists each proposed crease the CP does not contain, in
+  original sheet coordinates, with `problem` one of `assignment_conflict` (the
+  line is right, the M/V is wrong: flip over or move the other side),
+  `absent` (no CP crease lies on this line at all), or `partly_missing` (the CP
+  crease covers only part of this fold, so it would crease unfolded paper).
+  `uncovered` gives the exact sub-spans and `cp_creases_on_this_line` gives what
+  the CP does have there. `proposed_creases` lists every crease the fold makes.
 - would-tear means moving and stationary faces share a connection away from the
   hinge. Change the selected run or crease; the paper state remains unchanged.
-- direction-impossible means top must fold over or bottom must fold under.
+  `diagnostic` names the two layer ranks and the join itself:
+  `join_current_coords` and `join_sheet_coords` are its endpoints, and
+  `join_distance_from_fold_line` its signed distance from the proposed hinge.
+- direction-impossible means top must fold over or bottom must fold under;
+  `diagnostic.required_over` gives the only legal value for this selection.
 - nothing-to-move / no-crease mean the chosen line and side do not move selected
-  paper or do not create a crease. invalid-selection means too many layers.
+  paper or do not create a crease. `diagnostic.offsets_that_cut_the_selection`
+  gives the offset interval, in your own offset units along the same normal,
+  that would cross the selected layers. invalid-selection means too many layers;
+  it reports `stack_size`.
 - After three consecutive rejected add_fold actions without progress, reconsider
   the accepted prefix. Use restore_revision, go_to_step, or remove_fold to explore
   a different branch. If the sequence is empty, reconsider the first fold instead.

@@ -96,27 +96,77 @@ const LEGALITY_DETAILS = {
 };
 
 // Segment coverage rather than edge identity: planarization may split a crease differently.
-export function segmentCovered(segment, cp) {
+// Collect every CP edge collinear with this segment, projected onto it.
+function collinearEdges(segment, cp) {
   const dx = segment.Q[0] - segment.P[0], dy = segment.Q[1] - segment.P[1];
   const length = Math.hypot(dx, dy);
-  if (length <= TOL) return false;
-  const ux = dx / length, uy = dy / length, intervals = [];
+  if (length <= TOL) return null;
+  const ux = dx / length, uy = dy / length, edges = [];
   cp.edges_vertices.forEach((edge, i) => {
-    if (cp.edges_assignment[i] !== segment.a) return;
     const points = edge.map(v => cp.vertices_coords[v]);
     if (points.some(p => Math.abs((p[0] - segment.P[0]) * uy - (p[1] - segment.P[1]) * ux) > TOL)) return;
     const values = points.map(p => (p[0] - segment.P[0]) * ux + (p[1] - segment.P[1]) * uy).sort((a, b) => a - b);
-    intervals.push(values);
+    edges.push({assignment: cp.edges_assignment[i], lo: values[0], hi: values[1], points});
   });
-  intervals.sort((a, b) => a[0] - b[0]);
-  let covered = 0;
-  for (const [lo, hi] of intervals) {
-    if (hi < covered - TOL) continue;
-    if (lo > covered + TOL) break;
-    covered = Math.max(covered, hi);
-    if (covered >= length - TOL) return true;
+  const at = t => [segment.P[0] + ux * t, segment.P[1] + uy * t];
+  return {length, edges, at};
+}
+
+// The parts of [0, length] that the given intervals leave uncovered.
+function gapsIn(intervals, length) {
+  const spans = intervals.map(({lo, hi}) => [Math.max(0, lo), Math.min(length, hi)])
+      .filter(([lo, hi]) => hi > lo + TOL).sort((a, b) => a[0] - b[0]);
+  const gaps = [];
+  let cursor = 0;
+  for (const [lo, hi] of spans) {
+    if (lo > cursor + TOL) gaps.push([cursor, lo]);
+    cursor = Math.max(cursor, hi);
+    if (cursor >= length - TOL) break;
   }
-  return false;
+  if (cursor < length - TOL) gaps.push([cursor, length]);
+  return gaps;
+}
+
+const show = p => `(${p[0].toFixed(6)}, ${p[1].toFixed(6)})`;
+
+// Say exactly which part of a proposed crease the CP does not contain, and why: a missing
+// crease and an inverted M/V assignment call for different repairs, so they are named apart.
+// Coordinates are original-sheet coordinates, the same frame as the supplied CP.
+export function diagnoseSegment(segment, cp) {
+  const info = collinearEdges(segment, cp);
+  if (!info) return {problem: 'degenerate', message: 'The proposed crease has zero length.'};
+  const {length, edges, at} = info;
+  const gaps = gapsIn(edges.filter(e => e.assignment === segment.a), length);
+  if (!gaps.length) return null;
+  const uncovered = gaps.map(([lo, hi]) => {
+    const other = edges.find(e => e.assignment !== segment.a && e.hi > lo + TOL && e.lo < hi - TOL);
+    return {from: at(lo), to: at(hi), length: hi - lo,
+            cp_assignment_here: other ? other.assignment : null};
+  });
+  const conflicts = uncovered.filter(u => u.cp_assignment_here);
+  const problem = conflicts.length === uncovered.length ? 'assignment_conflict'
+      : edges.length ? 'partly_missing' : 'absent';
+  const first = uncovered[0];
+  const message = problem === 'assignment_conflict'
+      ? `This fold creases ${segment.a} from ${show(first.from)} to ${show(first.to)}, but the CP has ` +
+        `${first.cp_assignment_here} there. The line is right and the direction is wrong: flip over, ` +
+        `or move the other side of the line, so this crease comes out ${first.cp_assignment_here}.`
+      : problem === 'absent'
+      ? `The CP has no crease anywhere on this line. This fold would crease ${segment.a} from ` +
+        `${show(segment.P)} to ${show(segment.Q)}, in original sheet coordinates. Move the fold line ` +
+        `onto a line that the CP actually contains.`
+      : `The CP crease on this line covers only part of this fold. The CP has nothing from ` +
+        `${show(first.from)} to ${show(first.to)}, so folding here would crease unfolded paper. ` +
+        `Fold fewer layers, or reach this crease after the layers it crosses are already folded away.`;
+  return {problem, assignment: segment.a, from: segment.P, to: segment.Q, length,
+          uncovered, message,
+          cp_creases_on_this_line: edges.slice(0, 8)
+              .map(e => ({assignment: e.assignment, from: at(e.lo), to: at(e.hi)}))};
+}
+
+export function segmentCovered(segment, cp) {
+  const info = collinearEdges(segment, cp);
+  return Boolean(info) && !gapsIn(info.edges.filter(e => e.assignment === segment.a), info.length).length;
 }
 
 export class FoldSession {
@@ -135,15 +185,30 @@ export class FoldSession {
     if (action.tool !== 'apply_fold') throw Error('apply expects apply_fold');
     const mode = action.selection_mode ?? 'all';
     if (mode !== 'all' && action.layer_count > this.layers.length)
-      return {ok: false, error: 'invalid-selection', detail: 'layer_count exceeds the current stack size'};
+      return {ok: false, error: 'invalid-selection',
+        detail: `layer_count exceeds the current stack size: asked for ${action.layer_count} ${mode} layers, the stack has ${this.layers.length}`,
+        requested_layer_count: action.layer_count, stack_size: this.layers.length};
     const selection = mode === 'all' ? {mode} : {mode, k: action.layer_count};
     // Check material connectivity before target-CP compatibility. A tear must
     // remain a tear diagnostic even when the requested crease is also off-target.
     const r = foldLayers(this.paper, actionLine(action), action.move_positive, selection, action.over);
-    if (r.error) return {ok: false, error: r.error, detail: LEGALITY_DETAILS[r.error] ?? r.error,
-      ...(r.between ? {between_faces: r.between} : {})};
-    if (r.made.some(c => !segmentCovered(c, this.cp))) {
-      return {ok: false, error: 'OUTSIDE_TARGET_CP', detail: 'Candidate makes a crease segment or M/V assignment absent from the input CP'};
+    if (r.error) return {ok: false, error: r.error,
+      detail: [LEGALITY_DETAILS[r.error] ?? r.error, r.diagnostic?.why].filter(Boolean).join(' '),
+      ...(r.between ? {between_faces: r.between} : {}),
+      ...(r.diagnostic ? {diagnostic: r.diagnostic} : {})};
+    const offending = r.made.map((c, i) => {
+      const d = diagnoseSegment(c, this.cp);
+      return d && {crease_index: i, ...d};
+    }).filter(Boolean);
+    if (offending.length) {
+      return {ok: false, error: 'OUTSIDE_TARGET_CP',
+        detail: 'Candidate makes a crease segment or M/V assignment absent from the input CP. ' +
+          `${offending.length} of ${r.made.length} crease segments are off-target. ` + offending[0].message,
+        creases_proposed: r.made.length, creases_off_target: offending.length,
+        coordinate_frame: 'original sheet coordinates, the same frame as the supplied CP',
+        // Every proposed crease is listed with its own repair, not just the first failure.
+        off_target_creases: offending.slice(0, 6),
+        proposed_creases: r.made.map(c => ({assignment: c.a, from: c.P, to: c.Q}))};
     }
     this.paper = r.state;
     this.layers = currentPolys(this.paper);
