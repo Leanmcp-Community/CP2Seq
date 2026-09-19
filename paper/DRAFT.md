@@ -603,7 +603,88 @@ comparator rejects corrupted stacks rather than taking §6.4 on trust.
 
 ---
 
-## 14. Editorial rules for this draft
+## 14. References
+
+Grouped by the role each work plays in the argument rather than alphabetically, so that a
+co-author can see what is load-bearing. Entries marked ⚠️ need a citation fixed before submission.
+
+### 14.1 Origami benchmarks and systems for language models
+
+| Key | Work |
+| --- | --- |
+| `origamispace` | R. Xu, D. Lu, Z. Zhao, X. Tan, X. Wang, S. Yuan, J. Chen, Y. Xu. **OrigamiSpace: Benchmarking Multimodal LLMs in Multi-Step Spatial Reasoning with Mathematical Constraints.** arXiv:2511.18450, Nov 2025. ⚠️ Cite as a preprint; `papers.md` recorded NeurIPS'25 and the arXiv record carries no venue |
+| `gamibench` | R. Spencer, R. Yaari, R. Vemavarapu, J. Yang, S. Ngo, U. Sharma. **GamiBench: Evaluating Spatial Reasoning and 2D-to-3D Planning Capabilities of MLLMs with Origami Folding Tasks.** arXiv:2512.22207, Dec 2025. Code and data released |
+| `learn2fold` | Y. Huang, Y. Chen, Y. Jiang, J. Han, Z. Tu, Y. Yang, C. Jiang. **Learn2Fold: Structured Origami Generation with World Model Planning.** arXiv:2603.29585 (cs.GR), Feb 2026, rev. Apr 2026 |
+| `foldingagent` | M. Moriya et al. **FoldingAgent.** arXiv:2609.00377. Reconstructs folding processes from instructional video; built on the PurelandFold dataset. Code: `github.com/maya-moriya/FoldingAgent` |
+| `origamibench` | **OrigamiBench.** ⚠️ **Citation missing.** Appears in our metrics survey as the source of query efficiency and geometric/semantic similarity, and its dataset is the 366<!--fact:corpus.instagram.total--> patterns in Flat-Folder's `examples/instagram/`. A full reference has to be recovered before submission |
+| `corigami` | **COrigami.** ⚠️ **Citation missing.** Appears in the metrics survey (flat-foldability as a boolean, VLM aesthetic score). Same action needed |
+
+### 14.2 Complexity and theory of flat folding
+
+| Key | Work |
+| --- | --- |
+| `bern-hayes` | M. Bern, B. Hayes. **The Complexity of Flat Origami.** SODA 1996, 175–183. *Geometry does not determine layer order: deciding overlap order is NP hard even given a valid mountain-valley assignment.* The citation under the paper's central claim |
+| `arkin-map` | E. Arkin, M. Bender, E. Demaine, M. Demaine, J. Mitchell, S. Sethia, S. Skiena. **When Can You Fold a Map?** Comput. Geom. 29(1):23–46, 2004. *Defines simple foldability; the action space comes from here* |
+| `akitaya-hard` | H. Akitaya, E. Demaine, J. Ku. **Simple Folding is Really Hard.** J. Information Processing 25:580–589, 2017 |
+| `akitaya-infinite` | H. Akitaya et al. **Infinite All-Layers Simple Foldability.** Graphs and Combinatorics. arXiv:1901.08564. *The all-layers model, which corresponds to sheet-metal bending* |
+| `akitaya-flatfolder` | H. Akitaya, E. Demaine, J. Ku. **Computing Flat-Folded States.** OSME 2024. *The Flat-Folder paper; deciding a global flat-folded state is NP hard* |
+| `mixed-orthogonal` | **Complexity of Simple Folding of Mixed Orthogonal Crease Patterns.** arXiv:2306.00702 |
+| `turing` | **Flat Origami is Turing Complete.** arXiv:2309.07932. ⚠️ Defensive citation only (§7) |
+| `continuous` | E. Demaine, S. Devadoss, J. Mitchell, J. O'Rourke. **Continuous Foldability of Polygonal Paper.** CCCG 2004. *Folded state versus folding motion; reachability is free, so the hard question is the discrete step structure.* Predecessor: Demaine & Mitchell, *Reaching Folded States of a Rectangular Piece of Paper*, CCCG 2001 |
+| `layer-algebra` | **An Algebraic Approach to Layer Ordering Constraints for Origami Flat-Foldability.** Origami8, 2026 |
+| `flat-folding-graphs` | **Realization and Connectivity of the Graphs of Origami Flat Foldings.** arXiv:1808.06013 |
+
+### 14.3 The CP→Seq problem itself
+
+| Key | Work |
+| --- | --- |
+| `akitaya-cp2seq` | H. Akitaya, J. Mitani, Y. Kanamori, Y. Fukui. **Generating Folding Sequences from Crease Patterns of Flat-Foldable Origami.** ACM SRC / SIGGRAPH Posters 2013. *The problem was named here, by the group whose tools the field now uses. Reflection paths, graph rewriting, step graphs; a frog base explodes to 22,665 nodes and 30 minutes, and the authors' own future work asks for the priority heuristic this paper's models are being asked to supply* |
+| `creasy` | **Creasy.** Open-source CP→Seq implementation of the above (Java, GPL-3.0, unmaintained since 2022). `github.com/xkevio/Creasy`. *Usable as a symbolic baseline* `[TO RUN if used]` |
+
+### 14.4 Counting folded states
+
+| Key | Work |
+| --- | --- |
+| `oeis-a000136` | OEIS **A000136**, foldings of a strip of stamps: 1, 2, 6, 16, 50, 144, 462, 1392, 4536, 14060, … *No closed form.* See also A001011, A001416 |
+| `lucas` | É. Lucas (1891), attributing the problem to É. Lemoine; earlier literature traced by J. Touchard (1950) |
+| `koehler` | J. Koehler. **Folding a Strip of Stamps.** J. Combinatorial Theory 5:135–152, 1968 |
+| `lunnon` | W. F. Lunnon. Multi-dimensional map folding, 1971 |
+| `meanders` | **Foldings and Meanders.** arXiv:1302.2025. *Meanders and stamp foldings are the same combinatorial object* |
+
+### 14.5 Spatial reasoning context
+
+| Key | Work |
+| --- | --- |
+| `spatial-survey` | **Spatial Reasoning in MLLMs: A Survey.** arXiv:2511.15722 |
+| `vot` | **Mind's Eye of LLMs: Visualization-of-Thought Elicits Spatial Reasoning in Large Language Models.** NeurIPS 2024. arXiv:2404.03622. *Names the mental-imagery question this benchmark can turn into a measurement* |
+
+### 14.6 Tools, formats and data
+
+| Key | Work |
+| --- | --- |
+| `flatfolder` | **Flat-Folder.** `github.com/origamimagiro/flat-folder`, MIT. Decides and enumerates flat-folded states; source of the four constraint classes cited in §5.3 |
+| `fold-format` | **The FOLD file format.** `github.com/edemaine/fold`. The de facto standard used by every artifact we ship |
+| `oripa` | **ORIPA.** J. Mitani. Crease-pattern editor and folded-form estimation |
+| `purelandfold` | **PurelandFold.** `huggingface.co/datasets/mayaweiz/PurelandFold`, CC-BY-4.0. 27 sequences, 337 frames. *Not used as training or evaluation data here; cited as the closest existing sequence-level corpus and as FoldingAgent's data* |
+
+### 14.7 Statistical physics of random flat-foldability
+
+Optional support for the claim that multiple valid states is the normal case rather than a
+curiosity. Include only if §3.1 needs reinforcement.
+
+- **A Spin Model for Global Flat-Foldability of Random Origami.** arXiv:2403.07306
+- **On Random Locally Flat-Foldable Origami.** arXiv:2502.04279
+
+### 14.8 Deliberately not cited
+
+Thick folding (Ku & Demaine 2016), bar-and-hinge mechanics, MERLIN2, SWOMPS, Sim-FAST-PY, and the
+creased-sheet mechanics literature all belong to the thickness and mechanics line of work. They
+are a separate paper with a verifier several orders of magnitude more expensive, and citing them
+here would invite a reviewer to ask why this paper does not do that one.
+
+---
+
+## 15. Editorial rules for this draft
 
 Not part of the paper. Each of these has been drafted wrongly at least once in this project.
 
