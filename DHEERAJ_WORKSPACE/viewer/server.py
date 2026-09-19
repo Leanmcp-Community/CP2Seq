@@ -265,11 +265,29 @@ class Handler(SimpleHTTPRequestHandler):
                 return self.json_response(200, load_sample(self.server.corpus, sample))
             if request.path.startswith("/api/"):
                 return self.json_response(404, {"error": "Unknown API endpoint"})
+            # Serve the actual experiment modules to the verification workspace.
+            # Only source assets in these three trees are exposed, never run data.
+            if request.path.startswith("/source/"):
+                source = confined(REPO, unquote(request.path[len("/source/"):]))
+                allowed = (VIEWER, VIEWER.parent / "EXPERIMENT_SETUP", REPO / "workspace/corpus")
+                if source.suffix not in (".js", ".mjs") or not any(source.is_relative_to(p.resolve()) for p in allowed):
+                    return self.send_error(404)
+                if not source.is_file():
+                    return self.send_error(404)
+                raw = source.read_bytes()
+                self.send_response(200)
+                self.send_header("Content-Type", "text/javascript; charset=utf-8")
+                self.send_header("Content-Length", str(len(raw)))
+                self.end_headers()
+                self.wfile.write(raw)
+                return
             target = unquote(request.path).lstrip("/") or "index.html"
             if target in ("corpus", "corpus/"):
                 target, self.path = "corpus.html", "/corpus.html"
             if target in ("traces", "traces/"):
                 target, self.path = "traces.html", "/traces.html"
+            if target in ("verification", "verification/"):
+                target, self.path = "verification.html", "/verification.html"
             path = confined(VIEWER, target)
             if not path.is_file() or path.suffix not in (".html", ".js", ".mjs", ".css"):
                 return self.send_error(404)

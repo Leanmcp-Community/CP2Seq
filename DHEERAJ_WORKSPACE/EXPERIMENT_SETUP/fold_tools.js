@@ -2,7 +2,8 @@
 import { FoldSession, replay, actionLine } from './engine.mjs';
 import { captureCP, captureViews, layersToPieces, setCaptureSize } from '../viewer/capture.js';
 export { frameLayers, strictTerminalMatch, terminalMatch, TERMINAL_METRIC } from './terminal_match.mjs';
-import { frameLayers, terminalMatch, TERMINAL_METRIC } from './terminal_match.mjs';
+import { frameLayers } from './terminal_match.mjs';
+import { evaluateSession } from './evaluation.mjs';
 
 
 export class ToolSession {
@@ -19,9 +20,7 @@ export class ToolSession {
     this.history.set(this.revision, structuredClone(next.actions));
   }
   evaluate() {
-    const cp = this.session.evaluate(), terminal = terminalMatch(this.session.layers, this.target);
-    return {...cp, terminal_reference_match: terminal, pilot_match: cp.cp_match && terminal,
-      terminal_metric: TERMINAL_METRIC};
+    return evaluateSession(this.session, this.target);
   }
   images(step = this.session.actions.length) {
     if (!Number.isInteger(step) || step < 0 || step >= this.session.states.length) throw Error('step must be 0..current sequence length');

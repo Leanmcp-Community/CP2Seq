@@ -1,3 +1,5 @@
+import {artifactRelative, loadSequence, drawLayers} from './trace-playback.mjs';
+
 const $ = id => document.getElementById(id);
 const pretty = value => typeof value === 'string' ? value : JSON.stringify(value, null, 2);
 function node(tag, text, parent) {
@@ -43,10 +45,15 @@ function images(parent, run, manifest) {
 }
 async function renderTurn(parent, run, sample, turn) {
   const prefix = `${sample.id}/turn-${String(turn).padStart(3, '0')}`;
-  const read = (path, kind = 'json') => fetchFile(url(run, path), kind, true);
+  const read = (path, kind = 'json') => cachedRead(run, sample, path, kind);
   const conversation = node('div', undefined, parent); conversation.className = 'turn-rows';
   function row(label) {
     const section = node('section', undefined, conversation); section.className = 'turn-row';
+    section.dataset.category = /images|encoded prompt/.test(label) ? 'images'
+      : /reasoning|thinking/.test(label) ? 'thinking'
+      : /Simulator/.test(label) ? 'tools'
+      : /CLI|Sampling|raw response/.test(label) ? 'diagnostics' : 'conversation';
+    section.dataset.phase = /Simulator|CLI|Sampling/.test(label) ? '2' : /Assistant/.test(label) && !/thinking|reasoning/.test(label) ? '1' : '0';
     node('h3', label, section);
     const body = node('div', undefined, section); body.className = 'turn-row-body';
     return body;
@@ -94,8 +101,136 @@ async function renderTurn(parent, run, sample, turn) {
 const STORAGE = 'origami-trace-panels-v1';
 let saved;
 try { saved = JSON.parse(localStorage.getItem(STORAGE) || '{}'); } catch { saved = {}; }
-const state = {run: null, locations: {}, sidebarClosed: false, scroll: {}, expanded: {}, live: true, ...saved};
+const state = {run: null, locations: {}, sidebarClosed: false, scroll: {}, expanded: {}, live: true,
+  mode: 'sequence', view: 'top', speed: 1600, showThinking: false, showConversation: false, showDiagnostics: false, ...saved};
 let currentRun = null, busy = false, ticket = 0, conversationSignature = '', lastRuns = [];
+let sequenceKey = '', sequencePromise = null, playbackFrames = [], playbackIndex = 0;
+let playing = false, playTimer = null;
+const reads = new Map();
+function cachedRead(run, sample, path, kind = 'json') {
+  const key = JSON.stringify([run.id, sample.id, sample.modified, path, kind]);
+  if (!reads.has(key)) {
+    if (reads.size > 600) reads.clear();
+    reads.set(key, fetchFile(url(run, path), kind, true).catch(error => { reads.delete(key); throw error; }));
+  }
+  return reads.get(key);
+}
+function sequenceFor(run, sample) {
+  const key = JSON.stringify([run.id, sample.id, sample.modified]);
+  if (key !== sequenceKey) {
+    sequenceKey = key;
+    sequencePromise = loadSequence(path => cachedRead(run, sample, path), sample).catch(error => {
+      if (sequenceKey === key) sequenceKey = '';
+      throw error;
+    });
+  }
+  return sequencePromise;
+}
+function pausePlayback() {
+  playing = false; clearTimeout(playTimer);
+  const button = $('sequence-play'); if (button) { button.textContent = '▶ Play'; button.setAttribute('aria-pressed', 'false'); }
+}
+async function selectFrame(index, automatic = false) {
+  const frame = playbackFrames[index]; if (!frame) return;
+  if (!automatic) pausePlayback();
+  rememberScroll(); location().turn = frame.turn; location().phase = frame.phase;
+  conversationSignature = ''; persist(); await renderConversation(true);
+}
+function schedulePlayback() {
+  clearTimeout(playTimer);
+  if (!playing) return;
+  playTimer = setTimeout(async () => {
+    try {
+      if (playbackIndex >= playbackFrames.length - 1) { pausePlayback(); return; }
+      await selectFrame(playbackIndex + 1, true);
+      schedulePlayback();
+    } catch (error) { pausePlayback(); fail(error); }
+  }, Number(state.speed) || 1600);
+}
+async function togglePlayback() {
+  if (playing) { pausePlayback(); return; }
+  if (playbackIndex >= playbackFrames.length - 1) await selectFrame(0);
+  playing = true;
+  const button = $('sequence-play'); if (button) { button.textContent = 'Ⅱ Pause'; button.setAttribute('aria-pressed', 'true'); }
+  schedulePlayback();
+}
+function applyDisplayFilters() {
+  const focused = state.mode === 'sequence', phase = location().phase || 'result';
+  const phaseRank = {initial: -1, thinking: 0, action: 1, result: 2}[phase];
+  for (const row of $('conversation-body').querySelectorAll('[data-category]')) {
+    const category = row.dataset.category;
+    row.hidden = focused && (Number(row.dataset.phase || 0) > phaseRank || category === 'images'
+      || category === 'thinking' && !state.showThinking
+      || category === 'conversation' && !state.showConversation
+      || category === 'diagnostics' && !state.showDiagnostics);
+  }
+}
+function picture(parent, run, title, images, layers) {
+  const figure = node('figure', undefined, parent); figure.className = 'sequence-picture';
+  node('figcaption', title, figure);
+  const area = node('div', undefined, figure); area.className = 'sequence-image';
+  const caption = node('p', undefined, figure); caption.className = 'note';
+  const fallback = () => {
+    area.replaceChildren();
+    if (!layers?.length) { node('p', 'No image or geometry recorded for this state.', area).className = 'note'; caption.textContent = ''; return; }
+    const canvas = node('canvas', undefined, area); canvas.setAttribute('role', 'img');
+    canvas.setAttribute('aria-label', `${title}, ${state.view} view from saved geometry`);
+    drawLayers(canvas, layers, state.view);
+    caption.textContent = 'Drawn from saved geometry · fitted independently';
+  };
+  const path = artifactRelative(run, images?.[state.view]);
+  if (!path) { fallback(); return; }
+  const a = node('a', undefined, area); a.href = url(run, path); a.target = '_blank'; a.rel = 'noopener';
+  const img = node('img', undefined, a); img.alt = `${title} · ${state.view}`; img.src = a.href; img.onerror = fallback;
+  caption.textContent = 'Saved experiment image · click to enlarge';
+}
+function renderSequenceStage(run, sequence, frame) {
+  const stage = $('sequence-stage'); stage.replaceChildren(); stage.hidden = false;
+  const pair = node('div', undefined, stage); pair.className = 'sequence-pair';
+  picture(pair, run, `Current paper · step ${frame.step}`, frame.images, frame.layers);
+  picture(pair, run, 'Target · final folded state', sequence.targetImages, sequence.target);
+  const status = node('div', undefined, stage); status.className = 'sequence-status'; status.setAttribute('role', 'status');
+  badge(status, frame.phase, frame.result?.ok === false ? 'bad' : '');
+  node('strong', frame.label, status);
+  if (frame.phase === 'thinking') node('span', 'Paper stays unchanged while the model decides.', status);
+  if (frame.phase === 'action') node('span', frame.action ? `${frame.action.name} · awaiting tool result` : 'No executed tool call recorded.', status);
+  if (frame.phase === 'result') node('span', !frame.result ? 'Result not recorded yet.' : frame.result.ok
+    ? frame.result.finished ? 'Episode finished; inspect its evaluation below.' : 'Tool completed.'
+    : `${frame.result.error || 'Rejected'} · paper unchanged`, status);
+}
+function sequenceControls(toolbar, sample) {
+  const transport = node('div', undefined, toolbar); transport.className = 'sequence-transport';
+  for (const [label, index] of [['↺ Restart', 0], ['← Back', playbackIndex - 1]]) {
+    const b = node('button', label, transport); b.disabled = index < 0; b.onclick = () => selectFrame(index).catch(fail);
+  }
+  const play = node('button', playing ? 'Ⅱ Pause' : '▶ Play', transport); play.id = 'sequence-play';
+  play.disabled = !sample.turns.length; play.setAttribute('aria-pressed', String(playing));
+  play.onclick = () => togglePlayback().catch(fail);
+  const next = node('button', 'Next →', transport); next.disabled = playbackIndex >= playbackFrames.length - 1;
+  next.onclick = () => selectFrame(playbackIndex + 1).catch(fail);
+  const slider = node('input', undefined, transport); slider.type = 'range'; slider.min = 0;
+  slider.max = playbackFrames.length - 1; slider.value = playbackIndex;
+  slider.setAttribute('aria-label', 'Sequence event'); slider.setAttribute('aria-valuetext', playbackFrames[playbackIndex].label);
+  slider.oninput = () => { pausePlayback(); $('sequence-position').textContent = playbackFrames[Number(slider.value)].label; };
+  slider.onchange = () => selectFrame(Number(slider.value)).catch(fail);
+  node('output', playbackFrames[playbackIndex].label, transport).id = 'sequence-position';
+  const options = node('div', undefined, toolbar); options.className = 'sequence-options';
+  for (const [label, key, choices] of [
+    ['View', 'view', [['top','Top'],['oblique','Oblique'],['reverse','Reverse'],['xray','X-ray'],['exploded','Exploded']]],
+    ['Pace', 'speed', [[3000,'Slow'],[1600,'Normal'],[700,'Fast']]],
+  ]) {
+    const lab = node('label', label, options), select = node('select', undefined, lab);
+    for (const [value, text] of choices) { const option = node('option', text, select); option.value = value; }
+    select.value = state[key];
+    select.onchange = () => { state[key] = key === 'speed' ? Number(select.value) : select.value; persist();
+      if (key === 'view') renderConversation(true).catch(fail); else schedulePlayback(); };
+  }
+  node('span', 'Show: tool calls', options).className = 'note';
+  for (const [text, key] of [['Thinking', 'showThinking'], ['Conversation', 'showConversation'], ['Diagnostics', 'showDiagnostics']]) {
+    const lab = node('label', undefined, options), input = node('input', undefined, lab); input.type = 'checkbox'; input.checked = state[key];
+    node('span', text, lab); input.onchange = () => { state[key] = input.checked; persist(); applyDisplayFilters(); };
+  }
+}
 function persist() { try { localStorage.setItem(STORAGE, JSON.stringify(state)); } catch {} }
 function location() { return state.locations[state.run] ||= {sample: null, turn: null}; }
 function context(panel) {
@@ -214,8 +349,10 @@ function renderTurns() {
   const sample = currentRun?.samples.find(s => s.id === location().sample);
   const turns = sample?.turns || [];
   $('turns-count').textContent = turns.length ? String(turns.length) : '';
-  if (!turns.length) { node('p', sample ? 'No turn saved yet.' : '—', parent).className = 'note'; return; }
+  if (!sample) { node('p', '—', parent).className = 'note'; return; }
   const list = node('div', undefined, parent); list.className = 'row-list';
+  if (state.mode === 'sequence') listRow(list, {title: 'Initial sheet', chosen: Number(location().turn) === 0,
+    action: () => selectTurn(0).catch(fail)});
   for (const turn of turns) listRow(list, {
     title: `Turn ${turn}`,
     chosen: Number(location().turn) === turn,
@@ -224,20 +361,24 @@ function renderTurns() {
   restoreScroll('turns');
 }
 async function selectRun(id) {
+  pausePlayback(); ++ticket; playbackFrames = []; $('sequence-stage').hidden = true;
   rememberScroll(); state.run = id; currentRun = null; conversationSignature = '';
   renderRuns(); persist();
   await loadSelected(true);
 }
 async function selectSample(id) {
+  pausePlayback(); ++ticket;
   rememberScroll(); location().sample = id; conversationSignature = '';
   if (narrow()) toggleSidebar(false);
   renderExamples(); await renderConversation(true);
 }
 async function selectTurn(turn) {
-  rememberScroll(); location().turn = Number(turn); conversationSignature = ''; persist();
+  pausePlayback();
+  rememberScroll(); location().turn = Number(turn); location().phase = Number(turn) ? 'result' : 'initial'; conversationSignature = ''; persist();
   await renderConversation(true);
 }
 function stepTurn(delta) {
+  if (state.mode === 'sequence') { selectFrame(playbackIndex + delta).catch(fail); return; }
   const sample = currentRun?.samples.find(s => s.id === location().sample);
   if (!sample) return;
   const pos = sample.turns.indexOf(Number(location().turn)) + delta;
@@ -248,6 +389,7 @@ async function renderConversation(force = false) {
   const run = currentRun, loc = location(), sample = run.samples.find(s => s.id === loc.sample);
   const meta = $('conversation-meta'); meta.replaceChildren();
   if (!sample) {
+    ++ticket; pausePlayback(); playbackFrames = []; $('sequence-stage').hidden = true;
     $('conversation-title').textContent = 'Conversation';
     node('span', run.id, meta);
     renderTurns();
@@ -257,8 +399,12 @@ async function renderConversation(force = false) {
     if (run.legacy_image) block(parent, 'Single-image input and response', run.legacy_image);
     return;
   }
-  if (!sample.turns.includes(Number(loc.turn))) loc.turn = sample.turns[0] || null;
-  const signature = JSON.stringify([run.id, sample.id, loc.turn, sample.modified]);
+  const focused = state.mode === 'sequence';
+  if (loc.turn == null || (!sample.turns.includes(Number(loc.turn)) && !(focused && Number(loc.turn) === 0))) {
+    loc.turn = focused ? 0 : sample.turns[0] || null;
+    loc.phase = focused ? 'initial' : 'result';
+  }
+  const signature = JSON.stringify([run.id, sample.id, loc.turn, loc.phase, sample.modified, state.mode, state.view]);
   if (!force && signature === conversationSignature) return;
   const renderTicket = ++ticket;
   $('conversation-title').textContent = sample.id;
@@ -268,25 +414,51 @@ async function renderConversation(force = false) {
   node('span', `${sample.turns.length} turn${sample.turns.length === 1 ? '' : 's'}`, meta);
   renderTurns();
   const toolbar = $('conversation-toolbar'); toolbar.replaceChildren();
-  node('span', `Turn ${loc.turn ?? '—'} of ${sample.turns.length}`, toolbar).className = 'turn-picker';
-  for (const [text, delta] of [['← Prev', -1], ['Next →', 1]]) {
-    const b = node('button', text, toolbar), pos = sample.turns.indexOf(Number(loc.turn)) + delta;
-    b.disabled = pos < 0 || pos >= sample.turns.length;
-    b.onclick = () => selectTurn(sample.turns[pos]).catch(fail);
-  }
-  node('span', undefined, toolbar).className = 'spacer';
-  for (const [text, open] of [['Collapse all', false], ['Expand all', true]]) {
-    const b = node('button', text, toolbar);
-    b.onclick = () => $('conversation-body').querySelectorAll('details').forEach(d => { d.open = open; });
-  }
   const body = document.createElement('div');
-  if (sample.result) block(body, 'Episode result', sample.result, false);
-  if (sample.error) block(body, 'Episode error', sample.error, true);
+  let sequence, frame;
+  if (focused) {
+    sequence = await sequenceFor(run, sample);
+    if (renderTicket !== ticket) return;
+    const index = sequence.frames.findIndex(f => f.turn === Number(loc.turn) && f.phase === (loc.phase || 'result'));
+    frame = sequence.frames[index < 0 ? 0 : index];
+    // The lightweight event card is visible even with all optional text hidden.
+    const event = node('section', undefined, body); event.className = 'turn-row';
+    node('h3', frame.phase === 'thinking' ? 'Model decision' : frame.phase === 'initial' ? 'Ready to play' : 'Tool call', event);
+    const content = node('div', undefined, event); content.className = 'turn-row-body';
+    if (frame.action) block(content, frame.action.name, frame.action.arguments);
+    else node('p', frame.phase === 'initial' ? 'Press Play to follow the entire conversation and paper updates.'
+      : frame.phase === 'thinking' ? 'Enable Thinking to read the saved model text. Paper updates only after an accepted tool result.'
+      : 'No executed tool action recorded for this turn.', content);
+    if (frame.result) {
+      node('p', frame.result.ok ? frame.result.finished ? 'Finished' : 'Accepted' : frame.result.error || 'Rejected', content);
+      if (frame.result.detail) node('p', frame.result.detail, content);
+    }
+  }
+  if ((!focused || frame?.result?.finished) && sample.result) block(body, 'Episode result', sample.result, false);
+  if ((!focused || Number(loc.turn) === sample.turns.at(-1)) && sample.error) block(body, 'Episode error', sample.error, true);
   if (loc.turn) await renderTurn(body, run, sample, Number(loc.turn));
-  else node('p', 'No model turn saved yet.', body);
+  else if (!sample.turns.length) node('p', 'No model turn saved yet.', body);
   if (renderTicket !== ticket || state.run !== run.id || location().sample !== sample.id) return;
+  if (focused) {
+    playbackFrames = sequence.frames; playbackIndex = playbackFrames.indexOf(frame);
+    renderSequenceStage(run, sequence, frame); sequenceControls(toolbar, sample);
+  } else {
+    $('sequence-stage').hidden = true;
+    node('span', `Turn ${loc.turn ?? '—'} of ${sample.turns.length}`, toolbar).className = 'turn-picker';
+    for (const [text, delta] of [['← Prev', -1], ['Next →', 1]]) {
+      const b = node('button', text, toolbar), pos = sample.turns.indexOf(Number(loc.turn)) + delta;
+      b.disabled = pos < 0 || pos >= sample.turns.length;
+      b.onclick = () => selectTurn(sample.turns[pos]).catch(fail);
+    }
+    node('span', undefined, toolbar).className = 'spacer';
+    for (const [text, open] of [['Collapse all', false], ['Expand all', true]]) {
+      const b = node('button', text, toolbar);
+      b.onclick = () => $('conversation-body').querySelectorAll('details').forEach(d => { d.open = open; });
+    }
+  }
   bindDetails(body);
   $('conversation-body').replaceChildren(body);
+  applyDisplayFilters();
   conversationSignature = signature; restoreScroll('conversation'); persist();
 }
 async function loadSelected(force = false) {
@@ -302,7 +474,12 @@ async function refresh(force = false) {
     const listing = await fetchFile('/api/traces');
     $('trace-status').textContent = `${listing.runs.length} saved run${listing.runs.length === 1 ? '' : 's'}`;
     $('trace-error').hidden = !listing.errors.length; $('trace-error').textContent = listing.errors.join('\n');
-    if (state.run && !listing.runs.some(r => r.id === state.run)) { state.run = null; currentRun = null; }
+    if (state.run && !listing.runs.some(r => r.id === state.run)) {
+      pausePlayback(); ++ticket; state.run = null; currentRun = null; playbackFrames = [];
+      $('sequence-stage').hidden = true; $('conversation-toolbar').replaceChildren();
+      $('conversation-body').textContent = 'This run is no longer available. Select another run.';
+      renderExamples();
+    }
     renderRuns(listing.runs);
     await loadSelected(force);
   } catch (e) { fail(e); }
@@ -311,6 +488,10 @@ async function refresh(force = false) {
 $('sidebar-toggle').onclick = () => toggleSidebar();
 $('runs-filter').oninput = () => renderRuns();
 $('examples-filter').oninput = () => renderExamples();
+$('trace-mode').value = state.mode;
+$('trace-mode').onchange = () => {
+  pausePlayback(); state.mode = $('trace-mode').value; persist(); renderConversation(true).catch(fail);
+};
 for (const name of ['runs', 'examples', 'turns', 'conversation']) $(`${name}-body`).addEventListener('scroll', () => {
   const body = $(`${name}-body`);
   if (body.dataset.locationKey) state.scroll[body.dataset.locationKey] = body.scrollTop;
@@ -323,11 +504,15 @@ document.addEventListener('keydown', event => {
   if (event.key === '[' || event.key === ']') { toggleSidebar(); event.preventDefault(); }
   else if (event.key === 'ArrowLeft' || event.key === 'k') stepTurn(-1);
   else if (event.key === 'ArrowRight' || event.key === 'j') stepTurn(1);
+  else if (event.code === 'Space' && tag !== 'BUTTON' && state.mode === 'sequence' && playbackFrames.length) {
+    event.preventDefault(); togglePlayback().catch(fail);
+  }
 });
 $('live').checked = state.live;
 $('live').onchange = () => { state.live = $('live').checked; persist(); };
 $('refresh').onclick = () => refresh(true);
-window.addEventListener('pagehide', rememberScroll);
+window.addEventListener('pagehide', () => { pausePlayback(); rememberScroll(); });
+document.addEventListener('visibilitychange', () => { if (document.hidden) pausePlayback(); });
 applySidebar();
 setInterval(() => { if (state.live && !document.hidden) refresh(); }, 5000);
 refresh(true);

@@ -20,6 +20,7 @@
     <a href="/">Search playback</a>
     <a href="/corpus">Dataset</a>
     <a href="/traces" class="here">Model traces</a>
+    <a href="/verification">Verification</a>
   </nav>
   <div class="bar-right">
     <span id="trace-status" class="note" role="status">Loading…</span>
@@ -58,7 +59,11 @@
     <div class="conversation-head">
       <h2 id="conversation-title">Conversation</h2>
       <div id="conversation-meta" class="conversation-meta"></div>
+      <label class="trace-mode">View
+        <select id="trace-mode"><option value="sequence">Sequence playback</option><option value="full">Full trace</option></select>
+      </label>
     </div>
+    <div id="sequence-stage" hidden></div>
     <div id="conversation-toolbar" class="conversation-toolbar"></div>
     <div id="conversation-body" class="conversation-body"><p class="note">Select an example to open its conversation.</p></div>
   </section>

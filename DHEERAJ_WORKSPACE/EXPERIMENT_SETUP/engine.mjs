@@ -69,6 +69,25 @@ export function actionLine(action) {
   return {n: [-Math.sin(theta), Math.cos(theta)], d: action.offset};
 }
 
+// Decode saved corpus/experiment folds into the same action API used live.
+export function actionFromFold(fold) {
+  const action = {tool: 'apply_fold', move_positive: fold.move_positive ?? fold.movePositive,
+    over: fold.over ?? true};
+  if (fold.angle_index != null) Object.assign(action, {angle_index: fold.angle_index, offset: fold.offset});
+  else if (fold.angle_degrees != null) Object.assign(action, {angle_degrees: fold.angle_degrees, offset: fold.offset});
+  else {
+    const line = fold.line ?? {n: fold.normal, d: fold.offset};
+    if (!Array.isArray(line.n) || line.n.length !== 2 || !line.n.every(Number.isFinite) ||
+        !Number.isFinite(line.d) || Math.hypot(...line.n) === 0) throw Error('Invalid saved fold line');
+    action.angle_degrees = Math.atan2(-line.n[0], line.n[1]) * 180 / Math.PI;
+    action.offset = line.d / Math.hypot(...line.n);
+  }
+  const selection = fold.selection ?? fold.sel ?? {mode: fold.selection_mode ?? 'all', k: fold.layer_count};
+  action.selection_mode = selection.mode;
+  if (selection.mode !== 'all') action.layer_count = selection.k;
+  return parseAction(JSON.stringify(action));
+}
+
 const LEGALITY_DETAILS = {
   'would-tear': 'Selected moving paper is attached to stationary paper away from the fold line. Moving it would tear that connection. Change the selected run or fold line.',
   'direction-impossible': 'A top run must fold over; a bottom run must fold under.',

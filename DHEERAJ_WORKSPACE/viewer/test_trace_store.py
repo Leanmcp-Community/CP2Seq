@@ -76,6 +76,13 @@ class TraceTests(unittest.TestCase):
             base = f"http://127.0.0.1:{server.server_port}"
             with urlopen(base + '/traces') as response:
                 self.assertIn(b'Model traces', response.read())
+            with urlopen(base + '/verification') as response:
+                self.assertIn(b'Verification workspace', response.read())
+            with urlopen(base + '/source/DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/engine.mjs') as response:
+                self.assertIn('javascript', response.headers['Content-Type'])
+                self.assertIn(b'foldLayers', response.read())
+            with self.assertRaises(HTTPError):
+                urlopen(base + '/source/DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/profiles.json')
             with urlopen(base + '/api/trace?' + urlencode({'run': self.run.name})) as response:
                 self.assertEqual(json.load(response)['samples'][0]['turns'], [1])
             query = urlencode({'run': self.run.name, 'path': 'easy-0001/turn-001-messages.json'})

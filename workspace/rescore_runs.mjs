@@ -14,14 +14,17 @@
 //   node workspace/rescore_runs.mjs --dry-run       # report only, touch nothing
 //   node workspace/rescore_runs.mjs --root <dir>    # limit to one runs/ tree
 //
-// Re-runs nothing and calls no model: it reads each episode's saved final.fold
-// and target.fold, which are the exact artifacts the harness scored.
+// Calls no model. Replays saved seq.json against cp.fold through the experiment
+// verifier, including tearing, before scoring against target.fold. Final images
+// alone cannot establish that every earlier step was legal.
 
 import { readFile, writeFile, readdir, stat } from 'node:fs/promises';
 import { join, resolve, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { frameLayers, terminalMatch, strictTerminalMatch, TERMINAL_METRIC }
+import { frameLayers, strictTerminalMatch, TERMINAL_METRIC }
   from '../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/terminal_match.mjs';
+import {FoldSession, actionFromFold} from '../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/engine.mjs';
+import {evaluateSession} from '../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/evaluation.mjs';
 
 const REPO = resolve(fileURLToPath(import.meta.url), '../..');
 const DEFAULT_ROOTS = [
@@ -44,35 +47,47 @@ async function subdirs(dir) {
   return entries.filter(e => e.isDirectory()).map(e => e.name).sort();
 }
 
-// One episode: recompute the terminal comparison from the saved frames.
+// One episode: use the same fold verifier and evaluation function as live tools.
 async function rescoreEpisode(episodeDir) {
   const resultPath = join(episodeDir, 'result.json');
   if (!await exists(resultPath)) return null;
   const before = await readJson(resultPath);
-  const finalPath = join(episodeDir, 'final.fold'), targetPath = join(episodeDir, 'target.fold');
-  if (!await exists(finalPath) || !await exists(targetPath)) {
+  const cpPath = join(episodeDir, 'cp.fold'), seqPath = join(episodeDir, 'seq.json'), targetPath = join(episodeDir, 'target.fold');
+  if (!await exists(cpPath) || !await exists(seqPath) || !await exists(targetPath)) {
     return {id: before.sample_id, status: 'no-artifacts', before, after: null};
   }
-  let terminal, strict;
+  let evaluation, strict = false, replayFailure = null;
   try {
-    const layers = frameLayers(await readJson(finalPath));
+    const session = new FoldSession(await readJson(cpPath));
+    const sequence = await readJson(seqPath);
+    if (!Array.isArray(sequence.folds)) throw Error('seq.json lacks a folds array');
     const target = frameLayers(await readJson(targetPath));
-    terminal = terminalMatch(layers, target);
-    strict = strictTerminalMatch(layers, target);
+    for (const [index, fold] of sequence.folds.entries()) {
+      let result;
+      try { result = session.apply(actionFromFold(fold)); }
+      catch (error) { result = {ok:false,error:'invalid-action',detail:error.message}; }
+      if (!result.ok) { replayFailure = {step:index+1,...result}; break; }
+    }
+    evaluation = evaluateSession(session, target);
+    strict = strictTerminalMatch(session.layers, target);
   } catch (e) {
     // An episode that never produced a foldable terminal frame stays unsolved.
     return {id: before.sample_id, status: `ungradable: ${e.message}`, before, after: null};
   }
-  const pilot = Boolean(before.cp_match) && terminal;
+  const pilot = !replayFailure && evaluation.pilot_match;
   const after = {
     ...before,
-    terminal_reference_match: terminal,
+    ...evaluation,
+    replay_valid: !replayFailure,
+    replay_failure: replayFailure,
+    rescore_scope: 'Replayed saved accepted sequence through live experiment verifier; on failure, geometry metrics describe the valid prefix. Rejected model attempts are not in seq.json.',
     pilot_match: pilot,
     solved: before.termination === 'finished' && pilot,
     terminal_metric: TERMINAL_METRIC,
     terminal_match_fixed_coordinates: strict,
   };
-  const flipped = after.solved !== before.solved || after.terminal_reference_match !== before.terminal_reference_match;
+  const flipped = after.solved !== before.solved || after.terminal_reference_match !== before.terminal_reference_match
+    || after.cp_match !== before.cp_match || Boolean(replayFailure);
   return {id: before.sample_id, status: flipped ? 'changed' : 'same', before, after};
 }
 
@@ -114,22 +129,23 @@ const solvedAfter = all.filter(r => r.after?.solved === true).length;
 const changed = all.filter(r => r.status === 'changed');
 
 const lines = [];
-lines.push('# Re-score under the isometry-quotient terminal metric', '');
+lines.push('# Re-score by legal sequence replay and the experiment terminal metric', '');
 lines.push(`Generated: ${new Date().toISOString()}`);
 lines.push(`Metric: ${TERMINAL_METRIC}`, '');
 lines.push(`Episodes graded: ${all.length}`);
 lines.push(`Solved before: ${solvedBefore}`);
 lines.push(`Solved after: ${solvedAfter}`);
 lines.push(`Rows changed: ${changed.length}`, '');
+lines.push(`Replay failures: ${all.filter(r => r.after?.replay_valid === false).length}`, '');
 for (const {runDir, episodes} of runs) {
   lines.push(`## ${relative(REPO, runDir)}`, '');
-  lines.push('| sample | termination | cp_match | terminal was | terminal now | solved was | solved now |');
-  lines.push('| --- | --- | --- | --- | --- | --- | --- |');
+  lines.push('| sample | termination | cp now | terminal was | terminal now | solved was | solved now | replay |');
+  lines.push('| --- | --- | --- | --- | --- | --- | --- | --- |');
   for (const r of episodes) {
     const a = r.after ?? {};
-    lines.push(`| ${r.id} | ${r.before.termination ?? '—'} | ${r.before.cp_match ?? '—'} | ` +
+    lines.push(`| ${r.id} | ${r.before.termination ?? '—'} | ${a.cp_match ?? '—'} | ` +
       `${r.before.terminal_reference_match ?? '—'} | ${a.terminal_reference_match ?? r.status} | ` +
-      `${r.before.solved ?? '—'} | ${a.solved ?? '—'} |`);
+      `${r.before.solved ?? '—'} | ${a.solved ?? '—'} | ${a.replay_failure ? `step ${a.replay_failure.step}: ${a.replay_failure.error}` : a.replay_valid ? 'legal' : r.status} |`);
   }
   lines.push('');
 }

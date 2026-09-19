@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Origami · Verification workspace</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="traces.css">
+<link rel="stylesheet" href="verification.css">
+<body class="verification">
+<header><strong>Origami / Verification workspace</strong><nav>
+  <a href="/">Search playback</a> <a href="/corpus">Dataset</a>
+  <a href="/traces">Model traces</a> <a href="/verification" aria-current="page">Verification</a>
+</nav></header>
+<main class="verification-workspace">
+  <aside aria-label="Verification cases">
+    <h1>Check the scorer</h1>
+    <p class="note">Small cases with expected outcomes, using the experiment’s actual tools and scorer.</p>
+    <button id="check-all">Check all cases</button>
+    <p id="suite-status" role="status" class="note">Cases have not been checked yet.</p>
+    <div id="cases"></div>
+    <p class="note">No model calls. No saved experiment files are changed.</p>
+  </aside>
+  <article class="verification-content">
+    <p id="verification-error" role="alert" hidden></p>
+    <h2 id="case-title"></h2><p id="case-description"></p>
+    <div class="sequence-pair">
+      <figure class="sequence-picture"><figcaption id="current-caption">Candidate</figcaption><canvas id="candidate-view" role="img" aria-label="Current candidate paper"></canvas></figure>
+      <figure class="sequence-picture"><figcaption>Reference target · final state</figcaption><canvas id="target-view" role="img" aria-label="Target folded paper"></canvas></figure>
+    </div>
+    <div class="case-controls">
+      <button id="case-reset">↺ Reset</button><button id="case-prev">← Back</button>
+      <button id="case-play">▶ Play</button><button id="case-next">Next →</button><button id="case-finish">Run to end</button>
+      <label>View <select id="case-view"><option value="exploded">Exploded</option><option value="top">Top</option><option value="xray">X-ray</option><option value="oblique">Oblique</option></select></label>
+    </div>
+    <div id="case-steps" class="case-steps" aria-label="Candidate sequence steps"></div>
+    <p id="case-status" role="status"></p>
+    <div class="case-evidence">
+      <section><h3>Verifier and scorer</h3><div id="verdict"></div>
+        <p class="note">Exactly the experiment’s <code>ToolSession.call</code> → <code>FoldSession.apply</code> and <code>evaluateSession</code> → <code>terminalMatch</code>. “Expected” is a test assertion, not a second scorer.</p>
+        <details><summary>Actual tool result</summary><pre id="case-result"></pre></details>
+        <details><summary>Actual evaluation</summary><pre id="case-evaluation"></pre></details>
+      </section>
+      <section><h3>Original sheet connections</h3><canvas id="sheet-view" role="img" aria-label="Original sheet polygons, selected layers orange and stationary layers blue"></canvas>
+        <p class="note">Orange = selected run; blue = layers held still. Shared edges show paper connections before the attempted fold. Selection marks whole faces; only the chosen side of the crease moves. On rejection, this paper stays unchanged.</p>
+      </section>
+    </div>
+    <div class="case-evidence">
+      <section><h3>Reference sequence A</h3><pre id="reference-actions"></pre></section>
+      <section><h3>Candidate sequence B</h3><pre id="candidate-actions"></pre></section>
+    </div>
+    <p class="note">Flat, zero-thickness folds; no continuous collision simulation. Terminal comparison checks geometry, parity and layer order under a common rotation/translation or physical turnover. It does not distinguish original-sheet identities of otherwise identical layers.</p>
+  </article>
+</main>
+<script type="module" src="/source/DHEERAJ_WORKSPACE/viewer/verification.js"></script>
+</body></html>
