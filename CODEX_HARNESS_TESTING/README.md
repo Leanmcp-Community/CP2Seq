@@ -63,17 +63,18 @@ instead reattaches every earlier feedback image, preserving the visual history.
 
 ## Full Luna low-reasoning pilot
 
-Sol and Terra have equivalent launchers, with the same samples, low reasoning,
+Sol, Terra, and Astra have equivalent launchers, with the same samples, low reasoning,
 40-turn budget, all image history, and logging:
 
 ```sh
 bash CODEX_HARNESS_TESTING/run_sol_low.sh
 bash CODEX_HARNESS_TESTING/run_terra_low.sh
+bash CODEX_HARNESS_TESTING/run_astra_low.sh
 ```
 
 Each accepts the same appended options as the Luna launcher, including
 `--samples`, `--max-turns`, and `--timeout`. They select `gpt-5.6-sol` and
-`gpt-5.6-terra`, respectively.
+`gpt-5.6-terra`, and `gpt-6-astra`, respectively.
 
 Run from the repository root after signing in with `codex login`:
 
@@ -107,7 +108,14 @@ The run root now includes `events.jsonl`, `transcripts.jsonl`, `metrics.jsonl`,
 and `episodes/`, in addition to the complete per-turn CLI logs and PNG artifacts.
 CLI-reported token usage and exposed reasoning summaries are normalized into
 the transcripts; private reasoning and unavailable usage fields are not invented.
-The launcher uses terminal previews; set `OBS_ECHO=full` for full terminal output.
+All model launchers default to full terminal output (`OBS_ECHO=full`); set
+`OBS_ECHO=preview` or `OBS_ECHO=off` to reduce it. Each Codex invocation requests
+`model_reasoning_summary="detailed"`, forces reasoning metadata on with
+`model_supports_reasoning_summaries=true`, and sets `hide_agent_reasoning=false`
+and `show_raw_agent_reasoning=true`. These settings request and surface reasoning
+that the model/backend exposes; they cannot force access to private reasoning
+or guarantee a longer summary. Reasoning effort remains unchanged.
+[Official configuration reference](https://developers.openai.com/codex/config-reference).
 
 Read the newest run using the existing viewer:
 

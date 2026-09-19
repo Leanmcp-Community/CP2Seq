@@ -4,7 +4,7 @@ set -eu
 script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 repo_dir=$(dirname -- "$script_dir")
 fold_python=${FOLD_PYTHON:-"$repo_dir/.venv/bin/python"}
-export OBS_ECHO="${OBS_ECHO:-preview}"
+export OBS_ECHO="${OBS_ECHO:-full}"
 if [ ! -x "$fold_python" ]; then
   printf '%s\n' "Python environment not found: $fold_python. Set FOLD_PYTHON to your experiment interpreter." >&2
   exit 1

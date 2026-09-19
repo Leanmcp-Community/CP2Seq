@@ -122,7 +122,11 @@ def ask_codex(args, prompt, manifest, turn_dir, workdir, schema_path):
                "--output-last-message", str(turn_dir / "response.json")]
     if args.reasoning_effort:
         command += ["-c", f'model_reasoning_effort="{args.reasoning_effort}"']
-    command += ["-c", "hide_agent_reasoning=false", "-c", 'model_reasoning_summary="auto"']
+    # Request exposed reasoning without claiming access to private model internals.
+    command += ["-c", "hide_agent_reasoning=false",
+                "-c", "show_raw_agent_reasoning=true",
+                "-c", "model_supports_reasoning_summaries=true",
+                "-c", 'model_reasoning_summary="detailed"']
     if args.model:
         command += ["--model", args.model]
     for info in manifest.values():

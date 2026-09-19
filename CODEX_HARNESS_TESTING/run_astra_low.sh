@@ -14,7 +14,7 @@ exec "$fold_python" "$script_dir/codex_fold_loop.py" \
   --samples easy-0001 easy-0002 \
   --max-turns 40 \
   --timeout 300 \
-  --model gpt-5.6-sol \
+  --model gpt-6-astra \
   --reasoning-effort low \
   --image-history all \
   "$@"
