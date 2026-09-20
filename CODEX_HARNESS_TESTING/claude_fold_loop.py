@@ -9,6 +9,7 @@ No Anthropic SDK and no API key: this shells out to `claude -p`, the documented 
 against whatever credentials the CLI already has.
 """
 import argparse
+import base64
 from datetime import datetime, timezone
 import json
 import math
@@ -60,8 +61,14 @@ def ask_claude(args, prompt, manifest, turn_dir, workdir, schema_path, run=None)
     to process.json, so cache_read_input_tokens can be checked rather than hoped for.
     """
     schema = json.loads(Path(schema_path).read_text())
+    # There is no --image flag, so the PNGs ride in as content blocks on a stream-json user
+    # message -- verified by workspace/probe_claude_cli.sh, which got back a description of the
+    # crease pattern. stream-json input requires stream-json output, hence --verbose and the
+    # event-stream parsing below.
     command = [args.claude_bin, "-p",
-               "--output-format", "json",
+               "--input-format", "stream-json",
+               "--output-format", "stream-json",
+               "--verbose",
                "--json-schema", json.dumps(schema, separators=(",", ":")),
                "--system-prompt", args.prompt_text,
                "--model", args.model,
@@ -72,11 +79,7 @@ def ask_claude(args, prompt, manifest, turn_dir, workdir, schema_path, run=None)
                "--disallowedTools", *DENIED_TOOLS]
     if args.reasoning_effort:
         command += ["--effort", args.reasoning_effort]
-    # Images have no CLI flag. When the stream-json probe says they are accepted this is where
-    # they would be attached; until then the arm runs on geometry alone and says so.
-    if manifest and args.attach_images:
-        raise RuntimeError("Image attachment over the CLI is unverified; run "
-                           "workspace/probe_claude_cli.sh, then wire the stream-json path")
+    payload_in = stream_json_message(prompt, manifest if args.attach_images else {})
     (turn_dir / "prompt.md").write_text(prompt, encoding="utf-8")
     write_json(turn_dir / "command.json", command)
     environment = os.environ.copy()
@@ -86,7 +89,7 @@ def ask_claude(args, prompt, manifest, turn_dir, workdir, schema_path, run=None)
         started = time.monotonic()
         with (turn_dir / "events.jsonl").open("w") as stdout, (turn_dir / "stderr.log").open("w") as stderr:
             try:
-                result = subprocess.run(command, input=prompt, text=True, env=environment,
+                result = subprocess.run(command, input=payload_in, text=True, env=environment,
                                         cwd=str(workdir), stdout=stdout, stderr=stderr,
                                         timeout=args.timeout)
             except subprocess.TimeoutExpired:
@@ -95,7 +98,7 @@ def ask_claude(args, prompt, manifest, turn_dir, workdir, schema_path, run=None)
                 raise RuntimeError(f"Claude timed out; see {turn_dir / 'stderr.log'}") from None
         duration = time.monotonic() - started
         if not result.returncode:
-            payload = json.loads((turn_dir / "events.jsonl").read_text())
+            payload = result_event((turn_dir / "events.jsonl").read_text())
             usage = payload.get("usage") or {}
             write_json(turn_dir / "process.json", {
                 "returncode": 0, "attempt": attempt, "duration_s": duration,
@@ -130,12 +133,59 @@ def ask_claude(args, prompt, manifest, turn_dir, workdir, schema_path, run=None)
         time.sleep(wait)
 
 
-def structured_result(payload):
-    """Pull the schema-constrained object out of the CLI's json envelope.
+def stream_json_message(prompt, manifest):
+    """One stream-json user message: the prompt, then the feedback PNGs as image blocks.
 
-    --output-format json wraps the answer; --json-schema constrains it. Where the structured
-    value lands has varied, so look in the documented places and fall back to parsing the text
-    field rather than failing on an envelope change.
+    Text first so the cacheable prefix is as long as possible, and the images in manifest
+    order, which puts the fixed initial views ahead of the per-turn ones.
+    """
+    content = [{"type": "text", "text": prompt}]
+    for info in manifest.values():
+        path = Path(info["path"] if isinstance(info, dict) else info)
+        content.append({"type": "image", "source": {
+            "type": "base64", "media_type": "image/png",
+            "data": base64.b64encode(path.read_bytes()).decode("ascii")}})
+    return json.dumps({"type": "user", "message": {"role": "user", "content": content}}) + "\n"
+
+
+def result_event(raw):
+    """Find the terminal result object in whatever shape the CLI emitted.
+
+    Three shapes have been seen: stream-json writes one JSON object per line; --output-format
+    json returns an ARRAY of events (which is what broke the first run -- a list has no .get);
+    and a single object is possible too. Parse defensively and take the last result event
+    rather than assuming any one of them.
+    """
+    text = raw.strip()
+    if not text:
+        raise ValueError("Claude CLI produced no output")
+    events = []
+    try:
+        parsed = json.loads(text)
+        events = parsed if isinstance(parsed, list) else [parsed]
+    except json.JSONDecodeError:
+        for line in text.splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                events.append(json.loads(line))
+            except json.JSONDecodeError:
+                continue
+    for event in reversed(events):
+        if isinstance(event, dict) and event.get("type") == "result":
+            return event
+    for event in reversed(events):
+        if isinstance(event, dict) and ("result" in event or "usage" in event):
+            return event
+    raise ValueError(f"No result event in CLI output; saw {len(events)} event(s)")
+
+
+def structured_result(payload):
+    """Pull the schema-constrained object out of the result event.
+
+    --json-schema constrains the final answer; where it lands in the envelope has varied, so
+    check the documented places and fall back to parsing the text field.
     """
     for key in ("structured_output", "structured_result", "parsed", "result_json"):
         if isinstance(payload.get(key), dict):
@@ -168,9 +218,10 @@ def main():
                              "newest, which would silently change what a benchmark measures.")
     parser.add_argument("--reasoning-effort", choices=["low", "medium", "high", "xhigh", "max"])
     parser.add_argument("--image-history", choices=["latest", "all"], default="latest")
-    parser.add_argument("--attach-images", action="store_true",
-                        help="Attach feedback PNGs. Needs the verified stream-json path; see "
-                             "workspace/probe_claude_cli.sh")
+    # On by default: an arm without the PNGs is not comparable to a Codex run using
+    # --image-history all. Verified working over stream-json by workspace/probe_claude_cli.sh.
+    parser.add_argument("--no-attach-images", dest="attach_images", action="store_false",
+                        help="Run on geometry alone. Not comparable to an image-fed Codex arm.")
     parser.add_argument("--max-turns", type=int, default=40)
     parser.add_argument("--stuck-limit", type=int, default=5)
     parser.add_argument("--cycle-limit", type=int, default=3)
