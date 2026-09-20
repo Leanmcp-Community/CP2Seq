@@ -249,7 +249,7 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
     out = run_dir / sample_id
     out.mkdir()
     cp, target = load_task(sample_id, args.corpus)
-    initial = browser.init(cp, target, args.render_size)
+    initial = browser.init(cp, target, args.render_size, getattr(args, "compare_tier", 0))
     write_json(out / "cp.fold", cp)
     write_json(out / "target.fold", target)
     save_candidate(out, browser.artifacts())
@@ -420,6 +420,11 @@ def main():
     parser.add_argument("--out", type=Path, default=HERE / "runs")
     parser.add_argument("--prompt", type=Path, default=HERE / "codex_fold_prompt.md")
     parser.add_argument("--codex-bin", default="codex")
+    parser.add_argument("--compare-tier", type=int, choices=[0, 1, 2, 3], default=0,
+                        help="Expose compare_to_target at this detail level. 0 off; 1 layer counts; "
+                             "2 which layers disagree and how; 3 what each should be. Uses only the "
+                             "target state, never the reference sequence. Tier 3 does most of the "
+                             "reasoning, so a run using it must say so when reported.")
     parser.add_argument("--tools", choices=["base", "legal-folds"], default="base",
                         help="base keeps the original action set; legal-folds adds list_legal_folds "
                              "and its prompt appendix, which is a different experimental condition")
@@ -467,7 +472,7 @@ def main():
     args.out = args.out.expanduser().resolve()
     args.corpus = args.corpus.expanduser().resolve()
     args.prompt = args.prompt.expanduser().resolve()
-    args.tool_specs = tools_for(args.tools)
+    args.tool_specs = tools_for(args.tools, args.compare_tier)
     args.ask = ask_codex
     # The baseline prompt stays byte-identical under --tools base, so base runs remain
     # comparable with every run recorded before the enumerator existed.
@@ -475,6 +480,8 @@ def main():
     if args.tools == "legal-folds":
         args.prompt_appendix = args.prompt_appendix.expanduser().resolve()
         args.prompt_text += "\n" + args.prompt_appendix.read_text()
+    if args.compare_tier:
+        args.prompt_text += "\n" + (HERE / "codex_fold_prompt_compare.md").read_text()
     for sample_id in args.samples:
         load_task(sample_id, args.corpus)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")

@@ -5,11 +5,15 @@ import { captureCP, captureViews, layersToPieces, setCaptureSize } from '../view
 export { frameLayers, strictTerminalMatch, terminalMatch, TERMINAL_METRIC } from './terminal_match.mjs';
 import { frameLayers } from './terminal_match.mjs';
 import { evaluateSession } from './evaluation.mjs';
+import { compareToTarget } from './compare_target.mjs';
 
 
 export class ToolSession {
-  constructor(cp, target) {
+  constructor(cp, target, compareTier = 0) {
     this.cp = cp; this.target = frameLayers(target); this.session = new FoldSession(cp);
+    // Fixed at init, never taken from the action: the tier IS the experimental condition, so
+    // the model must not be able to ask for a more helpful one than the run was configured for.
+    this.compareTier = compareTier;
     this.revision = 0; this.history = new Map([[0, []]]);
   }
   state() {
@@ -32,7 +36,8 @@ export class ToolSession {
       if (!args || typeof args !== 'object' || Array.isArray(args)) throw Error('arguments must be an object');
       const keys = {add_fold: ['angle_index', 'angle_degrees', 'selection_mode', 'layer_count', 'offset', 'move_positive', 'over'], remove_fold: ['step'],
         go_to_step: ['step'], restore_revision: ['revision'], get_images: ['step'], get_state: [],
-        list_legal_folds: ['max_results', 'selection_filter', 'include_rejected'], finish: []}[name];
+        list_legal_folds: ['max_results', 'selection_filter', 'include_rejected'],
+        compare_to_target: [], finish: []}[name];
       if (!keys || Object.keys(args).some(k => !keys.includes(k))) throw Error('Unknown tool or argument');
       let info = {};
       if (name === 'add_fold') {
@@ -52,6 +57,12 @@ export class ToolSession {
       } else if (name === 'list_legal_folds') {
         // Read-only: no commit, so the revision and the accepted sequence are untouched.
         return {ok: true, ...this.state(), enumeration: enumerateLegalFolds(this.session, args)};
+      } else if (name === 'compare_to_target') {
+        if (!this.compareTier) throw Error('compare_to_target is not enabled for this run');
+        // Read-only, like list_legal_folds: no commit, revision and sequence untouched.
+        return {ok: true, ...this.state(),
+          comparison: compareToTarget(frameLayers(this.session.sequence().file_frames.at(-1)),
+                                      this.target, this.compareTier)};
       } else if (name === 'get_images') {
         return {ok: true, ...this.state(), image_step: args.step ?? this.session.actions.length, images: this.images(args.step)};
       } else if (name === 'finish') {
@@ -78,9 +89,9 @@ export class ToolSession {
 }
 
 window.foldTools = {
-  init(cp, target, size = 512) {
+  init(cp, target, size = 512, compareTier = 0) {
     setCaptureSize(size);
-    this.active = new ToolSession(cp, target);
+    this.active = new ToolSession(cp, target, compareTier);
     return {state: this.active.state(), images: {cp: captureCP(cp),
       ...Object.fromEntries(Object.entries(captureViews(layersToPieces(this.active.target), 'Target')).map(([k, v]) => [`target-${k}`, v])),
       ...Object.fromEntries(Object.entries(this.active.images()).map(([k, v]) => [`initial-${k}`, v]))}};

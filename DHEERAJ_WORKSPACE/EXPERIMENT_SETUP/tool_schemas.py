@@ -29,17 +29,30 @@ TOOLS = [
         "max_results": {"type": "integer", "minimum": 1},
         "selection_filter": {"type": "string", "enum": ["any", "all", "top", "bottom"]},
         "include_rejected": {"type": "boolean"}}),
+    tool("compare_to_target", "Compare the current stack with the target folded state. Read-only. "
+         "Detail is fixed by the run's configured tier, not by you. Uses the target state only; "
+         "the reference fold sequence is never consulted."),
     tool("finish", "End this episode and evaluate the current sequence."),
 ]
 
 # The Codex loop exposes only a subset in its baseline condition; the enumerator changes
 # what the benchmark measures, so it must be requested explicitly. See TODO.md.
 ENUMERATION_TOOLS = ("list_legal_folds",)
+COMPARE_TOOLS = ("compare_to_target",)
 
 
-def tools_for(mode):
+def tools_for(mode, compare_tier=0):
+    """The action set for one experimental condition.
+
+    compare_to_target appears only when a tier is configured, so the default arms are
+    byte-identical to every run recorded before the comparison tool existed.
+    """
     if mode == "base":
-        return [t for t in TOOLS if t["function"]["name"] not in ENUMERATION_TOOLS]
-    if mode == "legal-folds":
-        return list(TOOLS)
-    raise ValueError(f"Unknown tool mode: {mode}")
+        chosen = [t for t in TOOLS if t["function"]["name"] not in ENUMERATION_TOOLS]
+    elif mode == "legal-folds":
+        chosen = list(TOOLS)
+    else:
+        raise ValueError(f"Unknown tool mode: {mode}")
+    if not compare_tier:
+        chosen = [t for t in chosen if t["function"]["name"] not in COMPARE_TOOLS]
+    return chosen

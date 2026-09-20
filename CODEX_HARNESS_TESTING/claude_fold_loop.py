@@ -240,6 +240,7 @@ def main():
     # --image-history all. Verified working over stream-json by workspace/probe_claude_cli.sh.
     parser.add_argument("--no-attach-images", dest="attach_images", action="store_false",
                         help="Run on geometry alone. Not comparable to an image-fed Codex arm.")
+    parser.add_argument("--compare-tier", type=int, choices=[0, 1, 2, 3], default=0)
     parser.add_argument("--max-turns", type=int, default=40)
     parser.add_argument("--stuck-limit", type=int, default=5)
     parser.add_argument("--cycle-limit", type=int, default=3)
@@ -266,10 +267,12 @@ def main():
     args.out = args.out.expanduser().resolve()
     args.corpus = args.corpus.expanduser().resolve()
     args.prompt = args.prompt.expanduser().resolve()
-    args.tool_specs = tools_for(args.tools)
+    args.tool_specs = tools_for(args.tools, args.compare_tier)
     args.prompt_text = args.prompt.read_text()
     if args.tools == "legal-folds":
         args.prompt_text += "\n" + args.prompt_appendix.expanduser().resolve().read_text()
+    if args.compare_tier:
+        args.prompt_text += "\n" + (HERE / "codex_fold_prompt_compare.md").read_text()
     for sample_id in args.samples:
         load_task(sample_id, args.corpus)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
