@@ -83,6 +83,13 @@ def ask_claude(args, prompt, manifest, turn_dir, workdir, schema_path, run=None)
     (turn_dir / "prompt.md").write_text(prompt, encoding="utf-8")
     write_json(turn_dir / "command.json", command)
     environment = os.environ.copy()
+    # This arm runs on the CLI's own claude.ai login, not on an API key. An exported
+    # ANTHROPIC_API_KEY silently outranks that login -- the CLI warns about it on stderr and
+    # bills the API instead, which cost $0.86 for nine turns of one easy sample before it was
+    # noticed. Dropping the credentials here mirrors what the Codex arm does with
+    # OPENAI_API_KEY, and keeps the run on the subscription it was meant to use.
+    for key in ("ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN", "ANTHROPIC_BASE_URL"):
+        environment.pop(key, None)
     attempts_allowed = args.max_retries + 1
     history = []
     for attempt in range(1, attempts_allowed + 1):
