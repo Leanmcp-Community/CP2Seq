@@ -290,7 +290,10 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
         sample_calls += 1
         run.event("codex_request", turn=turn, model=args.model, reasoning_effort=args.reasoning_effort,
                   prompt_artifact=str(turn_dir / "prompt.md"), image_artifacts=manifest)
-        response = ask_codex(args, prompt, manifest, turn_dir, workdir, schema_path, run)
+        # args.ask is the backend. Everything else in this loop -- the prompt, the schema, the
+        # stop conditions, the artifacts -- is identical whichever model answers, which is what
+        # makes a Codex arm and a Claude arm comparable rather than two separate experiments.
+        response = args.ask(args, prompt, manifest, turn_dir, workdir, schema_path, run)
         cli_events = read_jsonl(turn_dir / "events.jsonl")
         completed = [e for e in cli_events if e.get("type") == "turn.completed"]
         cli_usage = completed[-1].get("usage", {}) if completed else {}
@@ -465,6 +468,7 @@ def main():
     args.corpus = args.corpus.expanduser().resolve()
     args.prompt = args.prompt.expanduser().resolve()
     args.tool_specs = tools_for(args.tools)
+    args.ask = ask_codex
     # The baseline prompt stays byte-identical under --tools base, so base runs remain
     # comparable with every run recorded before the enumerator existed.
     args.prompt_text = args.prompt.read_text()
@@ -479,7 +483,7 @@ def main():
     # The resolved schemas and prompt are saved whole as tools.json and prompt.md; repeating
     # them inline would bury the settings the config file exists to show.
     config_view = {k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()
-                   if k not in ("tool_specs", "prompt_text")}
+                   if k not in ("tool_specs", "prompt_text", "ask")}
     write_json(run_dir / "config.json", config_view)
     (run_dir / "prompt.md").write_text(args.prompt_text)
     schema_path = run_dir / "action.schema.json"
@@ -491,8 +495,17 @@ def main():
     config = dict(config_view)
     config["model_geometry_decimals"] = MODEL_GEOMETRY_DECIMALS
     print(json.dumps(config, indent=2), flush=True)
+    run_batch(args, config, run_dir, schema_path, results)
+
+
+def run_batch(args, config, run_dir, schema_path, results):
+    """Drive every sample through `episode`, stopping the batch on a hard error.
+
+    Shared by every backend so the two arms cannot differ in how episodes are sequenced,
+    where artifacts land, or when a batch gives up.
+    """
     with closing(Run("fold-pilot", config=config, root=args.out, run_name=run_dir.name)) as run, \
-            tempfile.TemporaryDirectory(prefix="codex-fold-") as temporary, BrowserSession() as browser:
+            tempfile.TemporaryDirectory(prefix="fold-harness-") as temporary, BrowserSession() as browser:
         workdir = Path(temporary)
         for sample_id in args.samples:
             try:
