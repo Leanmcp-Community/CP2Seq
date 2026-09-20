@@ -104,6 +104,17 @@ def ask_claude(args, prompt, manifest, turn_dir, workdir, schema_path, run=None)
                            {"timeout": True, "attempt": attempt, "duration_s": time.monotonic()-started})
                 raise RuntimeError(f"Claude timed out; see {turn_dir / 'stderr.log'}") from None
         duration = time.monotonic() - started
+        # Fail closed on billed credentials. Stripping the env vars above should be enough, but
+        # "should be enough" is how $0.86 of unwanted API spend happened on the first run. The
+        # CLI says out loud when a key is outranking the claude.ai login, so believe it and stop
+        # the batch rather than discover the charge afterwards.
+        warning = (turn_dir / "stderr.log").read_text(encoding="utf-8", errors="replace")
+        if "takes precedence over your claude.ai login" in warning:
+            raise RuntimeError(
+                "Claude Code is authenticating with an API key, not the claude.ai login, so this "
+                "run would be billed per token. Find the credential still reaching the CLI "
+                "(ANTHROPIC_API_KEY and friends are already stripped from the subprocess "
+                f"environment) and unset it. See {turn_dir / 'stderr.log'}")
         if not result.returncode:
             payload = result_event((turn_dir / "events.jsonl").read_text())
             usage = payload.get("usage") or {}
