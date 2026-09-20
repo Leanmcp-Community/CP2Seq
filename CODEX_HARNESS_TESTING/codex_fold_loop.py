@@ -433,11 +433,11 @@ def main():
     parser.add_argument("--cycle-limit", type=int, default=3,
                         help="End the episode after the same move is played from the same folded "
                              "position this many times: repetition, not exploration. 0 disables.")
-    parser.add_argument("--revisit-limit", type=int, default=7,
+    parser.add_argument("--revisit-limit", type=int, default=15,
                         help="End the episode after the paper returns to one folded position this "
                              "many times by any route. Must stay above the branching factor or it "
                              "cuts off systematic search; positions rarely offer more than 7 legal "
-                             "folds. 0 disables.")
+                             "folds; measured over 17180 states, none offered more than 14. 0 disables.")
     parser.add_argument("--timeout", type=float, default=300, help="Seconds per Codex invocation")
     parser.add_argument("--max-retries", type=int, default=5,
                         help="Retries per turn after a rate-limit/capacity/transient CLI failure")
