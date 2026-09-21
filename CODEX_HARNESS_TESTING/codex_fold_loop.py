@@ -276,7 +276,8 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
     out = run_dir / sample_id
     out.mkdir()
     cp, target = load_task(sample_id, args.corpus)
-    initial = browser.init(cp, target, args.render_size, getattr(args, "compare_tier", 0))
+    initial = browser.init(cp, target, args.render_size, getattr(args, "compare_tier", 0),
+                           getattr(args, "action_space", "any"))
     write_json(out / "cp.fold", cp)
     write_json(out / "target.fold", target)
     save_candidate(out, browser.artifacts())
@@ -371,9 +372,9 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
         # easy-0003 from 80 turns unsolved to 19 turns solved.
         if (getattr(args, "compare_auto", False) and action["name"] == "add_fold"
                 and result.get("ok") and "comparison" not in result):
-            seen = browser.call("compare_to_target", {})
-            if seen.get("ok"):
-                result["comparison_now"] = seen["comparison"]
+            cmp_result = browser.call("compare_to_target", {})
+            if cmp_result.get("ok"):
+                result["comparison_now"] = cmp_result["comparison"]
         # A dead end the model will not leave. When no legal fold exists, the ONLY useful move
         # is to back out, and a model that instead keeps proposing folds cannot recover: every
         # one of them is rejected by construction. easy-0003 spent turns 60-80 that way. Count
@@ -442,7 +443,7 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
     reference = json.loads((args.corpus / sample_id / "seq.json").read_text())["folds"]
     result = {"sample_id": sample_id, "backend": "codex-cli-chatgpt", "model_requested": args.model,
               "reasoning_effort": args.reasoning_effort, "image_history": args.image_history,
-              "tools": args.tools,
+              "tools": args.tools, "action_space": args.action_space,
               "termination": termination, "sample_calls": sample_calls, "tool_calls": tool_calls,
               **artifacts["evaluation"], **sequence_metrics(artifacts["sequence"]["folds"], reference)}
     result["solved"] = termination == "finished" and result["pilot_match"]
@@ -467,6 +468,14 @@ def main():
                              "2 which layers disagree and how; 3 what each should be. Uses only the "
                              "target state, never the reference sequence. Tier 3 does most of the "
                              "reasoning, so a run using it must say so when reported.")
+    parser.add_argument("--action-space", choices=["any", "all-layers"], default="any",
+                        help="all-layers removes partial top/bottom runs from the action space, for "
+                             "both the schema and the simulator. A property of the corpus, not a "
+                             "preference: every reference fold in release/all-layers is whole-stack, "
+                             "while 14%% of some-verified-d3 and 34%% of some-generated-d6 need a "
+                             "partial fold. The search arm must be given the same setting "
+                             "(search_baseline_stateful.mjs --selection all) or the comparison "
+                             "measures the setting rather than the solver.")
     parser.add_argument("--tools", choices=["base", "legal-folds"], default="base",
                         help="base keeps the original action set; legal-folds adds list_legal_folds "
                              "and its prompt appendix, which is a different experimental condition")
@@ -516,7 +525,7 @@ def main():
     args.out = args.out.expanduser().resolve()
     args.corpus = args.corpus.expanduser().resolve()
     args.prompt = args.prompt.expanduser().resolve()
-    args.tool_specs = tools_for(args.tools, args.compare_tier)
+    args.tool_specs = tools_for(args.tools, args.compare_tier, args.action_space)
     args.ask = ask_codex
     # The baseline prompt stays byte-identical under --tools base, so base runs remain
     # comparable with every run recorded before the enumerator existed.
@@ -524,6 +533,10 @@ def main():
     if args.tools == "legal-folds":
         args.prompt_appendix = args.prompt_appendix.expanduser().resolve()
         args.prompt_text += "\n" + args.prompt_appendix.read_text()
+    if args.action_space == "all-layers":
+        # Its own appendix rather than an edit to the base prompt, so every arm recorded
+        # before this flag existed keeps a byte-identical prompt.
+        args.prompt_text += "\n" + (HERE / "codex_fold_prompt_all_layers.md").read_text()
     if args.compare_tier:
         args.prompt_text += "\n" + (HERE / "codex_fold_prompt_compare.md").read_text()
     if args.compare_auto:

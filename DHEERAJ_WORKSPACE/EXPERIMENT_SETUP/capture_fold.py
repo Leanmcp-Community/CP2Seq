@@ -92,12 +92,13 @@ class BrowserSession:
             self.server.server_close()
             self.thread.join(timeout=2)
 
-    def init(self, cp, target, size=512, compare_tier=0):
-        # compare_tier defaults to 0 so every existing caller, the Tinker loop included, keeps
-        # its old behaviour: at 0 the comparison tool is absent from the session entirely.
+    def init(self, cp, target, size=512, compare_tier=0, action_space="any"):
+        # Both extras default to the pre-existing behaviour so every existing caller, the
+        # Tinker loop included, is unaffected: at tier 0 the comparison tool is absent from
+        # the session entirely, and at "any" the action space is the one it has always been.
         return self.page.evaluate(
-            "([cp, target, size, tier]) => window.foldTools.init(cp, target, size, tier)",
-            [cp, target, size, compare_tier])
+            "([cp, target, size, tier, space]) => window.foldTools.init(cp, target, size, tier, space)",
+            [cp, target, size, compare_tier, action_space])
 
     def call(self, name, args=None):
         return self.page.evaluate("([name, args]) => window.foldTools.call(name, args)", [name, args or {}])
