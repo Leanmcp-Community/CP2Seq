@@ -9,11 +9,23 @@ import { compareToTarget } from './compare_target.mjs';
 
 
 export class ToolSession {
-  constructor(cp, target, compareTier = 0) {
+  constructor(cp, target, compareTier = 0, actionSpace = 'any') {
     this.cp = cp; this.target = frameLayers(target); this.session = new FoldSession(cp);
     // Fixed at init, never taken from the action: the tier IS the experimental condition, so
     // the model must not be able to ask for a more helpful one than the run was configured for.
     this.compareTier = compareTier;
+    // Same reasoning, same enforcement point. 'all-layers' removes partial top/bottom runs
+    // from the action space entirely: add_fold refuses them and list_legal_folds will not
+    // list them, whatever the caller asks for. Gating only one of the two would let a model
+    // fold a run the enumerator never offered, or offer one add_fold then rejects.
+    //
+    // Why it is a run-level condition rather than a tuning knob: on release/all-layers all
+    // 4180 reference folds are whole-stack, so partial folds cost 3-87x in search and buy
+    // nothing, while on some-verified-d3 and some-generated-d6 they are what 14% and 34% of
+    // the samples need. The right setting depends on the corpus, and it must be the SAME for
+    // the model arm and the search arm or the comparison measures the setting.
+    if (!['any', 'all-layers'].includes(actionSpace)) throw Error(`Unknown action space: ${actionSpace}`);
+    this.actionSpace = actionSpace;
     this.revision = 0; this.history = new Map([[0, []]]);
   }
   state() {
@@ -41,6 +53,9 @@ export class ToolSession {
       if (!keys || Object.keys(args).some(k => !keys.includes(k))) throw Error('Unknown tool or argument');
       let info = {};
       if (name === 'add_fold') {
+        if (this.actionSpace === 'all-layers' && (args.selection_mode ?? 'all') !== 'all') {
+          throw Error('This run is configured for whole-stack folds only; selection_mode must be all');
+        }
         const next = replay(this.cp, this.session.actions);
         info = next.apply({tool: 'apply_fold', ...args});
         if (!info.ok) return {...info, ...this.state()};
@@ -56,7 +71,10 @@ export class ToolSession {
         this.commit(replay(this.cp, this.history.get(args.revision)));
       } else if (name === 'list_legal_folds') {
         // Read-only: no commit, so the revision and the accepted sequence are untouched.
-        return {ok: true, ...this.state(), enumeration: enumerateLegalFolds(this.session, args)};
+        // The run's action space overrides selection_filter rather than merging with it:
+        // a listed fold add_fold would refuse breaks the tool's stated guarantee.
+        const options = this.actionSpace === 'all-layers' ? {...args, selection_filter: 'all'} : args;
+        return {ok: true, ...this.state(), enumeration: enumerateLegalFolds(this.session, options)};
       } else if (name === 'compare_to_target') {
         if (!this.compareTier) throw Error('compare_to_target is not enabled for this run');
         // Read-only, like list_legal_folds: no commit, revision and sequence untouched.
@@ -89,9 +107,9 @@ export class ToolSession {
 }
 
 window.foldTools = {
-  init(cp, target, size = 512, compareTier = 0) {
+  init(cp, target, size = 512, compareTier = 0, actionSpace = 'any') {
     setCaptureSize(size);
-    this.active = new ToolSession(cp, target, compareTier);
+    this.active = new ToolSession(cp, target, compareTier, actionSpace);
     return {state: this.active.state(), images: {cp: captureCP(cp),
       ...Object.fromEntries(Object.entries(captureViews(layersToPieces(this.active.target), 'Target')).map(([k, v]) => [`target-${k}`, v])),
       ...Object.fromEntries(Object.entries(this.active.images()).map(([k, v]) => [`initial-${k}`, v]))}};

@@ -1,0 +1,129 @@
+
+easy-0001  MV edges 9, reference 4 folds
+  depth  stack  lines   evaluated  legal  ms       us/candidate  cheap   rejection breakdown
+  0      1      7       28         6      25.1     894.8         0%      OUTSIDE_TARGET_CP 57%
+  1      2      8       64         5      1.9      29.6          56.3%   no-crease 28%, nothing-to-move 28%, OUTSIDE_TARGET_CP 19%
+  2      3      8       96         5      2.1      21.8          68.8%   no-crease 34%, nothing-to-move 34%, would-tear 11%
+  3      5      12      240        2      28.4     118.3         87.5%   no-crease 44%, nothing-to-move 44%, would-tear 6%
+  4      9      13      468        0      4.3      9.1           95.7%   no-crease 48%, nothing-to-move 48%, OUTSIDE_TARGET_CP 3%
+  mean branching 3.6, slowest call 28.4ms at depth 3
+  896 candidates evaluated in total; 84.8% miss the selection (share of candidates, not of time)
+  no-crease: 42.4%  nothing-to-move: 42.4%  OUTSIDE_TARGET_CP: 6.9%  would-tear: 4.4%
+
+easy-0003  MV edges 64, reference 10 folds
+  depth  stack  lines   evaluated  legal  ms       us/candidate  cheap   rejection breakdown
+  0      1      20      80         5      3.8      47.4          0%      OUTSIDE_TARGET_CP 88%
+  1      2      32      256        4      4.3      16.8          54.7%   OUTSIDE_TARGET_CP 32%, nothing-to-move 27%, no-crease 27%
+  2      3      32      384        6      6.7      17.4          63.5%   no-crease 32%, nothing-to-move 32%, OUTSIDE_TARGET_CP 17%
+  3      5      35      700        8      14.2     20.2          72.3%   no-crease 36%, nothing-to-move 36%, would-tear 18%
+  4      9      35      1260       8      23.8     18.9          81%     no-crease 41%, nothing-to-move 40%, would-tear 12%
+  5      14     36      2016       5      49.4     24.5          84%     no-crease 43%, nothing-to-move 41%, would-tear 12%
+  6      18     35      2520       3      46.9     18.6          88.4%   no-crease 44%, nothing-to-move 44%, would-tear 9%
+  7      20     38      3040       1      49.0     16.1          91.1%   no-crease 46%, nothing-to-move 45%, would-tear 8%
+  8      24     35      3360       2      51.7     15.4          91.4%   no-crease 46%, nothing-to-move 46%, would-tear 8%
+  9      40     37      5920       1      127.0    21.5          95.7%   nothing-to-move 48%, no-crease 48%, would-tear 4%
+  10     48     36      6912       0      162.0    23.4          98.1%   no-crease 49%, nothing-to-move 49%, would-tear 1%
+  mean branching 3.91, slowest call 162ms at depth 10
+  26,448 candidates evaluated in total; 91.2% miss the selection (share of candidates, not of time)
+  no-crease: 45.8%  nothing-to-move: 45.4%  would-tear: 6.4%  OUTSIDE_TARGET_CP: 2.0%
+
+easy-0108  MV edges 736, reference 10 folds
+  depth  stack  lines   evaluated  legal  ms       us/candidate  cheap   rejection breakdown
+  0      1      60      240        7      34.2     142.5         0%      OUTSIDE_TARGET_CP 94%
+  1      2      72      576        9      60.7     105.5         30.6%   OUTSIDE_TARGET_CP 39%, would-tear 27%, no-crease 15%
+  2      4      80      1280       9      102.7    80.2          54.4%   nothing-to-move 27%, no-crease 27%, would-tear 27%
+  3      8      92      2944       8      166.6    56.6          73.2%   no-crease 37%, nothing-to-move 37%, would-tear 19%
+  4      12     96      4608       9      274.0    59.5          80.3%   nothing-to-move 40%, no-crease 40%, would-tear 16%
+  5      19     104     7904       9      846.8    107.1         88.7%   no-crease 44%, nothing-to-move 44%, would-tear 10%
+  6      32     104     13312      7      1103.4   82.9          90.4%   no-crease 45%, nothing-to-move 45%, would-tear 9%
+  7      64     104     26624      8      2285.3   85.8          94.2%   no-crease 47%, nothing-to-move 47%, would-tear 6%
+  8      128    108     55296      7      7948.6   143.7         97.2%   no-crease 49%, nothing-to-move 49%, would-tear 3%
+  9      256    114     116736     4      28670.0  245.6         99.1%   nothing-to-move 50%, no-crease 50%, would-tear 1%
+  10     512    116     237568     0      986.8    4.2           100%    nothing-to-move 50%, no-crease 50%
+  mean branching 7, slowest call 28670ms at depth 9
+  467,088 candidates evaluated in total; 98% miss the selection (share of candidates, not of time)
+  no-crease: 49.0%  nothing-to-move: 49.0%  would-tear: 1.7%  OUTSIDE_TARGET_CP: 0.2%
+
+mid-0001  MV edges 176, reference 11 folds
+  depth  stack  lines   evaluated  legal  ms       us/candidate  cheap   rejection breakdown
+  0      1      28      112        5      12.5     111.9         0%      OUTSIDE_TARGET_CP 91%
+  1      2      40      320        5      26.8     83.7          45%     OUTSIDE_TARGET_CP 34%, no-crease 23%, nothing-to-move 23%
+  2      3      40      480        7      44.3     92.3          55%     no-crease 28%, nothing-to-move 28%, would-tear 23%
+  3      5      40      800        8      44.0     55            61.5%   no-crease 31%, nothing-to-move 31%, would-tear 26%
+  4      9      48      1728       5      80.3     46.5          77%     no-crease 39%, nothing-to-move 38%, would-tear 16%
+  5      10     48      1920       7      71.6     37.3          78%     no-crease 39%, nothing-to-move 39%, would-tear 18%
+  6      14     48      2688       2      99.6     37.1          84.6%   no-crease 43%, nothing-to-move 42%, would-tear 14%
+  7      28     52      5824       5      197.1    33.8          88.8%   no-crease 44%, nothing-to-move 44%, would-tear 11%
+  8      44     54      9504       4      436.6    45.9          93.8%   no-crease 47%, nothing-to-move 47%, would-tear 5%
+  9      60     54      12960      1      689.4    53.2          96.9%   no-crease 49%, nothing-to-move 48%, would-tear 3%
+  10     64     50      12800      3      613.1    47.9          98%     no-crease 49%, nothing-to-move 49%, would-tear 2%
+  11     128    52      26624      0      65.8     2.5           100%    no-crease 50%, nothing-to-move 50%
+  mean branching 4.33, slowest call 689.4ms at depth 9
+  75,760 candidates evaluated in total; 94.8% miss the selection (share of candidates, not of time)
+  no-crease: 47.4%  nothing-to-move: 47.3%  would-tear: 4.1%  OUTSIDE_TARGET_CP: 0.9%
+
+mid-0030  MV edges 736, reference 13 folds
+  depth  stack  lines   evaluated  legal  ms       us/candidate  cheap   rejection breakdown
+  0      1      60      240        7      30.5     127           0%      OUTSIDE_TARGET_CP 94%
+  1      2      60      480        8      55.1     114.7         26.7%   OUTSIDE_TARGET_CP 40%, would-tear 30%, no-crease 13%
+  2      4      76      1216       15     78.4     64.5          52.6%   would-tear 33%, no-crease 26%, nothing-to-move 26%
+  3      8      88      2816       10     198.0    70.3          69.3%   nothing-to-move 35%, no-crease 35%, would-tear 23%
+  4      16     96      6144       13     471.2    76.7          81.3%   nothing-to-move 41%, no-crease 41%, would-tear 14%
+  5      20     112     8960       13     709.1    79.1          84.7%   no-crease 43%, nothing-to-move 42%, would-tear 12%
+  6      28     116     12992      6      937.0    72.1          88.6%   no-crease 45%, nothing-to-move 44%, would-tear 10%
+  7      36     112     16128      3      1448.0   89.8          90%     no-crease 45%, nothing-to-move 45%, would-tear 9%
+  8      44     112     19712      8      3217.0   163.2         91%     no-crease 46%, nothing-to-move 45%, would-tear 8%
+  9      48     104     19968      7      4302.9   215.5         91.7%   nothing-to-move 46%, no-crease 46%, would-tear 7%
+  10     64     104     26624      8      5391.4   202.5         94.2%   nothing-to-move 47%, no-crease 47%, would-tear 6%
+  11     128    108     55296      7      11768.1  212.8         97.2%   nothing-to-move 49%, no-crease 49%, would-tear 3%
+  12     256    114     116736     4      26454.3  226.6         99.1%   nothing-to-move 50%, no-crease 50%, would-tear 1%
+  13     512    116     237568     0      776.2    3.3           100%    no-crease 50%, nothing-to-move 50%
+  mean branching 7.79, slowest call 26454.3ms at depth 12
+  524,880 candidates evaluated in total; 97.1% miss the selection (share of candidates, not of time)
+  no-crease: 48.6%  nothing-to-move: 48.5%  would-tear: 2.5%  OUTSIDE_TARGET_CP: 0.4%
+
+hard-0001  MV edges 5340, reference 19 folds
+  depth  stack  lines   evaluated  legal  ms       us/candidate  cheap   rejection breakdown
+  0      1      188     752        1      437.6    581.9         0%      OUTSIDE_TARGET_CP 100%
+  1      2      188     1504       18     673.5    447.8         17%     OUTSIDE_TARGET_CP 43%, would-tear 37%, nothing-to-move 9%
+  2      4      188     3008       17     1299.0   431.9         40.4%   would-tear 37%, OUTSIDE_TARGET_CP 22%, nothing-to-move 20%
+  3      8      236     7552       16     2822.1   373.7         64.8%   no-crease 32%, nothing-to-move 32%, would-tear 25%
+  4      10     236     9440       20     2229.2   236.1         67.8%   no-crease 34%, nothing-to-move 34%, would-tear 25%
+  5      16     268     17152      22     3417.5   199.2         79.1%   no-crease 40%, nothing-to-move 40%, would-tear 18%
+  6      28     300     33600      20     4836.1   143.9         83.8%   no-crease 42%, nothing-to-move 42%, would-tear 15%
+  7      40     316     50560      19     9579.1   189.5         89%     no-crease 45%, nothing-to-move 44%, would-tear 10%
+  8      54     340     73440      14     17920.4  244           92.2%   no-crease 46%, nothing-to-move 46%, would-tear 7%
+  9      108    356     153792     12     46579.7  302.9         93.8%   no-crease 47%, nothing-to-move 47%, would-tear 6%
+  10     164    360     236160     6      106190.7 449.7         95.5%   no-crease 48%, nothing-to-move 48%, would-tear 4%
+  11     328    368     482816     3      467686.7 968.7         96.3%   no-crease 48%, nothing-to-move 48%, would-tear 3%
+  mean branching 14, slowest call 467686.7ms at depth 11  [budget 300s reached at depth 12]
+  1,069,776 candidates evaluated in total; 93.6% miss the selection (share of candidates, not of time)
+  no-crease: 46.8%  nothing-to-move: 46.8%  would-tear: 5.6%  OUTSIDE_TARGET_CP: 0.7%
+
+hard-0043  MV edges 24448, reference 18 folds
+  depth  stack  lines   evaluated  legal  ms       us/candidate  cheap   rejection breakdown
+  0      1      380     1520       4      3663.3   2410.1        0%      OUTSIDE_TARGET_CP 99%
+  1      2      508     4064       3      6286.8   1547          40.9%   OUTSIDE_TARGET_CP 40%, no-crease 20%, nothing-to-move 20%
+  2      3      508     6096       5      10247.2  1681          49.3%   would-tear 26%, no-crease 25%, nothing-to-move 25%
+  3      5      604     12080      14     8553.7   708.1         62.5%   no-crease 31%, nothing-to-move 31%, would-tear 26%
+  4      8      604     19328      26     22720.6  1175.5        68.9%   no-crease 34%, nothing-to-move 34%, would-tear 23%
+  5      10     668     26720      19     27935.4  1045.5        75.2%   no-crease 38%, nothing-to-move 38%, would-tear 19%
+  6      12     572     27456      18     23149.4  843.1         74.2%   no-crease 37%, nothing-to-move 37%, would-tear 21%
+  7      22     636     55968      15     31084.8  555.4         82.6%   nothing-to-move 41%, no-crease 41%, would-tear 15%
+  8      28     636     71232      8      38369.9  538.7         86.4%   nothing-to-move 43%, no-crease 43%, would-tear 12%
+  9      34     636     86496      19     36018.3  416.4         88.1%   no-crease 44%, nothing-to-move 44%, would-tear 12%
+  10     64     636     162816     25     54400.9  334.1         91.8%   nothing-to-move 46%, no-crease 46%, would-tear 8%
+  11     128    668     342016     29     163844.6 479.1         94.6%   nothing-to-move 47%, no-crease 47%, would-tear 5%
+  mean branching 15.42, slowest call 163844.6ms at depth 11  [budget 300s reached at depth 12]
+  815,792 candidates evaluated in total; 88.6% miss the selection (share of candidates, not of time)
+  no-crease: 44.3%  nothing-to-move: 44.3%  would-tear: 9.7%  OUTSIDE_TARGET_CP: 1.6%
+
+  --- one node of search costs one enumeration ---
+  sample      MV      mean b   slowest call   nodes/s there  cheap% (of candidates)
+  easy-0001   9       3.6      28.4ms         35.21          84.8%
+  easy-0003   64      3.91     162ms          6.17           91.2%
+  easy-0108   736     7        28670ms        0.03           98%
+  mid-0001    176     4.33     689.4ms        1.45           94.8%
+  mid-0030    736     7.79     26454.3ms      0.04           97.1%
+  hard-0001   5340    14       467686.7ms     0.00           93.6%
+  hard-0043   24448   15.42    163844.6ms     0.01           88.6%

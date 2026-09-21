@@ -116,6 +116,126 @@ function selections(stackSize, filter) {
   return out;
 }
 
+// SKIPPING THE CANDIDATES THAT CANNOT POSSIBLY FOLD
+//
+// Profiling every state along the reference sequences: 85-98 percent of candidates are
+// rejected as `nothing-to-move` or `no-crease`, and the share rises monotonically with depth,
+// reaching 100 percent at the deepest states -- exactly where the cost is. Both mean the same
+// geometric fact, that the fold line misses the selected run entirely; which of the two names
+// it gets depends only on which side was asked to move.
+//
+// That fact is decidable from the selected layers' projection onto the fold normal, without
+// splitting a single polygon. `foldLayers` already computes such a range for its own
+// diagnostics (`lineValues`), so this is not new geometry, only the same test done before the
+// expensive part instead of inside it.
+//
+// SOUNDNESS. This must only skip candidates `tryFold` would itself reject, and must produce
+// the identical rejection. Reading `splitPoly`, a face whose vertices have side values
+// s = n.q - d falls into exactly one of three cases:
+//
+//   every s >= -EPS   -> {pos: poly, neg: null}   the face is wholly on the positive side
+//   every s <=  EPS   -> {pos: null, neg: poly}   wholly on the negative side
+//   otherwise         -> cut, and the cut IS the crease
+//
+// and `foldLayers` makes a crease only in the third case. So if NO selected layer is cut, the
+// fold creases nothing, and the only question left is whether anything was on the moving side
+// at all: nothing there is `nothing-to-move`, something there is `no-crease`.
+//
+// It is the uncut case, not the "whole selection on one side" case, that dominates. The
+// layers are separate polygons, so a line can run clean between them -- crossing the stack's
+// overall extent while cutting none of it -- and at depth that is most of the candidate
+// space. Testing each layer's own extent catches it; testing only the stack's does not, and
+// buys almost nothing (measured: 1.2x against the 11x the rejection tallies promise).
+//
+// A layer is classified only when its extent clears the margin on one side; anything closer
+// than that, including a genuine cut, makes the whole candidate fall through to `tryFold`
+// rather than be guessed at. The rejection strings are reproduced verbatim from the engine's.
+//
+// The margin is deliberately wider than EPS: the offset handed to `tryFold` is the SNAPPED
+// one, which can differ from `line.d` by up to 5e-10 in the unit frame, and the prefilter has
+// to stay conservative with respect to the number actually judged, not the one it started
+// from. 1e-8 is three orders below the 2e-6 geometric tolerance, so it costs nothing.
+const PREFILTER_MARGIN = 1e-8;
+
+// The reasons, worded exactly as tryFold words them, so a prefiltered candidate is
+// indistinguishable in `rejected_summary` from one the engine rejected itself.
+const MISSES_SELECTION = {
+  'nothing-to-move': side =>
+    'The chosen half-plane contains no selected paper to move. ' +
+    `no selected paper lies on the ${side} side of this line`,
+  'no-crease': () =>
+    'The proposed action creates no crease in the selected paper. ' +
+    'the line does not cut any selected layer: every selected layer lies wholly on the moving ' +
+    'side, so the fold would lift it off the sheet instead of creasing it',
+};
+
+// Every layer's extent along one unit normal, rank by rank, bottom to top. Computed once per
+// distinct normal and reused for every offset, selection and direction on it.
+function rankExtents(paper, n) {
+  return paper.order.map(fi => {
+    const f = paper.faces[fi];
+    let min = Infinity, max = -Infinity;
+    for (const p of f.poly) {
+      const v = n[0] * (f.T.a * p[0] + f.T.b * p[1] + f.T.e) +
+                n[1] * (f.T.c * p[0] + f.T.d * p[1] + f.T.f);
+      if (v < min) min = v;
+      if (v > max) max = v;
+    }
+    return {min, max};
+  });
+}
+
+// For one offset on one normal: classify every layer, then make the counts cumulative so that
+// `all`, `top k` and `bottom k` are each O(1) instead of O(k). `unsure` counts the layers this
+// cannot classify -- cut, or within the margin of the line -- and one of those anywhere in a
+// selection sends the candidate down the full path.
+function classifyRanks(ranks, d) {
+  const N = ranks.length;
+  const pre = [{pos: 0, unsure: 0}], suf = [{pos: 0, unsure: 0}];
+  const at = i => {
+    const e = ranks[i];
+    if (!Number.isFinite(e.min)) return {pos: 0, unsure: 1};
+    if (e.min - d > PREFILTER_MARGIN) return {pos: 1, unsure: 0};   // wholly positive
+    if (e.max - d < -PREFILTER_MARGIN) return {pos: 0, unsure: 0};  // wholly negative
+    return {pos: 0, unsure: 1};                                     // cut, or too close to call
+  };
+  const cls = Array.from({length: N}, (_, i) => at(i));
+  for (let i = 0; i < N; i++) {
+    pre.push({pos: pre[i].pos + cls[i].pos, unsure: pre[i].unsure + cls[i].unsure});
+    const j = N - 1 - i;
+    suf.push({pos: suf[i].pos + cls[j].pos, unsure: suf[i].unsure + cls[j].unsure});
+  }
+  return {all: pre[N], bottom: pre, top: suf, size: N};
+}
+
+const countFor = (cls, choice) =>
+  choice.selection_mode === 'all' ? {c: cls.all, k: cls.size} :
+  choice.selection_mode === 'top' ? {c: cls.top[choice.layer_count], k: choice.layer_count}
+                                  : {c: cls.bottom[choice.layer_count], k: choice.layer_count};
+
+// null when the candidate has to be handed to tryFold; otherwise the error it would return.
+function missesSelection({c, k}, movePositive) {
+  if (c.unsure || k === 0) return null;      // something is cut, borderline, or nothing selected
+  // No selected layer is cut, so this fold creases nothing. Whether any paper moves decides
+  // which of the two rejections the engine names.
+  const moving = movePositive ? c.pos : k - c.pos;
+  const side = movePositive ? 'positive' : 'negative';
+  return moving === 0
+      ? {error: 'nothing-to-move', detail: MISSES_SELECTION['nothing-to-move'](side)}
+      : {error: 'no-crease', detail: MISSES_SELECTION['no-crease']()};
+}
+
+// The (unit normal, offset) pair tryFold will actually see for these emitted arguments --
+// after lineArguments' possible sign flip and after snapping. Projecting against anything
+// else would make the prefilter reason about a slightly different line than the engine judges.
+function judgedLine(args) {
+  if (args.angle_index === undefined) return {n: [-Math.sin(args.angle_degrees * Math.PI / 180),
+                                                  Math.cos(args.angle_degrees * Math.PI / 180)],
+                                              d: args.offset};
+  const raw = INDEXED_NORMALS[args.angle_index], L = Math.hypot(raw[0], raw[1]);
+  return {n: [raw[0] / L, raw[1] / L], d: args.offset / L};
+}
+
 // WHEN ARE TWO RESULTS THE SAME MOVE?
 //
 // Not "the folded shapes look alike". `terminalMatch` would say yes to that, and it is the
@@ -188,12 +308,15 @@ function newCreaseLength(made, existing) {
 
 function readOptions(options) {
   const {max_results = DEFAULT_MAX_RESULTS, selection_filter = 'any',
-         include_rejected = false} = options ?? {};
+         include_rejected = false, prefilter = true} = options ?? {};
   if (!Number.isInteger(max_results) || max_results < 1) throw Error('max_results must be a positive integer');
   if (!SELECTION_FILTERS.includes(selection_filter))
     throw Error(`selection_filter must be one of ${SELECTION_FILTERS.join(', ')}`);
   if (typeof include_rejected !== 'boolean') throw Error('include_rejected must be a boolean');
-  return {max_results, selection_filter, include_rejected};
+  // Off only for measurement and for the equality check: with it on and off the returned
+  // object must be identical, which is the property that makes the shortcut safe to ship.
+  if (typeof prefilter !== 'boolean') throw Error('prefilter must be a boolean');
+  return {max_results, selection_filter, include_rejected, prefilter};
 }
 
 /**
@@ -203,7 +326,7 @@ function readOptions(options) {
  * @param options  {max_results, selection_filter: any|all|top|bottom, include_rejected}
  */
 export function enumerateLegalFolds(session, options) {
-  const {max_results, selection_filter, include_rejected} = readOptions(options);
+  const {max_results, selection_filter, include_rejected, prefilter} = readOptions(options);
   const paper = session.paper, cp = session.cp;
   const stackSize = paper.order.length;
 
@@ -226,12 +349,33 @@ export function enumerateLegalFolds(session, options) {
     else rejected.set(error, {count: 1, example: detail});
   };
 
+  // Keyed on the normal, not the line: every offset on one normal shares these projections,
+  // and after pushing the CP's lines through the face transforms the same few normals recur
+  // many times over.
+  const extentCache = new Map();
+  const extentsFor = (n) => {
+    const key = `${Math.round(n[0] / 1e-12)},${Math.round(n[1] / 1e-12)}`;
+    let e = extentCache.get(key);
+    if (!e) { e = rankExtents(paper, n); extentCache.set(key, e); }
+    return e;
+  };
+
+  let prefiltered = 0;
   for (const line of lines.values()) {
     const args = lineArguments(line);
+    // Projections depend only on the normal and are shared by every offset on it; the
+    // classification depends on the offset too, so it is redone per line but stays O(layers).
+    const judged = prefilter ? judgedLine(args) : null;
+    const cls = prefilter ? classifyRanks(extentsFor(judged.n), judged.d) : null;
     for (const choice of choices) {
+      const counts = prefilter ? countFor(cls, choice) : null;
       for (const move_positive of [true, false]) {
         const action = {tool: 'apply_fold', ...args, move_positive, ...choice};
         evaluated++;
+        if (prefilter) {
+          const missed = missesSelection(counts, move_positive);
+          if (missed) { prefiltered++; note(missed.error, missed.detail); continue; }
+        }
         let verdict;
         // parseAction throws on a malformed action rather than returning; an emitted
         // candidate that cannot even be parsed is a generator bug, so it is counted
@@ -280,6 +424,10 @@ export function enumerateLegalFolds(session, options) {
       'Legality and CP compatibility are decided by the same verifier add_fold uses.',
     rejected_summary: Object.fromEntries([...rejected].map(([error, {count, example}]) =>
         [error, include_rejected ? {count, example} : count])),
+    // Only under include_rejected, which is a debug path the harness never sets: the object
+    // the MODEL sees has to stay byte-identical to the one recorded before this shortcut, or
+    // the prompt changes and every run before it becomes incomparable.
+    ...(include_rejected ? {prefiltered, prefilter_enabled: prefilter} : {}),
     legal_folds: shown,
   };
 }
