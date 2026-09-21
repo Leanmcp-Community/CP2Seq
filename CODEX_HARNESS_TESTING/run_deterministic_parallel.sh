@@ -6,14 +6,14 @@
 # solves quickly the five PNG captures per fold cost more than the search does, so there is
 # little left to win there.
 #
-# WORKERS defaults to the core count. Going past it does not help: the workers are CPU-bound
-# and simply contend. This machine reports its cores via sysctl below.
+# WORKERS defaults to 32. That is above the core count on this machine, so it will not add
+# throughput -- the searches are CPU-bound -- but it costs little beyond memory. Lower it to
 #
 #   bash CODEX_HARNESS_TESTING/run_deterministic_parallel.sh --easy
 #   WORKERS=16 SECONDS_PER_SAMPLE=30 bash CODEX_HARNESS_TESTING/run_deterministic_parallel.sh --mid
 set -eu
 script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
-: "${WORKERS:=$(sysctl -n hw.ncpu 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null || echo 8)}"
+: "${WORKERS:=32}"
 export WORKERS
 printf '%s\n' "searching with $WORKERS workers (cores: $(sysctl -n hw.ncpu 2>/dev/null || echo '?'))" >&2
 exec sh "$script_dir/run_deterministic.sh" "$@" --workers "$WORKERS"

@@ -92,6 +92,16 @@ def validate_action(response, tools):
     return {"name": action["name"], "arguments": arguments}
 
 
+class EpisodeError(RuntimeError):
+    """A failure that belongs to one episode, not to the batch.
+
+    The batch stops on auth and quota because retrying every remaining sample would only burn
+    through them failing. A hung CLI call is not that: it says nothing about the next sample,
+    and treating it as fatal cost several batches -- easy-0109 timed out on turn 8 and took the
+    remaining 91 samples with it.
+    """
+
+
 RECOVERY_ACTIONS = ("remove_fold", "go_to_step", "restore_revision")
 
 
@@ -215,9 +225,26 @@ def ask_codex(args, prompt, manifest, turn_dir, workdir, schema_path, run=None):
                 result = subprocess.run(command, input=prompt, text=True, env=environment,
                                         stdout=stdout, stderr=stderr, timeout=args.timeout)
             except subprocess.TimeoutExpired:
+                # A hung call is transient: retry it like a 429 rather than ending the run.
+                duration = time.monotonic() - started
                 write_json(turn_dir / "process.json",
-                           {"timeout": True, "attempt": attempt, "duration_s": time.monotonic()-started})
-                raise RuntimeError(f"Codex timed out; see {turn_dir / 'stderr.log'}") from None
+                           {"timeout": True, "attempt": attempt, "duration_s": duration})
+                archive = archive_attempt(turn_dir, attempt)
+                record = {"attempt": attempt, "returncode": None, "reason": "timeout",
+                          "duration_s": duration, "artifacts": archive.name}
+                history.append(record)
+                write_json(turn_dir / "retries.json", history)
+                if run is not None:
+                    run.event("codex_retry", turn_dir=str(turn_dir), **record)
+                if attempt >= attempts_allowed:
+                    raise EpisodeError(f"Codex timed out on all {attempts_allowed} attempts; "
+                                       f"see {archive / 'stderr.log'}") from None
+                wait = min(args.retry_max_wait, args.retry_wait * (2 ** (attempt - 1)))
+                print(f"{turn_dir.parent.name}/{turn_dir.name}: codex timed out after "
+                      f"{duration:.0f}s; waiting {wait:g}s then attempt {attempt + 1}/"
+                      f"{attempts_allowed}", flush=True)
+                time.sleep(wait)
+                continue
         duration = time.monotonic() - started
         write_json(turn_dir / "process.json",
                    {"returncode": result.returncode, "attempt": attempt, "duration_s": duration})
@@ -553,6 +580,9 @@ def run_batch(args, config, run_dir, schema_path, results):
                 results.append(error)
                 write_json(run_dir / "results.json", results)
                 print(f"{sample_id}: {exc}", flush=True)
+                if isinstance(exc, EpisodeError):
+                    # One sample's problem. Carry on; the rest of the batch is unaffected.
+                    continue
                 # Auth/quota/CLI errors should stop the batch rather than retry every sample.
                 break
     write_json(run_dir / "results.json", results)
