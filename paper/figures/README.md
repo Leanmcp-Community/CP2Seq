@@ -1,5 +1,10 @@
 # Figures
 
+> **All figures currently in the paper are DRAFT IMAGES.** Placeholders are generated with
+> OpenAI `gpt-image-2` via `gen_figures.sh` and serve only as tracing references. Every one will
+> be replaced with a human-authored figure before submission, and this is disclosed in the
+> paper's LLM-usage section (§13b of the draft).
+
 One file per figure. Each names where it appears, what it has to show, what it must
 not show, and how to tell whether the drawing worked.
 

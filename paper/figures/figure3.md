@@ -1,3 +1,7 @@
+> **DRAFT IMAGE.** Any version of this figure produced by
+> `gen_figures.sh` is a placeholder generated with OpenAI `gpt-image-2`, used only as a
+> tracing reference. It will be replaced with a human-authored figure before submission.
+
 # Figure 3 — The difficulty grid
 
 **Appears in:** §4.7, beside the two limits.

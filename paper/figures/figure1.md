@@ -1,3 +1,7 @@
+> **DRAFT IMAGE.** Any version of this figure produced by
+> `gen_figures.sh` is a placeholder generated with OpenAI `gpt-image-2`, used only as a
+> tracing reference. It will be replaced with a human-authored figure before submission.
+
 # Figure 1 — The asymmetry
 
 **Appears in:** §1, Introduction. Should be the first figure a reader meets, ideally on page 1 or 2.

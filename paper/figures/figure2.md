@@ -1,3 +1,7 @@
+> **DRAFT IMAGE.** Any version of this figure produced by
+> `gen_figures.sh` is a placeholder generated with OpenAI `gpt-image-2`, used only as a
+> tracing reference. It will be replaced with a human-authored figure before submission.
+
 # Figure 2 — One dataset sample, end to end
 
 **Appears in:** §4.6, after the table of what a sample carries.

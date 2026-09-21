@@ -528,7 +528,8 @@ results are reported.
 | `seq.json` | Every fold: line, direction, selected layers, creases made, coupling. **The ground truth**, never shown to the model |
 | `meta.json` | Difficulty metrics, degeneracy flags, seed and generator version |
 
-> **FIGURE 2 — one dataset sample, end to end.** `[TO DRAW]` A single easy sample laid out as the
+> **FIGURE 2 — one dataset sample, end to end.** `[DRAFT IMAGE — placeholder, will be replaced
+> with a human-authored figure. Drafts generated with OpenAI gpt-image-2.]` A single easy sample laid out as the
 > model sees it and as the ground truth records it. Left: `cp.fold` rendered as a crease pattern,
 > mountain and valley distinguished. Centre: the final folded state from `steps.fold`, as the
 > top-down X-ray plus the exploded layer view, which is exactly what the model receives. Right: the
@@ -549,7 +550,8 @@ the benchmark can express.
 the benchmark is about lives past the depth a search can reach. Restoring the deeper tier is a
 matter of generator configuration and wall-clock, not redesign.
 
-> **FIGURE 3 — the difficulty grid.** `[TO DRAW]` Depth on one axis, coupling on the other, one
+> **FIGURE 3 — the difficulty grid.** `[DRAFT IMAGE — placeholder, will be replaced with a
+> human-authored figure plotted from real data.]` Depth on one axis, coupling on the other, one
 > cell per stratum, shaded by how many samples landed there. The long-sequence low-coupling corner
 > should be visibly empty, and the caption should name pre-creasing as the reason. This figure
 > argues §4.7 better than the prose does, and it is honest in a way reviewers notice: it shows what
@@ -827,7 +829,8 @@ proposing is rewarded in the secondary metric even when both eventually solve th
 **The reference sequence is never read during the episode.** It enters only at scoring time, and
 then only as something to replay, never as something to compare against step by step (§6.1).
 
-> **FIGURE 4 — the evaluation pipeline.** `[TO DRAW]` A left-to-right diagram of one episode. On
+> **FIGURE 4 — the evaluation pipeline.** `[DRAFT IMAGE — placeholder, will be replaced with a
+> human-authored figure. Drafts generated with OpenAI gpt-image-2.]` A left-to-right diagram of one episode. On
 > the left, the two inputs: the crease pattern and the final folded state. In the centre, the loop
 > as a cycle: model proposes a fold, environment either returns a new state with its two rendered
 > views or returns a named refusal, history accumulates. On the right, termination and scoring:
@@ -857,7 +860,8 @@ deterministic baseline of §8.4 is reported: if exhaustive search over the enume
 corpus outright, then the filtered arm is not measuring origami reasoning, and the benchmark has to
 say so rather than let a headline number imply otherwise.
 
-> **FIGURE 5 — a refusal as the model receives it.** `[TO DRAW]` One concrete rejected fold,
+> **FIGURE 5 — a refusal as the model receives it.** `[DRAFT IMAGE — placeholder, will be
+> replaced with a human-authored figure built from real renders.]` One concrete rejected fold,
 > rendered exactly as the harness returns it. The proposed fold line drawn over the current state;
 > the named reason (`would-tear`); and the specific evidence, which for a tear is the crease segment
 > joining a moving face to a stationary one, highlighted, away from the fold line. Beside it, the
@@ -1015,7 +1019,8 @@ failure from exhausting the budget and should not be pooled with it.
 §4.4 predicts difficulty as intended. If depth predicts and coupling does not, that is a finding
 about the corpus design and belongs here rather than in a footnote.]`
 
-> **FIGURE 6 — main result per stratum.** `[TO DRAW once the numbers exist]` Solve rate on the
+> **FIGURE 6 — main result per stratum.** `[DRAFT IMAGE — placeholder, will be replaced with a
+> human-authored figure plotted from the aggregation output.]` Solve rate on the
 > vertical axis, difficulty stratum on the horizontal, one line per model with the deterministic
 > baseline drawn as a distinct reference line rather than as another model. Attempt counts printed
 > at each point, because cells with four attempts and cells with forty must not look alike. If the
@@ -1087,6 +1092,48 @@ computed against it in place and is reported as a number.
 `[TO COMPLETE before submission: anonymised repository URL, archival DOI, and a datasheet covering
 motivation, composition, collection, preprocessing, uses and maintenance. The maintenance
 commitment should name who fixes a reported generator bug and on what horizon.]`
+
+---
+
+## 13b. Use of large language models
+
+ICLR 2026 requires that **any** use of a large language model be disclosed, on the Code of Ethics
+principle that all contributions to the research must be acknowledged, and holds the authors
+responsible for everything in the paper regardless of what assisted in producing it. The policy does
+not treat a model used as a research instrument differently from one used for writing: both must be
+disclosed. Disclosure is required **in the paper's text and in the submission form**, so filling in
+this section is not sufficient on its own.
+
+⚠️ Remember the submission form. It is a separate field and is easy to miss.
+
+**Large language models are part of the object of study.** This is a benchmark for evaluating
+language models, so models appear in the work by construction. Every number in §10 is the output of
+a frontier multimodal model driven through the harness of §8. The models, versions and settings are
+listed there. No model was trained or fine-tuned for this paper.
+
+**Code.** The benchmark's implementation was written with AI assistance, principally Claude Code,
+used as a coding assistant throughout. Every design decision, every experiment and the direction of
+the work were determined by the human authors, and all generated code was reviewed before use. The
+authors are responsible for the correctness of the released artifacts. Two habits in this project
+exist because of that reliance and are worth naming: the corpus carries two independently written
+checks over every sample (§4.8), and the state comparator ships with a negative control that must
+reject a deliberately corrupted state (§6.4). The second caught a real defect, in which 23 of 600
+corrupted states were initially accepted.
+
+**Literature search.** Related work was assembled primarily by hand, using Google Scholar and
+alphaXiv. AI assistance was used partially, to locate candidate papers and recover bibliographic
+details. Every citation was verified against the arXiv or publisher record by a human author;
+citations that could not be verified were removed rather than softened.
+
+**Writing.** AI assistance was used in drafting and editing. The argument, claims, experimental
+design and conclusions are the authors'. No text was included that an author had not read and
+agreed with, and no result, citation or number was produced by a language model without being
+checked against the artifact it describes.
+
+**Figures.** Any figure marked **DRAFT IMAGE** is a placeholder generated with OpenAI
+`gpt-image-2` and used only as a compositional reference to be redrawn by hand. Generated images
+never depict data or geometry: crease patterns, folded states and result charts are rendered from
+the corpus and the run outputs. Draft figures will not appear in a submitted version.
 
 ---
 
@@ -1440,3 +1487,40 @@ and the aggregation output. A generated crease pattern would be a fabricated fig
 subject is exact verification, which is the worst place in the literature to put one. The imagegen
 skill says the same thing in its own terms: diagrams are "better produced directly in SVG, HTML/CSS,
 or canvas". The script prints this rather than assuming it is remembered.
+
+### 16.16 Draft figures are labelled as drafts, in the PDF itself
+
+**Decision.** Every placeholder figure renders a visible banner reading **DRAFT IMAGE — PLACEHOLDER,
+NOT FINAL**, with a line saying it will be replaced by a human-authored figure and that drafts come
+from OpenAI `gpt-image-2`. Captions carry a `[DRAFT IMAGE]` prefix so the marking also appears in
+any list of figures. The same banner is at the top of each `paper/figures/figureN.md` and the README.
+
+**Why in the PDF and not only in the notes.** A placeholder that is only labelled in a side file
+becomes a real figure the moment somebody exports a PDF to show a collaborator. The label has to
+travel with the artifact. It costs nothing and removes a whole class of accident.
+
+### 16.17 LLM usage is disclosed, per ICLR 2026 policy
+
+**Decision.** A new §13b discloses every use: models as the object of study, Claude Code for the
+implementation, partial AI assistance for literature search alongside Google Scholar and alphaXiv,
+AI assistance in drafting, and `gpt-image-2` for draft figures.
+
+**The policy, checked rather than assumed.** ICLR 2026 has two policies on LLM use. Policy 1: any
+use of an LLM must be disclosed, on the Code of Ethics principle that all contributions to the
+research must be acknowledged. Policy 2: authors are ultimately responsible for their contributions
+and must not make false or misleading claims. The policy does **not** distinguish a model used as a
+research instrument from one used for writing; both must be disclosed.
+
+⚠️ **Disclosure is required in the paper's text *and* in the submission form.** §13b satisfies the
+first. The second is a separate field on the OpenReview form and is easy to miss.
+
+The FAQ does not specify a required section, required wording, or whether the disclosure counts
+against the page limit. It is written as a full section here on the basis that under Policy 2 the
+authors carry responsibility either way, so under-disclosing buys nothing and risks everything.
+
+**Why it is written long rather than minimal.** A disclosure that omits a use is worse than one that
+reports a use a reader would have forgiven. The section also names the two verification habits that
+exist *because* of the reliance on AI-assisted implementation, the independent corpus checks and the
+comparator's negative control, and states that the negative control caught a real defect. That is
+the honest form of the disclosure: not a claim that assistance introduced no risk, but a description
+of what was put in place to catch it.
