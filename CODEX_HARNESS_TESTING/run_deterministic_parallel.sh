@@ -6,15 +6,15 @@
 # solves quickly the five PNG captures per fold cost more than the search does, so there is
 # little left to win there.
 #
-# WORKERS defaults to 32. That is above the core count on this machine, so it will not add
-# throughput -- the searches are CPU-bound -- but it costs little beyond memory. Set WORKERS
-# to the core count if you would rather not run 32 node heaps.
+# WORKERS defaults to 8, the core count. The searcher's timeout is WALL clock, so oversubscribing
+# does not just fail to add throughput: with 32 workers on 8 cores each search gets a quarter
+# of a core and explores a quarter as many nodes inside the same budget. Keep it near the cores.
 #
 #   bash CODEX_HARNESS_TESTING/run_deterministic_parallel.sh --easy
 #   WORKERS=16 SECONDS_PER_SAMPLE=30 bash CODEX_HARNESS_TESTING/run_deterministic_parallel.sh --mid
 set -eu
 script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
-: "${WORKERS:=32}"
+: "${WORKERS:=8}"
 export WORKERS
 printf '%s\n' "searching with $WORKERS workers (cores: $(sysctl -n hw.ncpu 2>/dev/null || echo '?'))" >&2
-exec sh "$script_dir/run_deterministic.sh" "$@" --workers "$WORKERS"
+exec sh "$script_dir/run_deterministic.sh" "$@" --workers "$WORKERS" --deadline-minutes "${DEADLINE_MINUTES:-0}"

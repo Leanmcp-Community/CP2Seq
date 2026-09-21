@@ -119,6 +119,10 @@ def main():
                              "second; deep ones blow past any budget, so a small number costs "
                              "little and keeps the batch moving.")
     parser.add_argument("--max-states", type=int, default=500000)
+    parser.add_argument("--deadline-minutes", type=float, default=0,
+                        help="Stop starting new work after this long and write what is done. "
+                             "0 means no deadline. Searches already running finish first, so "
+                             "the real stop is up to one --seconds later.")
     parser.add_argument("--workers", type=int, default=1,
                         help="Search this many samples at once. The search is pure CPU in node "
                              "and single-threaded per process, so past the core count workers "
@@ -168,11 +172,21 @@ def main():
             # Search in parallel, replay serially. Verdicts arrive out of order; each is
             # replayed and written the moment it lands, so progress stays visible and an
             # interrupt costs only what has not been replayed yet.
+            deadline = started + args.deadline_minutes * 60 if args.deadline_minutes else None
             with ThreadPoolExecutor(max_workers=args.workers) as pool:
                 pending = [pool.submit(find, s) for s in args.samples]
                 for index, future in enumerate(as_completed(pending), 1):
                     sample_id, verdict = future.result()
                     record(index, sample_id, verdict, started, browser, results)
+                    if deadline and time.monotonic() > deadline:
+                        # Replay happens on this thread while the pool keeps searching, so the
+                        # check belongs here: it is the only point that knows how much wall
+                        # clock the whole batch has actually used.
+                        skipped = sum(1 for f in pending if not f.done())
+                        pool.shutdown(wait=False, cancel_futures=True)
+                        print(f"deadline of {args.deadline_minutes:g} min reached after "
+                              f"{len(results)} samples; {skipped} not started", flush=True)
+                        break
         else:
             for index, sample_id in enumerate(args.samples, 1):
                 print(f"[{index}/{len(args.samples)}] {sample_id}: searching "
