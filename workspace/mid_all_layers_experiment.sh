@@ -55,11 +55,19 @@ PY
 echo
 
 # ------------------------------------------------------------------------------- search arms
+# Warn, do not stop. The two results this produces are not equally load-sensitive: WHETHER a
+# sample is solved within the budget is robust, while the SECONDS are not. Refusing to run
+# would withhold the first answer to protect the second, so instead the run is labelled and
+# the comparison marks every timing it produced under contention.
+CONTENDED=0
 if pgrep -f 'profile_enum_cost|search_baseline|codex_fold_loop' > /dev/null; then
-  echo "Another measurement is running; time-to-solve is what this reports, so stop it first:" >&2
-  pgrep -fl 'profile_enum_cost|search_baseline|codex_fold_loop' >&2
-  exit 1
+  CONTENDED=1
+  echo "note: another job is running, so seconds below are upper bounds and not comparable" >&2
+  echo "      across runs. Solved-or-not within the budget is unaffected." >&2
+  pgrep -fl 'profile_enum_cost|search_baseline|codex_fold_loop' | cut -c1-90 | sed 's/^/      /' >&2
+  echo >&2
 fi
+echo "$CONTENDED" > "$OUT/contended.txt"
 
 for sel in any all; do
   echo "=== search, selection=$sel, ${SECONDS_BUDGET}s per sample ==="
@@ -130,9 +138,12 @@ try {
   }
 } catch {}
 
-const cell = r => !r ? "-" : r.status === "solved" ? `solved ${r.seconds.toFixed(0)}s` : r.status;
+const contended = (() => { try { return fs.readFileSync(`${out}/contended.txt`, "utf8").trim() === "1"; } catch { return false; } })();
+const mark = contended ? "~" : "";
+const cell = r => !r ? "-" : r.status === "solved" ? `solved ${mark}${r.seconds.toFixed(0)}s` : r.status;
 
 console.log("\n=== SEARCH: time to reach the reference depth ===");
+if (contended) console.log("  ~ = measured while another job held the machine: an upper bound, not comparable across runs.");
 console.log(`  ${pad("sample", 11)}${pad("ref", 5)}${pad("any (wide)", 20)}all (whole-stack only)`);
 for (const id of Object.keys(A).length ? Object.keys(A) : Object.keys(B)) {
   console.log(`  ${pad(id, 11)}${pad(A[id]?.reference ?? B[id]?.reference ?? "-", 5)}` +
