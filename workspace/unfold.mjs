@@ -170,10 +170,14 @@ const canonicalPoly = rawPoly => {
 // arrangement. That is the smallest topological order of the DAG whose edges run from a
 // lower layer to a higher one it overlaps, which is canonical by construction.
 //
-// Overlap is tested on bounding boxes. That OVER-approximates -- two layers whose boxes meet
-// but whose polygons do not are treated as ordered -- which keeps more constraints than
-// strictly necessary. Still canonical, just less aggressive, and it never merges two states
-// that are genuinely different.
+// Overlap is tested on the polygons, not their bounding boxes. Boxes were the first attempt
+// and they are far too coarse here: the two sides of a DIAGONAL fold have overlapping boxes
+// and disjoint polygons, so every reordering across such a fold looked constrained and
+// nothing was normalised. Diagonals are angle_index 1 and 3, half the indexed directions,
+// which is why it changed nothing at all.
+//
+// Being aggressive is safe for this key specifically: it is used only to notice a possible
+// meet, and every meet is replayed from the flat sheet and put through terminalMatch.
 const bbox = poly => {
   let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
   for (const p of poly) {
@@ -188,6 +192,37 @@ const boxesOverlap = (a, b) =>
   Math.min(a[2], b[2]) - Math.max(a[0], b[0]) > TOL &&
   Math.min(a[3], b[3]) - Math.max(a[1], b[1]) > TOL;
 
+// Two segments cross at an interior point of both.
+function segmentsCross(p1, p2, p3, p4) {
+  const d = (a, b, c) => (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]);
+  const d1 = d(p3, p4, p1), d2 = d(p3, p4, p2), d3 = d(p1, p2, p3), d4 = d(p1, p2, p4);
+  return ((d1 > TOL && d2 < -TOL) || (d1 < -TOL && d2 > TOL)) &&
+         ((d3 > TOL && d4 < -TOL) || (d3 < -TOL && d4 > TOL));
+}
+
+function pointInside(pt, poly) {
+  let inside = false;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    const a = poly[i], b = poly[j];
+    if ((a[1] > pt[1]) !== (b[1] > pt[1]) &&
+        pt[0] < (b[0] - a[0]) * (pt[1] - a[1]) / (b[1] - a[1]) + a[0]) inside = !inside;
+  }
+  return inside;
+}
+
+// Interiors intersect: an edge crosses, or one polygon's centroid sits inside the other.
+// The centroid can fall outside a non-convex face, which only loses an overlap the crossing
+// test usually catches anyway, and a missed constraint here costs a verified false meet.
+function polysOverlap(A, B) {
+  for (let i = 0; i < A.length; i++) {
+    for (let j = 0; j < B.length; j++) {
+      if (segmentsCross(A[i], A[(i + 1) % A.length], B[j], B[(j + 1) % B.length])) return true;
+    }
+  }
+  const mid = poly => poly.reduce((acc, p) => [acc[0] + p[0] / poly.length, acc[1] + p[1] / poly.length], [0, 0]);
+  return pointInside(mid(A), B) || pointInside(mid(B), A);
+}
+
 function canonicalStack(layers) {
   const n = layers.length;
   const keys = layers.map(l => l.par + ':' + canonicalPoly(l.poly));
@@ -196,7 +231,10 @@ function canonicalStack(layers) {
   const edges = Array.from({length: n}, () => []);
   const indeg = new Array(n).fill(0);
   for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) {
-    if (boxesOverlap(boxes[i], boxes[j])) { edges[i].push(j); indeg[j]++; }
+    // Boxes first as a cheap reject; the polygon test only runs where they meet.
+    if (boxesOverlap(boxes[i], boxes[j]) && polysOverlap(layers[i].poly, layers[j].poly)) {
+      edges[i].push(j); indeg[j]++;
+    }
   }
   const ready = [];
   for (let i = 0; i < n; i++) if (!indeg[i]) ready.push(i);
@@ -270,7 +308,7 @@ export function predecessors(paper, cp, {maxResults = 200} = {}) {
         // several vertex-list variants, so the candidates multiply; the count stays small
         // because at most a couple of faces are cut by any one fold.
         const consumed = new Set();
-        const order = [];
+        const partner = new Map();   // moving half -> the stationary half it rejoins
         for (const si of rest) {
           for (const mi of movingIdx) {
             if (consumed.has(mi)) continue;
@@ -279,10 +317,40 @@ export function predecessors(paper, cp, {maxResults = 200} = {}) {
             if (!union) continue;
             faces[si] = {...faces[si], poly: union};
             consumed.add(mi);
+            partner.set(mi, si);
             break;
           }
-          order.push(si);
         }
+
+        // RECOVERING THE ORDER, rather than guessing it.
+        //
+        // A face that moved WHOLE is gone from newOrder, and appending it to the end is
+        // wrong: on easy-0003's fourth fold the true predecessor keeps it at position 2.
+        // Its position is not free either -- in the predecessor the faces that the fold is
+        // about to CUT are still whole, so they span the line and genuinely overlap it.
+        //
+        // But it is recoverable. foldLayers preserves the relative order of the movers
+        // (movedRun is their reverse) and of the stationaries (newOrder is a subsequence of
+        // order). A cut face appears in BOTH lists -- its moving half among the movers, its
+        // stationary half among the stationaries -- so the cut faces are anchors common to
+        // the two sequences, and merging on them puts every whole mover back between the
+        // right pair of anchors.
+        const movingSeq = movingIdx.map(mi => partner.get(mi) ?? mi);
+        const anchors = new Set([...partner.values()]);
+        const order = [];
+        let mi2 = 0, si2 = 0;
+        while (mi2 < movingSeq.length || si2 < rest.length) {
+          const m = movingSeq[mi2], t = rest[si2];
+          if (m !== undefined && m === t) { order.push(m); mi2++; si2++; continue; }
+          // Emit whichever side is holding a face the other side does not carry.
+          if (m !== undefined && !anchors.has(m)) { order.push(m); mi2++; continue; }
+          if (t !== undefined && !anchors.has(t)) { order.push(t); si2++; continue; }
+          // Both are anchors and they disagree: the two orders are inconsistent, so this
+          // (line, run, end) is not how the fold was made. Verification would reject it
+          // anyway; bailing out here just saves the work.
+          break;
+        }
+        if (order.length !== rest.length + movingSeq.length - anchors.size) continue;
         // A face that moved WHOLE was removed from its position and appended to one end, so
         // its place in the predecessor's stack is not recorded anywhere. Every placement
         // folds to the same successor -- it does not overlap the layers it would move past,
@@ -292,11 +360,6 @@ export function predecessors(paper, cp, {maxResults = 200} = {}) {
         // fold the true predecessor has it at position 2 and appending it to the end missed
         // by exactly that. So every insertion is emitted, and verification keeps the real
         // ones.
-        // One representative is enough, because stateKey below is canonical under exactly
-        // this freedom. Emitting every insertion instead reached 11/14 but drove the mean
-        // predecessor count from 1.79 to 14.64 -- destroying the narrow backward frontier
-        // that is the entire reason to search bidirectionally.
-        for (const mi of movingIdx) if (!consumed.has(mi)) order.push(mi);
         if (!order.length) continue;
         {
           const pred = {faces, order};

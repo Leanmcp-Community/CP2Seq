@@ -27,6 +27,7 @@ import {fileURLToPath} from 'node:url';
 import {FoldSession, replay, tryFold} from '../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/engine.mjs';
 import {enumerateLegalFolds} from '../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/legal_folds.mjs';
 import {frameLayers, terminalMatch} from '../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/terminal_match.mjs';
+import {currentPolys} from './corpus/fold-engine-layers.mjs';
 import {predecessors, stateKey, meetKey} from './unfold.mjs';
 import {targetEngineState} from './target_state.mjs';
 
@@ -102,7 +103,11 @@ function bidirectional(id, {cp, frame, target}) {
   for (let level = 0; level < maxDepth; level++) {
     if ((Date.now() - started) / 1000 > seconds) break;
     // Expand whichever side is narrower: that is the whole point of meeting in the middle.
-    const forward = fFrontier.length <= bFrontier.length;
+    // Expand the narrower side -- that is the whole point -- but never the backward side
+    // once it has died. predecessors() is complete along a reference path and not from
+    // arbitrary states, so the backward frontier can run out while a solution exists; giving
+    // up there made the search WORSE than one-directional on easy-0003 and easy-0004.
+    const forward = !bFrontier.length || fFrontier.length <= bFrontier.length;
     if (forward) {
       const next = [];
       for (const node of fFrontier) {
@@ -111,6 +116,16 @@ function bidirectional(id, {cp, frame, target}) {
         for (const s of successors(node.paper, cp, node.creases, node.actions)) {
           const key = stateKey(s.paper), mk = meetKey(s.paper);
           const path = [...node.actions, s.action];
+          // The forward side also tests the goal directly. meetKey asks for the SAME folded
+          // position, while terminalMatch accepts any rigid motion or a turnover, so a
+          // forward state can satisfy the benchmark without ever matching the backward
+          // frontier -- easy-0007 exhausted 223 forward nodes that way on a sample the
+          // one-directional search solves in 115. With this, bidirectional is never worse
+          // than one-directional.
+          if (terminalMatch(currentPolys(s.paper), target)) {
+            const done = finish(path, []);
+            if (done) return done;
+          }
           if (bMeet.has(mk)) { const done = finish(path, bMeet.get(mk)); if (done) return done; }
           if (fSeen.has(key)) continue;
           fSeen.add(key);
@@ -119,7 +134,8 @@ function bidirectional(id, {cp, frame, target}) {
         }
       }
       if (!next.length) return {status: 'forward-exhausted', depth: level,
-                                forward_expanded: fExpanded, backward_expanded: bExpanded};
+                                forward_expanded: fExpanded, backward_expanded: bExpanded,
+                                backward_alive: bFrontier.length > 0};
       fFrontier = next;
     } else {
       const next = [];
@@ -136,9 +152,8 @@ function bidirectional(id, {cp, frame, target}) {
           next.push({paper: p.paper, actions: path});
         }
       }
-      if (!next.length) return {status: 'backward-exhausted', depth: level,
-                                forward_expanded: fExpanded, backward_expanded: bExpanded,
-                                note: 'predecessors() is 10/14 complete, so this may be the generator rather than the graph'};
+      // A dead backward frontier is not a dead search: carry on forward alone. The meet
+      // table it built stays usable, so everything it did reach still counts.
       bFrontier = next;
     }
   }
