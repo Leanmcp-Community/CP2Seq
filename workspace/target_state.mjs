@@ -21,8 +21,11 @@
 // pre-images of one particular target, which is sound and not complete -- fine for measuring
 // what bidirectional search buys, and not a change to what the benchmark asks for.
 import {readFileSync} from 'node:fs';
-import {join} from 'node:path';
+import {join, dirname} from 'node:path';
+import {fileURLToPath} from 'node:url';
 import {inv} from './corpus/geom.mjs';
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
 const TOL = 2e-6;
 
@@ -84,7 +87,25 @@ export function targetEngineState(frame) {
   return {faces, order: faces.map((_, i) => i)};
 }
 
-export function loadTargetState(sampleDir) {
+/**
+ * The target state for a sample, from the ORIGINAL corpus plus the committed provenance.
+ *
+ * The provenance lives in workspace/provenance/<sample>.json rather than in a second copy
+ * of the corpus. The copy is 47 MB, of which 22 MB -- cp.fold, seq.json, meta.json -- is
+ * byte-identical to what is already in the tree; the field itself is 11.4 MB. So the field
+ * is what is versioned, and it is attached to the original frame here.
+ *
+ * A corpus that already carries the field (one written by backfill_target_provenance.mjs)
+ * works too: the sidecar is only consulted when the frame does not have it.
+ */
+export function loadTargetState(sampleDir, provenanceDir = null) {
   const steps = JSON.parse(readFileSync(join(sampleDir, 'steps.fold'), 'utf8'));
-  return targetEngineState(steps.file_frames.at(-1));
+  const frame = steps.file_frames.at(-1);
+  if (!frame['fo:faces_sheet_polygon']) {
+    const dir = provenanceDir ?? join(ROOT, 'workspace/provenance');
+    const id = sampleDir.replace(/\/+$/, '').split('/').pop();
+    frame['fo:faces_sheet_polygon'] =
+      JSON.parse(readFileSync(join(dir, `${id}.json`), 'utf8'))['fo:faces_sheet_polygon'];
+  }
+  return targetEngineState(frame);
 }
