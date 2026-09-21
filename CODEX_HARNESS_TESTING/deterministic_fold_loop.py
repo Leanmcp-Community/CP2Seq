@@ -26,6 +26,8 @@ import argparse
 from datetime import datetime, timezone
 import json
 from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import os
 import subprocess
 import sys
 import time
@@ -117,6 +119,11 @@ def main():
                              "second; deep ones blow past any budget, so a small number costs "
                              "little and keeps the batch moving.")
     parser.add_argument("--max-states", type=int, default=500000)
+    parser.add_argument("--workers", type=int, default=1,
+                        help="Search this many samples at once. The search is pure CPU in node "
+                             "and single-threaded per process, so past the core count workers "
+                             "only contend. Replay stays serial: it drives one browser, and for "
+                             "fast samples the PNG captures cost more than the search does.")
     add_image_options(parser)
     args = parser.parse_args()
     args.out = args.out.expanduser().resolve()
@@ -137,25 +144,42 @@ def main():
     # One sample at a time: search it, replay it, write it, then move on. Searching the whole
     # list up front meant nothing landed on disk until every sample had finished -- 200 samples
     # at a 60s budget is hours of silence, and an interrupt threw all of it away.
+    def find(sample_id):
+        try:
+            return sample_id, search([sample_id], args.seconds, args.max_states,
+                                     args.node_bin).get(sample_id, {"status": "missing"})
+        except RuntimeError as exc:
+            return sample_id, {"status": "error", "error": str(exc)}
+
+    def record(index, sample_id, verdict, started, browser, results):
+        row = episode(args, sample_id, browser, run_dir, verdict)
+        results.append(row)
+        write_json(run_dir / "results.json", results)
+        solved = sum(1 for r in results if r["solved"])
+        print(f"[{index}/{len(args.samples)}] {sample_id}: {row['search_status']}  "
+              f"solved={row['solved']}  folds={row['candidate_steps']}/{row['reference_steps']}  "
+              f"nodes={row['search_expanded']}  {time.monotonic() - started:.1f}s  "
+              f"| running total {solved}/{len(results)}", flush=True)
+
     results = []
+    started = time.monotonic()
     with BrowserSession() as browser:
-        for index, sample_id in enumerate(args.samples, 1):
-            print(f"[{index}/{len(args.samples)}] {sample_id}: searching "
-                  f"(<= {args.seconds:g}s)...", end="", flush=True)
-            started = time.monotonic()
-            try:
-                verdict = search([sample_id], args.seconds, args.max_states,
-                                 args.node_bin).get(sample_id, {"status": "missing"})
-            except RuntimeError as exc:
-                print(f" FAILED {exc}", flush=True)
-                continue
-            row = episode(args, sample_id, browser, run_dir, verdict)
-            results.append(row)
-            write_json(run_dir / "results.json", results)
-            print(f" {row['search_status']}  solved={row['solved']}  "
-                  f"folds={row['candidate_steps']}/{row['reference_steps']}  "
-                  f"nodes={row['search_expanded']}  {time.monotonic() - started:.1f}s",
-                  flush=True)
+        if args.workers > 1:
+            # Search in parallel, replay serially. Verdicts arrive out of order; each is
+            # replayed and written the moment it lands, so progress stays visible and an
+            # interrupt costs only what has not been replayed yet.
+            with ThreadPoolExecutor(max_workers=args.workers) as pool:
+                pending = [pool.submit(find, s) for s in args.samples]
+                for index, future in enumerate(as_completed(pending), 1):
+                    sample_id, verdict = future.result()
+                    record(index, sample_id, verdict, started, browser, results)
+        else:
+            for index, sample_id in enumerate(args.samples, 1):
+                print(f"[{index}/{len(args.samples)}] {sample_id}: searching "
+                      f"(<= {args.seconds:g}s)...", end="", flush=True)
+                one = time.monotonic()
+                sample_id, verdict = find(sample_id)
+                record(index, sample_id, verdict, one, browser, results)
     solved = sum(1 for r in results if r["solved"])
     print(f"Saved: {run_dir}", flush=True)
     print(f"deterministic BFS solved {solved} of {len(results)}", flush=True)
