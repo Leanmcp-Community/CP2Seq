@@ -1,4 +1,4 @@
-# Origami as a Spatial Reasoning Benchmark with Free Exact Verification
+# Origami as a Spatial Reasoning Benchmark
 
 Working draft, started 2026-09-19. Target: ICLR, datasets and benchmarks.
 
@@ -10,6 +10,38 @@ Working draft, started 2026-09-19. Target: ICLR, datasets and benchmarks.
 > and `notes/plan/*` rather than restating them. Numbers carry the repo's inline `fact:` tags, so
 > `doccheck.mjs` guards them here as everywhere else. §14 holds the editorial rules that are about
 > writing rather than content.
+
+---
+
+## Positioning
+
+This paper is submitted as a **benchmark and dataset** contribution. What it offers the community
+is an evaluation substrate for **spatial and geometric reasoning in large language models**: a
+corpus, an environment that doubles as an exact verifier, and a scoring protocol, rather than a
+model, a training method or a state-of-the-art number. Every arm reported here runs an
+off-the-shelf model through the harness; nothing is trained. The claim under review is that the
+benchmark measures what it says it measures and that its judge can be trusted, not that any
+particular model is good at the task.
+
+The reasoning being measured is geometric as much as it is spatial, and the distinction is
+load-bearing rather than cosmetic. A solver has to reason about lines, reflections, incidence and
+adjacency on the original sheet, which is geometry in the ordinary sense, and simultaneously about
+a layer ordering that the geometry does not determine, which is combinatorial. Calling the task
+spatial reasoning alone understates the second half. Positioning the work as a benchmark for
+spatial *and geometric* reasoning states the scope accurately and places it beside the
+multimodal-reasoning benchmarks of §2.1 rather than beside the computational-origami literature of
+§2.3, which is the theory the benchmark rests on rather than the field it contributes to.
+
+**Title.** The title may therefore carry *geometric reasoning* explicitly. Candidates, to be
+settled before submission:
+
+- *Origami as a Spatial and Geometric Reasoning Benchmark*
+- *Origami as a Benchmark for Spatial and Geometric Reasoning in Multimodal Language Models*
+- *CP2Seq: A Spatial and Geometric Reasoning Benchmark with an Exact Verifier*
+
+The current title is *Origami as a Spatial Reasoning Benchmark*; the subtitle *with Free Exact
+Verification* was removed, and the exactness of the verifier now carries in the abstract and §5
+rather than in the title.
 
 ---
 
