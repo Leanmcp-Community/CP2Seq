@@ -29,6 +29,7 @@
 // discarded, so a returned predecessor is always genuine. Completeness is the open half, and
 // is what check_unfold.mjs measures against the reference sequences.
 import {tryFold, actionLine} from '../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/engine.mjs';
+import {cleanPoly} from '../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/terminal_match.mjs';
 import {currentPolys} from './corpus/fold-engine-layers.mjs';
 import {lineOf, lkey, mul, inv} from './corpus/geom.mjs';
 import {TOL} from './corpus/crease-compare.mjs';
@@ -154,7 +155,15 @@ const sameTransform = (A, B) =>
 // Rotation is canonicalised away by starting at the lexicographically smallest vertex.
 // Winding is NOT: a polygon traversed the other way is the face seen from the other side,
 // which is a real difference.
-const canonicalPoly = poly => {
+const canonicalPoly = rawPoly => {
+  // Collinear vertices are stripped first. The forward engine and the unfold arrive at the
+  // same physical face with different vertex LISTS -- a cut leaves a point in the middle of
+  // a straight edge, a merge may or may not remove it -- and a key that keeps them calls one
+  // physical state two. In a bidirectional search that is fatal rather than merely untidy:
+  // the two frontiers meet on the paper and not on its vertex list, and without this
+  // easy-0001 exhausted 207 forward nodes without ever recognising a backward one, on a
+  // sample the one-directional search solves in 38.
+  const poly = cleanPoly(rawPoly);
   const v = poly.map(p => `${Math.round(p[0] / 2e-6)},${Math.round(p[1] / 2e-6)}`);
   let best = 0;
   for (let i = 1; i < v.length; i++) {
