@@ -1,0 +1,429 @@
+{
+  "action": {
+    "name": "list_legal_folds",
+    "arguments": {
+      "max_results": 40,
+      "include_rejected": false
+    }
+  },
+  "result": {
+    "ok": true,
+    "state_id": 3,
+    "layers_bottom_to_top": [
+      {
+        "polygon": [
+          [
+            -0.5000000000000001,
+            0.2500000000000002
+          ],
+          [
+            -0.37499999999999994,
+            0.2500000000000002
+          ],
+          [
+            -0.25,
+            0.2500000000000002
+          ],
+          [
+            -0.25,
+            0.3750000000000002
+          ],
+          [
+            -0.25,
+            0.5000000000000001
+          ]
+        ],
+        "parity": 0,
+        "sheet_polygon": [
+          [
+            0.2500000000000002,
+            1
+          ],
+          [
+            0.125,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            0.875
+          ],
+          [
+            0,
+            0.75
+          ]
+        ]
+      },
+      {
+        "polygon": [
+          [
+            0.25,
+            1.942890293094024e-16
+          ],
+          [
+            0.25,
+            -0.12499999999999994
+          ],
+          [
+            0.25000000000000006,
+            -0.24999999999999978
+          ],
+          [
+            -0.24999999999999994,
+            0.25000000000000006
+          ],
+          [
+            -5.551115123125783e-17,
+            0.25
+          ]
+        ],
+        "parity": 1,
+        "sheet_polygon": [
+          [
+            0.2499999999999998,
+            0
+          ],
+          [
+            0.375,
+            0
+          ],
+          [
+            0.49999999999999983,
+            0
+          ],
+          [
+            0,
+            0.5
+          ],
+          [
+            0,
+            0.25000000000000006
+          ]
+        ]
+      },
+      {
+        "polygon": [
+          [
+            0.2499999999999999,
+            -0.24999999999999994
+          ],
+          [
+            0.49999999999999983,
+            -0.25000000000000006
+          ],
+          [
+            -0.25000000000000006,
+            0.49999999999999994
+          ],
+          [
+            -0.25,
+            0.37500000000000006
+          ],
+          [
+            -0.24999999999999994,
+            0.25000000000000006
+          ]
+        ],
+        "parity": 0,
+        "sheet_polygon": [
+          [
+            0.49999999999999983,
+            0
+          ],
+          [
+            0.7499999999999999,
+            0
+          ],
+          [
+            0,
+            0.75
+          ],
+          [
+            0,
+            0.625
+          ],
+          [
+            0,
+            0.5
+          ]
+        ]
+      },
+      {
+        "polygon": [
+          [
+            0.5,
+            -0.2499999999999999
+          ],
+          [
+            0.5000000000000001,
+            -0.4999999999999999
+          ],
+          [
+            0.2500000000000004,
+            -0.4999999999999999
+          ],
+          [
+            4.440892098500626e-16,
+            -0.4999999999999998
+          ],
+          [
+            -0.24999999999999967,
+            -0.4999999999999998
+          ],
+          [
+            -0.49999999999999967,
+            -0.49999999999999967
+          ],
+          [
+            -0.49999999999999967,
+            -0.37499999999999967
+          ],
+          [
+            -0.49999999999999967,
+            -0.24999999999999978
+          ],
+          [
+            -0.4999999999999998,
+            -0.12499999999999978
+          ],
+          [
+            -0.4999999999999998,
+            2.220446049250313e-16
+          ],
+          [
+            -0.4999999999999998,
+            0.12500000000000022
+          ],
+          [
+            -0.4999999999999998,
+            0.24999999999999994
+          ],
+          [
+            -0.2499999999999999,
+            0.5
+          ]
+        ],
+        "parity": 1,
+        "sheet_polygon": [
+          [
+            0.7499999999999999,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            0.24999999999999978
+          ],
+          [
+            1,
+            0.4999999999999998
+          ],
+          [
+            1,
+            0.7499999999999999
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0.875,
+            1
+          ],
+          [
+            0.7500000000000001,
+            1
+          ],
+          [
+            0.625,
+            1
+          ],
+          [
+            0.5,
+            1
+          ],
+          [
+            0.375,
+            1
+          ],
+          [
+            0.2500000000000002,
+            1
+          ],
+          [
+            0,
+            0.75
+          ]
+        ]
+      },
+      {
+        "polygon": [
+          [
+            0,
+            0
+          ],
+          [
+            0.125,
+            0
+          ],
+          [
+            0.2499999999999998,
+            0
+          ],
+          [
+            0,
+            0.25000000000000006
+          ]
+        ],
+        "parity": 0,
+        "sheet_polygon": [
+          [
+            0,
+            0
+          ],
+          [
+            0.125,
+            0
+          ],
+          [
+            0.2499999999999998,
+            0
+          ],
+          [
+            0,
+            0.25000000000000006
+          ]
+        ]
+      }
+    ],
+    "revision": 21,
+    "sequence": [
+      {
+        "angle_index": 3,
+        "offset": 0.5,
+        "move_positive": true,
+        "over": false
+      },
+      {
+        "angle_index": 3,
+        "offset": 0.25,
+        "move_positive": true,
+        "over": false
+      },
+      {
+        "angle_index": 1,
+        "offset": 0.75,
+        "move_positive": true,
+        "over": false
+      }
+    ],
+    "enumeration": {
+      "state_id": 3,
+      "stack_size": 5,
+      "candidate_lines": 56,
+      "actions_evaluated": 224,
+      "distinct_legal_folds": 2,
+      "returned": 2,
+      "truncated": false,
+      "ordering": "most new crease length first, then fewest resulting layers",
+      "deduplication": "Actions reaching the same paper in the same stacking order, up to one rigid motion of the whole sheet or a turnover, are one entry; the others are in equivalent_actions.",
+      "coordinate_frames": {
+        "action": "current folded coordinates",
+        "creates": "original sheet coordinates"
+      },
+      "guarantee": "Each listed action is accepted verbatim by add_fold while state_id is unchanged. Legality and CP compatibility are decided by the same verifier add_fold uses.",
+      "rejected_summary": {
+        "nothing-to-move": 66,
+        "no-crease": 66,
+        "OUTSIDE_TARGET_CP": 88
+      },
+      "legal_folds": [
+        {
+          "action": {
+            "angle_index": 2,
+            "offset": 0.25,
+            "move_positive": true,
+            "selection_mode": "all",
+            "over": false
+          },
+          "creates": [
+            {
+              "assignment": "M",
+              "from": [
+                0.49999999999999983,
+                0
+              ],
+              "to": [
+                0.5,
+                0.2499999999999999
+              ]
+            },
+            {
+              "assignment": "V",
+              "from": [
+                1,
+                0.24999999999999978
+              ],
+              "to": [
+                0.49999999999999983,
+                0.2500000000000001
+              ]
+            }
+          ],
+          "new_crease_length": 0.7500000000000001,
+          "layers_after": 7,
+          "equivalent_actions": [
+            {
+              "angle_index": 2,
+              "offset": 0.25,
+              "move_positive": false,
+              "selection_mode": "all",
+              "over": false
+            }
+          ],
+          "equivalent_action_count": 2
+        },
+        {
+          "action": {
+            "angle_index": 3,
+            "offset": -0.75,
+            "move_positive": true,
+            "selection_mode": "all",
+            "over": true
+          },
+          "creates": [
+            {
+              "assignment": "M",
+              "from": [
+                1,
+                0.7499999999999999
+              ],
+              "to": [
+                0.7500000000000001,
+                1
+              ]
+            }
+          ],
+          "new_crease_length": 0.3535533905932738,
+          "layers_after": 6,
+          "equivalent_actions": [
+            {
+              "angle_index": 3,
+              "offset": -0.75,
+              "move_positive": false,
+              "selection_mode": "all",
+              "over": true
+            }
+          ],
+          "equivalent_action_count": 2
+        }
+      ]
+    }
+  }
+}

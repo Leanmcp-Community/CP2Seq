@@ -1,0 +1,32 @@
+{
+  "samples": [
+    "mid-0002"
+  ],
+  "corpus": "/Users/luxian/FoldOriganmi/workspace/corpus/out/release/all-layers/samples",
+  "out": "/Users/luxian/FoldOriganmi/workspace/mid_all_layers/model-runs",
+  "prompt": "/Users/luxian/FoldOriganmi/CODEX_HARNESS_TESTING/codex_fold_prompt.md",
+  "codex_bin": "/Users/luxian/.local/bin/codex",
+  "compare_auto": true,
+  "compare_tier": 3,
+  "action_space": "all-layers",
+  "tools": "legal-folds",
+  "prompt_appendix": "/Users/luxian/FoldOriganmi/CODEX_HARNESS_TESTING/codex_fold_prompt_legal_folds.md",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "low",
+  "image_history": "all",
+  "max_turns": 80,
+  "stuck_limit": 5,
+  "cycle_limit": 3,
+  "revisit_limit": 15,
+  "timeout": 300.0,
+  "max_retries": 5,
+  "retry_wait": 10,
+  "retry_max_wait": 120,
+  "render_size": 512,
+  "max_image_edge": 1024,
+  "max_image_bytes": 1800000,
+  "model_geometry_decimals": 10,
+  "_kind": "fold-pilot",
+  "_started_at": "2026-09-21T15:20:52.377714+00:00",
+  "_dir": "/Users/luxian/FoldOriganmi/workspace/mid_all_layers/model-runs/codex-20260921T152052376450Z"
+}
