@@ -145,6 +145,27 @@ forwards, so difficulty is controllable rather than sampled, ground truth is rec
 annotated, and negative examples are unlimited, because an illegal fold is produced by asking for
 one.
 
+Two recent benchmarks make origami a target for multimodal evaluation, and the difference between
+them and this work is the difference between asking a model a question and executing its answer.
+**GamiBench** pairs crease patterns with folded shapes rendered from six viewpoints and scores
+multiple-choice visual question answering, including a set of deliberately impossible patterns a
+model ought to reject. **OrigamiSpace** instruments each instance with a pattern diagram, the
+folding process and a final image, and defines four tasks over them, from pattern prediction to
+crease-pattern code generation. In both, a proposal is graded by comparison against a stored
+target: the model selects among rendered alternatives, or emits an artifact that is matched to a
+reference. Neither steps a paper-exact engine and asks whether *this* move, on *this* stack, is
+something paper could do. Both therefore measure recognition of folded geometry, which is a real
+capability, rather than the ability to search for a sequence that produces it. Section 2 makes the
+comparison in full.
+
+The distinction matters because the search is where the difficulty lives. Deciding whether a crease
+pattern can be reached by simple folds at all is NP hard [Arkin et al. 2004; Akitaya, Demaine & Ku
+2017], so recovering the sequence that produced one is at least as hard, and determining the layer
+ordering of a flat folding is NP hard on its own even when a valid mountain-valley assignment is
+supplied [Bern & Hayes 1996]. No amount of pattern recognition substitutes for search on a problem
+of that shape. A benchmark that never executes a proposed step cannot tell a model that searched
+from a model that recognised, and cannot report how much search either one needed.
+
 The task is also hard in ways a maze or a grid-world is not. It gets harder as it proceeds: every
 fold thickens the stack and constrains what the next fold may do, so the difficulty of step *k*
 depends on steps 1 through *k−1*. And a solver has to maintain two kinds of state that constrain
@@ -269,6 +290,34 @@ this problem supplies an exact verifier for free and can therefore serve as an e
 substrate for models that reason with tools.
 
 ### 2.4 The structural gap
+
+The two closest benchmarks are worth setting beside this one directly, because a reader who knows
+them will ask what is left to do.
+
+| | **GamiBench** | **OrigamiSpace** | **CP2Seq (this work)** |
+| --- | --- | --- | --- |
+| Model produces | A choice among rendered options | A predicted pattern, a relation, or crease-pattern code | A sequence of folds, one step at a time |
+| Judged by | Agreement with the stored answer | Similarity to a stored target, or compilation | Execution of each step, then replay of the whole |
+| Judge is | A stored key | A comparison against a reference artifact | The fold engine itself, run forwards |
+| Judge can be wrong | Not applicable; no execution | Where similarity stands in for correctness | Only if the model of paper is wrong, which replay cannot detect (§4.4) |
+| Wrong answers | 186 authored impossible patterns | Not a designed axis | Unlimited: an illegal fold is produced by asking for one |
+| Ground truth | Annotated per instance | Annotated per instance | Constructed; recorded as the fold happens |
+| Non-unique answers | One key per question | Compared against one reference | Replayed and compared up to a declared symmetry group (§6.2) |
+| Scores search effort | No | No | Yes: queries to solution, over all attempts (§6.3) |
+
+Read across the bottom three rows rather than the top. GamiBench's impossible patterns are the
+closest the literature comes to forcing a judgement of feasibility rather than a recognition of
+shape, and they are authored, which is why there are 186 of them; here the same object is a
+by-product of generation and there is no limit on it. OrigamiSpace's instrumentation per instance
+is richer than ours and is the reason 350 instances sustain a benchmark paper; what it does not
+have is a judge that can rule on a step the authors never anticipated. Neither ranks among the
+several valid folded states of one crease pattern, because both compare against a stored answer,
+and a stored answer cannot represent a set.
+
+None of this is a defect in either benchmark. Both were built to measure whether a model
+understands folded geometry, and they measure it. The claim here is narrower: that measuring
+whether a model can *search* for a folding sequence requires a judge that executes, and that
+origami supplies one for free.
 
 Collecting the metrics used across this literature makes one absence visible. Every metric in use
 compares a produced artifact against a target: geometric or semantic similarity to a reference,
