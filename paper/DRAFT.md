@@ -421,40 +421,104 @@ the two would put a false statement about branching factor into the paper.
 
 ---
 
-## 4. CP2Seq
+## 4. CP2Seq: the dataset
 
-### 4.1 Generation
+### 4.1 Why the corpus is synthesised
 
-The corpus is synthesised and the project takes no outside data. A sample is produced by folding
-forward from a square with randomly chosen simple folds, recording each fold as it is applied, and
-unfolding at the end to obtain the crease pattern. The `(pattern, sequence)` pair is built rather
-than labelled, so there is nothing to annotate and nothing to trust, and every sample is correct
-by construction: the pattern is what the folding left behind.
+Every sample is built rather than collected, and the reason is that the construction supplies the
+label. A folding sequence is not something that can be read off a finished crease pattern by
+inspection, which is the whole premise of the task; so a corpus of annotated patterns would require
+either a solver, which is the thing being benchmarked, or a human expert, which does not scale and
+introduces an error rate nobody can measure. Folding forward and recording avoids both. The
+sequence is not inferred after the fact, it is what happened, and the pattern is what the folding
+left behind.
 
-Nothing is shipped that cannot be rebuilt. Given its seed, a sample regenerates byte-identically,
-so the corpus is distributed as a generator plus a manifest rather than as data.
+This also means difficulty is a dial rather than an observation. A collected corpus has whatever
+distribution of depth and entanglement its source happened to have. A generated one is stratified
+on purpose, and the empty regions of that stratification are visible rather than hidden (§4.5).
 
-### 4.2 Difficulty, stratified rather than sampled
+### 4.2 Generation, step by step
 
-Difficulty is set by the sampler along two axes rather than measured after the fact. **Fold depth**
-is the primary axis. **Coupling**, the number of creases a single fold creates, which is to say how
-many layers it cuts, is the second; it is free to compute at generation time, since one fold cuts
-every layer it crosses and each cut becomes one crease in the unfolded square. Coupling is
-simultaneously the non-local dependency that Learn2Fold's difficulty tiers appeal to and the
-closest measurable proxy for how hard a model is to fold by hand.
+The generator starts from a unit square and applies randomly chosen legal simple folds, recording
+each one, until it reaches a target depth. It then unfolds and reads off the crease pattern.
 
-The release corpus holds 600<!--fact:corpus.release.total--> samples in five batches. It is divided into two splits that
-differ in what is *known* about each sample, and the distinction matters when reading the numbers
-reported elsewhere. Every sample is correct by construction, because it was produced by folding
+```
+GENERATE(seed, depth_target, tier):
+    rng   <- seeded RNG from `seed`                 # byte-identical replay depends only on this
+    state <- unit square, one layer
+    seq   <- []
+
+    while len(seq) < depth_target:
+        cands <- ENUMERATE_LEGAL_FOLDS(state, tier)   # every fold the engine would accept
+        if cands is empty:
+            return FAILED                             # dead end: discard, do not repair
+        fold  <- rng.choice(cands)
+        state <- APPLY(state, fold)                   # the same APPLY the verifier uses
+        seq.append(fold with its line, direction, selected layers, creases made, coupling)
+
+    cp     <- UNFOLD(state)                           # creases accumulated over the whole sequence
+    cp     <- PLANARISE(cp)                           # split edges at crossings; canonical form
+    frames <- [state after each step]                 # retained as the multi-frame steps.fold
+
+    assert REPLAY(cp, seq) == state                   # sample is rejected if this fails
+    return Sample(cp, seq, frames, metrics(cp, seq))
+```
+
+Four properties of this procedure matter for the benchmark and each is a deliberate choice.
+
+**The generator never searches.** It picks uniformly among legal folds and never backtracks. A dead
+end discards the sample rather than repairing it. This keeps generation one forward pass, and it is
+also why the recorded sequence carries no claim to being minimal (§6.1).
+
+**`ENUMERATE_LEGAL_FOLDS` and `APPLY` are the same functions the environment exposes to the model.**
+The generator is not a privileged path through a different code path; it is the environment driven
+by a random policy. A sample is therefore reachable by definition, using exactly the action space
+the model is given.
+
+**Planarisation is canonical.** A crease pattern is stored with every edge split at every crossing,
+so two patterns that describe the same geometry have the same edge set and can be compared as
+multisets without a tolerance.
+
+**Every sample is replayed before it is kept.** The assertion is not a test that runs sometimes; a
+sample that does not reproduce its own state is discarded at generation time.
+
+### 4.3 Reproducibility as a shipping format
+
+Given its seed and the generator version, a sample regenerates byte-identically. The corpus is
+therefore distributed as a generator plus a manifest, not as a data archive: the manifest lists each
+sample's seed, tier, target depth and a hash of the resulting crease pattern, and rebuilding is
+verification. A reader who wants ten thousand samples instead of six hundred, or a stratification we
+did not choose, runs the generator rather than asking us for a larger download.
+
+### 4.4 Difficulty, stratified rather than sampled
+
+Difficulty is set along two axes rather than measured after the fact.
+
+**Fold depth** is the primary axis: the number of folds in the recorded sequence. It is the axis the
+task's hardness is defined on, because step *k* is constrained by steps 1 through *k−1*.
+
+**Coupling** is the second: the number of creases a single fold creates, which is to say how many
+layers the fold line cuts. It is free to compute at generation time, since one fold cuts every layer
+it crosses and each cut becomes one crease in the unfolded square. Coupling is the measurable proxy
+for non-local dependency: a high-coupling fold writes creases into many layers at once, so a later
+fold cannot be reasoned about locally.
+
+The two are not independent, and the dependence is itself a finding (§4.5).
+
+### 4.5 What the corpus contains
+
+The release corpus holds 600<!--fact:corpus.release.total--> samples in five<!--fact:corpus.release.batches--> batches, divided into two splits
+that differ in what is *known* about each sample. The distinction matters when reading numbers
+elsewhere in this paper. Every sample is correct by construction, because it was produced by folding
 forward and recording. The **verified** split additionally carries a solver verdict, so it is the
 only split on which statements about solvability or about shorter sequences can be made; the
 shorter-sequence rate of §6.1 is measured there and nowhere else. The **generated** split has no
-verdict. The corpus-level checks of §4.4 run over all 600 samples, because replay and crease
+verdict. The corpus-level checks of §4.8 run over all 600 samples, because replay and crease
 comparison need no solver.
 
 | Batch | Tier | Split | n | Folds | Creases (max) | Layers (max) |
 | --- | --- | --- | ---: | ---: | ---: | ---: |
-| `all-layers` | all-layers | generated | 400 | 4–19 | 83 (24448) | 58 (16384) |
+| `all-layers` | all-layers | generated | 400<!--fact:corpus.release.allLayers--> | 4–19 | 83 (24448) | 58 (16384) |
 | `some-verified-d3` | some-layers | verified | 50 | 3 | 10.5 (75) | 9 (42) |
 | `some-verified-d4` | some-layers | verified | 50 | 4 | ” | ” |
 | `some-generated-d5` | some-layers | generated | 50 | 5 | ” | ” |
@@ -466,39 +530,58 @@ comparison need no solver.
 Crease and layer figures are medians with the maximum in brackets. Across the whole corpus the
 median crease count is 33<!--fact:corpus.release.creaseP50--> and the median layer count 23.5<!--fact:corpus.release.layerP50-->, with the deep tail of
 the all-layers tier reaching tens of thousands of both. The some-layers tier is shallower by design
-and its medians are an order of magnitude smaller, which is why the two tiers are never pooled.
+and its medians are an order of magnitude smaller, which is why the two tiers are never pooled when
+results are reported.
 
-⚠️ Two limits belong in the paper rather than in an appendix. The first is an empty cell: long
-sequences at low coupling are almost unreachable, yielding 2<!--fact:corpus.synth.lLocalHits--> hits in 16,000 attempts,
-because every all-layers fold thickens the stack, so a long sequence cannot keep cutting few
-layers. Real folders reach that corner by **pre-creasing**, an operation this action space
-excludes. The longer a real model runs, the more of it sits outside what the benchmark can
-express. The second is depth: the some-layers tier stops at six folds in this release, and the
-difficulty the benchmark is about lives past the depth a search can reach. Restoring the deeper
-tier is a matter of generator configuration and wall-clock, not redesign.
-
-### 4.3 What a sample carries
+### 4.6 What a sample carries
 
 | File | Contents |
 | --- | --- |
-| `cp.fold` | The crease pattern, planarised. The input |
-| `seq.json` | Every fold: line, direction, creases made, coupling. The ground truth |
-| `steps.fold` | The pattern plus the folded state after each step, as one multi-frame file |
-| `meta.json` | Difficulty metrics, degeneracy flags, provenance |
+| `cp.fold` | The crease pattern, planarised. **The input** |
+| `steps.fold` | The pattern plus the folded state after each step, as one multi-frame file. The final frame is **the other input**; the intermediate frames are held back |
+| `seq.json` | Every fold: line, direction, selected layers, creases made, coupling. **The ground truth**, never shown to the model |
+| `meta.json` | Difficulty metrics, degeneracy flags, seed and generator version |
 
-### 4.4 Verifying the corpus itself
+> **FIGURE 2 — one dataset sample, end to end.** `[TO DRAW]` A single easy sample laid out as the
+> model sees it and as the ground truth records it. Left: `cp.fold` rendered as a crease pattern,
+> mountain and valley distinguished. Centre: the final folded state from `steps.fold`, as the
+> top-down X-ray plus the exploded layer view, which is exactly what the model receives. Right: the
+> recorded `seq.json` as a strip of small diagrams, one per fold, each showing the fold line and
+> the layers it moved, with the coupling of that fold printed beneath. The caption should say
+> plainly that the left and centre panels are the input and the right panel is withheld. This is
+> the figure that makes the task legible in one glance, and it should come early.
+
+### 4.7 Two limits that belong in the paper rather than an appendix
+
+⚠️ The first is an empty cell. Long sequences at low coupling are almost unreachable, yielding
+2<!--fact:corpus.synth.lLocalHits--> hits in 16,000 attempts, because every all-layers fold thickens the stack, so a long
+sequence cannot keep cutting few layers. Real folders reach that corner by **pre-creasing**, an
+operation this action space excludes. The longer a real model runs, the more of it sits outside what
+the benchmark can express.
+
+⚠️ The second is depth. The some-layers tier stops at six folds in this release, and the difficulty
+the benchmark is about lives past the depth a search can reach. Restoring the deeper tier is a
+matter of generator configuration and wall-clock, not redesign.
+
+> **FIGURE 3 — the difficulty grid.** `[TO DRAW]` Depth on one axis, coupling on the other, one
+> cell per stratum, shaded by how many samples landed there. The long-sequence low-coupling corner
+> should be visibly empty, and the caption should name pre-creasing as the reason. This figure
+> argues §4.7 better than the prose does, and it is honest in a way reviewers notice: it shows what
+> the benchmark cannot reach.
+
+### 4.8 Verifying the corpus itself
 
 Two checks run over every sample, written independently of each other. The first replays each
 recorded sequence and confirms it reproduces the pattern stored beside it. The second, written
-without reference to the first, compares maximal creased intervals as multisets with no tolerance
-in the verdict, after clustering edges into lines so that subdivision differences cannot register
-as disagreements. Both pass on all 600 samples of the release corpus.
+without reference to the first, compares maximal creased intervals as multisets with no tolerance in
+the verdict, after clustering edges into lines so that subdivision differences cannot register as
+disagreements. Both pass on all 600<!--fact:corpus.release.total--> samples of the release corpus.
 
-⚠️ Both share the fold engine with the generator, which bounds what they can establish. They
-cannot catch a wrong model of paper: if the engine is wrong about tearing, replay is wrong in the
-same way and agrees with itself. What they do catch is drift between what was folded and what was
-recorded, which is the likelier failure and the one that silently corrupts ground truth. An
-independent check requires a third-party solver and is not claimed here.
+⚠️ Both share the fold engine with the generator, which bounds what they can establish. They cannot
+catch a wrong model of paper: if the engine is wrong about tearing, replay is wrong in the same way
+and agrees with itself. What they do catch is drift between what was folded and what was recorded,
+which is the likelier failure and the one that silently corrupts ground truth. An independent check
+requires a third-party solver and is not claimed here.
 
 ---
 
@@ -684,24 +767,118 @@ nothing. §9.
 
 ---
 
-## 8. Experiments `[TO RUN]`
+## 8. Experimental setup
 
-- **8.1 Models.** Held fixed across tiers; comparing across models would confound the tier comparison.
-  `[TO RUN: the main evaluation sweep]`
-- **8.2 Protocol.** Query budget, repeats, seeds; median and spread reported, never a single run,
-  because sampling is not deterministic and one run is not a measurement.
-  `[TO RUN: same sweep]`
-- **8.3 Main table.** Solve rate per stratum under Level 1 and Level 2.
-  `[TO RUN: same sweep]`
-- **8.4 Query distribution.** Queries to solution over all attempts, with the timeout fraction.
-  `[TO RUN: same sweep]`
-- **8.5 Baselines.** Three, none of them a language model, so the models are ranked against
-  something rather than only against each other. A uniform random proposer over the enumerated
-  legal actions, which fixes the floor. A deterministic breadth-first search over exactly the
-  action set the model is offered (`workspace/search_baseline.mjs`), which says how much of the
-  task the enumerator already solves and at what depth exhaustive search stops being affordable.
-  And a symbolic CP→Seq solver (Creasy), the closest thing to prior art on the task itself.
-  `[TO RUN: the baseline ladder]`
+### 8.1 The pipeline
+
+One episode is one sample attempted by one model under one tier of assistance. The loop is the same
+for every arm and every model, and the only thing that varies between arms is what the model is
+allowed to see and call.
+
+```
+EPISODE(sample, model, tier, budget):
+    cp, final <- LOAD(sample)          # cp.fold and the LAST frame of steps.fold
+                                       # intermediate frames are never exposed
+    state     <- unit square, one layer
+    seq       <- []
+    while len(seq) < budget:
+        obs      <- RENDER(state, tier)        # views withheld at the no-vision tier
+        action   <- model(cp, final, obs, history, tier)
+        if action is SUBMIT:  break
+        verdict  <- ENVIRONMENT.step(state, action)   # the verifier IS this call
+        if verdict is REFUSAL:
+            history.append(refusal with its named reason)   # state unchanged
+        else:
+            state <- verdict.state
+            seq.append(action)
+            history.append(obs)
+    return SCORE(replay(cp, seq), replay(cp, reference_seq))
+```
+
+Three things about this loop decide what the benchmark measures.
+
+**The environment is the only thing that changes state.** A model cannot assert that a fold
+happened. It proposes, and the environment either performs the fold or refuses it, so the state the
+model reasons about is always a state paper could be in.
+
+**A refusal costs a query and does not advance the episode.** This is what makes queries-to-solution
+meaningful: a model that proposes carelessly pays for it in budget, and a model that reasons before
+proposing is rewarded in the secondary metric even when both eventually solve the sample.
+
+**The reference sequence is never read during the episode.** It enters only at scoring time, and
+then only as something to replay, never as something to compare against step by step (§6.1).
+
+> **FIGURE 4 — the evaluation pipeline.** `[TO DRAW]` A left-to-right diagram of one episode. On
+> the left, the two inputs: the crease pattern and the final folded state. In the centre, the loop
+> as a cycle: model proposes a fold, environment either returns a new state with its two rendered
+> views or returns a named refusal, history accumulates. On the right, termination and scoring:
+> replay of the model's sequence and replay of the reference, compared at Level 1 and Level 2. The
+> figure should make three things visually obvious: that the environment and the verifier are one
+> box and not two; that refusals loop back without advancing; and that `seq.json` sits outside the
+> loop entirely, entering only at the scoring step. A dashed boundary around the withheld items
+> (intermediate frames, reference sequence) would carry that last point without a sentence.
+
+### 8.2 The tools the model is given
+
+The tool belt is the experimental variable. Every tool is a read or a step against the same engine;
+none of them searches, and none of them ranks candidates.
+
+| Tool | What it returns | Why it exists |
+| --- | --- | --- |
+| `apply_fold` | The new state, or a named refusal | The action. This call **is** the verification |
+| `get_views` | Top-down X-ray of the stack, exploded layer view | The visual channel; withheld at the no-vision tier |
+| `get_state` | Face positions in original-sheet coordinates plus integer layer index | The symbolic channel, so a model is never forced to read geometry off a raster |
+| `list_legal_folds` | Every fold the engine would currently accept | The filtering tier. It prunes; it does not choose |
+| `undo` | The previous state | Backtracking without spending the episode |
+
+`list_legal_folds` is the tool that needs justifying, because it is doing the most work. It
+enumerates candidate actions and returns those that are legal, which is a large prune performed by
+the simulator rather than by the model. That is precisely why the tier structure exists and why the
+deterministic baseline of §8.4 is reported: if exhaustive search over the enumerated set solves the
+corpus outright, then the filtered arm is not measuring origami reasoning, and the benchmark has to
+say so rather than let a headline number imply otherwise.
+
+> **FIGURE 5 — a refusal as the model receives it.** `[TO DRAW]` One concrete rejected fold,
+> rendered exactly as the harness returns it. The proposed fold line drawn over the current state;
+> the named reason (`would-tear`); and the specific evidence, which for a tear is the crease segment
+> joining a moving face to a stationary one, highlighted, away from the fold line. Beside it, the
+> same state with a legal fold line for contrast, since the tearing pair of §3.2 is the clearest
+> illustration in the paper and currently exists only as prose. The caption should state that the
+> reason is a name rather than a boolean, and that this is why error analysis is a taxonomy that
+> exists before the experiment rather than a clustering done afterwards.
+
+### 8.3 Tiers, models and protocol
+
+**Tiers.** Four levels of assistance, from a full tool belt down to none; the table is in §9. The
+same model, the same samples and the same query budget across tiers, so that the only difference
+between two tiers is what was withheld.
+
+**Models.** `[TO FILL from the aggregation: the models actually run, their versions, and the
+reasoning-effort and image-history settings used. Held fixed across tiers, because comparing across
+models and across tiers at once would confound the two.]`
+
+**Protocol.** Query budget, number of repeats and seeds are fixed before the first run and reported
+with the results. Median and spread across repeats are reported, never a single run, because
+sampling is not deterministic and one run is not a measurement.
+
+**Error verbosity is itself a variable.** The richer a refusal, the more of the reasoning the
+environment performs rather than the model; at the limit a message that names the fix has solved the
+step. Verbosity is fixed before the first run and reported, otherwise the comparison between tiers
+measures message design rather than reasoning.
+
+### 8.4 Baselines
+
+Three, none of them a language model, so the models are ranked against something rather than only
+against each other.
+
+| Baseline | What it establishes |
+| --- | --- |
+| Uniform random over enumerated legal actions | The floor. What the tool alone achieves with no reasoning at all |
+| Deterministic breadth-first over the same action set (`workspace/search_baseline.mjs`) | How much of the task the enumerator already solves, and the depth at which exhaustive search stops being affordable |
+| Symbolic CP→Seq solver (Creasy) | The closest thing to prior art on the task itself |
+
+The breadth-first baseline is the one that answers the "the simulator did all the work" objection of
+§7 numerically rather than structurally, which is the stronger form of that answer.
 
 ---
 
@@ -724,12 +901,90 @@ means the gain is not where it was assumed to be. `[TO RUN]`
 
 ---
 
-## 10. Results `[TO RUN]`
+## 10. Results `[NUMBERS TO FILL]`
 
-- **10.1 Headline.** `[TO RUN]`
-- **10.2 Failure taxonomy.** Rejections grouped by refusal class; the taxonomy already exists, so
-  this is tabulation rather than interpretation. `[TO RUN]`
-- **10.3 Where difficulty lives.** Depth against coupling. `[TO RUN]`
+> **How this section gets filled.** Run `python3 workspace/aggregate_results.py`. It walks every
+> `CODEX_HARNESS_TESTING/runs/*/results.json`, counts every attempt once, and writes
+> `workspace/RESULTS/results.md` with the tables below already shaped, plus `results.json` of facts
+> for `notes/facts.json`. **No number enters this section that the script did not produce.**
+
+### 10.1 What was run
+
+The harness records runs for the following, read from the run configs rather than from memory:
+
+| Family | Models present in `CODEX_HARNESS_TESTING/runs/` | Runs |
+| --- | --- | ---: |
+| OpenAI | `gpt-5.6-luna`, `gpt-5.6-sol`, `gpt-5.6-terra`, `gpt-6-astra` | 40 |
+| Anthropic | `claude-sonnet-5` | 3 |
+| Baseline | `deterministic-bfs` | 10 |
+
+`gpt-5.6-luna` is the most heavily run arm by a wide margin and is the one with coverage across
+tool tiers; the other three OpenAI models appear in far fewer runs. ⚠️ **This is an imbalance the
+paper has to state rather than hide.** A main table that puts a four-run model beside a
+twenty-run model in the same column implies a comparison the data does not support. Either the
+under-run models are brought up to the same protocol, or they are reported separately as a
+preliminary sweep with their run counts printed in the table.
+
+### 10.2 Headline
+
+`[TO FILL: solve rate per stratum for each model at the full tool tier, under Level 1 and Level 2
+equality, with the number of attempts printed in every cell. Never pooled across strata.]`
+
+| Model | easy | mid | hard | overall | median tool calls |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| `gpt-5.6-luna` | | | | | |
+| `gpt-5.6-sol` | | | | | |
+| `gpt-5.6-terra` | | | | | |
+| `gpt-6-astra` | | | | | |
+| `claude-sonnet-5` | | | | | |
+| `deterministic-bfs` | | | | | |
+
+### 10.3 The baseline reading, which has to come before the model reading
+
+`[TO FILL from the deterministic-bfs block of the aggregation: attempts, solved, median states
+expanded, and the per-stratum breakdown.]`
+
+This is the number that determines how the rest of the section is written, and it should be read
+first. `workspace/search_baseline.mjs` records that `list_legal_folds` evaluates roughly 2,010
+candidate actions per state and returns a mean of 3.51 that are legal and stay inside the target
+crease pattern, measured over 73,750 enumerations. A branching factor near 3.5 is small. Two
+outcomes are possible and the paper says something different in each case:
+
+- **If breadth-first search solves the easy tier outright**, then the filtered arm's solve rate on
+  that tier is not evidence of origami reasoning, and the paper must say so plainly and move its
+  claims to the strata where search fails. This is the honest reading and it costs nothing, because
+  the benchmark's value is precisely that it can tell the difference.
+- **If breadth-first search does not solve it**, then the "the simulator did all the work"
+  objection of §7 is answered numerically rather than structurally, which is much stronger.
+
+Either way the number is reported before the model numbers, not after.
+
+### 10.4 Tier comparison
+
+`[TO FILL: the same model across the four tiers of §9, so that what each level of assistance
+contributes is visible. The comparison is within a model and never across models, since only
+`gpt-5.6-luna` has coverage across tiers.]`
+
+### 10.5 Failure taxonomy
+
+`[TO FILL from the termination table of the aggregation.]` Rejections group by refusal class and by
+termination reason. The taxonomy already exists in the environment (§5.3), so this is tabulation
+rather than interpretation. One termination reason seen in the runs is worth naming in its own
+right: `state_cycling`, where a model returns to a state it has already visited, which is a distinct
+failure from exhausting the budget and should not be pooled with it.
+
+### 10.6 Where difficulty lives
+
+`[TO FILL: solve rate against fold depth and against coupling, to test whether the stratification of
+§4.4 predicts difficulty as intended. If depth predicts and coupling does not, that is a finding
+about the corpus design and belongs here rather than in a footnote.]`
+
+> **FIGURE 6 — main result per stratum.** `[TO DRAW once the numbers exist]` Solve rate on the
+> vertical axis, difficulty stratum on the horizontal, one line per model with the deterministic
+> baseline drawn as a distinct reference line rather than as another model. Attempt counts printed
+> at each point, because cells with four attempts and cells with forty must not look alike. If the
+> baseline line crosses or exceeds the model lines on the easy stratum, the figure should not hide
+> it; that crossing is the most informative thing on the chart.
 
 ---
 
