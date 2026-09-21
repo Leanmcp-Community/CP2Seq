@@ -250,17 +250,115 @@ moving and stationary faces, and the per-crease CP comparison.
 
 ---
 
+## 5b. The action space does not match the corpus — and this may overturn §6
+
+## 5b. 动作空间和语料不匹配——这可能推翻 §6
+
+PR #35 widened the action space from whole-stack folds to "whole stack, or a contiguous
+top/bottom run". Counting the corpus:
+
+PR #35 把动作空间从「全层折叠」扩展到「全层，或栈一端的连续区间」。数一下语料：
+
+| corpus / 语料 | samples | reference folds | of which partial / 其中部分折叠 |
+| --- | --- | --- | --- |
+| `release/all-layers` — **every experiment runs here** | 400 | 4180 | **0** |
+| `release/some-verified-d3` | 50 | 150 | 51 |
+| `release/some-verified-d4` | 50 | 200 | 67 |
+| `release/some-generated-d5` | 50 | 250 | 96 |
+| `release/some-generated-d6` | 50 | 300 | 118 |
+
+The partial-fold extension is not gratuitous — the `some-*` corpora are about one third
+partial folds and would be unsolvable without it. But **no experiment runs on them.** On
+`all-layers` the saved fold format has no selection field at all, so a partial fold can never
+appear in a reference solution, while it multiplies the candidate count by the layer count.
+
+部分折叠不是白加的——`some-*` 语料约三分之一是部分折叠，没有它根本解不了。
+**但没有任何实验跑在那些语料上。** 在 `all-layers` 上，保存的折叠格式里连 `selection` 字段都没有，
+所以部分折叠**不可能出现在任何参考解里**，而它把候选数乘上了层数。
+
+`enumerateLegalFolds` already takes `selection_filter`, and the harness never sets it.
+Restricting to `all` on the all-layers corpus:
+
+`enumerateLegalFolds` 本来就有 `selection_filter` 参数，harness 从来没用过。在 all-layers 语料上限制为 `all`：
+
+| sample | depth | `any` candidates / ms | `all` candidates / ms | speedup |
+| --- | --- | --- | --- | --- |
+| easy-0108 | 9 | 116736 / 33211 ms | 456 / 1078 ms | **30.8×** |
+| easy-0108 | 10 | 237568 / 967 ms | 464 / 19 ms | **50.9×** |
+| hard-0001 | 9 | 153792 / 50991 ms | 1424 / 8238 ms | **6.2×** |
+
+**The candidate count stops depending on the stack at all**: `4 · lines`, not
+`4 · lines · layers`. easy-0108 goes 240 → 464 over ten folds instead of 240 → 237568. One
+of the two per-node factors of N is gone; per-candidate cost still grows with the stack,
+because each surviving all-layers fold still touches every face.
+
+**候选数不再依赖层数**：变成 `4 · lines` 而不是 `4 · lines · 层数`。
+easy-0108 十折从 240 涨到 464，而不是 240 涨到 237568。
+每节点的两个 N 因子去掉了一个；单候选成本仍随层数增长，因为每次全层折叠还是要碰每一个面。
+
+**The branching factor drops too**, which matters more. Over 8-second searches:
+easy-0003 `b` 3.54 → 2.95 with throughput 47.8 → 103.5 expansions/s; mid-0001 `b`
+3.63 → 2.94 with throughput 17.3 → 38.9.
+
+**分支因子也降了**，这更要紧。8 秒搜索实测：
+easy-0003 的 `b` 从 3.54 降到 2.95，吞吐量从 47.8 升到 103.5；
+mid-0001 的 `b` 从 3.63 降到 2.94，吞吐量从 17.3 升到 38.9。
+
+**Both exponentials shrink at once, so the effect compounds with depth.** A back-of-envelope
+projection from those eight-second runs puts easy-0003's reference depth at about 8 minutes
+instead of 1.8 hours, and mid-0001's at roughly an hour instead of days.
+
+**两个指数同时变小，所以效果随深度复利。** 按那组 8 秒数据粗算，
+easy-0003 到参考深度约需 8 分钟而非 1.8 小时，mid-0001 约需 1 小时而非数天。
+
+> **This is not yet measured, and if it holds it overturns §6.2.** The claim that "mid is
+> where the comparison has tension" rests on BFS needing days to years there. If restricting
+> the search to the action space the corpus actually uses makes mid searchable in hours, then
+> mid joins easy as a tier where search is not a fair foil, and the paper's claim has to move
+> to hard — or to a corpus the `some-*` sets provide. Settle it before the draft leans on it:
+>
+> **这一点尚未实测，如果成立，它推翻 §6.2。**「mid 才是有张力的区间」这个主张，
+> 依赖于 BFS 在那里需要几天到几年。如果把搜索限制到语料真正使用的动作空间之后 mid 几小时可解，
+> 那 mid 就和 easy 一样不再是公平的对照，论文的主张必须移到 hard，或者移到 `some-*` 语料。
+> **在草稿依赖这条结论之前先把它测掉：**
+>
+> ```sh
+> SELECTION=all bash workspace/measure_depth_wall.sh
+> ```
+>
+> It writes to `workspace/depth_wall_all/`, leaving the `any` data intact for comparison.
+> 它写到 `workspace/depth_wall_all/`，不覆盖 `any` 那组数据。
+
+Note also that restricting is **complete with respect to this benchmark**: every reference
+solution is all-layers, so a restricted search still contains a path to every target. It can
+only lose alternative routes, never the known one.
+
+另外，这个限制对本基准是**完备的**：每个参考解都是全层折叠，
+所以限制后的搜索仍然包含通往每个目标的路径。它只可能丢掉别的替代路线，不会丢掉已知那条。
+
+---
+
 ## 6. Consequences for the paper / 对论文的影响
 
 1. **Do not headline the easy tier.** Effective base 4.1–5.4 at depth 6.8 means BFS solves it
    in seconds to minutes. It does not measure origami reasoning.
    **不要把 easy 当主结果。** 有效底数 4.1–5.4、深度 6.8，BFS 几秒到几分钟就解完，测不出模型推理。
 
-2. **mid is where the comparison has tension.** BFS needs 6.5 days to 5.7 years there against
-   a model's 80-turn budget, so every mid sample a model solves is something search cannot do
-   at any reasonable cost. This is a stronger claim than the easy comparison, not a weaker one.
-   **mid 才是有张力的区间。** BFS 在那里要 6.5 天到 5.7 年，而模型只有 80 回合预算。
-   模型在 mid 上每解出一个，都是搜索在任何合理预算下做不到的。**这比 easy 的对比更强，不是更弱。**
+2. **mid is where the comparison has tension — pending §5b.** BFS needs 6.5 days to 5.7 years
+   there against a model's 80-turn budget, so every mid sample a model solves is something
+   search cannot do at any reasonable cost. **But this is measured with the partial-fold
+   action space, which no reference solution on this corpus uses.** §5b projects that
+   restricting to whole-stack folds may bring mid down to hours. Do not build the draft on
+   this point until that run is done.
+   **mid 才是有张力的区间——但取决于 §5b。** BFS 在那里要 6.5 天到 5.7 年，而模型只有 80 回合预算，
+   所以模型每解出一个 mid 样本都是搜索做不到的。**但这是在带部分折叠的动作空间下测的，
+   而本语料没有任何参考解使用部分折叠。** §5b 推算限制回全层后 mid 可能降到几小时。
+   **这条结论测掉之前，草稿不要依赖它。**
+
+   Independently of the outcome: the model arms and the search arm should be given the **same**
+   action space, and right now the choice of that space is not being made deliberately.
+   不论结果如何：模型 arm 和搜索 arm 应当使用**同一个**动作空间，
+   而目前这个空间是怎么选的，并没有被有意识地决定过。
 
 3. **The 120s default in `run_deterministic*.sh` is wasted on mid and hard.** Measured, 120s
    reaches depth 8.6 on easy (needs 6.8), 6.9 on mid (needs 12) and 2.9 on hard (needs 19).

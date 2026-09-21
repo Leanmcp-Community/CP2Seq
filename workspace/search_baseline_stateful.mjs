@@ -50,6 +50,17 @@ const seconds = flag('--seconds', 60);
 const maxStates = flag('--max-states', 500000);
 const maxDepth = flag('--max-depth', 24);
 const engine = pick('--engine', 'stateful');
+// Which selections the search is allowed to consider. `any` is the enumerator's default and
+// includes contiguous top/bottom runs; `all` restricts it to whole-stack folds.
+//
+// This is not a tuning knob, it is a statement about which corpus is being searched. All 4180
+// reference folds in out/release/all-layers use whole-stack folds and their saved format has
+// no selection field at all, so on that corpus the partial-fold half of the action space
+// cannot appear in a reference solution -- while it multiplies the candidate count by the
+// layer count and raises the branching factor several-fold. The some-verified-* and
+// some-generated-* corpora are the opposite: about a third of their reference folds are
+// partial, and restricting there would make them unsolvable.
+const selection = pick('--selection', 'any');
 const benchmark = argv.includes('--benchmark');
 const asJson = argv.includes('--json');
 const samples = argv.filter(a => !a.startsWith('--'));
@@ -60,6 +71,10 @@ if (!samples.length) {
 }
 if (!['stateful', 'replay'].includes(engine)) {
   console.error(`--engine must be stateful or replay, got ${engine}`);
+  process.exit(2);
+}
+if (!['any', 'all', 'top', 'bottom'].includes(selection)) {
+  console.error(`--selection must be any, all, top or bottom, got ${selection}`);
   process.exit(2);
 }
 
@@ -102,7 +117,7 @@ function statefulBfs(cp, targetLayers) {
       if ((Date.now() - started) / 1000 > seconds) return {status: 'timeout', depth, expanded, generated, folds};
       if (seen.size > maxStates) return {status: 'state_limit', depth, expanded, generated, folds};
       expanded++;
-      for (const entry of enumerateLegalFolds(nodeView(node), {max_results: 500}).legal_folds) {
+      for (const entry of enumerateLegalFolds(nodeView(node), {max_results: 500, selection_filter: selection}).legal_folds) {
         const move = {tool: 'apply_fold', ...entry.action};
         // The one fold this child costs. tryFold does not mutate node.paper, so siblings all
         // expand from the same untouched state and nothing has to be undone.
@@ -148,7 +163,7 @@ function replayBfs(cp, targetLayers) {
       const session = replay(cp, path);
       folds += path.length;
       expanded++;
-      for (const entry of enumerateLegalFolds(session, {max_results: 500}).legal_folds) {
+      for (const entry of enumerateLegalFolds(session, {max_results: 500, selection_filter: selection}).legal_folds) {
         const move = {tool: 'apply_fold', ...entry.action};
         const child = replay(cp, path);
         folds += path.length;
@@ -201,7 +216,7 @@ if (benchmark) {
       const {cp, target, referenceSteps} = loadTask(id);
       r = ENGINES[engine](cp, frameLayers(target));
       r.reference = referenceSteps;
-      r.engine = engine;
+      r.engine = engine; r.selection_filter = selection;
     } catch (e) {
       report.push({sample_id: id, status: 'error', error: e.message});
       if (!asJson) console.log(`  ${pad(id, 11)}error        ${e.message.slice(0, 70)}`);
