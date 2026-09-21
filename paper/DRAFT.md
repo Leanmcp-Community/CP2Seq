@@ -39,50 +39,56 @@ settled before submission:
 - *Origami as a Benchmark for Spatial and Geometric Reasoning in Multimodal Language Models*
 - *CP2Seq: A Spatial and Geometric Reasoning Benchmark with an Exact Verifier*
 
-The current title is *Origami as a Spatial Reasoning Benchmark*; the subtitle *with Free Exact
-Verification* was removed, and the exactness of the verifier now carries in the abstract and §5
-rather than in the title.
+The current title is *Origami as a Spatial Reasoning Benchmark*. The subtitle *with Free Exact
+Verification* was removed and the free-verification framing has been taken out of the abstract and
+the body as well; §16 records why.
 
 ---
 
 ## Abstract
 
-Progress on reasoning has been fastest where verification is free. In mathematics and in code, a
-candidate answer can be checked exactly, cheaply, and without a human, and that property has
-shaped how quickly those domains improved. Spatial and physical reasoning has no such checker, so
-it is evaluated instead with static images, multiple choice questions, or learned surrogate
-simulators whose wrong verdicts look exactly like their right ones. A benchmark can only be as
-trustworthy as the judge inside it.
+Multimodal language models are strong at tasks that ask what is in an image, and weaker, in ways
+their image-task scores do not predict, at tasks that ask about geometry: exact angles, exact
+incidences, and which of two overlapping pieces lies in front. We use origami to measure the
+difference. Given a crease pattern and the final folded state, a model must recover the sequence of
+folds that turns the flat sheet into that state. Both endpoints are supplied; the path between them
+is not.
 
-We show that origami is a domain where exact verification is free, and that the gap between
-generating a problem and solving it is severe. Folding a sheet forward is trivial: fold, record,
-unfold. Recovering the discrete sequence of folds that produced a crease pattern is NP hard. The
-same forward engine that generates a sample can therefore rule on any proposed step exactly, at no
-cost, with no learned model in the loop. The task is also not a puzzle chosen for convenience. It
-becomes strictly harder as it proceeds, because every fold thickens the stack and constrains the
-next one, and a solver has to track a planar geometry together with a layer ordering that
-continuously constrain each other.
+The task is trivial to generate and hard to solve, which is what makes it usable as a benchmark.
+Folding forward is one pass of an engine that records what it did. Deciding whether a crease
+pattern is reachable by simple folds at all is NP hard, so recovering the sequence is at least as
+hard, and determining the layer ordering of a flat folding is NP hard on its own even when a valid
+mountain-valley assignment is given. The same engine that generates a sample can rule exactly on
+any proposed step of a solution, so the benchmark's judge executes the model's proposal rather than
+comparing it against a stored answer. The task also becomes strictly harder as it proceeds, because
+every fold thickens the stack and constrains the next one, and a solver has to track a planar
+geometry together with a layer ordering that continuously constrain each other.
 
-We release CP2Seq, a benchmark whose ground truth is constructed rather than annotated, together
-with an environment that is also the verifier: stepping it is the same act as asking for a
-verdict. It executes one candidate fold and either returns the resulting state or refuses with a
-named reason, such as the sheet would tear, the fold creases nothing, or the selected layers
-cannot move in that direction. It performs no search and makes no choices of its own, so the work
-of proposing, pruning and backtracking stays with the model, and what the benchmark scores is
-search rather than geometry.
+Search alone does not survive this. The reachable space grows with depth faster than any exhaustive
+strategy can cover, so a model that proposes without reading the pattern exhausts its budget, and a
+deterministic breadth-first search fails on the same samples for the same reason. What the
+benchmark rewards is using the geometry of the crease pattern to choose a direction. Geometry is
+supplied as input and is not the thing being scored; being able to act on it is.
+
+We release CP2Seq, a dataset of 600 samples whose ground truth is constructed rather than
+annotated, together with an environment that is also the verifier: stepping it is the same act as
+asking for a verdict. It executes one candidate fold and either returns the resulting state or
+refuses with a named reason, such as the sheet would tear, the fold creases nothing, or the
+selected layers cannot move in that direction. It performs no search and makes no choices of its
+own, so proposing, pruning and backtracking stay with the model.
 
 Samples are generated under two action models taken from the simple folding literature and
-stratified along two axes, fold depth and coupling, where coupling is the number of layers a
-single fold cuts. Every sample rebuilds byte identically from its seed and is checked by tolerance
-free replay. Because one crease pattern admits many valid folded states, and because the recorded
+stratified along two axes, fold depth and coupling, where coupling is the number of layers a single
+fold cuts. Every sample rebuilds byte identically from its seed and is checked by tolerance free
+replay. Because one crease pattern admits many valid folded states, and because the recorded
 sequence is not guaranteed to be minimal, an answer is scored by replaying the proposed sequence
 rather than by step wise agreement with the stored one. The scoring protocol is solve rate at a
 fixed query budget, reported per difficulty stratum under two notions of equality, equality of
 crease sets and equality of folded states up to a symmetry group declared in advance, with queries
 to solution as a secondary measure over all attempts including those that exhaust the budget. We
-instantiate this protocol on off the shelf multimodal language models, with ablations that remove
-visual feedback, remove filtering, and remove tools entirely as a memorization control on
-anonymized geometry.
+instantiate this protocol on off the shelf multimodal language models under progressive tiers of
+tool assistance, from a full tool belt down to none, with a memorization control on anonymized
+geometry.
 
 ---
 
@@ -125,13 +131,20 @@ flat record left behind when a finished model is unfolded, contains all of that 
 of its order. Reading a sequence back out of it is the skill that separates a practitioner from
 someone who can recognise a crane.
 
-We use origami as an instrument. The task we set a model is to recover the sequence of folds that
-produced a crease pattern, given the pattern and the final folded state. It is a task with a
-property that is rare and, for evaluation, decisive: it is trivial to generate and hard to solve.
-Folding forward is a single pass of an engine that records what it did. Recovering the sequence is
-NP hard [Arkin et al. 2004; Akitaya, Demaine & Ku 2017]. The same engine that generates a sample
-therefore rules on any proposed step of a solution exactly, at no cost, with no learned component
-in the loop, no tolerance to tune and no oracle to trust.
+We use origami as an instrument. **The model is given two things: the crease pattern, and the final
+folded state. It is asked for the sequence of folds that turns the flat sheet into that state.**
+Both endpoints are supplied and the path between them is not, which is the whole of the task. The
+pattern says which lines were creased at some point during the folding but says nothing about the
+order they were creased in, and the final state says where the paper ended up but not how it got
+there.
+
+This is trivial to generate and hard to solve, which is what makes it usable for evaluation.
+Folding forward is a single pass of an engine that records what it did. Deciding whether a crease
+pattern is reachable by simple folds at all is NP hard [Arkin et al. 2004; Akitaya, Demaine & Ku
+2017], so recovering the sequence that produced one is at least as hard. The same engine that
+generates a sample therefore rules on any proposed step of a solution exactly, using an operation
+it already implements, with no learned component in the loop, no tolerance to tune and no oracle to
+trust.
 
 That asymmetry is what a benchmark wants, and it is what spatial and physical reasoning has
 generally lacked. Benchmarks built on static images or multiple choice never execute the model's
@@ -158,13 +171,22 @@ something paper could do. Both therefore measure recognition of folded geometry,
 capability, rather than the ability to search for a sequence that produces it. Section 2 makes the
 comparison in full.
 
-The distinction matters because the search is where the difficulty lives. Deciding whether a crease
-pattern can be reached by simple folds at all is NP hard [Arkin et al. 2004; Akitaya, Demaine & Ku
-2017], so recovering the sequence that produced one is at least as hard, and determining the layer
-ordering of a flat folding is NP hard on its own even when a valid mountain-valley assignment is
+The distinction matters because the search is where the difficulty lives. Determining the layer
+ordering of a flat folding is NP hard on its own, even when a valid mountain-valley assignment is
 supplied [Bern & Hayes 1996]. No amount of pattern recognition substitutes for search on a problem
-of that shape. A benchmark that never executes a proposed step cannot tell a model that searched
-from a model that recognised, and cannot report how much search either one needed.
+of that shape, and a benchmark that never executes a proposed step cannot tell a model that
+searched from a model that recognised, nor report how much search either one needed.
+
+Search alone does not survive the task either, and this is the point on which the benchmark turns.
+The reachable space grows with depth faster than any exhaustive strategy can cover, so a model that
+proposes moves without reading the pattern exhausts its query budget on the deeper strata, and a
+deterministic breadth-first search fails on the same samples for the same reason. Blind enumeration
+is not a baseline that merely scores poorly; it stops being viable. What remains is to use the
+geometry, which is to say to look at the crease pattern and the final state and infer which fold
+could plausibly have been last, then work backwards. **Geometry is supplied to the model as input
+and is not the thing being scored. Being able to act on it is.** A model that cannot read a
+reflection off a pattern has no way to choose a direction, and having no way to choose a direction
+is, on this task, indistinguishable from being unable to do it at all.
 
 The task is also hard in ways a maze or a grid-world is not. It gets harder as it proceeds: every
 fold thickens the stack and constrains what the next fold may do, so the difficulty of step *k*
@@ -203,7 +225,8 @@ We contribute the following.
    recorded sequence is not guaranteed to be the shortest.
 
 3. **An evaluation of frontier multimodal models** against this dataset through this framework,
-   with the tool tiers as ablations and a memorization control on anonymized geometry. `[TO RUN]`
+   run across the progressive tiers of tool assistance and with a memorization control on
+   anonymized geometry. `[TO RUN]`
 
 4. **A measured scope boundary.** 89.3%<!--fact:probeC.provenNotPct--> of real crease patterns provably lie outside
    all-layers simple folding. The benchmark's action space is bounded by evidence rather than by
@@ -253,7 +276,7 @@ stated key insight is to decouple semantic proposal from physical verification.
 
 We adopt that decomposition and differ on one thing: the verifier. Theirs is learned,
 differentiable and approximate, which is what makes it usable for planning and also what makes its
-mistakes invisible. Ours is exact and costs nothing, because it is the generator run forwards.
+mistakes invisible. Ours is exact, because it is the generator run forwards.
 Their scoring is step-level precision, recall and F1 against an expert sequence, together with
 edge-level IoU; §6.1 shows why that family of measures is unsafe in this task, since a model that
 finds a *shorter* correct sequence is marked wrong by it. That is a finding about scoring in this
@@ -286,8 +309,8 @@ states", and it is a fact about the problem rather than about any implementation
 Finally, the problem itself is not new: generating folding sequences from crease patterns was
 named and attacked symbolically by Akitaya et al. in 2013, by the same group whose tools this
 field now depends on. What is new is neither the problem nor the theory, but the observation that
-this problem supplies an exact verifier for free and can therefore serve as an evaluation
-substrate for models that reason with tools.
+this problem supplies an exact verifier and can therefore serve as an evaluation substrate for
+models that reason with tools.
 
 ### 2.4 The structural gap
 
@@ -317,7 +340,7 @@ and a stored answer cannot represent a set.
 None of this is a defect in either benchmark. Both were built to measure whether a model
 understands folded geometry, and they measure it. The claim here is narrower: that measuring
 whether a model can *search* for a folding sequence requires a judge that executes, and that
-origami supplies one for free.
+origami supplies one.
 
 Collecting the metrics used across this literature makes one absence visible. Every metric in use
 compares a produced artifact against a target: geometric or semantic similarity to a reference,
@@ -624,8 +647,8 @@ astronomical magnitudes. The hardness is the problem's, not an implementation's.
 
 **"Synthetic data is a shortcut."** The comparable published corpora are largely produced by their
 authors' own symbolic simulators; synthesis is the field's normal practice. Here it is also what
-makes difficulty controllable and ground truth free, and what allows the corpus to ship as a seed
-rather than as a file.
+makes difficulty controllable and ground truth constructed rather than annotated, and what allows
+the corpus to ship as a seed rather than as a file.
 
 **"Your corpus is not real origami."** Correct, and measured: 89.3%<!--fact:probeC.provenNotPct--> of real crease
 patterns provably lie outside all-layers simple folding. This is stated as a scope boundary in §1
@@ -640,7 +663,7 @@ nothing. §9.
 
 ## 8. Experiments `[TO RUN]`
 
-- **8.1 Models.** Held fixed across arms; comparing across models would confound the ablation.
+- **8.1 Models.** Held fixed across tiers; comparing across models would confound the tier comparison.
   `[TO RUN: the main evaluation sweep]`
 - **8.2 Protocol.** Query budget, repeats, seeds; median and spread reported, never a single run,
   because sampling is not deterministic and one run is not a measurement.
@@ -652,17 +675,21 @@ nothing. §9.
 
 ---
 
-## 9. Ablations `[TO RUN]`
+## 9. Progressive tiers of tool assistance `[TO RUN]`
 
-| Arm | Tools available | What it measures |
+The model is run at four levels of assistance, each removing one kind of help from the level above.
+These are reported as tiers rather than as ablations, for the reason given in §16: a full ablation
+study was planned and has not been run, and calling a partial sweep an ablation would overclaim.
+
+| Tier | Tools available | What it isolates |
 | --- | --- | --- |
-| Full tool belt | Environment, views, any auxiliary tools | Upper bound |
-| No vision | Same, rendered views withheld | The value of visual feedback specifically |
-| Verifier only | Pass/fail, no filtering | The value of filtering on top of raw verification |
+| Full tool belt | Environment, rendered views, any auxiliary tools | Upper bound |
+| No vision | Same, rendered views withheld | The contribution of visual feedback |
+| Verifier only | Pass/fail, no filtering | The contribution of filtering on top of raw verification |
 | No tools | None, anonymized geometry | Memorization control |
 
-Same model, same patterns, same query budget across arms. If the no-vision or no-tools arm
-performs nearly as well as the full arm, **that is a finding rather than a failed experiment**: it
+Same model, same patterns, same query budget across tiers. If the no-vision or no-tools tier
+performs nearly as well as the full tier, **that is a finding rather than a failed experiment**: it
 means the gain is not where it was assumed to be. `[TO RUN]`
 
 ---
@@ -815,7 +842,84 @@ Not part of the paper. Each of these has been drafted wrongly at least once in t
    venue that its arXiv record does not carry.
 5. **Every number carries a `fact:` tag** and `doccheck.mjs` must pass before submission.
 6. **Sections 8 to 10 stay empty until the runs exist.** If they cannot be filled in time, the
-   paper is submitted as a benchmark paper and the ablation sentence leaves the abstract.
+   paper is submitted as a benchmark paper and the tier-sweep sentence leaves the abstract.
 7. **No citation enters this draft from memory.** Authors, venue, year and the specific claim
    attributed to a work are verified against the record before the sentence stays. A citation that
    cannot be verified is cut, not softened. The `⚠️` in §1 is live and blocks submission.
+
+---
+
+## 16. Changes
+
+Decisions taken about the paper's framing, recorded here so they are not relitigated and so a
+co-author can see what was deliberate. Not part of the paper.
+
+### 16.1 The free-verification framing is removed
+
+**Decision.** The phrase *free exact verification*, and the framing built on it, is out. It is gone
+from the title, from the abstract, and from the body. Where the property still matters it is stated
+as what it is: the judge executes the model's proposal, and the engine that generates a sample is
+the engine that rules on a step.
+
+**Why.** Free verification is not a distinguishing property. It is the ordinary condition of the
+benchmarks this paper sits beside: code benchmarks run tests, maths benchmarks run a proof
+assistant, and nobody advertises that as a contribution because it is assumed. Leading with it
+invites two bad readings at once. A reviewer who works on code or maths benchmarks reads it as a
+claim to something everyone already has, which reads as naivety. A reviewer who does not reads it
+as the paper's main idea, which displaces the actual contribution. Either way the reader's
+attention goes to the verifier rather than to the dataset, the task and the tiers, which is where
+the work is.
+
+**What replaces it.** The contribution is stated as a dataset and an evaluation framework for
+spatial and geometric reasoning. Exact verification stays in the paper as a property of the
+environment (§5) and as the reason the scoring protocol can be trusted (§6.4), which is the right
+altitude for it: a mechanism the paper relies on, not the thing it is selling.
+
+### 16.2 The task definition is fixed and is now stated once, precisely
+
+**Decision.** The model is given **both** the crease pattern **and** the final folded state, and is
+asked for the sequence of folds that turns the flat sheet into that state. Both endpoints are
+supplied; the path between them is not.
+
+**Why.** The abstract previously said the task was recovering the sequence "that produced a crease
+pattern," which omits the final state and describes a harder and different task. §1 and the
+abstract now agree and use the same wording. Any future edit that changes what the model is given
+has to change both.
+
+### 16.3 Geometry versus search is not a contradiction, and the resolution is now written down
+
+**Decision.** The paper keeps saying that what it scores is search, and also keeps positioning
+itself as a benchmark for spatial and geometric reasoning. Both are true and the bridge between
+them is now stated in §1 and the abstract rather than left implicit.
+
+**Why.** The two only look like they collide. Geometry is supplied to the model as input, so the
+paper is not scoring whether a model can compute a reflection. What it scores is whether a model
+can *act* on the geometry it was given in order to choose a direction. That distinction is
+load-bearing, because blind search does not survive this task: the reachable space grows with depth
+faster than exhaustive strategies can cover, so a model proposing without reading the pattern
+exhausts its budget on the deeper strata, and a deterministic breadth-first search fails on the
+same samples for the same reason. Blind enumeration is not a weak baseline here, it stops being
+viable. A model that cannot read a reflection off a pattern therefore has no way to choose a
+direction, and on this task that is indistinguishable from being unable to do it at all. Geometric
+understanding is the precondition for the search that gets scored.
+
+### 16.4 Ablations are demoted to tiers, because the full study has not been run
+
+**Decision.** The word *ablation* is out of the abstract and §1. §9 is now "Progressive tiers of
+tool assistance." The four arms are unchanged; only the claim about them is weaker.
+
+**Why.** A full ablation study was planned and has not been run. An ablation is a specific claim,
+that one factor was isolated and its contribution measured, and a partial sweep does not support
+it. Reporting tiers says what was actually done: the model is run at four levels of assistance and
+the levels are compared. If the full study is run before submission this can be restored to an
+ablation, and §9 and the abstract both change back together.
+
+### 16.5 Still open
+
+- **The abstract's lede.** It now opens on multimodal models and the geometry gap, matching §1. It
+  is still long, at roughly one page-third, and should be cut once §10 exists and the headline
+  result has to fit.
+- **The headline result sentence** in §1 and the abstract. `[TO RUN]`
+- **Figure 1**, the generation-versus-recovery asymmetry. §12 has it as "to draw"; an introduction
+  to a benchmark paper is usually carried by that figure.
+- **The star example in §1 is an unverified citation** and blocks submission. See §15 rule 7.
