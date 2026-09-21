@@ -110,3 +110,20 @@ hard-0043  MV edges 24448, reference 18 folds
   5      10     668     26720      19     27935.4  1045.5        75.2%   no-crease 38%, nothing-to-move 38%, would-tear 19%
   6      12     572     27456      18     23149.4  843.1         74.2%   no-crease 37%, nothing-to-move 37%, would-tear 21%
   7      22     636     55968      15     31084.8  555.4         82.6%   nothing-to-move 41%, no-crease 41%, would-tear 15%
+  8      28     636     71232      8      38369.9  538.7         86.4%   nothing-to-move 43%, no-crease 43%, would-tear 12%
+  9      34     636     86496      19     36018.3  416.4         88.1%   no-crease 44%, nothing-to-move 44%, would-tear 12%
+  10     64     636     162816     25     54400.9  334.1         91.8%   nothing-to-move 46%, no-crease 46%, would-tear 8%
+  11     128    668     342016     29     163844.6 479.1         94.6%   nothing-to-move 47%, no-crease 47%, would-tear 5%
+  mean branching 15.42, slowest call 163844.6ms at depth 11  [budget 300s reached at depth 12]
+  815,792 candidates evaluated in total; 88.6% miss the selection (share of candidates, not of time)
+  no-crease: 44.3%  nothing-to-move: 44.3%  would-tear: 9.7%  OUTSIDE_TARGET_CP: 1.6%
+
+  --- one node of search costs one enumeration ---
+  sample      MV      mean b   slowest call   nodes/s there  cheap% (of candidates)
+  easy-0001   9       3.6      28.4ms         35.21          84.8%
+  easy-0003   64      3.91     162ms          6.17           91.2%
+  easy-0108   736     7        28670ms        0.03           98%
+  mid-0001    176     4.33     689.4ms        1.45           94.8%
+  mid-0030    736     7.79     26454.3ms      0.04           97.1%
+  hard-0001   5340    14       467686.7ms     0.00           93.6%
+  hard-0043   24448   15.42    163844.6ms     0.01           88.6%

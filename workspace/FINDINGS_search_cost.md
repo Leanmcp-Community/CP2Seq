@@ -118,6 +118,37 @@ The two factors behave completely differently / 两个因子的行为截然不�
 
   **`stack_size` 按几何级数增长。这才是成本爆炸的来源。**
 
+**`hard-0043` settles it, by being the counterexample to its own CP size.** It has 24448 M/V
+edges against hard-0001's 5340 — 4.6× the crease pattern, 1.8× the distinct lines — and at
+the same depth 11 it costs **less than half as much**, because its stack is 128 where
+hard-0001's is 328:
+
+**`hard-0043` 把这件事钉死了——它用自己的 CP 大小反证了 CP 大小无关。** 它有 24448 条 M/V 边，
+是 hard-0001 的 4.6 倍（不同线数 1.8 倍），但在同样的深度 11 上**成本不到一半**，
+因为它的层数是 128 而 hard-0001 是 328：
+
+| sample | MV edges | lines | stack | 4·lines·stack | evaluated | ms |
+| --- | --- | --- | --- | --- | --- | --- |
+| hard-0001 | 5340 | 368 | 328 | 482816 | 482816 ✓ | 467687 |
+| hard-0043 | **24448** | 668 | **128** | 342016 | 342016 ✓ | **163845** |
+
+A crease pattern 4.6× larger, costing 0.35× as much. The identity holds exactly on both.
+
+折痕图大 4.6 倍，成本却只有 0.35 倍。恒等式在两者上都精确成立。
+
+### Per-candidate cost grows too / 单候选成本也在涨
+
+The identity governs the candidate **count**. The cost of each candidate is not constant
+either — on hard-0001 it goes 144 µs at depth 6 to 969 µs at depth 11, because an all-layers
+fold has to split every face in a deeper stack. So per-node cost grows faster than the count
+alone, roughly as `stack^1.75` rather than `stack`. The fitted `g` in §1 absorbs both; the
+identity is what explains where the larger of the two factors comes from.
+
+恒等式管的是候选**数量**。每个候选的成本也不是常数——hard-0001 从深度 6 的 144 微秒涨到
+深度 11 的 969 微秒，因为层数越深，一次全层折叠要切的面越多。所以每节点成本比候选数涨得更快，
+大约是 `层数^1.75` 而不是 `层数`。§1 里拟合出的 `g` 把两者都吸收了；
+恒等式的作用是解释这两个因子里较大的那个从何而来。
+
 ### What a "layer" is, and why the count explodes / 「层数」是什么，为什么会爆炸
 
 A layer is one **facet** of the folded paper: a polygonal region of the sheet occupying one
@@ -163,12 +194,17 @@ escape being cut.
 hard-0001 平均 1.537 倍，十九折到 3504，相当于 2^11.8 而不是 2^19：
 纸被切得越碎，越多面片整个落在折线一侧，逃过了被切。
 
-So the answer to "3504 层是不是太高了": it is high, and it is real, and it is why one
-`list_legal_folds` call on hard-0001 at full depth evaluates `4 × 400 × 3504 ≈ 5.6 million`
-candidate actions and takes about 47 minutes.
+So the answer to "3504 层是不是太高了": it is high, it is real, and it is why one
+`list_legal_folds` call on hard-0001 at its full depth would evaluate
+`4 × 380 × 3504 ≈ 5.3 million` candidate actions. At the 969 µs per candidate measured at
+depth 11, scaled for the per-candidate growth above, that is on the order of **8 hours for a
+single call**. Measured directly: 467 seconds at depth 11, the deepest state profiled inside
+the 300 s budget.
 
 所以「3504 层会不会太高」——高，但是真的，而且这正是 hard-0001 在完整深度上
-单次 `list_legal_folds` 要评估约 **560 万**个候选动作、耗时约 **47 分钟**的原因。
+单次 `list_legal_folds` 要评估约 **530 万**个候选动作的原因。按深度 11 实测的 969 微秒/候选、
+再计入上面说的单候选成本增长，**单次调用约 8 小时**量级。
+直接实测到的是：深度 11 一次 **467 秒**，那是 300 秒预算内剖析到的最深状态。
 
 ---
 
@@ -187,11 +223,11 @@ form, so `stack_size` at the reference depth is measured, not fitted. The last l
 | easy-0108 | 2.72 | 512 | 36 s | 9.1 days |
 | mid-0001 | 3.15 | 128 | 1.9 s | 6.5 days |
 | mid-0030 | 3.15 | 512 | 59 s | 5.7 years |
-| hard-0001 | 7.05 | 3504 | 47 minutes | 1.2 × 10¹² years |
+| hard-0001 | 7.05 | 3504 | ~8 hours (extrapolated) | ≥ 1.2 × 10¹² years |
 
 **Saturation is settled: it happens, mildly.** For every sample profiled to full depth the
 geometric fit reproduced the corpus's final layer count exactly (48, 512, 128, 512). Only
-hard-0001 was truncated, at depth 10, and there the fit overshoots: extrapolating its 1.67×
+hard-0001 was truncated, at depth 11, and there the fit overshoots: extrapolating its 1.67×
 to depth 19 predicts 16151 layers where the corpus has **3504**, a 4.6× overestimate. That
 halves the projection (2.8 × 10¹² → 1.2 × 10¹² years) and changes nothing else.
 
@@ -490,10 +526,10 @@ CORPUS_DIR=workspace/corpus/out/release/some-verified-d3 \
    实测 120 秒在 easy 到深度 8.6（需要 6.8），mid 到 6.9（需要 12），hard 到 2.9（需要 19）。
 
 5. **Tool latency is an uncontrolled variable on hard.** One `list_legal_folds` call at depth
-   10 of hard-0001 takes 140 seconds and at full depth about 47 minutes, while `--timeout`
+   11 of hard-0001 takes 467 seconds and at full depth some 8 hours, while `--timeout`
    governs only the model call, not the simulator.
-   **hard 上工具延迟是失控变量。** hard-0001 第 10 层一次 `list_legal_folds` 要 140 秒，
-   完整深度约 47 分钟，而 `--timeout` 只管模型调用、不管模拟器。
+   **hard 上工具延迟是失控变量。** hard-0001 第 11 层一次 `list_legal_folds` 要 467 秒，
+   完整深度约 8 小时，而 `--timeout` 只管模型调用、不管模拟器。
 
 ---
 
@@ -548,11 +584,10 @@ extrapolation. **Quote §3's number in the text and treat the curve as the shape
   cannot evaluate the `any` action space at all. See §5b.
   **`some-*` 语料，两种 selection 都要跑。** 这是目前最重要的缺口：all-layers 语料只能测出
   部分折叠的成本、测不出收益，所以它根本无法评估 `any` 这个动作空间。见 §5b。
-- `hard-0043` (24448 edges, 380 lines) — the extreme point, never profiled to completion.
-  Corroboration for §2, not a load-bearing gap.
-  `hard-0043`（24448 条边、380 条线）——极端点，从未剖析完成。是 §2 的佐证，不是承重缺口。
 - The 960s search budget. `b` moved by less than 0.3 when 240s was added.
   960 秒那档搜索预算。加入 240s 时 `b` 变化小于 0.3，跑它换不来会变的数字。
 
-Resolved since first writing / 初稿后已解决：layer-count saturation (§3), the 240s budget,
+Resolved since first writing / 初稿后已解决：`hard-0043` (§2 — it is cheaper than the 4.6x smaller
+hard-0001 at the same depth, which settles that CP size is not the driver), layer-count
+saturation (§3), the 240s budget,
 and what a "layer" actually counts (§2).
