@@ -79,8 +79,12 @@ for sel in any all; do
     continue
   fi
   echo "=== search, selection=$sel, ${SECONDS_BUDGET}s per sample ==="
+  # Write through a temporary file. A plain `> file` truncates before the command starts, so
+  # interrupting a run destroys the previous result -- which is exactly what happened, and it
+  # then defeated SKIP_SEARCH on the restart because the file was there but empty.
   node workspace/search_baseline_stateful.mjs --json --selection "$sel" \
-    --seconds "$SECONDS_BUDGET" --max-states 5000000 $SAMPLES > "$OUT/search-$sel.json"
+    --seconds "$SECONDS_BUDGET" --max-states 5000000 $SAMPLES > "$OUT/search-$sel.json.part"
+  mv "$OUT/search-$sel.json.part" "$OUT/search-$sel.json"
   node -e '
     const r = JSON.parse(require("fs").readFileSync(process.argv[1], "utf8"));
     for (const x of r) {
