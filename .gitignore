@@ -55,3 +55,8 @@ DHEERAJ_WORKSPACE/viewer/*.log
 # Provenance-backfilled corpus copies: regenerable from the originals by
 # workspace/backfill_target_provenance.mjs, and ~50 MB.
 workspace/corpus_provenance/
+
+# Model-arm episode artifacts: 63 MB of PNGs and per-turn logs. The results and
+# configs are kept in model-results/ instead.
+workspace/mid_all_layers/model-runs/
+workspace/mid_all_layers/*.log

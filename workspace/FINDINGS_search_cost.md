@@ -641,6 +641,59 @@ Right tool, wrong corpus, now with numbers on both sides.
 
 ---
 
+## 5d. The model arm, same restriction: no help, and one sample worse
+
+## 5d. 模型臂同样限制后：没帮上忙，还伤了一个
+
+§5c restricted the search. This restricts the MODEL, on the same five samples, with every
+other setting copied from the baseline run's config so `--action-space` is the only
+difference.
+
+§5c 限制的是搜索。这一组限制的是**模型**，同样五个样本，其余参数全部照抄基线配置，
+所以 `--action-space` 是唯一的差别。
+
+| sample | baseline `any` | this run `all-layers` |
+| --- | --- | --- |
+| mid-0001 | state_cycling, 33 turns | state_cycling, 38 turns |
+| mid-0002 | state_cycling, 38 turns | state_cycling, 41 turns |
+| mid-0003 | state_cycling, 58 turns | state_cycling, 48 turns |
+| **mid-0004** | **finished, 75 turns, cp_match true** | **state_cycling, 31 turns, cp_match false** |
+| mid-0005 | state_cycling, 34 turns | state_cycling, 37 turns |
+
+**0/5 either way, and mid-0004 got worse.** Under the wide space it reached `finish` with
+every crease and every M/V correct, losing only on layer order; restricted, it gives up
+cycling at 31 turns with the crease pattern wrong.
+
+**两种设定都是 0/5，而且 mid-0004 变差了。** 宽空间下它走到了 `finish`，折痕和 M/V 全对、
+只输在层序；限制之后 31 回合就原地打转，连折痕都不对了。
+
+**So the same restriction helps search and does not help the model**, which is worth stating
+plainly because it is the opposite of what one would guess. Search gained 1.7-3.5× in
+throughput, 1-3 levels of depth and one more solve (§5c). The model gained nothing: nine of
+these ten episodes end in `state_cycling`, in both action spaces, at 31-58 turns out of 80.
+
+**同一个限制帮了搜索、没帮模型**——这值得明说，因为它和直觉相反。
+搜索拿到 1.7-3.5 倍吞吐、1-3 层深度、多解出一个（§5c）。模型什么也没拿到：
+这十个 episode 里有九个以 `state_cycling` 结束，两种动作空间下都是，用掉 31-58 回合（预算 80）。
+
+**The model's bottleneck is therefore not the size of the action space.** The likeliest
+candidate is the one PR #35 already flagged as the bigger remaining problem: ten of its
+twenty-six finished episodes had `cp_match: true` with `terminal_reference_match: false` --
+every crease right, the layer order wrong. mid-0004's baseline is exactly that.
+
+**所以模型的瓶颈不是动作空间的大小。** 最可能的是 PR #35 自己标记为「现在更大的问题」的那一条：
+它 26 个跑到 finish 的 episode 里有 10 个是 `cp_match: true` 而 `terminal_reference_match: false`
+——折痕全对、层序错。mid-0004 的基线正是这个。
+
+This qualifies §6b: restricting the action space makes the task easier **for a searcher**.
+On this evidence it does not make it easier for a model, so the two arms moving together is
+still right, but the "easier benchmark" caveat applies to one arm and not the other.
+
+这一条修正了 §6b：缩小动作空间让任务对**搜索**变简单。就现有证据看它没有让模型的任务变简单，
+所以两臂一起改仍然是对的，但「基准变简单」这个提醒只适用于其中一臂。
+
+---
+
 ## 6. Consequences for the paper / 对论文的影响
 
 1. **Do not headline the easy tier.** Effective base 4.1–5.4 at depth 6.8 means BFS solves it
