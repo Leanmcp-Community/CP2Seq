@@ -31,6 +31,9 @@ esac
 : "${WORKERS:=8}"
 : "${SECONDS_PER_SAMPLE:=300}"
 : "${DEADLINE_MINUTES:=90}"
+# STRATEGY=astar searches the same actions but orders the frontier by estimated folds
+# remaining. Worth it here precisely because these samples defeated breadth-first.
+: "${STRATEGY:=bfs}"
 : "${CORPUS_DIR:=$repo_dir/workspace/corpus/out/release/all-layers/samples}"
 runs=${RUNS_DIR:-CODEX_HARNESS_TESTING/runs}
 
@@ -60,8 +63,8 @@ if [ "$left" -eq 0 ]; then
   printf 'nothing left to retry\n' >&2
   exit 0
 fi
-printf 'budget %ss each, %s workers, deadline %s min\n' \
-  "$SECONDS_PER_SAMPLE" "$WORKERS" "$DEADLINE_MINUTES" >&2
+printf 'strategy %s, budget %ss each, %s workers, deadline %s min\n' \
+  "$STRATEGY" "$SECONDS_PER_SAMPLE" "$WORKERS" "$DEADLINE_MINUTES" >&2
 # Worst case is left x seconds / workers; say it out loud before burning an hour on it.
 printf 'worst case if none solve: about %s min\n' \
   "$(( left * SECONDS_PER_SAMPLE / WORKERS / 60 ))" >&2
@@ -70,4 +73,5 @@ exec "${FOLD_PYTHON:-$repo_dir/.venv/bin/python}" "$script_dir/deterministic_fol
   --samples $todo \
   --seconds "$SECONDS_PER_SAMPLE" \
   --workers "$WORKERS" \
-  --deadline-minutes "$DEADLINE_MINUTES"
+  --deadline-minutes "$DEADLINE_MINUTES" \
+  --strategy "$STRATEGY"

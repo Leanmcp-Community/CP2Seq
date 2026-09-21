@@ -41,9 +41,10 @@ from capture_fold import (BrowserSession, CORPUS, DEFAULT_SAMPLES, load_task,
 from codex_fold_loop import save_candidate, sequence_metrics, model_view
 
 
-def search(samples, seconds, max_states, node_bin):
-    """Run the BFS in node and return its verdict per sample."""
+def search(samples, seconds, max_states, node_bin, strategy="bfs"):
+    """Run the search in node and return its verdict per sample."""
     command = [node_bin, str(ROOT / "workspace/search_baseline.mjs"), "--json",
+               "--strategy", strategy,
                "--seconds", str(seconds), "--max-states", str(max_states), *samples]
     done = subprocess.run(command, capture_output=True, text=True, cwd=str(ROOT))
     if done.returncode:
@@ -99,6 +100,7 @@ def episode(args, sample_id, browser, run_dir, verdict):
               "model_requested": "deterministic-bfs", "tools": "legal-folds",
               "termination": "finished" if verdict.get("status") == "solved" else verdict.get("status"),
               "sample_calls": 0, "tool_calls": len(actions) + 1,
+              "search_strategy": verdict.get("strategy", "bfs"),
               "search_status": verdict.get("status"), "search_expanded": verdict.get("expanded"),
               "search_generated": verdict.get("generated"), "search_seconds": verdict.get("seconds"),
               **artifacts["evaluation"],
@@ -114,6 +116,11 @@ def main():
     parser.add_argument("--corpus", type=Path, default=CORPUS)
     parser.add_argument("--out", type=Path, default=HERE / "runs")
     parser.add_argument("--node-bin", default="node")
+    parser.add_argument("--strategy", choices=["bfs", "astar"], default="bfs",
+                        help="bfs is the published floor: uninformed, obviously untuned. astar "
+                             "orders the frontier by depth plus an estimate of folds remaining, "
+                             "so it goes deeper on the same clock but its solutions are not "
+                             "guaranteed shortest.")
     parser.add_argument("--seconds", type=float, default=10,
                         help="Search budget per sample. Shallow samples finish in well under a "
                              "second; deep ones blow past any budget, so a small number costs "
@@ -151,7 +158,8 @@ def main():
     def find(sample_id):
         try:
             return sample_id, search([sample_id], args.seconds, args.max_states,
-                                     args.node_bin).get(sample_id, {"status": "missing"})
+                                     args.node_bin, args.strategy).get(sample_id,
+                                                                       {"status": "missing"})
         except RuntimeError as exc:
             return sample_id, {"status": "error", "error": str(exc)}
 
