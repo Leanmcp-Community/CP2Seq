@@ -1129,16 +1129,7 @@ comparator rejects corrupted stacks rather than taking §6.4 on trust.
 The corpus generator, the environment and verifier, both corpus checks, the state comparator and the
 evaluation harness are released under the **BSD 3-Clause** licence.
 
-- **Code:** `https://github.com/leanmcp/foldorigami`
-- **Dataset:** `https://huggingface.co/datasets/leanmcp/foldorigami`
-
-⚠️ **These two names are now fixed by the paper.** If either needs renaming, rename the repository
-and the dataset to match what is written here rather than editing the paper. A URL that changes
-after submission breaks every copy a reviewer or reader already has.
-
-⚠️ **Both are withheld under anonymous review.** The LaTeX gates them on `\ificlrfinal`, so a
-submission build prints an anonymised placeholder and a camera-ready build prints the real URLs.
-Naming a `leanmcp` repository in a double-blind submission would identify the authors.
+Code and data are released on publication; links are omitted here.
 
 The artifacts carry no personal data, no human-subject data and no scraped content. Every sample is
 synthesised from a seed by folding a square, so no licensing question attaches to the geometry and
@@ -1609,20 +1600,17 @@ scoring protocol, which tells a reader what we did. It now ends on state cycling
 what we found. An abstract whose last sentence is a method is a proposal; one whose last sentence is
 a finding is a result.
 
-### 16.19 Repository and dataset names are fixed by the paper
+### 16.19 No repository or dataset links in the paper
 
-**Decision.** Two URLs and nothing else in §13a: `github.com/leanmcp/foldorigami` for the code and
-`huggingface.co/datasets/leanmcp/foldorigami` for the dataset. No DOI, no datasheet, no hosting or
-maintenance prose; those were placeholders and are removed rather than left as TODOs a reviewer can
-see.
+**Decision.** §13a states the licence and one sentence: code and data are released on publication,
+links omitted. No URLs, no DOI, no datasheet, no hosting or maintenance prose.
 
-**The direction of renaming is fixed.** The paper is the authority on these two names. If either
-needs to change, rename the GitHub repository and the Hugging Face dataset to match the paper, not
-the other way round. A URL edited after submission breaks every copy a reviewer or reader already
-holds, and a paper that points at a moved repository is worse than one that points at nothing.
+**Why no links at all.** Two reasons, and either is sufficient on its own. A URL naming the authors'
+organisation identifies them in a double-blind submission. And a link committed to in a paper is
+fixed at the moment of submission, so naming one before the repository and dataset are actually
+published creates a name the project then has to honour. Omitting them removes both problems and
+costs nothing at submission time.
 
-⚠️ **Anonymity.** Both URLs name the authors' organisation, which would identify the authors in a
-double-blind submission. The LaTeX gates them on `\ificlrfinal`, the template's own switch, set by
-`\iclrfinalcopy`. A submission build prints "withheld for anonymous review; released on
-publication" and the camera-ready prints the real URLs. Nothing has to be remembered at submission
-time, which is the point: the safe behaviour is the default.
+**When to add them.** At camera-ready, once the repository and the dataset exist under names that
+are not going to change. At that point the paper is the authority and the artifacts are renamed to
+match it, rather than the paper being edited to chase them.
