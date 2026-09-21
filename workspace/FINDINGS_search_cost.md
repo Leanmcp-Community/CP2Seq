@@ -335,23 +335,55 @@ instead of 1.8 hours, and mid-0001's at roughly an hour instead of days.
 **两个指数同时变小，所以效果随深度复利。** 按那组 8 秒数据粗算，
 easy-0003 到参考深度约需 8 分钟而非 1.8 小时，mid-0001 约需 1 小时而非数天。
 
-> **This is not yet measured, and if it holds it overturns §6.2.** The claim that "mid is
-> where the comparison has tension" rests on BFS needing days to years there. If restricting
-> the search to the action space the corpus actually uses makes mid searchable in hours, then
-> mid joins easy as a tier where search is not a fair foil, and the paper's claim has to move
-> to hard — or to a corpus the `some-*` sets provide. Settle it before the draft leans on it:
->
-> **这一点尚未实测，如果成立，它推翻 §6.2。**「mid 才是有张力的区间」这个主张，
-> 依赖于 BFS 在那里需要几天到几年。如果把搜索限制到语料真正使用的动作空间之后 mid 几小时可解，
-> 那 mid 就和 easy 一样不再是公平的对照，论文的主张必须移到 hard，或者移到 `some-*` 语料。
-> **在草稿依赖这条结论之前先把它测掉：**
->
-> ```sh
-> SELECTION=all bash workspace/measure_depth_wall.sh
-> ```
->
-> It writes to `workspace/depth_wall_all/`, leaving the `any` data intact for comparison.
-> 它写到 `workspace/depth_wall_all/`，不覆盖 `any` 那组数据。
+### Measured. It overturns §6.2. / 已实测，§6.2 被推翻
+
+Both arms, budgets 4s and 15s. The `any` arm's 4s and 15s runs were collected on an idle
+machine; the `all` arm shared the machine with an enumeration profile, so any bias runs
+**against** `all` and the real gap is at least this large.
+
+两臂对比，4 秒和 15 秒预算。`any` 那两档是在机器空闲时采的，`all` 那两档与一次枚举剖析共享机器，
+所以偏差方向是**不利于 `all`** 的——真实差距只会比下表更大。
+
+| sample | ref depth | `any` b / to ref | `all` b / to ref | ratio |
+| --- | --- | --- | --- | --- |
+| easy-0002 | 7 | 2.19 / 3.6 s | **solved, depth 7** | — |
+| easy-0003 | 10 | 3.44 / 1.2 h | 2.85 / **6.0 min** | 11.8× |
+| mid-0001 | 11 | 3.66 / 17.5 h | 2.74 / **30.6 min** | 34.4× |
+| mid-0002 | 12 | 2.34 / 12.4 min | 2.15 / 3.7 min | 3.4× |
+| mid-0003 | 13 | 4.47 / 100.7 d | 3.24 / **1.2 d** | 87.2× |
+| hard-0002 | 19 | 2.37 / 26.8 d | 2.02 / **1.0 d** | 26.4× |
+| hard-0001 | 19 | 12.62 / 2.1 × 10¹³ y | 10.68 / 8.9 × 10¹¹ y | 24.1× |
+
+The strongest line is not a projection: **`easy-0002` times out under `any` at depth 5 and is
+solved outright under `all`**, same budget, same machine. `b` falls on every single sample,
+and `all` reaches a greater depth in the same time on four of them.
+
+最硬的一条不是推算：**`easy-0002` 在 `any` 下超时（停在深度 5），在 `all` 下直接解出**，
+同预算同机器。`b` 在每一个样本上都下降，而且同样时间内 `all` 在四个样本上搜得更深。
+
+**Consequences / 后果：**
+
+- **mid is not a tier where search is a fair foil.** Restricted BFS reaches mid-0001's
+  reference depth in about half an hour and mid-0003's in about a day. §6.2 as originally
+  written is wrong.
+  **mid 不是一个「搜索够不着」的层。** 限制后的 BFS 约半小时到 mid-0001 的参考深度，
+  约一天到 mid-0003 的。§6.2 原来的写法是错的。
+- **"hard" is not a tier either.** hard-0002 comes down to about a day while hard-0001 stays
+  at 10¹¹ years. The 24× spread within one tier is larger than the gap between tiers. What
+  predicts cost is the sample's own `b` and line count, not its label.
+  **「hard」也不是一个整体。** hard-0002 降到约一天，hard-0001 仍是 10¹¹ 年。
+  **同一层内部 24 倍的差距比层与层之间还大。** 决定成本的是样本自己的 `b` 和线数，不是它的标签。
+- The honest framing is per-sample, against measured `b`, not per-tier.
+  诚实的表述方式是**按样本**、对着实测的 `b` 来讲，而不是按 tier。
+
+For a clean same-machine rerun of both arms with more budgets / 想在安静机器上重跑两臂：
+
+```sh
+bash workspace/compare_action_space.sh
+```
+
+It refuses to start while anything else that measures time is running.
+它在有其它计时任务运行时会拒绝启动。
 
 Note also that restricting is **complete with respect to this benchmark**: every reference
 solution is all-layers, so a restricted search still contains a path to every target. It can
@@ -368,28 +400,37 @@ only lose alternative routes, never the known one.
    in seconds to minutes. It does not measure origami reasoning.
    **不要把 easy 当主结果。** 有效底数 4.1–5.4、深度 6.8，BFS 几秒到几分钟就解完，测不出模型推理。
 
-2. **mid is where the comparison has tension — pending §5b.** BFS needs 6.5 days to 5.7 years
-   there against a model's 80-turn budget, so every mid sample a model solves is something
-   search cannot do at any reasonable cost. **But this is measured with the partial-fold
-   action space, which no reference solution on this corpus uses.** §5b projects that
-   restricting to whole-stack folds may bring mid down to hours. Do not build the draft on
-   this point until that run is done.
-   **mid 才是有张力的区间——但取决于 §5b。** BFS 在那里要 6.5 天到 5.7 年，而模型只有 80 回合预算，
-   所以模型每解出一个 mid 样本都是搜索做不到的。**但这是在带部分折叠的动作空间下测的，
-   而本语料没有任何参考解使用部分折叠。** §5b 推算限制回全层后 mid 可能降到几小时。
-   **这条结论测掉之前，草稿不要依赖它。**
+2. **Do not frame the result by tier at all.** §5b settles it: once the search uses the
+   action space the corpus actually uses, mid-0001 falls to half an hour and mid-0003 to a
+   day, so mid is not a tier where search is a fair foil either. And within `hard`, hard-0002
+   comes down to a day while hard-0001 stays at 10¹¹ years — a 24× spread inside one tier,
+   wider than the gap between tiers. The tier labels track reference depth, but cost is set
+   by the sample's own branching factor and line count.
+   **不要按 tier 来表述结果。** §5b 已经定论：一旦搜索使用语料真正使用的动作空间，
+   mid-0001 降到半小时、mid-0003 降到一天，所以 mid 也不是搜索够不着的层。
+   而 `hard` 内部，hard-0002 降到一天、hard-0001 仍是 10¹¹ 年——**同层内 24 倍的差距，比层间还大**。
+   tier 标签反映的是参考深度，但成本由样本自己的分支因子和线数决定。
 
-   Independently of the outcome: the model arms and the search arm should be given the **same**
-   action space, and right now the choice of that space is not being made deliberately.
-   不论结果如何：模型 arm 和搜索 arm 应当使用**同一个**动作空间，
-   而目前这个空间是怎么选的，并没有被有意识地决定过。
+   Report against measured `b` per sample. The samples where search is genuinely out of
+   reach exist — hard-0001 is one — but they have to be identified by measurement, not by
+   which directory they sit in.
+   **按样本、对着实测的 `b` 报告。** 搜索真正够不着的样本是存在的（hard-0001 就是），
+   但它们必须由测量来识别，而不是由它们放在哪个目录里来识别。
 
-3. **The 120s default in `run_deterministic*.sh` is wasted on mid and hard.** Measured, 120s
+3. **Give the model arm and the search arm the same action space.** Right now that choice is
+   not being made deliberately: the enumerator offers partial folds because the `some-*`
+   corpora need them, and every experiment inherits that on a corpus where no reference
+   solution uses one.
+   **模型 arm 和搜索 arm 必须用同一个动作空间。** 目前这个选择不是有意识做出的：
+   枚举器提供部分折叠是因为 `some-*` 语料需要，而所有实验都在一个没有任何参考解使用它的语料上
+   继承了这个设定。
+
+4. **The 120s default in `run_deterministic*.sh` is wasted on mid and hard.** Measured, 120s
    reaches depth 8.6 on easy (needs 6.8), 6.9 on mid (needs 12) and 2.9 on hard (needs 19).
    **`run_deterministic*.sh` 的 120 秒默认值在 mid/hard 上是浪费机器。**
    实测 120 秒在 easy 到深度 8.6（需要 6.8），mid 到 6.9（需要 12），hard 到 2.9（需要 19）。
 
-4. **Tool latency is an uncontrolled variable on hard.** One `list_legal_folds` call at depth
+5. **Tool latency is an uncontrolled variable on hard.** One `list_legal_folds` call at depth
    10 of hard-0001 takes 140 seconds and at full depth about 47 minutes, while `--timeout`
    governs only the model call, not the simulator.
    **hard 上工具延迟是失控变量。** hard-0001 第 10 层一次 `list_legal_folds` 要 140 秒，
