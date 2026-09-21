@@ -280,6 +280,210 @@
     "src": "manual: variables=0 rows; 27 are step-1, the rest are pre-crease steps",
     "v": 74
   },
+  "results.attempts": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 1211
+  },
+  "results.bfs.easyN": {
+    "src": "derived: workspace/RESULTS/results.md",
+    "v": 669
+  },
+  "results.bfs.easyPct": {
+    "src": "derived: workspace/RESULTS/results.md",
+    "unit": "%",
+    "v": 54.7
+  },
+  "results.bfs.easySolved": {
+    "src": "derived: workspace/RESULTS/results.md",
+    "v": 366
+  },
+  "results.bfs.hardN": {
+    "src": "derived: workspace/RESULTS/results.md",
+    "v": 16
+  },
+  "results.bfs.medExpandedEasy": {
+    "src": "derived: workspace/RESULTS/results.md",
+    "v": 65
+  },
+  "results.bfs.medExpandedMid": {
+    "src": "derived: workspace/RESULTS/results.md",
+    "v": 1051.5
+  },
+  "results.bfs.midN": {
+    "src": "derived: workspace/RESULTS/results.md",
+    "v": 40
+  },
+  "results.bfs.midSolved": {
+    "src": "derived: workspace/RESULTS/results.md",
+    "v": 1
+  },
+  "results.bfs.timeouts": {
+    "src": "derived: workspace/RESULTS/results.md",
+    "v": 358
+  },
+  "results.claudesonnet5.n": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 5
+  },
+  "results.claudesonnet5.solvePct": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 0.0
+  },
+  "results.claudesonnet5.solved": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 0
+  },
+  "results.codexclichatgpt.n": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 1
+  },
+  "results.codexclichatgpt.solvePct": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 0.0
+  },
+  "results.codexclichatgpt.solved": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 0
+  },
+  "results.deterministicbfs.n": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 725
+  },
+  "results.deterministicbfs.solvePct": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 50.6
+  },
+  "results.deterministicbfs.solved": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 367
+  },
+  "results.errorAttempts": {
+    "src": "derived: workspace/RESULTS/results.md",
+    "v": 24
+  },
+  "results.gpt56luna.n": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 447
+  },
+  "results.gpt56luna.solvePct": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 14.1
+  },
+  "results.gpt56luna.solved": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 63
+  },
+  "results.gpt56sol.n": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 7
+  },
+  "results.gpt56sol.solvePct": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 0.0
+  },
+  "results.gpt56sol.solved": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 0
+  },
+  "results.gpt56terra.n": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 1
+  },
+  "results.gpt56terra.solvePct": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 0.0
+  },
+  "results.gpt56terra.solved": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 0
+  },
+  "results.gpt6astra.n": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 1
+  },
+  "results.gpt6astra.solvePct": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 100.0
+  },
+  "results.gpt6astra.solved": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 1
+  },
+  "results.lm.hardN": {
+    "src": "derived: workspace/RESULTS/results.md",
+    "v": 27
+  },
+  "results.lm.midN": {
+    "src": "derived: workspace/RESULTS/results.md",
+    "v": 70
+  },
+  "results.luna.cycling": {
+    "src": "derived: workspace/RESULTS/results.md",
+    "v": 215
+  },
+  "results.luna.cyclingPct": {
+    "src": "derived: workspace/RESULTS/results.md",
+    "unit": "%",
+    "v": 48
+  },
+  "results.luna.finished": {
+    "src": "derived: workspace/RESULTS/results.md",
+    "v": 167
+  },
+  "results.luna.noToolEasyN": {
+    "src": "derived: workspace/RESULTS/results.md",
+    "v": 65
+  },
+  "results.luna.noToolEasyPct": {
+    "src": "derived: workspace/RESULTS/results.md",
+    "unit": "%",
+    "v": 6.2
+  },
+  "results.luna.noToolEasySolved": {
+    "src": "derived: workspace/RESULTS/results.md",
+    "v": 4
+  },
+  "results.luna.repetition": {
+    "src": "derived: workspace/RESULTS/results.md",
+    "v": 18
+  },
+  "results.luna.toolEasyN": {
+    "src": "derived: workspace/RESULTS/results.md",
+    "v": 289
+  },
+  "results.luna.toolEasyPct": {
+    "src": "derived: workspace/RESULTS/results.md",
+    "unit": "%",
+    "v": 20.4
+  },
+  "results.luna.toolEasySolved": {
+    "src": "derived: workspace/RESULTS/results.md",
+    "v": 59
+  },
+  "results.luna.turnBudget": {
+    "src": "derived: workspace/RESULTS/results.md",
+    "v": 47
+  },
+  "results.runs": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 47
+  },
+  "results.samples": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 256
+  },
+  "results.unknown.n": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 24
+  },
+  "results.unknown.solvePct": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 0.0
+  },
+  "results.unknown.solved": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 0
+  },
   "shorter.release.n": {
     "src": "workspace/corpus/out/release/manifest.json counts.shorter_sequence_known",
     "v": 2

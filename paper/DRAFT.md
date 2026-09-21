@@ -74,7 +74,10 @@ reflections reverse the stack and flip face parity, and where admitting arbitrar
 stated numerical tolerance. We report solve rate at a fixed query budget per difficulty stratum,
 with queries to solution over all attempts as a secondary measure, and we evaluate frontier
 multimodal models against a deterministic search baseline so that models are ranked against search
-rather than only against each other.
+rather than only against each other. At low reasoning effort no model we evaluated solved any sample
+beyond the easy stratum, and on that stratum breadth-first search over the same action set solves
+54.7% against the best model's 20.4%; the dominant failure is revisiting already-visited states
+rather than exhausting the budget.
 
 ---
 
@@ -219,8 +222,15 @@ We contribute the following.
    Flat-Folder's `examples/instagram/` corpus provably lie outside all-layers simple folding. The benchmark's action space is bounded by evidence rather than by
    assertion, and the boundary is reported rather than buried.
 
-`[TO RUN: one sentence of headline result here, once §10 exists. It states what the frontier models
-actually do on the task and is the last thing a reader of the introduction should see.]`
+We find that the task is beyond current models at the setting we could afford to run. No model
+solved a single sample past the easy stratum, and on the easy stratum a deterministic breadth-first
+search over exactly the action set the models are given solves 54.7%<!--fact:results.bfs.easyPct--> against
+20.4%<!--fact:results.luna.toolEasyPct--> for the best-covered model. Blind search beats every model tested, on the only
+stratum where anything succeeds at all. The dominant failure is not exhausting the search budget but
+revisiting states already seen: 48%<!--fact:results.luna.cyclingPct--> of that model's attempts terminate in detected state
+cycling. ⚠️ Every model attempt ran at low reasoning effort, so the supported claim is about models
+at that setting rather than about the frontier in general; §10.6 states this and §11 carries it as a
+limitation.
 
 ---
 
@@ -941,95 +951,148 @@ means the gain is not where it was assumed to be. `[TO RUN]`
 
 ---
 
-## 10. Results `[NUMBERS TO FILL]`
+## 10. Results
 
-> **How this section gets filled.** Run `python3 workspace/aggregate_results.py`. It walks every
-> `CODEX_HARNESS_TESTING/runs/*/results.json`, counts every attempt once, and writes
-> `workspace/RESULTS/results.md` with the tables below already shaped, plus `results.json` of facts
-> for `notes/facts.json`. **No number enters this section that the script did not produce.**
+All numbers below come from `workspace/RESULTS/results.md`, produced by
+`python3 workspace/aggregate_results.py` over every saved run. 1,211<!--fact:results.attempts--> attempts across
+47 runs and 256 distinct samples. Every attempt is counted once, and an attempt with no recorded
+`solved` field is counted as unsolved.
 
-### 10.1 What was run
+### 10.1 Headline
 
-The harness records runs for the following, read from the run configs rather than from memory:
+**No language model solved a single sample beyond the easy stratum.** Across every model arm,
+mid is 0 of 70<!--fact:results.lm.midN--> and hard is 0 of 27<!--fact:results.lm.hardN-->. On the easy stratum a deterministic
+breadth-first search over exactly the action set the models are given solves
+54.7%<!--fact:results.bfs.easyPct-->, against 20.4%<!--fact:results.luna.toolEasyPct--> for the best-covered model at the same tier.
 
-| Family | Models present in `CODEX_HARNESS_TESTING/runs/` | Runs |
-| --- | --- | ---: |
-| OpenAI | `gpt-5.6-luna`, `gpt-5.6-sol`, `gpt-5.6-terra`, `gpt-6-astra` | 40 |
-| Anthropic | `claude-sonnet-5` | 3 |
-| Baseline | `deterministic-bfs` | 10 |
+**Blind search beats every model tested, by a factor of about 2.7 on the only stratum where
+anything succeeds at all.**
 
-`gpt-5.6-luna` is the most heavily run arm by a wide margin and is the one with coverage across
-tool tiers; the other three OpenAI models appear in far fewer runs. ⚠️ **This is an imbalance the
-paper has to state rather than hide.** A main table that puts a four-run model beside a
-twenty-run model in the same column implies a comparison the data does not support. Either the
-under-run models are brought up to the same protocol, or they are reported separately as a
-preliminary sweep with their run counts printed in the table.
+| Arm | Tier | easy | mid | hard | overall | med. tool calls |
+| --- | --- | --- | --- | --- | --- | ---: |
+| `deterministic-bfs` | legal-folds | **366/669 (54.7%)** | 1/40 (2.5%) | 0/16 | 367/725 (50.6%) | 5 |
+| `gpt-5.6-luna` | legal-folds | 59/289 (20.4%) | 0/66 | 0/25 | 59/380 (15.5%) | 23.5 |
+| `gpt-5.6-luna` | no tools | 4/65 (6.2%) | 0/1 | 0/1 | 4/67 (6.0%) | 29 |
+| `claude-sonnet-5` | legal-folds | 0/5 | — | — | 0/5 | 10 |
+| `gpt-5.6-sol` | no tools | 0/7 | — | — | 0/7 | 20 |
+| `gpt-5.6-terra` | no tools | 0/1 | — | — | 0/1 | 35 |
+| `gpt-6-astra` | no tools | 1/1 | — | — | 1/1 | 5 |
+| `codex-cli-chatgpt` | none | 0/1 | — | — | 0/1 | 2 |
+| *errored, model unrecorded* | — | 0/20 | 0/3 | 0/1 | 0/24 | — |
 
-### 10.2 Headline
+⚠️ **Read the denominators before the percentages.** Only `gpt-5.6-luna` and the baseline have
+coverage worth a rate. `gpt-6-astra` shows 1/1; **that is one attempt and must not be reported as
+100%.** `claude-sonnet-5`, `gpt-5.6-sol`, `gpt-5.6-terra` and `codex-cli-chatgpt` have between one
+and seven attempts each. These rows are present because omitting them would be selective reporting,
+not because they support a comparison. Any main table in the submitted paper prints $n$ in every
+cell or drops the row.
 
-`[TO FILL: solve rate per stratum for each model at the full tool tier, under Level 1 and Level 2
-equality, with the number of attempts printed in every cell. Never pooled across strata.]`
+### 10.2 The baseline reading
 
-| Model | easy | mid | hard | overall | median tool calls |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| `gpt-5.6-luna` | | | | | |
-| `gpt-5.6-sol` | | | | | |
-| `gpt-5.6-terra` | | | | | |
-| `gpt-6-astra` | | | | | |
-| `claude-sonnet-5` | | | | | |
-| `deterministic-bfs` | | | | | |
+`deterministic-bfs` solves 367 of 725 attempts overall. Per stratum: 366/669 easy, 1/40 mid, 0/16
+hard. Median states expanded is 65 on easy, 1051.5 on mid, 532 on hard. 358<!--fact:results.bfs.timeouts--> of its 725
+attempts ended in timeout rather than exhaustion, so **50.6% is a lower bound under the baseline's
+time budget, not the ceiling of exhaustive search.**
 
-### 10.3 The baseline reading, which has to come before the model reading
+This is the outcome §16.7 anticipated and the one `workspace/search_baseline.mjs` was written to
+detect. Its header records that `list_legal_folds` evaluates roughly 2,010 candidate actions per
+state and returns a mean of 3.51 that are legal and stay inside the target crease pattern, over
+73,750 enumerations. A branching factor near 3.5 makes an easy sample of five folds a tree of a few
+hundred states, and the median of 65 states expanded on easy confirms it. **The easy stratum is
+therefore not measuring origami reasoning.** It is measuring whether a model can avoid losing to
+breadth-first search on a tree its own tool has already pruned by roughly 570-fold, and every model
+tested loses.
 
-`[TO FILL from the deterministic-bfs block of the aggregation: attempts, solved, median states
-expanded, and the per-stratum breakdown.]`
+The paper says this plainly rather than reporting the models' easy-tier rate as an achievement. It
+is also the answer to the "the simulator does all the work" objection of §7, and the answer is
+uncomfortable: **on the easy stratum the simulator does do most of the work.** The benchmark's value
+here is that it can measure that rather than hide it. On mid and hard the objection dissolves,
+because search solves 1 of 56 and the models solve 0 of 97.
 
-This is the number that determines how the rest of the section is written, and it should be read
-first. `workspace/search_baseline.mjs` records that `list_legal_folds` evaluates roughly 2,010
-candidate actions per state and returns a mean of 3.51 that are legal and stay inside the target
-crease pattern, measured over 73,750 enumerations. A branching factor near 3.5 is small. Two
-outcomes are possible and the paper says something different in each case:
+### 10.3 What the tools contribute
 
-- **If breadth-first search solves the easy tier outright**, then the filtered arm's solve rate on
-  that tier is not evidence of origami reasoning, and the paper must say so plainly and move its
-  claims to the strata where search fails. This is the honest reading and it costs nothing, because
-  the benchmark's value is precisely that it can tell the difference.
-- **If breadth-first search does not solve it**, then the "the simulator did all the work"
-  objection of §7 is answered numerically rather than structurally, which is much stronger.
+The one within-model tier comparison the data supports is `gpt-5.6-luna` on easy:
 
-Either way the number is reported before the model numbers, not after.
+| Tier | easy |
+| --- | --- |
+| `legal-folds` (filtering) | 59/289 (20.4%) |
+| no tools | 4/65 (6.2%) |
 
-### 10.4 Tier comparison
+Filtering is worth roughly 3.3x on the easy stratum. It is worth nothing on mid or hard, where both
+tiers are zero. ⚠️ The no-vision and verifier-only tiers of §9 were not run, so the four-tier ladder
+this paper describes is not yet instantiated; only the two endpoints exist.
 
-`[TO FILL: the same model across the four tiers of §9, so that what each level of assistance
-contributes is visible. The comparison is within a model and never across models, since only
-`gpt-5.6-luna` has coverage across tiers.]`
+### 10.4 Failure taxonomy
 
-### 10.5 Failure taxonomy
+Termination reasons for `gpt-5.6-luna`, its 447 attempts:
 
-`[TO FILL from the termination table of the aggregation.]` Rejections group by refusal class and by
-termination reason. The taxonomy already exists in the environment (§5.3), so this is tabulation
-rather than interpretation. One termination reason seen in the runs is worth naming in its own
-right: `state_cycling`, where a model returns to a state it has already visited, which is a distinct
-failure from exhausting the budget and should not be pooled with it.
+| Termination | n | Share |
+| --- | ---: | ---: |
+| `state_cycling` | 215<!--fact:results.luna.cycling--> | 48.1% |
+| `finished` | 167<!--fact:results.luna.finished--> | 37.4% |
+| `turn_budget` | 47<!--fact:results.luna.turnBudget--> | 10.5% |
+| `repetition_detected` | 18<!--fact:results.luna.repetition--> | 4.0% |
 
-### 10.6 Where difficulty lives
+**This is the most informative result in the section and it is not a solve rate.** A majority of
+attempts, 233 of 447 counting cycling and repetition together, end with the model revisiting a state
+it has already produced rather than exhausting its budget. The model is not running out of room to
+search; it is failing to notice that it has been somewhere before. That is a specific, diagnosable
+deficit in maintaining state across a multi-step spatial task, and it is exactly the kind of finding
+a benchmark with an executing verifier can produce and a multiple-choice benchmark cannot.
 
-`[TO FILL: solve rate against fold depth and against coupling, to test whether the stratification of
-§4.4 predicts difficulty as intended. If depth predicts and coupling does not, that is a finding
-about the corpus design and belongs here rather than in a footnote.]`
+By contrast the baseline never cycles, because breadth-first search over a visited set cannot; it
+times out instead, 358 times.
+
+### 10.5 Where difficulty lives
+
+Depth separates the arms completely. Easy is the only stratum where anything succeeds; mid yields a
+single solve, by the baseline, at a median of 1051.5 states expanded against 65 on easy; hard yields
+none from any arm. `[TO RUN: solve rate against coupling, to test whether the second stratification
+axis of §4.4 predicts difficulty as intended. Only depth is evidenced so far.]`
+
+### 10.6 Threats to these results
+
+⚠️ **Every model attempt ran at `reasoning_effort: low`.** All 461 language-model attempts with a
+recorded effort setting used the low setting; 25 have none recorded. **This is the single largest
+caveat on every claim in this section.** "Frontier models fail this task" is not supported by these
+runs. What is supported is "frontier models at low reasoning effort fail this task, and lose to
+breadth-first search where search works." Re-running the best-covered arm at high effort is the most
+valuable remaining experiment in the project, and until it exists the headline must carry the
+qualifier.
+
+⚠️ **Coverage is severely imbalanced.** 725 baseline attempts and 447 for `gpt-5.6-luna`, against
+between one and seven for every other model. No cross-model claim is made.
+
+⚠️ **24<!--fact:results.errorAttempts--> attempts terminated in `error` with no model recorded** and are counted as unsolved.
+They are reported as their own row rather than dropped, because dropping failed attempts inflates
+every rate above them.
+
+⚠️ **Repeats are not yet reported as median and spread.** §8.3 promises this and the aggregation
+counts attempts rather than grouping repeats per sample. The protocol requires it before submission.
 
 > **FIGURE 6 — main result per stratum.** `[DRAFT IMAGE — placeholder, will be replaced with a
-> human-authored figure plotted from the aggregation output.]` Solve rate on the
-> vertical axis, difficulty stratum on the horizontal, one line per model with the deterministic
-> baseline drawn as a distinct reference line rather than as another model. Attempt counts printed
-> at each point, because cells with four attempts and cells with forty must not look alike. If the
-> baseline line crosses or exceeds the model lines on the easy stratum, the figure should not hide
-> it; that crossing is the most informative thing on the chart.
+> human-authored figure plotted from the aggregation output.]` The baseline line crosses above every
+> model line on the easy stratum. Per `paper/figures/figure6.md`, that crossing must be plainly
+> visible rather than smoothed away; it is the most informative feature of the chart.
 
 ---
 
 ## 11. Limitations
+
+**Every model attempt ran at low reasoning effort.** All 461 language-model attempts with a
+recorded setting used `reasoning_effort: low`. The results therefore support a claim about models at
+that setting, not about frontier models in general, and the headline is worded accordingly. Raising
+the effort on the best-covered arm is the most valuable remaining experiment.
+
+**The easy stratum does not measure what the benchmark is for.** Deterministic breadth-first search
+solves 54.7% of it at a median of 65 states expanded, beating every model. The stratum measures
+whether a model can beat trivial search on a tree its own tool has pruned roughly 570-fold. Claims
+about reasoning should be read off mid and hard, where every arm including search is at or near
+zero, and where the benchmark currently discriminates nothing either. **The band in which this
+benchmark separates models may be narrow or, at this depth range, empty.**
+
+**Model coverage is severely imbalanced.** 447 attempts for one model and between one and seven for
+four others. No cross-model comparison is supported.
 
 **No training.** Every arm is an off-the-shelf model driven by prompting and tool calling; no
 model is trained or fine-tuned. The contribution is the harness, not a model. This is stated in
