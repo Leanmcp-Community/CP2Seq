@@ -44,11 +44,35 @@ PR #35 假设前沿按 `b^d` 增长（`b ≈ 3.5`），这等于假设每个节�
 `b` 是去重后的分支因子（由跑满预算的搜索以 `generated / expanded` 测得）；
 `g` 是单次枚举成本随深度的增长率（沿参考序列逐层计时，对 `log(ms)` 做最小二乘拟合）。
 
-| tier | b | g | **b·g** | mean reference depth / 平均参考深度 |
-| --- | --- | --- | --- | --- |
-| easy | 2.72 | 1.5–2.0 | **4.1–5.4** | 6.8 |
-| mid | 3.15 | 1.6–1.7 | **5.0–5.3** | 12.0 |
-| hard | 7.05 | 1.58 | **11.1** | 19.0 |
+| tier | b | g | **b·g** | reference depth | predicted time |
+| --- | --- | --- | --- | --- | --- |
+| easy | 2.72 | 1.44 | **3.92** | 6.8 | 46 seconds |
+| mid | 3.15 | 1.47 | **4.63** | 12.0 | 17 days |
+| hard | 7.05 | 1.76 | **12.39** | 19.0 | 5.9 × 10¹² years |
+
+`b` and `g` are fitted from the **same** samples. They were not at first: `b` comes from the
+search runs and `g` from the enumeration profile, and the two scripts have different default
+sample lists — the profile includes `easy-0108`, a 60-line outlier absent from the search set,
+which pulled the easy tier's `g` from 1.44 up to 1.80 and its predicted time from 46 s to
+6 min. The figure exposed it: the observed easy solves sat two orders of magnitude below
+their own curve. The generator now intersects the two sample sets and says on stderr what it
+dropped.
+
+`b` 和 `g` 现在拟合自**同一批样本**。最初不是：`b` 来自搜索运行，`g` 来自枚举剖析，
+而两个脚本的默认样本列表不同——剖析里有 `easy-0108`（60 条线的离群点，搜索那批里没有），
+把 easy 的 `g` 从 1.44 拉到 1.80，预测时间从 46 秒拉到 6 分钟。
+**是图自己暴露的**：实测解出点比自己的曲线低了两个数量级。
+生成器现在会取两个样本集的交集，并在 stderr 说明丢掉了什么。
+
+Terminal states are excluded from the `g` fit. A state with no legal fold is short-circuited
+entirely by the cheap-rejection shortcut, so its timing collapses — easy-0108 drops from
+28670 ms at depth 9 to 987 ms at depth 10. Those are leaves: search expands one and gets
+nothing back, so they are not what "the cost of expanding a node at depth d" means. Left in,
+each sample contributes one large downward outlier at its own maximum depth.
+
+终局态被排除在 `g` 的拟合之外。没有任何合法折叠的状态会被早退优化完全短路，耗时断崖下跌——
+easy-0108 从第 9 层的 28670ms 掉到第 10 层的 987ms。那是叶子节点：搜索展开它什么也得不到，
+不符合「深度 d 处展开一个节点的成本」这个定义。留着的话，每个样本都会在自己的最大深度贡献一个向下的大离群点。
 
 Fitted over the 1s, 4s, 15s, 60s and 240s budgets. Adding 240s moved `b` by less than 0.3 on
 every tier (easy 2.71 → 2.72, mid 3.34 → 3.15, hard 7.33 → 7.05), so the fit has converged.
@@ -393,16 +417,27 @@ only lose alternative routes, never the known one.
 > 4·(不同折痕线数)·(面片数) 个候选动作。菱形标记各层的平均参考深度，圆圈为实测解出点。
 > 参数拟合自 5 档时间预算 × 12 个样本的搜索，以及 6 个样本 × 完整深度的枚举计时。
 
-**The committed `depth_wall.svg` and `.tex` are the b^d lower bound**, not the curve above:
-the enumeration timings exist as `enum_cost.txt` but the machine-readable `enum_cost.json`
-was lost when that run was interrupted, and the generator refuses to guess. Re-run
-`profile_enum_cost.sh` and regenerate with `--enum`. Both artifacts state their own cost
-model in the SVG `desc` and the LaTeX header, so the two cannot be confused.
+The committed `depth_wall.svg` and `.tex` now use the measured `(b·g)^d` model for all three
+tiers. Both artifacts state their cost model, source file and fitted parameters in the SVG
+`desc` and the LaTeX header. The generator **refuses** to draw one figure from two models —
+if some tier has enumeration timings and another does not, it exits rather than putting a
+measured curve and a constant-throughput curve on the same axis, where the gap would read as
+a tier difference. `--allow-mixed` overrides it.
 
-**目前提交的 `depth_wall.svg` 和 `.tex` 用的是 `b^d` 下界模型**，不是上面那条曲线：
-逐层计时以 `enum_cost.txt` 形式存在，但机器可读的 `enum_cost.json` 在那次被中断的运行里丢了，
-生成器拒绝猜。重跑 `profile_enum_cost.sh` 后用 `--enum` 重新生成即可。
-两个图都在 SVG 的 `desc` 和 LaTeX 注释头里写明了自己用的是哪个模型，不会混淆。
+目前提交的 `depth_wall.svg` 和 `.tex` 三层全部使用实测的 `(b·g)^d` 模型。
+两个文件都在 SVG 的 `desc` 和 LaTeX 注释头里写明了模型、数据来源和拟合参数。
+生成器会**拒绝**用两种模型画同一张图——如果某一层有枚举计时而另一层没有，它直接退出，
+而不是把实测曲线和恒定吞吐曲线放在同一坐标轴上（那样两者的差距会被误读成层间差异）。
+`--allow-mixed` 可以强制覆盖。
+
+**One caveat on the hard curve.** hard-0001 was profiled only to depth 11 of 19 (300 s
+budget), so its `g` is extrapolated eight levels. The figure's 5.9 × 10¹² years is therefore
+about 5× above §3's 1.2 × 10¹², which uses the corpus's own final layer count and needs no
+extrapolation. **Quote §3's number in the text and treat the curve as the shape.**
+
+**hard 曲线有一个注意点。** hard-0001 只剖析到第 11 层（19 层中，300 秒预算用尽），
+所以它的 `g` 向外推了八层。图上的 5.9×10¹² 年因此比 §3 的 1.2×10¹² 高约 5 倍——
+后者用语料自带的最终层数，完全不需要外推。**正文引用 §3 的数字，把曲线当作形状看。**
 
 ---
 
