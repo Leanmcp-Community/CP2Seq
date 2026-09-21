@@ -670,6 +670,53 @@ extrapolation. **Quote §3's number in the text and treat the curve as the shape
 
 ---
 
+## 7b. The corpus has no symmetry, and real origami does / 语料没有对称性，而真实折纸有
+
+Measured across **all 400 samples of `release/all-layers`: every crease pattern has a
+trivial symmetry group.** Not one is invariant under any of the square's eight dihedral
+motions, with or without an M/V swap. The probe self-tests to 8 on a hand-made symmetric
+pattern, so this is the corpus and not the code.
+
+在 `release/all-layers` 的**全部 400 个样本上实测：每一个折痕图的对称群都是平凡群。**
+没有一个在正方形的八个二面体变换下不变（无论是否交换 M/V）。
+探针在人造的对称折痕图上自检得到阶 8，所以这是语料的性质，不是代码的问题。
+
+The cause is the generator: these crease patterns come from **random fold sequences**, and a
+symmetry would have to arise by coincidence. Real origami is the opposite — cranes, box
+pleats and tessellations are almost always 4- or 8-fold symmetric, because that is what makes
+them designable and foldable by hand.
+
+原因在生成器：这些折痕图来自**随机折叠序列**，对称只能靠巧合出现。
+真实折纸恰好相反——千纸鹤、箱形褶、镶嵌图案几乎都有 4 重或 8 重对称，
+因为那正是它们可设计、可手工折叠的原因。
+
+**Two consequences / 两层含义:**
+
+1. **Symmetry pruning is worth nothing here and might be the largest single win on real
+   patterns.** A symmetry maps solutions to solutions, so subtrees under symmetric folds are
+   isomorphic and exploring one per orbit is exact. It is also the only prune that bites at
+   the TOP of the tree, where a target-state heuristic has no signal because every candidate
+   is equally far from the target. Up to 8x, exactly, losing no solution — and unavailable on
+   this corpus.
+   **对称剪枝在这里一文不值，而在真实折痕图上可能是最大的一块。**
+   对称把解映射成解，所以对称折叠下的子树同构，每个轨道只探一条是**精确**的。
+   它还是唯一能剪**树顶**的方法——那里目标态启发式没有信号，因为所有候选离目标一样远。
+   最多 8 倍、精确、不丢解——而本语料上拿不到。
+
+2. **The benchmark may be systematically off from the difficulty structure of real origami.**
+   A solver that exploits symmetry would look much better on real patterns than it does here,
+   and one that does not would look relatively better here than it deserves. This belongs in
+   the paper's limitations, and it is worth telling whoever generates the corpus.
+   **这个基准可能系统性地偏离了真实折纸的难度结构。**
+   一个会利用对称的求解器在真实折痕图上会好得多，而不会利用对称的在这里显得比它应得的更好。
+   这属于论文的局限性，也值得告诉生成语料的人。
+
+```sh
+node workspace/probe_search_strategies.mjs --probe 5 easy-0003 mid-0001
+```
+
+---
+
 ## 8. Not yet measured / 尚未测量
 
 - The 960s search budget. `b` moved by less than 0.3 when 240s was added.

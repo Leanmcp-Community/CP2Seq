@@ -24,7 +24,10 @@ const CORPUS = process.env.CORPUS_DIR ?? join(ROOT, 'workspace/corpus/out/releas
 const argv = process.argv.slice(2);
 const flag = (n, f) => { const i = argv.indexOf(n); return i === -1 ? f : Number(argv.splice(i, 2)[1]); };
 const budget = flag('--budget', 120);
-const only = flag('--probe', 0);
+const only = flag("--probe", 0);
+// Which heuristic probe 2 scores with: 1 the counting score compare_to_target already has,
+// 2 the continuous geometric one. Both are measured the same way, so they are comparable.
+const hVersion = flag("--heuristic", 2);
 const selection = (() => { const i = argv.indexOf('--selection'); return i === -1 ? 'any' : argv.splice(i, 2)[1]; })();
 const samples = argv.filter(a => !a.startsWith('--'));
 if (!samples.length) { console.error('usage: node workspace/probe_search_strategies.mjs [--probe 1..4] [--budget S] [--selection any|all] <sample-id>...'); process.exit(2); }
@@ -112,13 +115,72 @@ function probeBidirectional(id, {cp}) {
  * compare_to_target, which reads the target state only and never the reference sequence, so
  * a search using it stays inside what the benchmark gives a solver.
  */
-const heuristic = (layers, target) => {
+// v1: the score compare_to_target already computes -- layers short, plus the NUMBER of ranks
+// that disagree. It is a counting score, so two candidates whose layers all disagree tie at
+// the maximum and the ordering between them is noise. Measured, it ranks the correct fold
+// only 5-39% better than random, and worse than blind search on mid-0003.
+const heuristicV1 = (layers, target) => {
   const c = compareToTarget(layers, target, 2);
+  return Math.max(0, target.length - layers.length) + (c.mismatched_ranks?.length ?? 0);
+};
+
+// v2: the same idea made continuous. Instead of asking HOW MANY ranks disagree, ask BY HOW
+// MUCH. Two candidates that both mismatch every rank still differ in how close their layers
+// are to the target's, and that difference is what an ordering needs.
+//
+// Three geometric terms, all cheap and all scale-free:
+//   area      per rank, |area(now) - area(target)|, summed. A fold that produces layers of
+//             the right sizes is closer than one that does not, even when nothing lines up.
+//   centroid  per rank, the distance between layer centroids after aligning both stacks on
+//             their own overall centroid, so a pure translation costs nothing.
+//   count     layers still to be created, which is the part v1 already had right.
+// Ranks are compared bottom-up as far as the shorter stack goes; the stacks are compared in
+// both directions and the better one kept, because terminalMatch accepts a turnover.
+const polyArea = poly => {
+  let a = 0;
+  for (let i = 0; i < poly.length; i++) {
+    const p = poly[i], q = poly[(i + 1) % poly.length];
+    a += p[0] * q[1] - q[0] * p[1];
+  }
+  return Math.abs(a) / 2;
+};
+const polyCentroid = poly => {
+  let x = 0, y = 0;
+  for (const p of poly) { x += p[0]; y += p[1]; }
+  return [x / poly.length, y / poly.length];
+};
+const stackCentroid = layers => {
+  const cs = layers.map(l => polyCentroid(l.poly));
+  return [cs.reduce((s, c) => s + c[0], 0) / cs.length, cs.reduce((s, c) => s + c[1], 0) / cs.length];
+};
+
+const heuristicV2 = (layers, target) => {
   const short = Math.max(0, target.length - layers.length);
-  // Each fold at most doubles the layers, so log2(target/now) folds are still REQUIRED.
-  // That part is an admissible lower bound; the mismatch count is the informative part.
+  const oc = stackCentroid(layers), tc = stackCentroid(target);
+  const score = (reversed) => {
+    const mine = reversed ? [...layers].reverse() : layers;
+    const depth = Math.min(mine.length, target.length);
+    let s = 0;
+    for (let i = 0; i < depth; i++) {
+      const a = mine[i], b = target[i];
+      s += Math.abs(polyArea(a.poly) - polyArea(b.poly));
+      const ca = polyCentroid(a.poly), cb = polyCentroid(b.poly);
+      s += Math.hypot((ca[0] - oc[0]) - (cb[0] - tc[0]), (ca[1] - oc[1]) - (cb[1] - tc[1]));
+      if (a.par !== b.par) s += 0.05;   // a parity flip is a real difference, but a small one
+    }
+    return s / Math.max(1, depth);
+  };
+  // `short` dominates: a stack with the wrong number of layers is further away than any
+  // arrangement of the right number, and the geometry breaks ties inside a layer count.
+  return short + Math.min(score(false), score(true));
+};
+
+const heuristic = (layers, target, version) => {
+  // Each fold at most doubles the layers, so log2(target/now) folds are still REQUIRED --
+  // an admissible lower bound, independent of either score and far too weak on its own.
   const floor = layers.length > 0 ? Math.log2(Math.max(1, target.length / layers.length)) : 0;
-  return {score: short + (c.mismatched_ranks?.length ?? 0), admissible_floor: Math.ceil(floor)};
+  return {score: version === 1 ? heuristicV1(layers, target) : heuristicV2(layers, target),
+          admissible_floor: Math.ceil(floor)};
 };
 
 function probeHeuristic(id, {cp, target, actions}) {
@@ -150,12 +212,12 @@ function probeHeuristic(id, {cp, target, actions}) {
       // Score the representative: it is the node a search would actually expand.
       const v0 = tryFold(session.paper, cp, {tool: 'apply_fold', ...e.action});
       if (!v0.ok) continue;
-      scored.push({isRef, ...heuristic(currentPolys(v0.fold.state), target)});
+      scored.push({isRef, ...heuristic(currentPolys(v0.fold.state), target, hVersion)});
     }
     scored.sort((a, b) => a.score - b.score);
     const rank = scored.findIndex(s => s.isRef) + 1;
     rows.push({d, n: scored.length, rank: rank || null,
-               floor: heuristic(currentPolys(session.paper), target).admissible_floor,
+               floor: heuristic(currentPolys(session.paper), target, hVersion).admissible_floor,
                remaining: actions.length - d});
   }
   return rows;
@@ -321,7 +383,7 @@ for (const id of samples) {
     const mean = ranked.reduce((s, r) => s + r.rank, 0) / Math.max(1, ranked.length);
     const top1 = ranked.filter(r => r.rank === 1).length;
     const top3 = ranked.filter(r => r.rank <= 3).length;
-    console.log(`  [2] heuristic       reference fold ranks ${ranked.map(r => `${r.rank}/${r.n}`).join(' ')}`);
+    console.log(`  [2] heuristic v${hVersion}    reference fold ranks ${ranked.map(r => `${r.rank}/${r.n}`).join(' ')}`);
     console.log(`      mean rank ${mean.toFixed(2)} over ${ranked.length} steps;` +
                 ` first ${top1}, top-3 ${top3}` +
                 `  -> best-first behaves like branching ~${mean.toFixed(1)}`);
