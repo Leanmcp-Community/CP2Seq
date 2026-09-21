@@ -526,14 +526,32 @@ harness applies one setting to both, and that setting is never chosen deliberate
 | `release/all-layers` (every experiment) | 0 of 4180 | `any` costs 3–87× and buys nothing |
 | `some-verified-d3` | 51 of 150 | `any` needed for 7 of 50 samples |
 
-Still open: whether the necessary fraction rises with depth. d3 allows only three folds, so
-there is a lot of room to route around a partial fold; `some-generated-d6` has six.
+### The necessary fraction rises with depth / 必需比例随深度上升
 
-仍未决：必需的比例是否随深度上升。d3 只有三折，绕开部分折的余地很大；`some-generated-d6` 有六折。
+`some-generated-d6`, same protocol:
 
-```sh
-CORPUS=some-generated-d6 bash workspace/run_some_layers.sh
 ```
+any solved 49 of 50
+all solved 32 of 50           <- 17 samples need partial folds
+```
+
+| | d3 | d6 |
+| --- | --- | --- |
+| reference uses a partial fold | 37/50 (74%) | 48/50 (96%) |
+| **genuinely requires one** | **7/50 (14%)** | **17/50 (34%)** |
+| routed around by whole-stack folds | 30 of 37 (81%) | 31 of 48 (65%) |
+
+The necessary fraction grows 2.4x from three folds to six, which is what one would expect:
+the deeper the model, the fewer whole-stack detours exist. But even at depth 6, **65% of the
+references that use a partial fold can be routed around it.** "The reference uses it" and
+"nothing else works" are not the same thing at any depth.
+
+从三折到六折，必需比例涨了 2.4 倍，这符合预期：折得越深，全层折的绕路越少。
+但即使在深度 6，**用了部分折的参考解里仍有 65% 能被绕过**。
+「参考解用了它」和「非它不可」在任何深度上都不是一回事。
+
+(One d6 sample is unsolved by both arms within 30 s.)
+（有 1 个 d6 样本在 30 秒内两臂都没解出。）
 
 ### A separate problem for the corpus itself / 语料本身的另一个问题
 
@@ -640,15 +658,15 @@ extrapolation. **Quote §3's number in the text and treat the curve as the shape
 
 ## 8. Not yet measured / 尚未测量
 
-- **Whether the partial-fold-necessary fraction rises with depth.** Measured at depth 3:
-  7 of 50. `some-generated-d6` has six folds and more room for a partial fold to be
-  unavoidable. See §5b.
-  **必需部分折的比例是否随深度上升。** 深度 3 实测是 50 个里 7 个；
-  `some-generated-d6` 有六折，部分折无法绕开的余地更大。见 §5b。
 - The 960s search budget. `b` moved by less than 0.3 when 240s was added.
   960 秒那档搜索预算。加入 240s 时 `b` 变化小于 0.3，跑它换不来会变的数字。
 
-Resolved since first writing / 初稿后已解决：`hard-0043` (§2 — it is cheaper than the 4.6x smaller
+Resolved since first writing / 初稿后已解决：whether the wide action space is necessary and whether
+that rises with depth (§5b — yes, for 14% of samples at depth 3 and 34% at depth 6), the
+corpus metadata's integrity (200/200 samples: meta.partial_used matches seq.json exactly, and
+no sequence begins with a partial fold, which is impossible from one layer — the 0-partial
+samples are the documented p_partial = 0.5 generator, not an error),
+`hard-0043` (§2 — it is cheaper than the 4.6x smaller
 hard-0001 at the same depth, which settles that CP size is not the driver), layer-count
 saturation (§3), the 240s budget,
 and what a "layer" actually counts (§2).
