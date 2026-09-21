@@ -1,4 +1,4 @@
-# Origami as a Spatial Reasoning Benchmark
+# Origami as a Spatial and Geometric Reasoning Benchmark
 
 Working draft, started 2026-09-19. Target: ICLR, datasets and benchmarks.
 
@@ -39,9 +39,9 @@ settled before submission:
 - *Origami as a Benchmark for Spatial and Geometric Reasoning in Multimodal Language Models*
 - *CP2Seq: A Spatial and Geometric Reasoning Benchmark with an Exact Verifier*
 
-The current title is *Origami as a Spatial Reasoning Benchmark*. The subtitle *with Free Exact
-Verification* was removed and the free-verification framing has been taken out of the abstract and
-the body as well; §16 records why.
+The title is now *Origami as a Spatial and Geometric Reasoning Benchmark*. The subtitle *with Free
+Exact Verification* was removed and the free-verification framing has been taken out of the abstract
+and the body as well; §16 records why.
 
 ---
 
@@ -177,16 +177,17 @@ supplied [Bern & Hayes 1996]. No amount of pattern recognition substitutes for s
 of that shape, and a benchmark that never executes a proposed step cannot tell a model that
 searched from a model that recognised, nor report how much search either one needed.
 
-Search alone does not survive the task either, and this is the point on which the benchmark turns.
-The reachable space grows with depth faster than any exhaustive strategy can cover, so a model that
-proposes moves without reading the pattern exhausts its query budget on the deeper strata, and a
-deterministic breadth-first search fails on the same samples for the same reason. Blind enumeration
-is not a baseline that merely scores poorly; it stops being viable. What remains is to use the
-geometry, which is to say to look at the crease pattern and the final state and infer which fold
-could plausibly have been last, then work backwards. **Geometry is supplied to the model as input
-and is not the thing being scored. Being able to act on it is.** A model that cannot read a
-reflection off a pattern has no way to choose a direction, and having no way to choose a direction
-is, on this task, indistinguishable from being unable to do it at all.
+This is also why the benchmark reports a deterministic search baseline alongside the models rather
+than only against them. The stack deepens with every fold, the enumerated action set grows with it,
+and the depth at which exhaustive search stops being affordable is a property of the corpus that
+can be measured rather than asserted. `[TO RUN: the deterministic breadth-first baseline of §8,
+reported per stratum, giving the depth at which it stops solving and the states it expands. Until
+that number exists, no claim is made here about where blind search fails.]` What the benchmark is
+designed to reward is the use of geometry: looking at the crease pattern and the final state and
+inferring which fold could plausibly have been last, then working backwards. **Geometry is supplied
+to the model as input and is not the thing being scored. Being able to act on it is.** A model that
+cannot read a reflection off a pattern has no way to choose a direction other than enumeration, and
+the baseline is what says how far enumeration alone gets.
 
 The task is also hard in ways a maze or a grid-world is not. It gets harder as it proceeds: every
 fold thickens the stack and constrains what the next fold may do, so the difficulty of step *k*
@@ -228,8 +229,8 @@ We contribute the following.
    run across the progressive tiers of tool assistance and with a memorization control on
    anonymized geometry. `[TO RUN]`
 
-4. **A measured scope boundary.** 89.3%<!--fact:probeC.provenNotPct--> of real crease patterns provably lie outside
-   all-layers simple folding. The benchmark's action space is bounded by evidence rather than by
+4. **A measured scope boundary.** 89.3%<!--fact:probeC.provenNotPct--> of the 366<!--fact:corpus.instagram.total--> real crease patterns in
+   Flat-Folder's `examples/instagram/` corpus provably lie outside all-layers simple folding. The benchmark's action space is bounded by evidence rather than by
    assertion, and the boundary is reported rather than buried.
 
 `[TO RUN: one sentence of headline result here, once §10 exists. It states what the frontier models
@@ -283,7 +284,8 @@ finds a *shorter* correct sequence is marked wrong by it. That is a finding abou
 setting rather than a criticism of their results.
 
 The general precedent for a proposer paired with a verifier is older than any of this work: a
-network that proposes and a search that checks is the structure behind AlphaGo, and the reason the
+network that proposes and a search that checks is the structure behind AlphaGo [Silver et al.
+2016], and the reason the
 combination is stronger than either half.
 
 ### 2.3 Computational origami: the theory under the action space
@@ -441,10 +443,30 @@ every layer it crosses and each cut becomes one crease in the unfolded square. C
 simultaneously the non-local dependency that Learn2Fold's difficulty tiers appeal to and the
 closest measurable proxy for how hard a model is to fold by hand.
 
-The release corpus holds 600 samples in five batches: 400 all-layers samples spanning 4 to 19
-folds, stratified easy, mid and hard on the action space's tertiles, and 200 some-layers samples
-at depths 3 to 6. Median crease count is 33 and median layer count 24, with the deep tail reaching
-tens of thousands of both.
+The release corpus holds 600<!--fact:corpus.release.total--> samples in five batches. It is divided into two splits that
+differ in what is *known* about each sample, and the distinction matters when reading the numbers
+reported elsewhere. Every sample is correct by construction, because it was produced by folding
+forward and recording. The **verified** split additionally carries a solver verdict, so it is the
+only split on which statements about solvability or about shorter sequences can be made; the
+shorter-sequence rate of §6.1 is measured there and nowhere else. The **generated** split has no
+verdict. The corpus-level checks of §4.4 run over all 600 samples, because replay and crease
+comparison need no solver.
+
+| Batch | Tier | Split | n | Folds | Creases (max) | Layers (max) |
+| --- | --- | --- | ---: | ---: | ---: | ---: |
+| `all-layers` | all-layers | generated | 400 | 4–19 | 83 (24448) | 58 (16384) |
+| `some-verified-d3` | some-layers | verified | 50 | 3 | 10.5 (75) | 9 (42) |
+| `some-verified-d4` | some-layers | verified | 50 | 4 | ” | ” |
+| `some-generated-d5` | some-layers | generated | 50 | 5 | ” | ” |
+| `some-generated-d6` | some-layers | generated | 50 | 6 | ” | ” |
+| **Verified split** | | | **100**<!--fact:corpus.release.verified--> | 3–4 | | |
+| **Generated split** | | | **500**<!--fact:corpus.release.generated--> | 4–19 | | |
+| **Total** | | | **600**<!--fact:corpus.release.total--> | 3–19 | 33 (24448) | 23.5 (16384) |
+
+Crease and layer figures are medians with the maximum in brackets. Across the whole corpus the
+median crease count is 33<!--fact:corpus.release.creaseP50--> and the median layer count 23.5<!--fact:corpus.release.layerP50-->, with the deep tail of
+the all-layers tier reaching tens of thousands of both. The some-layers tier is shallower by design
+and its medians are an order of magnitude smaller, which is why the two tiers are never pooled.
 
 ⚠️ Two limits belong in the paper rather than in an appendix. The first is an empty cell: long
 sequences at low coupling are almost unreachable, yielding 2<!--fact:corpus.synth.lLocalHits--> hits in 16,000 attempts,
@@ -650,8 +672,9 @@ authors' own symbolic simulators; synthesis is the field's normal practice. Here
 makes difficulty controllable and ground truth constructed rather than annotated, and what allows
 the corpus to ship as a seed rather than as a file.
 
-**"Your corpus is not real origami."** Correct, and measured: 89.3%<!--fact:probeC.provenNotPct--> of real crease
-patterns provably lie outside all-layers simple folding. This is stated as a scope boundary in §1
+**"Your corpus is not real origami."** Correct, and measured: 89.3%<!--fact:probeC.provenNotPct--> of the
+366<!--fact:corpus.instagram.total--> real crease patterns in Flat-Folder's `examples/instagram/` corpus provably lie
+outside all-layers simple folding. This is stated as a scope boundary in §1
 and §12 rather than left for a reviewer to discover.
 
 **"The model may have memorised the pattern."** The no-tools arm runs on anonymized geometry with
@@ -672,6 +695,13 @@ nothing. §9.
   `[TO RUN: same sweep]`
 - **8.4 Query distribution.** Queries to solution over all attempts, with the timeout fraction.
   `[TO RUN: same sweep]`
+- **8.5 Baselines.** Three, none of them a language model, so the models are ranked against
+  something rather than only against each other. A uniform random proposer over the enumerated
+  legal actions, which fixes the floor. A deterministic breadth-first search over exactly the
+  action set the model is offered (`workspace/search_baseline.mjs`), which says how much of the
+  task the enumerator already solves and at what depth exhaustive search stops being affordable.
+  And a symbolic CP→Seq solver (Creasy), the closest thing to prior art on the task itself.
+  `[TO RUN: the baseline ladder]`
 
 ---
 
@@ -710,8 +740,8 @@ model is trained or fine-tuned. The contribution is the harness, not a model. Th
 the introduction as well as here, because a limitation the authors declare is context and one a
 reviewer discovers is an objection.
 
-**Scope of the action space.** 89.3%<!--fact:probeC.provenNotPct--> of real crease patterns lie outside all-layers
-simple folding, and pre-creasing, the operation real folders use to reach long sequences at low
+**Scope of the action space.** 89.3%<!--fact:probeC.provenNotPct--> of the 366<!--fact:corpus.instagram.total--> real crease
+patterns in Flat-Folder's `examples/instagram/` corpus lie outside all-layers simple folding, and pre-creasing, the operation real folders use to reach long sequences at low
 coupling, is excluded.
 
 **The corpus verifiers share an engine with the generator**, so they cannot detect a wrong model
@@ -745,6 +775,27 @@ The corpus ships as a generator and a manifest; every sample rebuilds byte-ident
 seed. The environment, both corpus verifiers and the state comparator are released with the
 benchmark. The negative control of §6.4 runs as a command, so a reader can confirm that the
 comparator rejects corrupted stacks rather than taking §6.4 on trust.
+
+---
+
+## 13a. Licence, availability and maintenance
+
+The corpus generator, the environment and verifier, both corpus checks, the state comparator and
+the evaluation harness are released under the **BSD 3-Clause** licence. The corpus itself is
+released under the same terms and ships as a generator plus a manifest rather than a data blob:
+every sample rebuilds byte-identically from its seed, so the release is a few hundred kilobytes of
+specification rather than a hosted archive, and a reader who wants a larger corpus, a different
+stratification or a deeper some-layers tier regenerates it rather than asking us for it.
+
+The artifacts carry no personal data, no human-subject data and no scraped content. Every sample is
+synthesised from a seed by folding a square, so no licensing question attaches to the geometry and
+no attribution is owed to any origami designer. Flat-Folder's `examples/instagram/` set, the one
+external corpus this paper measures against, is not redistributed; the scope measurement of §11 was
+computed against it in place and is reported as a number.
+
+`[TO COMPLETE before submission: anonymised repository URL, archival DOI, and a datasheet covering
+motivation, composition, collection, preprocessing, uses and maintenance. The maintenance
+commitment should name who fixes a reported generator bug and on what horizon.]`
 
 ---
 
@@ -923,3 +974,91 @@ ablation, and §9 and the abstract both change back together.
 - **Figure 1**, the generation-versus-recovery asymmetry. §12 has it as "to draw"; an introduction
   to a benchmark paper is usually carried by that figure.
 - **The star example in §1 is an unverified citation** and blocks submission. See §15 rule 7.
+
+### 16.6 The 89.3% scope claim is now bounded to the corpus it was measured on
+
+**Decision.** Every statement of the figure now reads "89.3% of the 366 real crease patterns in
+Flat-Folder's `examples/instagram/` corpus" rather than "89.3% of real crease patterns." Three
+places: §1 contribution 5, §7, §11.
+
+**Why.** The measurement was made on one convenience corpus of 366 patterns. "Real crease patterns"
+names a population that was never sampled, and a reviewer who checks the provenance will read the
+generalization as either careless or deliberate. The bounded version is unattackable and loses none
+of its force, because the point is only that the action space excludes most real origami and the
+boundary is reported rather than buried. This was the single easiest reviewer objection in the
+paper to remove.
+
+### 16.7 The BFS claim was removed until the number exists
+
+**Decision.** §1 previously asserted that a deterministic breadth-first search fails on the same
+samples a model does. That sentence is gone. In its place is a statement that the depth at which
+exhaustive search stops being affordable is measurable, and a `[TO RUN]` for the baseline.
+
+**Why.** The claim had no measurement behind it, and the repo's own baseline suggests it may point
+the other way. `workspace/search_baseline.mjs` was written to answer the opposite worry: its header
+records that `list_legal_folds` evaluates roughly 2010 candidate actions per state and returns a
+mean of 3.51 that are legal and stay inside the target CP, measured over 73,750 enumerations, and
+warns that if exhaustive search over that pruned set solves the easy tier outright then the
+enumerator arm's 20 to 26 percent is not measuring origami reasoning. A branching factor of 3.5 is
+small. Asserting that blind search collapses, while shipping a script that suspects it does not,
+is the kind of contradiction a reviewer finds by reading the repository. **The script has never had
+its results written into any document in this project.** Run it and the sentence can come back,
+stronger, with a number.
+
+### 16.8 Baselines are named, because a benchmark without them is usually rejected
+
+**Decision.** §8.5 names three: uniform random over enumerated legal actions, deterministic
+breadth-first over the same action set, and the symbolic CP→Seq solver (Creasy). All `[TO RUN]`.
+
+**Why.** Reviewers of dataset and benchmark papers ask what the floor is and what a non-learned
+method achieves. Without that, model numbers are uninterpretable: 25 percent is either impressive
+or embarrassing depending on what search alone does. The BFS baseline doubles as the answer to the
+"the simulator did all the work" objection of §7, which is currently argued structurally and would
+be much stronger argued numerically.
+
+### 16.9 Licence and release terms
+
+**Decision.** Everything ships under **BSD 3-Clause**: generator, environment and verifier, corpus
+checks, comparator, harness, and the corpus itself. Recorded in §13a.
+
+**Why.** Dataset and benchmark tracks expect an explicit licence, a hosting story and a maintenance
+commitment, and their absence is a routine reviewer complaint. The corpus shipping as a seed rather
+than a blob answers hosting almost for free. Still outstanding: the anonymised repository URL, an
+archival DOI, and a datasheet.
+
+### 16.10 OrigamiBench is closer to this work than §2 assumes, and this needs a decision
+
+**Status: open. This is the most significant finding of the September 2026 citation check.**
+
+The missing `origamibench` citation was recovered: Agarwal, Wu, Jian, Hu, Mansoor, Li, Peng, Dai,
+Ding and Sansone, *OrigamiBench: An Interactive Environment to Synthesize Flat-Foldable Origamis*,
+arXiv:2603.13856, March 2026. Its abstract describes "an interactive benchmark in which models
+iteratively propose folds and receive feedback on physical validity and similarity to a target
+configuration."
+
+That is much nearer this paper's design than the draft assumed when it listed OrigamiBench as one
+of the works that "complete the picture." The claim in §1 and §2.4 that *none* of the existing
+benchmarks steps an engine and rules on a proposed move is now doubtful as stated, because
+OrigamiBench appears to do exactly that.
+
+Two distinctions probably survive and both need checking against the paper rather than the
+abstract. First, OrigamiBench reports "similarity to a target configuration", which is a graded
+comparison, where this work replays and compares exactly under a declared symmetry group. Second,
+OrigamiBench synthesises toward a target, where this work recovers a sequence from a crease pattern
+and a final state, which is the inverse problem. If both hold, the contribution stands and the
+wording needs narrowing from "none of them executes" to something precise about exactness and
+about the inverse direction. **If neither holds, the framing of §1 and §2.4 has to change.** Read
+the paper before submission.
+
+### 16.11 Citations verified in the September 2026 check
+
+- **OrigamiSpace.** 350 instances and the four tasks confirmed. The venue is confirmed as **NeurIPS
+  2025**, not an unvenued preprint, so §15 rule 4 is now satisfied and can be retired.
+- **GamiBench.** 186 regular and 186 impossible patterns, six viewpoints, three VQA tasks, and the
+  viewpoint-consistency and impossible-fold-selection-rate metrics all confirmed. Authors confirmed.
+- **OrigamiBench.** Recovered; see §16.10.
+- **COrigami.** Recovered as *COrigami: An AI Pipeline for Co-Designing Flat-Foldable Visually
+  Recognisable Origami*, arXiv:2606.26299. Author list still unverified.
+- **Still unverified:** the *Vision Language Models Are Blind* star example of §1, and the author
+  lists of thirteen theory and tools entries, which now carry sort keys so the bibliography renders
+  but still need real authors.

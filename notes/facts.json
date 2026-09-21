@@ -1,271 +1,311 @@
 {
- "_generated": "2026-09-17",
- "_how": "hand-maintained since the probes were removed; workspace/tools/facts.mjs no longer exists. Entries marked src \"retired-release\" cannot be recomputed from anything in the repo.",
- "corpus.instagram.total": {
-  "v": 366,
-  "src": "derived"
- },
- "probeC.screenFail": {
-  "v": 125,
-  "src": "derived"
- },
- "probeC.screenFailPct": {
-  "v": 34.2,
-  "unit": "%",
-  "src": "derived"
- },
- "probeC.passScreen": {
-  "v": 241,
-  "src": "derived"
- },
- "probeC.passScreenPct": {
-  "v": 65.8,
-  "unit": "%",
-  "src": "derived"
- },
- "probeC.preCrease": {
-  "v": 46,
-  "src": "derived"
- },
- "probeC.preCreasePct": {
-  "v": 12.6,
-  "unit": "%",
-  "src": "derived"
- },
- "probeC.inPlay": {
-  "v": 195,
-  "src": "derived"
- },
- "probeC.exhausted": {
-  "v": 156,
-  "src": "derived"
- },
- "probeC.exhaustedPct": {
-  "v": 42.6,
-  "unit": "%",
-  "src": "derived"
- },
- "probeC.timeout": {
-  "v": 37,
-  "src": "derived"
- },
- "probeC.timeoutPct": {
-  "v": 10.1,
-  "unit": "%",
-  "src": "derived"
- },
- "probeC.solved": {
-  "v": 2,
-  "src": "derived"
- },
- "probeC.solvedPct": {
-  "v": 0.5,
-  "unit": "%",
-  "src": "derived"
- },
- "probeC.provenNot": {
-  "v": 327,
-  "src": "derived"
- },
- "probeC.provenNotPct": {
-  "v": 89.3,
-  "unit": "%",
-  "src": "derived"
- },
- "probeC.stage1Ceiling": {
-  "v": 195,
-  "src": "derived: the ceiling after stage 1 only, kept so each layer stays traceable"
- },
- "probeC.stage1CeilingPct": {
-  "v": 53.3,
-  "unit": "%",
-  "src": "derived"
- },
- "probeC.ceiling": {
-  "v": 39,
-  "src": "derived"
- },
- "probeC.ceilingPct": {
-  "v": 10.7,
-  "unit": "%",
-  "src": "derived"
- },
- "corpus.synth.run": {
-  "v": "v2",
-  "src": "derived"
- },
- "corpus.synth.samples": {
-  "v": 322,
-  "src": "derived"
- },
- "corpus.synth.quota": {
-  "v": 360,
-  "src": "derived"
- },
- "corpus.synth.cellsFilled": {
-  "v": 8,
-  "src": "derived"
- },
- "corpus.synth.cellsTotal": {
-  "v": 9,
-  "src": "derived"
- },
- "corpus.synth.uniqueCPs": {
-  "v": 322,
-  "src": "derived"
- },
- "corpus.synth.stepMin": {
-  "v": 4,
-  "src": "derived"
- },
- "corpus.synth.stepMax": {
-  "v": 19,
-  "src": "derived"
- },
- "corpus.synth.couplingP50": {
-  "v": 4.2,
-  "src": "derived: mean creases per fold, per sample, median over the corpus"
- },
- "corpus.synth.couplingMax": {
-  "v": 64,
-  "src": "derived"
- },
- "corpus.synth.creaseP50": {
-  "v": 61,
-  "src": "derived"
- },
- "corpus.synth.degeneratePct": {
-  "v": 33.2,
-  "unit": "%",
-  "src": "derived: recorded, never filtered"
- },
- "corpus.synth.lLocalHits": {
-  "v": 2,
-  "src": "derived: the long/low-coupling cell"
- },
- "anchor.total": {
-  "v": 27,
-  "src": "derived: check-anchor.mjs"
- },
- "anchor.exhausted": {
-  "v": 12,
-  "src": "derived"
- },
- "anchor.exhaustedPct": {
-  "v": 44.4,
-  "unit": "%",
-  "src": "derived"
- },
- "anchor.solved": {
-  "v": 7,
-  "src": "derived"
- },
- "anchor.timeout": {
-  "v": 8,
-  "src": "derived"
- },
- "anchor.noF": {
-  "v": 4,
-  "src": "derived: models with no F edge at all"
- },
- "anchor.noFExhausted": {
-  "v": 2,
-  "src": "derived"
- },
- "anchor.solvedVerified": {
-  "v": 6,
-  "src": "derived: replay-anchor.mjs — crease sets equal, second engine"
- },
- "purelandfold.sequences": {
-  "v": 27,
-  "src": "manual: HF dataset mayaweiz/PurelandFold"
- },
- "purelandfold.frames": {
-  "v": 337,
-  "src": "manual: same"
- },
- "purelandfold.skippedRows": {
-  "v": 74,
-  "src": "manual: variables=0 rows; 27 are step-1, the rest are pre-crease steps"
- },
- "purelandfold.precreaseFrames": {
-  "v": 47,
-  "src": "manual: export_purelandfold_models.py — variables=0 past step 1"
- },
- "purelandfold.effStepMin": {
-  "v": 4,
-  "src": "manual: same — pre-crease frames merged into the step they precede"
- },
- "purelandfold.effStepMax": {
-  "v": 19,
-  "src": "manual: same"
- },
- "purelandfold.effTertileLo": {
-  "v": 10,
-  "src": "manual: same — the synthetic step strata are cut here"
- },
- "purelandfold.effTertileHi": {
-  "v": 13,
-  "src": "manual: same"
- },
- "shorter.release.n": {
-  "v": 2,
-  "src": "workspace/corpus/out/release/manifest.json counts.shorter_sequence_known"
- },
- "shorter.release.outOf": {
-  "v": 100,
-  "src": "the verified split; the other 500 samples were never checked"
- },
- "shorter.retired.n": {
-  "v": 30,
-  "src": "retired-release, not reproducible"
- },
- "shorter.retired.outOf": {
-  "v": 700,
-  "src": "retired-release, not reproducible"
- },
- "shorter.retired.d3Rate": {
-  "v": "1/100",
-  "src": "retired-release, not reproducible"
- },
- "shorter.retired.d5Rate": {
-  "v": "11/100",
-  "src": "retired-release, not reproducible"
- },
- "shorter.retired.d6Rate": {
-  "v": "10/99",
-  "src": "retired-release, not reproducible"
- },
- "_retired": [
-  {
-   "value": "65.8%",
-   "was": "the foldability ceiling before stage 2",
-   "now": "probeC.ceilingPct (10.7%); 65.8% is only the screen pass rate"
+  "_generated": "2026-09-17",
+  "_how": "hand-maintained since the probes were removed; workspace/tools/facts.mjs no longer exists. Entries marked src \"retired-release\" cannot be recomputed from anything in the repo.",
+  "_retired": [
+    {
+      "now": "probeC.ceilingPct (10.7%); 65.8% is only the screen pass rate",
+      "value": "65.8%",
+      "was": "the foldability ceiling before stage 2"
+    },
+    {
+      "now": "probeC.provenNotPct (89.3%); 34.2% is only the screen's share",
+      "value": "34.2%",
+      "was": "the headline 'proven not foldable'"
+    },
+    {
+      "now": "probeC.provenNotPct",
+      "value": "40.2%",
+      "was": "proven-not-foldable mid-revision"
+    },
+    {
+      "now": "probeC.provenNotPct",
+      "value": "46.7%",
+      "was": "proven-not-foldable mid-revision"
+    },
+    {
+      "now": "probeC.ceilingPct",
+      "value": "59.8%",
+      "was": "a ceiling mid-revision"
+    },
+    {
+      "now": "probeC.ceilingPct",
+      "value": "53.3%",
+      "was": "a ceiling mid-revision"
+    }
+  ],
+  "anchor.exhausted": {
+    "src": "derived",
+    "v": 12
   },
-  {
-   "value": "34.2%",
-   "was": "the headline 'proven not foldable'",
-   "now": "probeC.provenNotPct (89.3%); 34.2% is only the screen's share"
+  "anchor.exhaustedPct": {
+    "src": "derived",
+    "unit": "%",
+    "v": 44.4
   },
-  {
-   "value": "40.2%",
-   "was": "proven-not-foldable mid-revision",
-   "now": "probeC.provenNotPct"
+  "anchor.noF": {
+    "src": "derived: models with no F edge at all",
+    "v": 4
   },
-  {
-   "value": "46.7%",
-   "was": "proven-not-foldable mid-revision",
-   "now": "probeC.provenNotPct"
+  "anchor.noFExhausted": {
+    "src": "derived",
+    "v": 2
   },
-  {
-   "value": "59.8%",
-   "was": "a ceiling mid-revision",
-   "now": "probeC.ceilingPct"
+  "anchor.solved": {
+    "src": "derived",
+    "v": 7
   },
-  {
-   "value": "53.3%",
-   "was": "a ceiling mid-revision",
-   "now": "probeC.ceilingPct"
+  "anchor.solvedVerified": {
+    "src": "derived: replay-anchor.mjs \u2014 crease sets equal, second engine",
+    "v": 6
+  },
+  "anchor.timeout": {
+    "src": "derived",
+    "v": 8
+  },
+  "anchor.total": {
+    "src": "derived: check-anchor.mjs",
+    "v": 27
+  },
+  "corpus.instagram.total": {
+    "src": "derived",
+    "v": 366
+  },
+  "corpus.release.allLayers": {
+    "src": "derived: workspace/corpus/out/release/manifest.json",
+    "v": 400
+  },
+  "corpus.release.batches": {
+    "src": "derived: workspace/corpus/out/release/manifest.json",
+    "v": 5
+  },
+  "corpus.release.creaseP50": {
+    "src": "derived: workspace/corpus/out/release/manifest.json",
+    "v": 33
+  },
+  "corpus.release.foldMax": {
+    "src": "derived: workspace/corpus/out/release/manifest.json",
+    "v": 19
+  },
+  "corpus.release.foldMin": {
+    "src": "derived: workspace/corpus/out/release/manifest.json",
+    "v": 3
+  },
+  "corpus.release.generated": {
+    "src": "derived: workspace/corpus/out/release/manifest.json",
+    "v": 500
+  },
+  "corpus.release.layerP50": {
+    "src": "derived: workspace/corpus/out/release/manifest.json",
+    "v": 23.5
+  },
+  "corpus.release.someLayers": {
+    "src": "derived: workspace/corpus/out/release/manifest.json",
+    "v": 200
+  },
+  "corpus.release.total": {
+    "src": "derived: workspace/corpus/out/release/manifest.json",
+    "v": 600
+  },
+  "corpus.release.verified": {
+    "src": "derived: workspace/corpus/out/release/manifest.json",
+    "v": 100
+  },
+  "corpus.synth.cellsFilled": {
+    "src": "derived",
+    "v": 8
+  },
+  "corpus.synth.cellsTotal": {
+    "src": "derived",
+    "v": 9
+  },
+  "corpus.synth.couplingMax": {
+    "src": "derived",
+    "v": 64
+  },
+  "corpus.synth.couplingP50": {
+    "src": "derived: mean creases per fold, per sample, median over the corpus",
+    "v": 4.2
+  },
+  "corpus.synth.creaseP50": {
+    "src": "derived",
+    "v": 61
+  },
+  "corpus.synth.degeneratePct": {
+    "src": "derived: recorded, never filtered",
+    "unit": "%",
+    "v": 33.2
+  },
+  "corpus.synth.lLocalHits": {
+    "src": "derived: the long/low-coupling cell",
+    "v": 2
+  },
+  "corpus.synth.quota": {
+    "src": "derived",
+    "v": 360
+  },
+  "corpus.synth.run": {
+    "src": "derived",
+    "v": "v2"
+  },
+  "corpus.synth.samples": {
+    "src": "derived",
+    "v": 322
+  },
+  "corpus.synth.stepMax": {
+    "src": "derived",
+    "v": 19
+  },
+  "corpus.synth.stepMin": {
+    "src": "derived",
+    "v": 4
+  },
+  "corpus.synth.uniqueCPs": {
+    "src": "derived",
+    "v": 322
+  },
+  "probeC.ceiling": {
+    "src": "derived",
+    "v": 39
+  },
+  "probeC.ceilingPct": {
+    "src": "derived",
+    "unit": "%",
+    "v": 10.7
+  },
+  "probeC.exhausted": {
+    "src": "derived",
+    "v": 156
+  },
+  "probeC.exhaustedPct": {
+    "src": "derived",
+    "unit": "%",
+    "v": 42.6
+  },
+  "probeC.inPlay": {
+    "src": "derived",
+    "v": 195
+  },
+  "probeC.passScreen": {
+    "src": "derived",
+    "v": 241
+  },
+  "probeC.passScreenPct": {
+    "src": "derived",
+    "unit": "%",
+    "v": 65.8
+  },
+  "probeC.preCrease": {
+    "src": "derived",
+    "v": 46
+  },
+  "probeC.preCreasePct": {
+    "src": "derived",
+    "unit": "%",
+    "v": 12.6
+  },
+  "probeC.provenNot": {
+    "src": "derived",
+    "v": 327
+  },
+  "probeC.provenNotPct": {
+    "src": "derived",
+    "unit": "%",
+    "v": 89.3
+  },
+  "probeC.screenFail": {
+    "src": "derived",
+    "v": 125
+  },
+  "probeC.screenFailPct": {
+    "src": "derived",
+    "unit": "%",
+    "v": 34.2
+  },
+  "probeC.solved": {
+    "src": "derived",
+    "v": 2
+  },
+  "probeC.solvedPct": {
+    "src": "derived",
+    "unit": "%",
+    "v": 0.5
+  },
+  "probeC.stage1Ceiling": {
+    "src": "derived: the ceiling after stage 1 only, kept so each layer stays traceable",
+    "v": 195
+  },
+  "probeC.stage1CeilingPct": {
+    "src": "derived",
+    "unit": "%",
+    "v": 53.3
+  },
+  "probeC.timeout": {
+    "src": "derived",
+    "v": 37
+  },
+  "probeC.timeoutPct": {
+    "src": "derived",
+    "unit": "%",
+    "v": 10.1
+  },
+  "purelandfold.effStepMax": {
+    "src": "manual: same",
+    "v": 19
+  },
+  "purelandfold.effStepMin": {
+    "src": "manual: same \u2014 pre-crease frames merged into the step they precede",
+    "v": 4
+  },
+  "purelandfold.effTertileHi": {
+    "src": "manual: same",
+    "v": 13
+  },
+  "purelandfold.effTertileLo": {
+    "src": "manual: same \u2014 the synthetic step strata are cut here",
+    "v": 10
+  },
+  "purelandfold.frames": {
+    "src": "manual: same",
+    "v": 337
+  },
+  "purelandfold.precreaseFrames": {
+    "src": "manual: export_purelandfold_models.py \u2014 variables=0 past step 1",
+    "v": 47
+  },
+  "purelandfold.sequences": {
+    "src": "manual: HF dataset mayaweiz/PurelandFold",
+    "v": 27
+  },
+  "purelandfold.skippedRows": {
+    "src": "manual: variables=0 rows; 27 are step-1, the rest are pre-crease steps",
+    "v": 74
+  },
+  "shorter.release.n": {
+    "src": "workspace/corpus/out/release/manifest.json counts.shorter_sequence_known",
+    "v": 2
+  },
+  "shorter.release.outOf": {
+    "src": "the verified split; the other 500 samples were never checked",
+    "v": 100
+  },
+  "shorter.retired.d3Rate": {
+    "src": "retired-release, not reproducible",
+    "v": "1/100"
+  },
+  "shorter.retired.d5Rate": {
+    "src": "retired-release, not reproducible",
+    "v": "11/100"
+  },
+  "shorter.retired.d6Rate": {
+    "src": "retired-release, not reproducible",
+    "v": "10/99"
+  },
+  "shorter.retired.n": {
+    "src": "retired-release, not reproducible",
+    "v": 30
+  },
+  "shorter.retired.outOf": {
+    "src": "retired-release, not reproducible",
+    "v": 700
   }
- ]
 }

@@ -6,19 +6,20 @@
 % Origami benchmarks and systems for language models
 % ---------------------------------------------------------------
 
-@article{origamispace,
+@inproceedings{origamispace,
   author  = {Xu, R. and Lu, D. and Zhao, Z. and Tan, X. and Wang, X. and Yuan, S. and Chen, J. and Xu, Y.},
   title   = {{OrigamiSpace}: Benchmarking Multimodal {LLMs} in Multi-Step Spatial Reasoning with Mathematical Constraints},
-  journal = {arXiv preprint arXiv:2511.18450},
-  year    = {2025},
-  note    = {Preprint; the arXiv record carries no venue}
+  booktitle = {Advances in Neural Information Processing Systems ({NeurIPS})},
+  year      = {2025},
+  note      = {VERIFIED 2026-09-21: NeurIPS 2025 poster; also arXiv:2511.18450}
 }
 
 @article{gamibench,
   author  = {Spencer, R. and Yaari, R. and Vemavarapu, R. and Yang, J. and Ngo, S. and Sharma, U.},
   title   = {{GamiBench}: Evaluating Spatial Reasoning and {2D}-to-{3D} Planning Capabilities of {MLLMs} with Origami Folding Tasks},
   journal = {arXiv preprint arXiv:2512.22207},
-  year    = {2025}
+  year    = {2025},
+  note    = {VERIFIED 2026-09-21: 186 regular and 186 impossible patterns, six viewpoints, three VQA tasks, VC and IFSR metrics}
 }
 
 @article{learn2fold,
@@ -36,16 +37,20 @@
   note    = {Reconstructs folding processes from instructional video; built on PurelandFold}
 }
 
-@misc{origamibench,
-  title = {{OrigamiBench}},
-  note  = {TODO: full reference to be recovered before submission},
-  year  = {2026}
+@article{origamibench,
+  author  = {Agarwal, Naaisha and Wu, Yihan and Jian, Yichang and Hu, Yikuan and Mansoor, Nishad and Li, Mohan and Peng, Yifei and Dai, Wang-Zhou and Ding, Yao-Xiang and Sansone, Emanuele},
+  title   = {{OrigamiBench}: An Interactive Environment to Synthesize Flat-Foldable Origamis},
+  journal = {arXiv preprint arXiv:2603.13856},
+  year    = {2026},
+  note    = {VERIFIED 2026-09-21 against the arXiv record}
 }
 
-@misc{corigami,
-  title = {{COrigami}},
-  note  = {TODO: full reference to be recovered before submission},
-  year  = {2026}
+@article{corigami,
+  key     = {COrigami},
+  title   = {{COrigami}: An {AI} Pipeline for Co-Designing Flat-Foldable Visually Recognisable Origami},
+  journal = {arXiv preprint arXiv:2606.26299},
+  year    = {2026},
+  note    = {TODO: author list not yet verified against the arXiv record}
 }
 
 % ---------------------------------------------------------------
@@ -95,12 +100,14 @@
 }
 
 @article{mixed-orthogonal,
+  key     = {Simple Folding of Mixed Orthogonal CPs},
   title   = {Complexity of Simple Folding of Mixed Orthogonal Crease Patterns},
   journal = {arXiv preprint arXiv:2306.00702},
   year    = {2023}
 }
 
 @article{turing,
+  key     = {Flat Origami is Turing Complete},
   title   = {Flat Origami is {T}uring Complete},
   journal = {arXiv preprint arXiv:2309.07932},
   year    = {2023}
@@ -121,12 +128,14 @@
 }
 
 @inproceedings{layer-algebra,
+  key     = {Layer Ordering Constraints},
   title     = {An Algebraic Approach to Layer Ordering Constraints for Origami Flat-Foldability},
   booktitle = {Origami$^8$},
   year      = {2026}
 }
 
 @article{flat-folding-graphs,
+  key     = {Graphs of Origami Flat Foldings},
   title   = {Realization and Connectivity of the Graphs of Origami Flat Foldings},
   journal = {arXiv preprint arXiv:1808.06013},
   year    = {2018}
@@ -144,6 +153,7 @@
 }
 
 @misc{creasy,
+  key     = {Creasy},
   title = {{Creasy}},
   note  = {Open-source crease-pattern-to-sequence implementation, Java, GPL-3.0, unmaintained since 2022. \url{https://github.com/xkevio/Creasy}},
   year  = {2022}
@@ -154,6 +164,8 @@
 % ---------------------------------------------------------------
 
 @misc{oeis-a000136,
+  author = {{OEIS Foundation Inc.}},
+  year   = {2026},
   title = {The On-Line Encyclopedia of Integer Sequences, {A000136}: Number of Ways of Folding a Strip of $n$ Labeled Stamps},
   note  = {See also A001011, A001416}
 }
@@ -182,6 +194,7 @@
 }
 
 @article{meanders,
+  key     = {Foldings and Meanders},
   title   = {Foldings and Meanders},
   journal = {arXiv preprint arXiv:1302.2025},
   year    = {2013}
@@ -192,12 +205,14 @@
 % ---------------------------------------------------------------
 
 @article{spatial-survey,
+  key     = {Spatial Reasoning in MLLMs},
   title   = {Spatial Reasoning in {MLLMs}: A Survey},
   journal = {arXiv preprint arXiv:2511.15722},
   year    = {2025}
 }
 
 @inproceedings{vot,
+  key     = {Visualization-of-Thought},
   title     = {Mind's Eye of {LLM}s: Visualization-of-Thought Elicits Spatial Reasoning in Large Language Models},
   booktitle = {Advances in Neural Information Processing Systems ({NeurIPS})},
   note      = {arXiv:2404.03622},
@@ -209,11 +224,15 @@
 % ---------------------------------------------------------------
 
 @misc{flatfolder,
+  year    = {2024},
+  key     = {Flat-Folder},
   title = {{Flat-Folder}},
   note  = {\url{https://github.com/origamimagiro/flat-folder}, MIT licence. Decides and enumerates flat-folded states}
 }
 
 @misc{fold-format,
+  year    = {2019},
+  key     = {FOLD file format},
   title = {The {FOLD} File Format},
   note  = {\url{https://github.com/edemaine/fold}}
 }
@@ -225,6 +244,8 @@
 }
 
 @misc{purelandfold,
+  year    = {2026},
+  key     = {PurelandFold},
   title = {{PurelandFold}},
   note  = {\url{https://huggingface.co/datasets/mayaweiz/PurelandFold}, CC-BY-4.0. 27 sequences, 337 frames}
 }
@@ -234,13 +255,25 @@
 % ---------------------------------------------------------------
 
 @article{spin-model,
+  key     = {Spin Model for Flat-Foldability},
   title   = {A Spin Model for Global Flat-Foldability of Random Origami},
   journal = {arXiv preprint arXiv:2403.07306},
   year    = {2024}
 }
 
 @article{random-locally,
+  key     = {Random Locally Flat-Foldable Origami},
   title   = {On Random Locally Flat-Foldable Origami},
   journal = {arXiv preprint arXiv:2502.04279},
   year    = {2025}
+}
+
+@article{alphago,
+  author  = {Silver, David and Huang, Aja and Maddison, Chris J. and Guez, Arthur and Sifre, Laurent and van den Driessche, George and Schrittwieser, Julian and Antonoglou, Ioannis and Panneershelvam, Veda and Lanctot, Marc and Dieleman, Sander and Grewe, Dominik and Nham, John and Kalchbrenner, Nal and Sutskever, Ilya and Lillicrap, Timothy and Leach, Madeleine and Kavukcuoglu, Koray and Graepel, Thore and Hassabis, Demis},
+  title   = {Mastering the Game of {Go} with Deep Neural Networks and Tree Search},
+  journal = {Nature},
+  volume  = {529},
+  number  = {7587},
+  pages   = {484--489},
+  year    = {2016}
 }
