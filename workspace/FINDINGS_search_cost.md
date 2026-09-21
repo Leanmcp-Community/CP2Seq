@@ -385,12 +385,68 @@ bash workspace/compare_action_space.sh
 It refuses to start while anything else that measures time is running.
 它在有其它计时任务运行时会拒绝启动。
 
-Note also that restricting is **complete with respect to this benchmark**: every reference
-solution is all-layers, so a restricted search still contains a path to every target. It can
-only lose alternative routes, never the known one.
+### Completeness is not fairness — read the ratios narrowly
 
-另外，这个限制对本基准是**完备的**：每个参考解都是全层折叠，
-所以限制后的搜索仍然包含通往每个目标的路径。它只可能丢掉别的替代路线，不会丢掉已知那条。
+### 完备 ≠ 公平——上表的比值只能窄着读
+
+Restricting is **complete** with respect to this corpus: every reference solution is
+whole-stack, so a restricted search still contains a path to every target. It is **not fair**.
+Telling the search "you only need whole-stack folds" is a fact about the solution that the
+model is not told; the model gets `any` and has to find its way inside the wider space. So
+the numbers above are not "search reaches mid", they are "**search reaches mid when handed a
+structural hint the model does not have**".
+
+限制对本语料是**完备的**：每个参考解都是全层折叠，所以限制后的搜索仍然包含通往每个目标的路径。
+但它**不公平**。告诉搜索「你只需要全层折叠」是一条关于答案的信息，而模型没有被告知这一点——
+模型拿到的是 `any`，得自己在更宽的空间里摸索。所以上表不是「搜索够得着 mid」，
+而是**「搜索在拿到模型没有的结构性提示之后够得着 mid」**。
+
+That corrects this section's own first draft, which treated the restricted run as overturning
+§6.2. It does not, on its own. The defensible statement is a pair of conditionals:
+
+这一点修正了本节初稿的说法——它当时把限制后的运行当成了对 §6.2 的推翻。**单凭它并不能推翻。**
+站得住的表述是一对条件句：
+
+| both arms get / 两臂都用 | conclusion / 结论 |
+| --- | --- |
+| `any` | mid is out of search's reach, §6.2 **stands** — but the action space is far wider than the corpus needs / mid 搜索够不着，§6.2 **成立**，但动作空间远宽于语料所需 |
+| `all` | mid is within reach, §6.2 fails — but the task is now easier for the model too, and it is a different benchmark / mid 够得着，§6.2 不成立，但模型那边也同时变简单了，这是另一个基准 |
+
+The one configuration that cannot be defended is the arms disagreeing. What the measurement
+establishes on its own is narrower and still worth having: **on this corpus the wider action
+space costs 3–87× in search time and raises `b` on every sample.**
+
+唯一无法辩护的配置是两臂不一致。这组测量本身确立的结论更窄，但仍然成立：
+**在本语料上，更宽的动作空间使搜索时间增加 3–87 倍，并且在每个样本上都抬高了 `b`。**
+
+### The missing experiment: this corpus cannot evaluate `any` at all
+
+### 缺失的实验：本语料根本无法评估 `any`
+
+A corpus whose reference solutions never need partial folds can only ever measure what
+partial folds **cost**, never what they **buy**. The outcome is decided by the corpus, not by
+the parameter. `any` exists for the `some-*` sets, where about a third of reference folds are
+partial and restricting to `all` should make them outright unsolvable — and **no experiment
+has ever run there.**
+
+一个参考解从不需要部分折叠的语料，只能测出部分折叠的**成本**，永远测不出它的**收益**。
+结论是被语料决定的，不是被参数决定的。`any` 是为 `some-*` 那组存在的——
+那里约三分之一的参考折叠是部分折叠，限制成 `all` 应当直接导致无解——**而从来没有实验跑在那里。**
+
+|  | `all-layers` corpus | `some-*` corpora |
+| --- | --- | --- |
+| search with `any` | measured: expensive / 已测：贵 | **not run** / **没跑** |
+| search with `all` | measured: fast, but hinted / 已测：快，但有提示 | expected: unsolvable / 预期：无解 |
+
+The bottom-right cell is the one that matters: it is what would show `any` to be **necessary**
+rather than wasteful, and it is cheap — those corpora are only depth 3 to 6.
+
+右下角那格才是关键：**它是证明 `any` 是必需而非浪费的那个实验**，而且很便宜——那些语料深度只有 3 到 6。
+
+```sh
+CORPUS_DIR=workspace/corpus/out/release/some-verified-d3 \
+  node workspace/search_baseline_stateful.mjs --selection all --seconds 30 <sample-ids>
+```
 
 ---
 
@@ -400,16 +456,19 @@ only lose alternative routes, never the known one.
    in seconds to minutes. It does not measure origami reasoning.
    **不要把 easy 当主结果。** 有效底数 4.1–5.4、深度 6.8，BFS 几秒到几分钟就解完，测不出模型推理。
 
-2. **Do not frame the result by tier at all.** §5b settles it: once the search uses the
-   action space the corpus actually uses, mid-0001 falls to half an hour and mid-0003 to a
-   day, so mid is not a tier where search is a fair foil either. And within `hard`, hard-0002
-   comes down to a day while hard-0001 stays at 10¹¹ years — a 24× spread inside one tier,
-   wider than the gap between tiers. The tier labels track reference depth, but cost is set
-   by the sample's own branching factor and line count.
-   **不要按 tier 来表述结果。** §5b 已经定论：一旦搜索使用语料真正使用的动作空间，
-   mid-0001 降到半小时、mid-0003 降到一天，所以 mid 也不是搜索够不着的层。
-   而 `hard` 内部，hard-0002 降到一天、hard-0001 仍是 10¹¹ 年——**同层内 24 倍的差距，比层间还大**。
-   tier 标签反映的是参考深度，但成本由样本自己的分支因子和线数决定。
+2. **Do not frame the result by tier at all.** This does not depend on §5b and survives
+   either action space. Under `any`, hard-0002 needs 26.8 days while hard-0001 needs
+   2.1 × 10¹³ years; under `all`, 1.0 day against 8.9 × 10¹¹ years. Either way the spread
+   **inside** the hard tier is wider than the gap between tiers. The labels track reference
+   depth; cost is set by each sample's own branching factor and line count.
+   **不要按 tier 来表述结果。** 这一条不依赖 §5b，在两种动作空间下都成立。
+   在 `any` 下 hard-0002 要 26.8 天而 hard-0001 要 2.1×10¹³ 年；
+   在 `all` 下是 1.0 天对 8.9×10¹¹ 年。**无论哪种配置，hard 层内部的差距都比层间的差距大。**
+   tier 标签反映的是参考深度，成本由样本自己的分支因子和线数决定。
+
+   Whether **mid** is a tier search can reach is a separate question and is **not settled** —
+   it depends on which action space both arms are given. See §5b.
+   **mid 是不是搜索够得着的层是另一个问题，目前未定论**——取决于两臂使用哪个动作空间。见 §5b。
 
    Report against measured `b` per sample. The samples where search is genuinely out of
    reach exist — hard-0001 is one — but they have to be identified by measurement, not by
@@ -484,6 +543,11 @@ extrapolation. **Quote §3's number in the text and treat the curve as the shape
 
 ## 8. Not yet measured / 尚未测量
 
+- **The `some-*` corpora, with either selection filter.** This is now the most important gap:
+  the all-layers corpus can measure what partial folds cost but never what they buy, so it
+  cannot evaluate the `any` action space at all. See §5b.
+  **`some-*` 语料，两种 selection 都要跑。** 这是目前最重要的缺口：all-layers 语料只能测出
+  部分折叠的成本、测不出收益，所以它根本无法评估 `any` 这个动作空间。见 §5b。
 - `hard-0043` (24448 edges, 380 lines) — the extreme point, never profiled to completion.
   Corroboration for §2, not a load-bearing gap.
   `hard-0043`（24448 条边、380 条线）——极端点，从未剖析完成。是 §2 的佐证，不是承重缺口。
