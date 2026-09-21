@@ -735,6 +735,41 @@ extrapolation. **Quote §3's number in the text and treat the curve as the shape
 
 ---
 
+## 6b. Decided: both arms restricted on this corpus / 已决定：本语料两臂都关掉部分折
+
+**Both arms now use whole-stack folds only on `release/all-layers`, and the wide action space
+on the `some-*` corpora.** The default follows `CORPUS_DIR` in `_common.sh` and `--corpus` in
+`deterministic_fold_loop.py`, by the same rule in both, so the two cannot diverge by accident.
+`ACTION_SPACE` and `--selection` override it for a one-off.
+
+**两臂现在在 `release/all-layers` 上都只用全层折，在 `some-*` 语料上都用宽动作空间。**
+默认值由 `_common.sh` 的 `CORPUS_DIR` 和 `deterministic_fold_loop.py` 的 `--corpus` 推出，
+两边用同一条规则，所以不会意外分叉。要临时改用 `ACTION_SPACE` / `--selection`。
+
+Why restricted: not one of the 4180 reference folds on this corpus is partial (§5b), and
+restricting raises search throughput 1.7-3.5×, lowers branching 0.2-1.3, reaches 1-3 levels
+deeper and solves one more mid sample (§5c). Why corpus-dependent: on `some-*`, 14% of
+samples at depth 3 and 34% at depth 6 cannot be solved without partial folds (§5b).
+
+为什么关：本语料 4180 条参考折叠没有一条是部分折（§5b），而关掉之后搜索吞吐提升 1.7-3.5 倍、
+分支因子降 0.2-1.3、多搜 1-3 层、多解出一个 mid 样本（§5c）。
+为什么跟着语料走：在 `some-*` 上，深度 3 有 14%、深度 6 有 34% 的样本没有部分折就解不出来。
+
+**Two consequences to state in the paper / 论文里要写明的两点:**
+
+1. **The task is easier than it was.** A smaller action space is a smaller problem, for the
+   model as much as for the search. Runs before this change are not comparable to runs after
+   it; `result.json` records `action_space` on both arms so the two can be told apart.
+   **题目比原来简单了。** 动作空间变小对模型和搜索都是变简单。
+   改动前后的运行不可比；两臂的 `result.json` 都记录 `action_space`，可以区分。
+2. **Restricting one arm only would have been worse than restricting neither.** It tells that
+   arm a fact about the solution — that whole-stack folds suffice — which the other has not
+   been told, and the comparison then measures the setting instead of the solver.
+   **只关一边比两边都不关更糟。** 那等于告诉其中一臂一条关于答案的信息（全层折就够了），
+   而另一臂不知道，比出来的就是设定而不是求解能力。
+
+---
+
 ## 7a. Keep the goal test as it is / 判卷标准保持不变
 
 A backward search needs the target as an engine state, which means knowing which region of
