@@ -735,6 +735,62 @@ extrapolation. **Quote §3's number in the text and treat the curve as the shape
 
 ---
 
+## 7a. Keep the goal test as it is / 判卷标准保持不变
+
+A backward search needs the target as an engine state, which means knowing which region of
+the flat sheet each layer is — its **provenance**. That field can be backfilled from the
+existing corpus without regenerating it (`backfill_target_provenance.mjs`), which raises a
+question that has to be answered on purpose rather than by default: **should the goal test
+also require provenance to match?**
+
+倒向搜索需要把目标当成引擎状态，也就是要知道每一层是纸上的哪一块——它的 **provenance**。
+这个字段可以从现有语料回填、不用重新生成（`backfill_target_provenance.mjs`），
+于是引出一个必须**有意识回答**而不是默认掉的问题：**判卷是否也要求用纸一致？**
+
+Measured on the nine instances search has solved, comparing each found solution against the
+reference, at three levels of strictness:
+
+在搜索已解出的九个实例上实测，把找到的解和参考解在三个严格度上比较：
+
+| test / 判据 | agrees / 相同 | what it would cost / 代价 |
+| --- | --- | --- |
+| `strictTerminalMatch` (no rigid motion) | **0/9** | rejects every solve — a model rotated 90° is the same model |
+| sheet regions used, as a set / 用到的纸块集合 | **9/9** | nothing |
+| full provenance, turnover allowed / 完整 provenance（允许翻面） | **7/9** | **rejects 2 of 9** |
+
+So tightening to provenance costs about 22%, less than feared. **The problem is which 22%:**
+
+所以收紧到 provenance 的代价约 22%，比担心的小。**问题在于砍掉的是哪 22%：**
+
+- **`easy-0007`** — solved in **7 folds where the reference takes 8**. Under a
+  provenance-strict test, a solution *better than the reference* is marked wrong.
+  **`easy-0007`** —— **7 步解出，而参考解要 8 步**。在 provenance 严格判定下，
+  一个**比标准答案更好的解**会被判为错误。
+- **`mid-0004`** — the same sheet regions in a different stacking order: a genuinely
+  different, equally valid way to fold the same shape.
+  **`mid-0004`** —— 同样的纸块、不同的叠法：另一种同样有效的折法。
+
+**Decision: keep the goal test as it is (option A).** Not because the cost is large, but
+because it falls on exactly the behaviour the benchmark should reward. An origami shape has
+many foldings; making the reference sequence the only correct one turns the task from "can
+it be folded" into "can this particular sequence be reproduced".
+
+**决定：判卷标准不变（方案 A）。** 不是因为代价大，而是因为代价**正好落在基准应当奖励的行为上**。
+一个折纸形状有多种折法，把参考解定为唯一正确答案，测的就从「能不能折出来」
+变成了「能不能复现这一条序列」。
+
+**Backward search does not need the tightening.** It needs the provenance *field* as a
+starting point, with the goal test untouched. The cost is that a backward search seeded from
+one target's provenance cannot reach the ~22% of solutions that use the paper differently —
+but it never returns a wrong one, the forward half still finds them, and in a bidirectional
+search either half suffices.
+
+**倒向搜索不需要收紧。** 它需要的是 provenance 这个**字段**当起点，判卷照旧。
+代价是从单一 provenance 出发的倒向搜索够不到那约 22% 用纸不同的解——
+但它不会给出错解，前向那一半照样能找到它们，而双向搜索里任一半找到就够了。
+
+---
+
 ## 7b. The corpus has no symmetry, and real origami does / 语料没有对称性，而真实折纸有
 
 Measured across **all 400 samples of `release/all-layers`: every crease pattern has a
