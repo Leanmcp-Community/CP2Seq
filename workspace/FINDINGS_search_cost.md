@@ -68,18 +68,31 @@ So the layer count, not the crease pattern, is what makes deep states expensive.
 
 ## 3. Projected time to reach each sample's reference depth
 
-| sample | b | g | b·g | BFS to reference depth |
-| --- | --- | --- | --- | --- |
-| easy-0003 | 2.71 | 1.49 | 4.04 | 1.7 hours |
-| easy-0108 | 2.71 | 2.04 | 5.53 | 9.2 days |
-| mid-0001 | 3.34 | 1.62 | 5.42 | 12 days |
-| mid-0030 | 3.34 | 1.69 | 5.65 | 9.6 years |
-| hard-0001 | 7.33 | 1.58 | 11.60 | 2.8 × 10¹² years |
+No extrapolation is needed for the layer count: the corpus states each sample's final folded
+form, so `stack_size` at the reference depth is a measured quantity. The cost of the last
+level is then `4 · lines · final_layers · µs_per_candidate`, and the total is `b^d` times it.
 
-**Caveat.** hard-0001's figure extrapolates `g` from depth ≤ 10 out to depth 19; real stacks
-may saturate, so treat it as an upper bound. hard-0001 also has 188 lines against a hard-tier
-median of 59, so it sits around the tier's 90th percentile; a typical hard sample is perhaps
-3× cheaper per node, which changes nothing that matters.
+| sample | b | final layers | one enumeration there | BFS to reference depth |
+| --- | --- | --- | --- | --- |
+| easy-0003 | 2.72 | 48 | 0.2 s | 1.5 hours |
+| easy-0108 | 2.72 | 512 | 36 s | 9.1 days |
+| mid-0001 | 3.15 | 128 | 1.9 s | 6.5 days |
+| mid-0030 | 3.15 | 512 | 59 s | 5.7 years |
+| hard-0001 | 7.05 | 3504 | 47 minutes | 1.2 × 10¹² years |
+
+**The saturation question is settled, and the answer is "somewhat".** For every sample
+profiled to its full depth, the geometric fit reproduced the corpus's final layer count
+exactly (48, 512, 128, 512). Only hard-0001 was truncated, at depth 10, and there the fit
+overshoots: extrapolating its measured 1.67× per fold to depth 19 predicts 16151 layers where
+the corpus has **3504**, a 4.6× overestimate. Its true growth over the whole sequence is
+1.537× per fold, so the stack does decelerate once the paper is thick.
+
+Correcting for it roughly halves the projection — 2.8 × 10¹² years becomes 1.2 × 10¹² — and
+changes nothing else. The figures in §7 should be read as the measured-stack column above.
+
+hard-0001 also has 188 lines against a hard-tier median of 59, so it sits near the tier's 90th
+percentile; a typical hard sample is perhaps 3× cheaper per node, which again changes nothing
+that matters.
 
 ## 4. Tier label does not predict cost
 
@@ -163,6 +176,11 @@ carry it in their header, so the two cannot be confused.
 ## 8. Not yet measured
 
 - `hard-0043` (24448 edges, 380 lines) — the extreme point, never profiled to completion.
-- Whether `stack_size` saturates at depth, which bounds the §3 extrapolation.
-- The 240s and 960s search budgets (the batch was interrupted); `b` and `g` are already
-  converged without them.
+  It would confirm that CP size stays a constant rather than a driver; §2 already supports
+  that from hard-0001 and the line-count distribution, so this is corroboration, not a
+  load-bearing gap.
+- The 960s search budget. `b` moved by less than 0.3 when 240s was added, so this would not
+  change a number.
+
+Resolved since first writing: whether `stack_size` saturates (§3 — it does, mildly, and the
+corpus's own final layer counts remove the extrapolation entirely), and the 240s budget.
