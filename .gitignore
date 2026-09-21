@@ -51,3 +51,7 @@ htmlcov/
 # Local viewer logs
 DHEERAJ_WORKSPACE/viewer/*.log
 
+
+# Provenance-backfilled corpus copies: regenerable from the originals by
+# workspace/backfill_target_provenance.mjs, and ~50 MB.
+workspace/corpus_provenance/
