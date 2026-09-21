@@ -1,0 +1,110 @@
+{
+  "results.attempts": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 1211
+  },
+  "results.claudesonnet5.n": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 5
+  },
+  "results.claudesonnet5.solvePct": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 0.0
+  },
+  "results.claudesonnet5.solved": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 0
+  },
+  "results.codexclichatgpt.n": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 1
+  },
+  "results.codexclichatgpt.solvePct": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 0.0
+  },
+  "results.codexclichatgpt.solved": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 0
+  },
+  "results.deterministicbfs.n": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 725
+  },
+  "results.deterministicbfs.solvePct": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 50.6
+  },
+  "results.deterministicbfs.solved": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 367
+  },
+  "results.gpt56luna.n": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 447
+  },
+  "results.gpt56luna.solvePct": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 14.1
+  },
+  "results.gpt56luna.solved": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 63
+  },
+  "results.gpt56sol.n": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 7
+  },
+  "results.gpt56sol.solvePct": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 0.0
+  },
+  "results.gpt56sol.solved": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 0
+  },
+  "results.gpt56terra.n": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 1
+  },
+  "results.gpt56terra.solvePct": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 0.0
+  },
+  "results.gpt56terra.solved": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 0
+  },
+  "results.gpt6astra.n": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 1
+  },
+  "results.gpt6astra.solvePct": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 100.0
+  },
+  "results.gpt6astra.solved": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 1
+  },
+  "results.runs": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 47
+  },
+  "results.samples": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 256
+  },
+  "results.unknown.n": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 24
+  },
+  "results.unknown.solvePct": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 0.0
+  },
+  "results.unknown.solved": {
+    "src": "derived: CODEX_HARNESS_TESTING/runs",
+    "v": 0
+  }
+}
