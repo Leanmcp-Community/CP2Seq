@@ -335,6 +335,18 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
             listed = browser.call("list_legal_folds", {"max_results": 8})
             if listed.get("ok"):
                 result["legal_folds_now"] = listed["enumeration"]
+        # The model almost never asks how it is doing against the target. Measured on the
+        # tier-3 arm: easy-0094 spent 73 turns and 49 folds and called compare_to_target ONCE;
+        # easy-0097 never called it at all; meanwhile both called list_legal_folds constantly.
+        # "What can I fold next" is the immediate question and "am I going the right way" is
+        # not, so the second one has to arrive unasked. Attaching it to every accepted fold
+        # costs no turn, exactly as legal_folds_now does on a rejection -- the change that took
+        # easy-0003 from 80 turns unsolved to 19 turns solved.
+        if (getattr(args, "compare_auto", False) and action["name"] == "add_fold"
+                and result.get("ok") and "comparison" not in result):
+            seen = browser.call("compare_to_target", {})
+            if seen.get("ok"):
+                result["comparison_now"] = seen["comparison"]
         # A dead end the model will not leave. When no legal fold exists, the ONLY useful move
         # is to back out, and a model that instead keeps proposing folds cannot recover: every
         # one of them is rejected by construction. easy-0003 spent turns 60-80 that way. Count
@@ -420,6 +432,9 @@ def main():
     parser.add_argument("--out", type=Path, default=HERE / "runs")
     parser.add_argument("--prompt", type=Path, default=HERE / "codex_fold_prompt.md")
     parser.add_argument("--codex-bin", default="codex")
+    parser.add_argument("--compare-auto", action="store_true",
+                        help="Attach the target comparison to every accepted add_fold, so the "
+                             "model gets it without spending a turn. Requires --compare-tier.")
     parser.add_argument("--compare-tier", type=int, choices=[0, 1, 2, 3], default=0,
                         help="Expose compare_to_target at this detail level. 0 off; 1 layer counts; "
                              "2 which layers disagree and how; 3 what each should be. Uses only the "
@@ -457,6 +472,8 @@ def main():
     args = parser.parse_args()
     if args.max_turns < 1 or not math.isfinite(args.timeout) or args.timeout <= 0:
         parser.error("Require max-turns > 0 and finite timeout > 0")
+    if args.compare_auto and not args.compare_tier:
+        parser.error("--compare-auto needs --compare-tier; there is nothing to attach at tier 0")
     if args.stuck_limit < 0 or args.cycle_limit < 0 or args.revisit_limit < 0:
         parser.error("Require stuck-limit, cycle-limit and revisit-limit >= 0")
     if args.max_retries < 0 or args.retry_wait <= 0 or args.retry_max_wait < args.retry_wait:
@@ -482,6 +499,9 @@ def main():
         args.prompt_text += "\n" + args.prompt_appendix.read_text()
     if args.compare_tier:
         args.prompt_text += "\n" + (HERE / "codex_fold_prompt_compare.md").read_text()
+    if args.compare_auto:
+        # Its own appendix so the plain compare arm's prompt stays byte-identical.
+        args.prompt_text += "\n" + (HERE / "codex_fold_prompt_compare_auto.md").read_text()
     for sample_id in args.samples:
         load_task(sample_id, args.corpus)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
