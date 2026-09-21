@@ -1,5 +1,9 @@
 # Figures
 
+`gen_figures.sh` drafts figures through the **Codex CLI** (`codex exec`), which uses Codex's
+built-in `image_gen` tool. **No `OPENAI_API_KEY` is needed.** A bare run drafts only figures 1 and
+4, the two that are conceptual; `--list` explains how the other four should really be made.
+
 > **All figures currently in the paper are DRAFT IMAGES.** Placeholders are generated with
 > OpenAI `gpt-image-2` via `gen_figures.sh` and serve only as tracing references. Every one will
 > be replaced with a human-authored figure before submission, and this is disclosed in the

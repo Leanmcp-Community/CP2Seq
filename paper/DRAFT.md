@@ -1479,7 +1479,12 @@ middle of the paragraph.
 **Decision.** `paper/figures/gen_figures.sh` drives the imagegen CLI to produce tracing drafts.
 `--list` prints how each figure should actually be made; `--dry-run` needs no API key.
 
-**Why only two of six.** Figures 1 and 4 are conceptual and draft usefully from a prompt. The other
+**How it runs.** Each figure is one `codex exec` call. Codex uses its **built-in `image_gen` tool**,
+which is the imagegen skill's own preferred path and needs **no `OPENAI_API_KEY`** and no direct API
+access. The `scripts/image_gen.py` CLI fallback, which does require a key, is explicitly not used.
+
+**Why only two of six by default.** Figures 1 and 4 are conceptual and draft usefully from a prompt;
+a bare run drafts only those. `--all` overrides it. The other
 four carry data or geometry and must not ship as generated images: figures 2 and 5 should be built
 from renders that already exist in this repo (`initial/cp.png`, `final/top.png`,
 `final/exploded.png` for any sample), and figures 3 and 6 must be plotted from the release manifest
