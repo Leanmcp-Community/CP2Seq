@@ -102,17 +102,32 @@ if [ "${MODEL:-0}" = "1" ]; then
   echo "    Every other setting matches the baseline run's config.json."
   # One sample per invocation so a wall clock can be attributed to each, and so one sample
   # failing does not take the rest with it.
+  # The harness needs playwright, which lives in the project venv, not in system python.
+  # _common.sh resolves it the same way; running with `python3` fails on the first browser
+  # session, and the `|| true` below then reported a 0-second success.
+  fold_python="${FOLD_PYTHON:-$PWD/.venv/bin/python}"
+  if [ ! -x "$fold_python" ]; then
+    echo "Python environment not found: $fold_python. Set FOLD_PYTHON." >&2
+    exit 1
+  fi
   for s in $SAMPLES; do
     start=$(date +%s)
-    python3 CODEX_HARNESS_TESTING/codex_fold_loop.py \
+    "$fold_python" CODEX_HARNESS_TESTING/codex_fold_loop.py \
       --samples "$s" \
       --action-space all-layers \
       --tools legal-folds --compare-tier 3 --compare-auto \
       --model gpt-5.6-luna --reasoning-effort low --image-history all \
       --max-turns 80 --timeout 300 \
-      --out "$OUT/model-runs" > "$OUT/model-$s.log" 2>&1 || true
-    echo "$s $(( $(date +%s) - start ))" >> "$OUT/model-seconds.txt"
-    echo "  $s done in $(( $(date +%s) - start ))s"
+      --out "$OUT/model-runs" > "$OUT/model-$s.log" 2>&1 && rc=0 || rc=$?
+    elapsed=$(( $(date +%s) - start ))
+    echo "$s $elapsed" >> "$OUT/model-seconds.txt"
+    if [ "$rc" -eq 0 ]; then
+      echo "  $s done in ${elapsed}s"
+    else
+      # Keep going -- one sample failing should not cost the others -- but say so, and show
+      # the reason, rather than printing a success line for a run that never started.
+      echo "  $s FAILED after ${elapsed}s (exit $rc): $(tail -3 "$OUT/model-$s.log" | tr -d "\n" | tail -c 160)"
+    fi
   done
   echo
 else
