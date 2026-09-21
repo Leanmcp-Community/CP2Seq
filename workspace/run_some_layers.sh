@@ -23,10 +23,15 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
+# A warning, not a stop. What this script reports is which samples each arm SOLVES, and a
+# solve is a solve whatever else the machine is doing. Only the per-sample seconds are
+# load-sensitive, and they are not the result here. (compare_action_space.sh does refuse,
+# because throughput is exactly what it compares.)
 if pgrep -f 'profile_enum_cost|search_baseline' > /dev/null; then
-  echo "Another measurement is running; solve counts are robust to load but timings are not:" >&2
-  pgrep -fl 'profile_enum_cost|search_baseline' >&2
-  exit 1
+  echo "note: another measurement is running. Solve counts are unaffected; the timings" >&2
+  echo "      printed per sample are not comparable across runs." >&2
+  pgrep -fl 'profile_enum_cost|search_baseline' | sed 's/^/      /' >&2
+  echo >&2
 fi
 
 CORPUS="${CORPUS:-some-verified-d3}"
