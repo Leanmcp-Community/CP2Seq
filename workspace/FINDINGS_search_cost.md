@@ -474,15 +474,76 @@ has ever run there.**
 | search with `any` | measured: expensive / 已测：贵 | **not run** / **没跑** |
 | search with `all` | measured: fast, but hinted / 已测：快，但有提示 | expected: unsolvable / 预期：无解 |
 
-The bottom-right cell is the one that matters: it is what would show `any` to be **necessary**
-rather than wasteful, and it is cheap — those corpora are only depth 3 to 6.
+### Measured on some-verified-d3: `any` is necessary / 已实测：`any` 是必需的
 
-右下角那格才是关键：**它是证明 `any` 是必需而非浪费的那个实验**，而且很便宜——那些语料深度只有 3 到 6。
+All 50 samples, 30 s each, both arms (`bash workspace/run_some_layers.sh`):
+
+50 个样本全跑，每个 30 秒，两臂对比：
+
+```
+any solved 50 of 50
+all solved 43 of 50           ← 7 samples need partial folds
+reference uses a partial fold in 37 of 50
+```
+
+**Both halves of the obvious argument are wrong, and the truth is in between.**
+
+**「显然需要」和「显然不需要」都不对，真相在中间。**
+
+- It is *not* the case that a partial-fold instance obviously requires partial folds. The
+  goal test is `terminalMatch` — the same folded **form**, not the same sequence — so an
+  all-layers route to the same shape may exist. It usually does: of the 37 samples whose
+  reference uses a partial fold, **30 are solved by whole-stack folds alone**. `layers-0001`
+  is a worked example: its reference is `all / bottom:1 / all`, and a three-step all-layers
+  sequence reaches the identical 5-layer target, verified by replaying from a clean session.
+
+  **「部分折实例显然需要部分折」不成立。** 判定标准是 `terminalMatch`——同一个折叠**形态**，
+  而不是同一串步骤——所以可能存在只用全层折到达同一形态的路线。而且通常存在：
+  参考解用了部分折的 37 个样本里，**30 个能被纯全层折解出**。`layers-0001` 是个实例：
+  参考解是 `all / bottom:1 / all`，而一条三步全层折序列到达了完全相同的 5 层目标，
+  从干净会话重放验证过。
+
+- But 7 of 50 genuinely cannot be solved without them, and all 7 have a reference that uses
+  one. **On this corpus the wide action space is necessary, not merely expensive.**
+
+  但 50 个里有 7 个确实没它就解不出来，而且这 7 个的参考解全都用了部分折。
+  **在这个语料上，宽动作空间是必需的，不只是贵。**
+
+The seven cannot be picked out by the shape of their reference sequence: `all / bottom:1 /
+all` appears in both groups. Only search distinguishes them.
+
+这 7 个无法从参考序列的形状认出来——`all / bottom:1 / all` 在两组里都出现。只有搜索能分辨。
+
+**So the conclusion is "right tool, wrong corpus".** `any` earns its cost where reference
+solutions need partial folds and is pure overhead where none do. The defect is that the
+harness applies one setting to both, and that setting is never chosen deliberately.
+
+**所以结论是「工具是对的，用错了语料」。** `any` 在参考解需要部分折的地方值回成本，
+在一条都不需要的地方是纯开销。缺陷在于 harness 对两者用同一个设定，而这个设定从未被有意识地选择过。
+
+| corpus | reference folds that are partial | verdict |
+| --- | --- | --- |
+| `release/all-layers` (every experiment) | 0 of 4180 | `any` costs 3–87× and buys nothing |
+| `some-verified-d3` | 51 of 150 | `any` needed for 7 of 50 samples |
+
+Still open: whether the necessary fraction rises with depth. d3 allows only three folds, so
+there is a lot of room to route around a partial fold; `some-generated-d6` has six.
+
+仍未决：必需的比例是否随深度上升。d3 只有三折，绕开部分折的余地很大；`some-generated-d6` 有六折。
 
 ```sh
-CORPUS_DIR=workspace/corpus/out/release/some-verified-d3 \
-  node workspace/search_baseline_stateful.mjs --selection all --seconds 30 <sample-ids>
+CORPUS=some-generated-d6 bash workspace/run_some_layers.sh
 ```
+
+### A separate problem for the corpus itself / 语料本身的另一个问题
+
+If 30 of 37 "partial fold" instances are solvable without a partial fold, then the corpus is
+not testing partial-fold reasoning on those 30 either: a model could ignore the partial-fold
+action entirely and still score. That is a note for whoever generated the corpus, and it is
+independent of what the harness should enable.
+
+如果 37 个「部分折」实例里有 30 个不用部分折也能解，那语料在那 30 个上**也没有在测试部分折推理**——
+模型可以完全忽略这个动作照样拿分。这一条是给生成语料的人的，和 harness 该开什么是两回事。
 
 ---
 
@@ -579,11 +640,11 @@ extrapolation. **Quote §3's number in the text and treat the curve as the shape
 
 ## 8. Not yet measured / 尚未测量
 
-- **The `some-*` corpora, with either selection filter.** This is now the most important gap:
-  the all-layers corpus can measure what partial folds cost but never what they buy, so it
-  cannot evaluate the `any` action space at all. See §5b.
-  **`some-*` 语料，两种 selection 都要跑。** 这是目前最重要的缺口：all-layers 语料只能测出
-  部分折叠的成本、测不出收益，所以它根本无法评估 `any` 这个动作空间。见 §5b。
+- **Whether the partial-fold-necessary fraction rises with depth.** Measured at depth 3:
+  7 of 50. `some-generated-d6` has six folds and more room for a partial fold to be
+  unavoidable. See §5b.
+  **必需部分折的比例是否随深度上升。** 深度 3 实测是 50 个里 7 个；
+  `some-generated-d6` 有六折，部分折无法绕开的余地更大。见 §5b。
 - The 960s search budget. `b` moved by less than 0.3 when 240s was added.
   960 秒那档搜索预算。加入 240s 时 `b` 变化小于 0.3，跑它换不来会变的数字。
 
