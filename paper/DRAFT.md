@@ -79,8 +79,8 @@ own, so proposing, pruning and backtracking stay with the model.
 
 Samples are generated under two action models taken from the simple folding literature and
 stratified along two axes, fold depth and coupling, where coupling is the number of layers a single
-fold cuts. Every sample rebuilds byte identically from its seed and is checked by tolerance free
-replay. Because one crease pattern admits many valid folded states, and because the recorded
+fold cuts. Every sample rebuilds byte identically from its seed and is checked by replay, tolerance free at
+the level of crease sets. Because one crease pattern admits many valid folded states, and because the recorded
 sequence is not guaranteed to be minimal, an answer is scored by replaying the proposed sequence
 rather than by step wise agreement with the stored one. The scoring protocol is solve rate at a
 fixed query budget, reported per difficulty stratum under two notions of equality, equality of
@@ -686,17 +686,50 @@ free, because the engine needs them to decide tearing at all.
 Two levels of equality are reported.
 
 **Level 1, crease sets.** An exact multiset comparison of maximal creased intervals, equal rather
-than overlapping, with no tolerance in the verdict.
+than overlapping, with no tolerance in the verdict. This level is genuinely tolerance-free: edges
+are clustered into lines first, so subdivision differences cannot register as disagreements, and
+what remains is a combinatorial comparison.
 
-**Level 2, folded states up to a declared group.** Because one crease pattern admits many valid
-terminal states, exact equality against the one stored state would mark correct answers wrong. The
-answer is not a tolerance but an equivalence: declare in advance which differences do not count,
-then demand exactness inside that. The group is the eight symmetries of the square together with
-an arbitrary translation. Translation is included because a fold can carry paper off the original
-square, so a folded state's position in the plane is an accident of the sequence. The four
-reflections additionally reverse the stack and flip every face's parity, because turning a model
-over does all three at once; applying a reflection to coordinates alone would compare a model
-against its mirror image and silently accept wrong answers.
+**Level 2, folded states up to a declared group of transforms.** Because one crease pattern admits
+many valid terminal states, exact equality against the one stored state would mark correct answers
+wrong. The answer is an equivalence: declare in advance which differences do not count, then demand
+equality inside that.
+
+**The transforms are quotiented out of every result reported in this paper.** The declared group is
+the full plane isometry group: **arbitrary translation, arbitrary rotation, and reflection**. One
+single isometry must carry every layer of the candidate onto its reference counterpart; a match is
+not accepted by transforming each layer independently.
+
+Each transform is in the group for a concrete reason rather than for generality.
+
+- **Translation.** A fold can carry paper off the original square, and which half of the sheet
+  travels decides where the stack lands. A folded model is the same model wherever it sits on the
+  table, so its position in the plane is an accident of the sequence.
+- **Rotation.** The same object produced by a sequence that worked around the square in a different
+  order arrives rotated. Rotations preserve both stack order and face parity, so they need no
+  further correction.
+- **Reflection, with two corrections.** A reflection represents turning the model over, and turning a
+  model over does three things at once: it mirrors the coordinates, **reverses the stack**, and
+  **flips every face's parity**. All three are applied together. Applying a reflection to coordinates
+  alone would compare a model against its mirror image and silently accept wrong answers, which is
+  the most dangerous failure a comparator of this kind can have.
+
+**Floating point is unavoidable once transforms are admitted, and the paper states its tolerance
+rather than claiming not to have one.** A rotation by an angle that is not a multiple of a right
+angle produces irrational coordinates, so candidate and reference vertices agree only to within
+floating-point representation, and comparing them for bitwise equality would reject correct answers.
+The comparator therefore matches polygons under a tolerance of **2×10⁻⁶** in the plane, with
+degenerate-vertex cleanup at 10⁻⁷ and a collinearity threshold of 10⁻⁹. These are the values in
+`terminal_match.mjs` and they are reported in every result record, so a reader can see what was
+used rather than infer it.
+
+⚠️ **This qualifies a claim made elsewhere in the paper and the qualification belongs here.** Level 1
+crease-set comparison is genuinely tolerance-free: it compares maximal creased intervals as
+multisets after clustering edges into lines, and the verdict involves no floating-point threshold.
+Level 2 is not tolerance-free and cannot be, because it admits rotations. The honest formulation is
+that the *verifier* is exact, since legality is decided combinatorially by the engine, while
+*terminal-state equality under transforms* carries a stated numerical tolerance. Any sentence in
+this draft that calls the whole pipeline tolerance-free is wrong and must be narrowed to Level 1.
 
 ⚠️ The layer-order variants that a flat-foldability solver reports as equally valid are
 deliberately *not* in the group. Those are not symmetries of one state; they are different states
@@ -860,6 +893,23 @@ models and across tiers at once would confound the two.]`
 **Protocol.** Query budget, number of repeats and seeds are fixed before the first run and reported
 with the results. Median and spread across repeats are reported, never a single run, because
 sampling is not deterministic and one run is not a measurement.
+
+**Transforms are applied in every reported result.** Every solve rate in §10 is computed after
+quotienting out the plane isometry group of §6.2: translation, rotation and reflection, with
+reflections reversing the stack and flipping face parity. A candidate is counted correct if one
+single isometry carries every layer onto its reference counterpart. This is not an optional
+post-hoc leniency applied to borderline cases; it is part of the definition of a correct answer,
+and it is applied identically to every arm, every model and every baseline. Turning it off would
+mark correct answers wrong, because where a folded model lands on the table is an accident of which
+half of the sheet travelled.
+
+**Matching under transforms requires a floating-point tolerance, and it is stated.** Admitting
+arbitrary rotation means candidate and reference coordinates agree only to within floating-point
+representation, so the comparator matches polygons within **2×10⁻⁶**, cleans degenerate vertices at
+10⁻⁷ and treats vertices as collinear below 10⁻⁹. Every result record carries the tolerance it was
+scored under, so the value is visible in the released runs rather than buried in a constant. The
+engine's legality decisions are combinatorial and involve no tolerance; the numerical threshold
+applies only to terminal-state equality under transforms.
 
 **Error verbosity is itself a variable.** The richer a refusal, the more of the reasoning the
 environment performs rather than the model; at the limit a message that names the fix has solved the
@@ -1317,3 +1367,42 @@ the paper before submission.
 - **Still unverified:** the *Vision Language Models Are Blind* star example of §1, and the author
   lists of thirteen theory and tools entries, which now carry sort keys so the bibliography renders
   but still need real authors.
+
+### 16.12 Two claims about exactness were narrowed to what the code does
+
+**Decision.** The paper no longer calls the pipeline tolerance-free, and no longer describes the
+Level 2 group as the eight symmetries of the square plus a translation.
+
+**Why.** Neither matched `DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/terminal_match.mjs`. Two mismatches:
+
+1. **The group is larger than claimed.** The comparator quotients out the full plane isometry group,
+   including *arbitrary* rotation, not the eight symmetries of the square. Its own header says so:
+   "terminalMatch quotients the plane isometry group out."
+2. **There is a tolerance.** `MATCH_TOL = 2e-6`, with degenerate-vertex cleanup at `1e-7` and a
+   collinearity threshold at `1e-9`. The value is recorded in every result the harness writes:
+   1,187 of 1,211 attempts across the saved runs carry `"tolerance": 2e-06`.
+
+Admitting arbitrary rotation makes a tolerance unavoidable, because a rotation by an angle that is
+not a multiple of a right angle produces irrational coordinates. So the tolerance is not sloppiness;
+it is the necessary consequence of a design choice the paper wanted. What was wrong was the claim,
+not the code.
+
+The formulation now used: the **verifier** is exact, because legality is decided combinatorially by
+the engine and involves no threshold; **terminal-state equality under transforms** carries a stated
+numerical tolerance. Level 1 crease-set comparison remains genuinely tolerance-free.
+
+Claiming an exactness the implementation does not have is the first thing a reviewer with the
+repository checks, and in a paper whose contribution is the trustworthiness of its judge it would be
+the most damaging possible thing to get wrong.
+
+### 16.13 Figures have written briefs
+
+**Decision.** `paper/figures/figure1.md` through `figure6.md`, one per figure, each naming where it
+appears, the argument it carries, what it must show, **what it must not show**, how to tell whether
+the drawing worked, and a draft caption. `paper/figures/README.md` indexes them.
+
+**Why.** Three of the six figures can be drawn wrongly in ways that would contradict the paper's own
+claims, and the briefs say so explicitly. Figure 1 must not imply legal moves are rare, which §3.3
+exists to forbid. Figure 4 must draw the environment and the verifier as one box, because that is
+the claim. Figure 6 must not hide a baseline crossing. A figure brief that only says what to draw
+would let all three happen.
