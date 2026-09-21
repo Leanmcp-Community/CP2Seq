@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { inflateSync } from 'node:zlib';
-import { planarize } from '../../../workspace/corpus/planarize.mjs';
+import { planarize } from '../../workspace/corpus/planarize.mjs';
 import { FoldSession, parseAction, replay } from './engine.mjs';
 import { render, WIDTH, HEIGHT } from './render.mjs';
 import { payload, normalizeResponse, resolveProfile, request } from './api.mjs';
@@ -16,7 +16,7 @@ const cp = planarize([...sheet.map((P, i) => ({P, Q: sheet[(i + 1) % 4], assignm
 const half = {tool: 'apply_fold', angle_index: 2, offset: 0.5, move_positive: true, over: true};
 const finish = {tool: 'finish'};
 
-test('rejects invalid schema, partial folds, unknown tools and concatenated objects', () => {
+test('rejects invalid schema, arbitrary face subsets, unknown tools and concatenated objects', () => {
   for (const text of ['{}', '[]', '{"tool":"shell"}', JSON.stringify({...half, offset: '0.5'}),
     JSON.stringify({...half, moving_faces: [0]}), JSON.stringify({...half, angle_index: 4}), '{}{}']) {
     assert.throws(() => parseAction(text));

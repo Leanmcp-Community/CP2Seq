@@ -5,9 +5,9 @@
 // Which half of the sheet travels (move_positive) decides where the stack lands,
 // so a correct fold sequence routinely reproduces the reference object
 // translated, rotated or mirrored. terminalMatch quotients the plane isometry
-// group out: layer count, bottom-to-top order and per-layer parity must still
-// agree exactly, and one single isometry must carry every layer polygon onto its
-// reference counterpart.
+// group out. Rotations preserve stack order and parity; reflections represent
+// turning the object over, reversing the stack and flipping every face parity.
+// One single isometry must carry every layer onto its reference counterpart.
 
 const MATCH_TOL = 2e-6;
 
@@ -65,18 +65,19 @@ function isometry(a1, a2, b1, b2, mirror) {
 }
 
 export function terminalMatch(layers, target) {
-  if (layers.length !== target.length) return false;
-  if (layers.some((l, i) => l.par !== target[i].par)) return false;
-  const from = cleanPoly(layers[0].poly), onto = cleanPoly(target[0].poly);
-  if (from.length !== onto.length || from.length < 2) return false;
+  if (!layers.length || layers.length !== target.length) return false;
   // Every alignment of the first layer's vertex cycle, direct and mirrored,
   // proposes one isometry; a proposal counts only if it carries all layers.
   for (const mirror of [false, true]) {
+    const aligned = mirror ? [...layers].reverse().map(l => ({...l, par: 1 - l.par})) : layers;
+    if (aligned.some((l, i) => l.par !== target[i].par)) continue;
+    const from = cleanPoly(aligned[0].poly), onto = cleanPoly(target[0].poly);
+    if (from.length !== onto.length || from.length < 2) continue;
     for (let start = 0; start < onto.length; start++) {
       for (const sign of [1, -1]) {
         const b2 = onto[(start + sign + onto.length) % onto.length];
         const T = isometry(from[0], from[1], onto[start], b2, mirror);
-        if (T && layers.every((l, i) => samePolygon(l.poly.map(T), target[i].poly))) return true;
+        if (T && aligned.every((l, i) => samePolygon(l.poly.map(T), target[i].poly))) return true;
       }
     }
   }
@@ -89,4 +90,4 @@ export function framesMatch(candidateFrame, targetFrame) {
 
 export const TERMINAL_METRIC =
   'Polygon, parity and bottom-to-top layer equality under a single plane isometry ' +
-  '(translation, rotation or mirror); position and handedness are quotiented out';
+  '(arbitrary translation and rotation; reflections reverse stack order and flip every parity)';

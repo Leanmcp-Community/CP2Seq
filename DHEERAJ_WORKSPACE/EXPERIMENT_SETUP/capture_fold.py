@@ -92,8 +92,12 @@ class BrowserSession:
             self.server.server_close()
             self.thread.join(timeout=2)
 
-    def init(self, cp, target, size=512):
-        return self.page.evaluate("([cp, target, size]) => window.foldTools.init(cp, target, size)", [cp, target, size])
+    def init(self, cp, target, size=512, compare_tier=0):
+        # compare_tier defaults to 0 so every existing caller, the Tinker loop included, keeps
+        # its old behaviour: at 0 the comparison tool is absent from the session entirely.
+        return self.page.evaluate(
+            "([cp, target, size, tier]) => window.foldTools.init(cp, target, size, tier)",
+            [cp, target, size, compare_tier])
 
     def call(self, name, args=None):
         return self.page.evaluate("([name, args]) => window.foldTools.call(name, args)", [name, args or {}])
@@ -145,7 +149,12 @@ def main():
             if args.sequence:
                 seq = json.loads(args.sequence.read_text())
                 for fold in seq["folds"]:
-                    action = {k: fold[k] for k in ("angle_index", "offset", "move_positive", "over")}
+                    action = {k: fold[k] for k in ("angle_index", "angle_degrees", "offset",
+                              "move_positive", "over", "selection_mode", "layer_count") if k in fold}
+                    if "selection_mode" not in action and fold.get("selection"):
+                        action["selection_mode"] = fold["selection"]["mode"]
+                        if action["selection_mode"] != "all":
+                            action["layer_count"] = fold["selection"]["k"]
                     result = browser.call("add_fold", action)
                     if not result["ok"]:
                         raise ValueError(result)

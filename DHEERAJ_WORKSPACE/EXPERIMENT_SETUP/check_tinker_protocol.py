@@ -8,7 +8,11 @@ from tinker_cookbook.image_processing_utils import get_image_processor
 from tinker_cookbook.tokenizer_utils import get_tokenizer
 from image_assets import check_prompt_assets
 from tinker_describe_image import MODEL
-from tool_schemas import TOOLS
+from tool_schemas import tools_for
+
+# The Tinker condition keeps the original action set; the enumerator is a Codex-side
+# experiment for now, so it stays out until the Tinker loop grows the same flag. See TODO.md.
+TOOLS = tools_for("base")
 
 
 def main():

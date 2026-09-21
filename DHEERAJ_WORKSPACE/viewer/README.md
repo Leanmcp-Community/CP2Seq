@@ -1,7 +1,82 @@
 # Local origami run browser
 
-Two pages on one backend: **`/`** plays back saved searches, **`/corpus`** browses
-the generated dataset. Neither writes anything.
+## Sequence playback and verification workspace
+
+`/traces` now defaults to **Sequence playback**. Choose a run and example, then
+Play to follow Initial sheet → Thinking → Tool call → Result for every turn.
+The current paper stays on the left and the target on the right. Rejections
+preserve the displayed paper; remove/restore operations show the changed branch.
+Back/Next, Restart, the event slider, and pace controls let you inspect each event.
+Space toggles play/pause; arrow keys step events. Playback pauses when the tab is
+hidden. These are recorded decision phases, not token streaming or physical
+fold-motion animations. The target remains fixed throughout.
+
+Below the images, enable Thinking, Conversation, or Diagnostics independently;
+the default shows tools only. Full trace preserves the original detailed view.
+Choose Top, Oblique, Reverse, X-ray, or Exploded. Saved PNGs are preferred; missing
+views are drawn from saved geometry and labelled as such. No model rerun is
+needed. Only reasoning text actually saved by the model backend is available.
+
+`/verification` is a separate workspace, linked from every page. It contains
+nine fixtures covering three-of-four-leaf tearing, single-leaf tearing, a legal
+connected pair, impossible direction, off-target creases, different sequences
+with equivalent terminal states, rotation/translation/turnover, wrong stack
+order, and a legal arbitrary-angle crease. Play or scrub the candidate sequence;
+compare it with the target and inspect original-sheet connections. Check all
+cases compares actual results with explicit expectations, including expected
+rejections. Outcomes are not precomputed or presented as passing before a check.
+
+The verification workspace uses interactive Three.js scenes with OrbitControls,
+the same paper colours/lighting as the corpus viewer, and a continuous fold
+slider. Drag to orbit, scroll to zoom, and right-drag to pan. Play swings accepted
+folds around their crease using `swing` from the existing corpus playback module.
+The animation adapter uses before/after states supplied by the experiment engine;
+it does not simulate or score a different folding model. Rejected folds remain
+stationary and show a red proposed crease. Both candidate and target support 3D,
+exploded layers, top, and X-ray views, with speed and reset-camera controls.
+Original-sheet connections are also an interactive 3D view.
+
+The workspace imports the actual experiment `ToolSession`, `FoldSession`, and
+`evaluateSession`/`terminalMatch` modules via the source-asset route. It introduces
+no alternative verifier or scorer. Original-sheet diagrams highlight selected
+whole faces, not only the moving half-plane. The same engine limitations apply.
+The server remains read-only, and fixtures do not modify saved experiment runs.
+
+Restart the server for the new route, then hard-refresh:
+
+```sh
+bash run_server.sh --port 8001 --traces CODEX_HARNESS_TESTING/runs
+```
+
+Open http://127.0.0.1:8001/traces or http://127.0.0.1:8001/verification.
+
+To rescore saved accepted sequences, preview first and then apply:
+
+```sh
+node workspace/rescore_runs.mjs --dry-run
+node workspace/rescore_runs.mjs
+```
+
+Rescoring now replays `seq.json` against `cp.fold` with the live verifier, then
+uses the shared experiment evaluation against `target.fold`. A tearing/legality
+failure records its step and error and prevents a solved verdict. It recomputes
+CP matching instead of trusting the old flag. Rejected historical proposals are
+not part of the saved accepted sequence. The non-dry run updates result files
+and `workspace/RESCORE_REPORT.md`; it does not resample a model or alter images.
+
+Verification commands (not run by the assistant):
+
+```sh
+node --test DHEERAJ_WORKSPACE/viewer/test_trace_playback.mjs DHEERAJ_WORKSPACE/viewer/test_verification_cases.mjs
+node --test DHEERAJ_WORKSPACE/viewer/test_rescore_replay.mjs
+node --test DHEERAJ_WORKSPACE/viewer/test_verified_motion.mjs
+.venv/bin/python -m unittest discover -s DHEERAJ_WORKSPACE/viewer -p 'test_trace_store.py'
+.venv/bin/python DHEERAJ_WORKSPACE/viewer/test_browser_playback.py
+```
+
+Four pages share one backend: **`/`** plays saved searches, **`/corpus`** browses
+the dataset, **`/traces`** plays model conversations, and **`/verification`**
+exercises the experiment verifier and scorer. These pages do not write files.
 
 The Python backend lists saved runs directly from `DHEERAJ_WORKSPACE/exports`.
 The browser automatically loads the newest run and offers BFS/DFS selections.

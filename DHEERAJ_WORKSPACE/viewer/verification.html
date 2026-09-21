@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Origami · Verification workspace</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="traces.css">
+<link rel="stylesheet" href="verification.css">
+<script type="importmap">{"imports":{"three":"/source/DHEERAJ_WORKSPACE/viewer/vendor/three.module.js"}}</script>
+<body class="verification">
+<header><strong>Origami / Verification workspace</strong><nav>
+  <a href="/">Search playback</a> <a href="/corpus">Dataset</a>
+  <a href="/traces">Model traces</a> <a href="/verification" aria-current="page">Verification</a>
+</nav></header>
+<main class="verification-workspace">
+  <aside aria-label="Verification cases">
+    <h1>Check the scorer</h1>
+    <p class="note">Small cases with expected outcomes, using the experiment’s actual tools and scorer.</p>
+    <button id="check-all">Check all cases</button>
+    <p id="suite-status" role="status" class="note">Cases have not been checked yet.</p>
+    <div id="cases"></div>
+    <p class="note">No model calls. No saved experiment files are changed.</p>
+  </aside>
+  <article class="verification-content">
+    <p id="verification-error" role="alert" hidden></p>
+    <h2 id="case-title"></h2><p id="case-description"></p>
+    <div class="sequence-pair">
+      <figure class="sequence-picture"><figcaption id="current-caption">Candidate</figcaption><div id="candidate-view" class="paper-stage" aria-label="Interactive current candidate paper"></div></figure>
+      <figure class="sequence-picture"><figcaption>Reference target · final state</figcaption><div id="target-view" class="paper-stage" aria-label="Interactive target folded paper"></div></figure>
+    </div>
+    <div class="case-controls">
+      <button id="case-reset">↺ Reset</button><button id="case-prev">← Back</button>
+      <button id="case-play">▶ Play</button><button id="case-next">Next →</button><button id="case-finish">Run to end</button>
+      <button id="case-camera">Reset camera</button>
+      <label>Speed <select id="case-speed"><option value=".5">½×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label>
+      <label>View <select id="case-view"><option value="3d">3D paper</option><option value="exploded">Exploded layers</option><option value="top">Top</option><option value="xray">X-ray</option></select></label>
+    </div>
+    <input id="case-timeline" type="range" min="0" max="3" step="0.01" value="0" aria-label="Fold animation position">
+    <p class="note">Drag to orbit · scroll to zoom · right-drag to pan. Green marks the proposed crease; red marks a rejected crease. Rejected attempts never move the paper.</p>
+    <div id="case-steps" class="case-steps" aria-label="Candidate sequence steps"></div>
+    <p id="case-status" role="status"></p>
+    <div class="case-evidence">
+      <section><h3>Verifier and scorer</h3><div id="verdict"></div>
+        <p class="note">Checked with the same verifier and scorer as the experiments.</p>
+        <details><summary>Actual tool result</summary><pre id="case-result"></pre></details>
+        <details><summary>Actual evaluation</summary><pre id="case-evaluation"></pre></details>
+      </section>
+      <section><h3>Original sheet connections</h3><div id="sheet-view" class="paper-stage" aria-label="Interactive original sheet connections"></div>
+        <p class="note">Orange = selected run; blue = layers held still. Shared edges show paper connections before the attempted fold. Selection marks whole faces; only the chosen side of the crease moves. On rejection, this paper stays unchanged.</p>
+      </section>
+    </div>
+    <div class="case-evidence">
+      <section><h3>Reference sequence A</h3><pre id="reference-actions"></pre></section>
+      <section><h3>Candidate sequence B</h3><pre id="candidate-actions"></pre></section>
+    </div>
+    <p class="note">Flat, zero-thickness folds; no continuous collision simulation. Terminal comparison checks geometry, parity and layer order under a common rotation/translation or physical turnover. It does not distinguish original-sheet identities of otherwise identical layers.</p>
+  </article>
+</main>
+<script type="module" src="/source/DHEERAJ_WORKSPACE/viewer/verification.js"></script>
+</body></html>

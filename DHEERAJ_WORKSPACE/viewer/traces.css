@@ -3,6 +3,8 @@
    surfaces, #237c69 green, #d5d9d7 hairlines as the other two viewer pages. */
 
 body.traces { overflow: hidden; }
+body.traces [hidden] { display: none !important; }
+body.traces section { height: auto; }
 
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
@@ -198,6 +200,26 @@ body.sidebar-collapsed .sidebar {
 .badge.bad { background: #fae7e3; color: #812e25; }
 .row-item[aria-current="true"] .badge { background: rgba(255, 255, 255, .92); }
 
+/* Which action set a run used. Hover gives the full explanation via the title attribute. */
+.tool-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: help;
+  background: #eef1ec;
+  color: #7b8785;
+}
+.tool-mark.legal { background: #dce8f4; color: #1d4f7c; }
+.tool-mark.unknown { background: #f6ecd8; color: #7c5309; }
+.row-item[aria-current="true"] .tool-mark { background: rgba(255, 255, 255, .92); }
+
 .rail-footer { margin-top: 14px; }
 
 .artifact-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
@@ -256,6 +278,25 @@ body.traces .conversation {
   overflow-wrap: anywhere;
 }
 .conversation-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 11.5px; color: #63716f; }
+.trace-mode { display: flex; align-items: center; gap: 8px; margin: 0 0 0 auto; font-size: 12px; }
+.trace-mode select { padding: 4px 8px; font-size: 12px; }
+#sequence-stage { background: #f4f3ee; padding: 12px 20px 0; flex: 0 0 auto; }
+.sequence-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.sequence-picture { margin: 0; background: #fff; border: 1px solid #d5d9d7; border-radius: 9px; overflow: hidden; }
+.sequence-picture figcaption { padding: 7px 12px; font-size: 12px; font-weight: 600; border-bottom: 1px solid #eceae5; }
+.sequence-image { height: clamp(140px, 29vh, 340px); display: grid; place-items: center; overflow: hidden; }
+.sequence-image a { display: block; width: 100%; height: 100%; }
+.sequence-image img, .sequence-image canvas { display: block; width: 100%; height: 100%; object-fit: contain; }
+.sequence-image > .note { padding: 16px; text-align: center; }
+.sequence-picture > .note { margin: 0; padding: 4px 12px; font-size: 10px; }
+.sequence-status { min-height: 38px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 7px 0; font-size: 12px; }
+.sequence-status > span:last-child { color: #63716f; }
+.sequence-transport, .sequence-options { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; width: 100%; }
+.sequence-transport input[type=range] { flex: 1 1 140px; min-width: 80px; accent-color: #237c69; }
+.sequence-transport output { min-width: 160px; font-size: 11px; }
+.sequence-options label { display: inline-flex; align-items: center; gap: 5px; margin: 0; font-size: 12px; }
+.sequence-options input { accent-color: #237c69; }
+#sequence-play { background: #237c69; border-color: #237c69; color: white; }
 
 .conversation-toolbar {
   display: flex;
@@ -387,4 +428,15 @@ pre {
 @media (max-width: 620px) {
   body.traces header { gap: 10px; padding: 0 12px; }
   .bar-right .note { display: none; }
+  body.traces .turns-rail { flex-basis: 75px; width: 75px; }
+  #sequence-stage { padding: 8px 8px 0; }
+  .sequence-pair { gap: 6px; }
+  .sequence-picture figcaption { font-size: 10px; padding: 5px; }
+  .sequence-picture > .note { display: none; }
+  .sequence-image { height: 145px; }
+  .sequence-status { font-size: 10px; gap: 4px; }
+  .sequence-transport output { min-width: 0; }
+  .conversation-toolbar { padding: 6px 8px; }
+  .conversation-toolbar button { padding: 5px; font-size: 11px; }
+  .trace-mode { margin-left: 0; }
 }

@@ -13,7 +13,9 @@ REPO = VIEWER.parent.parent
 DEFAULT_EXPORTS = VIEWER.parent / "exports"
 DEFAULT_EXPERIMENTS = VIEWER.parent / "experiments"
 DEFAULT_CORPUS = REPO / "workspace" / "corpus" / "out" / "release"
-DEFAULT_TRACES = VIEWER.parent / "EXPERIMENT_SETUP" / "runs"
+# The Codex and Claude harness writes here; EXPERIMENT_SETUP/runs holds the older Tinker
+# runs and is still reachable with --traces.
+DEFAULT_TRACES = REPO / "CODEX_HARNESS_TESTING" / "runs"
 MAX_RUNS = 500
 MAX_SCAN_ENTRIES = 10000
 MAX_SCAN_DEPTH = 8
@@ -265,11 +267,29 @@ class Handler(SimpleHTTPRequestHandler):
                 return self.json_response(200, load_sample(self.server.corpus, sample))
             if request.path.startswith("/api/"):
                 return self.json_response(404, {"error": "Unknown API endpoint"})
+            # Serve the actual experiment modules to the verification workspace.
+            # Only source assets in these three trees are exposed, never run data.
+            if request.path.startswith("/source/"):
+                source = confined(REPO, unquote(request.path[len("/source/"):]))
+                allowed = (VIEWER, VIEWER.parent / "EXPERIMENT_SETUP", REPO / "workspace/corpus")
+                if source.suffix not in (".js", ".mjs") or not any(source.is_relative_to(p.resolve()) for p in allowed):
+                    return self.send_error(404)
+                if not source.is_file():
+                    return self.send_error(404)
+                raw = source.read_bytes()
+                self.send_response(200)
+                self.send_header("Content-Type", "text/javascript; charset=utf-8")
+                self.send_header("Content-Length", str(len(raw)))
+                self.end_headers()
+                self.wfile.write(raw)
+                return
             target = unquote(request.path).lstrip("/") or "index.html"
             if target in ("corpus", "corpus/"):
                 target, self.path = "corpus.html", "/corpus.html"
             if target in ("traces", "traces/"):
                 target, self.path = "traces.html", "/traces.html"
+            if target in ("verification", "verification/"):
+                target, self.path = "verification.html", "/verification.html"
             path = confined(VIEWER, target)
             if not path.is_file() or path.suffix not in (".html", ".js", ".mjs", ".css"):
                 return self.send_error(404)
@@ -288,7 +308,7 @@ def main():
     parser.add_argument("--corpus", type=Path, default=DEFAULT_CORPUS,
                         help="Dataset release folder shown under /corpus (read-only)")
     parser.add_argument("--traces", type=Path, default=DEFAULT_TRACES,
-                        help="Tinker runs folder shown under /traces (read-only)")
+                        help="Harness runs folder shown under /traces (read-only)")
     args = parser.parse_args()
     server = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)
     server.roots = ({"custom": args.exports.resolve()} if args.exports else {

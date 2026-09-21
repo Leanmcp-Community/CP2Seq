@@ -48,8 +48,12 @@ def list_traces(root):
             config = read_optional(directory / "config.json") or read_optional(directory / "response.json") or {}
             # obs.Run stores config under its config key in some versions.
             config = config.get("config", config)
+            # tools says which experimental arm a run belongs to. Absent on runs recorded
+            # before the flag existed, and the viewer distinguishes that from an explicit
+            # "base" rather than assuming one.
             rows.append({"id": directory.name, "model": config.get("model", "unknown"),
                          "thinking": config.get("thinking"),
+                         "tools": config.get("tools"),
                          "modified": directory.stat().st_mtime})
         except (OSError, ValueError) as exc:
             errors.append(f"{directory.name}: {exc}")

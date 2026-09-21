@@ -223,7 +223,7 @@ async function main() {
   fs.mkdirSync(root, {recursive: true});
   let gitCommit = null;
   try { gitCommit = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: ROOT, encoding: 'utf8'}).trim(); } catch {}
-  const config = {created: new Date().toISOString(), git_commit: gitCommit, protocol: 'cp-json-all-layers-v1',
+  const config = {created: new Date().toISOString(), git_commit: gitCommit, protocol: 'cp-json-some-layers-v2',
     node_version: process.version, limits, temperature: 0, seed: null, seed_support: 'not requested',
     renderer: {width: WIDTH, height: HEIGHT, panels: ['CP', 'top', 'exploded-oblique']},
     action_schema: ACTION_SCHEMA, system_prompt: SYSTEM,

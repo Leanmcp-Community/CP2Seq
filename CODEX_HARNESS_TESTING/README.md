@@ -55,6 +55,20 @@ These actions are returned as structured decisions. They are not registered as
 native Codex tools. The CLI harness handles inference and structured output;
 the outer controller handles simulator actions.
 
+`add_fold` now uses the shared `fold-engine-layers.mjs` engine. Existing
+`angle_index` actions remain valid. Alternatively, `angle_degrees` permits any
+crease-line angle, using the unit normal `(-sin(theta), cos(theta))` and signed
+perpendicular `offset`. The fold motion remains a flat 180-degree fold.
+`selection_mode` defaults to `all`; `top` or `bottom` requires `layer_count`.
+Top runs fold over, bottom runs fold under. Original-sheet connectivity is
+checked before target-CP compatibility: separating a moving/stationary connection
+away from the hinge returns `would-tear` without changing the session. This is
+a zero-thickness geometric check, not continuous collision/contact simulation.
+Saved sequences include the full line and selection for replay; edit distance
+compares normalized moving half-planes, over/under, and selected runs.
+The launcher still defaults to the same two all-layers corpus samples; this
+change expands the available actions, not the default dataset.
+
 Every decision uses a fresh ephemeral Codex invocation. No session ID or
 `resume --last` is needed. This avoids mixing sample sessions, but historical
 images are not replayed beyond the initial/latest views, and startup overhead
@@ -64,7 +78,7 @@ instead reattaches every earlier feedback image, preserving the visual history.
 ## Full Luna low-reasoning pilot
 
 Sol, Terra, and Astra have equivalent launchers, with the same samples, low reasoning,
-40-turn budget, all image history, and logging:
+20-turn budget, all image history, and logging:
 
 ```sh
 bash CODEX_HARNESS_TESTING/run_sol_low.sh
@@ -82,8 +96,8 @@ Run from the repository root after signing in with `codex login`:
 bash CODEX_HARNESS_TESTING/run_luna_low.sh
 ```
 
-This launches the same default samples as the Tinker pilot (`easy-0001` and
-`easy-0002`), with 40 decisions per sample, all historical feedback images,
+This launches the default 10-sample set (`easy-0001` through `easy-0008`,
+`mid-0001`, and `hard-0001`), with 20 decisions per sample, all historical feedback images,
 `--model gpt-5.6-luna`, and `model_reasoning_effort="low"`. The model and
 reasoning settings are explicitly passed on every CLI invocation.
 [Official model identifiers](https://developers.openai.com/codex/models),
@@ -99,9 +113,30 @@ Equivalent Python command:
 
 ```sh
 .venv/bin/python CODEX_HARNESS_TESTING/codex_fold_loop.py \
-  --samples easy-0001 easy-0002 --max-turns 40 --timeout 300 \
+  --samples easy-0001 easy-0002 easy-0003 easy-0004 easy-0005 easy-0006 easy-0007 easy-0008 mid-0001 hard-0001 \
+  --max-turns 20 --timeout 300 \
   --model gpt-5.6-luna --reasoning-effort low --image-history all
 ```
+
+## Rate limit and capacity retries
+
+When a Codex invocation exits nonzero and its logs name a transient service
+condition (`429`, rate limit, capacity/overloaded, 5xx, dropped connection),
+the turn is retried instead of ending the batch. Each retry prints a line
+naming the exit code, the matched reason, the wait, and the archived log path:
+
+```
+easy-0003/turn-007: codex exited 1 (http 429); waiting 10s then attempt 2/6; log .../failed-attempt-01/stderr.log
+```
+
+Waits double from `--retry-wait` (10s) up to `--retry-max-wait` (120s), for
+`--max-retries` retries (5) after the first attempt. Once those are exhausted
+the batch stops as before. Failed attempts keep their own artifacts under
+`turn-NNN/failed-attempt-NN/`, and `turn-NNN/retries.json` records every
+attempt; the successful attempt keeps the usual `turn-NNN/` file layout.
+
+Login failures, unknown models, timeouts, and plan/quota exhaustion are not
+retried: those do not clear within seconds.
 
 Logging is enabled automatically using the existing Tinker observability core.
 The run root now includes `events.jsonl`, `transcripts.jsonl`, `metrics.jsonl`,
@@ -194,12 +229,12 @@ This checks CLI login, image input, output schema, simulator integration, and
 trace generation. A two-turn episode may stop with `turn_budget`; that is an
 expected smoke-test outcome, not evidence of failure to integrate.
 
-Then run the two-sample pilot:
+Then run the ten-sample pilot:
 
 ```sh
 .venv/bin/python CODEX_HARNESS_TESTING/codex_fold_loop.py \
-  --samples easy-0001 easy-0002 \
-  --max-turns 40 \
+  --samples easy-0001 easy-0002 easy-0003 easy-0004 easy-0005 easy-0006 easy-0007 easy-0008 mid-0001 hard-0001 \
+  --max-turns 20 \
   --timeout 300
 ```
 
@@ -271,9 +306,14 @@ The run root also contains `config.json`, the prompt snapshot, `tools.json`,
 
 The matching evaluator and action-edit-distance tolerance follow the original
 pilot, except that `terminal_reference_match` now compares the final layer stack
-up to a plane isometry: the same folded model translated, rotated or mirrored
-counts, while layer count, bottom-to-top order and per-layer parity must still
-agree exactly. Older runs were scored at fixed coordinates; re-score them with
+up to a plane isometry: any translation or rotation angle counts. Turning the
+model over reflects its geometry, reverses the bottom-to-top layer order, and
+flips every face parity. A coordinate-only mirror with unchanged order/parity
+does not represent a turnover. Every layer must match under one shared
+transformation. Original-sheet face identity is not checked by this metric.
+Initial inputs include an exploded target view; successful edits produce an
+exploded current-state view for the next decision, alongside the existing views.
+Older runs retain their saved scores until explicitly re-scored with
 `node workspace/rescore_runs.mjs`.
 
 `solved` requires both a `finish` action and `pilot_match`. The reference

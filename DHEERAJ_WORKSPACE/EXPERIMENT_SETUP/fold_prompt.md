@@ -4,8 +4,8 @@ result before proposing the next fold. Do not return an entire sequence in prose
 The environment writes your accepted actions into seq.json.
 
 You receive only geometry and images of the CP, final target, and current state.
-No reference folding sequence is supplied. All folds are simple, all-layers,
-180-degree folds. Every layer on the chosen side moves together.
+No reference folding sequence is supplied. All folds are flat 180-degree simple
+folds. Select all layers (default), or a contiguous run from the top or bottom.
 
 Coordinates are x right, y up. Fold axes are in CURRENT folded coordinates:
 
@@ -15,6 +15,18 @@ Coordinates are x right, y up. Fold axes are in CURRENT folded coordinates:
 | 1 | y = x + offset | y - x > offset |
 | 2 | x = offset | x > offset |
 | 3 | x + y = offset | x + y > offset |
+
+For arbitrary line angles, supply angle_degrees instead of angle_index, never
+both. With theta counterclockwise from +x, the line is
+-sin(theta)*x + cos(theta)*y = offset; offset is signed perpendicular distance.
+move_positive selects the greater-than side. The folding motion remains 180 degrees.
+selection_mode is all (default), top, or bottom. Top/bottom requires layer_count;
+omit layer_count for all. Top must fold over; bottom must fold under.
+The engine tracks original-sheet connectivity. A partial fold returns would-tear
+if selected paper is attached to stationary paper away from the proposed hinge.
+For example, selecting three of four layers may tear a paired flap. This check
+runs before target-CP checking and leaves state unchanged on rejection. Inspect
+sheet_polygon coordinates and exploded views when choosing a connected run.
 
 move_positive selects which half-plane moves. over=true puts the reflected moving
 stack above the stationary stack; false puts it below. A flipped stack reverses
@@ -36,9 +48,17 @@ two oblique views show paper shape with a small illustrative layer separation.
 Oblique views look down from opposite directions, never exactly edge-on. X-ray
 is a top projection: more overlapping layers produce darker pixels. Each view
 is fitted independently; use geometry for coordinates and scale, not pixel size.
+Exploded views separate layers upward for inspection: layer 1 is the bottom,
+and p0/p1 labels give face parity. Separation is illustrative, not paper thickness.
+Initial images include the target's exploded view; feedback images include the
+current state's exploded view after edits.
 
 Try to reproduce both the CP and the supplied target, including face orientation
-and layer order. The pilot reports strict terminal matching in the supplied
-coordinates; it does not equate rotated/mirrored targets or alternative layer
-orders. Call finish when you are done. This ends the episode and evaluates your
+and layer order. Terminal matching accepts any global translation and any rotation
+angle, including 30 degrees. It also accepts turning the whole model upside down:
+reflect the geometry, reverse the bottom-to-top stack, and flip every face parity.
+These operations can be combined. One common rigid transformation must match all
+layers; arbitrary layer rearrangements, scaling, or independently moving layers
+do not count. CP matching still uses the supplied original-sheet coordinates and
+mountain/valley assignments. Call finish when you are done. This ends the episode and evaluates your
 current sequence; it does not automatically claim success.

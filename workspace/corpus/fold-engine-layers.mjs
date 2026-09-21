@@ -100,6 +100,21 @@ function sharedSegment(P, Q) {
 
 const ptOnLine = (l, t) => [l.n[0] * l.d + l.dir[0] * t, l.n[1] * l.d + l.dir[1] * t];
 
+// Where selected layers sit along a candidate fold normal, in the CURRENT plane. A refusal is
+// only useful to a planner if it can say which offsets would have cut this paper at all.
+function lineValues(st, indices, n) {
+    let min = Infinity, max = -Infinity;
+    for (const fi of indices) {
+        for (const p of st.faces[fi].poly) {
+            const q = ap(st.faces[fi].T, p);
+            const v = n[0] * q[0] + n[1] * q[1];
+            if (v < min) min = v;
+            if (v > max) max = v;
+        }
+    }
+    return Number.isFinite(min) ? { min, max } : null;
+}
+
 /* ---------- state ------------------------------------------------------------------- */
 export function initSheet(poly = [[0, 0], [1, 0], [1, 1], [0, 1]]) {
     return { faces: [{ poly, T: ID, inv: ID, par: 0 }], order: [0] };
@@ -134,7 +149,8 @@ export function foldLayers(st, line, movePositive, sel = { mode: "all" }, over =
     let lo = 0, hi = N;                                   // [lo, hi) in `order`
     if (sel.mode === "top")    lo = Math.max(0, N - sel.k);
     if (sel.mode === "bottom") hi = Math.min(N, sel.k);
-    if (sel.mode !== "all" && (sel.k ?? 0) <= 0) return { error: "nothing-to-move" };
+    if (sel.mode !== "all" && (sel.k ?? 0) <= 0) return { error: "nothing-to-move", diagnostic: {
+        why: "the selection is empty", requested_layer_count: sel.k ?? null, stack_size: N } };
 
     // Direction is free for an all-layers fold and forced for a partial one, and conflating the
     // two was a real defect here: `over` used to be derived from the selection alone, so every
@@ -146,7 +162,11 @@ export function foldLayers(st, line, movePositive, sel = { mode: "all" }, over =
     // moving there is nothing left behind, so both directions are available.
     if (sel.mode !== "all") {
         const forced = sel.mode === "bottom" ? false : true;
-        if (over !== forced) return { error: "direction-impossible", forced };
+        if (over !== forced) return { error: "direction-impossible", forced, diagnostic: {
+            selection_mode: sel.mode, layer_count: sel.k, requested_over: over, required_over: forced,
+            why: sel.mode === "bottom"
+                ? "a run taken from the bottom of the stack can only fold UNDER (over=false); folding it over would drive it through the layers above it"
+                : "a run taken from the top of the stack can only fold OVER (over=true); folding it under would drive it through the layers below it" } };
         over = forced;
     }
 
@@ -156,7 +176,15 @@ export function foldLayers(st, line, movePositive, sel = { mode: "all" }, over =
 
     // 1. split eligible faces that the line crosses; everything else is untouched, which is
     //    the whole difference from all-layers folding
-    const made = [], movingIdx = [], newOrder = [];
+    const made = [], movingIdx = [], newOrder = [], sourceOf = new Map();
+    const selected = order.slice(lo, hi);
+    // Reported in the caller's own offset units: the caller's offset is line.d, and d = line.d / L.
+    const offsetAdvice = () => {
+        const range = lineValues(st, selected, n);
+        return range && { requested_offset: line.d, selected_layer_ranks: [lo, hi - 1],
+            offsets_that_cut_the_selection: [range.min * L, range.max * L],
+            note: "an offset strictly inside offsets_that_cut_the_selection crosses the selected layers; outside it the line misses them" };
+    };
     for (const fi of order) {
         const f = faces[fi];
         if (!eligible.has(fi)) { newOrder.push(fi); continue; }
@@ -168,6 +196,7 @@ export function foldLayers(st, line, movePositive, sel = { mode: "all" }, over =
         if (!movePoly) { newOrder.push(fi); continue; }     // entirely on the stationary side
         if (!stayPoly) {                                    // entirely on the moving side: no crease
             movingIdx.push(fi);
+            sourceOf.set(fi, fi);
             continue;
         }
         // the line cuts this face: the cut IS a new crease
@@ -176,15 +205,21 @@ export function foldLayers(st, line, movePositive, sel = { mode: "all" }, over =
         const mi = faces.length;
         faces.push({ ...f, poly: movePoly });
         movingIdx.push(mi);
+        sourceOf.set(mi, fi);
 
         const seg = cutSegment(f.poly, hp.n, hp.d);
         if (seg) made.push({ P: seg[0], Q: seg[1], par: f.par, faceOf: fi });
     }
-    if (!movingIdx.length) return { error: "nothing-to-move" };
+    if (!movingIdx.length) return { error: "nothing-to-move", diagnostic: {
+        why: `no selected paper lies on the ${movePositive ? "positive" : "negative"} side of this line`,
+        moving_side: movePositive ? "positive" : "negative", ...offsetAdvice() } };
     // A fold that creases nothing is not a fold: it lifts whole layers off the rest of the
     // sheet, which for a single piece of paper means tearing it free. Caught here so the
     // diagnosis names the cause instead of surfacing as a confusing tear between two faces.
-    if (!made.length) return { error: "no-crease" };
+    if (!made.length) return { error: "no-crease", diagnostic: {
+        why: "the line does not cut any selected layer: every selected layer lies wholly on the moving side, so the fold would lift it off the sheet instead of creasing it",
+        moving_side: movePositive ? "positive" : "negative", moving_layers: movingIdx.length,
+        ...offsetAdvice() } };
 
     // 2. tearing check -- the reason this engine keeps original coordinates at all.
     //    A moving face joined to a stationary face along a crease that is NOT the fold line
@@ -200,7 +235,17 @@ export function foldLayers(st, line, movePositive, sel = { mode: "all" }, over =
             const A = ap(T, ptOnLine(seg.line, seg.lo)), B = ap(T, ptOnLine(seg.line, seg.hi));
             const onLine = Math.abs(n[0] * A[0] + n[1] * A[1] - d) < 1e-7 &&
                            Math.abs(n[0] * B[0] + n[1] * B[1] - d) < 1e-7;
-            if (!onLine) return { error: "would-tear", between: [mi, si] };
+            if (!onLine) {
+                const src = sourceOf.get(mi) ?? mi;
+                const S0 = ptOnLine(seg.line, seg.lo), S1 = ptOnLine(seg.line, seg.hi);
+                return { error: "would-tear", between: [mi, si], diagnostic: {
+                    why: "these two layers are one piece of paper, joined along a crease that is not the fold line, so moving one and not the other would tear the sheet there",
+                    moving_layer_rank: order.indexOf(src), stationary_layer_rank: order.indexOf(si),
+                    join_sheet_coords: [S0, S1], join_current_coords: [A, B],
+                    join_distance_from_fold_line: [n[0] * A[0] + n[1] * A[1] - d,
+                                                   n[0] * B[0] + n[1] * B[1] - d],
+                    fix: "select a run that includes both joined layers, or put the fold line on that join" } };
+            }
         }
     }
 

@@ -34,6 +34,29 @@ export function captureCP(cp) {
 }
 
 let renderer;
+// Diagram only: separate layers upward in bottom-to-top order without changing
+// simulator geometry. Shared fitting preserves each layer's relative size.
+function captureExploded(pieces, title) {
+  const points = pieces.flatMap(p => p.pts);
+  const ys = points.map(p => p[1]), xs = points.map(p => p[0]);
+  const span = Math.max(Math.max(...ys) - Math.min(...ys), Math.max(...xs) - Math.min(...xs), .001);
+  const shifted = pieces.map((p, rank) => ({...p,
+    pts: p.pts.map(v => [v[0] + rank * span * .12, v[1] + rank * span * .65])}));
+  const fit = fit2(shifted.flatMap(p => p.pts));
+  const c = canvas(), ctx = c.getContext('2d');
+  ctx.fillStyle = 'white'; ctx.fillRect(0, 0, N, N);
+  shifted.forEach((p, rank) => {
+    ctx.beginPath(); p.pts.forEach((v, i) => ctx[i ? 'lineTo' : 'moveTo'](...fit(v)));
+    ctx.closePath(); ctx.fillStyle = p.par ? 'rgba(201,155,101,.70)' : 'rgba(240,217,168,.70)';
+    ctx.fill(); ctx.strokeStyle = '#344956'; ctx.lineWidth = 1.5; ctx.stroke();
+    const anchor = p.pts.reduce((a, b) => b[0] < a[0] ? b : a);
+    const [x, y] = fit(anchor);
+    ctx.fillStyle = '#182b38'; ctx.font = '12px sans-serif';
+    ctx.fillText(`${rank + 1} / p${p.par}`, x, y - 4);
+  });
+  return label(c, `${title} · exploded · 1 = bottom · p = parity`);
+}
+
 export function captureViews(pieces, title = 'State') {
   if (!pieces.length) throw Error('No paper geometry to capture');
   // A separate renderer makes capture independent of playback camera and canvas size.
@@ -77,6 +100,7 @@ export function captureViews(pieces, title = 'State') {
       ctx.closePath(); ctx.fillStyle = 'rgba(20, 45, 70, 0.20)'; ctx.fill();
     }
     result.xray = label(c, `${title} · X-ray: darker = more layers`);
+    result.exploded = captureExploded(pieces, title);
     return result;
   } finally { resources.forEach(r => r.dispose()); }
 }
