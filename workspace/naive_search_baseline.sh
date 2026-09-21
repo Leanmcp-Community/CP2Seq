@@ -31,25 +31,23 @@ seconds=${SECONDS_PER_SAMPLE:-60}
 
 solved=0; total=0
 for s in "$@"; do
-  cp="$corpus/$s/cp.fold"
   steps="$corpus/$s/steps.fold"
-  [ -f "$cp" ] && [ -f "$steps" ] || { printf '  %-10s no such sample\n' "$s"; continue; }
+  [ -f "$steps" ] || { printf '  %-10s no such sample\n' "$s"; continue; }
   total=$((total + 1))
-  # The target is the last frame of steps.fold; run.py wants it as its own file.
+  # cp.fold carries no faces_vertices and the baseline needs a faced mesh, so take the CP from
+  # frame 0 of steps.fold (the flat sheet, planarised) and the target from the last frame.
+  cpf=$(mktemp -t foldcp).json
   target=$(mktemp -t foldtarget).json
-  "$python" - "$steps" "$target" <<'PY'
-import json, sys
-frames = json.load(open(sys.argv[1]))["file_frames"]
-json.dump(frames[-1], open(sys.argv[2], "w"))
-PY
+  "$python" workspace/_extract_frames.py "$steps" "$cpf" "$target"
   out=$(cd DHEERAJ_WORKSPACE/baseline_python && "../../$python" run.py solve \
-          --cp "../../$cp" --target "$target" --algorithm bfs \
+          --cp "$cpf" --target "$target" --algorithm bfs \
           --seconds "$seconds" 2>&1 | tail -40)
-  rm -f "$target"
+  err=$(printf '%s' "$out" | grep -m1 '^error:' || true)
+  rm -f "$target" "$cpf"
   status=$(printf '%s' "$out" | grep -o '"status": "[a-z_]*"' | head -1 | sed 's/.*: "//;s/"//')
   nodes=$(printf '%s' "$out" | grep -o '"expanded": [0-9]*' | head -1 | sed 's/.*: //')
   secs=$(printf '%s' "$out" | grep -o '"elapsed_seconds": [0-9.]*' | head -1 | sed 's/.*: //' | cut -c1-5)
   [ "$status" = "solved" ] && solved=$((solved + 1))
-  printf '  %-10s %-12s expanded=%-8s %ss\n' "$s" "${status:-error}" "${nodes:-?}" "${secs:-?}"
+  printf '  %-10s %-12s expanded=%-8s %ss %s\n' "$s" "${status:-error}" "${nodes:-?}" "${secs:-?}" "${err:-}"
 done
 printf '\nnaive BFS solved %s of %s\n' "$solved" "$total" >&2

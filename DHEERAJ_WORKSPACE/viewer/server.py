@@ -13,7 +13,9 @@ REPO = VIEWER.parent.parent
 DEFAULT_EXPORTS = VIEWER.parent / "exports"
 DEFAULT_EXPERIMENTS = VIEWER.parent / "experiments"
 DEFAULT_CORPUS = REPO / "workspace" / "corpus" / "out" / "release"
-DEFAULT_TRACES = VIEWER.parent / "EXPERIMENT_SETUP" / "runs"
+# The Codex and Claude harness writes here; EXPERIMENT_SETUP/runs holds the older Tinker
+# runs and is still reachable with --traces.
+DEFAULT_TRACES = REPO / "CODEX_HARNESS_TESTING" / "runs"
 MAX_RUNS = 500
 MAX_SCAN_ENTRIES = 10000
 MAX_SCAN_DEPTH = 8
@@ -306,7 +308,7 @@ def main():
     parser.add_argument("--corpus", type=Path, default=DEFAULT_CORPUS,
                         help="Dataset release folder shown under /corpus (read-only)")
     parser.add_argument("--traces", type=Path, default=DEFAULT_TRACES,
-                        help="Tinker runs folder shown under /traces (read-only)")
+                        help="Harness runs folder shown under /traces (read-only)")
     args = parser.parse_args()
     server = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)
     server.roots = ({"custom": args.exports.resolve()} if args.exports else {
