@@ -46,8 +46,16 @@ console.log(dryRun ? 'dry run: nothing is written\n' : `writing to ${outDir}\n`)
 console.log(`  ${pad('sample', 12)}${pad('ref folds', 11)}${pad('layers', 8)}${pad('replay==target', 16)}status`);
 
 let ok = 0, bad = 0;
+
 for (const id of samples) {
   const dir = join(CORPUS, id);
+  // Skip rather than crash: a mistyped or copy-pasted sample id should cost one line of
+  // output, not abort a 400-sample pass partway through and leave half a directory.
+  if (!existsSync(join(dir, 'cp.fold'))) {
+    console.log(`  ${pad(id, 12)}${pad('-', 11)}${pad('-', 8)}${pad('-', 16)}no such sample`);
+    bad++;
+    continue;
+  }
   const raw = JSON.parse(readFileSync(join(dir, 'cp.fold'), 'utf8'));
   const cp = {file_spec: 1.1, frame_classes: ['creasePattern'], vertices_coords: raw.vertices_coords,
               edges_vertices: raw.edges_vertices, edges_assignment: raw.edges_assignment};
