@@ -7,7 +7,8 @@
 # little left to win there.
 #
 # WORKERS defaults to 32. That is above the core count on this machine, so it will not add
-# throughput -- the searches are CPU-bound -- but it costs little beyond memory. Lower it to
+# throughput -- the searches are CPU-bound -- but it costs little beyond memory. Set WORKERS
+# to the core count if you would rather not run 32 node heaps.
 #
 #   bash CODEX_HARNESS_TESTING/run_deterministic_parallel.sh --easy
 #   WORKERS=16 SECONDS_PER_SAMPLE=30 bash CODEX_HARNESS_TESTING/run_deterministic_parallel.sh --mid
