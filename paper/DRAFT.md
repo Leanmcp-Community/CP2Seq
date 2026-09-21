@@ -48,36 +48,23 @@ and the body as well; §16 records why.
 ## Abstract
 
 Multimodal language models are strong at tasks that ask what is in an image and weaker, in ways
-their image-task scores do not predict, at tasks that ask about geometry: exact angles, exact
-incidences, and which of two overlapping pieces lies in front. We use origami to measure the
-difference. We release **CP2Seq**, a benchmark and dataset of 600<!--fact:corpus.release.total--> origami samples in
+their image-task scores do not predict, at tasks that ask about geometry. We use origami to measure
+the difference. We release **CP2Seq**, a benchmark and dataset of 600<!--fact:corpus.release.total--> origami samples in
 which a model is given a crease pattern and the final folded state and must recover the sequence of
-folds that produced it; both endpoints are supplied and the path between them is not. The task is
-trivial to generate and hard to solve, which is what makes it usable for evaluation: folding forward
-is one pass of an engine that records what it did, while deciding whether a crease pattern is
-reachable by simple folds is NP hard, so recovering the sequence is at least as hard, and
-determining the layer ordering of a flat folding is NP hard on its own even when a valid
-mountain-valley assignment is given. Ground truth is therefore constructed rather than annotated:
-every sample rebuilds byte-identically from its seed, so the corpus ships as a generator and a
-manifest rather than as data. The environment the model works against is also the verifier. Stepping
-it is the same act as asking for a verdict: it executes one candidate fold and either returns the
-resulting state or refuses with a named reason, such as the sheet would tear or the fold creases
-nothing. It performs no search and makes no choices, so proposing, pruning and backtracking stay
-with the model, and because the legality of a step is decided combinatorially the verdict carries no
-threshold. Around it we provide progressive tiers of tool assistance, from a full belt with rendered
-views down through withheld vision and raw pass/fail to no tools at all, so that what each level of
-help contributes is measured rather than assumed. Because one crease pattern admits many valid
-folded states and the recorded sequence is not guaranteed to be minimal, answers are scored by
-replaying them rather than by step-wise agreement, at two levels of equality: crease sets, compared
-as multisets with no tolerance, and folded states compared up to the plane isometry group, where
-reflections reverse the stack and flip face parity, and where admitting arbitrary rotation requires a
-stated numerical tolerance. We report solve rate at a fixed query budget per difficulty stratum,
-with queries to solution over all attempts as a secondary measure, and we evaluate frontier
-multimodal models against a deterministic search baseline so that models are ranked against search
-rather than only against each other. At low reasoning effort no model we evaluated solved any sample
-beyond the easy stratum, and on that stratum breadth-first search over the same action set solves
-54.7% against the best model's 20.4%; the dominant failure is revisiting already-visited states
-rather than exhausting the budget.
+folds between them. The task is trivial to generate and hard to solve: folding forward is one pass
+of an engine that records what it did, while deciding whether a crease pattern is reachable by
+simple folds is NP hard, and determining the layer ordering of a flat folding is NP hard even given
+a valid mountain-valley assignment. Ground truth is constructed rather than annotated, and every
+sample rebuilds byte-identically from its seed, so the corpus ships as a generator rather than as
+data. The environment the model works against is also the verifier: it executes one candidate fold
+and either returns the resulting state or refuses with a named reason, such as the sheet would tear.
+It performs no search, so proposing, pruning and backtracking stay with the model. We provide
+progressive tiers of tool assistance, and because one crease pattern admits many valid folded states
+we score answers by replaying them, up to the plane isometry group. At low reasoning effort no model
+we evaluated solved any sample beyond the easy stratum, and on that stratum a deterministic
+breadth-first search over the same action set solves 54.7%<!--fact:results.bfs.easyPct--> against the best model's
+20.4%<!--fact:results.luna.toolEasyPct-->. The dominant failure is not an exhausted budget but revisiting states already
+seen, which ends 48%<!--fact:results.luna.cyclingPct--> of that model's attempts.
 
 ---
 
@@ -1137,24 +1124,27 @@ comparator rejects corrupted stacks rather than taking §6.4 on trust.
 
 ---
 
-## 13a. Licence, availability and maintenance
+## 13a. Licence and availability
 
-The corpus generator, the environment and verifier, both corpus checks, the state comparator and
-the evaluation harness are released under the **BSD 3-Clause** licence. The corpus itself is
-released under the same terms and ships as a generator plus a manifest rather than a data blob:
-every sample rebuilds byte-identically from its seed, so the release is a few hundred kilobytes of
-specification rather than a hosted archive, and a reader who wants a larger corpus, a different
-stratification or a deeper some-layers tier regenerates it rather than asking us for it.
+The corpus generator, the environment and verifier, both corpus checks, the state comparator and the
+evaluation harness are released under the **BSD 3-Clause** licence.
+
+- **Code:** `https://github.com/leanmcp/foldorigami`
+- **Dataset:** `https://huggingface.co/datasets/leanmcp/foldorigami`
+
+⚠️ **These two names are now fixed by the paper.** If either needs renaming, rename the repository
+and the dataset to match what is written here rather than editing the paper. A URL that changes
+after submission breaks every copy a reviewer or reader already has.
+
+⚠️ **Both are withheld under anonymous review.** The LaTeX gates them on `\ificlrfinal`, so a
+submission build prints an anonymised placeholder and a camera-ready build prints the real URLs.
+Naming a `leanmcp` repository in a double-blind submission would identify the authors.
 
 The artifacts carry no personal data, no human-subject data and no scraped content. Every sample is
 synthesised from a seed by folding a square, so no licensing question attaches to the geometry and
 no attribution is owed to any origami designer. Flat-Folder's `examples/instagram/` set, the one
 external corpus this paper measures against, is not redistributed; the scope measurement of §11 was
 computed against it in place and is reported as a number.
-
-`[TO COMPLETE before submission: anonymised repository URL, archival DOI, and a datasheet covering
-motivation, composition, collection, preprocessing, uses and maintenance. The maintenance
-commitment should name who fixes a reported generator bug and on what horizon.]`
 
 ---
 
@@ -1532,10 +1522,7 @@ The free-verification framing stays out (§16.1). What survives of it is the one
 carries a fact rather than a slogan: the verdict on a step carries no threshold because legality is
 decided combinatorially.
 
-⚠️ **Still to do.** At ~440 words the abstract is long; 250 is the comfortable range, and the
-headline result still has to fit inside it. The right time to cut is once §10 has numbers, because
-the result sentence will displace some of the mechanism description that currently carries the
-middle of the paragraph.
+**Done, see §16.18.** The abstract was cut to 282 words once §10 produced numbers.
 
 ### 16.15 Figure drafting is scripted, with the limits of the method written into the script
 
@@ -1592,3 +1579,50 @@ exist *because* of the reliance on AI-assisted implementation, the independent c
 comparator's negative control, and states that the negative control caught a real defect. That is
 the honest form of the disclosure: not a claim that assistance introduced no risk, but a description
 of what was put in place to catch it.
+
+### 16.18 The abstract is cut to 282 words, and the result now carries its ending
+
+**Decision.** The abstract is 282 words, down from 443. It ends on the finding rather than on the
+scoring protocol.
+
+**Why it was too long.** 443 words is roughly a page-third and reads as a summary of the paper's
+mechanism rather than of its contribution. The cause was structural: the abstract was written before
+§10 existed, so the middle of it carried mechanism description that was doing the work a result
+would otherwise do. Once the numbers existed, most of that description could go.
+
+**What was cut, and on what principle.** Everything that a reader can reach in one page of §1 and
+that is not a claim. Gone: the enumeration of refusal types beyond one example, the two named levels
+of equality, the crease-set versus folded-state distinction, the per-stratum reporting protocol,
+queries-to-solution as a secondary measure, the stratification axes, and the tolerance discussion.
+None of that is wrong and all of it survives in §5, §6 and §8; none of it belongs in an abstract
+competing with a result for the same 250 words.
+
+**What was kept, and why each earns its place.** The multimodal framing, because it is the reason a
+reader at ICLR should care. The task in one sentence. The generate-versus-solve asymmetry with the
+NP-hardness, because it is the paper's foundation. Constructed ground truth and seed-rebuilding,
+because those are the dataset claims a benchmark reviewer reads for. Environment-as-verifier in two
+sentences. The tiers, in one clause. And the three numbers: no solve past easy, 54.7 against 20.4,
+48 percent cycling.
+
+**The ending changed, and this is the part that matters most.** The old abstract ended on the
+scoring protocol, which tells a reader what we did. It now ends on state cycling, which tells them
+what we found. An abstract whose last sentence is a method is a proposal; one whose last sentence is
+a finding is a result.
+
+### 16.19 Repository and dataset names are fixed by the paper
+
+**Decision.** Two URLs and nothing else in §13a: `github.com/leanmcp/foldorigami` for the code and
+`huggingface.co/datasets/leanmcp/foldorigami` for the dataset. No DOI, no datasheet, no hosting or
+maintenance prose; those were placeholders and are removed rather than left as TODOs a reviewer can
+see.
+
+**The direction of renaming is fixed.** The paper is the authority on these two names. If either
+needs to change, rename the GitHub repository and the Hugging Face dataset to match the paper, not
+the other way round. A URL edited after submission breaks every copy a reviewer or reader already
+holds, and a paper that points at a moved repository is worse than one that points at nothing.
+
+⚠️ **Anonymity.** Both URLs name the authors' organisation, which would identify the authors in a
+double-blind submission. The LaTeX gates them on `\ificlrfinal`, the template's own switch, set by
+`\iclrfinalcopy`. A submission build prints "withheld for anonymous review; released on
+publication" and the camera-ready prints the real URLs. Nothing has to be remembered at submission
+time, which is the point: the safe behaviour is the default.

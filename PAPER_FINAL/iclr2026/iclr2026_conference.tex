@@ -49,36 +49,23 @@ Paper under double-blind review}
 
 \begin{abstract}
 Multimodal language models are strong at tasks that ask what is in an image and weaker, in ways
-their image-task scores do not predict, at tasks that ask about geometry: exact angles, exact
-incidences, and which of two overlapping pieces lies in front. We use origami to measure the
-difference. We release \textbf{CP2Seq}, a benchmark and dataset of 600 origami samples in which a
-model is given a crease pattern and the final folded state and must recover the sequence of folds
-that produced it; both endpoints are supplied and the path between them is not. The task is trivial
-to generate and hard to solve, which is what makes it usable for evaluation: folding forward is one
-pass of an engine that records what it did, while deciding whether a crease pattern is reachable by
-simple folds is NP hard, so recovering the sequence is at least as hard, and determining the layer
-ordering of a flat folding is NP hard on its own even when a valid mountain-valley assignment is
-given. Ground truth is therefore constructed rather than annotated: every sample rebuilds
-byte-identically from its seed, so the corpus ships as a generator and a manifest rather than as
-data. The environment the model works against is also the verifier. Stepping it is the same act as
-asking for a verdict: it executes one candidate fold and either returns the resulting state or
-refuses with a named reason, such as the sheet would tear or the fold creases nothing. It performs
-no search and makes no choices, so proposing, pruning and backtracking stay with the model, and
-because the legality of a step is decided combinatorially the verdict carries no threshold. Around
-it we provide progressive tiers of tool assistance, from a full belt with rendered views down
-through withheld vision and raw pass/fail to no tools at all, so that what each level of help
-contributes is measured rather than assumed. Because one crease pattern admits many valid folded
-states and the recorded sequence is not guaranteed to be minimal, answers are scored by replaying
-them rather than by step-wise agreement, at two levels of equality: crease sets, compared as
-multisets with no tolerance, and folded states compared up to the plane isometry group, where
-reflections reverse the stack and flip face parity, and where admitting arbitrary rotation requires
-a stated numerical tolerance. We report solve rate at a fixed query budget per difficulty stratum,
-with queries to solution over all attempts as a secondary measure, and we evaluate frontier
-multimodal models against a deterministic search baseline so that models are ranked against search
-rather than only against each other. At low reasoning effort no model we evaluated solved any sample
-beyond the easy stratum, and on that stratum breadth-first search over the same action set solves
-54.7\% against the best model's 20.4\%; the dominant failure is revisiting already-visited states
-rather than exhausting the budget.
+their image-task scores do not predict, at tasks that ask about geometry. We use origami to measure
+the difference. We release \textbf{CP2Seq}, a benchmark and dataset of 600 origami samples in which
+a model is given a crease pattern and the final folded state and must recover the sequence of folds
+between them. The task is trivial to generate and hard to solve: folding forward is one pass of an
+engine that records what it did, while deciding whether a crease pattern is reachable by simple
+folds is NP hard, and determining the layer ordering of a flat folding is NP hard even given a valid
+mountain-valley assignment. Ground truth is constructed rather than annotated, and every sample
+rebuilds byte-identically from its seed, so the corpus ships as a generator rather than as data. The
+environment the model works against is also the verifier: it executes one candidate fold and either
+returns the resulting state or refuses with a named reason, such as the sheet would tear. It
+performs no search, so proposing, pruning and backtracking stay with the model. We provide
+progressive tiers of tool assistance, and because one crease pattern admits many valid folded states
+we score answers by replaying them, up to the plane isometry group. At low reasoning effort no model
+we evaluated solved any sample beyond the easy stratum, and on that stratum a deterministic
+breadth-first search over the same action set solves 54.7\% against the best model's 20.4\%. The
+dominant failure is not an exhausted budget but revisiting states already seen, which ends 48\% of
+that model's attempts.
 \end{abstract}
 
 \section{Positioning}
@@ -1357,27 +1344,32 @@ benchmark. The negative control of Section~\ref{sec:scoring-validate} runs as a 
 reader can confirm that the comparator rejects corrupted stacks rather than taking
 Section~\ref{sec:scoring-validate} on trust.
 
-\section{Licence, availability and maintenance}
+\section{Licence and availability}
 \label{sec:licence}
 
-The corpus generator, the environment and verifier, both corpus checks, the state comparator and
-the evaluation harness are released under the \textbf{BSD 3-Clause} licence. The corpus itself is
-released under the same terms and is distributed as a generator and a manifest rather than as a
-data blob: every sample rebuilds byte-identically from its seed, so the release is a few hundred
-kilobytes of specification rather than a hosted archive, and a reader who wants a larger corpus, a
-different difficulty stratification or a deeper some-layers tier regenerates it rather than asking
-us for it.
+The corpus generator, the environment and verifier, both corpus checks, the state comparator and the
+evaluation harness are released under the \textbf{BSD 3-Clause} licence.
+
+% The URLs identify the authors' organisation, so they are withheld under double-blind
+% review and printed only in the camera-ready. \ificlrfinal is the template's own switch,
+% set by \iclrfinalcopy in the preamble.
+\ificlrfinal
+\begin{itemize}
+\item \textbf{Code:} \url{https://github.com/leanmcp/foldorigami}
+\item \textbf{Dataset:} \url{https://huggingface.co/datasets/leanmcp/foldorigami}
+\end{itemize}
+\else
+\begin{itemize}
+\item \textbf{Code:} withheld for anonymous review; released on publication.
+\item \textbf{Dataset:} withheld for anonymous review; released on publication.
+\end{itemize}
+\fi
 
 The artifacts carry no personal data, no human-subject data and no scraped content. Every sample is
-synthesised from a seed by folding a square, so there is no licensing question attached to the
-geometry and no attribution owed to any origami designer. The one external corpus this paper
-measures against, Flat-Folder's \texttt{examples/instagram/} set, is not redistributed here; the
-scope measurement of Section~\ref{sec:limitations} was computed against it in place and is reported
-as a number.
-
-\texttt{[TO COMPLETE before submission: the anonymised repository URL, the archival DOI, and a
-datasheet covering motivation, composition, collection, preprocessing, uses and maintenance. The
-maintenance commitment should name who fixes a reported generator bug and on what horizon.]}
+synthesised from a seed by folding a square, so no licensing question attaches to the geometry and
+no attribution is owed to any origami designer. Flat-Folder's \texttt{examples/instagram/} set, the
+one external corpus this paper measures against, is not redistributed; the scope measurement of
+Section~\ref{sec:limitations} was computed against it in place and is reported as a number.
 
 \section{Use of large language models}
 \label{sec:llm-use}
