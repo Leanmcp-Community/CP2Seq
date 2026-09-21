@@ -24,6 +24,7 @@
 #   bash workspace/mid_all_layers_experiment.sh                  # search arms + preflight
 #   SECONDS_BUDGET=1800 bash workspace/mid_all_layers_experiment.sh
 #   MODEL=1 bash workspace/mid_all_layers_experiment.sh          # adds the model arm
+#   SKIP_SEARCH=1 MODEL=1 bash workspace/mid_all_layers_experiment.sh   # model arm only
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -69,7 +70,14 @@ if pgrep -f 'profile_enum_cost|search_baseline|codex_fold_loop' > /dev/null; the
 fi
 echo "$CONTENDED" > "$OUT/contended.txt"
 
+# SKIP_SEARCH=1 reuses whatever is already in $OUT. The search arms take up to 75 minutes
+# each, and once they have been run on a quiet machine there is nothing to gain by repeating
+# them before a model arm that takes hours longer.
 for sel in any all; do
+  if [ "${SKIP_SEARCH:-0}" = "1" ] && [ -s "$OUT/search-$sel.json" ]; then
+    echo "=== search, selection=$sel: reusing $OUT/search-$sel.json ==="
+    continue
+  fi
   echo "=== search, selection=$sel, ${SECONDS_BUDGET}s per sample ==="
   node workspace/search_baseline_stateful.mjs --json --selection "$sel" \
     --seconds "$SECONDS_BUDGET" --max-states 5000000 $SAMPLES > "$OUT/search-$sel.json"
