@@ -10,11 +10,23 @@
 # does not just fail to add throughput: with 32 workers on 8 cores each search gets a quarter
 # of a core and explores a quarter as many nodes inside the same budget. Keep it near the cores.
 #
+# Defaults are tuned for the full easy tier in half an hour: 120s of search per sample, 8
+# workers, and a 30 minute deadline after which no new sample is started. The deadline can
+# overshoot by up to one --seconds, because searches already running are allowed to finish
+# rather than be thrown away part-completed.
+#
 #   bash CODEX_HARNESS_TESTING/run_deterministic_parallel.sh --easy
-#   WORKERS=16 SECONDS_PER_SAMPLE=30 bash CODEX_HARNESS_TESTING/run_deterministic_parallel.sh --mid
+#   SECONDS_PER_SAMPLE=30 DEADLINE_MINUTES=10 bash CODEX_HARNESS_TESTING/run_deterministic_parallel.sh --mid
 set -eu
 script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 : "${WORKERS:=8}"
+# 120s per sample with a 30 minute cap fits the full 200-sample easy tier: roughly half the
+# samples solve in seconds and the rest exhaust their budget, so the wall time is about
+# (timeouts x seconds / workers) plus the serial replay, which overlaps the search pool.
+: "${SECONDS_PER_SAMPLE:=120}"
+: "${DEADLINE_MINUTES:=30}"
+export SECONDS_PER_SAMPLE DEADLINE_MINUTES
 export WORKERS
 printf '%s\n' "searching with $WORKERS workers (cores: $(sysctl -n hw.ncpu 2>/dev/null || echo '?'))" >&2
-exec sh "$script_dir/run_deterministic.sh" "$@" --workers "$WORKERS" --deadline-minutes "${DEADLINE_MINUTES:-0}"
+printf '%s\n' "budget ${SECONDS_PER_SAMPLE}s per sample, deadline ${DEADLINE_MINUTES} min" >&2
+exec sh "$script_dir/run_deterministic.sh" "$@" --workers "$WORKERS" --deadline-minutes "$DEADLINE_MINUTES"
