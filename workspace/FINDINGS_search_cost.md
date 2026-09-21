@@ -694,6 +694,77 @@ still right, but the "easier benchmark" caveat applies to one arm and not the ot
 
 ---
 
+## 5e. Why bidirectional search does not work here / 双向搜索为什么在这个引擎上做不成
+
+Probe 1 predicted 300-880×: forward branching 3.14-3.43 against a mean in-degree of
+1.20-1.33. The search is built, it is correct -- it solves what one-directional solves, every
+path replayed from the flat sheet and put through `terminalMatch` -- and it is **not faster**.
+easy-0007 takes 115f+97b against 115, 17.9 s against 2.0 s. The backward frontier dies within
+two or three levels, so the meet almost never happens.
+
+探针 1 预测 300-880 倍（前向分支 3.14-3.43 对后向入度 1.20-1.33）。搜索建好了、是正确的
+（能解出单向能解的，每条路径都从平纸重放并通过 `terminalMatch` 验证），**但不快**。
+easy-0007 是 115f+97b 对 115、17.9 秒对 2.0 秒。后向前沿两三层就死，相遇几乎不发生。
+
+**The cause is the engine's state representation, not the branching factor.**
+
+**原因是引擎表示状态的方式，不是分支因子。**
+
+A state is an ORDERED list of layers. Layers that do not overlap -- on opposite sides of a
+fold line, side by side rather than stacked -- have no physically meaningful relative order.
+Folding cannot see it: swapping such a pair leaves the result identical, measured 20 times
+out of 20. **Unfolding depends on it**, because recovering the previous state requires the
+layers that moved to form a contiguous run at one end of the list.
+
+状态是一个**有序**的层清单。互不重叠的层（在折线两侧、并排而非叠放）之间没有物理意义上的先后。
+折叠看不见它：交换这样一对，结果完全相同，实测 20/20。
+**逆折叠依赖它**，因为倒推上一步要求「移动过的那批层在清单一端连成一片」。
+
+So the unfold rebuilds a state that is the same paper -- geometrically identical, same
+`meetKey` -- with those layers in a different place in the list. It folds back correctly and
+verifies. But one step further back it is a dead end: under that arrangement the moved run is
+no longer contiguous and no fold reaches it. Measured on easy-0003: two levels back, the true
+state is matched by `meetKey` and has 2 predecessors, while the variant the unfold produced
+has 0.
+
+于是逆折叠重建出的状态是**同一张纸**（几何完全相同、`meetKey` 相同），但那些层在清单里的位置不同。
+它折回去正确、验证通过。但**再往回一步就是死胡同**：在那个排法下移动段不再连续，没有任何折叠能到达它。
+easy-0003 实测：回退两层，真状态被 `meetKey` 命中且有 2 个前驱，而逆折叠产出的变体有 0 个。
+
+That also explains why every earlier test passed. Along a reference path, and one step off it,
+the states are FORWARD-generated, so their order is the one folding produced: 24/24 complete
+along reference paths, 25/25 one step off. The failure only appears on states the unfold
+itself built.
+
+这也解释了为什么之前的测试全通过。沿参考路径、以及偏离一步，状态都是**正向生成的**，
+层序天然是折叠产生的那个：沿参考路径 24/24，偏离一步 25/25。只有逆折叠自己造出来的状态才出问题。
+
+### Three ways out, and all three are closed / 三条出路，全部堵死
+
+1. **Normalise the order everywhere**, so both directions agree. Tested directly: normalise
+   each forward state's layer order and ask whether the moved run is still contiguous at one
+   end. **7 of 30 folds lose it** (easy-0003 three, mid-0001 four). Normalising breaks the
+   property the unfold needs. Closed.
+   **统一规范化层序**，让两个方向一致。直接测了：把每个正向状态的层序规范化，
+   看移动段是否仍在一端连续。**30 个里 7 个不再连续**。规范化破坏逆折叠所需的性质。堵死。
+2. **Drop the contiguity requirement** and let the unfold consider any subset on one side.
+   The candidate set goes from ~2N to 2^N. Closed.
+   **放弃连续性要求**，允许一侧任意子集。候选从约 2N 变成 2^N。堵死。
+3. **Accept it.** Bidirectional search needs the engine to stop carrying an arbitrary order
+   between non-overlapping layers -- a partial order, or a canonical form that folding
+   preserves. That is a change to the simulator, not to the search.
+   **接受。** 双向搜索要求引擎不再给不重叠的层安排一个任意顺序——需要偏序，
+   或者一个折叠会保持的规范形。那是对模拟器的改动，不是对搜索的改动。
+
+**For the paper this is a positive result about the wall, not a failed experiment.** Depth is
+not beaten by meeting in the middle here, and the reason is specific and measured rather than
+"we tried and it was slow".
+
+**对论文而言这是关于「墙」的正面结果，不是失败的实验。** 在这里深度不能靠中间相遇绕过去，
+而且原因是具体的、测出来的，不是「试了一下很慢」。
+
+---
+
 ## 6. Consequences for the paper / 对论文的影响
 
 1. **Do not headline the easy tier.** Effective base 4.1–5.4 at depth 6.8 means BFS solves it
