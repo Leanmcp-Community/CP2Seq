@@ -28,6 +28,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import time
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
@@ -111,7 +112,10 @@ def main():
     parser.add_argument("--corpus", type=Path, default=CORPUS)
     parser.add_argument("--out", type=Path, default=HERE / "runs")
     parser.add_argument("--node-bin", default="node")
-    parser.add_argument("--seconds", type=float, default=60, help="Search budget per sample")
+    parser.add_argument("--seconds", type=float, default=10,
+                        help="Search budget per sample. Shallow samples finish in well under a "
+                             "second; deep ones blow past any budget, so a small number costs "
+                             "little and keeps the batch moving.")
     parser.add_argument("--max-states", type=int, default=500000)
     add_image_options(parser)
     args = parser.parse_args()
@@ -130,18 +134,28 @@ def main():
     write_json(run_dir / "config.json", config)
     print(json.dumps(config, indent=2), flush=True)
 
-    print(f"searching {len(args.samples)} sample(s)...", flush=True)
-    verdicts = search(args.samples, args.seconds, args.max_states, args.node_bin)
-
+    # One sample at a time: search it, replay it, write it, then move on. Searching the whole
+    # list up front meant nothing landed on disk until every sample had finished -- 200 samples
+    # at a 60s budget is hours of silence, and an interrupt threw all of it away.
     results = []
     with BrowserSession() as browser:
-        for sample_id in args.samples:
-            verdict = verdicts.get(sample_id, {"status": "missing"})
+        for index, sample_id in enumerate(args.samples, 1):
+            print(f"[{index}/{len(args.samples)}] {sample_id}: searching "
+                  f"(<= {args.seconds:g}s)...", end="", flush=True)
+            started = time.monotonic()
+            try:
+                verdict = search([sample_id], args.seconds, args.max_states,
+                                 args.node_bin).get(sample_id, {"status": "missing"})
+            except RuntimeError as exc:
+                print(f" FAILED {exc}", flush=True)
+                continue
             row = episode(args, sample_id, browser, run_dir, verdict)
             results.append(row)
             write_json(run_dir / "results.json", results)
-            print(f"{sample_id}: {row['search_status']} solved={row['solved']} "
-                  f"folds={row['candidate_steps']}/{row['reference_steps']}", flush=True)
+            print(f" {row['search_status']}  solved={row['solved']}  "
+                  f"folds={row['candidate_steps']}/{row['reference_steps']}  "
+                  f"nodes={row['search_expanded']}  {time.monotonic() - started:.1f}s",
+                  flush=True)
     solved = sum(1 for r in results if r["solved"])
     print(f"Saved: {run_dir}", flush=True)
     print(f"deterministic BFS solved {solved} of {len(results)}", flush=True)

@@ -13,7 +13,7 @@ script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 repo_dir=$(dirname -- "$script_dir")
 fold_python=${FOLD_PYTHON:-"$repo_dir/.venv/bin/python"}
 : "${SAMPLES:=easy-0001 easy-0002 easy-0003 easy-0004 easy-0005 easy-0006 easy-0007 easy-0008}"
-: "${SECONDS_PER_SAMPLE:=60}"
+: "${SECONDS_PER_SAMPLE:=10}"
 : "${CORPUS_DIR:=$repo_dir/workspace/corpus/out/release/all-layers/samples}"
 if [ ! -x "$fold_python" ]; then
   printf '%s\n' "Python environment not found: $fold_python. Set FOLD_PYTHON." >&2
