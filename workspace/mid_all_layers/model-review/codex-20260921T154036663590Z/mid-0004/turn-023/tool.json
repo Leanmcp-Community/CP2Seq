@@ -1,0 +1,232 @@
+{
+  "action": {
+    "name": "add_fold",
+    "arguments": {
+      "angle_index": 1,
+      "offset": -0.5,
+      "move_positive": true,
+      "over": false
+    }
+  },
+  "result": {
+    "ok": true,
+    "state_id": 2,
+    "created_segments": 1,
+    "layers_bottom_to_top": [
+      {
+        "polygon": [
+          [
+            0.4999999999999999,
+            -0.4999999999999999
+          ],
+          [
+            0.49999999999999994,
+            -0.25000000000000017
+          ],
+          [
+            0.5,
+            -1.6653345369377348e-16
+          ],
+          [
+            1,
+            0.5
+          ],
+          [
+            1.25,
+            0.5000000000000001
+          ],
+          [
+            1.5,
+            0.5000000000000001
+          ],
+          [
+            1.5,
+            0.25000000000000033
+          ],
+          [
+            1.4999999999999998,
+            3.3306690738754696e-16
+          ],
+          [
+            0.9999999999999998,
+            -0.4999999999999998
+          ],
+          [
+            0.7499999999999999,
+            -0.49999999999999983
+          ]
+        ],
+        "parity": 1,
+        "sheet_polygon": [
+          [
+            0,
+            0
+          ],
+          [
+            0.24999999999999978,
+            0
+          ],
+          [
+            0.49999999999999983,
+            0
+          ],
+          [
+            1,
+            0.5
+          ],
+          [
+            1,
+            0.75
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0.7500000000000002,
+            1
+          ],
+          [
+            0.5000000000000001,
+            1
+          ],
+          [
+            0,
+            0.5
+          ],
+          [
+            0,
+            0.25000000000000006
+          ]
+        ]
+      },
+      {
+        "polygon": [
+          [
+            1.5,
+            2.220446049250313e-16
+          ],
+          [
+            1.25,
+            1.1102230246251565e-16
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0.9999999999999999,
+            -0.2499999999999999
+          ],
+          [
+            0.9999999999999998,
+            -0.4999999999999998
+          ]
+        ],
+        "parity": 0,
+        "sheet_polygon": [
+          [
+            0.5000000000000001,
+            1
+          ],
+          [
+            0.2500000000000002,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            0.75
+          ],
+          [
+            0,
+            0.5
+          ]
+        ]
+      },
+      {
+        "polygon": [
+          [
+            0.49999999999999983,
+            0
+          ],
+          [
+            0.7499999999999997,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            0.2499999999999998
+          ],
+          [
+            1,
+            0.5
+          ]
+        ],
+        "parity": 0,
+        "sheet_polygon": [
+          [
+            0.49999999999999983,
+            0
+          ],
+          [
+            0.7499999999999997,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            0.2499999999999998
+          ],
+          [
+            1,
+            0.5
+          ]
+        ]
+      }
+    ],
+    "revision": 13,
+    "sequence": [
+      {
+        "angle_index": 1,
+        "offset": 0.5,
+        "move_positive": true,
+        "over": false
+      },
+      {
+        "angle_index": 1,
+        "offset": -0.5,
+        "move_positive": true,
+        "over": false
+      }
+    ],
+    "comparison_now": {
+      "tier": 3,
+      "tier_meaning": "which layers disagree and what each one should be",
+      "layers_now": 3,
+      "layers_target": 44,
+      "layer_difference": -41,
+      "summary": "41 layers short of the target: more folding to do.",
+      "uses_reference_sequence": false,
+      "alignment": {
+        "compared_under": "a direct rotation/translation of the target",
+        "layers_matching": 0,
+        "layers_compared": 3
+      },
+      "diagnosis": "layer_count",
+      "diagnosis_meaning": "The stacks are different sizes, so folding is incomplete or overdone; ranks are compared only as deep as the shorter stack.",
+      "mismatched_ranks": [],
+      "corrections": []
+    }
+  }
+}

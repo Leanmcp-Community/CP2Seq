@@ -1,0 +1,174 @@
+{
+  "steps": 4,
+  "folds": [
+    {
+      "step": 1,
+      "angle_deg": 90,
+      "angle_index": 2,
+      "offset": 0.75,
+      "move_positive": true,
+      "over": true,
+      "line": {
+        "n": [
+          1,
+          0
+        ],
+        "d": 0.75
+      },
+      "selection": {
+        "mode": "all"
+      },
+      "layers_before": 1,
+      "layers_after": 2,
+      "creases_created": 1,
+      "creases": [
+        {
+          "P": [
+            0.7499999999999997,
+            0
+          ],
+          "Q": [
+            0.75,
+            1
+          ],
+          "assignment": "V"
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "angle_deg": 90,
+      "angle_index": 2,
+      "offset": 0.5,
+      "move_positive": true,
+      "over": false,
+      "line": {
+        "n": [
+          1,
+          0
+        ],
+        "d": 0.5
+      },
+      "selection": {
+        "mode": "all"
+      },
+      "layers_before": 2,
+      "layers_after": 3,
+      "creases_created": 1,
+      "creases": [
+        {
+          "P": [
+            0.49999999999999944,
+            0
+          ],
+          "Q": [
+            0.5000000000000002,
+            1
+          ],
+          "assignment": "M"
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "angle_deg": 90,
+      "angle_index": 2,
+      "offset": 0.25,
+      "move_positive": true,
+      "over": false,
+      "line": {
+        "n": [
+          1,
+          0
+        ],
+        "d": 0.25
+      },
+      "selection": {
+        "mode": "all"
+      },
+      "layers_before": 3,
+      "layers_after": 4,
+      "creases_created": 1,
+      "creases": [
+        {
+          "P": [
+            0.24999999999999972,
+            0
+          ],
+          "Q": [
+            0.25000000000000006,
+            1
+          ],
+          "assignment": "M"
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "angle_deg": 135,
+      "angle_index": 3,
+      "offset": 0.5,
+      "move_positive": true,
+      "over": false,
+      "line": {
+        "n": [
+          1,
+          1
+        ],
+        "d": 0.5
+      },
+      "selection": {
+        "mode": "all"
+      },
+      "layers_before": 4,
+      "layers_after": 8,
+      "creases_created": 4,
+      "creases": [
+        {
+          "P": [
+            0.49999999999999983,
+            0.49999999999999983
+          ],
+          "Q": [
+            0.2499999999999998,
+            0.24999999999999978
+          ],
+          "assignment": "V"
+        },
+        {
+          "P": [
+            0.7499999999999998,
+            0.2500000000000003
+          ],
+          "Q": [
+            0.49999999999999983,
+            0.5000000000000002
+          ],
+          "assignment": "M"
+        },
+        {
+          "P": [
+            1,
+            0.4999999999999994
+          ],
+          "Q": [
+            0.7499999999999998,
+            0.24999999999999978
+          ],
+          "assignment": "V"
+        },
+        {
+          "P": [
+            0.2499999999999998,
+            0.2500000000000002
+          ],
+          "Q": [
+            0,
+            0.5000000000000003
+          ],
+          "assignment": "M"
+        }
+      ]
+    }
+  ]
+}

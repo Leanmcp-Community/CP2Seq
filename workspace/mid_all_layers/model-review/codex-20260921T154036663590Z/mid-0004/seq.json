@@ -1,0 +1,73 @@
+{
+  "steps": 2,
+  "folds": [
+    {
+      "step": 1,
+      "angle_deg": 45,
+      "angle_index": 1,
+      "offset": 0.5,
+      "move_positive": true,
+      "over": false,
+      "line": {
+        "n": [
+          -1,
+          1
+        ],
+        "d": 0.5
+      },
+      "selection": {
+        "mode": "all"
+      },
+      "layers_before": 1,
+      "layers_after": 2,
+      "creases_created": 1,
+      "creases": [
+        {
+          "P": [
+            0.5000000000000001,
+            1
+          ],
+          "Q": [
+            0,
+            0.5
+          ],
+          "assignment": "M"
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "angle_deg": 45,
+      "angle_index": 1,
+      "offset": -0.5,
+      "move_positive": true,
+      "over": false,
+      "line": {
+        "n": [
+          -1,
+          1
+        ],
+        "d": -0.5
+      },
+      "selection": {
+        "mode": "all"
+      },
+      "layers_before": 2,
+      "layers_after": 3,
+      "creases_created": 1,
+      "creases": [
+        {
+          "P": [
+            0.49999999999999983,
+            0
+          ],
+          "Q": [
+            1,
+            0.5
+          ],
+          "assignment": "M"
+        }
+      ]
+    }
+  ]
+}

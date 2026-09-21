@@ -576,6 +576,195 @@ independent of what the harness should enable.
 
 ---
 
+## 5c. Five mid samples at solving scale, both action spaces / mid 五样本，真实解题尺度
+
+The earlier §5b comparison ran at 4 s and 15 s, deep enough to measure branching and nothing
+else. This one gives each arm 900 s per sample on an idle machine — long enough for samples
+to actually be solved — and runs the same five mid samples the recorded model baseline used.
+
+§5b 的对比只跑 4 秒和 15 秒，够测分支因子，不够解题。这一组在空闲机器上给每臂每样本 900 秒，
+样本真的会被解出，而且用的正是模型基线跑过的同样五个 mid 样本。
+
+| sample | ref depth | `any` (wide) | `all` (whole-stack only) |
+| --- | --- | --- | --- |
+| mid-0001 | 11 | timeout, depth 7 | timeout, depth **8** |
+| mid-0002 | 12 | solved, **566 s** | solved, **121 s** |
+| mid-0003 | 13 | timeout, depth 7 | timeout, depth **9** |
+| **mid-0004** | 11 | timeout, depth 8 | **solved, 752 s** |
+| mid-0005 | 12 | timeout, depth 6 | timeout, depth **7** |
+
+**Solved 1/5 → 2/5, and all five reach further.** Both exponentials shrink at once:
+
+**解出 1/5 → 2/5，而且五个样本全部搜得更深。** 两个指数同时变小：
+
+| sample | nodes/s `any` → `all` | b `any` → `all` | depth gain |
+| --- | --- | --- | --- |
+| mid-0001 | 6.3 → 18.3 (2.9×) | 2.94 → 2.39 | +1 |
+| mid-0002 | 9.4 → 32.5 (3.5×) | 1.20 → 1.22 | 0 |
+| mid-0003 | 11.0 → 23.5 (2.1×) | 2.99 → 1.73 | +2 |
+| mid-0004 | 18.5 → 32.0 (1.7×) | 2.23 → 1.72 | +3 |
+| mid-0005 | 9.2 → 17.7 (1.9×) | 4.36 → 3.02 | +1 |
+
+`mid-0002` is the clean control. Its branching is 1.20 to begin with — nearly a chain — so
+restricting the action space barely moves it, and the whole 4.7× speedup (566 s → 121 s)
+comes from throughput alone, which rose 3.5×. Everywhere else both terms contribute.
+
+`mid-0002` 是干净的对照：它的分支本来就只有 1.20（几乎一条链），限制动作空间几乎不改变它，
+566 秒降到 121 秒这 4.7 倍**全部来自吞吐量**（涨了 3.5 倍）。其余样本是两项同时起作用。
+
+> **This does not compare against the model.** Only the search arm was restricted here, so
+> these numbers say what the wide action space costs a searcher, not whether search beats a
+> model. The recorded model baseline on these same five samples is 0/5 under `any`
+> (`runs/codex-20260921T085459155281Z`: four state_cycling, mid-0004 finished with
+> cp_match true and the wrong layer order), and putting "search 2/5 under `all`" next to it
+> would be comparing two different action spaces. The model arm under `--action-space
+> all-layers` has not been run.
+>
+> **这组数字不能拿去和模型比。** 这里只限制了搜索臂，所以它说明的是宽动作空间让搜索付出了多少，
+> 不是搜索能不能赢模型。同样这五个样本的模型基线在 `any` 下是 0/5
+> （四个 state_cycling，mid-0004 跑到 finish 但层序错），把「`all` 下搜索 2/5」摆在旁边
+> 等于在比两个不同的动作空间。**模型臂在 `--action-space all-layers` 下还没跑。**
+>
+> ```sh
+> MODEL=1 bash workspace/mid_all_layers_experiment.sh
+> ```
+
+What it does establish, with §5b and the 0-of-4180 count: **on this corpus the wide action
+space is pure cost to a searcher, and the cost is measurable** — 1.7-3.5× in throughput,
+0.2-1.3 in branching, 1-3 levels of depth. On `some-*` it is what 14-34% of samples require.
+Right tool, wrong corpus, now with numbers on both sides.
+
+结合 §5b 和「4180 条参考折叠里 0 条用部分折」，这组确立的是：
+**在本语料上，宽动作空间对搜索是纯损失，而且损失可量化**——吞吐量 1.7-3.5 倍、
+分支因子 0.2-1.3、深度 1-3 层。而在 `some-*` 上它是 14-34% 样本的刚需。
+工具对、语料用错，现在两边都有数。
+
+---
+
+## 5d. The model arm, same restriction: no help, and one sample worse
+
+## 5d. 模型臂同样限制后：没帮上忙，还伤了一个
+
+§5c restricted the search. This restricts the MODEL, on the same five samples, with every
+other setting copied from the baseline run's config so `--action-space` is the only
+difference.
+
+§5c 限制的是搜索。这一组限制的是**模型**，同样五个样本，其余参数全部照抄基线配置，
+所以 `--action-space` 是唯一的差别。
+
+| sample | baseline `any` | this run `all-layers` |
+| --- | --- | --- |
+| mid-0001 | state_cycling, 33 turns | state_cycling, 38 turns |
+| mid-0002 | state_cycling, 38 turns | state_cycling, 41 turns |
+| mid-0003 | state_cycling, 58 turns | state_cycling, 48 turns |
+| **mid-0004** | **finished, 75 turns, cp_match true** | **state_cycling, 31 turns, cp_match false** |
+| mid-0005 | state_cycling, 34 turns | state_cycling, 37 turns |
+
+**0/5 either way, and mid-0004 got worse.** Under the wide space it reached `finish` with
+every crease and every M/V correct, losing only on layer order; restricted, it gives up
+cycling at 31 turns with the crease pattern wrong.
+
+**两种设定都是 0/5，而且 mid-0004 变差了。** 宽空间下它走到了 `finish`，折痕和 M/V 全对、
+只输在层序；限制之后 31 回合就原地打转，连折痕都不对了。
+
+**So the same restriction helps search and does not help the model**, which is worth stating
+plainly because it is the opposite of what one would guess. Search gained 1.7-3.5× in
+throughput, 1-3 levels of depth and one more solve (§5c). The model gained nothing: nine of
+these ten episodes end in `state_cycling`, in both action spaces, at 31-58 turns out of 80.
+
+**同一个限制帮了搜索、没帮模型**——这值得明说，因为它和直觉相反。
+搜索拿到 1.7-3.5 倍吞吐、1-3 层深度、多解出一个（§5c）。模型什么也没拿到：
+这十个 episode 里有九个以 `state_cycling` 结束，两种动作空间下都是，用掉 31-58 回合（预算 80）。
+
+**The model's bottleneck is therefore not the size of the action space.** The likeliest
+candidate is the one PR #35 already flagged as the bigger remaining problem: ten of its
+twenty-six finished episodes had `cp_match: true` with `terminal_reference_match: false` --
+every crease right, the layer order wrong. mid-0004's baseline is exactly that.
+
+**所以模型的瓶颈不是动作空间的大小。** 最可能的是 PR #35 自己标记为「现在更大的问题」的那一条：
+它 26 个跑到 finish 的 episode 里有 10 个是 `cp_match: true` 而 `terminal_reference_match: false`
+——折痕全对、层序错。mid-0004 的基线正是这个。
+
+This qualifies §6b: restricting the action space makes the task easier **for a searcher**.
+On this evidence it does not make it easier for a model, so the two arms moving together is
+still right, but the "easier benchmark" caveat applies to one arm and not the other.
+
+这一条修正了 §6b：缩小动作空间让任务对**搜索**变简单。就现有证据看它没有让模型的任务变简单，
+所以两臂一起改仍然是对的，但「基准变简单」这个提醒只适用于其中一臂。
+
+---
+
+## 5e. Why bidirectional search does not work here / 双向搜索为什么在这个引擎上做不成
+
+Probe 1 predicted 300-880×: forward branching 3.14-3.43 against a mean in-degree of
+1.20-1.33. The search is built, it is correct -- it solves what one-directional solves, every
+path replayed from the flat sheet and put through `terminalMatch` -- and it is **not faster**.
+easy-0007 takes 115f+97b against 115, 17.9 s against 2.0 s. The backward frontier dies within
+two or three levels, so the meet almost never happens.
+
+探针 1 预测 300-880 倍（前向分支 3.14-3.43 对后向入度 1.20-1.33）。搜索建好了、是正确的
+（能解出单向能解的，每条路径都从平纸重放并通过 `terminalMatch` 验证），**但不快**。
+easy-0007 是 115f+97b 对 115、17.9 秒对 2.0 秒。后向前沿两三层就死，相遇几乎不发生。
+
+**The cause is the engine's state representation, not the branching factor.**
+
+**原因是引擎表示状态的方式，不是分支因子。**
+
+A state is an ORDERED list of layers. Layers that do not overlap -- on opposite sides of a
+fold line, side by side rather than stacked -- have no physically meaningful relative order.
+Folding cannot see it: swapping such a pair leaves the result identical, measured 20 times
+out of 20. **Unfolding depends on it**, because recovering the previous state requires the
+layers that moved to form a contiguous run at one end of the list.
+
+状态是一个**有序**的层清单。互不重叠的层（在折线两侧、并排而非叠放）之间没有物理意义上的先后。
+折叠看不见它：交换这样一对，结果完全相同，实测 20/20。
+**逆折叠依赖它**，因为倒推上一步要求「移动过的那批层在清单一端连成一片」。
+
+So the unfold rebuilds a state that is the same paper -- geometrically identical, same
+`meetKey` -- with those layers in a different place in the list. It folds back correctly and
+verifies. But one step further back it is a dead end: under that arrangement the moved run is
+no longer contiguous and no fold reaches it. Measured on easy-0003: two levels back, the true
+state is matched by `meetKey` and has 2 predecessors, while the variant the unfold produced
+has 0.
+
+于是逆折叠重建出的状态是**同一张纸**（几何完全相同、`meetKey` 相同），但那些层在清单里的位置不同。
+它折回去正确、验证通过。但**再往回一步就是死胡同**：在那个排法下移动段不再连续，没有任何折叠能到达它。
+easy-0003 实测：回退两层，真状态被 `meetKey` 命中且有 2 个前驱，而逆折叠产出的变体有 0 个。
+
+That also explains why every earlier test passed. Along a reference path, and one step off it,
+the states are FORWARD-generated, so their order is the one folding produced: 24/24 complete
+along reference paths, 25/25 one step off. The failure only appears on states the unfold
+itself built.
+
+这也解释了为什么之前的测试全通过。沿参考路径、以及偏离一步，状态都是**正向生成的**，
+层序天然是折叠产生的那个：沿参考路径 24/24，偏离一步 25/25。只有逆折叠自己造出来的状态才出问题。
+
+### Three ways out, and all three are closed / 三条出路，全部堵死
+
+1. **Normalise the order everywhere**, so both directions agree. Tested directly: normalise
+   each forward state's layer order and ask whether the moved run is still contiguous at one
+   end. **7 of 30 folds lose it** (easy-0003 three, mid-0001 four). Normalising breaks the
+   property the unfold needs. Closed.
+   **统一规范化层序**，让两个方向一致。直接测了：把每个正向状态的层序规范化，
+   看移动段是否仍在一端连续。**30 个里 7 个不再连续**。规范化破坏逆折叠所需的性质。堵死。
+2. **Drop the contiguity requirement** and let the unfold consider any subset on one side.
+   The candidate set goes from ~2N to 2^N. Closed.
+   **放弃连续性要求**，允许一侧任意子集。候选从约 2N 变成 2^N。堵死。
+3. **Accept it.** Bidirectional search needs the engine to stop carrying an arbitrary order
+   between non-overlapping layers -- a partial order, or a canonical form that folding
+   preserves. That is a change to the simulator, not to the search.
+   **接受。** 双向搜索要求引擎不再给不重叠的层安排一个任意顺序——需要偏序，
+   或者一个折叠会保持的规范形。那是对模拟器的改动，不是对搜索的改动。
+
+**For the paper this is a positive result about the wall, not a failed experiment.** Depth is
+not beaten by meeting in the middle here, and the reason is specific and measured rather than
+"we tried and it was slow".
+
+**对论文而言这是关于「墙」的正面结果，不是失败的实验。** 在这里深度不能靠中间相遇绕过去，
+而且原因是具体的、测出来的，不是「试了一下很慢」。
+
+---
+
 ## 6. Consequences for the paper / 对论文的影响
 
 1. **Do not headline the easy tier.** Effective base 4.1–5.4 at depth 6.8 means BFS solves it
@@ -670,8 +859,150 @@ extrapolation. **Quote §3's number in the text and treat the curve as the shape
 
 ---
 
+## 6b. Decided: both arms restricted on this corpus / 已决定：本语料两臂都关掉部分折
+
+**Both arms now use whole-stack folds only on `release/all-layers`, and the wide action space
+on the `some-*` corpora.** The default follows `CORPUS_DIR` in `_common.sh` and `--corpus` in
+`deterministic_fold_loop.py`, by the same rule in both, so the two cannot diverge by accident.
+`ACTION_SPACE` and `--selection` override it for a one-off.
+
+**两臂现在在 `release/all-layers` 上都只用全层折，在 `some-*` 语料上都用宽动作空间。**
+默认值由 `_common.sh` 的 `CORPUS_DIR` 和 `deterministic_fold_loop.py` 的 `--corpus` 推出，
+两边用同一条规则，所以不会意外分叉。要临时改用 `ACTION_SPACE` / `--selection`。
+
+Why restricted: not one of the 4180 reference folds on this corpus is partial (§5b), and
+restricting raises search throughput 1.7-3.5×, lowers branching 0.2-1.3, reaches 1-3 levels
+deeper and solves one more mid sample (§5c). Why corpus-dependent: on `some-*`, 14% of
+samples at depth 3 and 34% at depth 6 cannot be solved without partial folds (§5b).
+
+为什么关：本语料 4180 条参考折叠没有一条是部分折（§5b），而关掉之后搜索吞吐提升 1.7-3.5 倍、
+分支因子降 0.2-1.3、多搜 1-3 层、多解出一个 mid 样本（§5c）。
+为什么跟着语料走：在 `some-*` 上，深度 3 有 14%、深度 6 有 34% 的样本没有部分折就解不出来。
+
+**Two consequences to state in the paper / 论文里要写明的两点:**
+
+1. **The task is easier than it was.** A smaller action space is a smaller problem, for the
+   model as much as for the search. Runs before this change are not comparable to runs after
+   it; `result.json` records `action_space` on both arms so the two can be told apart.
+   **题目比原来简单了。** 动作空间变小对模型和搜索都是变简单。
+   改动前后的运行不可比；两臂的 `result.json` 都记录 `action_space`，可以区分。
+2. **Restricting one arm only would have been worse than restricting neither.** It tells that
+   arm a fact about the solution — that whole-stack folds suffice — which the other has not
+   been told, and the comparison then measures the setting instead of the solver.
+   **只关一边比两边都不关更糟。** 那等于告诉其中一臂一条关于答案的信息（全层折就够了），
+   而另一臂不知道，比出来的就是设定而不是求解能力。
+
+---
+
+## 7a. Keep the goal test as it is / 判卷标准保持不变
+
+A backward search needs the target as an engine state, which means knowing which region of
+the flat sheet each layer is — its **provenance**. That field can be backfilled from the
+existing corpus without regenerating it (`backfill_target_provenance.mjs`), which raises a
+question that has to be answered on purpose rather than by default: **should the goal test
+also require provenance to match?**
+
+倒向搜索需要把目标当成引擎状态，也就是要知道每一层是纸上的哪一块——它的 **provenance**。
+这个字段可以从现有语料回填、不用重新生成（`backfill_target_provenance.mjs`），
+于是引出一个必须**有意识回答**而不是默认掉的问题：**判卷是否也要求用纸一致？**
+
+Measured on the nine instances search has solved, comparing each found solution against the
+reference, at three levels of strictness:
+
+在搜索已解出的九个实例上实测，把找到的解和参考解在三个严格度上比较：
+
+| test / 判据 | agrees / 相同 | what it would cost / 代价 |
+| --- | --- | --- |
+| `strictTerminalMatch` (no rigid motion) | **0/9** | rejects every solve — a model rotated 90° is the same model |
+| sheet regions used, as a set / 用到的纸块集合 | **9/9** | nothing |
+| full provenance, turnover allowed / 完整 provenance（允许翻面） | **7/9** | **rejects 2 of 9** |
+
+So tightening to provenance costs about 22%, less than feared. **The problem is which 22%:**
+
+所以收紧到 provenance 的代价约 22%，比担心的小。**问题在于砍掉的是哪 22%：**
+
+- **`easy-0007`** — solved in **7 folds where the reference takes 8**. Under a
+  provenance-strict test, a solution *better than the reference* is marked wrong.
+  **`easy-0007`** —— **7 步解出，而参考解要 8 步**。在 provenance 严格判定下，
+  一个**比标准答案更好的解**会被判为错误。
+- **`mid-0004`** — the same sheet regions in a different stacking order: a genuinely
+  different, equally valid way to fold the same shape.
+  **`mid-0004`** —— 同样的纸块、不同的叠法：另一种同样有效的折法。
+
+**Decision: keep the goal test as it is (option A).** Not because the cost is large, but
+because it falls on exactly the behaviour the benchmark should reward. An origami shape has
+many foldings; making the reference sequence the only correct one turns the task from "can
+it be folded" into "can this particular sequence be reproduced".
+
+**决定：判卷标准不变（方案 A）。** 不是因为代价大，而是因为代价**正好落在基准应当奖励的行为上**。
+一个折纸形状有多种折法，把参考解定为唯一正确答案，测的就从「能不能折出来」
+变成了「能不能复现这一条序列」。
+
+**Backward search does not need the tightening.** It needs the provenance *field* as a
+starting point, with the goal test untouched. The cost is that a backward search seeded from
+one target's provenance cannot reach the ~22% of solutions that use the paper differently —
+but it never returns a wrong one, the forward half still finds them, and in a bidirectional
+search either half suffices.
+
+**倒向搜索不需要收紧。** 它需要的是 provenance 这个**字段**当起点，判卷照旧。
+代价是从单一 provenance 出发的倒向搜索够不到那约 22% 用纸不同的解——
+但它不会给出错解，前向那一半照样能找到它们，而双向搜索里任一半找到就够了。
+
+---
+
+## 7b. The corpus has no symmetry, and real origami does / 语料没有对称性，而真实折纸有
+
+Measured across **all 400 samples of `release/all-layers`: every crease pattern has a
+trivial symmetry group.** Not one is invariant under any of the square's eight dihedral
+motions, with or without an M/V swap. The probe self-tests to 8 on a hand-made symmetric
+pattern, so this is the corpus and not the code.
+
+在 `release/all-layers` 的**全部 400 个样本上实测：每一个折痕图的对称群都是平凡群。**
+没有一个在正方形的八个二面体变换下不变（无论是否交换 M/V）。
+探针在人造的对称折痕图上自检得到阶 8，所以这是语料的性质，不是代码的问题。
+
+The cause is the generator: these crease patterns come from **random fold sequences**, and a
+symmetry would have to arise by coincidence. Real origami is the opposite — cranes, box
+pleats and tessellations are almost always 4- or 8-fold symmetric, because that is what makes
+them designable and foldable by hand.
+
+原因在生成器：这些折痕图来自**随机折叠序列**，对称只能靠巧合出现。
+真实折纸恰好相反——千纸鹤、箱形褶、镶嵌图案几乎都有 4 重或 8 重对称，
+因为那正是它们可设计、可手工折叠的原因。
+
+**Two consequences / 两层含义:**
+
+1. **Symmetry pruning is worth nothing here and might be the largest single win on real
+   patterns.** A symmetry maps solutions to solutions, so subtrees under symmetric folds are
+   isomorphic and exploring one per orbit is exact. It is also the only prune that bites at
+   the TOP of the tree, where a target-state heuristic has no signal because every candidate
+   is equally far from the target. Up to 8x, exactly, losing no solution — and unavailable on
+   this corpus.
+   **对称剪枝在这里一文不值，而在真实折痕图上可能是最大的一块。**
+   对称把解映射成解，所以对称折叠下的子树同构，每个轨道只探一条是**精确**的。
+   它还是唯一能剪**树顶**的方法——那里目标态启发式没有信号，因为所有候选离目标一样远。
+   最多 8 倍、精确、不丢解——而本语料上拿不到。
+
+2. **The benchmark may be systematically off from the difficulty structure of real origami.**
+   A solver that exploits symmetry would look much better on real patterns than it does here,
+   and one that does not would look relatively better here than it deserves. This belongs in
+   the paper's limitations, and it is worth telling whoever generates the corpus.
+   **这个基准可能系统性地偏离了真实折纸的难度结构。**
+   一个会利用对称的求解器在真实折痕图上会好得多，而不会利用对称的在这里显得比它应得的更好。
+   这属于论文的局限性，也值得告诉生成语料的人。
+
+```sh
+node workspace/probe_search_strategies.mjs --probe 5 easy-0003 mid-0001
+```
+
+---
+
 ## 8. Not yet measured / 尚未测量
 
+- **The model arm under `--action-space all-layers`** (§5c). The search arm is measured; until
+  the model runs in the same action space there is no fair comparison, only two halves.
+  **模型臂在 `--action-space all-layers` 下的运行**（§5c）。搜索臂已测；
+  模型没在同一动作空间下跑之前，没有公平对比，只有两个半边。
 - The 960s search budget. `b` moved by less than 0.3 when 240s was added.
   960 秒那档搜索预算。加入 240s 时 `b` 变化小于 0.3，跑它换不来会变的数字。
 

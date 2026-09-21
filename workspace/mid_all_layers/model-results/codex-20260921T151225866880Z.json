@@ -1,0 +1,27 @@
+[
+  {
+    "sample_id": "mid-0001",
+    "backend": "codex-cli-chatgpt",
+    "model_requested": "gpt-5.6-luna",
+    "reasoning_effort": "low",
+    "image_history": "all",
+    "tools": "legal-folds",
+    "action_space": "all-layers",
+    "termination": "state_cycling",
+    "sample_calls": 38,
+    "tool_calls": 38,
+    "cp_match": false,
+    "produced_segments": 7,
+    "target_segments": 81,
+    "terminal_reference_match": false,
+    "tolerance": 2e-06,
+    "validity_scope": "Zero-thickness some-layers engine with original-sheet connectivity/tearing checks; exposed top/bottom runs only, no continuous collision simulation",
+    "pilot_match": false,
+    "terminal_metric": "Polygon, parity and bottom-to-top layer equality under a single plane isometry (arbitrary translation and rotation; reflections reverse stack order and flip every parity)",
+    "action_edit_distance": 11,
+    "candidate_steps": 4,
+    "reference_steps": 11,
+    "step_count_ratio": 0.36363636363636365,
+    "solved": false
+  }
+]

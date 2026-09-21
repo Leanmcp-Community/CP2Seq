@@ -24,7 +24,8 @@
 # none of them, SAMPLES is used: a ten-sample smoke set by default, or whatever you export.
 #
 # Any of these may be overridden from the environment for a one-off run:
-#   SAMPLES MAX_TURNS TIMEOUT REASONING_EFFORT IMAGE_HISTORY CORPUS_DIR FOLD_PYTHON OBS_ECHO
+#   SAMPLES MAX_TURNS TIMEOUT REASONING_EFFORT IMAGE_HISTORY CORPUS_DIR ACTION_SPACE
+#   FOLD_PYTHON OBS_ECHO
 #
 # Extra arguments to the run script are forwarded to codex_fold_loop.py after the shared
 # flags, and argparse takes the last occurrence, so any of them can be overridden inline:
@@ -50,6 +51,27 @@ repo_dir=$(dirname -- "$script_dir")
 : "${REASONING_EFFORT:=low}"
 : "${IMAGE_HISTORY:=all}"
 : "${CORPUS_DIR:=$repo_dir/workspace/corpus/out/release/all-layers/samples}"
+
+# ACTION SPACE -- follows the corpus, not a preference.
+#
+# Not one of the 4180 reference folds in release/all-layers is a partial top/bottom run, so
+# on that corpus those actions cannot appear in a solution while they multiply the
+# enumerator's candidate count by the layer count. Measured on five mid samples: restricting
+# to whole-stack folds raises search throughput 1.7-3.5x, lowers the branching factor by
+# 0.2-1.3, reaches 1-3 levels deeper, and solves one more sample.
+#
+# The some-verified-* and some-generated-* corpora are the opposite: about a third of their
+# reference folds are partial, and 14% of samples at depth 3 and 34% at depth 6 cannot be
+# solved without them. So the default is chosen from CORPUS_DIR rather than fixed, and a run
+# on one of those corpora keeps the wide space automatically.
+#
+# THE SEARCH ARM MUST MATCH. Restricting only the model, or only the search, tells one of
+# them something about the solution the other has not been told, and the comparison then
+# measures the setting instead of the solver. The deterministic arm takes --selection all.
+case "$CORPUS_DIR" in
+  *some-*) : "${ACTION_SPACE:=any}" ;;
+  *)       : "${ACTION_SPACE:=all-layers}" ;;
+esac
 
 # Pull the sample-selection flags out of the forwarded arguments. Rotating the argument list
 # one element at a time is the POSIX way to filter "$@" in place: shift the head off, and
@@ -99,4 +121,5 @@ exec "$fold_python" "$script_dir/codex_fold_loop.py" \
   --reasoning-effort "$REASONING_EFFORT" \
   --image-history "$IMAGE_HISTORY" \
   --tools "$TOOLS" \
+  --action-space "$ACTION_SPACE" \
   "$@"

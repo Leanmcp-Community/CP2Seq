@@ -41,9 +41,20 @@ from capture_fold import (BrowserSession, CORPUS, DEFAULT_SAMPLES, load_task,
 from codex_fold_loop import save_candidate, sequence_metrics, model_view
 
 
-def search(samples, seconds, max_states, node_bin):
-    """Run the BFS in node and return its verdict per sample."""
-    command = [node_bin, str(ROOT / "workspace/search_baseline.mjs"), "--json",
+def search(samples, seconds, max_states, node_bin, selection="all"):
+    """Run the BFS in node and return its verdict per sample.
+
+    selection is the action space, and it has to match whatever the MODEL arm was given --
+    _common.sh derives that from the corpus, whole-stack only on release/all-layers and the
+    wide space on the some-* sets. Restricting one arm and not the other hands that one a
+    fact about the solution the other does not have, and the comparison then measures the
+    setting rather than the solver.
+
+    search_baseline_stateful.mjs rather than search_baseline.mjs: it takes --selection, and
+    it agrees with the merged searcher node for node (bench_search_engines.sh).
+    """
+    command = [node_bin, str(ROOT / "workspace/search_baseline_stateful.mjs"), "--json",
+               "--selection", selection,
                "--seconds", str(seconds), "--max-states", str(max_states), *samples]
     done = subprocess.run(command, capture_output=True, text=True, cwd=str(ROOT))
     if done.returncode:
@@ -114,6 +125,11 @@ def main():
     parser.add_argument("--corpus", type=Path, default=CORPUS)
     parser.add_argument("--out", type=Path, default=HERE / "runs")
     parser.add_argument("--node-bin", default="node")
+    parser.add_argument("--selection", choices=["any", "all"], default=None,
+                        help="Action space for the search. Defaults to the one the model arm "
+                             "uses on this corpus: all (whole-stack only) on release/all-layers, "
+                             "any on the some-* sets, where 14-34%% of samples need a partial "
+                             "fold. Both arms must use the same one.")
     parser.add_argument("--seconds", type=float, default=10,
                         help="Search budget per sample. Shallow samples finish in well under a "
                              "second; deep ones blow past any budget, so a small number costs "
@@ -130,6 +146,10 @@ def main():
                              "fast samples the PNG captures cost more than the search does.")
     add_image_options(parser)
     args = parser.parse_args()
+    if args.selection is None:
+        # Same rule _common.sh applies to the model arm, so the two cannot diverge by
+        # accident: whole-stack only where no reference fold is partial, wide where they are.
+        args.selection = "any" if "some-" in str(args.corpus) else "all"
     args.out = args.out.expanduser().resolve()
     args.corpus = args.corpus.expanduser().resolve()
     for sample_id in args.samples:
@@ -141,7 +161,7 @@ def main():
     config = {k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()}
     # model/tools are what the viewer's sidebar reads to label the arm.
     config.update(model="deterministic-bfs", tools="legal-folds", compare_tier=0,
-                  backend="deterministic-bfs")
+                  backend="deterministic-bfs", action_space="all-layers" if args.selection == "all" else "any")
     write_json(run_dir / "config.json", config)
     print(json.dumps(config, indent=2), flush=True)
 
@@ -151,7 +171,7 @@ def main():
     def find(sample_id):
         try:
             return sample_id, search([sample_id], args.seconds, args.max_states,
-                                     args.node_bin).get(sample_id, {"status": "missing"})
+                                     args.node_bin, args.selection).get(sample_id, {"status": "missing"})
         except RuntimeError as exc:
             return sample_id, {"status": "error", "error": str(exc)}
 

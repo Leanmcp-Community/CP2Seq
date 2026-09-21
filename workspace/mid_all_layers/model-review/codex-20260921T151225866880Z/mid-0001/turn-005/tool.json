@@ -1,0 +1,787 @@
+{
+  "action": {
+    "name": "list_legal_folds",
+    "arguments": {
+      "max_results": 40,
+      "include_rejected": false
+    }
+  },
+  "result": {
+    "ok": true,
+    "state_id": 2,
+    "layers_bottom_to_top": [
+      {
+        "polygon": [
+          [
+            0.2500000000000003,
+            0
+          ],
+          [
+            0.125,
+            0
+          ],
+          [
+            5.551115123125783e-16,
+            0
+          ],
+          [
+            -2.220446049250313e-16,
+            1
+          ],
+          [
+            0.125,
+            1
+          ],
+          [
+            0.24999999999999994,
+            1
+          ]
+        ],
+        "parity": 1,
+        "sheet_polygon": [
+          [
+            0.24999999999999972,
+            0
+          ],
+          [
+            0.375,
+            0
+          ],
+          [
+            0.49999999999999944,
+            0
+          ],
+          [
+            0.5000000000000002,
+            1
+          ],
+          [
+            0.375,
+            1
+          ],
+          [
+            0.25000000000000006,
+            1
+          ]
+        ]
+      },
+      {
+        "polygon": [
+          [
+            -5.551115123125783e-16,
+            0
+          ],
+          [
+            0.125,
+            0
+          ],
+          [
+            0.24999999999999967,
+            0
+          ],
+          [
+            0.25,
+            1
+          ],
+          [
+            0.125,
+            1
+          ],
+          [
+            2.220446049250313e-16,
+            1
+          ]
+        ],
+        "parity": 0,
+        "sheet_polygon": [
+          [
+            0.49999999999999944,
+            0
+          ],
+          [
+            0.625,
+            0
+          ],
+          [
+            0.7499999999999997,
+            0
+          ],
+          [
+            0.75,
+            1
+          ],
+          [
+            0.625,
+            1
+          ],
+          [
+            0.5000000000000002,
+            1
+          ]
+        ]
+      },
+      {
+        "polygon": [
+          [
+            0.25000000000000033,
+            0
+          ],
+          [
+            0.125,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0.125
+          ],
+          [
+            0,
+            0.24999999999999953
+          ],
+          [
+            0,
+            0.375
+          ],
+          [
+            0,
+            0.4999999999999994
+          ],
+          [
+            0,
+            0.625
+          ],
+          [
+            0,
+            0.7499999999999996
+          ],
+          [
+            0,
+            0.875
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0.125,
+            1
+          ],
+          [
+            0.25,
+            1
+          ]
+        ],
+        "parity": 1,
+        "sheet_polygon": [
+          [
+            0.7499999999999997,
+            0
+          ],
+          [
+            0.875,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            0.125
+          ],
+          [
+            1,
+            0.24999999999999953
+          ],
+          [
+            1,
+            0.375
+          ],
+          [
+            1,
+            0.4999999999999994
+          ],
+          [
+            1,
+            0.625
+          ],
+          [
+            1,
+            0.7499999999999996
+          ],
+          [
+            1,
+            0.875
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0.875,
+            1
+          ],
+          [
+            0.75,
+            1
+          ]
+        ]
+      },
+      {
+        "polygon": [
+          [
+            0,
+            0
+          ],
+          [
+            0.125,
+            0
+          ],
+          [
+            0.24999999999999972,
+            0
+          ],
+          [
+            0.25000000000000006,
+            1
+          ],
+          [
+            0.125,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            0.875
+          ],
+          [
+            0,
+            0.75
+          ],
+          [
+            0,
+            0.625
+          ],
+          [
+            0,
+            0.5000000000000003
+          ],
+          [
+            0,
+            0.375
+          ],
+          [
+            0,
+            0.25000000000000017
+          ],
+          [
+            0,
+            0.125
+          ]
+        ],
+        "parity": 0,
+        "sheet_polygon": [
+          [
+            0,
+            0
+          ],
+          [
+            0.125,
+            0
+          ],
+          [
+            0.24999999999999972,
+            0
+          ],
+          [
+            0.25000000000000006,
+            1
+          ],
+          [
+            0.125,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            0.875
+          ],
+          [
+            0,
+            0.75
+          ],
+          [
+            0,
+            0.625
+          ],
+          [
+            0,
+            0.5000000000000003
+          ],
+          [
+            0,
+            0.375
+          ],
+          [
+            0,
+            0.25000000000000017
+          ],
+          [
+            0,
+            0.125
+          ]
+        ]
+      }
+    ],
+    "revision": 2,
+    "sequence": [
+      {
+        "angle_index": 2,
+        "offset": 0.5,
+        "move_positive": true,
+        "over": false
+      },
+      {
+        "angle_index": 2,
+        "offset": 0.25,
+        "move_positive": true,
+        "over": false
+      }
+    ],
+    "enumeration": {
+      "state_id": 2,
+      "stack_size": 4,
+      "candidate_lines": 36,
+      "actions_evaluated": 144,
+      "distinct_legal_folds": 6,
+      "returned": 6,
+      "truncated": false,
+      "ordering": "most new crease length first, then fewest resulting layers",
+      "deduplication": "Actions reaching the same paper in the same stacking order, up to one rigid motion of the whole sheet or a turnover, are one entry; the others are in equivalent_actions.",
+      "coordinate_frames": {
+        "action": "current folded coordinates",
+        "creates": "original sheet coordinates"
+      },
+      "guarantee": "Each listed action is accepted verbatim by add_fold while state_id is unchanged. Legality and CP compatibility are decided by the same verifier add_fold uses.",
+      "rejected_summary": {
+        "nothing-to-move": 40,
+        "no-crease": 40,
+        "OUTSIDE_TARGET_CP": 52
+      },
+      "legal_folds": [
+        {
+          "action": {
+            "angle_index": 3,
+            "offset": 0.5,
+            "move_positive": true,
+            "selection_mode": "all",
+            "over": false
+          },
+          "creates": [
+            {
+              "assignment": "V",
+              "from": [
+                0.49999999999999983,
+                0.49999999999999983
+              ],
+              "to": [
+                0.2499999999999998,
+                0.24999999999999978
+              ]
+            },
+            {
+              "assignment": "M",
+              "from": [
+                0.7499999999999998,
+                0.2500000000000003
+              ],
+              "to": [
+                0.49999999999999983,
+                0.5000000000000002
+              ]
+            },
+            {
+              "assignment": "V",
+              "from": [
+                1,
+                0.4999999999999994
+              ],
+              "to": [
+                0.7499999999999998,
+                0.24999999999999978
+              ]
+            },
+            {
+              "assignment": "M",
+              "from": [
+                0.2499999999999998,
+                0.2500000000000002
+              ],
+              "to": [
+                0,
+                0.5000000000000003
+              ]
+            }
+          ],
+          "new_crease_length": 1.414213562373095,
+          "layers_after": 8,
+          "equivalent_actions": [
+            {
+              "angle_index": 3,
+              "offset": 0.5,
+              "move_positive": false,
+              "selection_mode": "all",
+              "over": false
+            }
+          ],
+          "equivalent_action_count": 2
+        },
+        {
+          "action": {
+            "angle_index": 0,
+            "offset": 0.5,
+            "move_positive": true,
+            "selection_mode": "all",
+            "over": false
+          },
+          "creates": [
+            {
+              "assignment": "V",
+              "from": [
+                0.49999999999999983,
+                0.5
+              ],
+              "to": [
+                0.2499999999999999,
+                0.5
+              ]
+            },
+            {
+              "assignment": "M",
+              "from": [
+                0.7499999999999998,
+                0.5
+              ],
+              "to": [
+                0.49999999999999983,
+                0.5
+              ]
+            },
+            {
+              "assignment": "V",
+              "from": [
+                1,
+                0.4999999999999994
+              ],
+              "to": [
+                0.7499999999999998,
+                0.5
+              ]
+            },
+            {
+              "assignment": "M",
+              "from": [
+                0.2499999999999999,
+                0.5
+              ],
+              "to": [
+                0,
+                0.5000000000000003
+              ]
+            }
+          ],
+          "new_crease_length": 1,
+          "layers_after": 8,
+          "equivalent_actions": [
+            {
+              "angle_index": 0,
+              "offset": 0.5,
+              "move_positive": false,
+              "selection_mode": "all",
+              "over": false
+            }
+          ],
+          "equivalent_action_count": 2
+        },
+        {
+          "action": {
+            "angle_index": 0,
+            "offset": 0.375,
+            "move_positive": true,
+            "selection_mode": "all",
+            "over": true
+          },
+          "creates": [
+            {
+              "assignment": "M",
+              "from": [
+                0.4999999999999997,
+                0.375
+              ],
+              "to": [
+                0.24999999999999983,
+                0.375
+              ]
+            },
+            {
+              "assignment": "V",
+              "from": [
+                0.7499999999999998,
+                0.375
+              ],
+              "to": [
+                0.4999999999999997,
+                0.375
+              ]
+            },
+            {
+              "assignment": "M",
+              "from": [
+                1,
+                0.375
+              ],
+              "to": [
+                0.7499999999999998,
+                0.375
+              ]
+            },
+            {
+              "assignment": "V",
+              "from": [
+                0.24999999999999983,
+                0.375
+              ],
+              "to": [
+                0,
+                0.375
+              ]
+            }
+          ],
+          "new_crease_length": 1,
+          "layers_after": 8,
+          "equivalent_actions": [
+            {
+              "angle_index": 0,
+              "offset": 0.375,
+              "move_positive": false,
+              "selection_mode": "all",
+              "over": true
+            }
+          ],
+          "equivalent_action_count": 2
+        },
+        {
+          "action": {
+            "angle_index": 0,
+            "offset": 0.125,
+            "move_positive": true,
+            "selection_mode": "all",
+            "over": false
+          },
+          "creates": [
+            {
+              "assignment": "V",
+              "from": [
+                0.49999999999999956,
+                0.125
+              ],
+              "to": [
+                0.24999999999999978,
+                0.125
+              ]
+            },
+            {
+              "assignment": "M",
+              "from": [
+                0.7499999999999997,
+                0.125
+              ],
+              "to": [
+                0.49999999999999956,
+                0.125
+              ]
+            },
+            {
+              "assignment": "V",
+              "from": [
+                1,
+                0.125
+              ],
+              "to": [
+                0.7499999999999997,
+                0.125
+              ]
+            },
+            {
+              "assignment": "M",
+              "from": [
+                0.24999999999999978,
+                0.125
+              ],
+              "to": [
+                0,
+                0.125
+              ]
+            }
+          ],
+          "new_crease_length": 1,
+          "layers_after": 8,
+          "equivalent_actions": [
+            {
+              "angle_index": 0,
+              "offset": 0.125,
+              "move_positive": false,
+              "selection_mode": "all",
+              "over": false
+            }
+          ],
+          "equivalent_action_count": 2
+        },
+        {
+          "action": {
+            "angle_index": 0,
+            "offset": 0.875,
+            "move_positive": true,
+            "selection_mode": "all",
+            "over": true
+          },
+          "creates": [
+            {
+              "assignment": "M",
+              "from": [
+                0.5000000000000001,
+                0.875
+              ],
+              "to": [
+                0.25,
+                0.875
+              ]
+            },
+            {
+              "assignment": "V",
+              "from": [
+                0.75,
+                0.875
+              ],
+              "to": [
+                0.5000000000000001,
+                0.875
+              ]
+            },
+            {
+              "assignment": "M",
+              "from": [
+                1,
+                0.875
+              ],
+              "to": [
+                0.75,
+                0.875
+              ]
+            },
+            {
+              "assignment": "V",
+              "from": [
+                0.25,
+                0.875
+              ],
+              "to": [
+                0,
+                0.875
+              ]
+            }
+          ],
+          "new_crease_length": 1,
+          "layers_after": 8,
+          "equivalent_actions": [
+            {
+              "angle_index": 0,
+              "offset": 0.875,
+              "move_positive": false,
+              "selection_mode": "all",
+              "over": true
+            }
+          ],
+          "equivalent_action_count": 2
+        },
+        {
+          "action": {
+            "angle_index": 0,
+            "offset": 0.625,
+            "move_positive": true,
+            "selection_mode": "all",
+            "over": false
+          },
+          "creates": [
+            {
+              "assignment": "V",
+              "from": [
+                0.49999999999999994,
+                0.625
+              ],
+              "to": [
+                0.24999999999999994,
+                0.625
+              ]
+            },
+            {
+              "assignment": "M",
+              "from": [
+                0.7499999999999999,
+                0.625
+              ],
+              "to": [
+                0.49999999999999994,
+                0.625
+              ]
+            },
+            {
+              "assignment": "V",
+              "from": [
+                1,
+                0.625
+              ],
+              "to": [
+                0.7499999999999999,
+                0.625
+              ]
+            },
+            {
+              "assignment": "M",
+              "from": [
+                0.24999999999999994,
+                0.625
+              ],
+              "to": [
+                0,
+                0.625
+              ]
+            }
+          ],
+          "new_crease_length": 1,
+          "layers_after": 8,
+          "equivalent_actions": [
+            {
+              "angle_index": 0,
+              "offset": 0.625,
+              "move_positive": false,
+              "selection_mode": "all",
+              "over": false
+            }
+          ],
+          "equivalent_action_count": 2
+        }
+      ]
+    }
+  }
+}
