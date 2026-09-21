@@ -576,6 +576,71 @@ independent of what the harness should enable.
 
 ---
 
+## 5c. Five mid samples at solving scale, both action spaces / mid 五样本，真实解题尺度
+
+The earlier §5b comparison ran at 4 s and 15 s, deep enough to measure branching and nothing
+else. This one gives each arm 900 s per sample on an idle machine — long enough for samples
+to actually be solved — and runs the same five mid samples the recorded model baseline used.
+
+§5b 的对比只跑 4 秒和 15 秒，够测分支因子，不够解题。这一组在空闲机器上给每臂每样本 900 秒，
+样本真的会被解出，而且用的正是模型基线跑过的同样五个 mid 样本。
+
+| sample | ref depth | `any` (wide) | `all` (whole-stack only) |
+| --- | --- | --- | --- |
+| mid-0001 | 11 | timeout, depth 7 | timeout, depth **8** |
+| mid-0002 | 12 | solved, **566 s** | solved, **121 s** |
+| mid-0003 | 13 | timeout, depth 7 | timeout, depth **9** |
+| **mid-0004** | 11 | timeout, depth 8 | **solved, 752 s** |
+| mid-0005 | 12 | timeout, depth 6 | timeout, depth **7** |
+
+**Solved 1/5 → 2/5, and all five reach further.** Both exponentials shrink at once:
+
+**解出 1/5 → 2/5，而且五个样本全部搜得更深。** 两个指数同时变小：
+
+| sample | nodes/s `any` → `all` | b `any` → `all` | depth gain |
+| --- | --- | --- | --- |
+| mid-0001 | 6.3 → 18.3 (2.9×) | 2.94 → 2.39 | +1 |
+| mid-0002 | 9.4 → 32.5 (3.5×) | 1.20 → 1.22 | 0 |
+| mid-0003 | 11.0 → 23.5 (2.1×) | 2.99 → 1.73 | +2 |
+| mid-0004 | 18.5 → 32.0 (1.7×) | 2.23 → 1.72 | +3 |
+| mid-0005 | 9.2 → 17.7 (1.9×) | 4.36 → 3.02 | +1 |
+
+`mid-0002` is the clean control. Its branching is 1.20 to begin with — nearly a chain — so
+restricting the action space barely moves it, and the whole 4.7× speedup (566 s → 121 s)
+comes from throughput alone, which rose 3.5×. Everywhere else both terms contribute.
+
+`mid-0002` 是干净的对照：它的分支本来就只有 1.20（几乎一条链），限制动作空间几乎不改变它，
+566 秒降到 121 秒这 4.7 倍**全部来自吞吐量**（涨了 3.5 倍）。其余样本是两项同时起作用。
+
+> **This does not compare against the model.** Only the search arm was restricted here, so
+> these numbers say what the wide action space costs a searcher, not whether search beats a
+> model. The recorded model baseline on these same five samples is 0/5 under `any`
+> (`runs/codex-20260921T085459155281Z`: four state_cycling, mid-0004 finished with
+> cp_match true and the wrong layer order), and putting "search 2/5 under `all`" next to it
+> would be comparing two different action spaces. The model arm under `--action-space
+> all-layers` has not been run.
+>
+> **这组数字不能拿去和模型比。** 这里只限制了搜索臂，所以它说明的是宽动作空间让搜索付出了多少，
+> 不是搜索能不能赢模型。同样这五个样本的模型基线在 `any` 下是 0/5
+> （四个 state_cycling，mid-0004 跑到 finish 但层序错），把「`all` 下搜索 2/5」摆在旁边
+> 等于在比两个不同的动作空间。**模型臂在 `--action-space all-layers` 下还没跑。**
+>
+> ```sh
+> MODEL=1 bash workspace/mid_all_layers_experiment.sh
+> ```
+
+What it does establish, with §5b and the 0-of-4180 count: **on this corpus the wide action
+space is pure cost to a searcher, and the cost is measurable** — 1.7-3.5× in throughput,
+0.2-1.3 in branching, 1-3 levels of depth. On `some-*` it is what 14-34% of samples require.
+Right tool, wrong corpus, now with numbers on both sides.
+
+结合 §5b 和「4180 条参考折叠里 0 条用部分折」，这组确立的是：
+**在本语料上，宽动作空间对搜索是纯损失，而且损失可量化**——吞吐量 1.7-3.5 倍、
+分支因子 0.2-1.3、深度 1-3 层。而在 `some-*` 上它是 14-34% 样本的刚需。
+工具对、语料用错，现在两边都有数。
+
+---
+
 ## 6. Consequences for the paper / 对论文的影响
 
 1. **Do not headline the easy tier.** Effective base 4.1–5.4 at depth 6.8 means BFS solves it
@@ -719,6 +784,10 @@ node workspace/probe_search_strategies.mjs --probe 5 easy-0003 mid-0001
 
 ## 8. Not yet measured / 尚未测量
 
+- **The model arm under `--action-space all-layers`** (§5c). The search arm is measured; until
+  the model runs in the same action space there is no fair comparison, only two halves.
+  **模型臂在 `--action-space all-layers` 下的运行**（§5c）。搜索臂已测；
+  模型没在同一动作空间下跑之前，没有公平对比，只有两个半边。
 - The 960s search budget. `b` moved by less than 0.3 when 240s was added.
   960 秒那档搜索预算。加入 240s 时 `b` 变化小于 0.3，跑它换不来会变的数字。
 
