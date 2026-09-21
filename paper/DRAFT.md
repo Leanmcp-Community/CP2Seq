@@ -47,48 +47,34 @@ and the body as well; §16 records why.
 
 ## Abstract
 
-Multimodal language models are strong at tasks that ask what is in an image, and weaker, in ways
+Multimodal language models are strong at tasks that ask what is in an image and weaker, in ways
 their image-task scores do not predict, at tasks that ask about geometry: exact angles, exact
 incidences, and which of two overlapping pieces lies in front. We use origami to measure the
-difference. Given a crease pattern and the final folded state, a model must recover the sequence of
-folds that turns the flat sheet into that state. Both endpoints are supplied; the path between them
-is not.
-
-The task is trivial to generate and hard to solve, which is what makes it usable as a benchmark.
-Folding forward is one pass of an engine that records what it did. Deciding whether a crease
-pattern is reachable by simple folds at all is NP hard, so recovering the sequence is at least as
-hard, and determining the layer ordering of a flat folding is NP hard on its own even when a valid
-mountain-valley assignment is given. The same engine that generates a sample can rule exactly on
-any proposed step of a solution, so the benchmark's judge executes the model's proposal rather than
-comparing it against a stored answer. The task also becomes strictly harder as it proceeds, because
-every fold thickens the stack and constrains the next one, and a solver has to track a planar
-geometry together with a layer ordering that continuously constrain each other.
-
-Search alone does not survive this. The reachable space grows with depth faster than any exhaustive
-strategy can cover, so a model that proposes without reading the pattern exhausts its budget, and a
-deterministic breadth-first search fails on the same samples for the same reason. What the
-benchmark rewards is using the geometry of the crease pattern to choose a direction. Geometry is
-supplied as input and is not the thing being scored; being able to act on it is.
-
-We release CP2Seq, a dataset of 600 samples whose ground truth is constructed rather than
-annotated, together with an environment that is also the verifier: stepping it is the same act as
-asking for a verdict. It executes one candidate fold and either returns the resulting state or
-refuses with a named reason, such as the sheet would tear, the fold creases nothing, or the
-selected layers cannot move in that direction. It performs no search and makes no choices of its
-own, so proposing, pruning and backtracking stay with the model.
-
-Samples are generated under two action models taken from the simple folding literature and
-stratified along two axes, fold depth and coupling, where coupling is the number of layers a single
-fold cuts. Every sample rebuilds byte identically from its seed and is checked by replay, tolerance free at
-the level of crease sets. Because one crease pattern admits many valid folded states, and because the recorded
-sequence is not guaranteed to be minimal, an answer is scored by replaying the proposed sequence
-rather than by step wise agreement with the stored one. The scoring protocol is solve rate at a
-fixed query budget, reported per difficulty stratum under two notions of equality, equality of
-crease sets and equality of folded states up to a symmetry group declared in advance, with queries
-to solution as a secondary measure over all attempts including those that exhaust the budget. We
-instantiate this protocol on off the shelf multimodal language models under progressive tiers of
-tool assistance, from a full tool belt down to none, with a memorization control on anonymized
-geometry.
+difference. We release **CP2Seq**, a benchmark and dataset of 600<!--fact:corpus.release.total--> origami samples in
+which a model is given a crease pattern and the final folded state and must recover the sequence of
+folds that produced it; both endpoints are supplied and the path between them is not. The task is
+trivial to generate and hard to solve, which is what makes it usable for evaluation: folding forward
+is one pass of an engine that records what it did, while deciding whether a crease pattern is
+reachable by simple folds is NP hard, so recovering the sequence is at least as hard, and
+determining the layer ordering of a flat folding is NP hard on its own even when a valid
+mountain-valley assignment is given. Ground truth is therefore constructed rather than annotated:
+every sample rebuilds byte-identically from its seed, so the corpus ships as a generator and a
+manifest rather than as data. The environment the model works against is also the verifier. Stepping
+it is the same act as asking for a verdict: it executes one candidate fold and either returns the
+resulting state or refuses with a named reason, such as the sheet would tear or the fold creases
+nothing. It performs no search and makes no choices, so proposing, pruning and backtracking stay
+with the model, and because the legality of a step is decided combinatorially the verdict carries no
+threshold. Around it we provide progressive tiers of tool assistance, from a full belt with rendered
+views down through withheld vision and raw pass/fail to no tools at all, so that what each level of
+help contributes is measured rather than assumed. Because one crease pattern admits many valid
+folded states and the recorded sequence is not guaranteed to be minimal, answers are scored by
+replaying them rather than by step-wise agreement, at two levels of equality: crease sets, compared
+as multisets with no tolerance, and folded states compared up to the plane isometry group, where
+reflections reverse the stack and flip face parity, and where admitting arbitrary rotation requires a
+stated numerical tolerance. We report solve rate at a fixed query budget per difficulty stratum,
+with queries to solution over all attempts as a secondary measure, and we evaluate frontier
+multimodal models against a deterministic search baseline so that models are ranked against search
+rather than only against each other.
 
 ---
 
@@ -1406,3 +1392,51 @@ claims, and the briefs say so explicitly. Figure 1 must not imply legal moves ar
 exists to forbid. Figure 4 must draw the environment and the verifier as one box, because that is
 the claim. Figure 6 must not hide a baseline crossing. A figure brief that only says what to draw
 would let all three happen.
+
+### 16.14 The abstract is rewritten as one paragraph and made consistent with the code
+
+**Decision.** The abstract is now a single paragraph of roughly 440 words, down from six paragraphs,
+and every claim in it matches the implementation and the rest of the paper.
+
+**Why one paragraph.** The ICLR template states the requirement outright: "The abstract must be
+limited to one paragraph." Six paragraphs was a hard format violation, not a style preference.
+
+**What changed beyond the format.** Five inconsistencies were removed rather than reworded.
+
+1. **The task.** It now says the model is given the crease pattern *and the final folded state*,
+   matching §1. The old text said only "the sequence of folds that produced a crease pattern",
+   which describes a harder and different task.
+2. **The dataset.** It now leads with a benchmark *and dataset* of 600 samples. The old abstract
+   named no size and made no dataset claim, which for a datasets-and-benchmarks submission is the
+   first thing a reviewer looks for.
+3. **Tolerance.** It no longer claims tolerance-free replay. Crease-set comparison is tolerance-free
+   and says so; folded-state comparison is up to the plane isometry group and carries a stated
+   numerical tolerance, per §16.12.
+4. **Ablation vocabulary.** "Ablations that remove visual feedback, remove filtering, remove tools"
+   is replaced by progressive tiers of tool assistance, per §16.4.
+5. **Baselines.** The abstract now says models are ranked against a deterministic search baseline
+   rather than only against each other, which is what §8.4 promises and what a benchmark paper is
+   expected to provide.
+
+The free-verification framing stays out (§16.1). What survives of it is the one sentence that
+carries a fact rather than a slogan: the verdict on a step carries no threshold because legality is
+decided combinatorially.
+
+⚠️ **Still to do.** At ~440 words the abstract is long; 250 is the comfortable range, and the
+headline result still has to fit inside it. The right time to cut is once §10 has numbers, because
+the result sentence will displace some of the mechanism description that currently carries the
+middle of the paragraph.
+
+### 16.15 Figure drafting is scripted, with the limits of the method written into the script
+
+**Decision.** `paper/figures/gen_figures.sh` drives the imagegen CLI to produce tracing drafts.
+`--list` prints how each figure should actually be made; `--dry-run` needs no API key.
+
+**Why only two of six.** Figures 1 and 4 are conceptual and draft usefully from a prompt. The other
+four carry data or geometry and must not ship as generated images: figures 2 and 5 should be built
+from renders that already exist in this repo (`initial/cp.png`, `final/top.png`,
+`final/exploded.png` for any sample), and figures 3 and 6 must be plotted from the release manifest
+and the aggregation output. A generated crease pattern would be a fabricated figure in a paper whose
+subject is exact verification, which is the worst place in the literature to put one. The imagegen
+skill says the same thing in its own terms: diagrams are "better produced directly in SVG, HTML/CSS,
+or canvas". The script prints this rather than assuming it is remembered.
