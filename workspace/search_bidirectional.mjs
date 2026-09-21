@@ -27,7 +27,7 @@ import {fileURLToPath} from 'node:url';
 import {FoldSession, replay, tryFold} from '../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/engine.mjs';
 import {enumerateLegalFolds} from '../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/legal_folds.mjs';
 import {frameLayers, terminalMatch} from '../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/terminal_match.mjs';
-import {predecessors, stateKey} from './unfold.mjs';
+import {predecessors, stateKey, meetKey} from './unfold.mjs';
 import {targetEngineState} from './target_state.mjs';
 
 const ROOT = join(fileURLToPath(new URL('.', import.meta.url)), '..');
@@ -76,8 +76,13 @@ function bidirectional(id, {cp, frame, target}) {
 
   // Each side maps a state key to the path that reaches it -- forward paths run from the
   // flat sheet, backward paths run TO the target, and a key in both is a complete sequence.
-  const fSeen = new Map([[stateKey(root.paper), []]]);
-  const bSeen = new Map([[stateKey(targetPaper), []]]);
+  // Dedup exactly, meet loosely: fSeen/bSeen key on the exact stack so neither side prunes
+  // a state the goal test could tell apart, while fMeet/bMeet key on the canonical form so
+  // the two sides recognise the same paper through an unobservable reordering.
+  const fSeen = new Set([stateKey(root.paper)]);
+  const bSeen = new Set([stateKey(targetPaper)]);
+  const fMeet = new Map([[meetKey(root.paper), []]]);
+  const bMeet = new Map([[meetKey(targetPaper), []]]);
   let fFrontier = [{paper: root.paper, creases: root.creases, actions: []}];
   let bFrontier = [{paper: targetPaper, actions: []}];
   let fExpanded = 0, bExpanded = 0;
@@ -104,11 +109,12 @@ function bidirectional(id, {cp, frame, target}) {
         if ((Date.now() - started) / 1000 > seconds) break;
         fExpanded++;
         for (const s of successors(node.paper, cp, node.creases, node.actions)) {
-          const key = stateKey(s.paper);
+          const key = stateKey(s.paper), mk = meetKey(s.paper);
           const path = [...node.actions, s.action];
-          if (bSeen.has(key)) { const done = finish(path, bSeen.get(key)); if (done) return done; }
+          if (bMeet.has(mk)) { const done = finish(path, bMeet.get(mk)); if (done) return done; }
           if (fSeen.has(key)) continue;
-          fSeen.set(key, path);
+          fSeen.add(key);
+          if (!fMeet.has(mk)) fMeet.set(mk, path);
           next.push({paper: s.paper, creases: [...node.creases, ...s.made], actions: path});
         }
       }
@@ -121,17 +127,18 @@ function bidirectional(id, {cp, frame, target}) {
         if ((Date.now() - started) / 1000 > seconds) break;
         bExpanded++;
         for (const p of predecessors(node.paper, cp)) {
-          const key = stateKey(p.paper);
+          const key = stateKey(p.paper), mk = meetKey(p.paper);
           const path = [p.action, ...node.actions];
-          if (fSeen.has(key)) { const done = finish(fSeen.get(key), path); if (done) return done; }
+          if (fMeet.has(mk)) { const done = finish(fMeet.get(mk), path); if (done) return done; }
           if (bSeen.has(key)) continue;
-          bSeen.set(key, path);
+          bSeen.add(key);
+          if (!bMeet.has(mk)) bMeet.set(mk, path);
           next.push({paper: p.paper, actions: path});
         }
       }
       if (!next.length) return {status: 'backward-exhausted', depth: level,
                                 forward_expanded: fExpanded, backward_expanded: bExpanded,
-                                note: 'predecessors() is 8/14 complete, so this may be the generator rather than the graph'};
+                                note: 'predecessors() is 10/14 complete, so this may be the generator rather than the graph'};
       bFrontier = next;
     }
   }

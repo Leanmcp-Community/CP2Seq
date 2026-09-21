@@ -113,34 +113,17 @@ function mergeAlongSharedEdge(A, B) {
       for (let k = 1; k <= A.length; k++) out.push(A[(i + k) % A.length]);
       for (let k = 1; k < B.length - 1; k++) out.push(B[(j + 1 + k) % B.length]);
 
-      // The two junction vertices may be artefacts of the cut, or they may be corners the
-      // polygon already had -- a fold line often runs exactly through existing vertices, and
-      // in easy-0001's first fold both endpoints are pre-existing boundary points that lie
-      // collinear with their neighbours. Collinearity therefore cannot decide it, and
-      // guessing wrong makes the rebuilt face differ from the real predecessor in its vertex
-      // list while matching it in shape. So do not guess: offer every variant and let the
-      // verification fold decide, since only the true one reproduces the state exactly.
-      return variants(out, [vkey(a1), vkey(a0)]);
+      // The two junction vertices may be artefacts of the cut or corners the polygon
+      // already had, and collinearity cannot tell them apart -- a fold line often runs
+      // exactly through existing vertices. It no longer matters: the state key runs every
+      // polygon through cleanPoly, so a spare collinear vertex is normalised away. An
+      // earlier version enumerated keep/drop variants instead and capped the combinations,
+      // which with four cut faces threw away the right one and was the last source of
+      // missing predecessors.
+      return out;
     }
   }
   return null;
-}
-
-// Up to four polygons: keep or drop each junction vertex, dropping only where the vertex is
-// genuinely redundant (collinear with its neighbours).
-function variants(poly, keys) {
-  const idx = keys.map(k => poly.findIndex(p => vkey(p) === k)).filter(i => i >= 0);
-  const droppable = idx.filter(i => {
-    const p = poly[(i - 1 + poly.length) % poly.length], q = poly[i], r = poly[(i + 1) % poly.length];
-    return Math.abs((q[0] - p[0]) * (r[1] - p[1]) - (q[1] - p[1]) * (r[0] - p[0])) <= TOL;
-  });
-  const out = [poly];
-  for (let mask = 1; mask < (1 << droppable.length); mask++) {
-    const drop = new Set(droppable.filter((_, b) => mask & (1 << b)));
-    const v = poly.filter((_, i) => !drop.has(i));
-    if (v.length >= 3) out.push(v);
-  }
-  return out;
 }
 
 const sameTransform = (A, B) =>
@@ -177,8 +160,78 @@ const canonicalPoly = rawPoly => {
   return v.map((_, k) => v[(best + k) % v.length]).join(' ');
 };
 
+// A layer that moved whole loses its position in the stack, and every placement among the
+// layers it does NOT overlap folds to the same successor -- so those orderings are the same
+// piece of paper and must key the same, or a forward state and a backward state that are
+// physically identical never match.
+//
+// Only overlapping layers have a meaningful relative order. So: keep every constraint
+// between layers that overlap, and among the rest take the lexicographically smallest
+// arrangement. That is the smallest topological order of the DAG whose edges run from a
+// lower layer to a higher one it overlaps, which is canonical by construction.
+//
+// Overlap is tested on bounding boxes. That OVER-approximates -- two layers whose boxes meet
+// but whose polygons do not are treated as ordered -- which keeps more constraints than
+// strictly necessary. Still canonical, just less aggressive, and it never merges two states
+// that are genuinely different.
+const bbox = poly => {
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  for (const p of poly) {
+    if (p[0] < x0) x0 = p[0];
+    if (p[0] > x1) x1 = p[0];
+    if (p[1] < y0) y0 = p[1];
+    if (p[1] > y1) y1 = p[1];
+  }
+  return [x0, y0, x1, y1];
+};
+const boxesOverlap = (a, b) =>
+  Math.min(a[2], b[2]) - Math.max(a[0], b[0]) > TOL &&
+  Math.min(a[3], b[3]) - Math.max(a[1], b[1]) > TOL;
+
+function canonicalStack(layers) {
+  const n = layers.length;
+  const keys = layers.map(l => l.par + ':' + canonicalPoly(l.poly));
+  const boxes = layers.map(l => bbox(l.poly));
+  // indegree[j] counts lower overlapping layers still unplaced.
+  const edges = Array.from({length: n}, () => []);
+  const indeg = new Array(n).fill(0);
+  for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) {
+    if (boxesOverlap(boxes[i], boxes[j])) { edges[i].push(j); indeg[j]++; }
+  }
+  const ready = [];
+  for (let i = 0; i < n; i++) if (!indeg[i]) ready.push(i);
+  const out = [];
+  while (ready.length) {
+    // Smallest key first, and the original index breaks a tie so the result is total.
+    let best = 0;
+    for (let r = 1; r < ready.length; r++) {
+      if (keys[ready[r]] < keys[ready[best]] ||
+          (keys[ready[r]] === keys[ready[best]] && ready[r] < ready[best])) best = r;
+    }
+    const i = ready.splice(best, 1)[0];
+    out.push(keys[i]);
+    for (const j of edges[i]) if (--indeg[j] === 0) ready.push(j);
+  }
+  // A cycle cannot happen -- edges always run upward -- but fall back rather than lose data.
+  return out.length === n ? out : keys;
+}
+
+// TWO keys, because one cannot do both jobs.
+//
+// stateKey keeps the stack exactly as it is. It is what a search dedups on and what the
+// completeness test compares, and it has to stay exact because terminalMatch compares layer
+// i against target layer i -- so two stacks differing only by a swap of non-overlapping
+// layers ARE distinguishable at the goal, even though the swap is invisible to a fold.
+// Canonicalising here instead pruned the path to the answer: easy-0001 went from solved in
+// 38 expansions to exhausted at 119.
+//
+// meetKey normalises that freedom away, and is used only to notice that a forward state and
+// a backward state might be the same paper. A false meet costs nothing: every meet is
+// replayed from the flat sheet and put through terminalMatch before it is returned.
 export const stateKey = paper =>
   JSON.stringify(currentPolys(paper).map(l => l.par + ':' + canonicalPoly(l.poly)));
+
+export const meetKey = paper => JSON.stringify(canonicalStack(currentPolys(paper)));
 
 /**
  * Every state that could have produced `paper` by one whole-stack fold.
@@ -218,37 +271,35 @@ export function predecessors(paper, cp, {maxResults = 200} = {}) {
         // because at most a couple of faces are cut by any one fold.
         const consumed = new Set();
         const order = [];
-        let facesets = [faces];
         for (const si of rest) {
-          let matched = null;
           for (const mi of movingIdx) {
             if (consumed.has(mi)) continue;
             if (!sameTransform(faces[mi].T, faces[si].T) || faces[mi].par !== faces[si].par) continue;
-            const unions = mergeAlongSharedEdge(faces[si].poly, faces[mi].poly);
-            if (!unions) continue;
-            matched = {mi, unions};
+            const union = mergeAlongSharedEdge(faces[si].poly, faces[mi].poly);
+            if (!union) continue;
+            faces[si] = {...faces[si], poly: union};
+            consumed.add(mi);
             break;
-          }
-          if (matched) {
-            consumed.add(matched.mi);
-            // Capped hard: the variants exist only for junction vertices the cut may have
-            // invented, and letting them multiply across faces exhausted the heap.
-            facesets = facesets.slice(0, 4).flatMap(fs => matched.unions.slice(0, 2).map(u => {
-              const copy = fs.map(f => ({...f}));
-              copy[si] = {...copy[si], poly: u};
-              return copy;
-            }));
           }
           order.push(si);
         }
-        // Whole faces that moved rejoin at the end. Their position among the stationary
-        // layers is unobservable -- they do not overlap them -- so any placement folds to
-        // the same state, which the swap test confirmed 20 times out of 20.
+        // A face that moved WHOLE was removed from its position and appended to one end, so
+        // its place in the predecessor's stack is not recorded anywhere. Every placement
+        // folds to the same successor -- it does not overlap the layers it would move past,
+        // and the swap test confirmed that 20 times out of 20 -- but they are DIFFERENT
+        // states, and a bidirectional search has to produce the one the forward search
+        // generated or the two frontiers never recognise each other. On easy-0003's fourth
+        // fold the true predecessor has it at position 2 and appending it to the end missed
+        // by exactly that. So every insertion is emitted, and verification keeps the real
+        // ones.
+        // One representative is enough, because stateKey below is canonical under exactly
+        // this freedom. Emitting every insertion instead reached 11/14 but drove the mean
+        // predecessor count from 1.79 to 14.64 -- destroying the narrow backward frontier
+        // that is the entire reason to search bidirectionally.
         for (const mi of movingIdx) if (!consumed.has(mi)) order.push(mi);
         if (!order.length) continue;
-
-        for (const fs of facesets.slice(0, 8)) {
-          const pred = {faces: fs, order};
+        {
+          const pred = {faces, order};
           // Which side moved is not known in advance; both are cheap to test and only the
           // right one reproduces the state.
           for (const move_positive of [true, false]) {
