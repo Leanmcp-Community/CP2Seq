@@ -30,12 +30,16 @@ squares on `log(ms)` against depth along each sample's reference sequence.
 
 | tier | b | g | **b·g** | mean reference depth |
 | --- | --- | --- | --- | --- |
-| easy | 2.71 | 1.5–2.0 | **4.0–5.5** | 6.8 |
-| mid | 3.34 | 1.6–1.7 | **5.4–5.7** | 12.0 |
-| hard | 7.33 | 1.58 | **11.6** | 19.0 |
+| easy | 2.72 | 1.5–2.0 | **4.1–5.4** | 6.8 |
+| mid | 3.15 | 1.6–1.7 | **5.0–5.3** | 12.0 |
+| hard | 7.05 | 1.58 | **11.1** | 19.0 |
+
+Fitted over the 1s, 4s, 15s, 60s and 240s budgets. Adding the 240s budget moved `b` by less
+than 0.3 on every tier (easy 2.71 → 2.72, mid 3.34 → 3.15, hard 7.33 → 7.05), so the fit has
+converged and the two longest budgets the batch never reached would not change it.
 
 The published figure of 3.51 legal folds per state matches **mid** and only mid. Easy is
-lower (2.71) and hard is more than double it (7.33; hard-0001 alone is 12.8).
+lower (2.72) and hard is more than double it (7.05; hard-0001 alone is 12.8).
 
 Throughput collapses in step: easy averages 48.5 node expansions per second, hard 2.9. At
 depth 10 one `list_legal_folds` call on hard-0001 takes **140 seconds**.
@@ -146,8 +150,15 @@ constant-factor work has to go.
 > Both are exponential: the node count grows as b^d while the cost of expanding one node grows
 > as g^d, because an all-layers fold doubles the sheet's layers and one enumeration evaluates
 > exactly 4·(distinct crease lines)·(layers) candidate actions. Diamonds mark each tier's mean
-> reference depth; circles are observed solves. Fitted from 4 time budgets × 12 samples of
+> reference depth; circles are observed solves. Fitted from 5 time budgets × 12 samples of
 > search and 6 samples × full depth of enumeration timing.
+
+**The committed `depth_wall.svg` and `.tex` are the b^d lower bound**, not the curve above:
+the enumeration timings exist as `enum_cost.txt` but the machine-readable `enum_cost.json`
+was lost when that run was interrupted, and the generator refuses to guess. Re-run
+`profile_enum_cost.sh` (now one pass, flushing JSON per sample) and regenerate with `--enum`
+to get the published curve. The generator prints which model it used, and the figure files
+carry it in their header, so the two cannot be confused.
 
 ## 8. Not yet measured
 

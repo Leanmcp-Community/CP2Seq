@@ -144,7 +144,7 @@ const sup = p => (p < 0 ? '⁻' : '') + String(Math.abs(p)).split('')
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="Helvetica, Arial, sans-serif">
 <title>Breadth-first search time against fold depth, by tier</title>
-<desc>Search time grows exponentially with fold depth. ${curves.map(c => `${c.tier}: branching ${c.b.toFixed(2)}, ${c.rate.toFixed(1)} expansions per second, target depth ${c.target?.toFixed(1) ?? 'n/a'}`).join('; ')}.</desc>
+<desc>Search time grows exponentially with fold depth. Cost model: ${curves.some(c => c.g) ? 't(d) = b^d * c0 * g^d, with the per-node enumeration cost fitted from measurement' : 't(d) = b^d / r, assuming constant throughput -- a LOWER BOUND, because per-node cost also grows with depth'}. Source: ${source}. ${curves.map(c => `${c.tier}: b=${c.b.toFixed(2)}${c.g ? `, g=${c.g.toFixed(2)}` : `, ${c.rate.toFixed(1)} expansions per second`}, reference depth ${c.target?.toFixed(1) ?? 'n/a'}`).join('; ')}.</desc>
 <rect width="${W}" height="${H}" fill="#ffffff"/>
 ${guides.filter(g => Math.log10(g.s) >= L0 && Math.log10(g.s) <= L1).map(g =>
   `<line x1="${M.l}" y1="${y(g.s).toFixed(1)}" x2="${(W - M.r).toFixed(1)}" y2="${y(g.s).toFixed(1)}" stroke="#d4d4d4" stroke-width="0.6" stroke-dasharray="3 3"/>
