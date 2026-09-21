@@ -14,6 +14,17 @@ claim can stand.
 **一句话结论。** 搜索成本是**两个指数的乘积**，不是一个。PR #35 只算了节点数，没算每个节点的成本，
 而后者本身也是深度的指数函数。这不推翻枚举器的设计，但它改变了论文的主张该放在哪一层。
 
+![BFS search time against fold depth, one curve per tier, log scale](figures/out/depth_wall.png)
+
+*Search time against fold depth, by tier. Log vertical axis: every step right multiplies the
+time by b·g. Diamonds are each tier's reference depth, circles are observed solves. Sources:
+`figures/out/depth_wall.svg` and `.tex` (pgfplots, for the paper); regenerate with the command
+above. Full caption in §7.*
+
+*按 tier 分的搜索时间对深度。纵轴对数：每往右一格，时间乘以 b·g。
+菱形是各层的参考深度，圆圈是实测解出点。矢量版在 `figures/out/depth_wall.svg` 和 `.tex`
+（pgfplots，供论文用），用上面的命令重新生成。完整图注见 §7。*
+
 Reproduce / 复现：
 
 ```sh
@@ -613,6 +624,9 @@ independent of what the harness should enable.
 ---
 
 ## 7. Figure caption / 图注
+
+![BFS search time against fold depth](figures/out/depth_wall.png)
+
 
 > **Figure N. Breadth-first search time against fold depth.** Log-scale vertical axis. Curves
 > are t(d) = c0·(b·g)^d, where b is the deduplicated branching factor (measured as
