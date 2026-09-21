@@ -39,7 +39,10 @@ const flag = (name, fallback) => {
 const seconds = flag('--seconds', 60);
 const maxStates = flag('--max-states', 500000);
 const maxDepth = flag('--max-depth', 24);
-const samples = argv;
+// --json makes this consumable by deterministic_fold_loop.py, which replays the winning
+// action list through the real ToolSession so the run lands in the UI like any other.
+const asJson = argv.includes('--json');
+const samples = argv.filter(a => a !== '--json');
 if (!samples.length) {
   console.error('usage: node workspace/search_baseline.mjs [--seconds N] [--max-states N] <sample-id>...');
   process.exit(2);
@@ -106,6 +109,7 @@ function bfs(cp, targetLayers) {
 }
 
 let solved = 0;
+const report = [];
 for (const id of samples) {
   let r;
   try {
@@ -113,12 +117,15 @@ for (const id of samples) {
     r = bfs(cp, frameLayers(target));
     r.reference = referenceSteps;
   } catch (e) {
-    console.log(`  ${id.padEnd(10)} error        ${e.message.slice(0, 70)}`);
+    report.push({sample_id: id, status: 'error', error: e.message});
+    if (!asJson) console.log(`  ${id.padEnd(10)} error        ${e.message.slice(0, 70)}`);
     continue;
   }
   if (r.status === 'solved') solved++;
-  console.log(`  ${id.padEnd(10)} ${r.status.padEnd(12)} depth=${r.depth ?? '-'}/${r.reference}` +
+  report.push({sample_id: id, ...r});
+  if (!asJson) console.log(`  ${id.padEnd(10)} ${r.status.padEnd(12)} depth=${r.depth ?? '-'}/${r.reference}` +
     ` expanded=${String(r.expanded).padEnd(7)} generated=${String(r.generated).padEnd(7)}` +
     ` ${(r.seconds ?? seconds).toFixed(1)}s`);
 }
-console.log(`\ndeterministic BFS solved ${solved} of ${samples.length}`);
+if (asJson) console.log(JSON.stringify(report));
+else console.log(`\ndeterministic BFS solved ${solved} of ${samples.length}`);
