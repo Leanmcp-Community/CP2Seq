@@ -6,7 +6,7 @@ and limits as two parallel arrays, so the pairs below come from matching them by
 
 ## Quota granted
 
-| GPU | on-demand | preemptible / spot | committed | in use |
+| GPU | on-demand | preemptible / spot | CUD ceiling | in use |
 | --- | --- | --- | --- | --- |
 | **L4** | **32** | **32** | 8 | 0 |
 | A100 80GB | 8 | 8 | 0 | 0 |
@@ -19,6 +19,12 @@ and limits as two parallel arrays, so the pairs below come from matching them by
 | P4 | 1 | 1 | 0 | 0 |
 | P4 vWS | 1 | 1 | — | 0 |
 | K80 | 8 | 1 | 0 | 0 |
+
+Every column is a **quota ceiling, not a holding**. "CUD ceiling" is how many of that GPU this
+project is permitted to put under a Committed Use Discount -- a 1 or 3 year contract billed
+whether or not the capacity runs. Nothing is committed: usage is 0 on every one of those
+metrics, and `COMMITMENTS` itself has limit 0, so no commitment can even be created in this
+region without an increase. Everything here would be plain on-demand or spot.
 
 **No quota at all** for H100, H200, B200, GB200 or RTX PRO 6000 — those metrics are absent from
 the region's quota list, which means zero until a quota increase is approved. The accelerator
