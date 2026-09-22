@@ -1,7 +1,7 @@
-\section{The environment, which is also the verifier}
+\subsection{Environment}
 \label{sec:env}
 
-\subsection{One object, two names}
+\subsubsection{State transitions}
 \label{sec:env-one-object}
 
 In this benchmark the environment and the verifier are the same object. Stepping it is the same
@@ -9,15 +9,11 @@ act as asking for a verdict: the model submits a candidate fold, and the reply i
 resulting state or a refusal. There is no separate validity oracle, no second artifact that could
 disagree with the first, and no learned component in the loop.
 
-\subsection{The division of labour}
+\subsubsection{Tools and verification}
 \label{sec:env-division}
 
-The implementation provides sequence-editing tools (\texttt{add\_fold}, \texttt{remove\_fold},
-\texttt{go\_to\_step}, and \texttt{restore\_revision}), observation tools
-(\texttt{get\_state} and \texttt{get\_images}), optional candidate filtering
-(\texttt{list\_legal\_folds}), optional target feedback (\texttt{compare\_to\_target}),
-and submission (\texttt{finish}). Which tools are exposed is a run configuration; target
-feedback has three separately configured levels (Section~\ref{sec:target-feedback}).
+Table~\ref{tab:tools} lists the available tools. Tool availability and target-feedback detail
+are configured separately for each run.
 
 Three verification roles must be distinguished. The step engine checks proposed actions and
 target-crease compatibility. Final replay compares the constructed pattern and folded state with
@@ -46,7 +42,8 @@ candidate filtering removes illegal or off-pattern actions, while the model choo
 remaining alternatives. The search baseline measures what systematic exploration can achieve
 with the same candidate enumerator.
 
-\subsection{Refusals are named, isn't that you shoulr mention a check, each step check and final step check, final step check now is missing , should mention here--------}
+% EDITING NOTE (retained): Refusals are named, isn't that you shoulr mention a check, each step check and final step check, final step check now is missing , should mention here--------
+\subsubsection{Action validation}
 \label{sec:env-refusals}
 
 An illegal fold returns a structured refusal with a name, not a boolean.
@@ -80,7 +77,8 @@ classes that Flat-Folder checks (taco-taco, taco-tortilla, tortilla-tortilla, tr
 \citep{akitaya-flatfolder,flatfolder} remain the right vocabulary for global terminal states; they
 are not what a single legal step needs checking against here.
 
-\subsection{What the model observes - you should add a screen shot of simulator software !!!!!!!!}
+% EDITING NOTE (retained): What the model observes - you should add a screen shot of simulator software !!!!!!!!
+\subsubsection{Observations}
 \label{sec:env-observes}
 
 On success the environment returns the new state together with two views: a top-down X-ray of the

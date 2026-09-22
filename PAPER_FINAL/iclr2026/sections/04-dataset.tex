@@ -8,12 +8,50 @@
 \label{sec:cp2seq-why}
 \label{sec:cp2seq-difficulty}
 
-We generate each example by applying a sequence of legal folds to a square sheet and recording
-its crease pattern, intermediate states, and final folded state. We attempt to vary search
-difficulty by increasing the number of folds in the reference sequence: longer sequences can
-require exploring more combinations of actions. Reference length is not necessarily the shortest
-solution length, so difficulty is assessed through solver performance. We also record coupling,
+Starting from a square sheet, the generator samples a legal fold under the chosen action model,
+applies it, and records the action and resulting state. This process continues to the requested
+reference depth; attempts with no available legal continuation are discarded. The accumulated
+creases are mapped to the original sheet to form the input crease pattern, with edges split at
+intersections. The last state supplies the target, and the recorded actions supply a reference
+solution. A replay check compares the generated sample with its recorded construction.
+
+We group samples by reference fold count, hypothesizing that longer sequences generally require
+more search and are therefore harder to recover. These groups describe expected difficulty;
+reference length need not equal the shortest valid solution length. We also record coupling,
 the number of creases created by a fold, to characterize the geometry of each instance.
+
+\subsubsection{Generation pseudocode}
+
+{\small\begin{verbatim}
+GENERATE(reference_depth, action_model):
+    state <- unfolded square
+    actions, frames <- [], []
+    for step in 1..reference_depth:
+        candidates <- LEGAL_FOLDS(state, action_model)
+        if candidates is empty: return FAILED
+        action <- SAMPLE(candidates)
+        state <- APPLY(state, action)
+        actions.append(action)
+        frames.append(state)
+    cp <- CREASE_PATTERN_IN_ORIGINAL_SHEET(state)
+    cp <- SPLIT_EDGES_AT_INTERSECTIONS(cp)
+    if not REPLAY_CHECK(cp, actions, state): return FAILED
+    return (cp, state, actions, frames, METADATA(actions))
+\end{verbatim}}
+
+\begin{figure}[t]
+\centering
+\fbox{\parbox[c][8\baselineskip][c]{0.9\linewidth}{\centering
+\textbf{Dataset examples: placeholder}\\[6pt]
+Three rows: easy all-layers, deeper all-layers, and some-layers.\\[4pt]
+Each row: input crease pattern $\vert$ target folded state $\vert$
+reference folding sequence.\\[4pt]
+Replace with renders from actual dataset samples.}}
+\caption{Planned examples from CP2Seq. Each row will show the two task inputs and the recorded
+reference sequence, which is withheld during evaluation. Target views will show both geometry
+and layer structure. This placeholder contains no sample data.}
+\label{fig:dataset-examples}
+\end{figure}
 
 \subsection{Dataset statistics}
 \label{sec:dataset-statistics}

@@ -1,7 +1,7 @@
-\section{Scoring}
+\subsection{Evaluation metrics}
 \label{sec:scoring}
 
-\subsection{Why the obvious protocol is wrong}
+\subsubsection{Reference sequences}
 \label{sec:scoring-why}
 
 The recorded sequence is \emph{a} solution, not \emph{the} solution. The generator folds; it does
@@ -17,7 +17,7 @@ penalised for it. This disqualifies edit distance, and it disqualifies step-leve
 recall and F1 against an expert sequence for this task. Step count is not a correctness signal in
 either direction.
 
-\subsection{What we do instead}
+\subsubsection{State comparison}
 \label{sec:scoring-what}
 
 Proposals are scored by replaying them through the engine and comparing the resulting states. Both
@@ -78,7 +78,7 @@ requires a solver. Folding that into an equality test would hide an external dep
 what reads as arithmetic. If that equivalence is wanted, it belongs in a separate check that owns
 the solver.
 
-\subsection{Metrics}
+\subsubsection{Metrics}
 \label{sec:scoring-metrics}
 
 The primary metric is \textbf{solve rate at a fixed query budget}, reported per difficulty stratum
@@ -92,7 +92,7 @@ the task interesting. This metric is what answers the ``the simulator did all th
 quantitatively: two models sharing one exact verifier can be ranked by how little of it they
 needed.
 
-\subsection{Validating the protocol}
+\subsubsection{Comparator validation}
 \label{sec:scoring-validate}
 
 A verifier paper that does not test its own verifier is asking to be taken on trust, so the
