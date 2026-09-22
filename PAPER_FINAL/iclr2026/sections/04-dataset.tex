@@ -3,93 +3,34 @@
 
 \input{sections/03-problem-formulation}
 
-\subsection{Why the corpus is synthesised}
-\label{sec:cp2seq-why}
-
-Every sample is built rather than collected, and the reason is that the construction supplies the
-label. A folding sequence is not something that can be read off a finished crease pattern by
-inspection, which is the whole premise of the task; so a corpus of annotated patterns would require
-either a solver, which is the thing being benchmarked, or a human expert, which does not scale and
-introduces an error rate nobody can measure. Folding forward and recording avoids both. The sequence
-is not inferred after the fact, it is what happened, and the pattern is what the folding left behind.
-
-Generation controls reference sequence depth and the permitted action model. These parameters
-let us vary the corpus composition; empirical difficulty is assessed through model and search
-performance rather than guaranteed by a generation setting.
-
-\subsection{Generation, step by step}
+\subsection{Dataset construction}
 \label{sec:cp2seq-generation}
-
-The generator starts from a unit square and applies randomly chosen legal simple folds, recording
-each one, until it reaches a target depth. It then unfolds and reads off the crease pattern.
-
-{\small\begin{verbatim}
-GENERATE(depth_target, action_model):
-    state <- unit square, one layer
-    seq   <- []
-
-    while len(seq) < depth_target:
-        cands <- ENUMERATE_LEGAL_FOLDS(state, action_model)   # all legal folds
-        if cands is empty:
-            return FAILED               # dead end: discard, never repair
-        fold  <- RANDOM_CHOICE(cands)
-        state <- APPLY(state, fold)         # the APPLY the verifier uses
-        seq.append(fold: line, direction, layers, creases, coupling)
-
-    cp     <- UNFOLD(state)      # creases accumulated over the sequence
-    cp     <- PLANARISE(cp)      # split edges at crossings; canonical
-    frames <- [state after each step]        # retained as steps.fold
-
-    assert REPLAY(cp, seq) == state      # sample rejected if this fails
-    return Sample(cp, seq, frames, metrics(cp, seq))
-\end{verbatim}
-}
-
-Four properties of this procedure matter for the benchmark and each is a deliberate choice.
-
-\textbf{The generator never searches.} It picks uniformly among legal folds and never backtracks. A
-dead end discards the sample rather than repairing it. This keeps generation one forward pass, and
-it is also why the recorded sequence carries no claim to being minimal
-(Section~\ref{sec:scoring-why}).
-
-\textbf{\texttt{ENUMERATE\_LEGAL\_FOLDS} and \texttt{APPLY} are the same functions the environment
-exposes to the model.} The generator is not a privileged path through different code; it is the
-environment driven by a random policy. A sample is therefore reachable by definition, using exactly
-the action space the model is given.
-
-\textbf{Planarisation is canonical.} A crease pattern is stored with every edge split at every
-crossing, so two patterns describing the same geometry have the same edge set and can be compared as
-multisets without a tolerance.
-
-\textbf{Every sample is replayed before it is kept.} The assertion is not a test that runs
-sometimes; a sample that does not reproduce its own state is discarded at generation time.
-
-\subsection{Generation parameters and difficulty}
+\label{sec:cp2seq-why}
 \label{sec:cp2seq-difficulty}
 
-\textbf{Reference depth} is the number of folds in the recorded solution, not necessarily the
-minimum number needed to solve the instance. \textbf{Coupling} records the number of creases
-created by each fold and characterizes how an action affects multiple paper regions. Depth defines
-the all-layers strata; coupling is a structural descriptor whose relationship with solver
-performance requires separate measurement. Action models specify permitted moves, difficulty
-strata group instances, and assistance conditions specify the tools and feedback available.
-
-\subsection{What the corpus contains - This part only need to let readers know that , all layers fold(easy, medium, hard levels) + some layers fold}
-\label{sec:cp2seq-contents}
-
-other things like generated or verified, we don't need to mention, we only need to put it in
-hugging face or appendix
+We generate each example by applying a sequence of legal folds to a square sheet and recording
+its crease pattern, intermediate states, and final folded state. We attempt to vary search
+difficulty by increasing the number of folds in the reference sequence: longer sequences can
+require exploring more combinations of actions. Reference length is not necessarily the shortest
+solution length, so difficulty is assessed through solver performance. We also record coupling,
+the number of creases created by a fold, to characterize the geometry of each instance.
 
 \subsection{Dataset statistics}
 \label{sec:dataset-statistics}
+\label{sec:cp2seq-contents}
 
-The release contains 600 samples: 400 under the all-layers action model and 200 under the
-some-layers action model. Table~\ref{tab:dataset-statistics} reports counts and observed reference
-depths from the release manifest. These are corpus counts, not evaluation attempts.
+% EDITING NOTE (retained): This part only needs to let readers know that there are
+% all-layers folds (easy, medium, hard levels) and some-layers folds.
+% EDITING NOTE (retained): Other things like generated or verified can be put in
+% Hugging Face or the appendix rather than emphasized here.
+
+CP2Seq contains 600 samples: 400 all-layers examples grouped by reference depth and 200
+some-layers examples with three to six reference folds (Table~\ref{tab:dataset-statistics}).
+These counts describe distinct dataset samples, not evaluation attempts.
 
 \begin{table}[h]
 \centering
-\caption{Release composition. Fold counts refer to recorded reference sequences.}
+\caption{Dataset composition. Fold counts refer to recorded reference sequences.}
 \label{tab:dataset-statistics}
 \begin{tabular}{llrr}
 \hline
@@ -108,73 +49,46 @@ Total & & 600 & 3--19 \\
 \end{tabular}
 \end{table}
 
-Tool availability and target-feedback detail are configured separately from these dataset groups
-(Section~\ref{sec:target-feedback}). They change the assistance provided during an episode, not
-the sample's action model or reference depth.
-
-\subsection{What a sample carries}
-\label{sec:cp2seq-sample}
+Each sample contains the task inputs, a reference sequence, and metadata
+(Table~\ref{tab:sample-files}). The model receives the crease pattern and target state; reference
+actions and intermediate reference states are withheld. Tool availability and target feedback are
+configured separately from dataset groups (Section~\ref{sec:target-feedback}).
 
 \begin{table}[h]
-\caption{The files shipped with each CP2Seq sample. Only the first two, and only the final frame of
-the second, are shown to the model.}
+\centering
+\caption{Contents of a CP2Seq sample.}
 \label{tab:sample-files}
-\begin{center}
+\label{sec:cp2seq-sample}
 \begin{tabular}{lp{0.68\textwidth}}
-\multicolumn{1}{c}{\bf FILE}  &\multicolumn{1}{c}{\bf CONTENTS} \\
-\hline \\
-\texttt{cp.fold}    & The crease pattern, planarised. \textbf{The input} \\
-\texttt{steps.fold} & The pattern plus the folded state after each step, as one multi-frame file. The final frame is \textbf{the other input}; the intermediate frames are held back \\
-\texttt{seq.json}   & Every fold: line, direction, selected layers, creases made, coupling. \textbf{The ground truth}, never shown to the model \\
-\texttt{meta.json}  & Difficulty metrics, degeneracy flags and generator version \\
+\hline
+File & Contents \\
+\hline
+\texttt{cp.fold} & Input crease pattern. \\
+\texttt{steps.fold} & Folded states after each reference action; only the final state is supplied
+as the target. \\
+\texttt{seq.json} & Withheld reference actions: fold lines, directions, layer selections, and
+creases created. \\
+\texttt{meta.json} & Sample descriptors and generator version. \\
+\hline
 \end{tabular}
-\end{center}
 \end{table}
 
-
-\subsection{Two limits that belong in the paper rather than an appendix. --------MISSING}
-\label{sec:cp2seq-limits}
-
-\textbf{Caveat.} The first is an empty cell. Long sequences at low coupling are almost unreachable,
-yielding 2% fact:corpus.synth.lLocalHits
-hits in 16,000 attempts, because every all-layers fold thickens the stack, so a long sequence cannot
-keep cutting few layers. Real folders reach that corner by \textbf{pre-creasing}, an operation this
-action space excludes. The longer a real model runs, the more of it sits outside what the benchmark
-can express.
-
-\textbf{Caveat.} The second is depth. The some-layers action model stops at six folds in this release, which limits the sequence lengths represented for that action model. Longer reference sequences
-require additional generation and evaluation before claims about their difficulty can be made.
-
-% ===========================================================================
-% FIGURE 3 -- THE DIFFICULTY GRID.  [TO DRAW]
-% Depth on one axis, coupling on the other, one cell per stratum, shaded by how
-% many samples landed there. The long-sequence low-coupling corner must be
-% visibly EMPTY, and the caption names pre-creasing as the reason.
-% ===========================================================================
-\begin{figure}[h]
-\draftimage{7}
-\begin{center}\textit{\footnotesize Figure 3 placeholder: the
-difficulty grid. Fold depth against coupling, shaded by sample count, with the long-sequence
-low-coupling cell visibly empty.}\end{center}
-\caption{\textbf{[DRAFT IMAGE]} The difficulty grid. The empty corner is long sequences at low coupling, which this action
-space cannot reach because it excludes pre-creasing.}
-\label{fig:grid}
-\end{figure}
-
-\subsection{Verifying the corpus itself}
+\phantomsection
 \label{sec:cp2seq-verify}
+Reference sequences are checked by replaying them and comparing the resulting creases with the
+stored pattern. The two corpus checks reported in this release pass on all 600 samples; they
+share the folding engine and therefore do not independently validate its physical assumptions.
 
-Two checks run over every sample. Both replay the recorded sequence and compare the creases it
-makes against the pattern stored beside it; what they do not share is the comparison. The first
-groups edges into lines, merges collinear pieces and matches them within a tolerance. The second
-was written after five false failures had come out of exactly that machinery, each one a defect
-in the comparison rather than in the corpus, and reuses none of it. It merges each line's pieces
-into maximal creased intervals, the quantity subdivision cannot change, and matches those one to
-one. Comparing subdivided segments instead does not work: of 457 failures under that earlier
-design, 364 were two sides carrying a different \emph{number} of segments, which is not a distance and
-no tolerance can reach. The verdict is an absolute test at the radius at which the generator's own
-planarizer identifies two points as one vertex, 1e-9, the floor of what the corpus records rather
-than a constant tuned until the run passed. A depth-scaled ULP distance is reported alongside as a
-diagnostic on how much of that margin is used; on a sampled subset the median match needed 16 ULP,
-four orders inside the floor. Both checks pass on all 600% fact:corpus.release.total
-samples of the release corpus.
+\phantomsection
+\label{sec:cp2seq-limits}
+% EDITING NOTE (retained): "Two limits that belong in the paper rather than an appendix -- MISSING."
+% The two issues are limited coverage of long sequences with low coupling, and
+% the six-fold maximum reference depth of the some-layers subset.
+Coverage is limited in two respects: long reference sequences with low coupling are sparsely
+represented by the generation procedure, and some-layers examples extend only to six reference
+folds. These are limits of the present corpus, not proofs that other configurations are impossible.
+
+% FIGURE NOTE (retained): Plot fold depth against coupling, shaded by sample count.
+% Check the actual counts before describing a cell as empty; the earlier draft
+% reported two hits in 16,000 attempts, which does not establish impossibility.
+% The draft difficulty-grid placeholder has been removed from the main text.
