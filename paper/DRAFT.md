@@ -684,7 +684,7 @@ available, so a weakened comparison is visible in the output rather than assumed
 
 ## 8. Experimental setup
 
-### 8.1 The pipeline
+### 8.1 The pipeline -----should have a hand drawn graph 
 
 One episode is one sample attempted by one model under one tier of assistance. The loop is the same
 for every arm and every model, and the only thing that varies between arms is what the model is
