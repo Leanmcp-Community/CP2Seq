@@ -89,7 +89,7 @@ function faceTransforms(paper) {
 // Express one current-plane line as add_fold arguments. angle_index is preferred where it
 // applies, because that is the form the corpus sequences use and the form action_compare
 // scores against; any other angle falls back to angle_degrees.
-function lineArguments(line) {
+export function lineArguments(line) {
   for (let ai = 0; ai < INDEXED_NORMALS.length; ai++) {
     const raw = INDEXED_NORMALS[ai], L = Math.hypot(raw[0], raw[1]);
     for (const s of [1, -1]) {

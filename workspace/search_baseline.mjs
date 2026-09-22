@@ -26,6 +26,8 @@ import {fileURLToPath} from 'node:url';
 import {FoldSession, replay} from '../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/engine.mjs';
 import {enumerateLegalFolds} from '../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/legal_folds.mjs';
 import {frameLayers, terminalMatch} from '../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/terminal_match.mjs';
+import {enumerateLegalUnfolds, exactKey} from '../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/legal_unfolds.mjs';
+import {targetState} from '../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/target_state.mjs';
 
 const ROOT = join(fileURLToPath(new URL('.', import.meta.url)), '..');
 const CORPUS = process.env.CORPUS_DIR ?? join(ROOT, 'workspace/corpus/out/release/all-layers/samples');
@@ -46,8 +48,8 @@ const asJson = argv.includes('--json');
 const strategyAt = argv.indexOf('--strategy');
 // bfs stays the default so every number already published reproduces unchanged.
 const strategy = strategyAt === -1 ? 'bfs' : argv.splice(strategyAt, 2)[1];
-if (!['bfs', 'astar'].includes(strategy)) {
-  console.error(`unknown --strategy ${strategy}; use bfs or astar`);
+if (!['bfs', 'astar', 'reverse'].includes(strategy)) {
+  console.error(`unknown --strategy ${strategy}; use bfs, astar or reverse`);
   process.exit(2);
 }
 const samples = argv.filter(a => a !== '--json');
@@ -238,13 +240,89 @@ function bfs(cp, targetLayers) {
   return {status: 'depth_limit', expanded, generated, seconds: (Date.now() - started) / 1000};
 }
 
+// REVERSE: unfold the target back to the flat sheet.
+//
+// Same graph as bfs, walked the other way. Three things differ, and they are the reasons to
+// have it:
+//
+//   ROOT.   The target as the corpus stores it is not a runnable state -- the final frame keeps
+//           folded polygons and nothing else. target_state.mjs derives the missing original
+//           coordinates and placements from the CP and checks the result with terminalMatch, so
+//           a target that cannot be reconstructed is reported, never searched from.
+//   MOVES.  Unfolding only removes creases, so every state it reaches is inside the CP by
+//           construction. The forward search spends most of its budget on OUTSIDE_TARGET_CP;
+//           this side never asks the question.
+//   DEPTH.  A fold makes at least one crease, so it splits at least one face, so it strictly
+//           increases the layer count. Unfolding strictly decreases it, and the search is
+//           bounded by the target's own stack height. `exhausted` here is a PROOF that no
+//           sequence reaches this target through this action space, not a budget running out.
+//
+// CP-consistency is not reachability, and that is deliberate. A predecessor can be perfectly
+// consistent with the CP and still have no folding history of its own; such a branch simply
+// never reaches the flat sheet. It costs time, not correctness, because the only path that
+// counts is one that terminates at one layer -- and every edge on it was confirmed by tryFold.
+function reverse(cp, target, targetLayers) {
+  const started = Date.now();
+  const elapsed = () => (Date.now() - started) / 1000;
+  const rebuilt = targetState(cp, target);
+  const stats = () => ({expanded, generated, dead_ends: deadEnds,
+                        successors, seconds: elapsed(),
+                        reconstruction: {cp_faces: rebuilt.cp_faces, frame_faces: rebuilt.frame_faces,
+                                         layout_consistent: rebuilt.layout_consistent,
+                                         alignments_tried: rebuilt.alignments_tried}});
+  let expanded = 0, generated = 0, deadEnds = 0, successors = 0, mismatches = 0;
+  if (!rebuilt.ok) return {status: 'reconstruction_failed', reason: rebuilt.reason, ...stats()};
+  const root = rebuilt.state;
+  if (root.order.length === 1) return {status: 'solved', depth: 0, actions: [], ...stats()};
+
+  // The path a node carries is the FORWARD sequence from that node to the target, so an unfold
+  // prepends its own forward action. Reaching one layer therefore yields the sequence already
+  // in fold order, with no reversal step to get backwards.
+  let frontier = [{state: root, path: []}];
+  const seen = new Set([exactKey(root)]);
+  const bound = Math.min(maxDepth, root.order.length - 1);
+  for (let depth = 0; depth < bound; depth++) {
+    const next = [];
+    for (const node of frontier) {
+      if (elapsed() > seconds) return {status: 'timeout', depth, ...stats()};
+      if (seen.size > maxStates) return {status: 'state_limit', depth, ...stats()};
+      expanded++;
+      const step = enumerateLegalUnfolds(node.state, cp);
+      if (step.dead_end) deadEnds++;
+      successors += step.unfolds.length;
+      for (const u of step.unfolds) {
+        const key = exactKey(u.state);
+        if (seen.has(key)) continue;
+        seen.add(key);
+        generated++;
+        const path = [{tool: 'apply_fold', ...u.action}, ...node.path];
+        if (u.state.order.length > 1) { next.push({state: u.state, path}); continue; }
+        // One layer is the flat sheet. Before claiming it, replay the whole sequence forward
+        // from `new FoldSession(cp)` through the ordinary verifier and score it with the SAME
+        // terminalMatch bfs uses. Nothing about the reverse construction is taken on trust.
+        let session;
+        try { session = replay(cp, path); } catch (e) { mismatches++; continue; }
+        if (!terminalMatch(session.layers, targetLayers)) { mismatches++; continue; }
+        return {status: 'solved', depth: path.length, actions: path,
+                cp_match: session.evaluate().cp_match, forward_replay_mismatches: mismatches,
+                ...stats()};
+      }
+    }
+    if (!next.length) return {status: 'exhausted', depth, forward_replay_mismatches: mismatches, ...stats()};
+    frontier = next;
+  }
+  return {status: 'depth_limit', forward_replay_mismatches: mismatches, ...stats()};
+}
+
 let solved = 0;
 const report = [];
 for (const id of samples) {
   let r;
   try {
     const {cp, target, referenceSteps} = loadTask(id);
-    r = (strategy === 'astar' ? astar : bfs)(cp, frameLayers(target));
+    const targetLayers = frameLayers(target);
+    r = strategy === 'reverse' ? reverse(cp, target, targetLayers)
+      : (strategy === 'astar' ? astar : bfs)(cp, targetLayers);
     r.strategy = strategy;
     r.reference = referenceSteps;
   } catch (e) {
