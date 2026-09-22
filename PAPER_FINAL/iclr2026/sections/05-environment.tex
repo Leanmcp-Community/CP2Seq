@@ -1,90 +1,34 @@
 \subsection{Environment}
 \label{sec:env}
-
-\subsubsection{State transitions}
 \label{sec:env-one-object}
-
-In this benchmark the environment and the verifier are the same object. Stepping it is the same
-act as asking for a verdict: the model submits a candidate fold, and the reply is either the
-resulting state or a refusal. There is no separate validity oracle, no second artifact that could
-disagree with the first, and no learned component in the loop.
-
-\subsubsection{Tools and verification}
 \label{sec:env-division}
 
-Table~\ref{tab:tools} lists the available tools. Tool availability and target-feedback detail
-are configured separately for each run.
+The model edits a folding sequence through the tools in Table~\ref{tab:tools}. For each proposed
+fold, the engine reflects the selected paper across the fold line, updates layer order and
+orientation, and checks sheet connectivity and compatibility with the input crease pattern.
+Accepted edits update the current state; rejected edits return an error code and preserve the
+previous state. Candidate enumeration and target-comparison feedback are optional run settings.
 
-Three verification roles must be distinguished. The step engine checks proposed actions and
-target-crease compatibility. Final replay compares the constructed pattern and folded state with
-the target. A separate Flat-Folder wrapper checks whether a crease pattern admits a flat-folded
-state using layer-order constraints, including taco-taco, taco-tortilla, tortilla-tortilla, and
-transitivity constraints \citep{akitaya-flatfolder}. This last check does not verify the proposed
-sequence or establish that its particular layer ordering is valid, and is not automatically
-invoked by every model action. These checks should not be described collectively as a theorem
-that guarantees physical realizability.
-
-\begin{table}[h]
-\caption{Who does what. The environment does not search.}
-\label{tab:division}
-\begin{center}
-\begin{tabular}{lp{0.62\textwidth}}
-\multicolumn{1}{c}{\bf COMPONENT}  &\multicolumn{1}{c}{\bf RESPONSIBILITY} \\
-\hline \\
-Environment / verifier & State update and legality. It does not search and does not choose \\
-Model                  & Proposes the next fold, decides where to go, recognises when to backtrack \\
-\end{tabular}
-\end{center}
-\end{table}
-
-The environment checks and executes actions; it does not select a path to the target. Optional
-candidate filtering removes illegal or off-pattern actions, while the model chooses among the
-remaining alternatives. The search baseline measures what systematic exploration can achieve
-with the same candidate enumerator.
-
-% EDITING NOTE (retained): Refusals are named, isn't that you shoulr mention a check, each step check and final step check, final step check now is missing , should mention here--------
-\subsubsection{Action validation}
+\phantomsection
 \label{sec:env-refusals}
+% EDITING NOTE (retained): Explain checks for each step and the final state.
+For a some-layers fold, moving and stationary regions may share an edge away from the hinge.
+Reflecting only the moving region would separate that shared edge, so the engine rejects the
+proposal as \texttt{would-tear}. A \texttt{no-crease} rejection means that paper was selected to
+move but the operation did not create a crease segment; it is distinct from the connectivity
+check. Other rejections cover an empty moving region, an incompatible over/under direction,
+and creases absent from the target pattern. Detailed conditions are listed in
+Appendix~\ref{app:action-errors}.
 
-An illegal fold returns a structured refusal with a name, not a boolean.
-
-\begin{table}[h]
-\caption{The refusal taxonomy. A rejection arrives already labelled with the class it violated.}
-\label{tab:refusals}
-\begin{center}
-\begin{tabular}{lp{0.60\textwidth}}
-\multicolumn{1}{c}{\bf REFUSAL}  &\multicolumn{1}{c}{\bf MEANING} \\
-\hline \\
-\texttt{would-tear} & The moving layers are joined to stationary paper away from the fold line, so
-  the sheet would come apart. The binding constraint of the some-layers action model \\
-\texttt{no-crease} & The fold moves layers without creasing anything, tearing them free of the
-  sheet rather than folding them \\
-\texttt{nothing-to-move} & The fold line misses the selected layers entirely \\
-\texttt{direction-impossible} & A run taken from the bottom of the stack was asked to fold over,
-  or the reverse \\
-\texttt{bad-line} & The fold line is malformed, or names no side of itself \\
-\end{tabular}
-\end{center}
-\end{table}
-
-The names are the design. A model told \texttt{would-tear} can act on the information; a model told
-``illegal'' cannot. This also turns error analysis into a taxonomy that exists before the
-experiment: every rejection arrives already labelled with the class it violated, so a reject is a
-diagnosis rather than a dead end.
-
-FInal step check. - The four constraint
-classes that Flat-Folder checks (taco-taco, taco-tortilla, tortilla-tortilla, transitivity)
-\citep{akitaya-flatfolder,flatfolder} remain the right vocabulary for global terminal states; they
-are not what a single legal step needs checking against here.
-
-% EDITING NOTE (retained): What the model observes - you should add a screen shot of simulator software !!!!!!!!
-\subsubsection{Observations}
+\phantomsection
 \label{sec:env-observes}
+% EDITING NOTE (retained): Add a screenshot of the simulator interface.
+Observations include the current sequence, layer geometry, and rendered views. The image tools
+provide top, oblique, reverse, X-ray, and exploded views; the exposed views depend on the run
+configuration. Exploded views use illustrative layer separation. Final evaluation compares the
+constructed crease pattern and folded state with the supplied targets
+(Section~\ref{sec:scoring-what}).
 
-On success the environment returns the new state together with two views: a top-down X-ray of the
-stack, and an exploded view of the layers. Every intermediate state in this tier is flat, so a
-second camera angle would show the same silhouette rotated and would carry no new information;
-what carries information is layer structure, which is why the second view is an explosion rather
-than a rotation. Positions are reported as coordinates on the original sheet together with an
-integer layer index. There is no continuous vertical coordinate at this tier, and a rendering that
-looks three-dimensional is not evidence of one; thickness belongs to a different problem.
+The repository also provides a separate Flat-Folder check for the existence of a flat-folded state
+consistent with a crease pattern \citep{akitaya-flatfolder}. This check is distinct from action
+execution and target matching; its scope is described in Appendix~\ref{app:action-errors}.

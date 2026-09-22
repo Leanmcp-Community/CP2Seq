@@ -69,3 +69,30 @@ explicitly compare original-sheet region identities. Any identity-aware offline 
 be distinguished from this path, and the comparator version used for each reported result must
 be recorded. In particular, equal shapes at different original-sheet locations can require a
 stronger correspondence check than current-plane geometry alone.
+
+\subsection{Action rejection conditions}
+\label{app:action-errors}
+\begin{table}[h]
+\centering
+\caption{Geometric and action constraints checked by the implementation. Rejected edits preserve
+ the previous state.}
+\begin{tabular}{lp{.65\linewidth}}
+\hline
+Code & Condition \\
+\hline
+\texttt{would-tear} & A moving region and a stationary region share an original-sheet edge
+whose current position is not on the fold line. Reflecting one side would separate the join. \\
+\texttt{no-crease} & A nonempty moving selection produces no crease segment in the paper.
+This condition is checked separately from tearing. \\
+\texttt{nothing-to-move} & The selected half-plane contains no selected paper, or the requested
+partial selection contains no layers. \\
+\texttt{direction-impossible} & The action requests folding a top run under the stack or a bottom
+run over it, contrary to the supported layer-selection rule. \\
+\hline
+\end{tabular}
+\end{table}
+
+The independent Flat-Folder wrapper uses layer-order constraints, including taco-taco,
+taco-tortilla, tortilla-tortilla, and transitivity constraints \citep{akitaya-flatfolder}.
+It tests whether the pattern admits a flat-folded state, not whether the agent's sequence reaches
+the supplied target. It is not invoked automatically for every proposed action.
