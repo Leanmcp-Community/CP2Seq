@@ -28,33 +28,23 @@ seen, which ends 48%<!--fact:results.luna.cyclingPct--> of that model's attempts
 Multimodal language models have become genuinely good at visual work. They caption and answer
 questions about natural images, read documents, charts and tables, transcribe text in photographs,
 follow video, and drive graphical interfaces from screenshots alone. Over the last two years the
-direction of travel on these tasks has been steeply upward, and on several of them the reported
-numbers sit near careful human annotators.
+direction of progress on these tasks has been steeply upward, and on several of them the reported
+numbers sit near careful human annotators. TODO: Rewrite this. 
 
-It does not follow that these models reason about space. Most of the competence arrives through one
+It does not follow that these models reason about spatial reasong (TODO: Fisx this with geom reasoning etc. ). Most of the competence arrives through one
 architecture: a vision encoder trained to align images with text, and an adapter that projects its
 output into the language model's token stream. What that encoder is rewarded for preserving is
 semantic. It answers *what is in this picture*, and it answers it well, because that is what the
 training objective asks of it. Metric and relational structure is not rewarded and need not
 survive the projection: exact angles, exact incidences, which of two nearly identical shapes lies
-in front, how many times one line crosses another. Competence at recognising a scene and
-competence at reasoning about its geometry are separable, and an adapter trained for the first
+in front, how many times one line crosses another. Competence at recognising a scene and competence at reasoning about its geometry are different, and an adapter trained for the first
 gives no guarantee of the second. When the task moves to geometric and spatial reasoning, the
-ordering of models by their image-task scores need not survive.
+ranking of models by their image-task scores need not survive. (fix the wordings). 
 
-⚠️ **Star example, to verify before it goes in.** The intended example is the *Vision Language
-Models Are Blind* line of work, which reports that frontier models scoring well on hard visual
-question answering fail at elementary geometric perception: deciding whether two circles overlap,
-counting the intersections of two line plots, counting nested squares. The recorded reference is
-Rahmanzadehgervi, Bolton, Taesiri and Nguyen, ACCV 2024, arXiv:2407.06581. **Verify the authors,
-venue and the specific task list against the arXiv record before this sentence enters the paper.**
-If any part does not hold exactly as stated, cut the example rather than soften it; one
-unverifiable sentence in an introduction costs more than the example buys. Per §15 rule 7, no
-citation enters this draft from memory.
 
 Origami is an unusually clean place to look for the missing capability. It is an art form whose
 entire content is geometric: a folder works from lines, reflections and incidences on a single
-uncut sheet, and every decision is constrained by every decision before it. It also demands
+uncut sheet, and every decision is constrained by every decision before it. (Mention about the spatial thing - using the fact about the layer ordering etc. ) It also demands
 spatial reasoning of a specific kind, because the sheet stops being flat the moment folding
 begins. The folder has to track where each piece of paper now sits, which pieces lie above which,
 and which of them are still joined to each other through the original sheet. A crease pattern, the
