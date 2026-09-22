@@ -1,18 +1,9 @@
-\begin{thebibliography}{30}
+\begin{thebibliography}{8}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
-
-\bibitem[Agarwal et~al.(2026)Agarwal, Wu, Jian, Hu, Mansoor, Li, Peng, Dai,
-  Ding, and Sansone]{origamibench}
-Naaisha Agarwal, Yihan Wu, Yichang Jian, Yikuan Hu, Nishad Mansoor, Mohan Li,
-  Yifei Peng, Wang-Zhou Dai, Yao-Xiang Ding, and Emanuele Sansone.
-\newblock {OrigamiBench}: An interactive environment to synthesize
-  flat-foldable origamis.
-\newblock \emph{arXiv preprint arXiv:2603.13856}, 2026.
-\newblock VERIFIED 2026-09-21 against the arXiv record.
 
 \bibitem[Akitaya et~al.(2013)Akitaya, Mitani, Kanamori, and
   Fukui]{akitaya-cp2seq}
@@ -27,12 +18,6 @@ Hugo~A. Akitaya, Erik~D. Demaine, and Jason~S. Ku.
 \newblock Computing flat-folded states.
 \newblock In \emph{Origami$^8$: Eighth International Meeting on Origami in
   Science, Mathematics and Education ({OSME})}, 2024.
-
-\bibitem[Akitaya et~al.(2019)]{akitaya-infinite}
-Hugo~A. Akitaya et~al.
-\newblock Infinite all-layers simple foldability.
-\newblock \emph{Graphs and Combinatorics}, 2019.
-\newblock arXiv:1901.08564.
 
 \bibitem[Arkin et~al.(2004)Arkin, Bender, Demaine, Demaine, Mitchell, Sethia,
   and Skiena]{arkin-map}
@@ -54,106 +39,11 @@ Creasy.
 \newblock Open-source crease-pattern-to-sequence implementation, Java, GPL-3.0,
   unmaintained since 2022. \url{https://github.com/xkevio/Creasy}.
 
-\bibitem[Demaine \& Mitchell(2001)Demaine and Mitchell]{reaching-folded}
-Erik~D. Demaine and Joseph S.~B. Mitchell.
-\newblock Reaching folded states of a rectangular piece of paper.
-\newblock In \emph{Proceedings of the 13th Canadian Conference on Computational
-  Geometry ({CCCG})}, 2001.
-
-\bibitem[Demaine et~al.(2004)Demaine, Devadoss, Mitchell, and
-  O'Rourke]{continuous}
-Erik~D. Demaine, Satyan~L. Devadoss, Joseph S.~B. Mitchell, and Joseph
-  O'Rourke.
-\newblock Continuous foldability of polygonal paper.
-\newblock In \emph{Proceedings of the 16th Canadian Conference on Computational
-  Geometry ({CCCG})}, 2004.
-
 \bibitem[Flat-Folder()]{flatfolder}
 Flat-Folder.
 \newblock {Flat-Folder}, 2024.
 \newblock \url{https://github.com/origamimagiro/flat-folder}, MIT licence.
   Decides and enumerates flat-folded states.
-
-\bibitem[Flat Origami is Turing Complete()]{turing}
-Flat Origami is Turing Complete.
-\newblock Flat origami is {T}uring complete.
-\newblock \emph{arXiv preprint arXiv:2309.07932}, 2023.
-
-\bibitem[FOLD file format()]{fold-format}
-FOLD file format.
-\newblock The {FOLD} file format, 2019.
-\newblock \url{https://github.com/edemaine/fold}.
-
-\bibitem[Foldings and Meanders()]{meanders}
-Foldings and Meanders.
-\newblock Foldings and meanders.
-\newblock \emph{arXiv preprint arXiv:1302.2025}, 2013.
-
-\bibitem[Graphs of Origami Flat Foldings()]{flat-folding-graphs}
-Graphs of Origami Flat Foldings.
-\newblock Realization and connectivity of the graphs of origami flat foldings.
-\newblock \emph{arXiv preprint arXiv:1808.06013}, 2018.
-
-\bibitem[Koehler(1968)]{koehler}
-John~E. Koehler.
-\newblock Folding a strip of stamps.
-\newblock \emph{Journal of Combinatorial Theory}, 5:\penalty0 135--152, 1968.
-
-\bibitem[Layer Ordering Constraints()]{layer-algebra}
-Layer Ordering Constraints.
-\newblock An algebraic approach to layer ordering constraints for origami
-  flat-foldability.
-\newblock In \emph{Origami$^8$}, 2026.
-
-\bibitem[Lucas(1891)]{lucas}
-{\'E}douard Lucas.
-\newblock Th{\'e}orie des nombres, 1891.
-\newblock Attributes the stamp-folding problem to {\'E}. Lemoine; earlier
-  literature traced by J. Touchard (1950).
-
-\bibitem[Lunnon(1971)]{lunnon}
-W.~F. Lunnon.
-\newblock Multi-dimensional map folding.
-\newblock \emph{The Computer Journal}, 1971.
-
-\bibitem[Mitani()]{oripa}
-Jun Mitani.
-\newblock {ORIPA}: Origami pattern editor.
-\newblock Crease-pattern editor and folded-form estimation.
-
-\bibitem[Moriya et~al.(2026)]{foldingagent}
-M.~Moriya et~al.
-\newblock {FoldingAgent}.
-\newblock \emph{arXiv preprint arXiv:2609.00377}, 2026.
-\newblock Reconstructs folding processes from instructional video; built on
-  PurelandFold.
-
-\bibitem[{OEIS Foundation Inc.}(2026)]{oeis-a000136}
-{OEIS Foundation Inc.}
-\newblock The on-line encyclopedia of integer sequences, {A000136}: Number of
-  ways of folding a strip of $n$ labeled stamps, 2026.
-\newblock See also A001011, A001416.
-
-\bibitem[PurelandFold()]{purelandfold}
-PurelandFold.
-\newblock {PurelandFold}, 2026.
-\newblock \url{https://huggingface.co/datasets/mayaweiz/PurelandFold},
-  CC-BY-4.0. 27 sequences, 337 frames.
-
-\bibitem[Random Locally Flat-Foldable Origami()]{random-locally}
-Random Locally Flat-Foldable Origami.
-\newblock On random locally flat-foldable origami.
-\newblock \emph{arXiv preprint arXiv:2502.04279}, 2025.
-
-\bibitem[Simple Folding of Mixed Orthogonal CPs()]{mixed-orthogonal}
-Simple Folding of Mixed Orthogonal CPs.
-\newblock Complexity of simple folding of mixed orthogonal crease patterns.
-\newblock \emph{arXiv preprint arXiv:2306.00702}, 2023.
-
-\bibitem[Spatial Reasoning in MLLMs()]{spatial-survey}
-Spatial Reasoning in MLLMs.
-\newblock Spatial reasoning in {MLLMs}: A survey.
-\newblock \emph{arXiv preprint arXiv:2511.15722}, 2025.
 
 \bibitem[Spencer et~al.(2025)Spencer, Yaari, Vemavarapu, Yang, Ngo, and
   Sharma]{gamibench}
@@ -164,19 +54,6 @@ R.~Spencer, R.~Yaari, R.~Vemavarapu, J.~Yang, S.~Ngo, and U.~Sharma.
 \newblock VERIFIED 2026-09-21: 186 regular and 186 impossible patterns, six
   viewpoints, three VQA tasks, VC and IFSR metrics.
 
-\bibitem[Spin Model for Flat-Foldability()]{spin-model}
-Spin Model for Flat-Foldability.
-\newblock A spin model for global flat-foldability of random origami.
-\newblock \emph{arXiv preprint arXiv:2403.07306}, 2024.
-
-\bibitem[Visualization-of-Thought()]{vot}
-Visualization-of-Thought.
-\newblock Mind's eye of {LLM}s: Visualization-of-thought elicits spatial
-  reasoning in large language models.
-\newblock In \emph{Advances in Neural Information Processing Systems
-  ({NeurIPS})}, 2024.
-\newblock arXiv:2404.03622.
-
 \bibitem[Xu et~al.(2025)Xu, Lu, Zhao, Tan, Wang, Yuan, Chen, and
   Xu]{origamispace}
 R.~Xu, D.~Lu, Z.~Zhao, X.~Tan, X.~Wang, S.~Yuan, J.~Chen, and Y.~Xu.
@@ -185,17 +62,5 @@ R.~Xu, D.~Lu, Z.~Zhao, X.~Tan, X.~Wang, S.~Yuan, J.~Chen, and Y.~Xu.
 \newblock In \emph{Advances in Neural Information Processing Systems
   ({NeurIPS})}, 2025.
 \newblock VERIFIED 2026-09-21: NeurIPS 2025 poster; also arXiv:2511.18450.
-
-\bibitem[Zahavy et~al.(2026)Zahavy, Hou, Tumiel, Doran, Faccio, Feng, Havrilla,
-  Khytryi, Li, Schut, Veeriah, Abrashi, Kosmulski, Lang, Robinson, Wong, Chiam,
-  Fang, and Singh]{corigami}
-Tom Zahavy, Shaobo Hou, Thomas Tumiel, James Doran, Francesco Faccio, Xidong
-  Feng, Alex Havrilla, Igor Khytryi, Chenglei Li, Lisa Schut, Vivek Veeriah,
-  Arijan Abrashi, Micha{\l} Kosmulski, Robert~J. Lang, Nick Robinson, Brandon
-  Wong, Marcus Chiam, Gloria Fang, and Satinder Singh.
-\newblock {COrigami}: An {AI} pipeline for co-designing flat-foldable visually
-  recognisable origami.
-\newblock \emph{arXiv preprint arXiv:2606.26299}, 2026.
-\newblock VERIFIED 2026-09-21 against the arXiv record.
 
 \end{thebibliography}

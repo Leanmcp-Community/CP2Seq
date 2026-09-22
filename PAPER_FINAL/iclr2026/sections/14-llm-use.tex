@@ -1,48 +1,12 @@
 \section{Use of large language models}
 \label{sec:llm-use}
 
-ICLR 2026 requires that \textbf{any} use of a large language model be disclosed, on the Code of
-Ethics principle that all contributions to the research must be acknowledged, and holds the authors
-responsible for everything in the paper regardless of what assisted in producing it. The policy does
-not treat a model used as a research instrument differently from one used for writing: both must be
-disclosed. Disclosure is required \textbf{in the paper's text and in the submission form}, so filling
-in this section is not sufficient on its own.
+Language models are evaluated as agents in the folding task. AI assistants were also used for
+implementation, literature-search assistance, and manuscript drafting and editing. Claude Code
+was used for coding assistance. AI-generated figure drafts served as composition references;
+dataset geometry and experimental results must be rendered from the corresponding artifacts.
+The authors are responsible for the manuscript and released implementation.
 
-\textbf{Caveat.} Remember the submission form. It is a separate field and is easy to miss.
-
-\paragraph{Large language models are part of the object of study.}
-This is a benchmark for evaluating language models, so models appear in the work by construction.
-Every number reported in Section~\ref{sec:results} is the output of a frontier multimodal model
-driven through the harness described in Section~\ref{sec:experiments}. The models evaluated, their
-versions and their settings are listed there. No model was trained or fine-tuned for this paper.
-
-\paragraph{Code.}
-The benchmark's implementation was written with AI assistance, principally Claude Code, used as a
-coding assistant throughout. Every design decision, every experiment, and the direction of the work
-were determined by the human authors, and all generated code was reviewed by them before it was
-used. The authors are responsible for the correctness of the released artifacts. Two habits in the
-project exist because of this reliance and are worth naming: the corpus carries two independently
-written checks over every sample (Section~\ref{sec:cp2seq-verify}), and the state comparator ships
-with a negative control that must reject a deliberately corrupted state
-(Section~\ref{sec:scoring-validate}). The second of these caught a real defect, described in that
-section, in which 23 of 600 corrupted states were initially accepted.
-
-\paragraph{Literature search.}
-The related work of Section~\ref{sec:related} was assembled primarily by hand, using Google Scholar
-and alphaXiv. AI assistance was used partially, to locate candidate papers and to recover
-bibliographic details. Every citation in this paper was verified against the arXiv or publisher
-record by a human author; citations that could not be verified were removed rather than softened.
-
-\paragraph{Writing.}
-AI assistance was used in drafting and editing the manuscript. The argument, the claims, the
-experimental design and the conclusions are the authors'. No text was included that an author had
-not read and agreed with, and no result, citation or number in this paper was produced by a language
-model without being checked against the artifact it describes.
-
-\paragraph{Figures.}
-Any figure marked \textbf{DRAFT IMAGE} is a placeholder generated with OpenAI
-\texttt{gpt-image-2} and is used only as a compositional reference to be redrawn by hand. Generated
-images are never used to depict data or geometry: crease patterns, folded states and result charts
-are rendered from the corpus and from the run outputs. Draft figures will not appear in a submitted
-version of this paper.
-
+% EDITING NOTE: Confirm the assistance description and figure provenance before submission.
+% Retain only human-review and citation-verification claims that the authors can substantiate.
+% Check the venue's disclosure requirements, including any submission-form questions.

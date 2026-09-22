@@ -50,3 +50,22 @@ the number of legal moves and the probability that a random proposal is legal ar
 quantities: a larger proposal space can lower the latter without reducing the former. We use
 observed solver performance to assess difficulty rather than inferring it solely from either
 quantity or from worst-case complexity results for other folding variants.
+
+\subsection{Comparison implementation}
+\label{app:comparison-details}
+
+The engine compares creases in original-sheet coordinates after grouping and merging collinear
+intervals by assignment. Interval endpoints are matched within $2\times10^{-6}$; coordinate
+canonicalization is part of preprocessing and does not make the comparison tolerance-free.
+
+The shared terminal comparator first checks layer counts. It considers direct alignment and
+turnover, with turnover reversing layer order and face parity. Correspondences between vertices
+of the first layer propose global alignments; a candidate alignment is accepted only if every
+layer polygon and parity matches its target rank. Polygon matching uses a positional tolerance
+of $2\times10^{-6}$, short-edge cleanup at $10^{-7}$, and a collinearity threshold of $10^{-9}$.
+
+The shared implementation represents current-plane polygons, parity, and rank. It does not
+explicitly compare original-sheet region identities. Any identity-aware offline comparator must
+be distinguished from this path, and the comparator version used for each reported result must
+be recorded. In particular, equal shapes at different original-sheet locations can require a
+stronger correspondence check than current-plane geometry alone.

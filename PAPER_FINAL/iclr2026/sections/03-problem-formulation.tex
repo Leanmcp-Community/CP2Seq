@@ -16,23 +16,4 @@ run from the top or bottom of the stack. Both use flat $180^\circ$ folds, with c
 to reject moves that would tear the sheet; state representations and action constraints are
 detailed in Appendix~\ref{app:folding-model}.
 
-\begin{figure}[t]
-\centering
-\small
-\begin{tabular}{c}
-\fbox{\parbox{0.86\linewidth}{\centering
-\textbf{Inputs:} crease pattern $C$ and target folded state $S^\star$}}\\[4pt]
-$\downarrow$\\[4pt]
-\fbox{\parbox{0.86\linewidth}{\centering
-\textbf{Construct a sequence from the unfolded square}\\
-Propose a fold $\rightarrow$ check and execute $\rightarrow$ inspect the state\\
-Revise earlier actions as needed, then submit $a_1,\ldots,a_T$}}\\[4pt]
-$\downarrow$\\[4pt]
-\fbox{\parbox{0.86\linewidth}{\centering
-\textbf{Replay and evaluate:} crease-pattern agreement and target-state agreement}}
-\end{tabular}
-\caption{CP2Seq task and interactive evaluation. The model receives both endpoints and constructs
- the intervening fold sequence. Observations and tools depend on the assistance condition; the
- reference sequence and intermediate reference states are withheld.}
-\label{fig:sample}
-\end{figure}
+\input{figures/task-example}

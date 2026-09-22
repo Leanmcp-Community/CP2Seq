@@ -8,6 +8,8 @@
 \usepackage{verbatim}
 \usepackage{hyperref}
 \usepackage{url}
+\usepackage{graphicx}
+\usepackage{tikz}
 
 \title{Origami as a Spatial and Geometric Reasoning Benchmark}
 
@@ -61,7 +63,9 @@ Paper under double-blind review}
 \input{sections/08-tiers}
 \input{sections/09-results}
 \input{sections/10-limitations}
+\ifdraftnotes
 \input{sections/11-figures}
+\fi
 \input{sections/13-licence}
 \input{sections/14-llm-use}
 
@@ -75,10 +79,10 @@ Withheld for anonymous review.
 \appendix
 
 \input{sections/appendix-folding-model}
-
-\input{sections/appendix-a-reference-notes}
+\input{sections/appendix-artifacts}
 
 \ifdraftnotes
+\input{sections/appendix-a-reference-notes}
 \input{sections/appendix-b-editorial-rules}
 \input{sections/appendix-c-changes}
 \fi

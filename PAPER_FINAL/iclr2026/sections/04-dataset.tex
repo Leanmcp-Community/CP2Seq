@@ -39,19 +39,7 @@ GENERATE(reference_depth, action_model):
     return (cp, state, actions, frames, METADATA(actions))
 \end{verbatim}}
 
-\begin{figure}[t]
-\centering
-\fbox{\parbox[c][8\baselineskip][c]{0.9\linewidth}{\centering
-\textbf{Dataset examples: placeholder}\\[6pt]
-Three rows: easy all-layers, deeper all-layers, and some-layers.\\[4pt]
-Each row: input crease pattern $\vert$ target folded state $\vert$
-reference folding sequence.\\[4pt]
-Replace with renders from actual dataset samples.}}
-\caption{Planned examples from CP2Seq. Each row will show the two task inputs and the recorded
-reference sequence, which is withheld during evaluation. Target views will show both geometry
-and layer structure. This placeholder contains no sample data.}
-\label{fig:dataset-examples}
-\end{figure}
+\input{figures/dataset-examples}
 
 \subsection{Dataset statistics}
 \label{sec:dataset-statistics}

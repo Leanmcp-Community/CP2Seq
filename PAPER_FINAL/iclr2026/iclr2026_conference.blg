@@ -3,55 +3,44 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: iclr2026_conference.aux
 The style file: iclr2026_conference.bst
 Database file #1: iclr2026_conference.bib
-Warning--empty author in turing
-Warning--empty author in meanders
-Warning--empty author in flat-folding-graphs
-Warning--empty author in layer-algebra
-Warning--empty year in oripa
-Warning--empty author in random-locally
-Warning--empty author in mixed-orthogonal
-Warning--empty author in spatial-survey
-Warning--empty author in spin-model
-Warning--empty author in vot
-You've used 30 entries,
+You've used 8 entries,
             2773 wiz_defined-function locations,
-            734 strings with 10060 characters,
-and the built_in function-call counts, 11976 in all, are:
-= -- 1029
-> -- 705
-< -- 10
-+ -- 252
-- -- 222
-* -- 909
-:= -- 1719
-add.period$ -- 97
-call.type$ -- 30
-change.case$ -- 175
-chr.to.int$ -- 30
-cite$ -- 70
-duplicate$ -- 593
-empty$ -- 1072
-format.name$ -- 245
-if$ -- 2578
+            634 strings with 6649 characters,
+and the built_in function-call counts, 3987 in all, are:
+= -- 329
+> -- 288
+< -- 2
++ -- 98
+- -- 90
+* -- 327
+:= -- 592
+add.period$ -- 26
+call.type$ -- 8
+change.case$ -- 56
+chr.to.int$ -- 8
+cite$ -- 16
+duplicate$ -- 175
+empty$ -- 317
+format.name$ -- 98
+if$ -- 843
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 23
-newline$ -- 165
-num.names$ -- 68
-pop$ -- 416
+missing$ -- 6
+newline$ -- 50
+num.names$ -- 24
+pop$ -- 130
 preamble$ -- 1
-purify$ -- 145
+purify$ -- 48
 quote$ -- 0
-skip$ -- 455
+skip$ -- 144
 stack$ -- 0
-substring$ -- 136
-swap$ -- 47
+substring$ -- 67
+swap$ -- 21
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 330
-warning$ -- 10
-while$ -- 58
+type$ -- 88
+warning$ -- 0
+while$ -- 23
 width$ -- 0
-write$ -- 383
-(There were 10 warnings)
+write$ -- 109

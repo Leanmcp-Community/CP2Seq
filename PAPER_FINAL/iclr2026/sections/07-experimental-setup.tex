@@ -51,16 +51,7 @@ cycle limits must be reported alongside the query count.
 % A dashed boundary around the withheld items (intermediate frames, reference
 % sequence) carries point (3) without a sentence.
 % ===========================================================================
-\begin{figure}[h]
-\draftimage{10}
-\begin{center}\textit{\footnotesize Figure 4 placeholder: the
-evaluation pipeline. Inputs on the left; the propose-verify-observe loop in the centre with the
-environment and verifier drawn as one box and refusals looping back without advancing; replay and
-scoring on the right, with the reference sequence outside the loop.}\end{center}
-\caption{\textbf{[DRAFT IMAGE]} One episode. The environment and the verifier are the same object, so stepping is the same
-act as asking for a verdict. The reference sequence enters only at scoring.}
-\label{fig:pipeline}
-\end{figure}
+\input{figures/pipeline}
 
 \subsubsection{Tool configuration}
 \label{sec:exp-tools}
@@ -142,8 +133,8 @@ arbitrary rotation means candidate and reference coordinates agree only to withi
 representation, so the comparator matches polygons within $2\times10^{-6}$, cleans degenerate
 vertices at $10^{-7}$ and treats vertices as collinear below $10^{-9}$. Every result record carries
 the tolerance it was scored under, so the value is visible in the released runs rather than buried
-in a constant. The engine's legality decisions are combinatorial and involve no tolerance; the
-numerical threshold applies only to terminal-state equality under transforms.
+in a constant. Crease compatibility and terminal-state comparison both involve numerical
+tolerances; these checks must not be described as tolerance-free.
 
 \textbf{Error verbosity is itself a variable.} The richer a refusal, the more of the reasoning the
 environment performs rather than the model; at the limit a message that names the fix has solved the
@@ -175,4 +166,3 @@ Symbolic crease-pattern-to-sequence solver \citep{creasy} (planned) & The closes
 The breadth-first baseline is the one that answers the ``the simulator did all the work'' objection
 of Section~\ref{sec:env-division} numerically rather than structurally, which is the stronger form of
 that answer.
-

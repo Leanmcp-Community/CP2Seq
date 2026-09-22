@@ -12,8 +12,7 @@ no recorded \texttt{solved} field is counted as unsolved.
 \textbf{No language model solved a single sample beyond the easy stratum.} Across every model arm,
 mid is 0 of 70 and hard is 0 of 27. On the easy stratum a deterministic breadth-first search over
 exactly the action set the models are given solves 54.7\%, against 20.4\% for the best-covered model
-at the same tier. \textbf{Blind search beats every model tested, by a factor of about 2.7 on the
-only stratum where anything succeeds at all.}
+at the same tier.
 
 \begin{table}[h]
 \caption{Solve rate per stratum, all saved runs. Denominators are attempts, not distinct samples.
@@ -56,32 +55,19 @@ a comparison. Any main table in the submitted paper prints $n$ in every cell or 
 of its 725 attempts ended in timeout rather than exhaustion, so \textbf{50.6\% is a lower bound
 under the baseline's time budget, not the ceiling of exhaustive search.}
 
-The implementation of the baseline in Section~\ref{sec:exp-baselines},
-\texttt{workspace/search\_baseline.mjs}, records that \texttt{list\_legal\_folds} evaluates roughly 2,010
-candidate actions per state and returns a mean of 3.51 that
-are legal and stay inside the target crease pattern, over 73,750 enumerations. A branching factor
-near 3.5 makes an easy sample of five folds a tree of a few hundred states, and the median of 65
-states expanded on easy confirms it. \textbf{The easy stratum is therefore not measuring origami
-reasoning.} It measures whether a model can avoid losing to breadth-first search on a tree its own
-tool has already pruned roughly 570-fold, and every model tested loses.
+Candidate enumeration filters for legality and compatibility with the target crease pattern.
+The baseline measures performance of systematic exploration with this filtering; its success rate
+does not by itself identify which reasoning abilities a model uses.
 
-We state this rather than report the models' easy-tier rate as an achievement. It is also the answer
-to the ``the simulator does all the work'' objection of Section~\ref{sec:env-division}, and the answer
-is uncomfortable: on the easy stratum the simulator does do most of the work. The benchmark's value
-here is that it measures that rather than hiding it. On mid and hard the objection dissolves,
-because search solves 1 of 56 and the models solve 0 of 97.
-
-\subsection{Tool assistance}
+\phantomsection
 \label{sec:results-tiers}
 
-The one within-model tier comparison the data supports is \texttt{gpt-5.6-luna} on easy: 59/289
-(20.4\%) with the filtering tool against 4/65 (6.2\%) with basic tools. The observed rate ratio is roughly
-$3.3\times$ on that stratum and nothing on mid or hard, where both tiers are zero.
+On easy instances, Luna solves 59/289 attempts (20.4\%) with candidate filtering and 4/65
+(6.2\%) with basic tools. These are descriptive rates from unmatched attempt sets; controlled
+comparisons and the remaining assistance experiments are pending.
+% EDITING NOTE: Update this comparison after the remaining experiments.
 
-\textbf{Caveat.} The no-vision and verifier-only tiers of Section~\ref{sec:ablations} were not run.
-The four-tier ladder this paper describes is not yet instantiated; only the basic-tools and candidate-filtering conditions have reported results.
-
-\subsection{Failure taxonomy}
+\subsection{Failure analysis}
 \label{sec:results-failures}
 
 \begin{table}[h]
@@ -99,52 +85,38 @@ The four-tier ladder this paper describes is not yet instantiated; only the basi
 \end{center}
 \end{table}
 
-\textbf{This is the most informative result in the section, and it is not a solve rate.} A majority
-of attempts, 233 of 447 counting cycling and repetition together, end with the model revisiting a
-state it has already produced rather than exhausting its budget. The model is not running out of
-room to search; it is failing to notice it has been somewhere before. That is a specific,
-diagnosable deficit in maintaining state across a multi-step spatial task, and it is the kind of
-finding a benchmark with an executing verifier can produce and a multiple-choice benchmark cannot.
-The baseline never cycles, because breadth-first search over a visited set cannot; it times out
-instead, 358 times.
+State cycling terminates 215 of 447 Luna attempts (48.1\%), while another 18 terminate with a
+repetition label and 47 reach the turn budget. These labels describe stopping behavior rather
+than proving the absence of reasoning. Repeated exploration without reaching the target indicates
+ineffective search in those attempts; attributing it to state tracking or action selection
+requires trajectory analysis. A \texttt{finished} label denotes submission, not necessarily success.
 
-\subsection{Performance by difficulty}
+The harness defaults include a limit of three repetitions of the same action from the same
+position and fifteen arrivals at the same position by any route. The latter is a revisit limit,
+not a limit of fifteen distinct branches. Such limits can stop repeated exploration and must be
+reported from each run's configuration rather than inferred from defaults. The aggregate table
+does not separately identify all revisit-limit events.
+% EDITING NOTE: Audit per-run cycle and revisit limits and classify capped exploration separately.
+
+\phantomsection
 \label{sec:results-difficulty}
 
-Depth separates the arms completely. Easy is the only stratum where anything succeeds; mid yields a
-single solve, by the baseline, at a median of 1051.5 states expanded against 65 on easy; hard yields
-none from any arm. \texttt{[TO RUN: solve rate against coupling, to test whether the second
-stratification axis of Section~\ref{sec:cp2seq-difficulty} predicts difficulty as intended. Only
-depth is evidenced so far.]}
+No model attempt solves a medium or hard instance in the reported aggregate; BFS solves one
+medium instance. This observation is consistent with greater search difficulty at larger reference
+depths, but does not establish a causal effect of depth or coupling.
+% EDITING NOTE (retained): [TO RUN] solve rate against coupling.
 
-\subsection{Evaluation coverage}
+\phantomsection
 \label{sec:results-threats}
+The aggregate contains 725 BFS attempts and 447 Luna attempts, with much smaller counts for other
+models. Recorded reasoning settings are low for 461 model attempts and absent for 25. Twenty-four
+attempts with missing model identity ended in error and are reported separately as unsolved.
+Per-sample repeat statistics and matched-budget comparisons remain to be reported.
 
-\textbf{Every model attempt ran at low reasoning effort.} All 461 language-model attempts with a
-recorded setting used \texttt{reasoning\_effort: low}; 25 have none recorded. This is the single
-largest caveat on every claim in this section. ``Frontier models fail this task'' is not supported
-by these runs. What is supported is that frontier models at low reasoning effort fail this task and
-lose to breadth-first search where search works at all. Re-running the best-covered arm at high
-effort is the most valuable remaining experiment, and until it exists the headline carries the
-qualifier.
-
-\textbf{Coverage is severely imbalanced.} 725 baseline attempts and 447 for \texttt{gpt-5.6-luna},
-against between one and seven for every other model. No cross-model claim is made.
-
-\textbf{24 attempts terminated in error with no model recorded} and are counted as unsolved. They
-are reported as their own row rather than dropped, because dropping failed attempts inflates every
-rate above them.
-
-\textbf{Repeats are not yet reported as median and spread.} Section~\ref{sec:exp-protocol} promises
-this; the aggregation counts attempts rather than grouping repeats per sample. The protocol requires
-it before submission.
-
-\draftimage{8}
-\begin{center}\textit{\footnotesize Figure 6 placeholder: solve rate per difficulty stratum, one
-line per model, with the deterministic baseline as a distinct reference line crossing above every
-model line on the easy stratum, and attempt counts printed at each point.}\end{center}
 \begin{figure}[h]
-\caption{\textbf{[DRAFT IMAGE]} Main result per stratum. The baseline crosses above every model line
-on easy; that crossing is the most informative feature of the chart and is not smoothed away.}
+\draftimage{8}
+\begin{center}\textit{\footnotesize Placeholder: solve rate by fold-count stratum for Luna and BFS,
+with attempt counts and run conditions shown.}\end{center}
+\caption{\textbf{[DRAFT IMAGE]} Planned summary of performance by fold-count stratum.}
 \label{fig:main}
 \end{figure}

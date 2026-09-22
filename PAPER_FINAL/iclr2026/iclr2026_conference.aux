@@ -24,19 +24,18 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Task and action models}{3}{subsection.3.1}\protected@file@percent }
 \newlabel{sec:problem}{{3.1}{3}{Task and action models}{subsection.3.1}{}}
 \newlabel{sec:problem-task}{{3.1}{3}{Task and action models}{subsection.3.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces CP2Seq task and interactive evaluation. The model receives both endpoints and constructs the intervening fold sequence. Observations and tools depend on the assistance condition; the reference sequence and intermediate reference states are withheld.}}{4}{figure.1}\protected@file@percent }
-\newlabel{fig:sample}{{1}{4}{CP2Seq task and interactive evaluation. The model receives both endpoints and constructs the intervening fold sequence. Observations and tools depend on the assistance condition; the reference sequence and intermediate reference states are withheld}{figure.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Planned examples from CP2Seq. Each row will show the two task inputs and the recorded reference sequence, which is withheld during evaluation. Target views will show both geometry and layer structure. This placeholder contains no sample data.}}{4}{figure.2}\protected@file@percent }
-\newlabel{fig:dataset-examples}{{2}{4}{Planned examples from CP2Seq. Each row will show the two task inputs and the recorded reference sequence, which is withheld during evaluation. Target views will show both geometry and layer structure. This placeholder contains no sample data}{figure.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Dataset construction}{4}{subsection.3.2}\protected@file@percent }
-\newlabel{sec:cp2seq-generation}{{3.2}{4}{Dataset construction}{subsection.3.2}{}}
-\newlabel{sec:cp2seq-why}{{3.2}{4}{Dataset construction}{subsection.3.2}{}}
-\newlabel{sec:cp2seq-difficulty}{{3.2}{4}{Dataset construction}{subsection.3.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Dataset construction}{3}{subsection.3.2}\protected@file@percent }
+\newlabel{sec:cp2seq-generation}{{3.2}{3}{Dataset construction}{subsection.3.2}{}}
+\newlabel{sec:cp2seq-why}{{3.2}{3}{Dataset construction}{subsection.3.2}{}}
+\newlabel{sec:cp2seq-difficulty}{{3.2}{3}{Dataset construction}{subsection.3.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces CP2Seq task illustrated by all-layers/easy-0001. The model receives the crease pattern and target state and must produce a valid sequence from the unfolded sheet. The lower row shows states from the recorded reference sequence for illustration, not a model prediction; this sequence and its intermediate states are withheld during evaluation.}}{4}{figure.1}\protected@file@percent }
+\newlabel{fig:sample}{{1}{4}{CP2Seq task illustrated by all-layers/easy-0001. The model receives the crease pattern and target state and must produce a valid sequence from the unfolded sheet. The lower row shows states from the recorded reference sequence for illustration, not a model prediction; this sequence and its intermediate states are withheld during evaluation}{figure.1}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Generation pseudocode}{4}{subsubsection.3.2.1}\protected@file@percent }
-\citation{akitaya-flatfolder}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Dataset statistics}{5}{subsection.3.3}\protected@file@percent }
-\newlabel{sec:dataset-statistics}{{3.3}{5}{Dataset statistics}{subsection.3.3}{}}
-\newlabel{sec:cp2seq-contents}{{3.3}{5}{Dataset statistics}{subsection.3.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Dataset statistics}{4}{subsection.3.3}\protected@file@percent }
+\newlabel{sec:dataset-statistics}{{3.3}{4}{Dataset statistics}{subsection.3.3}{}}
+\newlabel{sec:cp2seq-contents}{{3.3}{4}{Dataset statistics}{subsection.3.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces CP2Seq examples: each panel pairs the crease pattern (left) with the target top view (right). Panels (a--c) use all-layers folds; (d) is from some-generated-d5. Counts are reference folds. Red and blue denote mountain and valley creases.}}{5}{figure.2}\protected@file@percent }
+\newlabel{fig:dataset-examples}{{2}{5}{CP2Seq examples: each panel pairs the crease pattern (left) with the target top view (right). Panels (a--c) use all-layers folds; (d) is from some-generated-d5. Counts are reference folds. Red and blue denote mountain and valley creases}{figure.2}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Dataset composition. Fold counts refer to recorded reference sequences.}}{5}{table.1}\protected@file@percent }
 \newlabel{tab:dataset-statistics}{{1}{5}{Dataset composition. Fold counts refer to recorded reference sequences}{table.1}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Contents of a CP2Seq sample.}}{5}{table.2}\protected@file@percent }
@@ -44,174 +43,113 @@
 \newlabel{sec:cp2seq-sample}{{2}{5}{Contents of a CP2Seq sample}{table.2}{}}
 \newlabel{sec:cp2seq-verify}{{3.3}{5}{Dataset statistics}{section*.1}{}}
 \newlabel{sec:cp2seq-limits}{{3.3}{5}{Dataset statistics}{section*.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Experimental setup}{5}{section.4}\protected@file@percent }
-\newlabel{sec:experimental-setup}{{4}{5}{Experimental setup}{section.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Environment}{5}{subsection.4.1}\protected@file@percent }
-\newlabel{sec:env}{{4.1}{5}{Environment}{subsection.4.1}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.1}State transitions}{5}{subsubsection.4.1.1}\protected@file@percent }
-\newlabel{sec:env-one-object}{{4.1.1}{5}{State transitions}{subsubsection.4.1.1}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.2}Tools and verification}{5}{subsubsection.4.1.2}\protected@file@percent }
-\newlabel{sec:env-division}{{4.1.2}{5}{Tools and verification}{subsubsection.4.1.2}{}}
-\citation{akitaya-flatfolder,flatfolder}
+\citation{akitaya-flatfolder}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Experimental setup}{6}{section.4}\protected@file@percent }
+\newlabel{sec:experimental-setup}{{4}{6}{Experimental setup}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Environment}{6}{subsection.4.1}\protected@file@percent }
+\newlabel{sec:env}{{4.1}{6}{Environment}{subsection.4.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.1}State transitions}{6}{subsubsection.4.1.1}\protected@file@percent }
+\newlabel{sec:env-one-object}{{4.1.1}{6}{State transitions}{subsubsection.4.1.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.2}Tools and verification}{6}{subsubsection.4.1.2}\protected@file@percent }
+\newlabel{sec:env-division}{{4.1.2}{6}{Tools and verification}{subsubsection.4.1.2}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Who does what. The environment does not search.}}{6}{table.3}\protected@file@percent }
 \newlabel{tab:division}{{3}{6}{Who does what. The environment does not search}{table.3}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.3}Action validation}{6}{subsubsection.4.1.3}\protected@file@percent }
 \newlabel{sec:env-refusals}{{4.1.3}{6}{Action validation}{subsubsection.4.1.3}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces The refusal taxonomy. A rejection arrives already labelled with the class it violated.}}{6}{table.4}\protected@file@percent }
 \newlabel{tab:refusals}{{4}{6}{The refusal taxonomy. A rejection arrives already labelled with the class it violated}{table.4}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.4}Observations}{6}{subsubsection.4.1.4}\protected@file@percent }
-\newlabel{sec:env-observes}{{4.1.4}{6}{Observations}{subsubsection.4.1.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Evaluation metrics}{6}{subsection.4.2}\protected@file@percent }
-\newlabel{sec:scoring}{{4.2}{6}{Evaluation metrics}{subsection.4.2}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1}Reference sequences}{6}{subsubsection.4.2.1}\protected@file@percent }
-\newlabel{sec:scoring-why}{{4.2.1}{6}{Reference sequences}{subsubsection.4.2.1}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2}State comparison}{7}{subsubsection.4.2.2}\protected@file@percent }
-\newlabel{sec:scoring-what}{{4.2.2}{7}{State comparison}{subsubsection.4.2.2}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.3}Metrics}{7}{subsubsection.4.2.3}\protected@file@percent }
-\newlabel{sec:scoring-metrics}{{4.2.3}{7}{Metrics}{subsubsection.4.2.3}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.4}Comparator validation}{8}{subsubsection.4.2.4}\protected@file@percent }
-\newlabel{sec:scoring-validate}{{4.2.4}{8}{Comparator validation}{subsubsection.4.2.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Evaluation protocol}{8}{subsection.4.3}\protected@file@percent }
-\newlabel{sec:experiments}{{4.3}{8}{Evaluation protocol}{subsection.4.3}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.1}Episode procedure}{8}{subsubsection.4.3.1}\protected@file@percent }
-\newlabel{sec:exp-pipeline}{{4.3.1}{8}{Episode procedure}{subsubsection.4.3.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {[DRAFT IMAGE]} One episode. The environment and the verifier are the same object, so stepping is the same act as asking for a verdict. The reference sequence enters only at scoring.}}{8}{figure.3}\protected@file@percent }
-\newlabel{fig:pipeline}{{3}{8}{\textbf {[DRAFT IMAGE]} One episode. The environment and the verifier are the same object, so stepping is the same act as asking for a verdict. The reference sequence enters only at scoring}{figure.3}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.2}Tool configuration}{9}{subsubsection.4.3.2}\protected@file@percent }
-\newlabel{sec:exp-tools}{{4.3.2}{9}{Tool configuration}{subsubsection.4.3.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Tools available to the evaluation harness; exposure depends on run configuration.}}{9}{table.5}\protected@file@percent }
-\newlabel{tab:tools}{{5}{9}{Tools available to the evaluation harness; exposure depends on run configuration}{table.5}{}}
+\citation{akitaya-flatfolder,flatfolder}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.4}Observations}{7}{subsubsection.4.1.4}\protected@file@percent }
+\newlabel{sec:env-observes}{{4.1.4}{7}{Observations}{subsubsection.4.1.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Evaluation metrics}{7}{subsection.4.2}\protected@file@percent }
+\newlabel{sec:scoring}{{4.2}{7}{Evaluation metrics}{subsection.4.2}{}}
+\newlabel{sec:scoring-why}{{4.2}{7}{Evaluation metrics}{section*.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1}Verification}{7}{subsubsection.4.2.1}\protected@file@percent }
+\newlabel{sec:scoring-what}{{4.2.1}{7}{Verification}{subsubsection.4.2.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2}Reported metrics}{7}{subsubsection.4.2.2}\protected@file@percent }
+\newlabel{sec:scoring-metrics}{{4.2.2}{7}{Reported metrics}{subsubsection.4.2.2}{}}
+\newlabel{sec:scoring-validate}{{4.2.2}{7}{Reported metrics}{section*.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Evaluation protocol}{7}{subsection.4.3}\protected@file@percent }
+\newlabel{sec:experiments}{{4.3}{7}{Evaluation protocol}{subsection.4.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.1}Episode procedure}{7}{subsubsection.4.3.1}\protected@file@percent }
+\newlabel{sec:exp-pipeline}{{4.3.1}{7}{Episode procedure}{subsubsection.4.3.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Evaluation pipeline. The model edits and inspects its current construction. The reference sequence is withheld from the model and used only for scoring.}}{8}{figure.3}\protected@file@percent }
+\newlabel{fig:pipeline}{{3}{8}{Evaluation pipeline. The model edits and inspects its current construction. The reference sequence is withheld from the model and used only for scoring}{figure.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.2}Tool configuration}{8}{subsubsection.4.3.2}\protected@file@percent }
+\newlabel{sec:exp-tools}{{4.3.2}{8}{Tool configuration}{subsubsection.4.3.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Tools available to the evaluation harness; exposure depends on run configuration.}}{8}{table.5}\protected@file@percent }
+\newlabel{tab:tools}{{5}{8}{Tools available to the evaluation harness; exposure depends on run configuration}{table.5}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.3}Models and budgets}{8}{subsubsection.4.3.3}\protected@file@percent }
+\newlabel{sec:exp-protocol}{{4.3.3}{8}{Models and budgets}{subsubsection.4.3.3}{}}
+\citation{creasy}
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {[DRAFT IMAGE]} A refusal is a diagnosis, not a dead end. The same state and the same layer selection give opposite verdicts depending only on the orientation of the fold line.}}{9}{figure.4}\protected@file@percent }
 \newlabel{fig:refusal}{{4}{9}{\textbf {[DRAFT IMAGE]} A refusal is a diagnosis, not a dead end. The same state and the same layer selection give opposite verdicts depending only on the orientation of the fold line}{figure.4}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.3}Models and budgets}{9}{subsubsection.4.3.3}\protected@file@percent }
-\newlabel{sec:exp-protocol}{{4.3.3}{9}{Models and budgets}{subsubsection.4.3.3}{}}
-\citation{creasy}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.4}Baselines}{10}{subsubsection.4.3.4}\protected@file@percent }
-\newlabel{sec:exp-baselines}{{4.3.4}{10}{Baselines}{subsubsection.4.3.4}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Baseline configurations and status. }}{10}{table.6}\protected@file@percent }
-\newlabel{tab:baselines}{{6}{10}{Baseline configurations and status}{table.6}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.4}Baselines}{9}{subsubsection.4.3.4}\protected@file@percent }
+\newlabel{sec:exp-baselines}{{4.3.4}{9}{Baselines}{subsubsection.4.3.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Baseline configurations and status. }}{9}{table.6}\protected@file@percent }
+\newlabel{tab:baselines}{{6}{9}{Baseline configurations and status}{table.6}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Assistance conditions}{10}{subsection.4.4}\protected@file@percent }
 \newlabel{sec:ablations}{{4.4}{10}{Assistance conditions}{subsection.4.4}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Assistance configurations and current reporting status.}}{10}{table.7}\protected@file@percent }
 \newlabel{tab:ablations}{{7}{10}{Assistance configurations and current reporting status}{table.7}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.1}Target-comparison feedback}{10}{subsubsection.4.4.1}\protected@file@percent }
 \newlabel{sec:target-feedback}{{4.4.1}{10}{Target-comparison feedback}{subsubsection.4.4.1}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Implemented target-feedback levels. Their availability does not establish an experimental benefit; comparisons require matched runs.}}{11}{table.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5}Results}{11}{section.5}\protected@file@percent }
-\newlabel{sec:results}{{5}{11}{Results}{section.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Model performance}{11}{subsection.5.1}\protected@file@percent }
-\newlabel{sec:results-headline}{{5.1}{11}{Model performance}{subsection.5.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Implemented target-feedback levels. Their availability does not establish an experimental benefit; comparisons require matched runs.}}{10}{table.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Results}{10}{section.5}\protected@file@percent }
+\newlabel{sec:results}{{5}{10}{Results}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Model performance}{10}{subsection.5.1}\protected@file@percent }
+\newlabel{sec:results-headline}{{5.1}{10}{Model performance}{subsection.5.1}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Solve rate per stratum, all saved runs. Denominators are attempts, not distinct samples. Rows with fewer than ten attempts support no rate and are shown only so that reporting is not selective.}}{11}{table.9}\protected@file@percent }
 \newlabel{tab:headline}{{9}{11}{Solve rate per stratum, all saved runs. Denominators are attempts, not distinct samples. Rows with fewer than ten attempts support no rate and are shown only so that reporting is not selective}{table.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Observed BFS search effort in the saved aggregate. Bar lengths use a linear scale and show median states expanded across attempts, including unsuccessful attempts. Budgets and repeated samples are not standardized by this aggregate; 358 of 725 attempts terminated in timeout. The lower hard-stratum median does not imply that hard instances require less search. Reference depth is not minimum solution length.}}{11}{figure.5}\protected@file@percent }
+\newlabel{fig:bfs-effort}{{5}{11}{Observed BFS search effort in the saved aggregate. Bar lengths use a linear scale and show median states expanded across attempts, including unsuccessful attempts. Budgets and repeated samples are not standardized by this aggregate; 358 of 725 attempts terminated in timeout. The lower hard-stratum median does not imply that hard instances require less search. Reference depth is not minimum solution length}{figure.5}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Search baseline}{11}{subsection.5.2}\protected@file@percent }
 \newlabel{sec:results-baseline}{{5.2}{11}{Search baseline}{subsection.5.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Observed BFS search effort in the saved aggregate. Bar lengths use a linear scale and show median states expanded across attempts, including unsuccessful attempts. Budgets and repeated samples are not standardized by this aggregate; 358 of 725 attempts terminated in timeout. The lower hard-stratum median does not imply that hard instances require less search. Reference depth is not minimum solution length.}}{12}{figure.5}\protected@file@percent }
-\newlabel{fig:bfs-effort}{{5}{12}{Observed BFS search effort in the saved aggregate. Bar lengths use a linear scale and show median states expanded across attempts, including unsuccessful attempts. Budgets and repeated samples are not standardized by this aggregate; 358 of 725 attempts terminated in timeout. The lower hard-stratum median does not imply that hard instances require less search. Reference depth is not minimum solution length}{figure.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Tool assistance}{12}{subsection.5.3}\protected@file@percent }
-\newlabel{sec:results-tiers}{{5.3}{12}{Tool assistance}{subsection.5.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Failure taxonomy}{12}{subsection.5.4}\protected@file@percent }
-\newlabel{sec:results-failures}{{5.4}{12}{Failure taxonomy}{subsection.5.4}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces Termination reasons for \texttt  {gpt-5.6-luna}, 447 attempts.}}{12}{table.10}\protected@file@percent }
-\newlabel{tab:terminations}{{10}{12}{Termination reasons for \texttt {gpt-5.6-luna}, 447 attempts}{table.10}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Performance by difficulty}{12}{subsection.5.5}\protected@file@percent }
-\newlabel{sec:results-difficulty}{{5.5}{12}{Performance by difficulty}{subsection.5.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.6}Evaluation coverage}{12}{subsection.5.6}\protected@file@percent }
-\newlabel{sec:results-threats}{{5.6}{12}{Evaluation coverage}{subsection.5.6}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces \textbf  {[DRAFT IMAGE]} Main result per stratum. The baseline crosses above every model line on easy; that crossing is the most informative feature of the chart and is not smoothed away.}}{13}{figure.6}\protected@file@percent }
-\newlabel{fig:main}{{6}{13}{\textbf {[DRAFT IMAGE]} Main result per stratum. The baseline crosses above every model line on easy; that crossing is the most informative feature of the chart and is not smoothed away}{figure.6}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Limitations}{13}{section.6}\protected@file@percent }
-\newlabel{sec:limitations}{{6}{13}{Limitations}{section.6}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {7}Figures}{14}{section.7}\protected@file@percent }
-\newlabel{sec:figures}{{7}{14}{Figures}{section.7}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces Planned figures and their status.}}{14}{table.11}\protected@file@percent }
-\newlabel{tab:figures}{{11}{14}{Planned figures and their status}{table.11}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {8}Licence and availability}{14}{section.8}\protected@file@percent }
-\newlabel{sec:licence}{{8}{14}{Licence and availability}{section.8}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {9}Use of large language models}{14}{section.9}\protected@file@percent }
-\newlabel{sec:llm-use}{{9}{14}{Use of large language models}{section.9}{}}
-\@writefile{toc}{\contentsline {paragraph}{Large language models are part of the object of study.}{14}{section*.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Code.}{14}{section*.4}\protected@file@percent }
+\newlabel{sec:results-tiers}{{5.2}{11}{Search baseline}{section*.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Failure analysis}{11}{subsection.5.3}\protected@file@percent }
+\newlabel{sec:results-failures}{{5.3}{11}{Failure analysis}{subsection.5.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces Termination reasons for \texttt  {gpt-5.6-luna}, 447 attempts.}}{11}{table.10}\protected@file@percent }
+\newlabel{tab:terminations}{{10}{11}{Termination reasons for \texttt {gpt-5.6-luna}, 447 attempts}{table.10}{}}
+\newlabel{sec:results-difficulty}{{5.3}{12}{Failure analysis}{section*.6}{}}
+\newlabel{sec:results-threats}{{5.3}{12}{Failure analysis}{section*.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces \textbf  {[DRAFT IMAGE]} Planned summary of performance by fold-count stratum.}}{12}{figure.6}\protected@file@percent }
+\newlabel{fig:main}{{6}{12}{\textbf {[DRAFT IMAGE]} Planned summary of performance by fold-count stratum}{figure.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Limitations}{12}{section.6}\protected@file@percent }
+\newlabel{sec:limitations}{{6}{12}{Limitations}{section.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Licence and availability}{12}{section.7}\protected@file@percent }
+\newlabel{sec:licence}{{7}{12}{Licence and availability}{section.7}{}}
 \bibdata{iclr2026_conference}
-\bibcite{origamibench}{{1}{2026}{{Agarwal et~al.}}{{Agarwal, Wu, Jian, Hu, Mansoor, Li, Peng, Dai, Ding, and Sansone}}}
-\bibcite{akitaya-cp2seq}{{2}{2013}{{Akitaya et~al.}}{{Akitaya, Mitani, Kanamori, and Fukui}}}
-\bibcite{akitaya-flatfolder}{{3}{2024}{{Akitaya et~al.}}{{Akitaya, Demaine, and Ku}}}
-\bibcite{akitaya-infinite}{{4}{2019}{{Akitaya et~al.}}{{}}}
-\bibcite{arkin-map}{{5}{2004}{{Arkin et~al.}}{{Arkin, Bender, Demaine, Demaine, Mitchell, Sethia, and Skiena}}}
-\bibcite{bern-hayes}{{6}{1996}{{Bern \& Hayes}}{{Bern and Hayes}}}
-\bibcite{creasy}{{7}{}{{Creasy}}{{}}}
-\bibcite{reaching-folded}{{8}{2001}{{Demaine \& Mitchell}}{{Demaine and Mitchell}}}
-\bibcite{continuous}{{9}{2004}{{Demaine et~al.}}{{Demaine, Devadoss, Mitchell, and O'Rourke}}}
-\bibcite{flatfolder}{{10}{}{{Flat-Folder}}{{}}}
-\bibcite{turing}{{11}{}{{Flat Origami is Turing Complete}}{{}}}
-\bibcite{fold-format}{{12}{}{{FOLD file format}}{{}}}
-\bibcite{meanders}{{13}{}{{Foldings and Meanders}}{{}}}
-\bibcite{flat-folding-graphs}{{14}{}{{Graphs of Origami Flat Foldings}}{{}}}
-\bibcite{koehler}{{15}{1968}{{Koehler}}{{}}}
-\bibcite{layer-algebra}{{16}{}{{Layer Ordering Constraints}}{{}}}
-\@writefile{toc}{\contentsline {paragraph}{Literature search.}{15}{section*.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Writing.}{15}{section*.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Figures.}{15}{section*.7}\protected@file@percent }
-\bibcite{lucas}{{17}{1891}{{Lucas}}{{}}}
-\bibcite{lunnon}{{18}{1971}{{Lunnon}}{{}}}
-\bibcite{oripa}{{19}{}{{Mitani}}{{}}}
-\bibcite{foldingagent}{{20}{2026}{{Moriya et~al.}}{{}}}
-\bibcite{oeis-a000136}{{21}{2026}{{OEIS Foundation Inc.}}{{}}}
-\bibcite{purelandfold}{{22}{}{{PurelandFold}}{{}}}
-\bibcite{random-locally}{{23}{}{{Random Locally Flat-Foldable Origami}}{{}}}
-\bibcite{mixed-orthogonal}{{24}{}{{Simple Folding of Mixed Orthogonal CPs}}{{}}}
-\bibcite{spatial-survey}{{25}{}{{Spatial Reasoning in MLLMs}}{{}}}
-\bibcite{gamibench}{{26}{2025}{{Spencer et~al.}}{{Spencer, Yaari, Vemavarapu, Yang, Ngo, and Sharma}}}
-\bibcite{spin-model}{{27}{}{{Spin Model for Flat-Foldability}}{{}}}
-\bibcite{vot}{{28}{}{{Visualization-of-Thought}}{{}}}
-\bibcite{origamispace}{{29}{2025}{{Xu et~al.}}{{Xu, Lu, Zhao, Tan, Wang, Yuan, Chen, and Xu}}}
-\bibcite{corigami}{{30}{2026}{{Zahavy et~al.}}{{Zahavy, Hou, Tumiel, Doran, Faccio, Feng, Havrilla, Khytryi, Li, Schut, Veeriah, Abrashi, Kosmulski, Lang, Robinson, Wong, Chiam, Fang, and Singh}}}
+\bibcite{akitaya-cp2seq}{{1}{2013}{{Akitaya et~al.}}{{Akitaya, Mitani, Kanamori, and Fukui}}}
+\bibcite{akitaya-flatfolder}{{2}{2024}{{Akitaya et~al.}}{{Akitaya, Demaine, and Ku}}}
+\bibcite{arkin-map}{{3}{2004}{{Arkin et~al.}}{{Arkin, Bender, Demaine, Demaine, Mitchell, Sethia, and Skiena}}}
+\bibcite{bern-hayes}{{4}{1996}{{Bern \& Hayes}}{{Bern and Hayes}}}
+\bibcite{creasy}{{5}{}{{Creasy}}{{}}}
+\bibcite{flatfolder}{{6}{}{{Flat-Folder}}{{}}}
+\bibcite{gamibench}{{7}{2025}{{Spencer et~al.}}{{Spencer, Yaari, Vemavarapu, Yang, Ngo, and Sharma}}}
+\bibcite{origamispace}{{8}{2025}{{Xu et~al.}}{{Xu, Lu, Zhao, Tan, Wang, Yuan, Chen, and Xu}}}
 \bibstyle{iclr2026_conference}
 \citation{akitaya-flatfolder}
 \citation{arkin-map}
-\@writefile{toc}{\contentsline {section}{\numberline {A}State representation and folding constraints}{16}{appendix.A}\protected@file@percent }
-\newlabel{app:folding-model}{{A}{16}{State representation and folding constraints}{appendix.A}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Flat-folded states}{16}{subsection.A.1}\protected@file@percent }
-\newlabel{sec:problem-states}{{A.1}{16}{Flat-folded states}{subsection.A.1}{}}
-\citation{origamispace}
-\citation{gamibench}
-\citation{foldingagent}
-\citation{origamibench}
-\citation{corigami}
-\citation{bern-hayes}
-\citation{arkin-map}
-\citation{akitaya-infinite}
-\citation{akitaya-flatfolder}
-\citation{mixed-orthogonal}
-\citation{layer-algebra}
-\citation{flat-folding-graphs}
-\citation{turing}
-\citation{continuous}
-\citation{reaching-folded}
-\citation{akitaya-cp2seq}
-\citation{creasy}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Supported actions}{17}{subsection.A.2}\protected@file@percent }
-\newlabel{sec:problem-actions}{{A.2}{17}{Supported actions}{subsection.A.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.3}Connectivity and tearing}{17}{subsection.A.3}\protected@file@percent }
-\newlabel{app:tearing}{{A.3}{17}{Connectivity and tearing}{subsection.A.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.4}Depth and search difficulty}{17}{subsection.A.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B}Reference notes}{17}{appendix.B}\protected@file@percent }
-\newlabel{app:references}{{B}{17}{Reference notes}{appendix.B}{}}
-\@writefile{toc}{\contentsline {paragraph}{Origami benchmarks and systems for language models.}{17}{section*.10}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Complexity and theory of flat folding.}{17}{section*.11}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{The crease-pattern-to-sequence problem itself.}{17}{section*.12}\protected@file@percent }
-\citation{oeis-a000136}
-\citation{lucas,koehler,lunnon,meanders}
-\citation{spatial-survey}
-\citation{vot}
-\citation{flatfolder}
-\citation{fold-format}
-\citation{oripa}
-\citation{purelandfold}
-\citation{spin-model}
-\citation{random-locally}
-\@writefile{toc}{\contentsline {paragraph}{Counting folded states.}{18}{section*.13}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Spatial reasoning context.}{18}{section*.14}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Tools, formats and data.}{18}{section*.15}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Statistical physics of random flat-foldability.}{18}{section*.16}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Deliberately not cited.}{18}{section*.17}\protected@file@percent }
-\gdef \@abspage@last{18}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Use of large language models}{13}{section.8}\protected@file@percent }
+\newlabel{sec:llm-use}{{8}{13}{Use of large language models}{section.8}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}State representation and folding constraints}{13}{appendix.A}\protected@file@percent }
+\newlabel{app:folding-model}{{A}{13}{State representation and folding constraints}{appendix.A}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Flat-folded states}{13}{subsection.A.1}\protected@file@percent }
+\newlabel{sec:problem-states}{{A.1}{13}{Flat-folded states}{subsection.A.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Supported actions}{13}{subsection.A.2}\protected@file@percent }
+\newlabel{sec:problem-actions}{{A.2}{13}{Supported actions}{subsection.A.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.3}Connectivity and tearing}{14}{subsection.A.3}\protected@file@percent }
+\newlabel{app:tearing}{{A.3}{14}{Connectivity and tearing}{subsection.A.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.4}Depth and search difficulty}{14}{subsection.A.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.5}Comparison implementation}{14}{subsection.A.5}\protected@file@percent }
+\newlabel{app:comparison-details}{{A.5}{14}{Comparison implementation}{subsection.A.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Tools, prompts, and run inspection}{14}{appendix.B}\protected@file@percent }
+\newlabel{app:artifacts}{{B}{14}{Tools, prompts, and run inspection}{appendix.B}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.1}Tool schemas and prompt}{14}{subsection.B.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.2}Dataset gallery and reference sequences}{17}{subsection.B.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{all-layers/easy-0001 (all-layers, 4 reference folds)}{18}{section*.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{all-layers/mid-0004 (all-layers, 11 reference folds)}{20}{section*.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{some-generated-d5/layers-0001 (some-layers, 5 reference folds)}{23}{section*.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.3}Trace-analysis interface}{24}{subsection.B.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.4}Comparator validation}{24}{subsection.B.4}\protected@file@percent }
+\gdef \@abspage@last{24}

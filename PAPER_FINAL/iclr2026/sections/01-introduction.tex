@@ -57,8 +57,8 @@ Evaluation checks both individual actions and the completed construction. Candid
 are replayed and assessed for crease-pattern agreement and agreement with the target folded
 state. A sequence need not match the recorded actions to be correct. Folded-state comparison
 accounts for a global translation, rotation, or turnover of the completed object, with the
-corresponding changes to layer order and face orientation, while preserving the identity of each
-paper region (Section~\ref{sec:scoring}). We also provide a deterministic breadth-first search
+corresponding changes to layer order and face orientation (Section~\ref{sec:scoring}).
+We also provide a deterministic breadth-first search
 baseline using the same candidate-fold enumerator and terminal-state comparator. This baseline
 measures how much can be achieved by systematic search with the available filtering, providing
 context for model performance beyond comparisons between language models.
@@ -71,8 +71,8 @@ Our contributions are:
   models, with coupling recorded to characterize geometric structure.
 \item \textbf{An interactive evaluation and verification pipeline.} The framework connects visual
   and geometric inputs to tools for constructing and revising sequences, step-level legality
-  checks, and final replay-based scoring. It includes corpus checks and a folded-state comparator
-  tested against deliberately corrupted layer arrangements. It defines four assistance conditions;
+  checks, and final replay-based scoring. It includes corpus checks and a folded-state comparator.
+  It defines four assistance conditions;
   the current experiments cover the filtered and basic-tools conditions.
 \item \textbf{A search baseline and an empirical analysis of model behavior.} We provide
   breadth-first search over the same candidate actions, report performance by difficulty stratum,

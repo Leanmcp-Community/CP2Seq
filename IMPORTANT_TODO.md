@@ -1,5 +1,7 @@
 # Important paper TODOs
 
+12. **CP edit distance for every existing run.** Define and compute edit distance between the crease pattern constructed at the end of each attempt and the supplied target CP, not between fold-action sequences or final folded shapes. Include successful, unsuccessful, cycling, budget-limited, and interrupted attempts using their final recoverable valid state; explicitly mark missing artifacts rather than assigning zero distance. Specify edit operations, costs, mountain/valley handling, geometric tolerances, subdivision invariance, and normalization. Store per-attempt scores and report distributions by model, assistance condition, and fold-count group alongside solve rate. This analysis is pending and must not be described as completed.
+
 1. **Data generation tool and framework.** Explicitly name and describe the tool and framework we developed to generate the data. Explain what we release, how the generation process works, and how it supports reproducibility.
 
 2. **Experiment tiers and tooling tiers.** Describe the different tiers of experimentation and the different levels of tool assistance. State what inputs, tools, feedback, and budgets are available in each condition, and what each comparison is intended to measure.
