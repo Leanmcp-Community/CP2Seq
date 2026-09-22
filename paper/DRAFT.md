@@ -217,7 +217,8 @@ edge-level IoU; §6.1 shows why that family of measures is unsafe in this task, 
 finds a *shorter* correct sequence is marked wrong by it. That is a finding about scoring in this
 setting rather than a criticism of their results.
 
-The general precedent for a proposer paired with a verifier is older than any of this work: a
+The general precedent for a (((((proposer paired with a verifier))))))) - ----what's this??? what's pur proposer
+is older than any of this work: a
 network that proposes and a search that checks is the structure behind AlphaGo [Silver et al.
 2016], and the reason the
 combination is stronger than either half.
