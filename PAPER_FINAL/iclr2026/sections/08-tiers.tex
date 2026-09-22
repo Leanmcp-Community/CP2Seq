@@ -1,0 +1,29 @@
+\section{Progressive tiers of tool assistance}
+\label{sec:ablations}
+
+\texttt{[TO RUN]}
+
+The model is run at four levels of assistance, each removing one kind of help from the level above.
+These are reported as tiers rather than as ablations, for the reason given in
+Section 16: a full ablation study was planned and has not been run, and calling a
+partial sweep an ablation would overclaim.
+
+\begin{table}[h]
+\caption{The tiers of assistance. Same model, same patterns, same query budget across tiers.}
+\label{tab:ablations}
+\begin{center}
+\begin{tabular}{lp{0.30\textwidth}p{0.40\textwidth}}
+\multicolumn{1}{c}{\bf TIER}  &\multicolumn{1}{c}{\bf TOOLS AVAILABLE}  &\multicolumn{1}{c}{\bf WHAT IT ISOLATES} \\
+\hline \\
+Full tool belt & Environment, rendered views, any auxiliary tools & Upper bound \\
+No vision      & Same, rendered views withheld           & The contribution of visual feedback \\
+Verifier only  & Pass/fail, no filtering                 & The contribution of filtering on top of raw verification \\
+No tools       & None, anonymized geometry               & Memorization control \\
+\end{tabular}
+\end{center}
+\end{table}
+
+Same model, same patterns, same query budget across tiers. If the no-vision or no-tools tier
+performs nearly as well as the full tier, \textbf{that is a finding rather than a failed
+experiment}: it means the gain is not where it was assumed to be. \texttt{[TO RUN]}
+

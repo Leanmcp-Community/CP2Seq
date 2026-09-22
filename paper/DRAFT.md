@@ -463,7 +463,7 @@ other things like generated or verified, we don't need to mention, we only need 
 | `seq.json` | Every fold: line, direction, selected layers, creases made, coupling. **The ground truth**, never shown to the model |
 | `meta.json` | Difficulty metrics, degeneracy flags, seed and generator version |
 
-> **FIGURE 2 — one dataset sample, end to end.** `[DRAFT IMAGE — placeholder, will be replaced
+> **FIGURE 2: one dataset sample, end to end.** `[DRAFT IMAGE: placeholder, will be replaced
 > with a human-authored figure. Drafts generated with OpenAI gpt-image-2.]` 
 
 A single easy sample laid out as the
@@ -487,7 +487,7 @@ the benchmark can express.
 the benchmark is about lives past the depth a search can reach. Restoring the deeper tier is a
 matter of generator configuration and wall-clock, not redesign.
 
-> **FIGURE 3 — the difficulty grid.** `[DRAFT IMAGE — placeholder, will be replaced with a
+> **FIGURE 3: the difficulty grid.** `[DRAFT IMAGE: placeholder, will be replaced with a
 > human-authored figure plotted from real data.]` Depth on one axis, coupling on the other, one
 > cell per stratum, shaded by how many samples landed there. The long-sequence low-coupling corner
 > should be visibly empty, and the caption should name pre-creasing as the reason.
@@ -497,13 +497,13 @@ matter of generator configuration and wall-clock, not redesign.
 Two checks run over every sample. Both replay the recorded sequence and compare the creases it
 makes against the pattern stored beside it; what they do not share is the comparison. The first
 groups edges into lines, merges collinear pieces and matches them within a tolerance. The second
-was written after five false failures had come out of exactly that machinery — each one a defect
-in the comparison rather than in the corpus — and reuses none of it. It merges each line's pieces
+was written after five false failures had come out of exactly that machinery, each one a defect
+in the comparison rather than in the corpus, and reuses none of it. It merges each line's pieces
 into maximal creased intervals, the quantity subdivision cannot change, and matches those one to
 one. Comparing subdivided segments instead does not work: of 457 failures under that earlier
 design, 364 were two sides carrying a different *number* of segments, which is not a distance and
 no tolerance can reach. The verdict is an absolute test at the radius at which the generator's own
-planarizer identifies two points as one vertex, 1e-9 — the floor of what the corpus records rather
+planarizer identifies two points as one vertex, 1e-9, the floor of what the corpus records rather
 than a constant tuned until the run passed. A depth-scaled ULP distance is reported alongside as a
 diagnostic on how much of that margin is used; on a sampled subset the median match needed 16 ULP,
 four orders inside the floor. Both checks pass on all 600<!--fact:corpus.release.total--> samples of
@@ -723,7 +723,7 @@ proposing is rewarded in the secondary metric even when both eventually solve th
 **The reference sequence is never read during the episode.** It enters only at scoring time, and
 then only as something to replay, never as something to compare against step by step (§6.1).
 
-> **FIGURE 4 — the evaluation pipeline.** `[DRAFT IMAGE — placeholder, will be replaced with a
+> **FIGURE 4: the evaluation pipeline.** `[DRAFT IMAGE: placeholder, will be replaced with a
 > human-authored figure. Drafts generated with OpenAI gpt-image-2.]` A left-to-right diagram of one episode. On
 > the left, the two inputs: the crease pattern and the final folded state. In the centre, the loop
 > as a cycle: model proposes a fold, environment either returns a new state with its two rendered
@@ -754,7 +754,7 @@ deterministic baseline of §8.4 is reported: if exhaustive search over the enume
 corpus outright, then the filtered arm is not measuring origami reasoning, and the benchmark has to
 say so rather than let a headline number imply otherwise.
 
-> **FIGURE 5 — a refusal as the model receives it.** `[DRAFT IMAGE — placeholder, will be
+> **FIGURE 5: a refusal as the model receives it.** `[DRAFT IMAGE: placeholder, will be
 > replaced with a human-authored figure built from real renders.]` One concrete rejected fold,
 > rendered exactly as the harness returns it. The proposed fold line drawn over the current state;
 > the named reason (`would-tear`); and the specific evidence, which for a tear is the crease segment
@@ -954,7 +954,7 @@ every rate above them.
 ⚠️ **Repeats are not yet reported as median and spread.** §8.3 promises this and the aggregation
 counts attempts rather than grouping repeats per sample. The protocol requires it before submission.
 
-> **FIGURE 6 — main result per stratum.** `[DRAFT IMAGE — placeholder, will be replaced with a
+> **FIGURE 6: main result per stratum.** `[DRAFT IMAGE: placeholder, will be replaced with a
 > human-authored figure plotted from the aggregation output.]` The baseline line crosses above every
 > model line on the easy stratum. Per `paper/figures/figure6.md`, that crossing must be plainly
 > visible rather than smoothed away; it is the most informative feature of the chart.
@@ -1433,7 +1433,7 @@ or canvas". The script prints this rather than assuming it is remembered.
 
 ### 16.16 Draft figures are labelled as drafts, in the PDF itself
 
-**Decision.** Every placeholder figure renders a visible banner reading **DRAFT IMAGE — PLACEHOLDER,
+**Decision.** Every placeholder figure renders a visible banner reading **DRAFT IMAGE: PLACEHOLDER,
 NOT FINAL**, with a line saying it will be replaced by a human-authored figure and that drafts come
 from OpenAI `gpt-image-2`. Captions carry a `[DRAFT IMAGE]` prefix so the marking also appears in
 any list of figures. The same banner is at the top of each `paper/figures/figureN.md` and the README.

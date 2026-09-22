@@ -1,0 +1,9 @@
+\section{Reproducibility}
+\label{sec:reproducibility}
+
+The corpus ships as a generator and a manifest; every sample rebuilds byte-identically from its
+seed. The environment, both corpus verifiers and the state comparator are released with the
+benchmark. The negative control of Section~\ref{sec:scoring-validate} runs as a command, so a
+reader can confirm that the comparator rejects corrupted stacks rather than taking
+Section~\ref{sec:scoring-validate} on trust.
+

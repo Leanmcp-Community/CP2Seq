@@ -1,0 +1,66 @@
+\section{Reference notes}
+\label{app:references}
+
+The bibliography is grouped in \texttt{iclr2026\_conference.bib} by the role each work plays in
+the argument rather than alphabetically, so that a co-author can see what is load-bearing. The
+notes below record what is still outstanding.
+
+\paragraph{Origami benchmarks and systems for language models.}
+\citet{origamispace} must be cited as a preprint; \texttt{papers.md} recorded NeurIPS'25 and the
+arXiv record carries no venue. \citet{gamibench} has code and data released. \citet{foldingagent}
+reconstructs folding processes from instructional video and is built on the PurelandFold dataset;
+code at \url{https://github.com/maya-moriya/FoldingAgent}. \textbf{OrigamiBench}
+\citep{origamibench} has a \emph{citation missing}: it appears in our metrics survey as the source
+of query efficiency and geometric/semantic similarity, and its dataset is the
+366% fact:corpus.instagram.total
+patterns in Flat-Folder's \texttt{examples/instagram/}. A full reference has to be recovered before
+submission. \textbf{COrigami} \citep{corigami} has a \emph{citation missing} as well: it appears in
+the metrics survey as the source of flat-foldability as a boolean and a VLM aesthetic score. Same
+action needed.
+
+\paragraph{Complexity and theory of flat folding.}
+\citet{bern-hayes} is the citation under the paper's central claim: geometry does not determine
+layer order, and deciding overlap order is NP hard even given a valid mountain-valley assignment.
+\citet{arkin-map} defines simple foldability; the action space comes from here.
+\citet{akitaya-infinite} covers the all-layers model, which corresponds to sheet-metal bending.
+\citet{akitaya-flatfolder} is the Flat-Folder paper; deciding a global flat-folded state is NP
+hard. See also \citet{mixed-orthogonal}, \citet{layer-algebra} and \citet{flat-folding-graphs}.
+\citet{turing} is a defensive citation only, per Section~7. \citet{continuous}
+separates folded state from folding motion: reachability is free, so the hard question is the
+discrete step structure; its predecessor is \citet{reaching-folded}.
+
+\paragraph{The crease-pattern-to-sequence problem itself.}
+\citet{akitaya-cp2seq} named the problem, by the group whose tools the field now uses: reflection
+paths, graph rewriting, step graphs; a frog base explodes to 22,665 nodes and 30 minutes, and the
+authors' own future work asks for the priority heuristic this paper's models are being asked to
+supply. \citet{creasy} is an open-source implementation of the above and is usable as a symbolic
+baseline. \texttt{[TO RUN if used]}
+
+\paragraph{Counting folded states.}
+\citet{oeis-a000136} lists the foldings of a strip of stamps: 1, 2, 6, 16, 50, 144, 462, 1392,
+4536, 14060, \ldots{} There is no closed form. See also A001011 and A001416, and
+\citet{lucas,koehler,lunnon,meanders}; meanders and stamp foldings are the same combinatorial
+object.
+
+\paragraph{Spatial reasoning context.}
+\citet{spatial-survey} surveys the area. \citet{vot} names the mental-imagery question this
+benchmark can turn into a measurement.
+
+\paragraph{Tools, formats and data.}
+\citet{flatfolder} decides and enumerates flat-folded states and is the source of the four
+constraint classes cited in Section~\ref{sec:env-refusals}. \citet{fold-format} is the de facto
+standard used by every artifact we ship. \citet{oripa} is a crease-pattern editor with folded-form
+estimation. \citet{purelandfold} is not used as training or evaluation data here; it is cited as
+the closest existing sequence-level corpus and as FoldingAgent's data.
+
+\paragraph{Statistical physics of random flat-foldability.}
+Optional support for the claim that multiple valid states is the normal case rather than a
+curiosity, to be included only if Section~\ref{sec:problem-states} needs reinforcement:
+\citet{spin-model} and \citet{random-locally}.
+
+\paragraph{Deliberately not cited.}
+Thick folding (Ku \& Demaine 2016), bar-and-hinge mechanics, MERLIN2, SWOMPS, Sim-FAST-PY, and the
+creased-sheet mechanics literature all belong to the thickness and mechanics line of work. They are
+a separate paper with a verifier several orders of magnitude more expensive, and citing them here
+would invite a reviewer to ask why this paper does not do that one.
+

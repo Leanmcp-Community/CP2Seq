@@ -1,0 +1,80 @@
+\section{The environment, which is also the verifier}
+\label{sec:env}
+
+\subsection{One object, two names}
+\label{sec:env-one-object}
+
+In this benchmark the environment and the verifier are the same object. Stepping it is the same
+act as asking for a verdict: the model submits a candidate fold, and the reply is either the
+resulting state or a refusal. There is no separate validity oracle, no second artifact that could
+disagree with the first, and no learned component in the loop.
+
+\subsection{The division of labour}
+\label{sec:env-division}
+
+\begin{table}[h]
+\caption{Who does what. The environment does not search.}
+\label{tab:division}
+\begin{center}
+\begin{tabular}{lp{0.62\textwidth}}
+\multicolumn{1}{c}{\bf COMPONENT}  &\multicolumn{1}{c}{\bf RESPONSIBILITY} \\
+\hline \\
+Environment / verifier & State update and legality. It does not search and does not choose \\
+Model                  & Proposes the next fold, decides where to go, recognises when to backtrack \\
+\end{tabular}
+\end{center}
+\end{table}
+
+This division is what makes the benchmark measure something. The obvious objection to any
+tool-augmented setup is that the tool is doing the work, and here the answer is structural rather
+than rhetorical: deciding global flat-foldability is NP hard, so the environment cannot search its
+way to an answer even in principle. It can only say whether one proposed step is something paper
+could do. Compressing an exponential search into a feasible number of queries is exactly what the
+environment cannot supply and exactly what the model is being measured on. The referee is not a
+player.
+
+\subsection{Refusals are named, isn't that you shoulr mention a check, each step check and final step check, final step check now is missing , should mention here--------}
+\label{sec:env-refusals}
+
+An illegal fold returns a structured refusal with a name, not a boolean.
+
+\begin{table}[h]
+\caption{The refusal taxonomy. A rejection arrives already labelled with the class it violated.}
+\label{tab:refusals}
+\begin{center}
+\begin{tabular}{lp{0.60\textwidth}}
+\multicolumn{1}{c}{\bf REFUSAL}  &\multicolumn{1}{c}{\bf MEANING} \\
+\hline \\
+\texttt{would-tear} & The moving layers are joined to stationary paper away from the fold line, so
+  the sheet would come apart. The binding constraint of the some-layers tier \\
+\texttt{no-crease} & The fold moves layers without creasing anything, tearing them free of the
+  sheet rather than folding them \\
+\texttt{nothing-to-move} & The fold line misses the selected layers entirely \\
+\texttt{direction-impossible} & A run taken from the bottom of the stack was asked to fold over,
+  or the reverse \\
+\texttt{bad-line} & The fold line is malformed, or names no side of itself \\
+\end{tabular}
+\end{center}
+\end{table}
+
+The names are the design. A model told \texttt{would-tear} can act on the information; a model told
+``illegal'' cannot. This also turns error analysis into a taxonomy that exists before the
+experiment: every rejection arrives already labelled with the class it violated, so a reject is a
+diagnosis rather than a dead end.
+
+FInal step check. - The four constraint
+classes that Flat-Folder checks (taco-taco, taco-tortilla, tortilla-tortilla, transitivity)
+\citep{akitaya-flatfolder,flatfolder} remain the right vocabulary for global terminal states; they
+are not what a single legal step needs checking against here.
+
+\subsection{What the model observes - you should add a screen shot of simulator software !!!!!!!!}
+\label{sec:env-observes}
+
+On success the environment returns the new state together with two views: a top-down X-ray of the
+stack, and an exploded view of the layers. Every intermediate state in this tier is flat, so a
+second camera angle would show the same silhouette rotated and would carry no new information;
+what carries information is layer structure, which is why the second view is an explosion rather
+than a rotation. Positions are reported as coordinates on the original sheet together with an
+integer layer index. There is no continuous vertical coordinate at this tier, and a rendering that
+looks three-dimensional is not evidence of one; thickness belongs to a different problem.
+

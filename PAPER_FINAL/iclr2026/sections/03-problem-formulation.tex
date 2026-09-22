@@ -1,0 +1,85 @@
+\section{Problem formulation}
+\label{sec:problem}
+
+\subsection{Flat-folded states}
+\label{sec:problem-states}
+
+A flat-folded state is an isometric map of the sheet into the plane together with a layer
+ordering. The map is fixed by the crease pattern; the ordering is not. A single crease pattern
+therefore admits many folded states that are geometrically identical and distinct as embeddings,
+and determining the ordering is NP hard even when a valid mountain-valley assignment is given
+\citep{bern-hayes}.
+
+This distinction is the reason the task cannot be reduced to geometry. Over a folding sequence the
+crease graph's topology never changes: the same vertices, edges and faces exist at step one and at
+step nineteen. What changes is everything else. Vertex coordinates are reflected at every step.
+The overlap structure, which faces lie above which, changes at every step and follows from the
+geometry. The layer ordering changes at every step and does \emph{not} follow from the geometry;
+it is chosen, and it is where the decisions live. The number of layers accumulates, which is the
+formal content of ``it gets harder as it goes''.
+
+\subsection{The action space}
+\label{sec:problem-actions}
+
+Simple folds come in named variants, and any benchmark in this area has to say which it uses,
+because the complexity results differ between them.
+
+\begin{table}[h]
+\caption{Named variants of the simple fold \citep{arkin-map}.}
+\label{tab:action-space}
+\begin{center}
+\begin{tabular}{ll}
+\multicolumn{1}{c}{\bf MODEL}  &\multicolumn{1}{c}{\bf DEFINITION} \\
+\hline \\
+One-layer simple fold    & Rotate a single layer $\pm 180^\circ$ about a line \\
+Some-layers simple fold  & Rotate a contiguous run of layers \\
+All-layers simple fold   & Rotate every layer the line crosses, as sheet metal bends \\
+Finite vs infinite line  & Whether the fold line is a full line or a segment \\
+\end{tabular}
+\end{center}
+\end{table}
+
+CP2Seq instantiates the all-layers and some-layers tiers. The all-layers tier is the simpler
+object and it buys three properties at once, the third of which is rarely named. Because the whole
+stack moves as a rigid body, no two connected pieces of paper ever move relative to each other
+except at the fold line itself, where paper is allowed to bend. Self-intersection is impossible,
+the layer ordering is forced rather than chosen, and \textbf{tearing is impossible by
+construction.}
+
+Moving only some layers brings all three back, and tearing becomes the binding constraint. If a
+moving face is joined to a stationary face along a crease, and that crease is not on the fold
+line, the fold would rip the sheet. This is decidable only in the coordinates of the original
+square, because adjacency is a fact about the original sheet that survives any amount of folding
+and cannot be recovered from the current positions of the polygons alone.
+
+An example makes the tier difference concrete, and it needs only two folds. Fold the right half of
+a square over to the left across the vertical midline. The result is a two-layer stack whose top
+layer is joined to the bottom layer along the entire crease at the midline. Now select the top
+layer alone. Folding its upper half down across the horizontal midline would tear the sheet,
+because the moving piece is joined to stationary paper along a vertical crease segment that is
+perpendicular to the fold line. Folding its left quarter across a vertical line does not tear,
+because the moving piece's only join to stationary paper lies on the fold line itself. Same state,
+same layer selection, opposite verdicts, and the only difference is the orientation of the line.
+
+------this 3 paragraphs are over emphasizing on whether all layers fold or some layer'fold  it
+gonna tear or not. is that the only point in this part????
+
+\subsection{The task}
+\label{sec:problem-task}
+
+Given a crease pattern, produce a sequence of simple folds that reproduces it. Generating an
+instance costs one forward pass of the engine; solving it is NP hard. That asymmetry is the
+paper's foundation.
+
+---------
+
+It is tempting
+to say that legal moves are rare and that this is what makes the task hard. Enumeration refutes
+it: legal partial folds \emph{grow} with depth, from 22 at two layers to 332 at thirty-eight, six
+times the 56 all-layers folds available at the same state. What falls is the hit rate of uniform
+random proposal, from 11.9\% to 3.8\% by seventeen layers, because the space being sampled grows
+faster than the legal set inside it. That is a fact about a sampler, not about origami, and
+conflating the two would put a false statement about branching factor into the paper.
+
+---------this paragraph should be listed properly and give a proper graph to illustrate it!!!!!!!!
+

@@ -1,0 +1,112 @@
+\section{Scoring}
+\label{sec:scoring}
+
+\subsection{Why the obvious protocol is wrong}
+\label{sec:scoring-why}
+
+The recorded sequence is \emph{a} solution, not \emph{the} solution. The generator folds; it does
+not search, so nothing makes its sequence minimal, and no minimal-length label is shipped because
+producing one would require a search this benchmark deliberately does not run. Measured on the
+verified split, 2% fact:shorter.release.n
+of 100% fact:shorter.release.outOf
+samples admit a sequence one fold shorter than the one that built them.
+
+The consequence is sharp. \textbf{Any metric that compares a proposal step by step against the
+recorded sequence marks a better answer wrong.} A model that finds a shorter correct solution is
+penalised for it. This disqualifies edit distance, and it disqualifies step-level precision,
+recall and F1 against an expert sequence for this task. Step count is not a correctness signal in
+either direction.
+
+\subsection{What we do instead}
+\label{sec:scoring-what}
+
+Proposals are scored by replaying them through the engine and comparing the resulting states. Both
+sides are replayed: the model's sequence and the reference sequence both pass through the same
+engine, and a stored frame is never the object compared against. That last point is a consequence
+of the file format rather than a preference. Stored frames record where each face sits in the
+current plane and not which piece of the original sheet it is, and deep in a stack many layers are
+congruent triangles, so two states differing by a swap of two such layers cannot be distinguished
+from stored frames alone. A replayed state carries original-sheet coordinates for free, because
+the engine needs them to decide tearing at all.
+
+Two levels of equality are reported.
+
+\textbf{Level 1, crease sets.} An exact multiset comparison of maximal creased intervals, equal
+rather than overlapping, with no tolerance in the verdict. This level is genuinely tolerance-free:
+edges are clustered into lines first, so subdivision differences cannot register as disagreements,
+and what remains is a combinatorial comparison.
+
+\textbf{Level 2, folded states up to a declared group of transforms.} Because one crease pattern
+admits many valid terminal states, exact equality against the one stored state would mark correct
+answers wrong. The answer is an equivalence: declare in advance which differences do not count, then
+demand equality inside that.
+
+\textbf{The transforms are quotiented out of every result reported in this paper.} The declared
+group is the full plane isometry group: \textbf{arbitrary translation, arbitrary rotation, and
+reflection}. One single isometry must carry every layer of the candidate onto its reference
+counterpart; a match is not accepted by transforming each layer independently.
+
+Each transform is in the group for a concrete reason rather than for generality.
+\emph{Translation}, because a fold can carry paper off the original square and which half of the
+sheet travels decides where the stack lands; a folded model is the same model wherever it sits on
+the table. \emph{Rotation}, because the same object produced by a sequence that worked around the
+square in a different order arrives rotated; rotations preserve both stack order and face parity, so
+they need no further correction. \emph{Reflection, with two corrections}, because a reflection
+represents turning the model over, and turning a model over mirrors the coordinates, \textbf{reverses
+the stack} and \textbf{flips every face's parity} at once. All three are applied together. Applying
+a reflection to coordinates alone would compare a model against its mirror image and silently accept
+wrong answers, which is the most dangerous failure a comparator of this kind can have.
+
+\textbf{Floating point is unavoidable once transforms are admitted, and this paper states its
+tolerance rather than claiming not to have one.} A rotation by an angle that is not a multiple of a
+right angle produces irrational coordinates, so candidate and reference vertices agree only to
+within floating-point representation, and comparing them for bitwise equality would reject correct
+answers. The comparator matches polygons under a tolerance of $2\times10^{-6}$ in the plane, with
+degenerate-vertex cleanup at $10^{-7}$ and a collinearity threshold of $10^{-9}$. These values are
+reported in every result record, so a reader can see what was used rather than infer it.
+
+\textbf{Caveat.} This qualifies a claim made elsewhere. Level 1 crease-set comparison is genuinely
+tolerance-free, since the verdict involves no floating-point threshold. Level 2 is not, and cannot
+be, because it admits rotations. The precise formulation is that the \emph{verifier} is exact, since
+legality is decided combinatorially by the engine, while \emph{terminal-state equality under
+transforms} carries a stated numerical tolerance.
+
+\textbf{Caveat.} The layer-order variants that a flat-foldability solver reports as equally valid
+are deliberately \emph{not} in the group. Those are not symmetries of one state; they are
+different states reachable from the same crease pattern, and deciding which orderings are valid
+requires a solver. Folding that into an equality test would hide an external dependency inside
+what reads as arithmetic. If that equivalence is wanted, it belongs in a separate check that owns
+the solver.
+
+\subsection{Metrics}
+\label{sec:scoring-metrics}
+
+The primary metric is \textbf{solve rate at a fixed query budget}, reported per difficulty stratum
+and never pooled, under both levels of equality. A proposal is solved if replaying it reproduces
+the target. Exhausting the budget is a timeout, which is reported separately from a wrong answer
+because the two mean different things.
+
+The secondary metric is \textbf{queries to solution}, reported over all attempts including those
+that time out. Conditioning on the solved attempts hides precisely the long-tail blowup that makes
+the task interesting. This metric is what answers the ``the simulator did all the work'' objection
+quantitatively: two models sharing one exact verifier can be ranked by how little of it they
+needed.
+
+\subsection{Validating the protocol}
+\label{sec:scoring-validate}
+
+A verifier paper that does not test its own verifier is asking to be taken on trust, so the
+comparator ships with a negative control: a deliberately corrupted state, with two layers swapped,
+must be rejected.
+
+The control earned its place. On its first full run, 23 of 600 corrupted states were
+\textbf{accepted}. The cause was not a tolerance. The comparison used current-plane geometry and
+parity alone, and deep in a stack many layers are congruent triangles, so two layers occupying the
+same region but originating from different parts of the sheet were interchangeable. They are not
+interchangeable: which one lies underneath is a real difference between two folded states, and
+precisely the difference Level 2 exists to catch. With face identity on the original sheet
+restored to the comparison, the full corpus reports 600 states equal, all under the identity
+symmetry, and 600 of 600 corrupted states rejected. Every verdict additionally reports whether
+face identity was available, so a weakened comparison is visible in the output rather than assumed
+away.
+

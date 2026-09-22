@@ -1,0 +1,149 @@
+\section{Results}
+\label{sec:results}
+
+All numbers below come from \texttt{workspace/RESULTS/results.md}, produced by
+\texttt{python3 workspace/aggregate\_results.py} over every saved run. 1,211% fact:results.attempts
+attempts across 47 runs and 256 distinct samples. Every attempt is counted once, and an attempt with
+no recorded \texttt{solved} field is counted as unsolved.
+
+\subsection{Headline}
+\label{sec:results-headline}
+
+\textbf{No language model solved a single sample beyond the easy stratum.} Across every model arm,
+mid is 0 of 70 and hard is 0 of 27. On the easy stratum a deterministic breadth-first search over
+exactly the action set the models are given solves 54.7\%, against 20.4\% for the best-covered model
+at the same tier. \textbf{Blind search beats every model tested, by a factor of about 2.7 on the
+only stratum where anything succeeds at all.}
+
+\begin{table}[h]
+\caption{Solve rate per stratum, all saved runs. Denominators are attempts, not distinct samples.
+Rows with fewer than ten attempts support no rate and are shown only so that reporting is not
+selective.}
+\label{tab:headline}
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{llrrrrr}
+\multicolumn{1}{c}{\bf ARM} &\multicolumn{1}{c}{\bf TIER} &\multicolumn{1}{c}{\bf EASY} &\multicolumn{1}{c}{\bf MID} &\multicolumn{1}{c}{\bf HARD} &\multicolumn{1}{c}{\bf OVERALL} &\multicolumn{1}{c}{\bf CALLS} \\
+\hline \\
+\texttt{deterministic-bfs} & legal-folds & {\bf 366/669 (54.7\%)} & 1/40 (2.5\%) & 0/16 & 367/725 (50.6\%) & 5 \\
+\texttt{gpt-5.6-luna}      & legal-folds & 59/289 (20.4\%) & 0/66 & 0/25 & 59/380 (15.5\%) & 23.5 \\
+\texttt{gpt-5.6-luna}      & no tools    & 4/65 (6.2\%)    & 0/1  & 0/1  & 4/67 (6.0\%)    & 29 \\
+\texttt{claude-sonnet-5}   & legal-folds & 0/5  & -- & -- & 0/5 & 10 \\
+\texttt{gpt-5.6-sol}       & no tools    & 0/7  & -- & -- & 0/7 & 20 \\
+\texttt{gpt-5.6-terra}     & no tools    & 0/1  & -- & -- & 0/1 & 35 \\
+\texttt{gpt-6-astra}       & no tools    & 1/1  & -- & -- & 1/1 & 5 \\
+\texttt{codex-cli-chatgpt} & none        & 0/1  & -- & -- & 0/1 & 2 \\
+\emph{errored, model unrecorded} & -- & 0/20 & 0/3 & 0/1 & 0/24 & -- \\
+\end{tabular}
+\end{center}
+\end{table}
+
+\textbf{Caveat: read the denominators before the percentages.} Only \texttt{gpt-5.6-luna} and the
+baseline have coverage worth a rate. \texttt{gpt-6-astra} shows 1/1; \textbf{that is one attempt and
+must not be reported as 100\%.} \texttt{claude-sonnet-5}, \texttt{gpt-5.6-sol},
+\texttt{gpt-5.6-terra} and \texttt{codex-cli-chatgpt} have between one and seven attempts each.
+These rows are present because omitting them would be selective reporting, not because they support
+a comparison. Any main table in the submitted paper prints $n$ in every cell or drops the row.
+
+\subsection{The baseline reading}
+\label{sec:results-baseline}
+
+\texttt{deterministic-bfs} solves 367 of 725 attempts overall. Per stratum: 366/669 easy, 1/40 mid,
+0/16 hard. Median states expanded is 65 on easy, 1051.5 on mid, 532 on hard. 358% fact:results.bfs.timeouts
+of its 725 attempts ended in timeout rather than exhaustion, so \textbf{50.6\% is a lower bound
+under the baseline's time budget, not the ceiling of exhaustive search.}
+
+This is the outcome Section 16.7 anticipated and the one \texttt{workspace/search\_baseline.mjs} was
+written to detect. Its header records that \texttt{list\_legal\_folds} evaluates roughly 2,010
+candidate actions per state and returns a mean of 3.51 that
+are legal and stay inside the target crease pattern, over 73,750 enumerations. A branching factor
+near 3.5 makes an easy sample of five folds a tree of a few hundred states, and the median of 65
+states expanded on easy confirms it. \textbf{The easy stratum is therefore not measuring origami
+reasoning.} It measures whether a model can avoid losing to breadth-first search on a tree its own
+tool has already pruned roughly 570-fold, and every model tested loses.
+
+We state this rather than report the models' easy-tier rate as an achievement. It is also the answer
+to the ``the simulator does all the work'' objection of Section~7, and the answer
+is uncomfortable: on the easy stratum the simulator does do most of the work. The benchmark's value
+here is that it measures that rather than hiding it. On mid and hard the objection dissolves,
+because search solves 1 of 56 and the models solve 0 of 97.
+
+\subsection{What the tools contribute}
+\label{sec:results-tiers}
+
+The one within-model tier comparison the data supports is \texttt{gpt-5.6-luna} on easy: 59/289
+(20.4\%) with the filtering tool against 4/65 (6.2\%) with no tools, so filtering is worth roughly
+$3.3\times$ on that stratum and nothing on mid or hard, where both tiers are zero.
+
+\textbf{Caveat.} The no-vision and verifier-only tiers of Section~\ref{sec:ablations} were not run.
+The four-tier ladder this paper describes is not yet instantiated; only its two endpoints exist.
+
+\subsection{Failure taxonomy}
+\label{sec:results-failures}
+
+\begin{table}[h]
+\caption{Termination reasons for \texttt{gpt-5.6-luna}, 447 attempts.}
+\label{tab:terminations}
+\begin{center}
+\begin{tabular}{lrr}
+\multicolumn{1}{c}{\bf TERMINATION} &\multicolumn{1}{c}{\bf $n$} &\multicolumn{1}{c}{\bf SHARE} \\
+\hline \\
+\texttt{state\_cycling}       & 215 & 48.1\% \\
+\texttt{finished}             & 167 & 37.4\% \\
+\texttt{turn\_budget}         & 47  & 10.5\% \\
+\texttt{repetition\_detected} & 18  & 4.0\% \\
+\end{tabular}
+\end{center}
+\end{table}
+
+\textbf{This is the most informative result in the section, and it is not a solve rate.} A majority
+of attempts, 233 of 447 counting cycling and repetition together, end with the model revisiting a
+state it has already produced rather than exhausting its budget. The model is not running out of
+room to search; it is failing to notice it has been somewhere before. That is a specific,
+diagnosable deficit in maintaining state across a multi-step spatial task, and it is the kind of
+finding a benchmark with an executing verifier can produce and a multiple-choice benchmark cannot.
+The baseline never cycles, because breadth-first search over a visited set cannot; it times out
+instead, 358 times.
+
+\subsection{Where difficulty lives}
+\label{sec:results-difficulty}
+
+Depth separates the arms completely. Easy is the only stratum where anything succeeds; mid yields a
+single solve, by the baseline, at a median of 1051.5 states expanded against 65 on easy; hard yields
+none from any arm. \texttt{[TO RUN: solve rate against coupling, to test whether the second
+stratification axis of Section~\ref{sec:cp2seq-difficulty} predicts difficulty as intended. Only
+depth is evidenced so far.]}
+
+\subsection{Threats to these results}
+\label{sec:results-threats}
+
+\textbf{Every model attempt ran at low reasoning effort.} All 461 language-model attempts with a
+recorded setting used \texttt{reasoning\_effort: low}; 25 have none recorded. This is the single
+largest caveat on every claim in this section. ``Frontier models fail this task'' is not supported
+by these runs. What is supported is that frontier models at low reasoning effort fail this task and
+lose to breadth-first search where search works at all. Re-running the best-covered arm at high
+effort is the most valuable remaining experiment, and until it exists the headline carries the
+qualifier.
+
+\textbf{Coverage is severely imbalanced.} 725 baseline attempts and 447 for \texttt{gpt-5.6-luna},
+against between one and seven for every other model. No cross-model claim is made.
+
+\textbf{24 attempts terminated in error with no model recorded} and are counted as unsolved. They
+are reported as their own row rather than dropped, because dropping failed attempts inflates every
+rate above them.
+
+\textbf{Repeats are not yet reported as median and spread.} Section~\ref{sec:exp-protocol} promises
+this; the aggregation counts attempts rather than grouping repeats per sample. The protocol requires
+it before submission.
+
+\draftimage{8}
+\begin{center}\textit{\footnotesize Figure 6 placeholder: solve rate per difficulty stratum, one
+line per model, with the deterministic baseline as a distinct reference line crossing above every
+model line on the easy stratum, and attempt counts printed at each point.}\end{center}
+\begin{figure}[h]
+\caption{\textbf{[DRAFT IMAGE]} Main result per stratum. The baseline crosses above every model line
+on easy; that crossing is the most informative feature of the chart and is not smoothed away.}
+\label{fig:main}
+\end{figure}
+

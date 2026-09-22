@@ -1,0 +1,170 @@
+\section{Introduction}
+\label{sec:intro}
+
+Multimodal language models have become genuinely good at visual work. They caption and answer
+questions about natural images, read documents, charts and tables, transcribe text in photographs,
+follow video, and drive graphical interfaces from screenshots alone. Over the last two years the
+direction of progress on these tasks has been steeply upward, and on several of them the reported
+numbers sit near careful human annotators. TODO: Rewrite this.
+
+It does not follow that these models reason about spatial reasong (TODO: Fisx this with geom
+reasoning etc. ). Most of the competence arrives through one
+architecture: a vision encoder trained to align images with text, and an adapter that projects its
+output into the language model's token stream. What that encoder is rewarded for preserving is
+semantic. It answers \emph{what is in this picture}, and it answers it well, because that is what
+the training objective asks of it. Metric and relational structure is not rewarded and need not
+survive the projection: exact angles, exact incidences, which of two nearly identical shapes lies
+in front, how many times one line crosses another. Competence at recognising a scene and
+competence at reasoning about its geometry are different, and an adapter trained for the first
+gives no guarantee of the second. When the task moves to geometric and spatial reasoning, the
+ranking of models by their image-task scores need not survive. (fix the wordings).
+
+% ============================================================================
+% STAR EXAMPLE, NOT YET VERIFIED. DO NOT SUBMIT WITH THIS PARAGRAPH AS IS.
+% The intended example is the "Vision Language Models Are Blind" line of work,
+% which reports that frontier models scoring well on hard visual question
+% answering fail at elementary geometric perception: whether two circles
+% overlap, counting intersections of two line plots, counting nested squares.
+% Recorded reference: Rahmanzadehgervi, Bolton, Taesiri and Nguyen, ACCV 2024,
+% arXiv:2407.06581.
+% VERIFY authors, venue and the specific task list against the arXiv record
+% before this enters the paper. If any part does not hold exactly as stated,
+% CUT the example rather than soften it. See editorial rule 7 in Appendix C.
+% ============================================================================
+
+Why Origami for Spatial and Geometric reasoning
+
+(DELETE AND WRITE AGAIN)
+Origami is an unusually clean place to look for the missing capability. It is an art form whose
+entire content is geometric: a folder works from lines, reflections and incidences on a single
+uncut sheet, and every decision is constrained by every decision before it. (Mention about the
+spatial thing - using the fact about the layer ordering etc. -  ) It also demands
+spatial reasoning of a specific kind, because the sheet stops being flat the moment folding
+begins. The folder has to track where each piece of paper now sits, which pieces lie above which,
+and which of them are still joined to each other through the original sheet. A crease pattern, the
+flat record left behind when a finished model is unfolded, contains all of that history and none
+of its order. Reading a sequence back out of it is the skill that separates a practitioner from
+someone who can recognise a crane.
+
+We use origami as an instrument. \textbf{The model is given two things: the crease pattern, and the
+final folded state. It is asked for the sequence of folds that turns the flat sheet into that
+state.} Both endpoints are supplied and the path between them is not, which is the whole of the
+task. The pattern says which lines were creased at some point during the folding but says nothing
+about the order they were creased in, and the final state says where the paper ended up but not how
+it got there.
+
+ -  need a graph here to illustrate
+
+This is trivial to generate and hard to solve, which is what makes it usable for evaluation.
+Folding forward is a single pass of an engine that records what it did. Deciding whether a crease
+pattern is reachable by simple folds at all is NP hard \citep{arkin-map,akitaya-hard}, so recovering
+the sequence that produced one is at least as hard. The same engine that generates a sample
+therefore rules on any proposed step of a solution exactly, using an operation it already
+implements, with no learned component in the loop, no tolerance to tune and no oracle to trust.
+
+That asymmetry is what a benchmark wants, and it is what spatial and physical reasoning has
+generally lacked. Benchmarks built on static images or multiple choice never execute the model's
+proposal, so an answer that is right for the wrong reason is indistinguishable from one that is
+right. Benchmarks built on learned surrogate simulators do execute the proposal, but against an
+approximation whose wrong verdicts look exactly like its right ones, which leaves the benchmark's
+own error rate unknown and unmeasurable from inside. Human judgement is exact in a sense and does
+not scale. The consequence is worth stating plainly, because it motivates everything below:
+\textbf{a benchmark can only be as trustworthy as the judge inside it.} Here the judge is the
+generator run forwards, so difficulty is controllable rather than sampled, ground truth is recorded
+rather than annotated, and negative examples are unlimited, because an illegal fold is produced by
+asking for one.
+
+Two recent benchmarks make origami a target for multimodal evaluation, and the difference between
+them and this work is the difference between asking a model a question and executing its answer.
+\textbf{GamiBench} \citep{gamibench} pairs crease patterns with folded shapes rendered from six
+viewpoints and scores multiple-choice visual question answering, including a set of deliberately
+impossible patterns a model ought to reject. \textbf{OrigamiSpace} \citep{origamispace} instruments
+each instance with a pattern diagram, the folding process and a final image, and defines four tasks
+over them, from pattern prediction to crease-pattern code generation. In both, a proposal is graded
+by comparison against a stored target: the model selects among rendered alternatives, or emits an
+artifact that is matched to a reference. Neither steps a paper-exact engine and asks whether
+\emph{this} move, on \emph{this} stack, is something paper could do. Both therefore measure
+recognition of folded geometry, which is a real capability, rather than the ability to search for a
+sequence that produces it. Section~\ref{sec:related-gap} makes the comparison in full.
+
+The distinction matters because the search is where the difficulty lives. Determining the layer
+ordering of a flat folding is NP hard on its own, even when a valid mountain-valley assignment is
+supplied \citep{bern-hayes}. No amount of pattern recognition substitutes for search on a problem
+of that shape, and a benchmark that never executes a proposed step cannot tell a model that
+searched from a model that recognised, nor report how much search either one needed.
+
+This is also why the benchmark reports a deterministic search baseline alongside the models rather
+than only against them. The stack deepens with every fold, the enumerated action set grows with it,
+and the depth at which exhaustive search stops being affordable is a property of the corpus that can
+be measured rather than asserted. \texttt{[TO RUN: the deterministic breadth-first baseline of
+Section~\ref{sec:experiments}, reported per stratum, giving the depth at which it stops solving and
+the states it expands. Until that number exists, no claim is made here about where blind search
+fails.]} What the benchmark is designed to reward is the use of geometry: looking at the crease
+pattern and the final state and inferring which fold could plausibly have been last, then working
+backwards. \textbf{Geometry is supplied to the model as input and is not the thing being scored.
+Being able to act on it is.} A model that cannot read a reflection off a pattern has no way to
+choose a direction other than enumeration, and the baseline is what says how far enumeration alone
+gets.
+
+The task is also hard in ways a maze or a grid-world is not. It gets harder as it proceeds: every
+fold thickens the stack and constrains what the next fold may do, so the difficulty of step $k$
+depends on steps $1$ through $k-1$. And a solver has to maintain two kinds of state that constrain
+each other. The crease graph is fixed once the pattern is given, but vertex coordinates are
+reflected at every step, the overlap structure changes at every step, and the layer ordering
+changes at every step and is \emph{chosen} rather than computed. Determining that ordering is NP
+hard even when a valid mountain-valley assignment is supplied \citep{bern-hayes}. Mazes have
+geometry alone; here an independent combinatorial layer is tracked alongside it. The action space
+is not invented for the occasion either: simple folds have been defined and their complexity
+studied for two decades \citep{arkin-map}, so the operations an agent is given have names and
+claims about them can be checked against a literature.
+
+We contribute the following.
+
+\begin{enumerate}
+\item \textbf{A dataset, and the generator that built it.} CP2Seq holds 600 origami samples, each
+  pairing a crease pattern with the fold sequence that produced it, the folded state after every
+  step, and per-sample difficulty metrics. Ground truth is constructed rather than annotated,
+  because the sequence is recorded as the fold happens. Samples are generated under two named
+  action models from the simple folding literature and stratified by fold depth and by coupling.
+  The corpus ships as a generator and a manifest rather than as data: every sample rebuilds
+  byte-identically from its seed, so the dataset can be regenerated, extended, or re-stratified at
+  a different difficulty by anyone who wants a different corpus than ours.
+
+\item \textbf{An evaluation framework and environment, with progressive tiers of assistance.} The
+  model is given the crease pattern and the final state and must recover the sequence, so it works
+  from partial information about the structure throughout. The environment it works against is also
+  the verifier: stepping it is the same act as asking for a verdict. It executes one candidate fold
+  and either returns the resulting state or refuses with a named reason, such as the sheet would
+  tear or the fold creases nothing. It performs no search and makes no choices, so proposing,
+  pruning and backtracking stay with the model. Around it sits a graded tool belt, from a full belt
+  with rendered views down through withheld vision and raw pass/fail to no tools at all, so the
+  contribution of each assistance level is measured rather than assumed. The framework also
+  supplies the scoring protocol: answers are judged by replaying them through the engine, at two
+  declared levels of equality -- (edited distance and CP) - -, because one crease pattern admits
+  many valid folded states and the
+  recorded sequence is not guaranteed to be the shortest.
+
+\item \textbf{An evaluation of frontier multimodal models} against this dataset through this
+  framework, run across the progressive tiers of tool assistance and with a memorization control on
+  anonymized geometry. \texttt{[TO RUN]}
+
+\item \textbf{A measured scope boundary.} 89.3\%% fact:probeC.provenNotPct
+  of the 366% fact:corpus.instagram.total
+  real crease patterns in Flat-Folder's \texttt{examples/instagram/} corpus \citep{flatfolder}
+  provably lie outside all-layers simple folding. The benchmark's action space is bounded by
+  evidence rather than by assertion, and the boundary is reported rather than buried.
+\end{enumerate}
+
+We find that the task is beyond current models at the setting we could afford to run. ((No model
+solved a single sample past the easy stratum  - ---are you sure, then we should give a graph, shows
+what's newest model performance))), and on the easy stratum a deterministic breadth-first
+search over exactly the action set the models are given solves 54.7\% against 20.4\% for the
+best-covered model. Blind search beats every model tested, on the only stratum where anything
+succeeds at all. The dominant failure is not exhausting the search budget but revisiting states
+already seen: 48\% of that model's attempts terminate in detected state cycling.
+
+\textbf{Caveat.} Every model attempt
+ran at low reasoning effort, so the supported claim is about models at that setting rather than
+about the frontier in general; Section~\ref{sec:results-threats} states this and
+Section~\ref{sec:limitations} carries it as a limitation.- -----put in appendix
+

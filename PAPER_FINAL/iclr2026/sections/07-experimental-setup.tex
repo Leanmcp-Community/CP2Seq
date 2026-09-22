@@ -1,0 +1,187 @@
+\section{Experimental setup}
+\label{sec:experiments}
+
+\subsection{The pipeline -----should have a hand drawn graph}
+\label{sec:exp-pipeline}
+
+One episode is one sample attempted by one model under one tier of assistance. The loop is the same
+for every arm and every model, and the only thing that varies between arms is what the model is
+allowed to see and call.
+
+{\small\begin{verbatim}
+EPISODE(sample, model, tier, budget):
+    cp, final <- LOAD(sample)     # cp.fold, and the LAST frame of
+                                  # steps.fold; other frames withheld
+    state     <- unit square, one layer
+    seq       <- []
+    while len(seq) < budget:
+        obs     <- RENDER(state, tier)   # withheld at the no-vision tier
+        action  <- model(cp, final, obs, history, tier)
+        if action is SUBMIT: break
+        verdict <- ENVIRONMENT.step(state, action)  # verifier IS this
+        if verdict is REFUSAL:
+            history.append(refusal with its reason)  # state unchanged
+        else:
+            state <- verdict.state
+            seq.append(action)
+            history.append(obs)
+    return SCORE(replay(cp, seq), replay(cp, reference_seq))
+\end{verbatim}
+}
+
+Three things about this loop decide what the benchmark measures.
+
+\textbf{The environment is the only thing that changes state.} A model cannot assert that a fold
+happened. It proposes, and the environment either performs the fold or refuses it, so the state the
+model reasons about is always a state paper could be in.
+
+\textbf{A refusal costs a query and does not advance the episode.} This is what makes
+queries-to-solution meaningful: a model that proposes carelessly pays for it in budget, and a model
+that reasons before proposing is rewarded in the secondary metric even when both eventually solve
+the sample.
+
+\textbf{The reference sequence is never read during the episode.} It enters only at scoring time,
+and then only as something to replay, never as something to compare against step by step
+(Section~\ref{sec:scoring-why}).
+
+% ===========================================================================
+% FIGURE 4 -- THE EVALUATION PIPELINE.  [TO DRAW]
+% Left-to-right diagram of one episode.
+%   LEFT    the two inputs: crease pattern, final folded state.
+%   CENTRE  the loop as a cycle: model proposes a fold; environment returns either
+%           a new state with its two rendered views, or a NAMED refusal; history
+%           accumulates.
+%   RIGHT   termination and scoring: replay of the model's sequence and replay of
+%           the reference, compared at Level 1 and Level 2.
+% Must make three things visually obvious:
+%   (1) environment and verifier are ONE box, not two;
+%   (2) refusals loop back WITHOUT advancing;
+%   (3) seq.json sits OUTSIDE the loop, entering only at scoring.
+% A dashed boundary around the withheld items (intermediate frames, reference
+% sequence) carries point (3) without a sentence.
+% ===========================================================================
+\begin{figure}[h]
+\draftimage{10}
+\begin{center}\textit{\footnotesize Figure 4 placeholder: the
+evaluation pipeline. Inputs on the left; the propose-verify-observe loop in the centre with the
+environment and verifier drawn as one box and refusals looping back without advancing; replay and
+scoring on the right, with the reference sequence outside the loop.}\end{center}
+\caption{\textbf{[DRAFT IMAGE]} One episode. The environment and the verifier are the same object, so stepping is the same
+act as asking for a verdict. The reference sequence enters only at scoring.}
+\label{fig:pipeline}
+\end{figure}
+
+\subsection{The tools the model is given}
+\label{sec:exp-tools}
+
+The tool belt is the experimental variable. Every tool is a read or a step against the same engine;
+none of them searches, and none of them ranks candidates.
+
+\begin{table}[h]
+\caption{The tool belt. Tiers are defined by which of these are available.}
+\label{tab:tools}
+\begin{center}
+\begin{tabular}{lp{0.32\textwidth}p{0.34\textwidth}}
+\multicolumn{1}{c}{\bf TOOL}  &\multicolumn{1}{c}{\bf WHAT IT RETURNS}  &\multicolumn{1}{c}{\bf WHY IT EXISTS} \\
+\hline \\
+\texttt{apply\_fold} & The new state, or a named refusal & The action. This call \textbf{is} the verification \\[3pt]
+\texttt{get\_views} & Top-down X-ray of the stack, exploded layer view & The visual channel; withheld at the no-vision tier \\[3pt]
+\texttt{get\_state} & Face positions in original-sheet coordinates plus integer layer index & The symbolic channel, so a model is never forced to read geometry off a raster \\[3pt]
+\texttt{list\_legal\_folds} & Every fold the engine would currently accept & The filtering tier. It prunes; it does not choose \\[3pt]
+\texttt{undo} & The previous state & Backtracking without spending the episode \\
+\end{tabular}
+\end{center}
+\end{table}
+
+\texttt{list\_legal\_folds} is the tool that needs justifying, because it is doing the most work. It
+enumerates candidate actions and returns those that are legal, which is a large prune performed by
+the simulator rather than by the model. That is precisely why the tier structure exists and why the
+deterministic baseline of Section~\ref{sec:exp-baselines} is reported: if exhaustive search over the
+enumerated set solves the corpus outright, then the filtered arm is not measuring origami reasoning,
+and the benchmark has to say so rather than let a headline number imply otherwise.
+
+% ===========================================================================
+% FIGURE 5 -- A REFUSAL AS THE MODEL RECEIVES IT.  [TO DRAW]
+% One concrete rejected fold, rendered exactly as the harness returns it:
+%   - the proposed fold line drawn over the current state;
+%   - the named reason (would-tear);
+%   - the specific evidence: for a tear, the crease segment joining a moving face
+%     to a stationary one, highlighted, away from the fold line.
+% Beside it, the SAME state with a legal fold line, for contrast. This is the
+% tearing pair of the action-space section, which currently exists only as prose.
+% Caption states that the reason is a NAME rather than a boolean, and that this is
+% why error analysis is a taxonomy that exists before the experiment.
+% ===========================================================================
+\begin{figure}[h]
+\draftimage{8}
+\begin{center}\textit{\footnotesize Figure 5 placeholder: a
+refusal as the model receives it. The proposed fold line over the current state, the named reason
+\texttt{would-tear}, and the offending crease segment highlighted; beside it the same state with a
+legal fold line.}\end{center}
+\caption{\textbf{[DRAFT IMAGE]} A refusal is a diagnosis, not a dead end. The same state and the same layer selection give
+opposite verdicts depending only on the orientation of the fold line.}
+\label{fig:refusal}
+\end{figure}
+
+\subsection{Tiers, models and protocol}
+\label{sec:exp-protocol}
+
+\textbf{Tiers.} Four levels of assistance, from a full tool belt down to none; the table is in
+Section~\ref{sec:ablations}. The same model, the same samples and the same query budget across
+tiers, so that the only difference between two tiers is what was withheld.
+
+\textbf{Models.} \texttt{[TO FILL from the aggregation: the models actually run, their versions, and
+the reasoning-effort and image-history settings used. Held fixed across tiers, because comparing
+across models and across tiers at once would confound the two.]}
+
+\textbf{Protocol.} Query budget, number of repeats and seeds are fixed before the first run and
+reported with the results. Median and spread across repeats are reported, never a single run,
+because sampling is not deterministic and one run is not a measurement.
+
+\textbf{Transforms are applied in every reported result.} Every solve rate in
+Section~\ref{sec:results} is computed after quotienting out the plane isometry group of
+Section~\ref{sec:scoring-what}: translation, rotation and reflection, with reflections reversing the
+stack and flipping face parity. A candidate is counted correct if one single isometry carries every
+layer onto its reference counterpart. This is not a post-hoc leniency applied to borderline cases;
+it is part of the definition of a correct answer, applied identically to every arm, every model and
+every baseline. Turning it off would mark correct answers wrong, because where a folded model lands
+on the table is an accident of which half of the sheet travelled.
+
+\textbf{Matching under transforms requires a floating-point tolerance, and it is stated.} Admitting
+arbitrary rotation means candidate and reference coordinates agree only to within floating-point
+representation, so the comparator matches polygons within $2\times10^{-6}$, cleans degenerate
+vertices at $10^{-7}$ and treats vertices as collinear below $10^{-9}$. Every result record carries
+the tolerance it was scored under, so the value is visible in the released runs rather than buried
+in a constant. The engine's legality decisions are combinatorial and involve no tolerance; the
+numerical threshold applies only to terminal-state equality under transforms.
+
+\textbf{Error verbosity is itself a variable.} The richer a refusal, the more of the reasoning the
+environment performs rather than the model; at the limit a message that names the fix has solved the
+step. Verbosity is fixed before the first run and reported, otherwise the comparison between tiers
+measures message design rather than reasoning.
+
+\subsection{Baselines}
+\label{sec:exp-baselines}
+
+Three, none of them a language model, so the models are ranked against something rather than only
+against each other.
+
+\begin{table}[h]
+\caption{The baseline ladder. \texttt{[TO RUN]}}
+\label{tab:baselines}
+\begin{center}
+\small
+\begin{tabular}{p{0.43\textwidth}p{0.45\textwidth}}
+\multicolumn{1}{c}{\bf BASELINE}  &\multicolumn{1}{c}{\bf WHAT IT ESTABLISHES} \\
+\hline \\
+Uniform random over enumerated legal actions & The floor. What the tool alone achieves with no reasoning at all \\[3pt]
+Deterministic breadth-first over the same action set (\texttt{workspace/search\_baseline.mjs}) & How much of the task the enumerator already solves, and the depth at which exhaustive search stops being affordable \\[3pt]
+Symbolic crease-pattern-to-sequence solver \citep{creasy} & The closest thing to prior art on the task itself \\
+\end{tabular}
+\end{center}
+\end{table}
+
+The breadth-first baseline is the one that answers the ``the simulator did all the work'' objection
+of Section~7 numerically rather than structurally, which is the stronger form of
+that answer.
+

@@ -1,0 +1,129 @@
+\section{Related work}
+\label{sec:related}
+
+\subsection{Origami benchmarks for multimodal models}
+\label{sec:related-benchmarks}
+
+\textbf{OrigamiSpace} \citep{origamispace} contributes 350 instances, each carrying a crease
+pattern diagram, a compiled flat pattern, the complete folding process and a final folded image,
+and defines four tasks over them: pattern prediction, multi-step spatial reasoning, spatial
+relationship prediction, and end-to-end crease-pattern code generation. It also provides an
+interactive environment and describes reinforcement learning as a possibility explored rather than
+a result demonstrated. Its design lesson is that one richly instrumented sample can support
+several tasks, which is how 350 instances sustain a benchmark paper.
+
+\textbf{GamiBench} \citep{gamibench} contributes 186 regular and 186 \emph{impossible} crease
+patterns paired with folded shapes from six viewpoints, across three visual question-answering
+tasks, and introduces two diagnostic metrics: viewpoint consistency and impossible fold selection
+rate. Its impossible patterns are the closest the current literature comes to forcing a model to
+judge feasibility rather than recognise a shape, and its headline finding is that leading models
+struggle even at single-step spatial understanding. It is the benchmark this work is most directly
+in conversation with, and the one whose negative examples we can produce without limit, because
+generating an illegal fold in our environment is the same operation as generating a legal one.
+
+\textbf{OrigamiBench} \citep{origamibench}, \textbf{FoldingAgent} \citep{foldingagent} and
+\textbf{COrigami} \citep{corigami} complete the picture; their metrics appear in the comparison of
+Section~\ref{sec:related-gap}.
+
+What all of these share is the gap. In each, the model's proposal is answered by a question rather
+than by an execution: it selects among rendered alternatives, or produces an artifact that is
+compared to a target. None of them steps a paper-exact engine and asks whether \emph{this} move,
+on \emph{this} stack, is something paper could do.
+
+\subsection{Methods that pair a proposer with a simulator}
+\label{sec:related-proposer}
+
+\textbf{Learn2Fold} \citep{learn2fold} formulates origami as conditional program induction over a
+crease-pattern graph. A language model generates candidate folding programs from text, and a
+learned graph-structured world model acts as a differentiable surrogate simulator that predicts
+physical feasibility and failure modes before execution, inside a lookahead planning loop. Its
+stated key insight is to decouple semantic proposal from physical verification.
+
+We adopt that decomposition and differ on one thing: the verifier. Theirs is learned,
+differentiable and approximate, which is what makes it usable for planning and also what makes its
+mistakes invisible. Ours is exact, because it is the generator run forwards.
+Their scoring is step-level precision, recall and F1 against an expert sequence, together with
+edge-level IoU; Section~\ref{sec:scoring-why} shows why that family of measures is unsafe in this
+task, since a model that finds a \emph{shorter} correct sequence is marked wrong by it. That is a
+finding about scoring in this setting rather than a criticism of their results.
+
+The general precedent for a (((((proposer paired with a verifier))))))) - ----what's this??? what's
+pur proposer
+is older than any of this work: a
+network that proposes and a search that checks is the structure behind AlphaGo \citep{alphago}, and
+the reason the
+combination is stronger than either half.
+
+\subsection{Computational origami: the theory under the action space}
+\label{sec:related-theory}
+
+The benchmark's central claim, that geometry does not determine a folded state, is Bern and
+Hayes's: deciding the overlap order of a flat folding is NP hard even given a valid
+mountain-valley assignment \citep{bern-hayes}. The action space is Arkin et al.'s: simple folds,
+in the one-layer, some-layers and all-layers variants, with finite or infinite fold lines
+\citep{arkin-map}. Their complexity has been mapped since, including simple foldability's hardness
+\citep{akitaya-hard} and the infinite all-layers case \citep{akitaya-infinite}. The solver whose
+constraint vocabulary we borrow for terminal states is Flat-Folder \citep{akitaya-flatfolder}.
+
+Two results shape what the task actually is. \citet{continuous} showed that any well-behaved
+folded state is reachable by \emph{some} continuous motion; the question is therefore never
+whether a path exists, but whether one exists through a finite number of the discrete operations a
+hand or a machine can perform. And counting foldings has no closed form even for a
+one-dimensional strip, a problem open since Lucas attributed it to Lemoine in 1891
+\citep{lucas,oeis-a000136}; this is the answer to ``why not enumerate the states'', and it is a
+fact about the problem rather than about any implementation.
+
+Finally, the problem itself is not new: generating folding sequences from crease patterns was
+named and attacked symbolically by \citet{akitaya-cp2seq}, by the same group whose tools this
+field now depends on. What is new is neither the problem nor the theory, but the observation that
+this problem supplies an exact verifier and can therefore serve as an evaluation substrate for
+models that reason with tools.
+
+\subsection{The structural gap}
+\label{sec:related-gap}
+
+The two closest benchmarks are worth setting beside this one directly, because a reader who knows
+them will ask what is left to do.
+
+\begin{table}[h]
+\caption{The two closest benchmarks beside this one. The informative rows are the last three.}
+\label{tab:closest}
+\begin{center}
+\small
+\begin{tabular}{p{0.15\textwidth}p{0.21\textwidth}p{0.23\textwidth}p{0.27\textwidth}}
+ &\multicolumn{1}{c}{\bf GAMIBENCH} &\multicolumn{1}{c}{\bf ORIGAMISPACE} &\multicolumn{1}{c}{\bf CP2SEQ (OURS)} \\
+\hline \\
+Model produces & A choice among rendered options & A predicted pattern, a relation, or crease-pattern code & A sequence of folds, one step at a time \\[4pt]
+Judged by & Agreement with the stored answer & Similarity to a stored target, or compilation & Execution of each step, then replay of the whole \\[4pt]
+Judge is & A stored key & A comparison against a reference artifact & The fold engine itself, run forwards \\[4pt]
+Judge can be wrong & Not applicable; no execution & Where similarity stands in for correctness & Only if the model of paper is wrong, which replay cannot detect (Sec.~\ref{sec:cp2seq-verify}) \\[4pt]
+Wrong answers & 186 authored impossible patterns & Not a designed axis & Unlimited: an illegal fold is produced by asking for one \\[4pt]
+Ground truth & Annotated per instance & Annotated per instance & Constructed; recorded as the fold happens \\[4pt]
+Non-unique answers & One key per question & Compared against one reference & Replayed and compared up to a declared symmetry group (Sec.~\ref{sec:scoring-what}) \\[4pt]
+Scores search effort & No & No & Yes: queries to solution, over all attempts (Sec.~\ref{sec:scoring-metrics}) \\
+\end{tabular}
+\end{center}
+\end{table}
+
+Read across the bottom three rows rather than the top. GamiBench's impossible patterns are the
+closest the literature comes to forcing a judgement of feasibility rather than a recognition of
+shape, and they are authored, which is why there are 186 of them; here the same object is a
+by-product of generation and there is no limit on it. OrigamiSpace's instrumentation per instance
+is richer than ours and is the reason 350 instances sustain a benchmark paper; what it does not
+have is a judge that can rule on a step the authors never anticipated. Neither ranks among the
+several valid folded states of one crease pattern, because both compare against a stored answer,
+and a stored answer cannot represent a set.
+
+None of this is a defect in either benchmark. Both were built to measure whether a model
+understands folded geometry, and they measure it. The claim here is narrower: that measuring
+whether a model can \emph{search} for a folding sequence requires a judge that executes, and that
+origami supplies one.
+
+Collecting the metrics used across this literature makes one absence visible. Every metric in use
+compares a produced artifact against a target: geometric or semantic similarity to a reference,
+precision and recall against an expert sequence, IoU over affected edges, compilation success,
+human preference. \textbf{None ranks among the several valid folded states of a single crease
+pattern, and none scores an agent by how much verification it required.} The absence is structural
+rather than accidental, because computing any of those metrics requires a target to compare
+against, and the interesting question here has more than one right answer.
+

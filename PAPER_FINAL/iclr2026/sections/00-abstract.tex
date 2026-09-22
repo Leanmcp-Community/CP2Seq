@@ -1,0 +1,20 @@
+\begin{abstract}
+Multimodal language models are strong at tasks that ask what is in an image and weaker, in ways
+their image-task scores do not predict, at tasks that ask about geometry. We use origami to measure
+the difference. We release \textbf{CP2Seq}, a benchmark and dataset of 600 origami samples in which
+a model is given a crease pattern and the final folded state and must recover the sequence of folds
+between them. The task is trivial to generate and hard to solve: folding forward is one pass of an
+engine that records what it did, while deciding whether a crease pattern is reachable by simple
+folds is NP hard, and determining the layer ordering of a flat folding is NP hard even given a valid
+mountain-valley assignment. Ground truth is constructed rather than annotated, and every sample
+rebuilds byte-identically from its seed, so the corpus ships as a generator rather than as data. The
+environment the model works against is also the verifier: it executes one candidate fold and either
+returns the resulting state or refuses with a named reason, such as the sheet would tear. It
+performs no search, so proposing, pruning and backtracking stay with the model. We provide
+progressive tiers of tool assistance, and because one crease pattern admits many valid folded states
+we score answers by replaying them, up to the plane isometry group. At low reasoning effort no model
+we evaluated solved any sample beyond the easy stratum, and on that stratum a deterministic
+breadth-first search over the same action set solves 54.7\% against the best model's 20.4\%. The
+dominant failure is not an exhausted budget but revisiting states already seen, which ends 48\% of
+that model's attempts.
+\end{abstract}
