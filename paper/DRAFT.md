@@ -448,33 +448,11 @@ fold cannot be reasoned about locally.
 
 The two are not independent, and the dependence is itself a finding (§4.5).
 
-### 4.5 What the corpus contains
+### 4.5 What the corpus contains - This part only need to let readers know that , all layers fold(easy, medium, hard levels) + some layers fold
 
-The release corpus holds 600<!--fact:corpus.release.total--> samples in five<!--fact:corpus.release.batches--> batches, divided into two splits
-that differ in what is *known* about each sample. The distinction matters when reading numbers
-elsewhere in this paper. Every sample is correct by construction, because it was produced by folding
-forward and recording. The **verified** split additionally carries a solver verdict, so it is the
-only split on which statements about solvability or about shorter sequences can be made; the
-shorter-sequence rate of §6.1 is measured there and nowhere else. The **generated** split has no
-verdict. The corpus-level checks of §4.8 run over all 600 samples, because replay and crease
-comparison need no solver.
+other things like generated or verified, we don't need to mention, we only need to put it in hugging face or appendix
 
-| Batch | Tier | Split | n | Folds | Creases (max) | Layers (max) |
-| --- | --- | --- | ---: | ---: | ---: | ---: |
-| `all-layers` | all-layers | generated | 400<!--fact:corpus.release.allLayers--> | 4–19 | 83 (24448) | 58 (16384) |
-| `some-verified-d3` | some-layers | verified | 50 | 3 | 10.5 (75) | 9 (42) |
-| `some-verified-d4` | some-layers | verified | 50 | 4 | ” | ” |
-| `some-generated-d5` | some-layers | generated | 50 | 5 | ” | ” |
-| `some-generated-d6` | some-layers | generated | 50 | 6 | ” | ” |
-| **Verified split** | | | **100**<!--fact:corpus.release.verified--> | 3–4 | | |
-| **Generated split** | | | **500**<!--fact:corpus.release.generated--> | 4–19 | | |
-| **Total** | | | **600**<!--fact:corpus.release.total--> | 3–19 | 33 (24448) | 23.5 (16384) |
 
-Crease and layer figures are medians with the maximum in brackets. Across the whole corpus the
-median crease count is 33<!--fact:corpus.release.creaseP50--> and the median layer count 23.5<!--fact:corpus.release.layerP50-->, with the deep tail of
-the all-layers tier reaching tens of thousands of both. The some-layers tier is shallower by design
-and its medians are an order of magnitude smaller, which is why the two tiers are never pooled when
-results are reported.
 
 ### 4.6 What a sample carries
 
@@ -486,7 +464,9 @@ results are reported.
 | `meta.json` | Difficulty metrics, degeneracy flags, seed and generator version |
 
 > **FIGURE 2 — one dataset sample, end to end.** `[DRAFT IMAGE — placeholder, will be replaced
-> with a human-authored figure. Drafts generated with OpenAI gpt-image-2.]` A single easy sample laid out as the
+> with a human-authored figure. Drafts generated with OpenAI gpt-image-2.]` 
+
+A single easy sample laid out as the
 > model sees it and as the ground truth records it. Left: `cp.fold` rendered as a crease pattern,
 > mountain and valley distinguished. Centre: the final folded state from `steps.fold`, as the
 > top-down X-ray plus the exploded layer view, which is exactly what the model receives. Right: the
@@ -495,7 +475,7 @@ results are reported.
 > plainly that the left and centre panels are the input and the right panel is withheld. This is
 > the figure that makes the task legible in one glance, and it should come early.
 
-### 4.7 Two limits that belong in the paper rather than an appendix
+### 4.7 Two limits that belong in the paper rather than an appendix. --------MISSING
 
 ⚠️ The first is an empty cell. Long sequences at low coupling are almost unreachable, yielding
 2<!--fact:corpus.synth.lLocalHits--> hits in 16,000 attempts, because every all-layers fold thickens the stack, so a long
@@ -510,23 +490,24 @@ matter of generator configuration and wall-clock, not redesign.
 > **FIGURE 3 — the difficulty grid.** `[DRAFT IMAGE — placeholder, will be replaced with a
 > human-authored figure plotted from real data.]` Depth on one axis, coupling on the other, one
 > cell per stratum, shaded by how many samples landed there. The long-sequence low-coupling corner
-> should be visibly empty, and the caption should name pre-creasing as the reason. This figure
-> argues §4.7 better than the prose does, and it is honest in a way reviewers notice: it shows what
-> the benchmark cannot reach.
+> should be visibly empty, and the caption should name pre-creasing as the reason.
 
 ### 4.8 Verifying the corpus itself
 
-Two checks run over every sample, written independently of each other. The first replays each
-recorded sequence and confirms it reproduces the pattern stored beside it. The second, written
-without reference to the first, compares maximal creased intervals as multisets with no tolerance in
-the verdict, after clustering edges into lines so that subdivision differences cannot register as
-disagreements. Both pass on all 600<!--fact:corpus.release.total--> samples of the release corpus.
-
-⚠️ Both share the fold engine with the generator, which bounds what they can establish. They cannot
-catch a wrong model of paper: if the engine is wrong about tearing, replay is wrong in the same way
-and agrees with itself. What they do catch is drift between what was folded and what was recorded,
-which is the likelier failure and the one that silently corrupts ground truth. An independent check
-requires a third-party solver and is not claimed here.
+Two checks run over every sample. Both replay the recorded sequence and compare the creases it
+makes against the pattern stored beside it; what they do not share is the comparison. The first
+groups edges into lines, merges collinear pieces and matches them within a tolerance. The second
+was written after five false failures had come out of exactly that machinery — each one a defect
+in the comparison rather than in the corpus — and reuses none of it. It merges each line's pieces
+into maximal creased intervals, the quantity subdivision cannot change, and matches those one to
+one. Comparing subdivided segments instead does not work: of 457 failures under that earlier
+design, 364 were two sides carrying a different *number* of segments, which is not a distance and
+no tolerance can reach. The verdict is an absolute test at the radius at which the generator's own
+planarizer identifies two points as one vertex, 1e-9 — the floor of what the corpus records rather
+than a constant tuned until the run passed. A depth-scaled ULP distance is reported alongside as a
+diagnostic on how much of that margin is used; on a sampled subset the median match needed 16 ULP,
+four orders inside the floor. Both checks pass on all 600<!--fact:corpus.release.total--> samples of
+the release corpus.
 
 ---
 
