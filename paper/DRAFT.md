@@ -61,6 +61,8 @@ pattern says which lines were creased at some point during the folding but says 
 order they were creased in, and the final state says where the paper ended up but not how it got
 there.
 
+ -  need a graph here to illustrate
+
 This is trivial to generate and hard to solve, which is what makes it usable for evaluation.
 Folding forward is a single pass of an engine that records what it did. Deciding whether a crease
 pattern is reachable by simple folds at all is NP hard [Arkin et al. 2004; Akitaya, Demaine & Ku
@@ -96,14 +98,14 @@ comparison in full.
 
 The distinction matters because the search is where the difficulty lives. Determining the layer
 ordering of a flat folding is NP hard on its own, even when a valid mountain-valley assignment is
-supplied [Bern & Hayes 1996]. No amount of pattern recognition substitutes for search on a problem
+supplied [Bern & Hayes 1996]. - 这句话看不懂 No amount of pattern recognition substitutes for search on a problem
 of that shape, and a benchmark that never executes a proposed step cannot tell a model that
-searched from a model that recognised, nor report how much search either one needed.
+searched from a model that recognised, nor report how much search either one needed. - 这句话看不懂
 
 This is also why the benchmark reports a deterministic search baseline alongside the models rather
 than only against them. The stack deepens with every fold, the enumerated action set grows with it,
 and the depth at which exhaustive search stops being affordable is a property of the corpus that
-can be measured rather than asserted. `[TO RUN: the deterministic breadth-first baseline of §8,
+can be measured rather than asserted. `[the deterministic breadth-first baseline of §8,
 reported per stratum, giving the depth at which it stops solving and the states it expands. Until
 that number exists, no claim is made here about where blind search fails.]` What the benchmark is
 designed to reward is the use of geometry: looking at the crease pattern and the final state and
@@ -145,7 +147,7 @@ We contribute the following.
    rendered views down through withheld vision and raw pass/fail to no tools at all, so the
    contribution of each assistance level is measured rather than assumed. The framework also
    supplies the scoring protocol: answers are judged by replaying them through the engine, at two
-   declared levels of equality, because one crease pattern admits many valid folded states and the
+   declared levels of equality -- （edited distance and CP） - -, because one crease pattern admits many valid folded states and the
    recorded sequence is not guaranteed to be the shortest.
 
 3. **An evaluation of frontier multimodal models** against this dataset through this framework,
@@ -156,15 +158,17 @@ We contribute the following.
    Flat-Folder's `examples/instagram/` corpus provably lie outside all-layers simple folding. The benchmark's action space is bounded by evidence rather than by
    assertion, and the boundary is reported rather than buried.
 
-We find that the task is beyond current models at the setting we could afford to run. No model
-solved a single sample past the easy stratum, and on the easy stratum a deterministic breadth-first
+We find that the task is beyond current models at the setting we could afford to run. ((No model
+solved a single sample past the easy stratum  - ---are you sure, then we should give a graph, shows what's newest model performance))), and on the easy stratum a deterministic breadth-first
 search over exactly the action set the models are given solves 54.7%<!--fact:results.bfs.easyPct--> against
 20.4%<!--fact:results.luna.toolEasyPct--> for the best-covered model. Blind search beats every model tested, on the only
 stratum where anything succeeds at all. The dominant failure is not exhausting the search budget but
 revisiting states already seen: 48%<!--fact:results.luna.cyclingPct--> of that model's attempts terminate in detected state
-cycling. ⚠️ Every model attempt ran at low reasoning effort, so the supported claim is about models
+cycling. 
+
+⚠️ Every model attempt ran at low reasoning effort, so the supported claim is about models
 at that setting rather than about the frontier in general; §10.6 states this and §11 carries it as a
-limitation.
+limitation.- -----put in appendix
 
 ---
 
