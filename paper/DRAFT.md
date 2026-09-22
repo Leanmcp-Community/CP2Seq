@@ -41,10 +41,12 @@ in front, how many times one line crosses another. Competence at recognising a s
 gives no guarantee of the second. When the task moves to geometric and spatial reasoning, the
 ranking of models by their image-task scores need not survive. (fix the wordings). 
 
+Why Origami for Spatial and Geometric reasoning
 
+(DELETE AND WRITE AGAIN)
 Origami is an unusually clean place to look for the missing capability. It is an art form whose
 entire content is geometric: a folder works from lines, reflections and incidences on a single
-uncut sheet, and every decision is constrained by every decision before it. (Mention about the spatial thing - using the fact about the layer ordering etc. ) It also demands
+uncut sheet, and every decision is constrained by every decision before it. (Mention about the spatial thing - using the fact about the layer ordering etc. -  ) It also demands
 spatial reasoning of a specific kind, because the sheet stops being flat the moment folding
 begins. The folder has to track where each piece of paper now sits, which pieces lie above which,
 and which of them are still joined to each other through the original sheet. A crease pattern, the
