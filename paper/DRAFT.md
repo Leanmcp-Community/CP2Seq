@@ -2,24 +2,28 @@
 
 ## Abstract
 
-Multimodal language models are strong at tasks that ask what is in an image and weaker, in ways
-their image-task scores do not predict, at tasks that ask about geometry. We use origami to measure
-the difference. We release **CP2Seq**, a benchmark and dataset of 600<!--fact:corpus.release.total--> origami samples in
-which a model is given a crease pattern and the final folded state and must recover the sequence of
-folds between them. The task is trivial to generate and hard to solve: folding forward is one pass
-of an engine that records what it did, while deciding whether a crease pattern is reachable by
-simple folds is NP hard, and determining the layer ordering of a flat folding is NP hard even given
-a valid mountain-valley assignment. Ground truth is constructed rather than annotated, and every
-sample rebuilds byte-identically from its seed, so the corpus ships as a generator rather than as
-data. The environment the model works against is also the verifier: it executes one candidate fold
-and either returns the resulting state or refuses with a named reason, such as the sheet would tear.
-It performs no search, so proposing, pruning and backtracking stay with the model. We provide
-progressive tiers of tool assistance, and because one crease pattern admits many valid folded states
-we score answers by replaying them, up to the plane isometry group. At low reasoning effort no model
-we evaluated solved any sample beyond the easy stratum, and on that stratum a deterministic
-breadth-first search over the same action set solves 54.7%<!--fact:results.bfs.easyPct--> against the best model's
-20.4%<!--fact:results.luna.toolEasyPct-->. The dominant failure is not an exhausted budget but revisiting states already
-seen, which ends 48%<!--fact:results.luna.cyclingPct--> of that model's attempts.
+Multimodal language models perform well on visual recognition and on tool use, but these abilities
+do not transfer directly to spatial and geometric reasoning. Geometric structure does not reduce to
+text or to a single image: exact angles and incidences, which of two overlapping surfaces lies in
+front, and the order in which operations were applied are not recoverable from a semantic
+description of a scene. We introduce **CP2Seq**, a benchmark for evaluating geometric reasoning
+and sequential planning in multimodal language models through origami. The benchmark contains 600<!--fact:corpus.release.total-->
+procedurally generated samples, each requiring a model to produce a valid sequence of folds from a
+crease pattern and a target folded state. A deterministic folding engine generates the reference
+sequences and enables reproducible reconstruction of each sample: ground truth is recorded as the
+fold happens rather than annotated afterwards, and every sample rebuilds byte-identically from its
+seed, so the corpus is released as a generator and a manifest rather than as a data archive. During
+evaluation, the engine executes proposed folds or rejects invalid actions with explicit feedback,
+while the model remains responsible for selecting actions and searching for a solution. We evaluate
+models under progressively greater tool assistance and assess candidate sequences by executing them
+and comparing the resulting folded state with the target, allowing for planar translations,
+rotations, and reflections. Under the low reasoning effort setting, none of the evaluated models
+solves a sample outside the easy subset. On that subset, the best model achieves a success rate of
+20.4%<!--fact:results.luna.toolEasyPct-->, compared with 54.7%<!--fact:results.bfs.easyPct--> for deterministic breadth-first search using the same action set. Its
+dominant failure mode is not an exhausted query budget but the repeated proposal of states it has
+already visited, which terminates 48%<!--fact:results.luna.cyclingPct--> of its attempts. These results identify a substantial
+performance gap between the evaluated models and an explicit search baseline on this origami
+planning task.
 
 ---
 
