@@ -30,11 +30,24 @@ folders use to reach long sequences at low coupling, is excluded.
 \textbf{The corpus verifiers share an engine with the generator}, so they cannot detect a wrong
 model of paper. They detect drift between what was folded and what was recorded.
 
-\textbf{Flat states only.} No thickness, no material, no mechanics. Thickness changes the geometry
-outright and belongs to a separate line of work with a verifier several orders of magnitude more
-expensive.
+\textbf{Attributing failures to individual capabilities.} Successful construction requires
+geometric reasoning, spatial state tracking, and sequential planning together. A failed attempt
+alone does not identify which capability failed. Isolating their contributions requires targeted
+experiments; changing tool availability does not necessarily isolate a single capability.
+
+\textbf{Generation parameters and difficulty.} Reference sequence depth is not a guarantee of
+minimum solution length, and variation across random seeds does not by itself establish greater
+difficulty. Difficulty must also be assessed through solver performance.
+
+\textbf{Evaluation contamination.} Generating fresh instances reduces reliance on a fixed public
+test set, but does not guarantee freedom from training overlap. Models may have encountered the
+generator, related folding procedures, or structurally similar examples.
+
+\textbf{Flat states only.} The environment represents flat-folded states with explicit layer
+ordering. It excludes paper thickness, material mechanics, and continuous collision checking
+during folding motions. Passing the engine's checks therefore establishes validity within the
+supported discrete model, not full physical realizability.
 
 \textbf{Level 2's group is narrower than the truest notion of equality}, because valid layer-order
 variants are excluded for the reason given in Section~\ref{sec:scoring-what}. It is therefore
 strict rather than permissive, which is the safe direction but not a free one.
-

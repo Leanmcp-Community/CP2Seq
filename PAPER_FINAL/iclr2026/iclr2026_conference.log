@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.1)  22 SEP 2026 18:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.1)  22 SEP 2026 18:58
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -382,38 +382,20 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 49.
 (/usr/local/texlive/2026basic/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-(./sections/00-abstract.tex) (./sections/01-introduction.tex [1{/usr/local/texl
-ive/2026basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/
-2026basic/texmf-dist/fonts/enc/dvips/base/8r.enc}
+(./sections/00-abstract.tex) (./sections/01-introduction.tex
+Underfull \vbox (badness 2050) has occurred while \output is active []
+
+ [1{/usr/local/texlive/2026basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{
+/usr/local/texlive/2026basic/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 ]
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 1
-02.
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 8
+6.
 
 (/usr/local/texlive/2026basic/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)
-Underfull \hbox (badness 10000) in paragraph at lines 96--108
-\OT1/pcr/m/n/10 breadth-first baseline of Section []7[], reported per stratum, 
-giving
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 96--108
-\OT1/pcr/m/n/10 the depth at which it stops solving and the states it expands.
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 96--108
-\OT1/pcr/m/n/10 Until that number exists, no claim is made here about where bli
-nd
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [2]
-[3]) (./sections/02-related-work.tex [4]
+) [2])
+(./sections/02-related-work.tex [3]
 Underfull \hbox (badness 10000) in paragraph at lines 97--97
 []\OT1/ptm/m/n/9 Agreement with the
  []
@@ -449,31 +431,30 @@ Underfull \hbox (badness 10000) in paragraph at lines 103--103
  []
 
 
-Underfull \vbox (badness 2662) has occurred while \output is active []
+Underfull \vbox (badness 1509) has occurred while \output is active []
 
- [5])
-(./sections/03-problem-formulation.tex [6]) (./sections/04-dataset.tex [7]
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
+ [4])
+(./sections/03-problem-formulation.tex [5]) (./sections/04-dataset.tex [6]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [7]
 [8]) (./sections/05-environment.tex
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
+[9]) (./sections/06-scoring.tex [10] [11])
+(./sections/07-experimental-setup.tex
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+LaTeX Warning: `h' float specifier changed to `ht'.
 
- [9]
-[10]) (./sections/06-scoring.tex [11]) (./sections/07-experimental-setup.tex
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [12]
 Underfull \hbox (badness 1983) in paragraph at lines 87--87
 []\OT1/ptm/m/n/10 The ac-tion. This call \OT1/ptm/b/n/10 is \OT1/ptm/m/n/10 the
 
@@ -492,9 +473,11 @@ Underfull \hbox (badness 3872) in paragraph at lines 91--92
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[13]
 LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <9> not available
 (Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 120.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
 
 Underfull \hbox (badness 10000) in paragraph at lines 133--136
 []\OT1/ptm/b/n/10 Models. \OT1/pcr/m/n/10 [TO FILL from the aggregation: the mo
@@ -513,7 +496,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 133--136
 s
  []
 
-[14]
+[12]
+Underfull \vbox (badness 7558) has occurred while \output is active []
+
+ [13]
 Underfull \hbox (badness 10000) in paragraph at lines 178--178
 []\OT1/ptm/m/n/9 Deterministic breadth-first
  []
@@ -528,34 +514,35 @@ Underfull \hbox (badness 10000) in paragraph at lines 179--179
 []\OT1/ptm/m/n/9 Symbolic crease-pattern-to-sequence solver
  []
 
-) (./sections/08-tiers.tex) (./sections/09-results.tex [15] [16]
+) (./sections/08-tiers.tex
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+) (./sections/09-results.tex
+Underfull \vbox (badness 1655) has occurred while \output is active []
+
+ [14]
+[15]
 Underfull \hbox (badness 10000) in paragraph at lines 112--117
 \OT1/pcr/m/n/10 whether the second stratification axis of Section []4.4[] predi
 cts
  []
 
-[17]) (./sections/10-limitations.tex
+[16]) (./sections/10-limitations.tex
 Underfull \hbox (badness 6510) in paragraph at lines 24--29
 []\OT1/ptm/b/n/10 Scope of the ac-tion space. \OT1/ptm/m/n/10 89.3%of the 366re
 al crease pat-terns in Flat-Folder's
  []
 
-) (./sections/11-figures.tex
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-) (./sections/12-reproducibility.tex
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [18])
-(./sections/13-licence.tex) (./sections/14-llm-use.tex [19]
+) (./sections/11-figures.tex [17]) (./sections/12-reproducibility.tex)
+(./sections/13-licence.tex) (./sections/14-llm-use.tex [18]
 Underfull \hbox (badness 2213) in paragraph at lines 43--48
  []\OT1/ptm/b/n/10 Figures.[] \OT1/ptm/m/n/10 Any fig-ure marked \OT1/ptm/b/n/1
 0 DRAFT IM-AGE \OT1/ptm/m/n/10 is a place-holder gen-er-ated with Ope-nAI
  []
 
-) (./iclr2026_conference.bbl [20] [21])
-(./sections/appendix-a-reference-notes.tex [22]) [23]
+) (./iclr2026_conference.bbl [19] [20])
+(./sections/appendix-a-reference-notes.tex [21]) [22]
 (./iclr2026_conference.aux)
  ***********
 LaTeX2e <2025-11-01>
@@ -565,9 +552,9 @@ Package rerunfilecheck Info: File `iclr2026_conference.out' has not changed.
 (rerunfilecheck)             Checksum: C850B29DBE29410D6507BC5B06C61633;10373.
  ) 
 Here is how much of TeX's memory you used:
- 11230 strings out of 469006
- 167010 string characters out of 5454814
- 600930 words of memory out of 5000000
+ 11228 strings out of 469006
+ 166997 string characters out of 5454814
+ 603926 words of memory out of 5000000
  39577 multiletter control sequences out of 15000+600000
  661715 words of font info for 112 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
@@ -584,10 +571,10 @@ rro8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/helvetic/uhv
 b8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/times/utmb8a.p
 fb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></
 usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on iclr2026_conference.pdf (23 pages, 236307 bytes).
+Output written on iclr2026_conference.pdf (22 pages, 231332 bytes).
 PDF statistics:
- 602 PDF objects out of 1000 (max. 8388607)
- 547 compressed objects within 6 object streams
- 140 named destinations out of 1000 (max. 500000)
+ 585 PDF objects out of 1000 (max. 8388607)
+ 531 compressed objects within 6 object streams
+ 138 named destinations out of 1000 (max. 500000)
  385 words of extra memory for PDF output out of 10000 (max. 10000000)
 

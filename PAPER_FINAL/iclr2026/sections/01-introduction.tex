@@ -8,14 +8,17 @@ order. A locally valid fold may lead away from the target, so completing a seque
 selecting among alternatives and revising earlier decisions. We study whether multimodal language
 models can use visual and geometric observations to make these decisions over successive folds.
 
-Existing origami benchmarks evaluate several components of this ability. GamiBench
+Existing origami benchmarks assess some aspects of geometric understanding, but answering
+questions about a folded configuration does not establish the ability to construct it. GamiBench
 \citep{gamibench} uses visual question answering to assess folded configurations, viewpoint
-consistency, and impossible patterns. OrigamiSpace \citep{origamispace} includes pattern prediction,
-multi-step spatial reasoning, spatial relationships, and crease-pattern code generation with an
-interactive environment. Our focus is the recovery of an executable folding sequence from its
-endpoints: the model must construct and revise a sequence whose execution reproduces a supplied
-crease pattern and target folded state. This task evaluates the consequences of the model's
-chosen actions throughout an episode, as well as the correctness of its final construction.
+consistency, and impossible patterns. OrigamiSpace \citep{origamispace} includes spatial reasoning
+tasks and crease-pattern code generation with an interactive environment. Generating a pattern
+specification differs from constructing a sequence of folds that realizes a supplied target.
+CP2Seq evaluates whether a model can translate geometric information into a complete, executable
+folding sequence, with each action checked for validity and the resulting construction checked
+against the target. Given a crease pattern and target folded state, the model must select folds,
+track their effects, and revise its choices until execution reproduces both the crease pattern
+and the target state.
 
 We introduce \textbf{CP2Seq}, a benchmark of 600 procedurally generated origami samples and a
 framework for generating, executing, and evaluating folding sequences. Each task supplies a crease
@@ -32,32 +35,23 @@ the target crease pattern describes the original sheet. Connecting these represe
 tracking reflections and the correspondence between paper regions. Selecting a fold also requires
 reasoning about overlapping layers and their connectivity. Subsequent decisions depend on the
 state produced by earlier actions, so increasing sequence depth extends the planning horizon.
-CP2Seq evaluates these abilities jointly through successful construction; a failed attempt alone
-does not identify which ability failed. The represented states are flat, with explicit layer
-ordering, and the task excludes material mechanics and continuous collision checking.
+We evaluate these abilities through the construction of valid folding sequences across increasing
+reference depths. The environment represents flat-folded states with explicit layer ordering.
 
-Procedural generation lets us vary the task distribution while retaining a recorded solution.
-The generator applies legal folds, records the sequence and intermediate states, and derives the
-resulting crease pattern. Its configuration controls reference sequence depth and the permitted
-action model, including all-layers and some-layers folds. Seeded sampling produces different
-instances, and recorded coupling measures how many creases each fold creates. These controls
-support evaluation across sequence lengths and geometric structures without manually annotating
-solutions. Reference depth is a generation parameter, not a guarantee of minimum solution length;
-likewise, variation across seeds does not by itself establish greater difficulty. The released
-generator and manifest allow the corpus to be reproduced and extended
+We generate examples procedurally by applying legal folds and recording the resulting sequence,
+crease pattern, and folded state. This supplies reference solutions without manual annotation and
+lets us vary task difficulty through sequence depth and the permitted folding operations. Releasing
+the generator also enables fresh evaluation instances beyond the published corpus, reducing
+reliance on fixed examples that future models may encounter during training
 (Section~\ref{sec:cp2seq}).
 
-The evaluation framework supplies an interactive loop for proposing, checking, and revising
-folds. Tools let the model add a fold, remove an earlier fold and replay the remaining sequence,
-inspect geometry and rendered views, and return to an earlier state. Each proposed edit is checked
-by the folding engine. For example, a fold that moves paper attached to stationary paper away
-from the hinge is rejected because it would tear the sheet under the supported model. This
-feedback prevents an invalid proposal from silently becoming the next state. In the filtered
-condition, a tool also enumerates legal folds compatible with the target crease pattern. This
-removes part of the action-selection burden, but leaves the model to choose which candidate to
-explore and when to backtrack. The framework therefore makes tool assistance an explicit
-experimental condition; success with filtering and success without it test different demands on
-the model.
+We also provide an evaluation framework that presents images of the input crease pattern, the
+target folded state, and the current state after each accepted edit. These observations let the
+model compare its progress with the target and choose its next action. Tools support adding and
+removing folds, inspecting geometry, and returning to a specified earlier step to explore another
+sequence. The engine checks proposed edits and returns feedback, while the model directs the
+search. Different levels of tool assistance allow us to study how this support affects performance
+(Section~\ref{sec:experiments}).
 
 Evaluation checks both individual actions and the completed construction. Candidate sequences
 are replayed and assessed for crease-pattern agreement and agreement with the target folded
