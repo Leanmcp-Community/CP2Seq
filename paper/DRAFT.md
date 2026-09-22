@@ -307,7 +307,7 @@ geometry. The layer ordering changes at every step and does *not* follow from th
 chosen, and it is where the decisions live. The number of layers accumulates, which is the formal
 content of "it gets harder as it goes".
 
-### 3.2 The action space
+### 3.2 The action space 
 
 Simple folds come in named variants, and any benchmark in this area has to say which it uses,
 because the complexity results differ between them.
@@ -340,19 +340,27 @@ perpendicular to the fold line. Folding its left quarter across a vertical line 
 because the moving piece's only join to stationary paper lies on the fold line itself. Same state,
 same layer selection, opposite verdicts, and the only difference is the orientation of the line.
 
+
+------this 3 paragraphs are over emphasizing on whether all layers fold or some layer'fold  it gonna tear or not. is that the only point in this part????
+
 ### 3.3 The task
 
 Given a crease pattern, produce a sequence of simple folds that reproduces it. Generating an
 instance costs one forward pass of the engine; solving it is NP hard. That asymmetry is the
 paper's foundation.
 
-⚠️ One claim must not be made, and it was drafted wrongly here once. It is tempting to say that
+---------
+
+It is tempting to say that
 legal moves are rare and that this is what makes the task hard. Enumeration refutes it: legal
 partial folds *grow* with depth, from 22 at two layers to 332 at thirty-eight, six times the 56
 all-layers folds available at the same state. What falls is the hit rate of uniform random
 proposal, from 11.9% to 3.8% by seventeen layers, because the space being sampled grows faster
 than the legal set inside it. That is a fact about a sampler, not about origami, and conflating
 the two would put a false statement about branching factor into the paper.
+
+
+---------this paragraph should be listed properly and give a proper graph to illustrate it!!!!!!!!
 
 ---
 
