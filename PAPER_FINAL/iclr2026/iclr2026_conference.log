@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.1)  22 SEP 2026 19:52
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.1)  22 SEP 2026 20:39
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -397,72 +397,52 @@ File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 (./sections/03-problem-formulation.tex)
 Underfull \vbox (badness 7397) has occurred while \output is active []
 
- [3])
-(./sections/05-environment.tex [4]
+ [3]
+
+LaTeX Warning: Characters dropped after `\end{verbatim}' on input line 40.
+
+
+Underfull \vbox (badness 3439) has occurred while \output is active []
+
+ [4])
+(./sections/05-environment.tex
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-) (./sections/06-scoring.tex [5] [6] [7]) (./sections/07-experimental-setup.tex
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-Underfull \hbox (badness 1983) in paragraph at lines 87--87
-[]\OT1/ptm/m/n/10 The ac-tion. This call \OT1/ptm/b/n/10 is \OT1/ptm/m/n/10 the
-
- []
-
-
-Underfull \hbox (badness 1158) in paragraph at lines 90--90
-[]\OT1/ptm/m/n/10 Every fold the en-gine would
- []
-
-
-Underfull \hbox (badness 3872) in paragraph at lines 91--92
-[]\OT1/ptm/m/n/10 Backtracking with-out spend-ing
- []
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <9> not available
-(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 120.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 133--136
-[]\OT1/ptm/b/n/10 Models. \OT1/pcr/m/n/10 [TO FILL from the aggregation: the mo
-dels actually
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 133--136
-\OT1/pcr/m/n/10 run, their versions, and the reasoning-effort and image-history
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 133--136
-\OT1/pcr/m/n/10 settings used. Held fixed across tiers, because comparing acros
-s
- []
-
+[5]) (./sections/06-scoring.tex [6] [7]) (./sections/07-experimental-setup.tex
 [8]
-Underfull \vbox (badness 7558) has occurred while \output is active []
+LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <9> not available
+(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 110.
 
- [9]
-Underfull \hbox (badness 10000) in paragraph at lines 178--178
+Underfull \hbox (badness 10000) in paragraph at lines 123--126
+[]\OT1/ptm/b/n/9 Models. \OT1/pcr/m/n/9 [TO FILL from the aggregation: the mode
+ls actually run, their
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 123--126
+\OT1/pcr/m/n/9 versions, and the reasoning-effort and image-history settings us
+ed. Held
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 123--126
+\OT1/pcr/m/n/9 fixed across tiers, because comparing across models and across t
+iers at
+ []
+
+[9]
+Underfull \hbox (badness 10000) in paragraph at lines 169--169
 []\OT1/ptm/m/n/9 Deterministic breadth-first
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 178--178
+Underfull \hbox (badness 10000) in paragraph at lines 169--169
 \OT1/ptm/m/n/9 over the same ac-tion set
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 179--179
+Underfull \hbox (badness 10000) in paragraph at lines 170--170
 []\OT1/ptm/m/n/9 Symbolic crease-pattern-to-sequence solver
  []
 
@@ -470,85 +450,89 @@ Underfull \hbox (badness 10000) in paragraph at lines 179--179
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
+) (./sections/09-results.tex
+Underfull \hbox (badness 6364) in paragraph at lines 4--8
+\OT1/ptm/m/n/9 All num-bers be-low come from \OT1/pcr/m/n/9 workspace/RESULTS/r
+esults.md\OT1/ptm/m/n/9 , pro-duced by \OT1/pcr/m/n/9 python3
+ []
 
-Underfull \vbox (badness 1655) has occurred while \output is active []
-
- [10])
-(./sections/09-results.tex
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-(./sections/figure-bfs-effort.tex) [11]
-
-LaTeX Warning: `h' float specifier changed to `ht'.
+[10] (./sections/figure-bfs-effort.tex) [11]
+Underfull \hbox (badness 3536) in paragraph at lines 114--119
+\OT1/ptm/m/n/9 any arm. \OT1/pcr/m/n/9 [TO RUN: solve rate against coupling, to
+ test whether the second
+ []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [12]
 Underfull \hbox (badness 10000) in paragraph at lines 114--119
-\OT1/pcr/m/n/10 whether the second stratification axis of Section []3.2[] predi
-cts
+\OT1/pcr/m/n/9 stratification axis of Section []3.2[] predicts difficulty as in
+tended. Only
+ []
+
+[12]) (./sections/10-limitations.tex [13]) (./sections/11-figures.tex)
+(./sections/13-licence.tex) (./sections/14-llm-use.tex [14])
+(./iclr2026_conference.bbl
+Underfull \hbox (badness 1629) in paragraph at lines 32--36
+[]\OT1/ptm/m/n/9 Hugo A. Ak-i-taya et al.  In-fi-nite all-layers sim-ple fold-a
+bil-ity.  \OT1/ptm/m/it/9 Graphs and Com-bi-na-torics\OT1/ptm/m/n/9 , 2019.
+ []
+
+[15]
+Underfull \hbox (badness 10000) in paragraph at lines 138--142
+[]\OT1/ptm/m/n/9 PurelandFold.  Pure-land-Fold, 2026.  []$\OT1/pcr/m/n/9 https 
+: / / huggingface . co / datasets / mayaweiz /
  []
 
 
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-) (./sections/10-limitations.tex [13]
-Underfull \hbox (badness 6510) in paragraph at lines 24--29
-[]\OT1/ptm/b/n/10 Scope of the ac-tion space. \OT1/ptm/m/n/10 89.3%of the 366re
-al crease pat-terns in Flat-Folder's
+Underfull \hbox (badness 1509) in paragraph at lines 144--147
+[]\OT1/ptm/m/n/9 Random Lo-cally Flat-Foldable Origami.  On ran-dom lo-cally fl
+at-foldable origami.  \OT1/ptm/m/it/9 arXiv preprint
  []
 
-) (./sections/11-figures.tex
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-) (./sections/13-licence.tex [14]) (./sections/14-llm-use.tex [15]
-Underfull \hbox (badness 2213) in paragraph at lines 43--48
- []\OT1/ptm/b/n/10 Figures.[] \OT1/ptm/m/n/10 Any fig-ure marked \OT1/ptm/b/n/1
-0 DRAFT IM-AGE \OT1/ptm/m/n/10 is a place-holder gen-er-ated with Ope-nAI
- []
-
-) (./iclr2026_conference.bbl [16]) (./sections/appendix-folding-model.tex
-[17]) (./sections/appendix-a-reference-notes.tex [18]) [19]
+) (./sections/appendix-folding-model.tex [16])
+(./sections/appendix-a-reference-notes.tex [17]) [18]
 (./iclr2026_conference.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `iclr2026_conference.out' has not changed.
-(rerunfilecheck)             Checksum: D34CF9240FC4E42B85BF657BB490C502;8244.
- ) 
+(rerunfilecheck)             Checksum: 919F072BFC682A20264ACFA85DE95403;6909.
+ )
+(\end occurred inside a group at level 1)
+
+### simple group (level 1) entered at line 25 ({)
+### bottom level 
 Here is how much of TeX's memory you used:
- 11207 strings out of 469006
- 166898 string characters out of 5454814
- 603463 words of memory out of 5000000
- 39565 multiletter control sequences out of 15000+600000
+ 11213 strings out of 469006
+ 167169 string characters out of 5454814
+ 602547 words of memory out of 5000000
+ 39569 multiletter control sequences out of 15000+600000
  661200 words of font info for 110 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
- 75i,14n,90p,965b,589s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi1
-0.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mmi6.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmmi7.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmmi9.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmr10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmr6.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/
-type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/typ
-e1/urw/courier/ucrro8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1
-/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/u
-rw/times/utmb8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/ti
-mes/utmr8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/times/u
-tmri8a.pfb>
-Output written on iclr2026_conference.pdf (19 pages, 252505 bytes).
+ 75i,14n,90p,564b,750s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmmi10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2026basic/texmf-dist/font
+s/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026basic/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2026basic/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026basic/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2026basic/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2026basic/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2026basi
+c/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2026basic/t
+exmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/local/texlive/2026basic/tex
+mf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2026basic/texmf
+-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2026basic/texmf-dist
+/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2026basic/texmf-dist/font
+s/type1/urw/times/utmri8a.pfb>
+Output written on iclr2026_conference.pdf (18 pages, 267745 bytes).
 PDF statistics:
- 552 PDF objects out of 1000 (max. 8388607)
- 494 compressed objects within 5 object streams
- 128 named destinations out of 1000 (max. 500000)
- 337 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 572 PDF objects out of 1000 (max. 8388607)
+ 510 compressed objects within 6 object streams
+ 130 named destinations out of 1000 (max. 500000)
+ 353 words of extra memory for PDF output out of 10000 (max. 10000000)
 
