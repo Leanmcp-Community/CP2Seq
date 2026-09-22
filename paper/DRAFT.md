@@ -535,7 +535,7 @@ could do. Compressing an exponential search into a feasible number of queries is
 environment cannot supply and exactly what the model is being measured on. The referee is not a
 player.
 
-### 5.3 Refusals are named
+### 5.3 Refusals are named， isn't that you shoulr mention a check, each step check and final step check, final step check now is missing , should mention here--------
 
 An illegal fold returns a structured refusal with a name, not a boolean.
 
@@ -552,12 +552,7 @@ The names are the design. A model told `would-tear` can act on the information; 
 experiment: every rejection arrives already labelled with the class it violated, so a reject is a
 diagnosis rather than a dead end.
 
-⚠️ There is deliberately no self-intersection refusal, and there cannot be one in this action
-space. A some-layers fold may only move a contiguous run of layers taken from the top or the
-bottom of the stack, and such a move cannot drive paper through the layers it left behind. Lifting
-the top two layers and folding them across is something a hand can do; folding them *underneath*
-the stack is not a fold but a slit. Restricting selection to a run at one extremity makes the
-illegal case unrepresentable rather than undetected. The four constraint classes that Flat-Folder
+FInal step check. - The four constraint classes that Flat-Folder
 checks (taco-taco, taco-tortilla, tortilla-tortilla, transitivity) remain the right vocabulary for
 global terminal states; they are not what a single legal step needs checking against here.
 
@@ -569,8 +564,7 @@ second camera angle would show the same silhouette rotated and would carry no ne
 what carries information is layer structure, which is why the second view is an explosion rather
 than a rotation. Positions are reported as coordinates on the original sheet together with an
 integer layer index. There is no continuous vertical coordinate at this tier, and a rendering that
-looks three-dimensional is not evidence of one; thickness belongs to a different problem and a
-different paper.
+looks three-dimensional is not evidence of one; thickness belongs to a different problem.
 
 ### 5.5 Error verbosity is an experimental variable
 
