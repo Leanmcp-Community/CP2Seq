@@ -37,11 +37,19 @@ const flag = (name, fallback) => {
   return Number(argv.splice(i, 2)[1]);
 };
 const seconds = flag('--seconds', 60);
+const weight = flag('--weight', 1);
 const maxStates = flag('--max-states', 500000);
 const maxDepth = flag('--max-depth', 24);
 // --json makes this consumable by deterministic_fold_loop.py, which replays the winning
 // action list through the real ToolSession so the run lands in the UI like any other.
 const asJson = argv.includes('--json');
+const strategyAt = argv.indexOf('--strategy');
+// bfs stays the default so every number already published reproduces unchanged.
+const strategy = strategyAt === -1 ? 'bfs' : argv.splice(strategyAt, 2)[1];
+if (!['bfs', 'astar'].includes(strategy)) {
+  console.error(`unknown --strategy ${strategy}; use bfs or astar`);
+  process.exit(2);
+}
 const samples = argv.filter(a => a !== '--json');
 if (!samples.length) {
   console.error('usage: node workspace/search_baseline.mjs [--seconds N] [--max-states N] <sample-id>...');
@@ -68,6 +76,128 @@ function loadTask(id) {
 // its cycle detection, so the search cannot count as progress what the harness calls a repeat.
 const positionKey = session => JSON.stringify(session.layers.map(l =>
   l.par + ':' + l.poly.map(p => `${Math.round(p[0] / 2e-6)},${Math.round(p[1] / 2e-6)}`).join(' ')));
+
+const segLength = (a, b) => Math.hypot(b[0] - a[0], b[1] - a[1]);
+
+// Total M/V crease length in the CP. cp_match requires every one of them, so what is left
+// unlaid is a direct measure of how much folding remains.
+function targetCreaseLength(cp) {
+  let total = 0;
+  cp.edges_vertices.forEach((e, i) => {
+    const a = cp.edges_assignment[i];
+    if (a === 'M' || a === 'V') total += segLength(cp.vertices_coords[e[0]], cp.vertices_coords[e[1]]);
+  });
+  return total;
+}
+
+const laidLength = session => session.creases.reduce((sum, c) => sum + segLength(c.P, c.Q), 0);
+
+// A child one fold on from its parent, without rebuilding from the flat sheet. replay() costs
+// O(depth) applies, so at depth 10 a node paid ~38 redundant fold applications and A* -- which
+// dives deep fast -- ran at 2.6 nodes/s against BFS's 18. apply() replaces paper/layers rather
+// than mutating them in place, so sharing those references is safe; the arrays it appends to
+// are the ones that must be copied.
+function fork(session) {
+  const child = Object.create(Object.getPrototypeOf(session));
+  Object.assign(child, session);
+  child.creases = [...session.creases];
+  child.actions = [...session.actions];
+  child.states = [...session.states];
+  return child;
+}
+
+// Folds still required, estimated two ways; the larger wins because both are lower bounds on
+// the same quantity and neither dominates.
+//
+//   crease  every target crease must be laid, so what is unlaid divided by the largest single
+//           fold contribution seen is a fold count. The scale is measured, not derived, so
+//           this is not provably admissible.
+//   layers  a fold cuts each selected layer at most once, so the stack can at most double.
+//           Going from C layers to the target's T therefore needs at least log2(T/C) folds.
+//           This one IS admissible, and it is exactly tier-1 compare_to_target information.
+function heuristic(session, totalCrease, targetCount, scale) {
+  const crease = Math.max(0, totalCrease - laidLength(session)) / scale;
+  const layers = session.layers.length < targetCount
+    ? Math.log2(targetCount / session.layers.length) : 0;
+  return Math.max(crease, layers);
+}
+
+// Binary heap: the frontier reaches tens of thousands of nodes, so re-sorting on every pop
+// would cost more than the search.
+class Heap {
+  constructor() { this.items = []; }
+  get size() { return this.items.length; }
+  push(item) {
+    const a = this.items;
+    a.push(item);
+    for (let i = a.length - 1; i > 0;) {
+      const p = (i - 1) >> 1;
+      if (a[p].f <= a[i].f) break;
+      [a[p], a[i]] = [a[i], a[p]];
+      i = p;
+    }
+  }
+  pop() {
+    const a = this.items, top = a[0], last = a.pop();
+    if (a.length) {
+      a[0] = last;
+      for (let i = 0;;) {
+        const l = 2 * i + 1, r = l + 1;
+        let m = i;
+        if (l < a.length && a[l].f < a[m].f) m = l;
+        if (r < a.length && a[r].f < a[m].f) m = r;
+        if (m === i) break;
+        [a[m], a[i]] = [a[i], a[m]];
+        i = m;
+      }
+    }
+    return top;
+  }
+}
+
+// Informed search over the same enumerated actions.
+//
+// h estimates the folds still required from how much target crease is still unlaid, scaled by
+// the largest single-fold contribution seen so far. That scale is measured rather than derived,
+// so h is NOT provably admissible and a solution found here is not guaranteed to be the
+// shortest -- which is why bfs remains the published floor. What it buys is direction: a branch
+// that stops laying new crease sinks in the queue instead of being expanded exhaustively.
+function astar(cp, targetLayers) {
+  const started = Date.now();
+  const total = targetCreaseLength(cp);
+  const root = new FoldSession(cp);
+  if (terminalMatch(root.layers, targetLayers)) return {status: 'solved', depth: 0, expanded: 0, generated: 0, actions: []};
+  let scale = 1e-9;
+  const open = new Heap();
+  open.push({session: root, path: [], g: 0, f: 0});
+  const seen = new Set([positionKey(root)]);
+  let expanded = 0, generated = 0;
+  while (open.size) {
+    if ((Date.now() - started) / 1000 > seconds) return {status: 'timeout', expanded, generated, seconds: (Date.now() - started) / 1000};
+    if (seen.size > maxStates) return {status: 'state_limit', expanded, generated, seconds: (Date.now() - started) / 1000};
+    const node = open.pop();
+    if (node.path.length >= maxDepth) continue;
+    expanded++;
+    for (const entry of enumerateLegalFolds(node.session, {max_results: 500}).legal_folds) {
+      const move = {tool: 'apply_fold', ...entry.action};
+      const child = fork(node.session);
+      if (!child.apply(move).ok) continue;
+      const key = positionKey(child);
+      if (seen.has(key)) continue;
+      seen.add(key);
+      generated++;
+      const path = [...node.path, move];
+      if (terminalMatch(child.layers, targetLayers)) {
+        return {status: 'solved', depth: path.length, expanded, generated, actions: path,
+                seconds: (Date.now() - started) / 1000};
+      }
+      scale = Math.max(scale, entry.new_crease_length || 0);
+      open.push({session: child, path, g: path.length,
+                 f: path.length + weight * heuristic(child, total, targetLayers.length, scale)});
+    }
+  }
+  return {status: 'exhausted', expanded, generated, seconds: (Date.now() - started) / 1000};
+}
 
 function bfs(cp, targetLayers) {
   const started = Date.now();
@@ -114,7 +244,8 @@ for (const id of samples) {
   let r;
   try {
     const {cp, target, referenceSteps} = loadTask(id);
-    r = bfs(cp, frameLayers(target));
+    r = (strategy === 'astar' ? astar : bfs)(cp, frameLayers(target));
+    r.strategy = strategy;
     r.reference = referenceSteps;
   } catch (e) {
     report.push({sample_id: id, status: 'error', error: e.message});
