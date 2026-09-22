@@ -84,11 +84,11 @@ none of them searches, and none of them ranks candidates.
 \begin{tabular}{lp{0.32\textwidth}p{0.34\textwidth}}
 \multicolumn{1}{c}{\bf TOOL}  &\multicolumn{1}{c}{\bf WHAT IT RETURNS}  &\multicolumn{1}{c}{\bf WHY IT EXISTS} \\
 \hline \\
-\texttt{apply\_fold} & The new state, or a named refusal & The action. This call \textbf{is} the verification \\[3pt]
-\texttt{get\_views} & Top-down X-ray of the stack, exploded layer view & The visual channel; withheld at the no-vision tier \\[3pt]
+\texttt{add\_fold} & The new state, or a named refusal & The action. This call \textbf{is} the verification \\[3pt]
+\texttt{get\_images} & Top-down X-ray of the stack, exploded layer view & The visual channel; withheld at the no-vision tier \\[3pt]
 \texttt{get\_state} & Face positions in original-sheet coordinates plus integer layer index & The symbolic channel, so a model is never forced to read geometry off a raster \\[3pt]
 \texttt{list\_legal\_folds} & Every fold the engine would currently accept & The filtering tier. It prunes; it does not choose \\[3pt]
-\texttt{undo} & The previous state & Backtracking without spending the episode \\
+\texttt{go\_to\_step} & A specified earlier step & Backtracking without spending the episode \\
 \end{tabular}
 \end{center}
 \end{table}
@@ -134,7 +134,7 @@ tiers, so that the only difference between two tiers is what was withheld.
 the reasoning-effort and image-history settings used. Held fixed across tiers, because comparing
 across models and across tiers at once would confound the two.]}
 
-\textbf{Protocol.} Query budget, number of repeats and seeds are fixed before the first run and
+\textbf{Protocol.} Query budget, number of repeats are fixed before the first run and
 reported with the results. Median and spread across repeats are reported, never a single run,
 because sampling is not deterministic and one run is not a measurement.
 

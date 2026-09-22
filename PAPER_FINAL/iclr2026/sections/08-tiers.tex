@@ -3,10 +3,9 @@
 
 \texttt{[TO RUN]}
 
-The model is run at four levels of assistance, each removing one kind of help from the level above.
-These are reported as tiers rather than as ablations, for the reason given in
-Section 16: a full ablation study was planned and has not been run, and calling a
-partial sweep an ablation would overclaim.
+The four conditions below describe the planned assistance study. They are distinct from the
+folding action models and the target-feedback levels described below. The current results do not
+instantiate the full study; completed conditions and coverage are reported in Section~\ref{sec:results}.
 
 \begin{table}[h]
 \caption{The tiers of assistance. Same model, same patterns, same query budget across tiers.}
@@ -27,3 +26,32 @@ Same model, same patterns, same query budget across tiers. If the no-vision or n
 performs nearly as well as the full tier, \textbf{that is a finding rather than a failed
 experiment}: it means the gain is not where it was assumed to be. \texttt{[TO RUN]}
 
+
+\subsection{Target-comparison feedback}
+\label{sec:target-feedback}
+
+The optional \texttt{compare\_to\_target} tool has three feedback levels, configured for the run
+rather than selected by the model. These levels are separate from the assistance conditions above
+and from the two final scoring criteria in Section~\ref{sec:scoring}. The tool reads the current
+and target stacks without consulting the reference sequence or changing the state.
+
+\begin{table}[h]
+\centering
+\caption{Implemented target-feedback levels. Their availability does not establish an experimental
+benefit; comparisons require matched runs.}
+\begin{tabular}{lp{0.72\textwidth}}
+\hline
+Level & Information returned \\
+\hline
+1: Counts & Current and target layer counts, their difference, and a count-based summary. \\
+2: Diagnosis & Level 1 plus aligned layer matches, mismatched ranks, and a diagnosis of count,
+shape, orientation, or ordering disagreement. \\
+3: Corrections & Level 2 plus suggested corrections for up to twelve mismatched ranks, such as
+orientation changes or a different target rank for a layer shape. \\
+\hline
+\end{tabular}
+\end{table}
+
+The richer levels supply more target-specific guidance. Their diagnoses are geometric feedback,
+not proofs of a valid repair or substitutes for the final state comparator. In particular, a
+matching layer count does not establish that the sequence is complete or correct.

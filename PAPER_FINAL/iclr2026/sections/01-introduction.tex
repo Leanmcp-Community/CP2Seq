@@ -40,7 +40,7 @@ reference depths. The environment represents flat-folded states with explicit la
 
 We generate examples procedurally by applying legal folds and recording the resulting sequence,
 crease pattern, and folded state. This supplies reference solutions without manual annotation and
-lets us vary task difficulty through sequence depth and the permitted folding operations. Releasing
+lets us vary reference depth and the permitted folding operations. Releasing
 the generator also enables fresh evaluation instances beyond the published corpus, reducing
 reliance on fixed examples that future models may encounter during training
 (Section~\ref{sec:cp2seq}).
@@ -65,9 +65,9 @@ context for model performance beyond comparisons between language models.
 
 Our contributions are:
 \begin{enumerate}
-\item \textbf{A reproducible dataset and generation framework.} CP2Seq contains 600 samples with
+\item \textbf{A dataset and generation framework.} CP2Seq contains 600 samples with
   crease patterns, target states, recorded fold sequences, and intermediate states. Configurable
-  generation and seeded reconstruction support experiments across reference depths and action
+  generation supports experiments across reference depths and action
   models, with coupling recorded to characterize geometric structure.
 \item \textbf{An interactive evaluation and verification pipeline.} The framework connects visual
   and geometric inputs to tools for constructing and revising sequences, step-level legality

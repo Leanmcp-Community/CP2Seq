@@ -7,10 +7,9 @@ scene. We introduce \textbf{CP2Seq}, a benchmark for evaluating geometric reason
 planning in multimodal language models through origami. The benchmark contains 600 procedurally
 generated samples, each requiring a model to produce a valid sequence of folds from a crease pattern
 and a target folded state. Samples are produced by a deterministic folding engine. Ground truth is
-recorded as each fold happens rather than annotated afterwards. Every sample rebuilds
-byte-identically from its seed, so the corpus is released as a generator and a manifest rather than
-as a data archive. We release the generation and evaluation framework alongside it, so the corpus
-can be regenerated, extended, or re-stratified at a different difficulty. During evaluation, the
+recorded as each fold happens rather than annotated afterwards. We release the generation and
+evaluation framework to support additional samples and experiments across reference depths and
+action models. During evaluation, the
 engine executes proposed folds or rejects invalid actions with explicit feedback, while the model
 remains responsible for selecting actions and searching for a solution. We evaluate
 multimodal language models under progressively greater tool assistance, and against a

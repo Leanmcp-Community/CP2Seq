@@ -12,6 +12,22 @@ disagree with the first, and no learned component in the loop.
 \subsection{The division of labour}
 \label{sec:env-division}
 
+The implementation provides sequence-editing tools (\texttt{add\_fold}, \texttt{remove\_fold},
+\texttt{go\_to\_step}, and \texttt{restore\_revision}), observation tools
+(\texttt{get\_state} and \texttt{get\_images}), optional candidate filtering
+(\texttt{list\_legal\_folds}), optional target feedback (\texttt{compare\_to\_target}),
+and submission (\texttt{finish}). Which tools are exposed is a run configuration; target
+feedback has three separately configured levels (Section~\ref{sec:target-feedback}).
+
+Three verification roles must be distinguished. The step engine checks proposed actions and
+target-crease compatibility. Final replay compares the constructed pattern and folded state with
+the target. A separate Flat-Folder wrapper checks whether a crease pattern admits a flat-folded
+state using layer-order constraints, including taco-taco, taco-tortilla, tortilla-tortilla, and
+transitivity constraints \citep{akitaya-flatfolder}. This last check does not verify the proposed
+sequence or establish that its particular layer ordering is valid, and is not automatically
+invoked by every model action. These checks should not be described collectively as a theorem
+that guarantees physical realizability.
+
 \begin{table}[h]
 \caption{Who does what. The environment does not search.}
 \label{tab:division}
@@ -25,13 +41,10 @@ Model                  & Proposes the next fold, decides where to go, recognises
 \end{center}
 \end{table}
 
-This division is what makes the benchmark measure something. The obvious objection to any
-tool-augmented setup is that the tool is doing the work, and here the answer is structural rather
-than rhetorical: deciding global flat-foldability is NP hard, so the environment cannot search its
-way to an answer even in principle. It can only say whether one proposed step is something paper
-could do. Compressing an exponential search into a feasible number of queries is exactly what the
-environment cannot supply and exactly what the model is being measured on. The referee is not a
-player.
+The environment checks and executes actions; it does not select a path to the target. Optional
+candidate filtering removes illegal or off-pattern actions, while the model chooses among the
+remaining alternatives. The search baseline measures what systematic exploration can achieve
+with the same candidate enumerator.
 
 \subsection{Refusals are named, isn't that you shoulr mention a check, each step check and final step check, final step check now is missing , should mention here--------}
 \label{sec:env-refusals}
@@ -46,7 +59,7 @@ An illegal fold returns a structured refusal with a name, not a boolean.
 \multicolumn{1}{c}{\bf REFUSAL}  &\multicolumn{1}{c}{\bf MEANING} \\
 \hline \\
 \texttt{would-tear} & The moving layers are joined to stationary paper away from the fold line, so
-  the sheet would come apart. The binding constraint of the some-layers tier \\
+  the sheet would come apart. The binding constraint of the some-layers action model \\
 \texttt{no-crease} & The fold moves layers without creasing anything, tearing them free of the
   sheet rather than folding them \\
 \texttt{nothing-to-move} & The fold line misses the selected layers entirely \\
@@ -77,4 +90,3 @@ what carries information is layer structure, which is why the second view is an 
 than a rotation. Positions are reported as coordinates on the original sheet together with an
 integer layer index. There is no continuous vertical coordinate at this tier, and a rendering that
 looks three-dimensional is not evidence of one; thickness belongs to a different problem.
-

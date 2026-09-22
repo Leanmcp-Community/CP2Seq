@@ -49,6 +49,8 @@ a comparison. Any main table in the submitted paper prints $n$ in every cell or 
 \subsection{The baseline reading}
 \label{sec:results-baseline}
 
+\input{sections/figure-bfs-effort}
+
 \texttt{deterministic-bfs} solves 367 of 725 attempts overall. Per stratum: 366/669 easy, 1/40 mid,
 0/16 hard. Median states expanded is 65 on easy, 1051.5 on mid, 532 on hard. 358% fact:results.bfs.timeouts
 of its 725 attempts ended in timeout rather than exhaustion, so \textbf{50.6\% is a lower bound
@@ -146,4 +148,3 @@ model line on the easy stratum, and attempt counts printed at each point.}\end{c
 on easy; that crossing is the most informative feature of the chart and is not smoothed away.}
 \label{fig:main}
 \end{figure}
-

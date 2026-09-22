@@ -1,4 +1,4 @@
-\begin{thebibliography}{33}
+\begin{thebibliography}{30}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -21,12 +21,6 @@ Hugo~A. Akitaya, Jun Mitani, Yoshihiro Kanamori, and Yukio Fukui.
   origami.
 \newblock In \emph{{ACM} {SIGGRAPH} Posters / Student Research Competition},
   2013.
-
-\bibitem[Akitaya et~al.(2017)Akitaya, Demaine, and Ku]{akitaya-hard}
-Hugo~A. Akitaya, Erik~D. Demaine, and Jason~S. Ku.
-\newblock Simple folding is really hard.
-\newblock \emph{Journal of Information Processing}, 25:\penalty0 580--589,
-  2017.
 
 \bibitem[Akitaya et~al.(2024)Akitaya, Demaine, and Ku]{akitaya-flatfolder}
 Hugo~A. Akitaya, Erik~D. Demaine, and Jason~S. Ku.
@@ -100,13 +94,6 @@ Graphs of Origami Flat Foldings.
 \newblock Realization and connectivity of the graphs of origami flat foldings.
 \newblock \emph{arXiv preprint arXiv:1808.06013}, 2018.
 
-\bibitem[Huang et~al.(2026)Huang, Chen, Jiang, Han, Tu, Yang, and
-  Jiang]{learn2fold}
-Y.~Huang, Y.~Chen, Y.~Jiang, J.~Han, Z.~Tu, Y.~Yang, and C.~Jiang.
-\newblock {Learn2Fold}: Structured origami generation with world model
-  planning.
-\newblock \emph{arXiv preprint arXiv:2603.29585}, 2026.
-
 \bibitem[Koehler(1968)]{koehler}
 John~E. Koehler.
 \newblock Folding a strip of stamps.
@@ -157,18 +144,6 @@ PurelandFold.
 Random Locally Flat-Foldable Origami.
 \newblock On random locally flat-foldable origami.
 \newblock \emph{arXiv preprint arXiv:2502.04279}, 2025.
-
-\bibitem[Silver et~al.(2016)Silver, Huang, Maddison, Guez, Sifre, van~den
-  Driessche, Schrittwieser, Antonoglou, Panneershelvam, Lanctot, Dieleman,
-  Grewe, Nham, Kalchbrenner, Sutskever, Lillicrap, Leach, Kavukcuoglu, Graepel,
-  and Hassabis]{alphago}
-David Silver, Aja Huang, Chris~J. Maddison, Arthur Guez, Laurent Sifre, George
-  van~den Driessche, Julian Schrittwieser, Ioannis Antonoglou, Veda
-  Panneershelvam, Marc Lanctot, Sander Dieleman, Dominik Grewe, John Nham, Nal
-  Kalchbrenner, Ilya Sutskever, Timothy Lillicrap, Madeleine Leach, Koray
-  Kavukcuoglu, Thore Graepel, and Demis Hassabis.
-\newblock Mastering the game of {Go} with deep neural networks and tree search.
-\newblock \emph{Nature}, 529\penalty0 (7587):\penalty0 484--489, 2016.
 
 \bibitem[Simple Folding of Mixed Orthogonal CPs()]{mixed-orthogonal}
 Simple Folding of Mixed Orthogonal CPs.
