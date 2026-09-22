@@ -15,7 +15,7 @@ byte-identically from its seed, so the corpus is released as a generator and a m
 as a data archive. We release the generation and evaluation framework alongside it, so the corpus
 can be regenerated, extended, or re-stratified at a different difficulty. During evaluation, the
 engine executes proposed folds or rejects invalid actions with explicit feedback, while the model
-remains responsible for selecting actions and searching for a solution. We evaluate frontier
+remains responsible for selecting actions and searching for a solution. We evaluate
 multimodal language models under progressively greater tool assistance, and against a
 deterministic breadth-first search over the same action set. Candidate sequences are assessed by
 executing them and comparing the resulting folded state with the target, allowing for planar
@@ -23,8 +23,8 @@ translations, rotations, and reflections. Under the low reasoning effort setting
 evaluated models solves a sample outside the easy subset. On that subset, the best model achieves a
 success rate of 20.4%<!--fact:results.luna.toolEasyPct-->, compared with 54.7%<!--fact:results.bfs.easyPct--> for the search baseline. Its dominant failure mode is
 not an exhausted query budget but the repeated proposal of states it has already visited, which
-terminates 48%<!--fact:results.luna.cyclingPct--> of its attempts. These results identify a substantial gap between frontier
-multimodal models and explicit search on this origami planning task.
+terminates 48%<!--fact:results.luna.cyclingPct--> of its attempts. These results identify a substantial gap between
+multimodal language models and explicit search on this origami planning task.
 
 ---
 

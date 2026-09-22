@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.1)  22 SEP 2026 18:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.1)  22 SEP 2026 18:37
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -584,7 +584,7 @@ rro8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/helvetic/uhv
 b8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/times/utmb8a.p
 fb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></
 usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on iclr2026_conference.pdf (23 pages, 236371 bytes).
+Output written on iclr2026_conference.pdf (23 pages, 236307 bytes).
 PDF statistics:
  602 PDF objects out of 1000 (max. 8388607)
  547 compressed objects within 6 object streams
