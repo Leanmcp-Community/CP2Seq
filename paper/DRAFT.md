@@ -556,7 +556,7 @@ FInal step check. - The four constraint classes that Flat-Folder
 checks (taco-taco, taco-tortilla, tortilla-tortilla, transitivity) remain the right vocabulary for
 global terminal states; they are not what a single legal step needs checking against here.
 
-### 5.4 What the model observes
+### 5.4 What the model observes - you should add a screen shot of simulator software !!!!!!!!
 
 On success the environment returns the new state together with two views: a top-down X-ray of the
 stack, and an exploded view of the layers. Every intermediate state in this tier is flat, so a
@@ -566,13 +566,6 @@ than a rotation. Positions are reported as coordinates on the original sheet tog
 integer layer index. There is no continuous vertical coordinate at this tier, and a rendering that
 looks three-dimensional is not evidence of one; thickness belongs to a different problem.
 
-### 5.5 Error verbosity is an experimental variable
-
-The richer a refusal, the more of the reasoning the environment performs rather than the model. At
-the limit, a message that names the fix has solved the step. Verbosity is therefore fixed before
-the first run and reported with the results; otherwise the tool-augmented condition is not
-reproducible and its comparison against the verifier-only condition measures message design rather
-than reasoning.
 
 ---
 
