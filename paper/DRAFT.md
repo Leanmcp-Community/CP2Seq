@@ -681,37 +681,6 @@ available, so a weakened comparison is visible in the output rather than assumed
 
 ---
 
-## 7. Objections, answered here rather than in rebuttal
-
-**"The simulator does all the work."** It cannot: deciding flat-foldability is NP hard, and the
-environment only rules on single steps. §5.2 states the division of labour and §6.3 measures it.
-
-**"Origami is a toy problem."** Flat origami is Turing complete, so the domain is not expressively
-impoverished. ⚠️ This is a defensive citation and nothing more. It shows that the domain is rich
-enough to be interesting; it does not show that anything learned here transfers, and the causal
-chain from "origami is Turing complete" to "training on origami yields physical understanding" is
-broken in the middle. Rule 110 is Turing complete too.
-
-**"Why not enumerate the valid states?"** There is no closed form for the number of foldings even
-of a one-dimensional strip, a problem open since 1891, and state counts for real patterns reach
-astronomical magnitudes. The hardness is the problem's, not an implementation's.
-
-**"Synthetic data is a shortcut."** The comparable published corpora are largely produced by their
-authors' own symbolic simulators; synthesis is the field's normal practice. Here it is also what
-makes difficulty controllable and ground truth constructed rather than annotated, and what allows
-the corpus to ship as a seed rather than as a file.
-
-**"Your corpus is not real origami."** Correct, and measured: 89.3%<!--fact:probeC.provenNotPct--> of the
-366<!--fact:corpus.instagram.total--> real crease patterns in Flat-Folder's `examples/instagram/` corpus provably lie
-outside all-layers simple folding. This is stated as a scope boundary in §1
-and §12 rather than left for a reviewer to discover.
-
-**"The model may have memorised the pattern."** The no-tools arm runs on anonymized geometry with
-filenames and metadata stripped, for exactly this reason: if a model can read a pattern's name it
-recalls rather than reasons, and then both arms measure recall and the comparison measures
-nothing. §9.
-
----
 
 ## 8. Experimental setup
 
