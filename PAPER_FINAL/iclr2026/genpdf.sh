@@ -41,15 +41,35 @@ if [[ ! -f "$JOB.tex" ]]; then
   exit 1
 fi
 
-# Preflight: the ICLR style pulls in times/natbib; fail early with the fix.
-for sty in times.sty natbib.sty; do
-  if ! kpsewhich "$sty" >/dev/null 2>&1 && [[ ! -f "$sty" ]]; then
-    echo "ERROR: '$sty' is missing (required by iclr2026_conference.sty)." >&2
-    echo "Install it, then re-run this script:" >&2
-    echo "    sudo tlmgr update --self && sudo tlmgr install psnfss natbib" >&2
-    exit 1
-  fi
-done
+# Preflight: collect every package the source asks for and check it is installed.
+# BasicTeX ships a minimal package set, so a missing .sty is the most common
+# failure here; report ALL of them at once with the command that fixes it.
+#
+# The scan strips LaTeX comments first and ignores \protect\usepackage, which
+# appears inside natbib's own error strings rather than as a real dependency.
+# Keep the <( ... ) body free of `#` comments: bash 3.2, the macOS system bash,
+# mis-parses them and reports "no closing `)'".
+missing=()
+while read -r pkg; do
+  [[ -z "$pkg" ]] && continue
+  [[ -f "$pkg.sty" ]] && continue                 # shipped alongside the paper
+  kpsewhich "$pkg.sty" >/dev/null 2>&1 || missing+=("$pkg")
+done < <(
+  sed -E 's/(^|[^\\])%.*/\1/' ./*.tex ./*.sty 2>/dev/null \
+    | grep -oE '(\\protect)?\\(usepackage|RequirePackage)(\[[^]]*\])?\{[^}]*\}' \
+    | grep -v '^\\protect' \
+    | sed -E 's/.*\{([^}]*)\}/\1/' | tr ',' '\n' | tr -d ' ' | sort -u
+)
+
+if (( ${#missing[@]} )); then
+  echo "ERROR: missing LaTeX package(s): ${missing[*]}" >&2
+  echo "" >&2
+  echo "Install them, then re-run this script:" >&2
+  echo "    sudo tlmgr update --self && sudo tlmgr install ${missing[*]}" >&2
+  echo "" >&2
+  echo "(If tlmgr itself is missing, install MacTeX or BasicTeX from https://tug.org/mactex/)" >&2
+  exit 1
+fi
 
 run_pdflatex() {
   local label="$1"

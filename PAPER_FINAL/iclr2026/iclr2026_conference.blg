@@ -3,75 +3,55 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: iclr2026_conference.aux
 The style file: iclr2026_conference.bst
 Database file #1: iclr2026_conference.bib
-Warning--to sort, need author or key in origamibench
-Warning--to sort, need author or key in corigami
-Warning--to sort, need author or key in oeis-a000136
-Warning--to sort, need author or key in flatfolder
-Warning--to sort, need author or key in turing
-Warning--to sort, need author or key in mixed-orthogonal
-Warning--to sort, need author or key in layer-algebra
-Warning--to sort, need author or key in flat-folding-graphs
-Warning--to sort, need author or key in creasy
-Warning--to sort, need author or key in meanders
-Warning--to sort, need author or key in spatial-survey
-Warning--to sort, need author or key in vot
-Warning--to sort, need author or key in fold-format
-Warning--to sort, need author or key in purelandfold
-Warning--to sort, need author or key in spin-model
-Warning--to sort, need author or key in random-locally
-Warning--empty year in flatfolder
-Warning--empty year in fold-format
-Warning--empty year in oeis-a000136
-Warning--empty year in purelandfold
+Warning--empty author in turing
 Warning--empty author in meanders
 Warning--empty author in flat-folding-graphs
-Warning--empty author in mixed-orthogonal
-Warning--empty author in turing
-Warning--empty author in spin-model
-Warning--empty author in vot
-Warning--empty author in random-locally
-Warning--empty author in spatial-survey
 Warning--empty author in layer-algebra
 Warning--empty year in oripa
-You've used 32 entries,
+Warning--empty author in random-locally
+Warning--empty author in mixed-orthogonal
+Warning--empty author in spatial-survey
+Warning--empty author in spin-model
+Warning--empty author in vot
+You've used 33 entries,
             2773 wiz_defined-function locations,
-            727 strings with 9213 characters,
-and the built_in function-call counts, 11391 in all, are:
-= -- 992
-> -- 524
-< -- 9
-+ -- 194
-- -- 162
-* -- 847
-:= -- 1522
-add.period$ -- 84
-call.type$ -- 32
-change.case$ -- 148
-chr.to.int$ -- 32
-cite$ -- 110
-duplicate$ -- 620
-empty$ -- 1144
-format.name$ -- 184
-if$ -- 2494
+            752 strings with 10857 characters,
+and the built_in function-call counts, 14446 in all, are:
+= -- 1218
+> -- 984
+< -- 10
++ -- 345
+- -- 312
+* -- 1162
+:= -- 2129
+add.period$ -- 106
+call.type$ -- 33
+change.case$ -- 214
+chr.to.int$ -- 33
+cite$ -- 76
+duplicate$ -- 655
+empty$ -- 1184
+format.name$ -- 338
+if$ -- 3058
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 23
-newline$ -- 156
-num.names$ -- 64
-pop$ -- 437
+missing$ -- 26
+newline$ -- 180
+num.names$ -- 80
+pop$ -- 490
 preamble$ -- 1
-purify$ -- 116
+purify$ -- 181
 quote$ -- 0
-skip$ -- 459
+skip$ -- 521
 stack$ -- 0
-substring$ -- 181
-swap$ -- 48
+substring$ -- 192
+swap$ -- 50
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 352
-warning$ -- 30
-while$ -- 57
+type$ -- 363
+warning$ -- 10
+while$ -- 71
 width$ -- 0
-write$ -- 366
-(There were 30 warnings)
+write$ -- 421
+(There were 10 warnings)
