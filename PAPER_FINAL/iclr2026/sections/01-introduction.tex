@@ -8,6 +8,14 @@ order. A locally valid fold may lead away from the target, so completing a seque
 selecting among alternatives and revising earlier decisions. We study whether multimodal language
 models can use visual and geometric observations to make these decisions over successive folds.
 
+Origami is an unusually economical instrument for this. A single sheet and a small action space
+generate geometric dependencies of arbitrary depth at no annotation cost, so difficulty is set by
+fold depth rather than by collecting harder images, and the exact simulator makes every
+intermediate state checkable rather than merely plausible. That combination of cheap depth and
+exact step-level checking is what a benchmark needs if it is to support not only measurement but
+the iteration that improves spatial and geometric ability: an automatic, dense signal over a long
+horizon, which visual question answering over static scenes does not provide.
+
 Existing origami benchmarks assess some aspects of geometric understanding, but answering
 questions about a folded configuration does not establish the ability to construct it. GamiBench
 \citep{gamibench} uses visual question answering to assess folded configurations, viewpoint

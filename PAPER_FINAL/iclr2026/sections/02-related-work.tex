@@ -26,13 +26,26 @@ of the pattern itself.
 \subsection{Computational origami and sequence planning}
 \label{sec:related-theory}
 
-Our action models build on the simple-fold framework of \citet{arkin-map}, which distinguishes
-one-layer, some-layers, and all-layers folds. CP2Seq uses the latter two variants. Work on
+A \emph{simple fold} is the operation introduced by \citet{arkin-map} for map folding: the sheet is
+folded along one line at a time, by $\pm 180^\circ$, and the models are distinguished by how much of
+the stack that line carries, namely a single layer, a contiguous run from the top or bottom
+(some-layers), or the entire stack (all-layers). Simple foldability is not uniformly hard. Deciding
+it for an orthogonal crease pattern on a rectangular sheet, which is map folding proper, is
+linear-time. Hardness appears once the sheet shape or the crease directions are generalized, and
+\citet{arkin-map} proves weak NP-completeness for an orthogonal pattern on an orthogonal sheet, for
+assigned axis-parallel and $45^\circ$ creases on a square sheet, and for unassigned patterns.
+\citet{akitaya-hard} strengthens these to strong NP-completeness, in the some-layers and all-layers
+models, for square paper with creases at multiples of $45^\circ$. CP2Seq generates in exactly that
+regime: a square sheet, fold lines at multiples of $45^\circ$, and those two action models. Deciding
+whether such a crease pattern is simply foldable at all is therefore strongly NP-complete, while
+producing an instance costs one forward pass of the engine. The hardness is a statement about the
+general decision problem and not about our instances, which are reachable by construction; the
+difficulty of the released samples is measured, not inferred (Section~\ref{sec:results}).
+
+CP2Seq uses the some-layers and all-layers variants. Work on
 flat-folded states studies layer ordering as well as planar geometry
 \citep{bern-hayes,akitaya-flatfolder}, motivating our explicit representation of layers in the
 state and final comparison. Earlier work also addresses generating folding sequences from crease
 patterns \citep{akitaya-cp2seq}; sequence recovery is therefore an established computational
 origami problem. We use it to evaluate multimodal models through visual observations, executable
-actions, and feedback. Complexity results depend on the permitted folds and crease-pattern
-restrictions \citep{arkin-map}; we assess the practical difficulty of our generated instances
-through measured model and search-baseline performance.
+actions, and feedback.

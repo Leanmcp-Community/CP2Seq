@@ -24,3 +24,9 @@ independent physical validity. Final comparisons use numerical tolerances. The s
 comparator does not explicitly match original-sheet region identities, as detailed in
 Appendix~\ref{app:comparison-details}; identity-aware validation and any re-scoring must be tied
 to the implementation used for the reported runs.
+
+Two capabilities the benchmark is built to exercise are not yet trained against it: deciding when
+to abandon a partial sequence, and deciding which candidate folds to discard unexamined. The
+48.1\% of attempts that end in state cycling (Section~\ref{sec:results-failures}) is where both
+are visible. We report the gap and leave its closure, whether by search-aware prompting, by tool
+design, or by training against the verifier, to future work.
