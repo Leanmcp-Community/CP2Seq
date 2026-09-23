@@ -22,11 +22,9 @@ class of unrecoverable moves, and the rates reported here are therefore rates un
 constraint. Detailed conditions are listed in
 Appendix~\ref{app:action-errors}.
 
-The environment never refuses a fold for self-intersection, because in these action models
-self-intersection cannot be expressed. A fold moves either the whole stack or a contiguous run
-taken from the top or the bottom, and such a move cannot drive paper through the layers it leaves
-behind. Self-intersection is excluded by construction rather than detected by a test, so its
-absence from the refusal taxonomy is a property of the action space and not a gap in the checks.
+The environment never refuses a fold for self-intersection. A fold moves either the whole stack or
+a contiguous run taken from the top or the bottom, and such a move cannot drive paper through the
+layers it leaves behind, so the action space excludes self-intersection by construction.
 
 \phantomsection
 \label{sec:env-observes}
