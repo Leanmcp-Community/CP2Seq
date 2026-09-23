@@ -84,7 +84,14 @@ if (dataPath) {
     const r = timeouts.reduce((s, x) => s + x.expanded / x.budget, 0) / timeouts.length;
     const refs = [...new Set(rows.filter(x => x.id.startsWith(tier + '-')).map(x => x.ref))];
     const target = refs.reduce((s, v) => s + v, 0) / refs.length;
-    curves.push({tier, b, rate: r, target, n: timeouts.length,
+    // The curve is a fit; only the part of it that overlaps observation is drawn solid.
+    // dmax is the deepest node any run of this tier actually reached, so beyond it the line
+    // is extrapolation and says so by going dashed.
+    const dmax = Math.max(...rows.filter(x => x.id.startsWith(tier + '-')).map(x => x.depth));
+    // A curve fitted from one tier says nothing about depths that tier's corpus never reaches,
+    // so it stops at the deepest reference sequence the tier contains.
+    const dend = Math.max(...rows.filter(x => x.id.startsWith(tier + '-')).map(x => x.ref));
+    curves.push({tier, b, rate: r, target, n: timeouts.length, dmax, dend,
                  samples: [...new Set(timeouts.map(x => x.id))].length});
   }
   // b and g must come from the SAME samples. They did not at first: b is fitted from the
@@ -142,8 +149,8 @@ if (dataPath) {
 // Without one: the old constant-throughput model, which is a lower bound.
 const tOf = (c, d) => c.g ? Math.pow(c.b, d) * c.c0 * Math.pow(c.g, d) : Math.pow(c.b, d) / c.rate;
 const D0 = 1, D1 = 20;
-const L0 = -1, L1 = 14;
-const W = 580, H = 380, M = {l: 70, r: 14, t: 18, b: 46};
+const L0 = -1, L1 = 21;
+const W = 580, H = 398, M = {l: 70, r: 14, t: 18, b: 64};
 const PX = W - M.l - M.r, PY = H - M.t - M.b;
 const x = d => M.l + (d - D0) / (D1 - D0) * PX;
 const y = s => M.t + PY - (Math.min(Math.max(Math.log10(s), L0), L1) - L0) / (L1 - L0) * PY;
@@ -158,12 +165,14 @@ const human = s => s < 60 ? `${s.toFixed(s < 10 ? 1 : 0)} s`
 const guides = [
   {s: 1, label: '1 second'}, {s: 60, label: '1 minute'}, {s: 3600, label: '1 hour'},
   {s: 86400, label: '1 day'}, {s: 31557600, label: '1 year'},
-  {s: 3.15576e9, label: '1 century'}, {s: 3.15576e13, label: 'age of the universe'},
+  {s: 3.15576e9, label: '1 century'}, {s: 3.15576e13, label: '1 million years'},
+  {s: 3.15576e16, label: '1 billion years'},
 ];
 
 const series = c => {
   const pts = [];
-  for (let d = D0; d <= D1; d += 0.25) {
+  const end = Math.min(D1, c.dend ?? D1);
+  for (let d = D0; d <= end; d += 0.25) {
     const t = tOf(c, d);
     if (Math.log10(t) > L1 + 0.5) break;
     pts.push([d, t]);
@@ -193,21 +202,40 @@ ${[2, 4, 6, 8, 10, 12, 14, 16, 18, 20].map(d =>
 ${curves.map(c => {
   const col = (TIER_COLOR[c.tier] ?? {svg: '#1a3d6d'}).svg;
   const pts = series(c);
-  const d = pts.map((p, i) => `${i ? 'L' : 'M'}${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`).join(' ');
-  const mark = c.target == null ? '' :
+  const cut = c.dmax ?? Infinity;
+  const path = ps => ps.map((p, i) => `${i ? 'L' : 'M'}${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`).join(' ');
+  const d = path(pts.filter(p => p[0] <= cut));
+  const dExtra = path(pts.filter(p => p[0] >= cut));
+  // A reference depth whose predicted cost is off the axis is not drawn: the marker would
+  // sit on the frame and read as a measurement.
+  const inRange = c.target != null && Math.log10(tOf(c, c.target)) <= L1;
+  const mark = !inRange ? '' :
     `<line x1="${x(c.target).toFixed(1)}" y1="${y(tOf(c, c.target)).toFixed(1)}" x2="${x(c.target).toFixed(1)}" y2="${(M.t + PY).toFixed(1)}" stroke="${col}" stroke-width="0.7" stroke-dasharray="2 3" opacity="0.7"/>
 <rect x="${(x(c.target) - 3.5).toFixed(1)}" y="${(y(tOf(c, c.target)) - 3.5).toFixed(1)}" width="7" height="7" fill="${col}" transform="rotate(45 ${x(c.target).toFixed(1)} ${y(tOf(c, c.target)).toFixed(1)})"/>
-<text x="${(x(c.target) + (c.target > D1 - 4 ? -8 : 8)).toFixed(1)}" y="${(y(tOf(c, c.target)) + (c.target > D1 - 4 ? 14 : 1)).toFixed(1)}" font-size="9.5" fill="${col}" text-anchor="${c.target > D1 - 4 ? 'end' : 'start'}">${human(tOf(c, c.target))}</text>`;
+${tOf(c, c.target) > 3.15576e11 ? '' : `<text x="${(x(c.target) + (c.target > D1 - 4 ? -8 : 8)).toFixed(1)}" y="${(y(tOf(c, c.target)) + (c.target > D1 - 4 ? 14 : 1)).toFixed(1)}" font-size="9.5" fill="${col}" text-anchor="${c.target > D1 - 4 ? 'end' : 'start'}">${human(tOf(c, c.target))}</text>`}`;
   const last = pts[pts.length - 1];
+  // A curve that runs off the top of the axis gets an arrowhead, so a clipped line does not
+  // read as a line that simply stopped. Its cost at the tier's reference depth is off any
+  // scale worth drawing, which is the point the arrow makes.
+  const offScale = Math.log10(tOf(c, Math.min(D1, c.dend ?? D1))) > L1;
+  const tip = pts[pts.length - 1];
+  const prev = pts[pts.length - 2] ?? tip;
+  const ang = Math.atan2(y(tip[1]) - y(prev[1]), x(tip[0]) - x(prev[0])) * 180 / Math.PI;
+  const arrow = offScale ? `<polygon points="0,-3.4 8.5,0 0,3.4" fill="${col}" transform="translate(${x(tip[0]).toFixed(1)} ${y(tip[1]).toFixed(1)}) rotate(${ang.toFixed(1)})"/>` : '';
   return `<path d="${d}" fill="none" stroke="${col}" stroke-width="1.9" stroke-linejoin="round"/>
+${dExtra ? `<path d="${dExtra}" fill="none" stroke="${col}" stroke-width="1.9" stroke-linejoin="round" stroke-dasharray="6 4"/>` : ''}
+${arrow}
 ${mark}
 <text x="${(x(last[0]) - 4).toFixed(1)}" y="${(y(last[1]) - 6).toFixed(1)}" font-size="10.5" fill="${col}" text-anchor="end">${c.tier}${c.target == null ? '' : (c.g ? `  (b·g)=${(c.b * c.g).toFixed(1)}` : `  b=${c.b.toFixed(2)}`)}</text>`;
 }).join('\n')}
 ${solves.map(s => `<circle cx="${x(s.depth).toFixed(1)}" cy="${y(s.seconds).toFixed(1)}" r="2.6" fill="#ffffff" stroke="${(TIER_COLOR[s.tier] ?? {svg: '#555'}).svg}" stroke-width="1.3"/>`).join('\n')}
-<text x="${(M.l + PX / 2).toFixed(1)}" y="${H - 8}" font-size="11" fill="#444" text-anchor="middle">fold depth (number of folds in the solution)</text>
+<text x="${(M.l + PX / 2).toFixed(1)}" y="${H - 38}" font-size="11" fill="#444" text-anchor="middle">search depth reached (folds)</text>
 <text x="14" y="${(M.t + PY / 2).toFixed(1)}" font-size="11" fill="#444" text-anchor="middle" transform="rotate(-90 14 ${(M.t + PY / 2).toFixed(1)})">search time (seconds, log scale)</text>
-<g font-size="9" fill="#777"><circle cx="${M.l + 18}" cy="${M.t + 44}" r="2.6" fill="#ffffff" stroke="#777" stroke-width="1.3"/><text x="${M.l + 26}" y="${M.t + 47}">observed solve</text>
-<rect x="${M.l + 15}" y="${M.t + 55}" width="6" height="6" fill="#777" transform="rotate(45 ${M.l + 18} ${M.t + 58})"/><text x="${M.l + 26}" y="${M.t + 61}">tier reference depth</text></g>
+<g font-size="9" fill="#777"><circle cx="${M.l + 78}" cy="${M.t + 44}" r="2.6" fill="#ffffff" stroke="#777" stroke-width="1.3"/><text x="${M.l + 86}" y="${M.t + 47}">observed solve</text>
+<line x1="${M.l + 73}" y1="${M.t + 72}" x2="${M.l + 84}" y2="${M.t + 72}" stroke="#777" stroke-width="1.6" stroke-dasharray="4 3"/><text x="${M.l + 88}" y="${M.t + 75}">extrapolated beyond observed depth</text>
+<rect x="${M.l + 75}" y="${M.t + 55}" width="6" height="6" fill="#777" transform="rotate(45 ${M.l + 78} ${M.t + 58})"/><text x="${M.l + 86}" y="${M.t + 61}">tier reference depth</text>
+<text x="${M.l}" y="${H - 20}" font-size="8.5" fill="#999">log scale: a straight line is exponential growth, of slope log(b·g).</text>
+<text x="${M.l}" y="${H - 9}" font-size="8.5" fill="#999">Each curve spans only the depths its own tier's corpus reaches.</text></g>
 </svg>
 `;
 
@@ -234,11 +262,11 @@ ${curves.map(c => `% ${c.tier}: b = ${c.b.toFixed(3)}, ` +
 \\begin{axis}[
   width=8.6cm, height=6.4cm,
   ymode=log,
-  xlabel={fold depth (number of folds in the solution)},
+  xlabel={search depth reached (folds)},
   ylabel={search time (s, log scale)},
   xmin=${D0}, xmax=${D1}, ymin=1e${L0}, ymax=1e${L1},
   xtick={2,4,6,8,10,12,14,16,18,20},
-  ytick={1e0,1e3,1e6,1e9,1e12},
+  ytick={${Array.from({length: Math.floor(L1 / 3) + 1}, (_, i) => `1e${i * 3}`).join(',')}},
   tick label style={font=\\scriptsize},
   label style={font=\\small},
   legend style={font=\\scriptsize, at={(0.02,0.98)}, anchor=north west, draw=none, fill=none},
@@ -250,16 +278,24 @@ ${guides.filter(g => Math.log10(g.s) >= L0 && Math.log10(g.s) <= L1).map(g =>
 ${curves.map(c => {
   const col = (TIER_COLOR[c.tier] ?? {tex: 'blue!55!black'}).tex;
   const pts = series(c);
+  const cut = c.dmax ?? Infinity;
+  const thin = ps => ps.filter((_, i) => i % 4 === 0 || i === ps.length - 1);
+  const solid = pts.filter(p => p[0] <= cut);
+  const dash = pts.filter(p => p[0] >= cut);
+  const coords = ps => thin(ps).map(p => `  (${p[0]},${p[1].toExponential(5)})`).join('\n');
   return `\\addplot[thick, color=${col}, mark=none] coordinates {
-${pts.filter((_, i) => i % 4 === 0 || i === pts.length - 1).map(p => `  (${p[0]},${p[1].toExponential(5)})`).join('\n')}
+${coords(solid)}
 };
-\\addlegendentry{${c.tier}${c.target == null ? '' : ` ($b=${c.b.toFixed(2)}$, $r=${c.rate.toFixed(0)}$/s)`}}`;
+\\addlegendentry{${c.tier}${c.target == null ? '' : ` ($b\\cdot g=${c.g ? (c.b * c.g).toFixed(1) : c.b.toFixed(2)}$)`}}
+${dash.length > 1 ? `\\addplot[thick, dashed, color=${col}, mark=none, forget plot] coordinates {
+${coords(dash)}
+};` : ''}`;
 }).join('\n')}
-${curves.filter(c => c.target != null).map(c => {
+${curves.filter(c => c.target != null && Math.log10(tOf(c, c.target)) <= L1).map(c => {
   const col = (TIER_COLOR[c.tier] ?? {tex: 'black'}).tex;
   return `\\addplot[only marks, mark=diamond*, mark size=2.6pt, color=${col}, forget plot]
   coordinates {(${c.target.toFixed(2)},${tOf(c, c.target).toExponential(5)})};
-\\node[font=\\tiny, color=${col}, anchor=west] at (axis cs:${(c.target + 0.3).toFixed(2)},${tOf(c, c.target).toExponential(5)}) {${human(tOf(c, c.target))}};`;
+${tOf(c, c.target) > 3.15576e11 ? '' : `\\node[font=\\tiny, color=${col}, anchor=west] at (axis cs:${(c.target + 0.3).toFixed(2)},${tOf(c, c.target).toExponential(5)}) {${human(tOf(c, c.target))}};`}`;
 }).join('\n')}
 ${solves.length ? `\\addplot[only marks, mark=o, mark size=1.5pt, color=gray, forget plot] coordinates {
 ${solves.map(s => `  (${s.depth},${s.seconds.toExponential(5)})`).join('\n')}

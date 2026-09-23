@@ -1,4 +1,4 @@
-\begin{thebibliography}{7}
+\begin{thebibliography}{9}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -12,6 +12,12 @@ Hugo~A. Akitaya, Jun Mitani, Yoshihiro Kanamori, and Yukio Fukui.
   origami.
 \newblock In \emph{{ACM} {SIGGRAPH} Posters / Student Research Competition},
   2013.
+
+\bibitem[Akitaya et~al.(2017)Akitaya, Demaine, and Ku]{akitaya-hard}
+Hugo~A. Akitaya, Erik~D. Demaine, and Jason~S. Ku.
+\newblock Simple folding is really hard.
+\newblock \emph{Journal of Information Processing}, 25:\penalty0 580--589,
+  2017.
 
 \bibitem[Akitaya et~al.(2024)Akitaya, Demaine, and Ku]{akitaya-flatfolder}
 Hugo~A. Akitaya, Erik~D. Demaine, and Jason~S. Ku.
@@ -39,14 +45,18 @@ Creasy.
 \newblock Open-source crease-pattern-to-sequence implementation, Java, GPL-3.0,
   unmaintained since 2022. \url{https://github.com/xkevio/Creasy}.
 
+\bibitem[Flat-Folder()]{flatfolder}
+Flat-Folder.
+\newblock {Flat-Folder}, 2024.
+\newblock \url{https://github.com/origamimagiro/flat-folder}, MIT licence.
+  Decides and enumerates flat-folded states.
+
 \bibitem[Spencer et~al.(2025)Spencer, Yaari, Vemavarapu, Yang, Ngo, and
   Sharma]{gamibench}
 R.~Spencer, R.~Yaari, R.~Vemavarapu, J.~Yang, S.~Ngo, and U.~Sharma.
 \newblock {GamiBench}: Evaluating spatial reasoning and {2D}-to-{3D} planning
   capabilities of {MLLMs} with origami folding tasks.
 \newblock \emph{arXiv preprint arXiv:2512.22207}, 2025.
-\newblock VERIFIED 2026-09-21: 186 regular and 186 impossible patterns, six
-  viewpoints, three VQA tasks, VC and IFSR metrics.
 
 \bibitem[Xu et~al.(2025)Xu, Lu, Zhao, Tan, Wang, Yuan, Chen, and
   Xu]{origamispace}
@@ -55,6 +65,5 @@ R.~Xu, D.~Lu, Z.~Zhao, X.~Tan, X.~Wang, S.~Yuan, J.~Chen, and Y.~Xu.
   reasoning with mathematical constraints.
 \newblock In \emph{Advances in Neural Information Processing Systems
   ({NeurIPS})}, 2025.
-\newblock VERIFIED 2026-09-21: NeurIPS 2025 poster; also arXiv:2511.18450.
 
 \end{thebibliography}

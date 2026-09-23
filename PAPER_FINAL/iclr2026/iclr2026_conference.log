@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.1)  22 SEP 2026 23:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.1)  23 SEP 2026 15:09
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -627,8 +627,130 @@ File: pgfmodulematrix.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 raries/tikzlibrarytopaths.code.tex
 File: tikzlibrarytopaths.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 )))
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/pgfplots/pgfplots.sty
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/pgfplots.revision
+.tex)
+Package: pgfplots 2026/08/26 v1.18.3 Data Visualization (1.18.3)
+
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/pgfplots.code.tex
+
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/pgfplotscore.code
+.tex
+\t@pgfplots@toka=\toks37
+\t@pgfplots@tokb=\toks38
+\t@pgfplots@tokc=\toks39
+\pgfplots@tmpa=\dimen276
+\c@pgfplots@coordindex=\count335
+\c@pgfplots@scanlineindex=\count336
+
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/sys/pgfplotssysge
+neric.code.tex))
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/libs/pgfplotslibr
+ary.code.tex)
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/oldpgfcompatib/pg
+fplotsoldpgfsupp_loader.code.tex
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgf/libraries/pgflibraryfp
+u.code.tex)
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/oldpgfcompatib/pg
+fplotsoldpgfsupp_pgfutil-common-lists.tex))
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/util/pgfplotsutil
+.code.tex
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/liststructure/pgf
+plotsliststructure.code.tex)
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/liststructure/pgf
+plotsliststructureext.code.tex)
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/liststructure/pgf
+plotsarray.code.tex
+\c@pgfplotsarray@tmp=\count337
+)
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/liststructure/pgf
+plotsmatrix.code.tex)
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/numtable/pgfplots
+tableshared.code.tex
+\c@pgfplotstable@counta=\count338
+\t@pgfplotstable@a=\toks40
+)
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/liststructure/pgf
+plotsdeque.code.tex)
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/util/pgfplotsbina
+ry.code.tex
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/util/pgfplotsbina
+ry.data.code.tex))
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/util/pgfplotsutil
+.verb.code.tex)
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/libs/pgflibrarypg
+fplots.surfshading.code.tex
+\c@pgfplotslibrarysurf@no=\count339
+
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/sys/pgflibrarypgf
+plots.surfshading.pgfsys-pdftex.def)))
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/util/pgfplotscolo
+rmap.code.tex
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/util/pgfplotscolo
+r.code.tex))
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/pgfplotsstackedpl
+ots.code.tex)
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/pgfplotsplothandl
+ers.code.tex
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/pgfplotsmeshploth
+andler.code.tex
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/pgfplotsmeshploti
+mage.code.tex)))
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/pgfplots.scaling.
+code.tex)
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/pgfplotscoordproc
+essing.code.tex)
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/pgfplots.errorbar
+s.code.tex)
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/pgfplots.markers.
+code.tex)
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/pgfplotsticks.cod
+e.tex)
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/pgfplots.paths.co
+de.tex)
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgf/frontendlayer/tikz/lib
+raries/tikzlibrarydecorations.code.tex
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgf/modules/pgfmoduledecor
+ations.code.tex
+\pgfdecoratedcompleteddistance=\dimen277
+\pgfdecoratedremainingdistance=\dimen278
+\pgfdecoratedinputsegmentcompleteddistance=\dimen279
+\pgfdecoratedinputsegmentremainingdistance=\dimen280
+\pgf@decorate@distancetomove=\dimen281
+\pgf@decorate@repeatstate=\count340
+\pgfdecorationsegmentamplitude=\dimen282
+\pgfdecorationsegmentlength=\dimen283
+)
+\tikz@lib@dec@box=\box68
+)
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgf/frontendlayer/tikz/lib
+raries/tikzlibrarydecorations.pathmorphing.code.tex
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgf/libraries/decorations/
+pgflibrarydecorations.pathmorphing.code.tex))
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgf/frontendlayer/tikz/lib
+raries/tikzlibrarydecorations.pathreplacing.code.tex
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgf/libraries/decorations/
+pgflibrarydecorations.pathreplacing.code.tex))
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgfplots/libs/tikzlibraryp
+gfplots.contourlua.code.tex)
+\pgfplots@numplots=\count341
+\pgfplots@xmin@reg=\dimen284
+\pgfplots@xmax@reg=\dimen285
+\pgfplots@ymin@reg=\dimen286
+\pgfplots@ymax@reg=\dimen287
+\pgfplots@zmin@reg=\dimen288
+\pgfplots@zmax@reg=\dimen289
+)
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgf/frontendlayer/tikz/lib
+raries/tikzlibraryplotmarks.code.tex
+File: tikzlibraryplotmarks.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/pgf/libraries/pgflibrarypl
+otmarks.code.tex
+File: pgflibraryplotmarks.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)))
 LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 4
-7.
+9.
 
 (/usr/local/texlive/2026basic/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
@@ -636,42 +758,42 @@ File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 (/usr/local/texlive/2026basic/texmf-dist/tex/latex/l3backend/l3backend-pdftex.d
 ef
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count335
+\l__color_backend_stack_int=\count342
 ) (./iclr2026_conference.aux)
 \openout1 = `iclr2026_conference.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
 
 (/usr/local/texlive/2026basic/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count336
-\scratchdimen=\dimen276
-\scratchbox=\box68
-\nofMPsegments=\count337
-\nofMParguments=\count338
-\everyMPshowfont=\toks37
-\MPscratchCnt=\count339
-\MPscratchDim=\dimen277
-\MPnumerator=\count340
-\makeMPintoPDFobject=\count341
-\everyMPtoPDFconversion=\toks38
+\scratchcounter=\count343
+\scratchdimen=\dimen290
+\scratchbox=\box69
+\nofMPsegments=\count344
+\nofMParguments=\count345
+\everyMPshowfont=\toks41
+\MPscratchCnt=\count346
+\MPscratchDim=\dimen291
+\MPnumerator=\count347
+\makeMPintoPDFobject=\count348
+\everyMPtoPDFconversion=\toks42
 )
 (/usr/local/texlive/2026basic/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.s
 ty
@@ -683,18 +805,21 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring OFF on input line 47.
+Package hyperref Info: Link coloring OFF on input line 49.
  (./iclr2026_conference.out) (./iclr2026_conference.out)
 \@outlinefile=\write4
 \openout4 = `iclr2026_conference.out'.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 51.
 
+Package pgfplots notification 'compat/show suggested version=true': document ha
+s been generated with the most recent feature set (\pgfplotsset{compat=1.18}).
+
+LaTeX Font Info:    Trying to load font information for U+msa on input line 53.
 
 (/usr/local/texlive/2026basic/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 51.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 53.
 
 
 (/usr/local/texlive/2026basic/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -706,14 +831,14 @@ ive/2026basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/
 
 ]
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 8
-0.
+8.
 
 (/usr/local/texlive/2026basic/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-))
-(./sections/02-related-work.tex [2]) (./sections/04-dataset.tex
-(./sections/03-problem-formulation.tex (./figures/task-example.tex
-<figures/dataset/sample-1.png, id=214, 963.6pt x 385.44pt>
+) [2])
+(./sections/02-related-work.tex) (./sections/04-dataset.tex
+(./sections/03-problem-formulation.tex [3] (./figures/task-example.tex
+<figures/dataset/sample-1.png, id=236, 963.6pt x 385.44pt>
 File: figures/dataset/sample-1.png Graphic file (type png)
 <use figures/dataset/sample-1.png>
 Package pdftex.def Info: figures/dataset/sample-1.png  used on input line 7.
@@ -722,37 +847,41 @@ File: figures/dataset/sample-1.png Graphic file (type png)
 <use figures/dataset/sample-1.png>
 Package pdftex.def Info: figures/dataset/sample-1.png  used on input line 8.
 (pdftex.def)             Requested size: 71.13188pt x 85.35579pt.
-<figures/dataset/sample-1-state-0.png, id=217, 963.6pt x 385.44pt>
+<figures/dataset/sample-1-state-0.png, id=239, 963.6pt x 385.44pt>
 File: figures/dataset/sample-1-state-0.png Graphic file (type png)
 <use figures/dataset/sample-1-state-0.png>
 Package pdftex.def Info: figures/dataset/sample-1-state-0.png  used on input li
 ne 21.
 (pdftex.def)             Requested size: 56.9055pt x 68.28227pt.
-<figures/dataset/sample-1-state-1.png, id=219, 963.6pt x 385.44pt>
+<figures/dataset/sample-1-state-1.png, id=241, 963.6pt x 385.44pt>
 File: figures/dataset/sample-1-state-1.png Graphic file (type png)
 <use figures/dataset/sample-1-state-1.png>
 Package pdftex.def Info: figures/dataset/sample-1-state-1.png  used on input li
 ne 21.
 (pdftex.def)             Requested size: 56.9055pt x 68.28227pt.
-<figures/dataset/sample-1-state-2.png, id=221, 963.6pt x 385.44pt>
+<figures/dataset/sample-1-state-2.png, id=243, 963.6pt x 385.44pt>
 File: figures/dataset/sample-1-state-2.png Graphic file (type png)
 <use figures/dataset/sample-1-state-2.png>
 Package pdftex.def Info: figures/dataset/sample-1-state-2.png  used on input li
 ne 21.
 (pdftex.def)             Requested size: 56.9055pt x 68.28227pt.
-<figures/dataset/sample-1-state-3.png, id=223, 963.6pt x 385.44pt>
+<figures/dataset/sample-1-state-3.png, id=245, 963.6pt x 385.44pt>
 File: figures/dataset/sample-1-state-3.png Graphic file (type png)
 <use figures/dataset/sample-1-state-3.png>
 Package pdftex.def Info: figures/dataset/sample-1-state-3.png  used on input li
 ne 21.
 (pdftex.def)             Requested size: 56.9055pt x 68.28227pt.
-<figures/dataset/sample-1-state-4.png, id=225, 963.6pt x 385.44pt>
+<figures/dataset/sample-1-state-4.png, id=247, 963.6pt x 385.44pt>
 File: figures/dataset/sample-1-state-4.png Graphic file (type png)
 <use figures/dataset/sample-1-state-4.png>
 Package pdftex.def Info: figures/dataset/sample-1-state-4.png  used on input li
 ne 21.
 (pdftex.def)             Requested size: 56.9055pt x 68.28227pt.
-)) [3]
+))
+[4 <./figures/dataset/sample-1.png (PNG copy)> <./figures/dataset/sample-1-stat
+e-0.png (PNG copy)> <./figures/dataset/sample-1-state-1.png (PNG copy)> <./figu
+res/dataset/sample-1-state-2.png (PNG copy)> <./figures/dataset/sample-1-state-
+3.png (PNG copy)> <./figures/dataset/sample-1-state-4.png (PNG copy)>]
 
 LaTeX Warning: Characters dropped after `\end{verbatim}' on input line 40.
 
@@ -761,17 +890,17 @@ File: figures/dataset/sample-1.png Graphic file (type png)
 <use figures/dataset/sample-1.png>
 Package pdftex.def Info: figures/dataset/sample-1.png  used on input line 7.
 (pdftex.def)             Requested size: 186.81842pt x 112.09232pt.
-<figures/dataset/sample-2.png, id=243, 963.6pt x 385.44pt>
+<figures/dataset/sample-2.png, id=263, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2.png Graphic file (type png)
 <use figures/dataset/sample-2.png>
 Package pdftex.def Info: figures/dataset/sample-2.png  used on input line 8.
 (pdftex.def)             Requested size: 186.81842pt x 112.09232pt.
-<figures/dataset/sample-4.png, id=245, 963.6pt x 385.44pt>
+<figures/dataset/sample-4.png, id=265, 963.6pt x 385.44pt>
 File: figures/dataset/sample-4.png Graphic file (type png)
 <use figures/dataset/sample-4.png>
 Package pdftex.def Info: figures/dataset/sample-4.png  used on input line 11.
 (pdftex.def)             Requested size: 186.81842pt x 112.09232pt.
-<figures/dataset/sample-3.png, id=247, 963.6pt x 385.44pt>
+<figures/dataset/sample-3.png, id=267, 963.6pt x 385.44pt>
 File: figures/dataset/sample-3.png Graphic file (type png)
 <use figures/dataset/sample-3.png>
 Package pdftex.def Info: figures/dataset/sample-3.png  used on input line 12.
@@ -780,18 +909,10 @@ Package pdftex.def Info: figures/dataset/sample-3.png  used on input line 12.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[4 <./figures/dataset/sample-1.png (PNG copy)> <./figures/dataset/sample-1-stat
-e-0.png (PNG copy)> <./figures/dataset/sample-1-state-1.png (PNG copy)> <./figu
-res/dataset/sample-1-state-2.png (PNG copy)> <./figures/dataset/sample-1-state-
-3.png (PNG copy)> <./figures/dataset/sample-1-state-4.png (PNG copy)>])
-[5 <./figures/dataset/sample-2.png (PNG copy)> <./figures/dataset/sample-4.png 
-(PNG copy)> <./figures/dataset/sample-3.png (PNG copy)>]
-(./sections/05-environment.tex) (./sections/06-scoring.tex)
-(./sections/07-experimental-setup.tex [6] (./figures/pipeline.tex)
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
+(./figures/difficulty-grid-plot.tex)) [5 <./figures/dataset/sample-2.png (PNG c
+opy)> <./figures/dataset/sample-4.png (PNG copy)> <./figures/dataset/sample-3.p
+ng (PNG copy)>] (./sections/05-environment.tex) (./sections/06-scoring.tex
+[6]) (./sections/07-experimental-setup.tex [7] (./figures/pipeline.tex)
 Underfull \hbox (badness 10000) in paragraph at lines 105--108
 []\OT1/ptm/b/n/9 Models. \OT1/pcr/m/n/9 [TO FILL from the aggregation: the mode
 ls actually run, their
@@ -809,48 +930,67 @@ Underfull \hbox (badness 10000) in paragraph at lines 105--108
 iers at
  []
 
-[7]
-Underfull \hbox (badness 10000) in paragraph at lines 151--151
+[8]
+Underfull \hbox (badness 10000) in paragraph at lines 150--150
 []\OT1/ptm/m/n/9 Deterministic breadth-first
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 151--151
+Underfull \hbox (badness 10000) in paragraph at lines 150--150
 \OT1/ptm/m/n/9 over the same ac-tion set
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 152--152
+Underfull \hbox (badness 10000) in paragraph at lines 151--151
 []\OT1/ptm/m/n/9 Symbolic crease-pattern-to-sequence solver
  []
 
-) (./sections/08-tiers.tex
+(./figures/depth-wall-plot.tex
+Package pgfplots info on input line 30: Using 'lua backend=false' for axis: ymo
+de=log unsupported (yet).
+) [9]) (./sections/08-tiers.tex [10])
+(./sections/09-results.tex
+Underfull \hbox (badness 1024) in paragraph at lines 4--8
+\OT1/ptm/m/n/9 Solve-rate and ter-mi-na-tion statis-tics come from \OT1/pcr/m/n
+/9 workspace/RESULTS/results.md\OT1/ptm/m/n/9 , pro-duced by
+ []
 
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[8]) (./sections/09-results.tex
-Underfull \hbox (badness 6364) in paragraph at lines 4--8
-\OT1/ptm/m/n/9 All num-bers be-low come from \OT1/pcr/m/n/9 workspace/RESULTS/r
-esults.md\OT1/ptm/m/n/9 , pro-duced by \OT1/pcr/m/n/9 python3
+[11] (./sections/figure-bfs-effort.tex) [12] (./figures/main-result-plot.tex
+Package pgfplots info on input line 39: Using 'lua backend=false' for axis: x c
+oord trafo unsupported.
+))
+(./sections/10-limitations.tex [13]) (./sections/15-conclusion.tex)
+(./sections/13-licence.tex) (./sections/14-llm-use.tex)
+(./iclr2026_conference.bbl [14]) (./sections/appendix-folding-model.tex
+[15]
+Underfull \hbox (badness 6592) in paragraph at lines 82--83
+[]\OT1/ptm/m/n/10 Short-edge cleanup be-fore poly-gon
  []
 
 
-LaTeX Warning: `h' float specifier changed to `ht'.
+Underfull \hbox (badness 2088) in paragraph at lines 83--84
+[]\OT1/ptm/m/n/10 Collinearity thresh-old for ver-tex re-
+ []
 
-(./sections/figure-bfs-effort.tex) [9] [10]) (./sections/10-limitations.tex)
-(./sections/13-licence.tex) (./sections/14-llm-use.tex
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [11])
-(./iclr2026_conference.bbl) (./sections/appendix-folding-model.tex [12]
-Overfull \hbox (4.87784pt too wide) in paragraph at lines 79--93
+Underfull \hbox (badness 10000) in paragraph at lines 85--86
+[]\OT1/ptm/m/n/10 Line quan-ti-za-tion when group-ing
+ []
+
+
+Overfull \hbox (10.14069pt too wide) in paragraph at lines 76--89
+ [][] 
+ []
+
+
+Overfull \hbox (4.87784pt too wide) in paragraph at lines 103--117
  [][] 
  []
 
 ) (./sections/appendix-artifacts.tex
-Underfull \vbox (badness 6094) has occurred while \output is active []
+Underfull \vbox (badness 6032) has occurred while \output is active []
 
- [13]
+ [16]
 File: "../../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/tool_schemas.py"  (verbatim)
 
 Overfull \hbox (203.11458pt too wide) in paragraph at lines 8--8
@@ -908,7 +1048,7 @@ Overfull \hbox (22.51471pt too wide) in paragraph at lines 8--8
 Choose angle_index OR angle_degrees.")[] 
  []
 
-[14]
+[17]
 File: "../../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/fold_prompt.md"  (verbatim)
 
 Overfull \hbox (39.91452pt too wide) in paragraph at lines 9--9
@@ -1090,7 +1230,7 @@ Overfull \hbox (23.71454pt too wide) in paragraph at lines 9--9
 ayer separation.[] 
  []
 
-[15]
+[18]
 Overfull \hbox (23.71454pt too wide) in paragraph at lines 9--9
 []\OT1/pcr/m/n/9 Oblique views look down from opposite directions, never exactl
 y edge-on. X-ray[] 
@@ -1190,17 +1330,17 @@ Package pdftex.def Info: figures/dataset/sample-3.png  used on input line 6.
 
 Underfull \vbox (badness 6412) has occurred while \output is active []
 
- [16]
+ [19]
 File: figures/dataset/sample-4.png Graphic file (type png)
 <use figures/dataset/sample-4.png>
 Package pdftex.def Info: figures/dataset/sample-4.png  used on input line 8.
 (pdftex.def)             Requested size: 397.48499pt x 158.99008pt.
-<figures/dataset/sample-5.png, id=374, 963.6pt x 385.44pt>
+<figures/dataset/sample-5.png, id=418, 963.6pt x 385.44pt>
 File: figures/dataset/sample-5.png Graphic file (type png)
 <use figures/dataset/sample-5.png>
 Package pdftex.def Info: figures/dataset/sample-5.png  used on input line 10.
 (pdftex.def)             Requested size: 397.48499pt x 158.99008pt.
-<figures/dataset/sample-6.png, id=375, 963.6pt x 385.44pt>
+<figures/dataset/sample-6.png, id=419, 963.6pt x 385.44pt>
 File: figures/dataset/sample-6.png Graphic file (type png)
 <use figures/dataset/sample-6.png>
 Package pdftex.def Info: figures/dataset/sample-6.png  used on input line 12.
@@ -1209,7 +1349,7 @@ Package pdftex.def Info: figures/dataset/sample-6.png  used on input line 12.
 (./figures/dataset/sequences.tex
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [17 <./figures/dataset/sample-5.png (PNG copy)>]
+ [20 <./figures/dataset/sample-5.png (PNG copy)>]
 File: figures/dataset/sample-1-state-0.png Graphic file (type png)
 <use figures/dataset/sample-1-state-0.png>
 Package pdftex.def Info: figures/dataset/sample-1-state-0.png  used on input li
@@ -1233,25 +1373,25 @@ ne 9.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [18 <./figures/dataset/sample-6.png (PNG copy)>]
+ [21 <./figures/dataset/sample-6.png (PNG copy)>]
 File: figures/dataset/sample-1-state-4.png Graphic file (type png)
 <use figures/dataset/sample-1-state-4.png>
 Package pdftex.def Info: figures/dataset/sample-1-state-4.png  used on input li
 ne 11.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-2-state-0.png, id=385, 963.6pt x 385.44pt>
+<figures/dataset/sample-2-state-0.png, id=429, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2-state-0.png Graphic file (type png)
 <use figures/dataset/sample-2-state-0.png>
 Package pdftex.def Info: figures/dataset/sample-2-state-0.png  used on input li
 ne 14.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-2-state-1.png, id=386, 963.6pt x 385.44pt>
+<figures/dataset/sample-2-state-1.png, id=430, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2-state-1.png Graphic file (type png)
 <use figures/dataset/sample-2-state-1.png>
 Package pdftex.def Info: figures/dataset/sample-2-state-1.png  used on input li
 ne 16.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-2-state-2.png, id=387, 963.6pt x 385.44pt>
+<figures/dataset/sample-2-state-2.png, id=431, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2-state-2.png Graphic file (type png)
 <use figures/dataset/sample-2-state-2.png>
 Package pdftex.def Info: figures/dataset/sample-2-state-2.png  used on input li
@@ -1260,27 +1400,27 @@ ne 18.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [19 <./figures/dataset/sample-2-state-0.png (PNG copy)> <./figures/dataset/sam
+ [22 <./figures/dataset/sample-2-state-0.png (PNG copy)> <./figures/dataset/sam
 ple-2-state-1.png (PNG copy)>]
-<figures/dataset/sample-2-state-3.png, id=394, 963.6pt x 385.44pt>
+<figures/dataset/sample-2-state-3.png, id=437, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2-state-3.png Graphic file (type png)
 <use figures/dataset/sample-2-state-3.png>
 Package pdftex.def Info: figures/dataset/sample-2-state-3.png  used on input li
 ne 20.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-2-state-4.png, id=395, 963.6pt x 385.44pt>
+<figures/dataset/sample-2-state-4.png, id=438, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2-state-4.png Graphic file (type png)
 <use figures/dataset/sample-2-state-4.png>
 Package pdftex.def Info: figures/dataset/sample-2-state-4.png  used on input li
 ne 22.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-2-state-5.png, id=396, 963.6pt x 385.44pt>
+<figures/dataset/sample-2-state-5.png, id=439, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2-state-5.png Graphic file (type png)
 <use figures/dataset/sample-2-state-5.png>
 Package pdftex.def Info: figures/dataset/sample-2-state-5.png  used on input li
 ne 24.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-2-state-6.png, id=397, 963.6pt x 385.44pt>
+<figures/dataset/sample-2-state-6.png, id=440, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2-state-6.png Graphic file (type png)
 <use figures/dataset/sample-2-state-6.png>
 Package pdftex.def Info: figures/dataset/sample-2-state-6.png  used on input li
@@ -1289,28 +1429,28 @@ ne 26.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [20 <./figures/dataset/sample-2-state-2.png (PNG copy)> <./figures/dataset/sam
+ [23 <./figures/dataset/sample-2-state-2.png (PNG copy)> <./figures/dataset/sam
 ple-2-state-3.png (PNG copy)> <./figures/dataset/sample-2-state-4.png (PNG copy
 )> <./figures/dataset/sample-2-state-5.png (PNG copy)>]
-<figures/dataset/sample-2-state-7.png, id=402, 963.6pt x 385.44pt>
+<figures/dataset/sample-2-state-7.png, id=445, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2-state-7.png Graphic file (type png)
 <use figures/dataset/sample-2-state-7.png>
 Package pdftex.def Info: figures/dataset/sample-2-state-7.png  used on input li
 ne 28.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-2-state-8.png, id=403, 963.6pt x 385.44pt>
+<figures/dataset/sample-2-state-8.png, id=446, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2-state-8.png Graphic file (type png)
 <use figures/dataset/sample-2-state-8.png>
 Package pdftex.def Info: figures/dataset/sample-2-state-8.png  used on input li
 ne 30.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-2-state-9.png, id=404, 963.6pt x 385.44pt>
+<figures/dataset/sample-2-state-9.png, id=447, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2-state-9.png Graphic file (type png)
 <use figures/dataset/sample-2-state-9.png>
 Package pdftex.def Info: figures/dataset/sample-2-state-9.png  used on input li
 ne 32.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-2-state-10.png, id=405, 963.6pt x 385.44pt>
+<figures/dataset/sample-2-state-10.png, id=448, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2-state-10.png Graphic file (type png)
 <use figures/dataset/sample-2-state-10.png>
 Package pdftex.def Info: figures/dataset/sample-2-state-10.png  used on input l
@@ -1319,28 +1459,28 @@ ine 34.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [21 <./figures/dataset/sample-2-state-6.png (PNG copy)> <./figures/dataset/sam
+ [24 <./figures/dataset/sample-2-state-6.png (PNG copy)> <./figures/dataset/sam
 ple-2-state-7.png (PNG copy)> <./figures/dataset/sample-2-state-8.png (PNG copy
 )> <./figures/dataset/sample-2-state-9.png (PNG copy)>]
-<figures/dataset/sample-2-state-11.png, id=410, 963.6pt x 385.44pt>
+<figures/dataset/sample-2-state-11.png, id=453, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2-state-11.png Graphic file (type png)
 <use figures/dataset/sample-2-state-11.png>
 Package pdftex.def Info: figures/dataset/sample-2-state-11.png  used on input l
 ine 36.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-3-state-0.png, id=411, 963.6pt x 385.44pt>
+<figures/dataset/sample-3-state-0.png, id=454, 963.6pt x 385.44pt>
 File: figures/dataset/sample-3-state-0.png Graphic file (type png)
 <use figures/dataset/sample-3-state-0.png>
 Package pdftex.def Info: figures/dataset/sample-3-state-0.png  used on input li
 ne 39.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-3-state-1.png, id=412, 963.6pt x 385.44pt>
+<figures/dataset/sample-3-state-1.png, id=455, 963.6pt x 385.44pt>
 File: figures/dataset/sample-3-state-1.png Graphic file (type png)
 <use figures/dataset/sample-3-state-1.png>
 Package pdftex.def Info: figures/dataset/sample-3-state-1.png  used on input li
 ne 41.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-3-state-2.png, id=413, 963.6pt x 385.44pt>
+<figures/dataset/sample-3-state-2.png, id=456, 963.6pt x 385.44pt>
 File: figures/dataset/sample-3-state-2.png Graphic file (type png)
 <use figures/dataset/sample-3-state-2.png>
 Package pdftex.def Info: figures/dataset/sample-3-state-2.png  used on input li
@@ -1349,22 +1489,22 @@ ne 43.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [22 <./figures/dataset/sample-2-state-10.png (PNG copy)> <./figures/dataset/sa
+ [25 <./figures/dataset/sample-2-state-10.png (PNG copy)> <./figures/dataset/sa
 mple-2-state-11.png (PNG copy)> <./figures/dataset/sample-3-state-0.png (PNG co
 py)> <./figures/dataset/sample-3-state-1.png (PNG copy)>]
-<figures/dataset/sample-3-state-3.png, id=419, 963.6pt x 385.44pt>
+<figures/dataset/sample-3-state-3.png, id=463, 963.6pt x 385.44pt>
 File: figures/dataset/sample-3-state-3.png Graphic file (type png)
 <use figures/dataset/sample-3-state-3.png>
 Package pdftex.def Info: figures/dataset/sample-3-state-3.png  used on input li
 ne 45.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-3-state-4.png, id=420, 963.6pt x 385.44pt>
+<figures/dataset/sample-3-state-4.png, id=464, 963.6pt x 385.44pt>
 File: figures/dataset/sample-3-state-4.png Graphic file (type png)
 <use figures/dataset/sample-3-state-4.png>
 Package pdftex.def Info: figures/dataset/sample-3-state-4.png  used on input li
 ne 47.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-3-state-5.png, id=421, 963.6pt x 385.44pt>
+<figures/dataset/sample-3-state-5.png, id=465, 963.6pt x 385.44pt>
 File: figures/dataset/sample-3-state-5.png Graphic file (type png)
 <use figures/dataset/sample-3-state-5.png>
 Package pdftex.def Info: figures/dataset/sample-3-state-5.png  used on input li
@@ -1373,49 +1513,52 @@ ne 49.
 )
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [23 <./figures/dataset/sample-3-state-2.png (PNG copy)> <./figures/dataset/sam
+ [26 <./figures/dataset/sample-3-state-2.png (PNG copy)> <./figures/dataset/sam
 ple-3-state-3.png (PNG copy)> <./figures/dataset/sample-3-state-4.png (PNG copy
-)> <./figures/dataset/sample-3-state-5.png (PNG copy)>]) [24] (./iclr2026_confe
+)> <./figures/dataset/sample-3-state-5.png (PNG copy)>]) [27] (./iclr2026_confe
 rence.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `iclr2026_conference.out' has not changed.
-(rerunfilecheck)             Checksum: BA234592A1FF0B5093D3172DC8EC1C6A;6739.
+(rerunfilecheck)             Checksum: 18E232EFE5E6D7FA1BA86058FB1AFA52;6922.
  )
 (\end occurred inside a group at level 1)
 
 ### simple group (level 1) entered at line 25 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 21774 strings out of 469006
- 403124 string characters out of 5454814
- 795908 words of memory out of 5000000
- 49918 multiletter control sequences out of 15000+600000
- 660583 words of font info for 108 fonts, out of 8000000 for 9000
+ 32389 strings out of 469006
+ 759775 string characters out of 5454814
+ 1317713 words of memory out of 5000000
+ 60372 multiletter control sequences out of 15000+600000
+ 662127 words of font info for 110 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
- 84i,15n,94p,564b,928s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,19n,94p,1355b,2510s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmmi10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026basic/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2026basic/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2026basic/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2026basic/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2026basic/texmf
--dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2026basic/texmf-di
-st/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2026basic/texmf-dist
-/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2026basic/texmf-dist/font
-s/type1/urw/times/utmr8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/typ
-e1/urw/times/utmri8a.pfb>
-Output written on iclr2026_conference.pdf (24 pages, 568484 bytes).
+/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2026basic/texmf-dist/font
+s/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2026basic/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026basic/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2026basic/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026basic/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2026basic/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2026basic
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2026ba
+sic/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2026basic
+/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2026basic/t
+exmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2026basic/texmf-
+dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2026basic/texmf-dist/
+fonts/type1/urw/times/utmri8a.pfb>
+Output written on iclr2026_conference.pdf (27 pages, 628668 bytes).
 PDF statistics:
- 521 PDF objects out of 1000 (max. 8388607)
- 420 compressed objects within 5 object streams
- 103 named destinations out of 1000 (max. 500000)
- 544 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 579 PDF objects out of 1000 (max. 8388607)
+ 468 compressed objects within 5 object streams
+ 115 named destinations out of 1000 (max. 500000)
+ 552 words of extra memory for PDF output out of 10000 (max. 10000000)
 

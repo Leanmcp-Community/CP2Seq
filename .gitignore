@@ -51,3 +51,7 @@ htmlcov/
 # Local viewer logs
 DHEERAJ_WORKSPACE/viewer/*.log
 
+
+# Local corpus and run artifacts; large, machine-local, regenerated rather than versioned
+workspace/corpus_provenance/
+workspace/mid_all_layers/
