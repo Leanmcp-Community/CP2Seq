@@ -22,6 +22,12 @@ class of unrecoverable moves, and the rates reported here are therefore rates un
 constraint. Detailed conditions are listed in
 Appendix~\ref{app:action-errors}.
 
+The environment never refuses a fold for self-intersection, because in these action models
+self-intersection cannot be expressed. A fold moves either the whole stack or a contiguous run
+taken from the top or the bottom, and such a move cannot drive paper through the layers it leaves
+behind. Self-intersection is excluded by construction rather than detected by a test, so its
+absence from the refusal taxonomy is a property of the action space and not a gap in the checks.
+
 \phantomsection
 \label{sec:env-observes}
 % EDITING NOTE (retained): Add a screenshot of the simulator interface.
@@ -34,3 +40,11 @@ constructed crease pattern and folded state with the supplied targets
 The repository also provides a separate Flat-Folder check for the existence of a flat-folded state
 consistent with a crease pattern \citep{akitaya-flatfolder}. This check is distinct from action
 execution and target matching; its scope is described in Appendix~\ref{app:action-errors}.
+
+A second auxiliary tool checks a crease pattern against the local necessary conditions for flat
+foldability: Kawasaki's condition on alternating sector angles at an interior vertex, Maekawa's
+condition on the mountain and valley counts, and the big-little-big condition on the creases
+bounding a strictly smaller sector. These conditions are necessary and not sufficient, so the tool
+can refute a pattern but never certify one; a pattern that passes every vertex is reported as
+undecided rather than as flat-foldable. Neither auxiliary tool takes part in scoring or in action
+execution, and neither is invoked during an episode.

@@ -50,8 +50,13 @@ and zero distance does not establish folded-state agreement.
 
 \phantomsection
 \label{sec:scoring-validate}
-% EDITING NOTE: Reconcile the separate identity-aware comparator validation with the comparator
-% actually used for reported runs before restoring claims about 600/600 corrupted-state rejection.
-Comparator validation must cover accepted global transformations and rejected changes to layer
-order or orientation. The validation applies to the implementation used to score each run;
-checks of a different comparator do not establish the behavior of the reported evaluation.
+The comparator that scores every reported run is validated by a test that must accept the global
+transformations and reject everything else. Acceptance is checked across rotations, turnovers and
+translations, in both comparison directions, and under changes to polygon start vertex and winding
+that do not change the folded object. Rejection is checked for a turnover without stack reversal,
+a turnover without parity flips, a coordinate mirror presented as a turnover, a permuted layer
+order, a missing layer, a uniform scaling, a per-layer transformation that no single isometry
+explains, and an empty stack. The polygons used are asymmetric, so an incorrect reflection cannot
+pass through a symmetry of the square. This validates the implementation on the scoring path. The
+corpus-side comparator is a separate implementation with its own negative control, described in
+Appendix~\ref{app:comparison-details}, and does not stand in for it.

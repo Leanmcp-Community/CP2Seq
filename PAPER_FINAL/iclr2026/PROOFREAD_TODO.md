@@ -12,10 +12,17 @@
 - [!] **A1. `[TO FILL ...]` 占位符会编进 PDF。** `sections/07-experimental-setup.tex`
   「Models」段，待填：实际运行的模型、版本、reasoning-effort 与 image-history 设置。
   这是正文里唯一一处直接可见的空白。
-- [!] **A2. §6.4 证据缺失，与 §1 定位段冲突。** 定位段声称 "its judge can be trusted"，
-  但 `06-scoring.tex` 的比较器验证现在只剩规范性陈述——原先 600/600 拒绝损坏状态的负控结果，
-  因为跑的是另一份 identity-aware 比较器而被撤下。
-  **二选一：在实际评分器上重跑负控，或把定位段的说法降级。** 全文最大的内在张力。
+- [x] **A2.〔已解决〕§6.4 证据缺失，与 §1 定位段冲突。**
+  实际评分路径是 `workspace/rescore_runs.mjs` → `DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/terminal_match.mjs`，
+  而该实现**本就有负控测试** `test_terminal_match.mjs`（2026-09-23 跑通）：
+  接受侧覆盖旋转/翻面/平移、双向比较、多边形起点与绕向重排；拒绝侧八项
+  （翻面未颠倒纸叠、翻面未翻奇偶、坐标镜像冒充翻面、层序置换、缺层、缩放、
+  逐层不同变换、空栈），且刻意用非对称多边形。§6.4 已改写为陈述这一证据。
+  **遗留：`test_terminal_match.mjs` 在 `DHEERAJ_WORKSPACE/` 下，§13 的制品清单里没有它；
+  论文现在引它作证据，就必须随制品发布。**
+  原先的问题：§1 定位段声称 "its judge can be trusted"，而 §6.4 只剩规范性陈述，
+  因为 600/600 拒绝损坏状态的负控跑的是语料侧的另一份比较器。现已用评分路径自身的
+  负控证据替代，语料侧比较器另行说明，不再互相冒充。
 - [x] **A3.〔已被 `\ifdraftnotes` 包裹，主文件第 30 行是 `\draftnotesfalse`，不进 PDF；投稿前确认该开关仍为 false〕§11 图看板。** `11-figures.tex` 是作者看板，
   交给审稿人等于声明图没画完。
 - [!] **A4. 五处图占位。** `[TO DRAW]` / `[DRAFT IMAGE]` / `\draftimage{8}`，
@@ -60,7 +67,9 @@
   —— 与 D5 一并处理。
 - [ ] **C5.「未确立匹配对照」在 §7.3、§8、§9、§10 各说一遍。** 诚实，但四遍会形成
   「实验设计未完成」的整体印象。§10 完整说一次，其余引用它。
-- [ ] **C6. §6.4 与 §10 第 4 段是同一件事，说了两遍。**
+- [x] **C6.〔已消除〕§6.4 与 §10 第 4 段重复。** §6.4 改为陈述评分器的负控证据；
+  §10 只保留真正仍成立的局限：终态比较器比的是当前平面多边形、奇偶与位次，
+  不显式匹配原始纸面区域身份。
 
 ## D. 内容缺口
 
@@ -86,7 +95,10 @@
 - [ ] **D5. 加消融实验。** §8 现在只报告了 basic tools 与 legal-folds 两种条件，
   no-vision 与 verifier-only 标着「计划中」。要么补跑，要么把「四种辅助条件」的说法
   （§1 贡献 2）改成与实际相符。与 C4 一并处理。〔= IMPORTANT_TODO 6〕
-- [ ] **D6. 参考文献改成会议要求的格式。** 核对 ICLR 2026 模板的 `\bibliographystyle`
+- [x] **D6.〔`.bst` 与 natbib 用法本就正确；已删 `.bib` 第 55 行多余的 `}`，
+  并把附录 A 里两条过期的「citation missing」改成正常引用说明〕参考文献格式。**
+  遗留：`origamibench` / `corigami` 的 `note = {VERIFIED ...}` 字段是否会被 `.bst`
+  排进参考文献，需编译确认；若会，须改成注释或删除。 核对 ICLR 2026 模板的 `\bibliographystyle`
   与 natbib 用法；同时清理附录 A 里 `⚠️ Citation missing` 一类条目
   （`origamibench`、`corigami`）。
 - [x] **D7.〔已加入 `05-environment.tex:20`〕§5 未点明「拒绝目标图样之外的折痕」本身是一种辅助。** 它泄露目标信息、
@@ -106,10 +118,13 @@
   的注释写明：Flat-Folder **没有「折叠步」这个概念，所以不能充当我们的模拟器**。
   我们的引擎判定的是单步动作合法性（连通性/撕裂、层选择、方向、与目标 CP 相容），
   并在构造中直接维护层序，不做全局平折性求解。
-- [x] **E2.「BFS 基线用了那四种约束」——同样不成立。**
+- [x] **E2.「BFS 基线用了那四种约束」——不成立；但另有一个 CP 检查器。**
   全仓库 `taco` 只出现在 `workspace/tools/flatfolder-check.mjs`、`corpus/inspector.html`
-  和第三方数据集 blob 中；`workspace/search_baseline.mjs` 里没有。
-  BFS 用的是与模型相同的合法动作枚举器。
+  和第三方数据集 blob 中；`workspace/search_baseline.mjs` 里没有，BFS 用的是与模型
+  相同的合法动作枚举器。**但** `Leanmcp/origami-surface-sim` 的 `learn2fold/cp-checker.js`
+  实现了 **Kawasaki / Maekawa / big-little-big** 三个局部必要条件
+  （不是 Flat-Folder 的四类约束）。已作为辅助工具写入 §5，并写明只是必要条件、
+  只能证伪不能证实，且不参与评分与动作执行。
 - 正文现有的三处 Flat-Folder 表述（`05-environment.tex:32`、
   `appendix-folding-model.tex:95`、`appendix-a-reference-notes.tex:50`）**措辞都是对的**，
   界限划得很清楚，不需要改。
@@ -118,10 +133,13 @@
 
 ## E'. 新增（来自 `origami-surface-sim` 核查）
 
-- [ ] **E4. §5 应点明自穿透在本动作空间中不可表示。** `workspace/tools/surface-sim.mjs` 文件头：
+- [x] **E4.〔已加入 `05-environment.tex`〕§5 应点明自穿透在本动作空间中不可表示。** `workspace/tools/surface-sim.mjs` 文件头：
   部分层折叠只能移动取自顶部或底部的一段连续层，这类移动无法把纸推过它留下的层，
   因此自穿透是构造上排除的，而非检测出来的。环境永远不会返回该类拒绝。
-- [?] **E5. `origami-surface-sim` 要不要作为制品一起发布？** §13 现在没列它。
+- [!] **E5. `origami-surface-sim` 现在必须列进 §13。** 已核实：**它不在评测路径上**
+  （评测全在 `DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/*` 加 `viewer/capture.js`），
+  论文此前也从未点名它。但 §5 现在引用了它的 CP 检查器作为辅助工具，
+  所以 §13 的制品清单必须补上，否则审稿人无法核实。
   该仓库的 `learn2fold/cp-checker.js` 实现的是 **Kawasaki / Maekawa / big-little-big
   三个局部必要条件**（不是 Flat-Folder 的四类约束，全仓库 `taco` 零命中），
   且文件头写明「Necessary conditions only. Never emits a positive global-foldability label.」,
