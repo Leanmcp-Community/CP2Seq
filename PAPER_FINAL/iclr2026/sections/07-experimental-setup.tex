@@ -154,9 +154,8 @@ Symbolic crease-pattern-to-sequence solver \citep{creasy} (planned) & The closes
 \end{table}
 
 \paragraph{What the enumerator does, and why exhaustive search is affordable.}
-A fold is specified by a line in current-plane coordinates together with a layer selection, which
-looks like a continuum of lines crossed with a power set of layers and is neither. Candidate lines
-are read off the crease pattern itself: the distinct lines through its mountain and valley edges,
+A fold is specified by a line in current-plane coordinates together with a layer selection, and
+both are drawn from small finite sets. Candidate lines are read off the crease pattern itself: the distinct lines through its mountain and valley edges,
 carried forward through each distinct face transform into current coordinates, then deduplicated.
 On a box-pleated pattern thousands of crease edges collapse to a few dozen lines. Layer selections
 are not arbitrary subsets either, because a partial fold must be a contiguous run at one extremity

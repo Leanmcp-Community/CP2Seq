@@ -3,8 +3,8 @@
 
 CP2Seq asks a model to recover the folding sequence between a crease pattern and a target folded
 state, and checks the answer by executing it. Generating an instance costs one forward pass of the
-engine while deciding simple foldability in this regime is strongly NP-complete, which is what lets
-the corpus grow without annotation and the verifier stay exact. On the easy group a deterministic
+engine while recovering a sequence has no known efficient method, which is what lets the corpus
+grow without annotation and the verifier stay exact. On the easy group a deterministic
 breadth-first search over the same action set solves 54.7\% of its attempts against 20.4\% for the
 best-covered model, and no evaluated model attempt succeeds on the medium or hard groups. Every
 recorded reasoning-effort setting is low, so these numbers bound what was measured rather than
