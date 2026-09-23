@@ -39,12 +39,5 @@ constructed crease pattern and folded state with the supplied targets
 
 The repository also provides a separate Flat-Folder check for the existence of a flat-folded state
 consistent with a crease pattern \citep{akitaya-flatfolder}. This check is distinct from action
-execution and target matching; its scope is described in Appendix~\ref{app:action-errors}.
-
-A second auxiliary tool checks a crease pattern against the local necessary conditions for flat
-foldability: Kawasaki's condition on alternating sector angles at an interior vertex, Maekawa's
-condition on the mountain and valley counts, and the big-little-big condition on the creases
-bounding a strictly smaller sector. These conditions are necessary and not sufficient, so the tool
-can refute a pattern but never certify one; a pattern that passes every vertex is reported as
-undecided rather than as flat-foldable. Neither auxiliary tool takes part in scoring or in action
-execution, and neither is invoked during an episode.
+execution and target matching, takes no part in scoring, and is not invoked during an episode; its
+scope is described in Appendix~\ref{app:action-errors}.

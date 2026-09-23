@@ -153,6 +153,31 @@ Symbolic crease-pattern-to-sequence solver \citep{creasy} (planned) & The closes
 \end{center}
 \end{table}
 
-The breadth-first baseline is the one that answers the ``the simulator did all the work'' objection
-of Section~\ref{sec:env-division} numerically rather than structurally, which is the stronger form of
-that answer.
+\paragraph{What the enumerator does, and why exhaustive search is affordable.}
+A fold is specified by a line in current-plane coordinates together with a layer selection, which
+looks like a continuum of lines crossed with a power set of layers and is neither. Candidate lines
+are read off the crease pattern itself: the distinct lines through its mountain and valley edges,
+carried forward through each distinct face transform into current coordinates, then deduplicated.
+On a box-pleated pattern thousands of crease edges collapse to a few dozen lines. Layer selections
+are not arbitrary subsets either, because a partial fold must be a contiguous run at one extremity
+of the stack; the selections are the whole stack, the top $k$, and the bottom $k$, which is about
+$2N$ for $N$ layers rather than $2^N$, with the over or under direction forced for partials. Each
+surviving candidate is judged by the same function the \texttt{add\_fold} tool calls, so a listed
+fold cannot be one the tool would then reject, and it is dropped if it fails any material check of
+Section~\ref{sec:env-refusals} or would crease the sheet where the target pattern carries no
+crease.
+
+Across 73,750 enumerations recorded in the saved runs, this evaluates a mean of about 2,010
+candidate actions per state and returns 3.51 of them, a prune of roughly 570 times performed by
+the environment rather than by the model. That factor is what makes exhaustive search affordable
+at all: at a branching factor near 3.5, an easy sample of five folds is a tree of a few hundred
+states. The baseline expands with the same enumerator the model is given, tests goals with the
+same terminal comparator that decides \texttt{solved}, reads no reference sequence, and runs under
+a per-sample wall-clock budget with caps on states expanded and depth.
+
+The comparison is therefore like-for-like by construction, and that is the point. The question a
+reader should ask is not whether a model can fold paper but how much of the task its tool has
+already done for it: if breadth-first search over the same enumerated actions solves most of the
+easy group outright, a model scoring below it is losing on a tree that tool had already pruned.
+This answers the ``the simulator did all the work'' objection numerically rather than
+structurally, which is the stronger form of that answer.

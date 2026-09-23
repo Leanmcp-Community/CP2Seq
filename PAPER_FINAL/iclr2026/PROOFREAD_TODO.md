@@ -55,7 +55,9 @@
 
 ## C. 交叉引用与结构
 
-- [ ] **C1. §7.4 末句指向一个不存在的论证。** 它说 BFS 基线回答了 §5 的
+- [~] **C1.〔部分解决〕§7.4 末句指向一个不存在的论证。** 新增的枚举器段落已把该论证
+  就地写出，末句不再依赖 §5 的一个空 label，但 `\ref{sec:env-division}` 已从该句移除；
+  若仍想在 §5 保留分工论述，需另行补写。原始问题： 它说 BFS 基线回答了 §5 的
   "the simulator did all the work" 质疑，但 §5 全文没有这个质疑——原 DRAFT 的
   "Objections, answered here rather than in rebuttal" 一节在拆分成 `sections/` 时没被搬过来。
 - [ ] **C2. §13 指向 §10 的「一个数字」不存在。** `examples/instagram/` 的 366
@@ -123,8 +125,8 @@
   和第三方数据集 blob 中；`workspace/search_baseline.mjs` 里没有，BFS 用的是与模型
   相同的合法动作枚举器。**但** `Leanmcp/origami-surface-sim` 的 `learn2fold/cp-checker.js`
   实现了 **Kawasaki / Maekawa / big-little-big** 三个局部必要条件
-  （不是 Flat-Folder 的四类约束）。已作为辅助工具写入 §5，并写明只是必要条件、
-  只能证伪不能证实，且不参与评分与动作执行。
+  （不是 Flat-Folder 的四类约束）。曾写入 §5，**因该仓库不公开而撤回**：
+  论文不能引用审稿人拿不到的制品。
 - 正文现有的三处 Flat-Folder 表述（`05-environment.tex:32`、
   `appendix-folding-model.tex:95`、`appendix-a-reference-notes.tex:50`）**措辞都是对的**，
   界限划得很清楚，不需要改。
@@ -136,10 +138,10 @@
 - [x] **E4.〔已加入 `05-environment.tex`〕§5 应点明自穿透在本动作空间中不可表示。** `workspace/tools/surface-sim.mjs` 文件头：
   部分层折叠只能移动取自顶部或底部的一段连续层，这类移动无法把纸推过它留下的层，
   因此自穿透是构造上排除的，而非检测出来的。环境永远不会返回该类拒绝。
-- [!] **E5. `origami-surface-sim` 现在必须列进 §13。** 已核实：**它不在评测路径上**
-  （评测全在 `DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/*` 加 `viewer/capture.js`），
-  论文此前也从未点名它。但 §5 现在引用了它的 CP 检查器作为辅助工具，
-  所以 §13 的制品清单必须补上，否则审稿人无法核实。
+- [x] **E5.〔已决定不公开〕`origami-surface-sim` 不作为制品发布。**
+  已核实它**不在评测路径上**（评测全在 `DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/*`
+  加 `viewer/capture.js`），论文也从未点名它。引用它的那段已从 §5 撤回，
+  §13 无需改动。
   该仓库的 `learn2fold/cp-checker.js` 实现的是 **Kawasaki / Maekawa / big-little-big
   三个局部必要条件**（不是 Flat-Folder 的四类约束，全仓库 `taco` 零命中），
   且文件头写明「Necessary conditions only. Never emits a positive global-foldability label.」,
@@ -157,6 +159,11 @@
 - [ ] **F2.** `reference depth` 与 `fold depth` 并存，是否同一个量需确认。
 - [ ] **F3.** `turnover` 与 `reflection` 在 §6 与摘要中所指是否同一操作需确认。
 - [ ] **F4.** `action model` 与 §3.2 的 action space 是否同义；若是，统一用一个词。
+
+- [ ] **G0. BFS 每样本 wall-clock 预算未填。** §7.4 新段写作「a per-sample wall-clock budget」，
+  具体秒数需从 run 记录读取（`run_deterministic.sh` 默认 `SECONDS_PER_SAMPLE=10`，
+  但实际报告的那批用了多少只有 run 记录知道，而记录在另一台机器上）。
+  与 §9.2 的 358 次超时是同一个预算，审稿人会问。
 
 ## G. 高价值但未做的实验
 
