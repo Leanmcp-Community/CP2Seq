@@ -21,21 +21,22 @@ includes runs outside the earlier 1,211-attempt solve-rate snapshot.
 \subsection{Model performance}
 \label{sec:results-headline}
 
-\textbf{No language model solved a single sample beyond the easy stratum.} Across every model arm,
-mid is 0 of 70 and hard is 0 of 27. On the easy stratum a deterministic breadth-first search over
+\textbf{No language model solved a single sample beyond the easy group.} Across every model arm,
+medium is 0 of 70 and hard is 0 of 27. On the easy group a deterministic breadth-first search over
 exactly the action set the models are given solves 54.7\%, against 20.4\% for the best-covered model
 at the same tier.
 
 \begin{table}[h]
-\caption{Solve rate per stratum, all saved runs. Denominators are attempts, not distinct samples.
-Rows with fewer than ten attempts support no rate and are shown only so that reporting is not
-selective.}
+\caption{Solve rate per group, all saved runs. Denominators are attempts, not distinct samples.
+Rows with fewer than ten attempts come from exploratory runs that were never extended into a
+configured arm; they support no rate and are shown only so that reporting is not selective. The
+single solved attempt by \texttt{gpt-6-astra} is one attempt, not a 100\% rate.}
 \label{tab:headline}
 \begin{center}
 \footnotesize
 \setlength{\tabcolsep}{2.5pt}
 \begin{tabular}{llrrrrr}
-\multicolumn{1}{c}{\bf ARM} &\multicolumn{1}{c}{\bf TIER} &\multicolumn{1}{c}{\bf EASY} &\multicolumn{1}{c}{\bf MID} &\multicolumn{1}{c}{\bf HARD} &\multicolumn{1}{c}{\bf OVERALL} &\multicolumn{1}{c}{\bf CALLS} \\
+\multicolumn{1}{c}{\bf ARM} &\multicolumn{1}{c}{\bf TIER} &\multicolumn{1}{c}{\bf EASY} &\multicolumn{1}{c}{\bf MEDIUM} &\multicolumn{1}{c}{\bf HARD} &\multicolumn{1}{c}{\bf OVERALL} &\multicolumn{1}{c}{\bf CALLS} \\
 \hline \\
 \texttt{deterministic-bfs} & legal-folds & {\bf 366/669 (54.7\%)} & 1/40 (2.5\%) & 0/16 & 367/725 (50.6\%) & 5 \\
 \texttt{gpt-5.6-luna}      & legal-folds & 59/289 (20.4\%) & 0/66 & 0/25 & 59/380 (15.5\%) & 23.5 \\
@@ -62,10 +63,14 @@ a comparison. Any main table in the submitted paper prints $n$ in every cell or 
 
 \input{sections/figure-bfs-effort}
 
-\texttt{deterministic-bfs} solves 367 of 725 attempts overall. Per stratum: 366/669 easy, 1/40 mid,
-0/16 hard. Median states expanded is 65 on easy, 1051.5 on mid, 532 on hard. 358% fact:results.bfs.timeouts
+\texttt{deterministic-bfs} solves 367 of 725 attempts overall. Per group: 366/669 easy, 1/40 medium,
+0/16 hard. Median states expanded is 65 on easy, 1051.5 on medium, 532 on hard. 358% fact:results.bfs.timeouts
 of its 725 attempts ended in timeout rather than exhaustion, so \textbf{50.6\% is a lower bound
-under the baseline's time budget, not the ceiling of exhaustive search.}
+under the baseline's time budget, not the ceiling of exhaustive search.} Timeouts also explain why
+the hard median falls below the medium one: an attempt stopped by the clock contributes the states
+it had expanded when it stopped, so the groups where the budget binds hardest report the smaller
+counts. The medians describe observed effort under that budget and are not estimates of the search
+each group requires.
 
 Candidate enumeration filters for legality and compatibility with the target crease pattern.
 The baseline measures performance of systematic exploration with this filtering; its success rate
@@ -127,8 +132,8 @@ Per-sample repeat statistics and matched-budget comparisons remain to be reporte
 
 \begin{figure}[h]
 \draftimage{8}
-\begin{center}\textit{\footnotesize Placeholder: solve rate by fold-count stratum for Luna and BFS,
+\begin{center}\textit{\footnotesize Placeholder: solve rate by fold-count group for Luna and BFS,
 with attempt counts and run conditions shown.}\end{center}
-\caption{\textbf{[DRAFT IMAGE]} Planned summary of performance by fold-count stratum.}
+\caption{\textbf{[DRAFT IMAGE]} Planned summary of performance by fold-count group.}
 \label{fig:main}
 \end{figure}

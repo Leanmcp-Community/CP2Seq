@@ -16,7 +16,7 @@
   但 `06-scoring.tex` 的比较器验证现在只剩规范性陈述——原先 600/600 拒绝损坏状态的负控结果，
   因为跑的是另一份 identity-aware 比较器而被撤下。
   **二选一：在实际评分器上重跑负控，或把定位段的说法降级。** 全文最大的内在张力。
-- [!] **A3. 删掉 §11「计划中的图及其状态」整节。** `11-figures.tex` 是作者看板，
+- [x] **A3.〔已被 `\ifdraftnotes` 包裹，主文件第 30 行是 `\draftnotesfalse`，不进 PDF；投稿前确认该开关仍为 false〕§11 图看板。** `11-figures.tex` 是作者看板，
   交给审稿人等于声明图没画完。
 - [!] **A4. 五处图占位。** `[TO DRAW]` / `[DRAFT IMAGE]` / `\draftimage{8}`，
   含 §9 的主结果图 `fig:main`。
@@ -29,14 +29,21 @@
 
 ## B. 数字与口径
 
-- [ ] **B1. 模型尝试总数对不上。** §9/§10 称「461 次记录了 reasoning 设置 + 25 次缺失」；
-  §9.1 表中非 BFS、非出错行相加为 **462**。差 1。
-- [ ] **B2. 三个总数并存且未说明关系。** 1,211（解出率快照）/ 1,422（CP 距离扫描）/ 447（Luna）。
-  **建议全部数字由同一个脚本产出**，避免逐个被审稿人加总核对。
-- [ ] **B3. BFS 展开状态中位数倒置未解释。** 中等 1051.5 > 困难 532。
+- [x] **B1.〔误报，论文是对的〕模型尝试总数。** 按 `results.md` 的 effort 分表：
+  luna 380+67、claude-sonnet-5 5、sol 7、terra 1、astra 1 = **461**（全为 `eff=low`）；
+  `eff=-` 为 codex-cli-chatgpt 1 + unknown 24 = **25**。此前把 codex-cli-chatgpt
+  错划进「有记录」一侧。不需改动。
+- [!] **B2. 两个数字来自两次快照，且本机无法重算。** 1,211（解出率）与 1,422（CP 距离）
+  扫描时间不同，正文已说明后者包含前者之外的运行。但 `python3 workspace/aggregate_results.py`
+  在本机只能看到 7 次运行 / 26 次尝试——**论文的 runs 目录在另一台机器上**
+  （`cp-distance/summary.json` 的 roots 为 `/Users/ddod/LEANMCP/ROBOTICS/FoldOrigami/...`）。
+  在本机重跑会把 `results.md` 截断，已发生过一次并用 git 还原。
+  要让两个数出自同一次快照，须在有完整 runs 的机器上依次重跑两个脚本，或先同步 runs。
+  **附带风险：论文核心数字依赖一个不在仓库里的目录，投稿前须确认该批 runs 有备份。**
+- [x] **B3.〔已在 `09-results.tex:68` 解释超时导致的倒置〕BFS 展开状态中位数倒置。** 中等 1051.5 > 困难 532。
   真实原因多半是困难实例更早超时（725 次中 358 次超时）。补一句：
   *the hard median is lower because hard attempts time out earlier, not because they are easier.*
-- [ ] **B4. `gpt-6-astra` 的 1/1 行。** 论文已警告不可读作 100%，但它同时是表中唯一一个
+- [x] **B4.〔已写进 `tab:headline` 表注；「探索性运行」一语未经数据验证，如有出入请改〕`gpt-6-astra` 的 1/1 行。** 论文已警告不可读作 100%，但它同时是表中唯一一个
   在基础工具条件下解出样本的非 Luna 模型。表注应直接说明为何只跑一次。
 
 ## C. 交叉引用与结构
@@ -74,7 +81,7 @@
 - [x] **D3.〔已加入 `10-limitations.tex:28`，开头已改为明指并挂上 §9.3 的 48.1%〕回退与剪枝作为未来工作，全文未提。** `pruning` 一次都没出现；
   `backtracking` 只作为工具名出现在 §8 表格里。48.1% 死于状态重访正指向这两项能力。
   已备好的措辞见文末「备用段落 3」。
-- [ ] **D4. 加 Future Work 节。** 目前 14 个正文节直接进附录，**没有 Conclusion 也没有 Future Work**。
+- [x] **D4.〔已新建 `sections/15-conclusion.tex`（Conclusion and future work），§10 之后 input〕加 Future Work 节。** 目前 14 个正文节直接进附录，**没有 Conclusion 也没有 Future Work**。
   D3 的内容需要一个落脚处。
 - [ ] **D5. 加消融实验。** §8 现在只报告了 basic tools 与 legal-folds 两种条件，
   no-vision 与 verifier-only 标着「计划中」。要么补跑，要么把「四种辅助条件」的说法
@@ -82,11 +89,11 @@
 - [ ] **D6. 参考文献改成会议要求的格式。** 核对 ICLR 2026 模板的 `\bibliographystyle`
   与 natbib 用法；同时清理附录 A 里 `⚠️ Citation missing` 一类条目
   （`origamibench`、`corigami`）。
-- [ ] **D7. §5 未点明「拒绝目标图样之外的折痕」本身是一种辅助。** 它泄露目标信息、
+- [x] **D7.〔已加入 `05-environment.tex:20`〕§5 未点明「拒绝目标图样之外的折痕」本身是一种辅助。** 它泄露目标信息、
   大幅剪枝动作空间，却不在 §8 的辅助条件表里。建议补一句：
   *This is a form of assistance: it prevents a class of unrecoverable moves, and the rates
   reported here are therefore rates under that constraint.*
-- [ ] **D8. 容差三个数分散在两节**（2e-6 / 1e-7 / 1e-9）。集中到附录一张表，正文引表。
+- [x] **D8.〔已建 `tab:tolerances`，收六个值；§6 与 §7.3 改为引表〕容差分散**（2e-6 / 1e-7 / 1e-9）。集中到附录一张表，正文引表。
 - [ ] **D9. `coupling` 定义了但没用上。** §4.2 出现一次，§9 只出现在一条「待运行」注释里。
   要么补上 solve rate vs coupling 的结果，要么弱化其在 §4 的地位。
 
@@ -106,7 +113,7 @@
 - 正文现有的三处 Flat-Folder 表述（`05-environment.tex:32`、
   `appendix-folding-model.tex:95`、`appendix-a-reference-notes.tex:50`）**措辞都是对的**，
   界限划得很清楚，不需要改。
-- [ ] **E3. 四类约束的引用 key 不一致。** 附录正文挂 `\citet{akitaya-flatfolder}`（论文），
+- [x] **E3.〔已统一为 `\citep{akitaya-flatfolder,flatfolder}`〕四类约束的引用 key 不一致。** 附录正文挂 `\citet{akitaya-flatfolder}`（论文），
   refnotes 挂 `\citet{flatfolder}`（软件）。建议统一为 `\citep{akitaya-flatfolder,flatfolder}`。
 
 ## E'. 新增（来自 `origami-surface-sim` 核查）
@@ -127,7 +134,8 @@
 
 ## F. 术语统一
 
-- [ ] **F1.** `stratum` / `group` 混用（表头写成 "Stratum or group"）。
+- [x] **F1.〔已统一为 group，6 个文件 13 处；`appendix-c-changes.tex` 作为历史记录未动〕**
+- [x] **F1b.〔已统一为 medium，`09-results.tex` 4 处〕§4 与 §9 的组名不一致。**
 - [ ] **F2.** `reference depth` 与 `fold depth` 并存，是否同一个量需确认。
 - [ ] **F3.** `turnover` 与 `reflection` 在 §6 与摘要中所指是否同一操作需确认。
 - [ ] **F4.** `action model` 与 §3.2 的 action space 是否同义；若是，统一用一个词。

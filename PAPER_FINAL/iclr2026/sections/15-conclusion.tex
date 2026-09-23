@@ -1,0 +1,19 @@
+\section{Conclusion and future work}
+\label{sec:conclusion}
+
+CP2Seq asks a model to recover the folding sequence between a crease pattern and a target folded
+state, and checks the answer by executing it. Generating an instance costs one forward pass of the
+engine while deciding simple foldability in this regime is strongly NP-complete, which is what lets
+the corpus grow without annotation and the verifier stay exact. On the easy group a deterministic
+breadth-first search over the same action set solves 54.7\% of its attempts against 20.4\% for the
+best-covered model, and no evaluated model attempt succeeds on the medium or hard groups. Every
+recorded reasoning-effort setting is low, so these numbers bound what was measured rather than
+what the models can do.
+
+Two capabilities the benchmark is built to exercise are not yet trained against it: deciding when
+to abandon a partial sequence, and deciding which candidate folds to discard unexamined. The
+48.1\% of attempts that end in state cycling (Section~\ref{sec:results-failures}) is where both
+are visible, and neither is addressed by a larger query budget. We report the gap and leave its
+closure, whether by search-aware prompting, by tool design, or by training against the verifier,
+to future work. The remaining assistance conditions, higher reasoning-effort runs, and matched
+budgets across configurations are the measurements that would make those comparisons controlled.

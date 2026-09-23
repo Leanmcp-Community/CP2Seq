@@ -19,16 +19,16 @@ reverses the stack order, and flips face orientations. The same transformation m
 layers; independent layer transformations and arbitrary layer permutations are not accepted.
 A successful construction must satisfy both crease-pattern and folded-state agreement.
 
-The engine's crease comparator uses a numerical tolerance of $2\times10^{-6}$ for interval
-endpoint matching, and the shared folded-state comparator uses the same positional tolerance.
-The comparison is therefore not tolerance-free. Appendix~\ref{app:comparison-details} describes
-the alignment and representation details. These final checks are distinct from the three optional
+Neither comparison is tolerance-free. The crease comparator and the shared folded-state
+comparator both match positions within $2\times10^{-6}$; Table~\ref{tab:tolerances} lists every
+tolerance in the pipeline, and Appendix~\ref{app:comparison-details} describes the alignment and
+representation details. These final checks are distinct from the three optional
 levels of target feedback supplied during an episode.
 
 \subsubsection{Reported metrics}
 \label{sec:scoring-metrics}
 
-We report solve rate by fold-count stratum, with the number of attempts and the applicable run
+We report solve rate by fold-count group, with the number of attempts and the applicable run
 budgets. Termination reasons distinguish successful submission, unsuccessful completion, budget
 limits, and repetition-related stopping. Query counts describe search effort; for unsuccessful
 attempts they are consumed queries, not observed queries to solution.

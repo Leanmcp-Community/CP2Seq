@@ -17,7 +17,9 @@ Reflecting only the moving region would separate that shared edge, so the engine
 proposal as \texttt{would-tear}. A \texttt{no-crease} rejection means that paper was selected to
 move but the operation did not create a crease segment; it is distinct from the connectivity
 check. Other rejections cover an empty moving region, an incompatible over/under direction,
-and creases absent from the target pattern. Detailed conditions are listed in
+and creases absent from the target pattern. That last check is a form of assistance: it prevents a
+class of unrecoverable moves, and the rates reported here are therefore rates under that
+constraint. Detailed conditions are listed in
 Appendix~\ref{app:action-errors}.
 
 \phantomsection

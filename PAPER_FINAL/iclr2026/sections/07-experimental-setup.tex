@@ -121,10 +121,9 @@ on the table is an accident of which half of the sheet travelled.
 
 \textbf{Matching under transforms requires a floating-point tolerance, and it is stated.} Admitting
 arbitrary rotation means candidate and reference coordinates agree only to within floating-point
-representation, so the comparator matches polygons within $2\times10^{-6}$, cleans degenerate
-vertices at $10^{-7}$ and treats vertices as collinear below $10^{-9}$. Every result record carries
-the tolerance it was scored under, so the value is visible in the released runs rather than buried
-in a constant. Crease compatibility and terminal-state comparison both involve numerical
+representation, so the comparator matches polygons within $2\times10^{-6}$; the remaining
+tolerances are listed in Table~\ref{tab:tolerances}. Every result record carries the tolerances it
+was scored under, so the values are visible in the released runs rather than buried in a constant. Crease compatibility and terminal-state comparison both involve numerical
 tolerances; these checks must not be described as tolerance-free.
 
 \textbf{Error verbosity is itself a variable.} The richer a refusal, the more of the reasoning the

@@ -83,15 +83,15 @@ Our contributions are:
   It defines four assistance conditions;
   the current experiments cover the filtered and basic-tools conditions.
 \item \textbf{A search baseline and an empirical analysis of model behavior.} We provide
-  breadth-first search over the same candidate actions, report performance by difficulty stratum,
+  breadth-first search over the same candidate actions, report performance by difficulty group,
   and analyze episode termination. The current evaluation concentrates on
   \texttt{gpt-5.6-luna}; other model runs have insufficient coverage for a cross-model ranking.
 \end{enumerate}
 
-In the current aggregate results, breadth-first search solves 54.7\% of easy-stratum attempts,
+In the current aggregate results, breadth-first search solves 54.7\% of easy-group attempts,
 compared with 20.4\% for \texttt{gpt-5.6-luna} with filtering and 6.2\% with basic tools.
 These rates summarize different sets of attempts rather than a paired comparison on an identical
-sample set. No evaluated language-model attempt succeeds on the medium or hard strata. All
+sample set. No evaluated language-model attempt succeeds on the medium or hard groups. All
 recorded reasoning-effort settings are low, so these results do not establish a general limit on
 the evaluated models. State cycling terminates 48.1\% of Luna's attempts, motivating further
 experiments on state tracking and backtracking. Section~\ref{sec:results} reports the coverage,
