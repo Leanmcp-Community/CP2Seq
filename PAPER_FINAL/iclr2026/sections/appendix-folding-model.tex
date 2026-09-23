@@ -64,6 +64,30 @@ of the first layer propose global alignments; a candidate alignment is accepted 
 layer polygon and parity matches its target rank. Polygon matching uses a positional tolerance
 of $2\times10^{-6}$, short-edge cleanup at $10^{-7}$, and a collinearity threshold of $10^{-9}$.
 
+Table~\ref{tab:tolerances} collects every numerical tolerance the reported results depend on.
+Each result record carries the values it was scored under, so a re-scoring can be distinguished
+from a comparison at the same settings.
+
+\begin{table}[h]
+\centering
+\caption{Numerical tolerances used by the reported checks. No check in this pipeline is
+tolerance-free.}
+\label{tab:tolerances}
+\begin{tabular}{llp{0.40\textwidth}}
+\hline
+Value & Where used & What it admits \\
+\hline
+$2\times10^{-6}$ & Crease comparator; terminal comparator & Interval endpoint and polygon vertex
+positions, after an arbitrary global isometry. \\
+$10^{-7}$ & Terminal comparator & Short-edge cleanup before polygon matching. \\
+$10^{-9}$ & Terminal comparator & Collinearity threshold for vertex removal. \\
+$2\times10^{-6}$ & CP edit distance & Interval endpoint agreement. \\
+$2.44\times10^{-4}$ & CP edit distance & Line quantization when grouping collinear intervals. \\
+$10^{-5}$ & CP edit distance & Gap below which two intervals on one line are merged. \\
+\hline
+\end{tabular}
+\end{table}
+
 The shared implementation represents current-plane polygons, parity, and rank. It does not
 explicitly compare original-sheet region identities. Any identity-aware offline comparator must
 be distinguished from this path, and the comparator version used for each reported result must
@@ -93,6 +117,7 @@ run over it, contrary to the supported layer-selection rule. \\
 \end{table}
 
 The independent Flat-Folder wrapper uses layer-order constraints, including taco-taco,
-taco-tortilla, tortilla-tortilla, and transitivity constraints \citep{akitaya-flatfolder}.
+taco-tortilla, tortilla-tortilla, and transitivity constraints
+\citep{akitaya-flatfolder,flatfolder}.
 It tests whether the pattern admits a flat-folded state, not whether the agent's sequence reaches
 the supplied target. It is not invoked automatically for every proposed action.

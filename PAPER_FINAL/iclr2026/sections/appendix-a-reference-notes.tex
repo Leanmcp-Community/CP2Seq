@@ -9,14 +9,12 @@ notes below record what is still outstanding.
 \citet{origamispace} must be cited as a preprint; \texttt{papers.md} recorded NeurIPS'25 and the
 arXiv record carries no venue. \citet{gamibench} has code and data released. \citet{foldingagent}
 reconstructs folding processes from instructional video and is built on the PurelandFold dataset;
-code at \url{https://github.com/maya-moriya/FoldingAgent}. \textbf{OrigamiBench}
-\citep{origamibench} has a \emph{citation missing}: it appears in our metrics survey as the source
-of query efficiency and geometric/semantic similarity, and its dataset is the
+code at \url{https://github.com/maya-moriya/FoldingAgent}. \citet{origamibench} is the source of
+query efficiency and geometric or semantic similarity in our metrics survey, and its dataset is the
 366% fact:corpus.instagram.total
-patterns in Flat-Folder's \texttt{examples/instagram/}. A full reference has to be recovered before
-submission. \textbf{COrigami} \citep{corigami} has a \emph{citation missing} as well: it appears in
-the metrics survey as the source of flat-foldability as a boolean and a VLM aesthetic score. Same
-action needed.
+patterns in Flat-Folder's \texttt{examples/instagram/}. \citet{corigami} is the source of
+flat-foldability as a boolean and of a VLM aesthetic score. Both were verified against the arXiv
+record on 2026-09-21.
 
 \paragraph{Complexity and theory of flat folding.}
 \citet{bern-hayes} is the citation under the paper's central claim: geometry does not determine
@@ -47,8 +45,9 @@ object.
 benchmark can turn into a measurement.
 
 \paragraph{Tools, formats and data.}
-\citet{flatfolder} decides and enumerates flat-folded states and is the source of the four
-constraint classes cited in Section~\ref{sec:env-refusals}. \citet{fold-format} is the de facto
+\citet{flatfolder} is the implementation that decides and enumerates flat-folded states, for the
+method of \citet{akitaya-flatfolder}; together they are the source of the four constraint classes
+cited in Section~\ref{sec:env-refusals}. \citet{fold-format} is the de facto
 standard used by every artifact we ship. \citet{oripa} is a crease-pattern editor with folded-form
 estimation. \citet{purelandfold} is not used as training or evaluation data here; it is cited as
 the closest existing sequence-level corpus and as FoldingAgent's data.
