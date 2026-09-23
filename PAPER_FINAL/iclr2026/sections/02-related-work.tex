@@ -1,0 +1,38 @@
+\section{Related work}
+\label{sec:related}
+
+\subsection{Origami benchmarks and generation}
+\label{sec:related-benchmarks}
+
+GamiBench \citep{gamibench} evaluates multimodal models through visual questions about folded
+configurations, viewpoints, and impossible crease patterns. Its viewpoint-consistency and
+impossible-fold-selection metrics assess whether predictions remain consistent across views and
+whether models recognize infeasible patterns. OrigamiSpace \citep{origamispace} evaluates pattern
+prediction, multi-step spatial reasoning, spatial relationships, and crease-pattern code generation.
+It also provides an interactive environment for the code-generation task. These benchmarks connect
+origami geometry to visual reasoning and generation, with different requirements on the model's
+output.
+
+CP2Seq focuses on recovering a complete folding sequence from a crease pattern and a target
+folded state. The model selects and revises actions, and evaluation checks their execution and the
+resulting construction. This differs from selecting a folded configuration or generating a pattern
+specification. Our procedural generator records reference sequences as folds are performed,
+allowing new instances to be produced without manually annotating solutions. The environment
+checks proposed actions under its supported folding model and supplies feedback during the search.
+Rejecting an invalid action in a reachable instance is distinct from identifying an impossible
+crease pattern: the former concerns a particular move, while the latter concerns the feasibility
+of the pattern itself.
+
+\subsection{Computational origami and sequence planning}
+\label{sec:related-theory}
+
+Our action models build on the simple-fold framework of \citet{arkin-map}, which distinguishes
+one-layer, some-layers, and all-layers folds. CP2Seq uses the latter two variants. Work on
+flat-folded states studies layer ordering as well as planar geometry
+\citep{bern-hayes,akitaya-flatfolder}, motivating our explicit representation of layers in the
+state and final comparison. Earlier work also addresses generating folding sequences from crease
+patterns \citep{akitaya-cp2seq}; sequence recovery is therefore an established computational
+origami problem. We use it to evaluate multimodal models through visual observations, executable
+actions, and feedback. Complexity results depend on the permitted folds and crease-pattern
+restrictions \citep{arkin-map}; we assess the practical difficulty of our generated instances
+through measured model and search-baseline performance.

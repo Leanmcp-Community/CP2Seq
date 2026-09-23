@@ -1,0 +1,159 @@
+\subsection{Evaluation protocol}
+\label{sec:experiments}
+
+% EDITING NOTE (retained): The pipeline -----should have a hand drawn graph
+\subsubsection{Episode procedure}
+\label{sec:exp-pipeline}
+
+One episode is one sample attempted by one model under one tier of assistance. The loop is the same
+for every arm and every model, and the only thing that varies between arms is what the model is
+allowed to see and call.
+
+{\small\begin{verbatim}
+EPISODE(sample, model, condition, query_budget):
+    cp, target <- LOAD_INPUTS(sample)
+    session <- INITIALIZE(cp, target, unfolded_square)
+    history <- []
+    for query in 1..query_budget:
+        obs <- OBSERVE(session, condition)
+        call <- model(cp, target, obs, history, condition)
+        if call is finish: break
+        # Edits: add/remove fold, go to step, restore revision.
+        # Reads: state, images, candidates, target feedback.
+        result <- DISPATCH_TRANSACTIONALLY(session, call)
+        # Rejected edits leave session unchanged but consume a query.
+        # Read calls consume a query without changing the sequence.
+        history.append(call, result)
+        if STOPPING_RULE(session, history): break
+    return SCORE(REPLAY(session.actions), REFERENCE_AT_SCORING(sample))
+\end{verbatim}
+}
+
+The pseudocode describes one tool call per query. Accepted edits update the current sequence;
+rejected edits preserve it, and both consume budget. Removing a fold replays the remaining actions;
+returning to an earlier step truncates the sequence, while revision restoration can recover a
+previous branch. The reference sequence is withheld until scoring. Run-specific turn, time, and
+cycle limits must be reported alongside the query count.
+
+% ===========================================================================
+% FIGURE 4 -- THE EVALUATION PIPELINE.  [TO DRAW]
+% Left-to-right diagram of one episode.
+%   LEFT    the two inputs: crease pattern, final folded state.
+%   CENTRE  the loop as a cycle: model proposes a fold; environment returns either
+%           a new state with its two rendered views, or a NAMED refusal; history
+%           accumulates.
+%   RIGHT   termination and scoring: replay of the model's sequence and replay of
+%           the reference, compared at Level 1 and Level 2.
+% Must make three things visually obvious:
+%   (1) environment and verifier are ONE box, not two;
+%   (2) refusals loop back WITHOUT advancing;
+%   (3) seq.json sits OUTSIDE the loop, entering only at scoring.
+% A dashed boundary around the withheld items (intermediate frames, reference
+% sequence) carries point (3) without a sentence.
+% ===========================================================================
+\input{figures/pipeline}
+
+\subsubsection{Tool configuration}
+\label{sec:exp-tools}
+
+Table~\ref{tab:tools} lists the tool interface. Loading and configuration are described in
+Appendix~\ref{app:tool-loading}.
+
+\begin{table}[h]
+\centering
+\caption{Tools available to the evaluation harness; exposure depends on run configuration.}
+\label{tab:tools}
+\begin{tabular}{lp{0.65\textwidth}}
+\hline
+Tool & Operation \\
+\hline
+\texttt{add\_fold} & Append a checked fold; reject invalid actions without changing state. \\
+\texttt{remove\_fold} & Remove a specified fold and replay the remainder transactionally. \\
+\texttt{go\_to\_step} & Retain the first specified number of folds. \\
+\texttt{restore\_revision} & Restore a previously recorded branch state. \\
+\texttt{get\_state} & Return the current sequence and layer geometry. \\
+\texttt{get\_images} & Render views of a completed step, including X-ray and exploded views. \\
+\texttt{list\_legal\_folds} & Optionally enumerate legal candidates compatible with the target CP. \\
+\texttt{compare\_to\_target} & Optionally return feedback at the configured level (Section~\ref{sec:target-feedback}). \\
+\texttt{finish} & End the episode and evaluate the current sequence. \\
+\hline
+\end{tabular}
+\end{table}
+
+% ===========================================================================
+% FIGURE 5 -- A REFUSAL AS THE MODEL RECEIVES IT.  [TO DRAW]
+% One concrete rejected fold, rendered exactly as the harness returns it:
+%   - the proposed fold line drawn over the current state;
+%   - the named reason (would-tear);
+%   - the specific evidence: for a tear, the crease segment joining a moving face
+%     to a stationary one, highlighted, away from the fold line.
+% Beside it, the SAME state with a legal fold line, for contrast. This is the
+% tearing pair of the action-space section, which currently exists only as prose.
+% Caption states that the reason is a NAME rather than a boolean, and that this is
+% why error analysis is a taxonomy that exists before the experiment.
+% ===========================================================================
+% EDITING NOTE: Refusal figure moved to the appendix plan; use an actual rejected action.
+
+
+\subsubsection{Models and budgets}
+\label{sec:exp-protocol}
+
+\textbf{Conditions.} Section~\ref{sec:ablations} distinguishes completed configurations from
+planned comparisons. Matched samples and budgets are required for controlled comparisons; the
+current aggregate does not establish such matching.
+
+\textbf{Models.} \texttt{[TO FILL from the aggregation: the models actually run, their versions, and
+the reasoning-effort and image-history settings used. Held fixed across tiers, because comparing
+across models and across tiers at once would confound the two.]}
+
+\textbf{Protocol.} Report budgets, repeat counts, and stopping rules for each configuration.
+The current results aggregate attempts; per-sample repeats and their variability have not yet
+been reported (Section~\ref{sec:results-threats}).
+
+\textbf{Transforms are applied in every reported result.} Every solve rate in
+Section~\ref{sec:results} is computed after quotienting out the plane isometry group of
+Section~\ref{sec:scoring-what}: translation, rotation and reflection, with reflections reversing the
+stack and flipping face parity. A candidate is counted correct if one single isometry carries every
+layer onto its reference counterpart. This is not a post-hoc leniency applied to borderline cases;
+it is part of the definition of a correct answer, applied identically to every arm, every model and
+every baseline. Turning it off would mark correct answers wrong, because where a folded model lands
+on the table is an accident of which half of the sheet travelled.
+
+\textbf{Matching under transforms requires a floating-point tolerance, and it is stated.} Admitting
+arbitrary rotation means candidate and reference coordinates agree only to within floating-point
+representation, so the comparator matches polygons within $2\times10^{-6}$, cleans degenerate
+vertices at $10^{-7}$ and treats vertices as collinear below $10^{-9}$. Every result record carries
+the tolerance it was scored under, so the value is visible in the released runs rather than buried
+in a constant. Crease compatibility and terminal-state comparison both involve numerical
+tolerances; these checks must not be described as tolerance-free.
+
+\textbf{Error verbosity is itself a variable.} The richer a refusal, the more of the reasoning the
+environment performs rather than the model; at the limit a message that names the fix has solved the
+step. Verbosity is fixed before the first run and reported, otherwise the comparison between tiers
+measures message design rather than reasoning.
+
+\subsubsection{Baselines}
+\label{sec:exp-baselines}
+
+Breadth-first search has recorded results. Uniform random search and the symbolic solver below
+remain planned baselines; they are not included in the reported comparison.
+
+\begin{table}[h]
+\caption{Baseline configurations and status. % EDITING NOTE: [TO RUN] remaining baselines
+}
+\label{tab:baselines}
+\begin{center}
+\small
+\begin{tabular}{p{0.43\textwidth}p{0.45\textwidth}}
+\multicolumn{1}{c}{\bf BASELINE}  &\multicolumn{1}{c}{\bf WHAT IT ESTABLISHES} \\
+\hline \\
+Uniform random over enumerated legal actions (planned) & The floor. What the tool alone achieves with no reasoning at all \\[3pt]
+Deterministic breadth-first over the same action set (\texttt{workspace/search\_baseline.mjs}) & How much of the task the enumerator already solves, and the depth at which exhaustive search stops being affordable \\[3pt]
+Symbolic crease-pattern-to-sequence solver \citep{creasy} (planned) & The closest thing to prior art on the task itself \\
+\end{tabular}
+\end{center}
+\end{table}
+
+The breadth-first baseline is the one that answers the ``the simulator did all the work'' objection
+of Section~\ref{sec:env-division} numerically rather than structurally, which is the stronger form of
+that answer.

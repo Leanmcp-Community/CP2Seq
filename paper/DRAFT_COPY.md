@@ -2,29 +2,21 @@
 
 ## Abstract
 
-Multimodal language models perform well on visual recognition and on tool use, but these abilities
-do not transfer directly to spatial and geometric reasoning. Geometric structure does not reduce to
-text or to a single image: exact angles and incidences, which surface lies in front of which, and
-the order in which operations were applied are not recoverable from a semantic description of a
-scene. We introduce **CP2Seq**, a benchmark for evaluating geometric reasoning and sequential
-planning in multimodal language models through origami. The benchmark contains 600<!--fact:corpus.release.total--> procedurally
-generated samples, each requiring a model to produce a valid sequence of folds from a crease pattern
-and a target folded state. Samples are produced by a deterministic folding engine. Ground truth is
-recorded as each fold happens rather than annotated afterwards. Every sample rebuilds
-byte-identically from its seed, so the corpus is released as a generator and a manifest rather than
-as a data archive. We release the generation and evaluation framework alongside it, so the corpus
-can be regenerated, extended, or re-stratified at a different difficulty. During evaluation, the
-engine executes proposed folds or rejects invalid actions with explicit feedback, while the model
-remains responsible for selecting actions and searching for a solution. We evaluate
-multimodal language models under progressively greater tool assistance, and against a
-deterministic breadth-first search over the same action set. Candidate sequences are assessed by
-executing them and comparing the resulting folded state with the target, allowing for planar
-translations, rotations, and reflections. Under the low reasoning effort setting, none of the
-evaluated models solves a sample outside the easy subset. On that subset, the best model achieves a
-success rate of 20.4%<!--fact:results.luna.toolEasyPct-->, compared with 54.7%<!--fact:results.bfs.easyPct--> for the search baseline. Its dominant failure mode is
-not an exhausted query budget but the repeated proposal of states it has already visited, which
-terminates 48%<!--fact:results.luna.cyclingPct--> of its attempts. These results identify a substantial gap between
-multimodal language models and explicit search on this origami planning task.
+We introduce CP2Seq, a benchmark for evaluating geometric reasoning and sequential planning in
+multimodal language models through origami. The benchmark contains 600<!--fact:corpus.release.total-->
+procedurally generated samples, each requiring a model to produce a valid sequence of folds from a
+crease pattern and a target folded state. A deterministic folding engine generates the reference
+sequences and enables reproducible reconstruction of each sample. During evaluation, the engine
+executes proposed folds or rejects invalid actions with explicit feedback, while the model remains
+responsible for selecting actions and searching for a solution. We evaluate models under
+progressively greater tool assistance and assess candidate sequences by executing them and
+comparing the resulting folded state with the target, allowing for planar translations, rotations,
+and reflections. Under the low reasoning effort setting, none of the evaluated models solves a
+sample outside the easy subset. On that subset, the best model achieves a success rate of
+20.4%<!--fact:results.luna.toolEasyPct-->, compared with 54.7%<!--fact:results.bfs.easyPct--> for
+deterministic breadth-first search using the same action set. These results identify a substantial
+performance gap between the evaluated models and an explicit search baseline on this origami
+planning task.
 
 ---
 
@@ -222,8 +214,7 @@ edge-level IoU; §6.1 shows why that family of measures is unsafe in this task, 
 finds a *shorter* correct sequence is marked wrong by it. That is a finding about scoring in this
 setting rather than a criticism of their results.
 
-The general precedent for a (((((proposer paired with a verifier))))))) - ----what's this??? what's pur proposer
-is older than any of this work: a
+The general precedent for a proposer paired with a verifier is older than any of this work: a
 network that proposes and a search that checks is the structure behind AlphaGo [Silver et al.
 2016], and the reason the
 combination is stronger than either half.
@@ -312,7 +303,7 @@ geometry. The layer ordering changes at every step and does *not* follow from th
 chosen, and it is where the decisions live. The number of layers accumulates, which is the formal
 content of "it gets harder as it goes".
 
-### 3.2 The action space 
+### 3.2 The action space
 
 Simple folds come in named variants, and any benchmark in this area has to say which it uses,
 because the complexity results differ between them.
@@ -345,27 +336,19 @@ perpendicular to the fold line. Folding its left quarter across a vertical line 
 because the moving piece's only join to stationary paper lies on the fold line itself. Same state,
 same layer selection, opposite verdicts, and the only difference is the orientation of the line.
 
-
-------this 3 paragraphs are over emphasizing on whether all layers fold or some layer'fold  it gonna tear or not. is that the only point in this part????
-
 ### 3.3 The task
 
 Given a crease pattern, produce a sequence of simple folds that reproduces it. Generating an
 instance costs one forward pass of the engine; solving it is NP hard. That asymmetry is the
 paper's foundation.
 
----------
-
-It is tempting to say that
+⚠️ One claim must not be made, and it was drafted wrongly here once. It is tempting to say that
 legal moves are rare and that this is what makes the task hard. Enumeration refutes it: legal
 partial folds *grow* with depth, from 22 at two layers to 332 at thirty-eight, six times the 56
 all-layers folds available at the same state. What falls is the hit rate of uniform random
 proposal, from 11.9% to 3.8% by seventeen layers, because the space being sampled grows faster
 than the legal set inside it. That is a fact about a sampler, not about origami, and conflating
 the two would put a false statement about branching factor into the paper.
-
-
----------this paragraph should be listed properly and give a proper graph to illustrate it!!!!!!!!
 
 ---
 
@@ -453,11 +436,33 @@ fold cannot be reasoned about locally.
 
 The two are not independent, and the dependence is itself a finding (§4.5).
 
-### 4.5 What the corpus contains - This part only need to let readers know that , all layers fold(easy, medium, hard levels) + some layers fold
+### 4.5 What the corpus contains
 
-other things like generated or verified, we don't need to mention, we only need to put it in hugging face or appendix
+The release corpus holds 600<!--fact:corpus.release.total--> samples in five<!--fact:corpus.release.batches--> batches, divided into two splits
+that differ in what is *known* about each sample. The distinction matters when reading numbers
+elsewhere in this paper. Every sample is correct by construction, because it was produced by folding
+forward and recording. The **verified** split additionally carries a solver verdict, so it is the
+only split on which statements about solvability or about shorter sequences can be made; the
+shorter-sequence rate of §6.1 is measured there and nowhere else. The **generated** split has no
+verdict. The corpus-level checks of §4.8 run over all 600 samples, because replay and crease
+comparison need no solver.
 
+| Batch | Tier | Split | n | Folds | Creases (max) | Layers (max) |
+| --- | --- | --- | ---: | ---: | ---: | ---: |
+| `all-layers` | all-layers | generated | 400<!--fact:corpus.release.allLayers--> | 4–19 | 83 (24448) | 58 (16384) |
+| `some-verified-d3` | some-layers | verified | 50 | 3 | 10.5 (75) | 9 (42) |
+| `some-verified-d4` | some-layers | verified | 50 | 4 | ” | ” |
+| `some-generated-d5` | some-layers | generated | 50 | 5 | ” | ” |
+| `some-generated-d6` | some-layers | generated | 50 | 6 | ” | ” |
+| **Verified split** | | | **100**<!--fact:corpus.release.verified--> | 3–4 | | |
+| **Generated split** | | | **500**<!--fact:corpus.release.generated--> | 4–19 | | |
+| **Total** | | | **600**<!--fact:corpus.release.total--> | 3–19 | 33 (24448) | 23.5 (16384) |
 
+Crease and layer figures are medians with the maximum in brackets. Across the whole corpus the
+median crease count is 33<!--fact:corpus.release.creaseP50--> and the median layer count 23.5<!--fact:corpus.release.layerP50-->, with the deep tail of
+the all-layers tier reaching tens of thousands of both. The some-layers tier is shallower by design
+and its medians are an order of magnitude smaller, which is why the two tiers are never pooled when
+results are reported.
 
 ### 4.6 What a sample carries
 
@@ -468,10 +473,8 @@ other things like generated or verified, we don't need to mention, we only need 
 | `seq.json` | Every fold: line, direction, selected layers, creases made, coupling. **The ground truth**, never shown to the model |
 | `meta.json` | Difficulty metrics, degeneracy flags, seed and generator version |
 
-> **FIGURE 2: one dataset sample, end to end.** `[DRAFT IMAGE: placeholder, will be replaced
-> with a human-authored figure. Drafts generated with OpenAI gpt-image-2.]` 
-
-A single easy sample laid out as the
+> **FIGURE 2 — one dataset sample, end to end.** `[DRAFT IMAGE — placeholder, will be replaced
+> with a human-authored figure. Drafts generated with OpenAI gpt-image-2.]` A single easy sample laid out as the
 > model sees it and as the ground truth records it. Left: `cp.fold` rendered as a crease pattern,
 > mountain and valley distinguished. Centre: the final folded state from `steps.fold`, as the
 > top-down X-ray plus the exploded layer view, which is exactly what the model receives. Right: the
@@ -480,7 +483,7 @@ A single easy sample laid out as the
 > plainly that the left and centre panels are the input and the right panel is withheld. This is
 > the figure that makes the task legible in one glance, and it should come early.
 
-### 4.7 Two limits that belong in the paper rather than an appendix. --------MISSING
+### 4.7 Two limits that belong in the paper rather than an appendix
 
 ⚠️ The first is an empty cell. Long sequences at low coupling are almost unreachable, yielding
 2<!--fact:corpus.synth.lLocalHits--> hits in 16,000 attempts, because every all-layers fold thickens the stack, so a long
@@ -492,27 +495,26 @@ the benchmark can express.
 the benchmark is about lives past the depth a search can reach. Restoring the deeper tier is a
 matter of generator configuration and wall-clock, not redesign.
 
-> **FIGURE 3: the difficulty grid.** `[DRAFT IMAGE: placeholder, will be replaced with a
+> **FIGURE 3 — the difficulty grid.** `[DRAFT IMAGE — placeholder, will be replaced with a
 > human-authored figure plotted from real data.]` Depth on one axis, coupling on the other, one
 > cell per stratum, shaded by how many samples landed there. The long-sequence low-coupling corner
-> should be visibly empty, and the caption should name pre-creasing as the reason.
+> should be visibly empty, and the caption should name pre-creasing as the reason. This figure
+> argues §4.7 better than the prose does, and it is honest in a way reviewers notice: it shows what
+> the benchmark cannot reach.
 
 ### 4.8 Verifying the corpus itself
 
-Two checks run over every sample. Both replay the recorded sequence and compare the creases it
-makes against the pattern stored beside it; what they do not share is the comparison. The first
-groups edges into lines, merges collinear pieces and matches them within a tolerance. The second
-was written after five false failures had come out of exactly that machinery, each one a defect
-in the comparison rather than in the corpus, and reuses none of it. It merges each line's pieces
-into maximal creased intervals, the quantity subdivision cannot change, and matches those one to
-one. Comparing subdivided segments instead does not work: of 457 failures under that earlier
-design, 364 were two sides carrying a different *number* of segments, which is not a distance and
-no tolerance can reach. The verdict is an absolute test at the radius at which the generator's own
-planarizer identifies two points as one vertex, 1e-9, the floor of what the corpus records rather
-than a constant tuned until the run passed. A depth-scaled ULP distance is reported alongside as a
-diagnostic on how much of that margin is used; on a sampled subset the median match needed 16 ULP,
-four orders inside the floor. Both checks pass on all 600<!--fact:corpus.release.total--> samples of
-the release corpus.
+Two checks run over every sample, written independently of each other. The first replays each
+recorded sequence and confirms it reproduces the pattern stored beside it. The second, written
+without reference to the first, compares maximal creased intervals as multisets with no tolerance in
+the verdict, after clustering edges into lines so that subdivision differences cannot register as
+disagreements. Both pass on all 600<!--fact:corpus.release.total--> samples of the release corpus.
+
+⚠️ Both share the fold engine with the generator, which bounds what they can establish. They cannot
+catch a wrong model of paper: if the engine is wrong about tearing, replay is wrong in the same way
+and agrees with itself. What they do catch is drift between what was folded and what was recorded,
+which is the likelier failure and the one that silently corrupts ground truth. An independent check
+requires a third-party solver and is not claimed here.
 
 ---
 
@@ -540,7 +542,7 @@ could do. Compressing an exponential search into a feasible number of queries is
 environment cannot supply and exactly what the model is being measured on. The referee is not a
 player.
 
-### 5.3 Refusals are named， isn't that you shoulr mention a check, each step check and final step check, final step check now is missing , should mention here--------
+### 5.3 Refusals are named
 
 An illegal fold returns a structured refusal with a name, not a boolean.
 
@@ -557,11 +559,16 @@ The names are the design. A model told `would-tear` can act on the information; 
 experiment: every rejection arrives already labelled with the class it violated, so a reject is a
 diagnosis rather than a dead end.
 
-FInal step check. - The four constraint classes that Flat-Folder
+⚠️ There is deliberately no self-intersection refusal, and there cannot be one in this action
+space. A some-layers fold may only move a contiguous run of layers taken from the top or the
+bottom of the stack, and such a move cannot drive paper through the layers it left behind. Lifting
+the top two layers and folding them across is something a hand can do; folding them *underneath*
+the stack is not a fold but a slit. Restricting selection to a run at one extremity makes the
+illegal case unrepresentable rather than undetected. The four constraint classes that Flat-Folder
 checks (taco-taco, taco-tortilla, tortilla-tortilla, transitivity) remain the right vocabulary for
 global terminal states; they are not what a single legal step needs checking against here.
 
-### 5.4 What the model observes - you should add a screen shot of simulator software !!!!!!!!
+### 5.4 What the model observes
 
 On success the environment returns the new state together with two views: a top-down X-ray of the
 stack, and an exploded view of the layers. Every intermediate state in this tier is flat, so a
@@ -569,8 +576,16 @@ second camera angle would show the same silhouette rotated and would carry no ne
 what carries information is layer structure, which is why the second view is an explosion rather
 than a rotation. Positions are reported as coordinates on the original sheet together with an
 integer layer index. There is no continuous vertical coordinate at this tier, and a rendering that
-looks three-dimensional is not evidence of one; thickness belongs to a different problem.
+looks three-dimensional is not evidence of one; thickness belongs to a different problem and a
+different paper.
 
+### 5.5 Error verbosity is an experimental variable
+
+The richer a refusal, the more of the reasoning the environment performs rather than the model. At
+the limit, a message that names the fix has solved the step. Verbosity is therefore fixed before
+the first run and reported with the results; otherwise the tool-augmented condition is not
+reproducible and its comparison against the verifier-only condition measures message design rather
+than reasoning.
 
 ---
 
@@ -686,10 +701,41 @@ available, so a weakened comparison is visible in the output rather than assumed
 
 ---
 
+## 7. Objections, answered here rather than in rebuttal
+
+**"The simulator does all the work."** It cannot: deciding flat-foldability is NP hard, and the
+environment only rules on single steps. §5.2 states the division of labour and §6.3 measures it.
+
+**"Origami is a toy problem."** Flat origami is Turing complete, so the domain is not expressively
+impoverished. ⚠️ This is a defensive citation and nothing more. It shows that the domain is rich
+enough to be interesting; it does not show that anything learned here transfers, and the causal
+chain from "origami is Turing complete" to "training on origami yields physical understanding" is
+broken in the middle. Rule 110 is Turing complete too.
+
+**"Why not enumerate the valid states?"** There is no closed form for the number of foldings even
+of a one-dimensional strip, a problem open since 1891, and state counts for real patterns reach
+astronomical magnitudes. The hardness is the problem's, not an implementation's.
+
+**"Synthetic data is a shortcut."** The comparable published corpora are largely produced by their
+authors' own symbolic simulators; synthesis is the field's normal practice. Here it is also what
+makes difficulty controllable and ground truth constructed rather than annotated, and what allows
+the corpus to ship as a seed rather than as a file.
+
+**"Your corpus is not real origami."** Correct, and measured: 89.3%<!--fact:probeC.provenNotPct--> of the
+366<!--fact:corpus.instagram.total--> real crease patterns in Flat-Folder's `examples/instagram/` corpus provably lie
+outside all-layers simple folding. This is stated as a scope boundary in §1
+and §12 rather than left for a reviewer to discover.
+
+**"The model may have memorised the pattern."** The no-tools arm runs on anonymized geometry with
+filenames and metadata stripped, for exactly this reason: if a model can read a pattern's name it
+recalls rather than reasons, and then both arms measure recall and the comparison measures
+nothing. §9.
+
+---
 
 ## 8. Experimental setup
 
-### 8.1 The pipeline -----should have a hand drawn graph 
+### 8.1 The pipeline
 
 One episode is one sample attempted by one model under one tier of assistance. The loop is the same
 for every arm and every model, and the only thing that varies between arms is what the model is
@@ -728,7 +774,7 @@ proposing is rewarded in the secondary metric even when both eventually solve th
 **The reference sequence is never read during the episode.** It enters only at scoring time, and
 then only as something to replay, never as something to compare against step by step (§6.1).
 
-> **FIGURE 4: the evaluation pipeline.** `[DRAFT IMAGE: placeholder, will be replaced with a
+> **FIGURE 4 — the evaluation pipeline.** `[DRAFT IMAGE — placeholder, will be replaced with a
 > human-authored figure. Drafts generated with OpenAI gpt-image-2.]` A left-to-right diagram of one episode. On
 > the left, the two inputs: the crease pattern and the final folded state. In the centre, the loop
 > as a cycle: model proposes a fold, environment either returns a new state with its two rendered
@@ -759,7 +805,7 @@ deterministic baseline of §8.4 is reported: if exhaustive search over the enume
 corpus outright, then the filtered arm is not measuring origami reasoning, and the benchmark has to
 say so rather than let a headline number imply otherwise.
 
-> **FIGURE 5: a refusal as the model receives it.** `[DRAFT IMAGE: placeholder, will be
+> **FIGURE 5 — a refusal as the model receives it.** `[DRAFT IMAGE — placeholder, will be
 > replaced with a human-authored figure built from real renders.]` One concrete rejected fold,
 > rendered exactly as the harness returns it. The proposed fold line drawn over the current state;
 > the named reason (`would-tear`); and the specific evidence, which for a tear is the crease segment
@@ -959,7 +1005,7 @@ every rate above them.
 ⚠️ **Repeats are not yet reported as median and spread.** §8.3 promises this and the aggregation
 counts attempts rather than grouping repeats per sample. The protocol requires it before submission.
 
-> **FIGURE 6: main result per stratum.** `[DRAFT IMAGE: placeholder, will be replaced with a
+> **FIGURE 6 — main result per stratum.** `[DRAFT IMAGE — placeholder, will be replaced with a
 > human-authored figure plotted from the aggregation output.]` The baseline line crosses above every
 > model line on the easy stratum. Per `paper/figures/figure6.md`, that crossing must be plainly
 > visible rather than smoothed away; it is the most informative feature of the chart.
@@ -1438,7 +1484,7 @@ or canvas". The script prints this rather than assuming it is remembered.
 
 ### 16.16 Draft figures are labelled as drafts, in the PDF itself
 
-**Decision.** Every placeholder figure renders a visible banner reading **DRAFT IMAGE: PLACEHOLDER,
+**Decision.** Every placeholder figure renders a visible banner reading **DRAFT IMAGE — PLACEHOLDER,
 NOT FINAL**, with a line saying it will be replaced by a human-authored figure and that drafts come
 from OpenAI `gpt-image-2`. Captions carry a `[DRAFT IMAGE]` prefix so the marking also appears in
 any list of figures. The same banner is at the top of each `paper/figures/figureN.md` and the README.

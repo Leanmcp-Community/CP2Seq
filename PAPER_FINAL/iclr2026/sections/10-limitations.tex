@@ -1,0 +1,26 @@
+\section{Limitations}
+\label{sec:limitations}
+
+The current evaluation is concentrated on Luna and the search baseline; other model runs have
+limited coverage. All 461 model attempts with a recorded reasoning setting used low effort, while
+25 lack that setting. The aggregate contains repeated attempts and does not establish matched
+samples and budgets across configurations. Higher-effort runs and controlled assistance comparisons
+remain to be completed.
+
+Fold-count groups express the hypothesis that longer reference sequences generally require more
+search. They do not establish minimum solution length or guarantee an ordering of instance
+difficulty. The action space covers all-layers and selected some-layers simple folds, excluding
+pre-creasing; the some-layers corpus currently extends to six reference folds. The environment
+represents zero-thickness flat states and does not model material mechanics or continuous
+collisions during folding.
+
+Success requires geometric reasoning, state tracking, and planning together. Termination labels
+identify observed behavior but do not isolate the underlying cause of failure. Revisit and budget
+limits also constrain the search trajectories that can be observed. Generating new samples reduces
+reliance on a fixed public test set but cannot guarantee absence of training overlap.
+
+Corpus replay checks share the generation engine and therefore test consistency rather than
+independent physical validity. Final comparisons use numerical tolerances. The shared terminal
+comparator does not explicitly match original-sheet region identities, as detailed in
+Appendix~\ref{app:comparison-details}; identity-aware validation and any re-scoring must be tied
+to the implementation used for the reported runs.

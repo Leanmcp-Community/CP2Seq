@@ -1,0 +1,19 @@
+% Source: workspace/RESULTS/results.md, Deterministic search baseline.
+% Static TeX bars; no additional plotting package or runtime required.
+\begin{figure}[t]
+\centering
+\small
+\begin{tabular}{llr}
+Stratum (reference folds) & Median states expanded & Solved / attempts \\
+\hline
+Easy (4--10) & \rule{0.247cm}{8pt}\quad 65 & 366/669 \\
+Medium (11--13) & \rule{4cm}{8pt}\quad 1,051.5 & 1/40 \\
+Hard (14--19) & \rule{2.024cm}{8pt}\quad 532 & 0/16 \\
+\end{tabular}
+\caption{Observed BFS search effort in the saved aggregate. Bar lengths use a linear scale and
+show median states expanded across attempts, including unsuccessful attempts. Budgets and repeated
+samples are not standardized by this aggregate; 358 of 725 attempts terminated in timeout.
+The lower hard-stratum median does not imply that hard instances require less search.
+Reference depth is not minimum solution length.}
+\label{fig:bfs-effort}
+\end{figure}

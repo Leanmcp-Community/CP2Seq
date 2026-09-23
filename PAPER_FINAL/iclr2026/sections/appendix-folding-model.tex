@@ -1,0 +1,98 @@
+\section{State representation and folding constraints}
+\label{app:folding-model}
+
+\subsection{Flat-folded states}
+\label{sec:problem-states}
+
+A state represents the positions of paper regions in the plane, their orientations, and their
+layer ordering. Original-sheet coordinates identify each region and preserve its connectivity to
+other regions as folds change its current position. Overlapping regions can occupy the same
+planar area while remaining distinct layers. Their original-sheet identities therefore matter
+both when validating a move and when comparing the completed construction with the target.
+Layer ordering is also a central component of computational treatments of flat-folded states
+\citep{akitaya-flatfolder}.
+
+\subsection{Supported actions}
+\label{sec:problem-actions}
+
+The simple-fold literature distinguishes operations by the layers they move
+\citep{arkin-map}. Our all-layers action selects the paper on one side of a fold line throughout
+the stack. Our some-layers action restricts that selection to a contiguous run from the top or
+bottom. An action specifies the line in current folded coordinates, the moving side, the layer
+selection, and whether the moving paper folds over or under the stationary paper. The selected
+paper is reflected across the line, with the corresponding orientation and stack-order updates.
+In the implemented some-layers model, a top run folds over and a bottom run folds under.
+
+These action models specify the permitted moves. They are distinct from the assistance conditions,
+which specify the observations, feedback, and tools available to the model. In particular, access
+to candidate enumeration changes the assistance provided without defining a new folding operation.
+
+\subsection{Connectivity and tearing}
+\label{app:tearing}
+
+A move must preserve the connections between regions of the original sheet. If moving paper is
+attached to stationary paper along a segment away from the proposed hinge, the operation would
+separate connected paper and is rejected with a \texttt{would-tear} response. The check uses
+original-sheet connectivity together with the proposed motion; overlap in the current plane alone
+cannot establish whether two regions are attached. Rejection leaves the current state unchanged.
+
+Tearing is one action constraint rather than a complete model of physical feasibility. The engine
+also checks the action parameters and compatibility with the target crease pattern. It represents
+zero-thickness flat states and does not test continuous collisions during the folding motion.
+Step-level legality and final target agreement are separate checks: a sequence of legal actions
+can still produce the wrong construction.
+
+\subsection{Depth and search difficulty}
+
+The recorded sequence provides a reachable target, but need not be a shortest solution.
+Reference depth therefore describes generation rather than minimum planning horizon. Likewise,
+the number of legal moves and the probability that a random proposal is legal are different
+quantities: a larger proposal space can lower the latter without reducing the former. We use
+observed solver performance to assess difficulty rather than inferring it solely from either
+quantity or from worst-case complexity results for other folding variants.
+
+\subsection{Comparison implementation}
+\label{app:comparison-details}
+
+The engine compares creases in original-sheet coordinates after grouping and merging collinear
+intervals by assignment. Interval endpoints are matched within $2\times10^{-6}$; coordinate
+canonicalization is part of preprocessing and does not make the comparison tolerance-free.
+
+The shared terminal comparator first checks layer counts. It considers direct alignment and
+turnover, with turnover reversing layer order and face parity. Correspondences between vertices
+of the first layer propose global alignments; a candidate alignment is accepted only if every
+layer polygon and parity matches its target rank. Polygon matching uses a positional tolerance
+of $2\times10^{-6}$, short-edge cleanup at $10^{-7}$, and a collinearity threshold of $10^{-9}$.
+
+The shared implementation represents current-plane polygons, parity, and rank. It does not
+explicitly compare original-sheet region identities. Any identity-aware offline comparator must
+be distinguished from this path, and the comparator version used for each reported result must
+be recorded. In particular, equal shapes at different original-sheet locations can require a
+stronger correspondence check than current-plane geometry alone.
+
+\subsection{Action rejection conditions}
+\label{app:action-errors}
+\begin{table}[h]
+\centering
+\caption{Geometric and action constraints checked by the implementation. Rejected edits preserve
+ the previous state.}
+\begin{tabular}{lp{.65\linewidth}}
+\hline
+Code & Condition \\
+\hline
+\texttt{would-tear} & A moving region and a stationary region share an original-sheet edge
+whose current position is not on the fold line. Reflecting one side would separate the join. \\
+\texttt{no-crease} & A nonempty moving selection produces no crease segment in the paper.
+This condition is checked separately from tearing. \\
+\texttt{nothing-to-move} & The selected half-plane contains no selected paper, or the requested
+partial selection contains no layers. \\
+\texttt{direction-impossible} & The action requests folding a top run under the stack or a bottom
+run over it, contrary to the supported layer-selection rule. \\
+\hline
+\end{tabular}
+\end{table}
+
+The independent Flat-Folder wrapper uses layer-order constraints, including taco-taco,
+taco-tortilla, tortilla-tortilla, and transitivity constraints \citep{akitaya-flatfolder}.
+It tests whether the pattern admits a flat-folded state, not whether the agent's sequence reaches
+the supplied target. It is not invoked automatically for every proposed action.

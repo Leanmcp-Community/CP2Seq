@@ -1,0 +1,120 @@
+\section{CP2Seq: task and dataset}
+\label{sec:cp2seq}
+
+\input{sections/03-problem-formulation}
+
+\subsection{Dataset construction}
+\label{sec:cp2seq-generation}
+\label{sec:cp2seq-why}
+\label{sec:cp2seq-difficulty}
+
+Starting from a square sheet, the generator samples a legal fold under the chosen action model,
+applies it, and records the action and resulting state. This process continues to the requested
+reference depth; attempts with no available legal continuation are discarded. The accumulated
+creases are mapped to the original sheet to form the input crease pattern, with edges split at
+intersections. The last state supplies the target, and the recorded actions supply a reference
+solution. A replay check compares the generated sample with its recorded construction.
+
+We group samples by reference fold count, hypothesizing that longer sequences generally require
+more search and are therefore harder to recover. These groups describe expected difficulty;
+reference length need not equal the shortest valid solution length. We also record coupling,
+the number of creases created by a fold, to characterize the geometry of each instance.
+
+The generation procedure is summarized below.
+
+{\small\begin{verbatim}
+GENERATE(reference_depth, action_model):
+    state <- unfolded square
+    actions, frames <- [], []
+    for step in 1..reference_depth:
+        candidates <- LEGAL_FOLDS(state, action_model)
+        if candidates is empty: return FAILED
+        action <- SAMPLE(candidates)
+        state <- APPLY(state, action)
+        actions.append(action)
+        frames.append(state)
+    cp <- CREASE_PATTERN_IN_ORIGINAL_SHEET(state)
+    cp <- SPLIT_EDGES_AT_INTERSECTIONS(cp)
+    if not REPLAY_CHECK(cp, actions, state): return FAILED
+    return (cp, state, actions, frames, METADATA(actions))
+\end{verbatim}}
+
+\input{figures/dataset-examples}
+
+\subsection{Dataset statistics}
+\label{sec:dataset-statistics}
+\label{sec:cp2seq-contents}
+
+% EDITING NOTE (retained): This part only needs to let readers know that there are
+% all-layers folds (easy, medium, hard levels) and some-layers folds.
+% EDITING NOTE (retained): Other things like generated or verified can be put in
+% Hugging Face or the appendix rather than emphasized here.
+
+CP2Seq contains 600 samples: 400 all-layers examples grouped by reference depth and 200
+some-layers examples with three to six reference folds (Table~\ref{tab:dataset-statistics}).
+These counts describe distinct dataset samples, not evaluation attempts.
+
+\begin{table}[h]
+\centering
+\caption{Dataset composition. Fold counts refer to recorded reference sequences.}
+\label{tab:dataset-statistics}
+\begin{tabular}{llrr}
+\hline
+Action model & Stratum or group & Samples & Reference folds \\
+\hline
+All-layers & Easy & 200 & 4--10 \\
+All-layers & Medium & 100 & 11--13 \\
+All-layers & Hard & 100 & 14--19 \\
+Some-layers & Depth 3 & 50 & 3 \\
+Some-layers & Depth 4 & 50 & 4 \\
+Some-layers & Depth 5 & 50 & 5 \\
+Some-layers & Depth 6 & 50 & 6 \\
+\hline
+Total & & 600 & 3--19 \\
+\hline
+\end{tabular}
+\end{table}
+
+Each sample contains the task inputs, a reference sequence, and metadata
+(Table~\ref{tab:sample-files}). The model receives the crease pattern and target state; reference
+actions and intermediate reference states are withheld. Tool availability and target feedback are
+configured separately from dataset groups (Section~\ref{sec:target-feedback}).
+
+\begin{table}[h]
+\centering
+\caption{Contents of a CP2Seq sample.}
+\label{tab:sample-files}
+\label{sec:cp2seq-sample}
+\begin{tabular}{lp{0.68\textwidth}}
+\hline
+File & Contents \\
+\hline
+\texttt{cp.fold} & Input crease pattern. \\
+\texttt{steps.fold} & Folded states after each reference action; only the final state is supplied
+as the target. \\
+\texttt{seq.json} & Withheld reference actions: fold lines, directions, layer selections, and
+creases created. \\
+\texttt{meta.json} & Sample descriptors and generator version. \\
+\hline
+\end{tabular}
+\end{table}
+
+\phantomsection
+\label{sec:cp2seq-verify}
+Reference sequences are checked by replaying them and comparing the resulting creases with the
+stored pattern. The two corpus checks reported in this release pass on all 600 samples; they
+share the folding engine and therefore do not independently validate its physical assumptions.
+
+\phantomsection
+\label{sec:cp2seq-limits}
+% EDITING NOTE (retained): "Two limits that belong in the paper rather than an appendix -- MISSING."
+% The two issues are limited coverage of long sequences with low coupling, and
+% the six-fold maximum reference depth of the some-layers subset.
+Coverage is limited in two respects: long reference sequences with low coupling are sparsely
+represented by the generation procedure, and some-layers examples extend only to six reference
+folds. These are limits of the present corpus, not proofs that other configurations are impossible.
+
+% FIGURE NOTE (retained): Plot fold depth against coupling, shaded by sample count.
+% Check the actual counts before describing a cell as empty; the earlier draft
+% reported two hits in 16,000 attempts, which does not establish impossibility.
+% The draft difficulty-grid placeholder has been removed from the main text.

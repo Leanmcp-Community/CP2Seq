@@ -1,0 +1,57 @@
+\subsection{Evaluation metrics}
+\label{sec:scoring}
+
+\phantomsection
+\label{sec:scoring-why}
+The recorded sequence provides one solution, but other sequences may produce the required
+construction. We therefore assess correctness by execution rather than agreement with the
+reference actions. Distance between the constructed crease pattern and the input crease pattern
+is a separate measure of geometric progress; it does not compare action sequences or replace
+final-state verification.
+
+\subsubsection{Verification}
+\label{sec:scoring-what}
+
+We execute the proposed sequence and compare its accumulated creases with the input pattern,
+including mountain--valley assignments. We then compare the final stack with the target after
+alignment by a single global translation, rotation, or turnover. A turnover reflects the geometry,
+reverses the stack order, and flips face orientations. The same transformation must align all
+layers; independent layer transformations and arbitrary layer permutations are not accepted.
+A successful construction must satisfy both crease-pattern and folded-state agreement.
+
+The engine's crease comparator uses a numerical tolerance of $2\times10^{-6}$ for interval
+endpoint matching, and the shared folded-state comparator uses the same positional tolerance.
+The comparison is therefore not tolerance-free. Appendix~\ref{app:comparison-details} describes
+the alignment and representation details. These final checks are distinct from the three optional
+levels of target feedback supplied during an episode.
+
+\subsubsection{Reported metrics}
+\label{sec:scoring-metrics}
+
+We report solve rate by fold-count stratum, with the number of attempts and the applicable run
+budgets. Termination reasons distinguish successful submission, unsuccessful completion, budget
+limits, and repetition-related stopping. Query counts describe search effort; for unsuccessful
+attempts they are consumed queries, not observed queries to solution.
+
+% EDITING NOTE: Compute CP edit distance for the final valid state of every saved attempt,
+% including unsuccessful and interrupted runs. Define edits, costs, normalization, and treatment
+% of missing state artifacts before adding numerical results. See IMPORTANT_TODO.md.
+We measure CP edit distance between the accumulated crease pattern in the last recoverable
+state and the supplied pattern, in original-sheet coordinates. Collinear mountain and valley
+intervals are merged separately, excluding sheet boundaries. If $m$ intervals match under the
+crease comparator, the insertion/deletion distance is
+$d_{\mathrm{CP}}=|C_{\mathrm{target}}|+|C_{\mathrm{candidate}}|-2m$.
+Each missing or extra interval costs one; changing an assignment costs two. Partially overlapping
+intervals do not match unless their endpoints agree within tolerance. We also report
+$d_{\mathrm{CP}}/|C_{\mathrm{target}}|$, which can exceed one. Normalized distance is undefined
+for an empty target. Means weight attempts equally and exclude missing state artifacts,
+whose counts are reported separately. This metric compares crease patterns, not fold sequences,
+and zero distance does not establish folded-state agreement.
+
+\phantomsection
+\label{sec:scoring-validate}
+% EDITING NOTE: Reconcile the separate identity-aware comparator validation with the comparator
+% actually used for reported runs before restoring claims about 600/600 corrupted-state rejection.
+Comparator validation must cover accepted global transformations and rejected changes to layer
+order or orientation. The validation applies to the implementation used to score each run;
+checks of a different comparator do not establish the behavior of the reported evaluation.

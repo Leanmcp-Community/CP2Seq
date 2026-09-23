@@ -1,0 +1,134 @@
+\section{Results}
+\label{sec:results}
+
+Solve-rate and termination statistics come from \texttt{workspace/RESULTS/results.md}, produced by
+\texttt{python3 workspace/aggregate\_results.py} over every saved run. 1,211% fact:results.attempts
+attempts across 47 runs and 256 distinct samples. Every attempt is counted once, and an attempt with
+no recorded \texttt{solved} field is counted as unsolved.
+
+\paragraph{Crease-pattern distance.}
+The saved-run CP-distance scan covers 1,422 attempts, of which 1,421 have recoverable
+crease patterns. Mean insertion/deletion distance is 45.454; mean distance normalized
+by target crease count is 0.553. One attempt is excluded because its state could not be
+recovered. These averages pool models, baselines, configurations, and repeated samples;
+they describe the saved attempts rather than a matched comparison of methods. This scan
+includes runs outside the earlier 1,211-attempt solve-rate snapshot.
+% EDITING NOTE: Refresh the paragraph above with summary.json when new runs are scored.
+% Validate known complete, empty, partial, and wrong-assignment cases before submission.
+\IfFileExists{../../workspace/RESULTS/cp-distance/paper-table.tex}{%
+  \input{../../workspace/RESULTS/cp-distance/paper-table.tex}}{}
+
+\subsection{Model performance}
+\label{sec:results-headline}
+
+\textbf{No language model solved a single sample beyond the easy stratum.} Across every model arm,
+mid is 0 of 70 and hard is 0 of 27. On the easy stratum a deterministic breadth-first search over
+exactly the action set the models are given solves 54.7\%, against 20.4\% for the best-covered model
+at the same tier.
+
+\begin{table}[h]
+\caption{Solve rate per stratum, all saved runs. Denominators are attempts, not distinct samples.
+Rows with fewer than ten attempts support no rate and are shown only so that reporting is not
+selective.}
+\label{tab:headline}
+\begin{center}
+\footnotesize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{llrrrrr}
+\multicolumn{1}{c}{\bf ARM} &\multicolumn{1}{c}{\bf TIER} &\multicolumn{1}{c}{\bf EASY} &\multicolumn{1}{c}{\bf MID} &\multicolumn{1}{c}{\bf HARD} &\multicolumn{1}{c}{\bf OVERALL} &\multicolumn{1}{c}{\bf CALLS} \\
+\hline \\
+\texttt{deterministic-bfs} & legal-folds & {\bf 366/669 (54.7\%)} & 1/40 (2.5\%) & 0/16 & 367/725 (50.6\%) & 5 \\
+\texttt{gpt-5.6-luna}      & legal-folds & 59/289 (20.4\%) & 0/66 & 0/25 & 59/380 (15.5\%) & 23.5 \\
+\texttt{gpt-5.6-luna}      & basic tools & 4/65 (6.2\%)    & 0/1  & 0/1  & 4/67 (6.0\%)    & 29 \\
+\texttt{claude-sonnet-5}   & legal-folds & 0/5  & -- & -- & 0/5 & 10 \\
+\texttt{gpt-5.6-sol}       & basic tools & 0/7  & -- & -- & 0/7 & 20 \\
+\texttt{gpt-5.6-terra}     & basic tools & 0/1  & -- & -- & 0/1 & 35 \\
+\texttt{gpt-6-astra}       & basic tools & 1/1  & -- & -- & 1/1 & 5 \\
+\texttt{codex-cli-chatgpt} & none        & 0/1  & -- & -- & 0/1 & 2 \\
+\emph{errored, model unrecorded} & -- & 0/20 & 0/3 & 0/1 & 0/24 & -- \\
+\end{tabular}
+\end{center}
+\end{table}
+
+\textbf{Caveat: read the denominators before the percentages.} Only \texttt{gpt-5.6-luna} and the
+baseline have coverage worth a rate. \texttt{gpt-6-astra} shows 1/1; \textbf{that is one attempt and
+must not be reported as 100\%.} \texttt{claude-sonnet-5}, \texttt{gpt-5.6-sol},
+\texttt{gpt-5.6-terra} and \texttt{codex-cli-chatgpt} have between one and seven attempts each.
+These rows are present because omitting them would be selective reporting, not because they support
+a comparison. Any main table in the submitted paper prints $n$ in every cell or drops the row.
+
+\subsection{Search baseline}
+\label{sec:results-baseline}
+
+\input{sections/figure-bfs-effort}
+
+\texttt{deterministic-bfs} solves 367 of 725 attempts overall. Per stratum: 366/669 easy, 1/40 mid,
+0/16 hard. Median states expanded is 65 on easy, 1051.5 on mid, 532 on hard. 358% fact:results.bfs.timeouts
+of its 725 attempts ended in timeout rather than exhaustion, so \textbf{50.6\% is a lower bound
+under the baseline's time budget, not the ceiling of exhaustive search.}
+
+Candidate enumeration filters for legality and compatibility with the target crease pattern.
+The baseline measures performance of systematic exploration with this filtering; its success rate
+does not by itself identify which reasoning abilities a model uses.
+
+\phantomsection
+\label{sec:results-tiers}
+
+On easy instances, Luna solves 59/289 attempts (20.4\%) with candidate filtering and 4/65
+(6.2\%) with basic tools. These are descriptive rates from unmatched attempt sets; controlled
+comparisons and the remaining assistance experiments are pending.
+% EDITING NOTE: Update this comparison after the remaining experiments.
+
+\subsection{Failure analysis}
+\label{sec:results-failures}
+
+\begin{table}[h]
+\caption{Termination reasons for \texttt{gpt-5.6-luna}, 447 attempts.}
+\label{tab:terminations}
+\begin{center}
+\begin{tabular}{lrr}
+\multicolumn{1}{c}{\bf TERMINATION} &\multicolumn{1}{c}{\bf $n$} &\multicolumn{1}{c}{\bf SHARE} \\
+\hline \\
+\texttt{state\_cycling}       & 215 & 48.1\% \\
+\texttt{finished}             & 167 & 37.4\% \\
+\texttt{turn\_budget}         & 47  & 10.5\% \\
+\texttt{repetition\_detected} & 18  & 4.0\% \\
+\end{tabular}
+\end{center}
+\end{table}
+
+State cycling terminates 215 of 447 Luna attempts (48.1\%), while another 18 terminate with a
+repetition label and 47 reach the turn budget. These labels describe stopping behavior rather
+than proving the absence of reasoning. Repeated exploration without reaching the target indicates
+ineffective search in those attempts; attributing it to state tracking or action selection
+requires trajectory analysis. A \texttt{finished} label denotes submission, not necessarily success.
+
+The harness defaults include a limit of three repetitions of the same action from the same
+position and fifteen arrivals at the same position by any route. The latter is a revisit limit,
+not a limit of fifteen distinct branches. Such limits can stop repeated exploration and must be
+reported from each run's configuration rather than inferred from defaults. The aggregate table
+does not separately identify all revisit-limit events.
+% EDITING NOTE: Audit per-run cycle and revisit limits and classify capped exploration separately.
+
+\phantomsection
+\label{sec:results-difficulty}
+
+No model attempt solves a medium or hard instance in the reported aggregate; BFS solves one
+medium instance. This observation is consistent with greater search difficulty at larger reference
+depths, but does not establish a causal effect of depth or coupling.
+% EDITING NOTE (retained): [TO RUN] solve rate against coupling.
+
+\phantomsection
+\label{sec:results-threats}
+The aggregate contains 725 BFS attempts and 447 Luna attempts, with much smaller counts for other
+models. Recorded reasoning settings are low for 461 model attempts and absent for 25. Twenty-four
+attempts with missing model identity ended in error and are reported separately as unsolved.
+Per-sample repeat statistics and matched-budget comparisons remain to be reported.
+
+\begin{figure}[h]
+\draftimage{8}
+\begin{center}\textit{\footnotesize Placeholder: solve rate by fold-count stratum for Luna and BFS,
+with attempt counts and run conditions shown.}\end{center}
+\caption{\textbf{[DRAFT IMAGE]} Planned summary of performance by fold-count stratum.}
+\label{fig:main}
+\end{figure}

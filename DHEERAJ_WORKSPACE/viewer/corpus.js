@@ -120,7 +120,7 @@ function cpSvg(cp, doneSteps, activeStep) {
     const a = cp.edges_assignment?.[i], A = cp.vertices_coords[u], B = cp.vertices_coords[v];
     if (!A || !B) return;
     if (a === 'B') parts.push(line(A, B, '#9aa0a6', sw, false, 1));
-    else if (a === 'M' || a === 'V') parts.push(line(A, B, '#9aa0a6', sw, a === 'V', .28));
+    else if (a === 'M' || a === 'V') parts.push(line(A, B, a === 'M' ? '#b8402b' : '#2f5fa8', sw, a === 'V', .85));
   });
   for (const step of doneSteps) for (const c of (step.creases || [])) {
     parts.push(line(c.P, c.Q, c.assignment === 'V' ? '#2f5fa8' : '#b8402b', sw * 1.2, c.assignment === 'V', .95));
@@ -157,7 +157,7 @@ function draw() {
   $('cp-note').textContent = active
     ? `Green marks the creases this fold makes in the flat sheet: ${active.creases_created ?? active.creases?.length ?? 0} of them, `
       + `because the line cuts ${active.creases_created ?? 0} layer${(active.creases_created ?? 0) === 1 ? '' : 's'} at once.`
-    : 'The full pattern is faint. Creases light up as the sequence makes them.';
+    : 'Full target pattern: mountain folds are red and valley folds dashed blue. The current fold is highlighted in green.';
   $('position').textContent = `${Math.min(activeIndex + 1, total)} / ${total} folds · ${stack} layers`;
   $('timeline').value = position;
 }

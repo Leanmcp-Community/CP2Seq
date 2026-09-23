@@ -1,0 +1,91 @@
+\section{Introduction}
+\label{sec:intro}
+
+Geometric planning requires a model to connect a description of a target with the operations
+needed to construct it. In origami, this involves choosing a fold line, identifying which parts of
+the sheet should move, and tracking how the resulting reflections change their positions and layer
+order. A locally valid fold may lead away from the target, so completing a sequence also requires
+selecting among alternatives and revising earlier decisions. We study whether multimodal language
+models can use visual and geometric observations to make these decisions over successive folds.
+
+Existing origami benchmarks assess some aspects of geometric understanding, but answering
+questions about a folded configuration does not establish the ability to construct it. GamiBench
+\citep{gamibench} uses visual question answering to assess folded configurations, viewpoint
+consistency, and impossible patterns. OrigamiSpace \citep{origamispace} includes spatial reasoning
+tasks and crease-pattern code generation with an interactive environment. Generating a pattern
+specification differs from constructing a sequence of folds that realizes a supplied target.
+CP2Seq evaluates whether a model can translate geometric information into a complete, executable
+folding sequence, with each action checked for validity and the resulting construction checked
+against the target. Given a crease pattern and target folded state, the model must select folds,
+track their effects, and revise its choices until execution reproduces both the crease pattern
+and the target state.
+
+We introduce \textbf{CP2Seq}, a benchmark of 600 procedurally generated origami samples and a
+framework for generating, executing, and evaluating folding sequences. Each task supplies a crease
+pattern and a target folded state; the reference sequence and intermediate reference states are
+withheld. Starting from an unfolded square, the model must produce a valid sequence of simple
+folds under the specified action model. In the visual setting, it receives images of both inputs
+and views of its current folded state. The crease pattern constrains which creases must be
+produced, while the target specifies the arrangement of the folded sheet, including layer order.
+Together, these inputs guide the model's choice of where to fold and which layers to move.
+
+The task combines \emph{geometric reasoning}, \emph{spatial state tracking}, and
+\emph{sequential planning}. A fold line is specified in the current folded coordinates, whereas
+the target crease pattern describes the original sheet. Connecting these representations requires
+tracking reflections and the correspondence between paper regions. Selecting a fold also requires
+reasoning about overlapping layers and their connectivity. Subsequent decisions depend on the
+state produced by earlier actions, so increasing sequence depth extends the planning horizon.
+We evaluate these abilities through the construction of valid folding sequences across increasing
+reference depths. The environment represents flat-folded states with explicit layer ordering.
+
+We generate examples procedurally by applying legal folds and recording the resulting sequence,
+crease pattern, and folded state. This supplies reference solutions without manual annotation and
+lets us vary reference depth and the permitted folding operations. Releasing
+the generator also enables fresh evaluation instances beyond the published corpus, reducing
+reliance on fixed examples that future models may encounter during training
+(Section~\ref{sec:cp2seq}).
+
+We also provide an evaluation framework that presents images of the input crease pattern, the
+target folded state, and the current state after each accepted edit. These observations let the
+model compare its progress with the target and choose its next action. Tools support adding and
+removing folds, inspecting geometry, and returning to a specified earlier step to explore another
+sequence. The engine checks proposed edits and returns feedback, while the model directs the
+search. Different levels of tool assistance allow us to study how this support affects performance
+(Section~\ref{sec:experiments}).
+
+Evaluation checks both individual actions and the completed construction. Candidate sequences
+are replayed and assessed for crease-pattern agreement and agreement with the target folded
+state. A sequence need not match the recorded actions to be correct. Folded-state comparison
+accounts for a global translation, rotation, or turnover of the completed object, with the
+corresponding changes to layer order and face orientation (Section~\ref{sec:scoring}).
+We also provide a deterministic breadth-first search
+baseline using the same candidate-fold enumerator and terminal-state comparator. This baseline
+measures how much can be achieved by systematic search with the available filtering, providing
+context for model performance beyond comparisons between language models.
+
+Our contributions are:
+\begin{enumerate}
+\item \textbf{A dataset and generation framework.} CP2Seq contains 600 samples with
+  crease patterns, target states, recorded fold sequences, and intermediate states. Configurable
+  generation supports experiments across reference depths and action
+  models, with coupling recorded to characterize geometric structure.
+\item \textbf{An interactive evaluation and verification pipeline.} The framework connects visual
+  and geometric inputs to tools for constructing and revising sequences, step-level legality
+  checks, and final replay-based scoring. It includes corpus checks and a folded-state comparator.
+  It defines four assistance conditions;
+  the current experiments cover the filtered and basic-tools conditions.
+\item \textbf{A search baseline and an empirical analysis of model behavior.} We provide
+  breadth-first search over the same candidate actions, report performance by difficulty stratum,
+  and analyze episode termination. The current evaluation concentrates on
+  \texttt{gpt-5.6-luna}; other model runs have insufficient coverage for a cross-model ranking.
+\end{enumerate}
+
+In the current aggregate results, breadth-first search solves 54.7\% of easy-stratum attempts,
+compared with 20.4\% for \texttt{gpt-5.6-luna} with filtering and 6.2\% with basic tools.
+These rates summarize different sets of attempts rather than a paired comparison on an identical
+sample set. No evaluated language-model attempt succeeds on the medium or hard strata. All
+recorded reasoning-effort settings are low, so these results do not establish a general limit on
+the evaluated models. State cycling terminates 48.1\% of Luna's attempts, motivating further
+experiments on state tracking and backtracking. Section~\ref{sec:results} reports the coverage,
+budgets, and limitations of these measurements. The findings motivate evaluating geometric
+planning through both the constructions models produce and the search behavior that leads to them.

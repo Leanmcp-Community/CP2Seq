@@ -1,0 +1,56 @@
+\section{Tools, prompts, and run inspection}
+\label{app:artifacts}
+
+\subsection{Tool schemas and prompt}
+The following source listings document the available arguments and the folding prompt. Tool
+exposure varies by run configuration; the full schema listing is not a claim that every run
+exposed every tool.
+{\scriptsize\verbatiminput{../../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/tool_schemas.py}}
+{\small\verbatiminput{../../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/fold_prompt.md}}
+
+\subsection{Dataset gallery and reference sequences}
+Each rendered panel contains the crease pattern, top view, and an oblique view with illustrative
+layer separation. Layer separation is a visualization aid, not simulated paper thickness.
+\IfFileExists{figures/dataset/gallery.tex}{\input{figures/dataset/gallery}}{
+\noindent\fbox{\parbox{.9\linewidth}{Dataset gallery pending export: short all-layers,
+longer all-layers, and some-layers examples.}}}
+\IfFileExists{figures/dataset/sequences.tex}{\input{figures/dataset/sequences}}{}
+
+\subsection{Trace-analysis interface}
+We provide a trace-inspection interface for browsing saved runs, replaying recorded folding
+trajectories, and examining model actions alongside tool feedback and rendered states. This
+supports qualitative analysis of successful construction, repeated exploration, and unsuccessful
+termination. The interface presents recorded artifacts; it does not establish the model's internal
+reasoning process. A command-line trace viewer additionally supports filtering by task, trial,
+session, role, and event type.
+
+% EDITING NOTE: Select actual saved episodes after inspecting their terminal verdicts.
+% Include one solved, one cycling, and one unsuccessful non-cycling attempt. For each,
+% give run/sample IDs, configuration, terminal reason, and selected actions/tool responses.
+% Include screenshots from traces.html: target/current state plus action and feedback panes.
+% Include actual request/response excerpts; do not invent representative tool responses.
+% Attach per-run budgets, effort, tool schemas, comparison tier, and supplementary results.
+
+\subsection{Comparator validation}
+Implementation details and current representation limits are described in
+Appendix~\ref{app:comparison-details}. The repository contains comparison and verification tests;
+executed test results and the exact comparator revision must accompany any reported validation.
+% EDITING NOTE: Capture fresh test output and resolve identity-aware versus shared comparator
+% differences before claiming all positive and corrupted-state controls pass.
+
+
+\subsection{Tool loading and configuration}
+\label{app:tool-loading}
+The schema builder selects the tools exposed in each run. Basic mode excludes candidate
+enumeration; filtered mode includes it. Target comparison is added only when a comparison level
+is configured. For an all-layers action model, partial-layer selection arguments are removed
+from the exposed action schemas. The run configuration therefore records tool mode, comparison
+level, and action model separately.
+
+% REFUSAL FIGURE PLAN: Use a saved some-layers would-tear response with geometric diagnostics.
+% Panel A: current stack, selected moving region, proposed hinge, and shared off-hinge edge.
+% Panel B: original-sheet connectivity showing which moving/stationary regions share that edge.
+% Label the rejection and note that the simulator retains the pre-action state.
+% Do not render a torn state as an accepted simulation result. A counterfactual separation may
+% be shown only as a clearly labelled explanatory schematic. Add a legal alternative only if
+% the same-state action has been checked by the engine. Pending selection of a suitable trace.
