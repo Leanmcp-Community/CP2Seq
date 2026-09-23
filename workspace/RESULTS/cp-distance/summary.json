@@ -1,0 +1,293 @@
+{
+  "metric": "CP merged-interval insertion/deletion distance v1",
+  "costs": {
+    "insertion": 1,
+    "deletion": 1,
+    "substitution": 2
+  },
+  "endpoint_tolerance": 0.000002,
+  "line_quantization": 0.000244140625,
+  "merge_gap": 0.00001,
+  "boundaries": "excluded",
+  "normalization": "raw / target merged M/V interval count; may exceed 1; null for zero target creases",
+  "aggregation": "attempt-weighted; missing states excluded and counted explicitly",
+  "roots": [
+    "/Users/ddod/LEANMCP/ROBOTICS/FoldOrigami/CODEX_HARNESS_TESTING/runs"
+  ],
+  "overall": {
+    "attempts": 1422,
+    "scored": 1421,
+    "unscored": 1,
+    "mean_edit_distance": 45.453905700211116,
+    "mean_normalized_edit_distance": 0.55308757539563,
+    "normalized_count": 1421
+  },
+  "groups": [
+    {
+      "configuration": [
+        "unknown",
+        "unknown",
+        "unknown",
+        "easy"
+      ],
+      "attempts": 27,
+      "scored": 26,
+      "unscored": 1,
+      "mean_edit_distance": 19.923076923076923,
+      "mean_normalized_edit_distance": 0.7828399183190483,
+      "normalized_count": 26
+    },
+    {
+      "configuration": [
+        "claude-sonnet-5",
+        "legal-folds",
+        "low",
+        "easy"
+      ],
+      "attempts": 5,
+      "scored": 5,
+      "unscored": 0,
+      "mean_edit_distance": 12.8,
+      "mean_normalized_edit_distance": 0.48087339309068866,
+      "normalized_count": 5
+    },
+    {
+      "configuration": [
+        "codex-cli-chatgpt",
+        "unknown",
+        "unknown",
+        "easy"
+      ],
+      "attempts": 1,
+      "scored": 1,
+      "unscored": 0,
+      "mean_edit_distance": 8,
+      "mean_normalized_edit_distance": 1,
+      "normalized_count": 1
+    },
+    {
+      "configuration": [
+        "gpt-5.6-luna",
+        "unknown",
+        "low",
+        "easy"
+      ],
+      "attempts": 65,
+      "scored": 65,
+      "unscored": 0,
+      "mean_edit_distance": 19.353846153846153,
+      "mean_normalized_edit_distance": 0.7725136111054075,
+      "normalized_count": 65
+    },
+    {
+      "configuration": [
+        "gpt-5.6-sol",
+        "unknown",
+        "low",
+        "easy"
+      ],
+      "attempts": 7,
+      "scored": 7,
+      "unscored": 0,
+      "mean_edit_distance": 15.857142857142858,
+      "mean_normalized_edit_distance": 0.5856871405413624,
+      "normalized_count": 7
+    },
+    {
+      "configuration": [
+        "gpt-5.6-terra",
+        "unknown",
+        "low",
+        "easy"
+      ],
+      "attempts": 1,
+      "scored": 1,
+      "unscored": 0,
+      "mean_edit_distance": 0,
+      "mean_normalized_edit_distance": 0,
+      "normalized_count": 1
+    },
+    {
+      "configuration": [
+        "gpt-6-astra",
+        "unknown",
+        "low",
+        "easy"
+      ],
+      "attempts": 1,
+      "scored": 1,
+      "unscored": 0,
+      "mean_edit_distance": 0,
+      "mean_normalized_edit_distance": 0,
+      "normalized_count": 1
+    },
+    {
+      "configuration": [
+        "gpt-5.6-luna",
+        "unknown",
+        "low",
+        "hard"
+      ],
+      "attempts": 1,
+      "scored": 1,
+      "unscored": 0,
+      "mean_edit_distance": 2736,
+      "mean_normalized_edit_distance": 0.9989047097480832,
+      "normalized_count": 1
+    },
+    {
+      "configuration": [
+        "gpt-5.6-luna",
+        "unknown",
+        "low",
+        "mid"
+      ],
+      "attempts": 1,
+      "scored": 1,
+      "unscored": 0,
+      "mean_edit_distance": 80,
+      "mean_normalized_edit_distance": 0.9876543209876543,
+      "normalized_count": 1
+    },
+    {
+      "configuration": [
+        "gpt-5.6-luna",
+        "legal-folds",
+        "low",
+        "easy"
+      ],
+      "attempts": 289,
+      "scored": 289,
+      "unscored": 0,
+      "mean_edit_distance": 13.14878892733564,
+      "mean_normalized_edit_distance": 0.3850693347367081,
+      "normalized_count": 289
+    },
+    {
+      "configuration": [
+        "gpt-5.6-luna",
+        "legal-folds",
+        "low",
+        "mid"
+      ],
+      "attempts": 66,
+      "scored": 66,
+      "unscored": 0,
+      "mean_edit_distance": 78.95454545454545,
+      "mean_normalized_edit_distance": 0.8096060153439968,
+      "normalized_count": 66
+    },
+    {
+      "configuration": [
+        "unknown",
+        "unknown",
+        "unknown",
+        "mid"
+      ],
+      "attempts": 3,
+      "scored": 3,
+      "unscored": 0,
+      "mean_edit_distance": 168.66666666666666,
+      "mean_normalized_edit_distance": 0.8709812093310333,
+      "normalized_count": 3
+    },
+    {
+      "configuration": [
+        "gpt-5.6-luna",
+        "legal-folds",
+        "low",
+        "hard"
+      ],
+      "attempts": 25,
+      "scored": 25,
+      "unscored": 0,
+      "mean_edit_distance": 677.4,
+      "mean_normalized_edit_distance": 0.9434562796611791,
+      "normalized_count": 25
+    },
+    {
+      "configuration": [
+        "unknown",
+        "unknown",
+        "unknown",
+        "hard"
+      ],
+      "attempts": 2,
+      "scored": 2,
+      "unscored": 0,
+      "mean_edit_distance": 155.5,
+      "mean_normalized_edit_distance": 0.9805503439649781,
+      "normalized_count": 2
+    },
+    {
+      "configuration": [
+        "deterministic-bfs",
+        "legal-folds",
+        "unknown",
+        "easy"
+      ],
+      "attempts": 669,
+      "scored": 669,
+      "unscored": 0,
+      "mean_edit_distance": 19.336322869955158,
+      "mean_normalized_edit_distance": 0.452914798206278,
+      "normalized_count": 669
+    },
+    {
+      "configuration": [
+        "deterministic-bfs",
+        "legal-folds",
+        "unknown",
+        "mid"
+      ],
+      "attempts": 40,
+      "scored": 40,
+      "unscored": 0,
+      "mean_edit_distance": 93.85,
+      "mean_normalized_edit_distance": 0.975,
+      "normalized_count": 40
+    },
+    {
+      "configuration": [
+        "deterministic-bfs",
+        "legal-folds",
+        "unknown",
+        "hard"
+      ],
+      "attempts": 16,
+      "scored": 16,
+      "unscored": 0,
+      "mean_edit_distance": 715.4375,
+      "mean_normalized_edit_distance": 1,
+      "normalized_count": 16
+    },
+    {
+      "configuration": [
+        "deterministic-reverse",
+        "legal-folds",
+        "unknown",
+        "easy"
+      ],
+      "attempts": 202,
+      "scored": 202,
+      "unscored": 0,
+      "mean_edit_distance": 23.722772277227723,
+      "mean_normalized_edit_distance": 0.7623762376237624,
+      "normalized_count": 202
+    },
+    {
+      "configuration": [
+        "deterministic-reverse",
+        "legal-folds",
+        "unknown",
+        "hard"
+      ],
+      "attempts": 1,
+      "scored": 1,
+      "unscored": 0,
+      "mean_edit_distance": 123,
+      "mean_normalized_edit_distance": 1,
+      "normalized_count": 1
+    }
+  ]
+}

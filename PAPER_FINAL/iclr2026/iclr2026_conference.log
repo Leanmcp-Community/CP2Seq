@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.1)  22 SEP 2026 22:46
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.1)  22 SEP 2026 23:12
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -713,7 +713,7 @@ File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 ))
 (./sections/02-related-work.tex [2]) (./sections/04-dataset.tex
 (./sections/03-problem-formulation.tex (./figures/task-example.tex
-<figures/dataset/sample-1.png, id=227, 963.6pt x 385.44pt>
+<figures/dataset/sample-1.png, id=214, 963.6pt x 385.44pt>
 File: figures/dataset/sample-1.png Graphic file (type png)
 <use figures/dataset/sample-1.png>
 Package pdftex.def Info: figures/dataset/sample-1.png  used on input line 7.
@@ -722,31 +722,31 @@ File: figures/dataset/sample-1.png Graphic file (type png)
 <use figures/dataset/sample-1.png>
 Package pdftex.def Info: figures/dataset/sample-1.png  used on input line 8.
 (pdftex.def)             Requested size: 71.13188pt x 85.35579pt.
-<figures/dataset/sample-1-state-0.png, id=230, 963.6pt x 385.44pt>
+<figures/dataset/sample-1-state-0.png, id=217, 963.6pt x 385.44pt>
 File: figures/dataset/sample-1-state-0.png Graphic file (type png)
 <use figures/dataset/sample-1-state-0.png>
 Package pdftex.def Info: figures/dataset/sample-1-state-0.png  used on input li
 ne 21.
 (pdftex.def)             Requested size: 56.9055pt x 68.28227pt.
-<figures/dataset/sample-1-state-1.png, id=232, 963.6pt x 385.44pt>
+<figures/dataset/sample-1-state-1.png, id=219, 963.6pt x 385.44pt>
 File: figures/dataset/sample-1-state-1.png Graphic file (type png)
 <use figures/dataset/sample-1-state-1.png>
 Package pdftex.def Info: figures/dataset/sample-1-state-1.png  used on input li
 ne 21.
 (pdftex.def)             Requested size: 56.9055pt x 68.28227pt.
-<figures/dataset/sample-1-state-2.png, id=234, 963.6pt x 385.44pt>
+<figures/dataset/sample-1-state-2.png, id=221, 963.6pt x 385.44pt>
 File: figures/dataset/sample-1-state-2.png Graphic file (type png)
 <use figures/dataset/sample-1-state-2.png>
 Package pdftex.def Info: figures/dataset/sample-1-state-2.png  used on input li
 ne 21.
 (pdftex.def)             Requested size: 56.9055pt x 68.28227pt.
-<figures/dataset/sample-1-state-3.png, id=236, 963.6pt x 385.44pt>
+<figures/dataset/sample-1-state-3.png, id=223, 963.6pt x 385.44pt>
 File: figures/dataset/sample-1-state-3.png Graphic file (type png)
 <use figures/dataset/sample-1-state-3.png>
 Package pdftex.def Info: figures/dataset/sample-1-state-3.png  used on input li
 ne 21.
 (pdftex.def)             Requested size: 56.9055pt x 68.28227pt.
-<figures/dataset/sample-1-state-4.png, id=238, 963.6pt x 385.44pt>
+<figures/dataset/sample-1-state-4.png, id=225, 963.6pt x 385.44pt>
 File: figures/dataset/sample-1-state-4.png Graphic file (type png)
 <use figures/dataset/sample-1-state-4.png>
 Package pdftex.def Info: figures/dataset/sample-1-state-4.png  used on input li
@@ -761,17 +761,17 @@ File: figures/dataset/sample-1.png Graphic file (type png)
 <use figures/dataset/sample-1.png>
 Package pdftex.def Info: figures/dataset/sample-1.png  used on input line 7.
 (pdftex.def)             Requested size: 186.81842pt x 112.09232pt.
-<figures/dataset/sample-2.png, id=255, 963.6pt x 385.44pt>
+<figures/dataset/sample-2.png, id=243, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2.png Graphic file (type png)
 <use figures/dataset/sample-2.png>
 Package pdftex.def Info: figures/dataset/sample-2.png  used on input line 8.
 (pdftex.def)             Requested size: 186.81842pt x 112.09232pt.
-<figures/dataset/sample-4.png, id=257, 963.6pt x 385.44pt>
+<figures/dataset/sample-4.png, id=245, 963.6pt x 385.44pt>
 File: figures/dataset/sample-4.png Graphic file (type png)
 <use figures/dataset/sample-4.png>
 Package pdftex.def Info: figures/dataset/sample-4.png  used on input line 11.
 (pdftex.def)             Requested size: 186.81842pt x 112.09232pt.
-<figures/dataset/sample-3.png, id=259, 963.6pt x 385.44pt>
+<figures/dataset/sample-3.png, id=247, 963.6pt x 385.44pt>
 File: figures/dataset/sample-3.png Graphic file (type png)
 <use figures/dataset/sample-3.png>
 Package pdftex.def Info: figures/dataset/sample-3.png  used on input line 12.
@@ -786,48 +786,49 @@ res/dataset/sample-1-state-2.png (PNG copy)> <./figures/dataset/sample-1-state-
 3.png (PNG copy)> <./figures/dataset/sample-1-state-4.png (PNG copy)>])
 [5 <./figures/dataset/sample-2.png (PNG copy)> <./figures/dataset/sample-4.png 
 (PNG copy)> <./figures/dataset/sample-3.png (PNG copy)>]
-(./sections/05-environment.tex [6]) (./sections/06-scoring.tex)
-(./sections/07-experimental-setup.tex [7] (./figures/pipeline.tex)
-LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <9> not available
-(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 101.
-
+(./sections/05-environment.tex) (./sections/06-scoring.tex)
+(./sections/07-experimental-setup.tex [6] (./figures/pipeline.tex)
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 114--117
+Underfull \hbox (badness 10000) in paragraph at lines 105--108
 []\OT1/ptm/b/n/9 Models. \OT1/pcr/m/n/9 [TO FILL from the aggregation: the mode
 ls actually run, their
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 114--117
+Underfull \hbox (badness 10000) in paragraph at lines 105--108
 \OT1/pcr/m/n/9 versions, and the reasoning-effort and image-history settings us
 ed. Held
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 114--117
+Underfull \hbox (badness 10000) in paragraph at lines 105--108
 \OT1/pcr/m/n/9 fixed across tiers, because comparing across models and across t
 iers at
  []
 
-[8]
-Underfull \hbox (badness 10000) in paragraph at lines 160--160
+[7]
+Underfull \hbox (badness 10000) in paragraph at lines 151--151
 []\OT1/ptm/m/n/9 Deterministic breadth-first
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 160--160
+Underfull \hbox (badness 10000) in paragraph at lines 151--151
 \OT1/ptm/m/n/9 over the same ac-tion set
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 161--161
+Underfull \hbox (badness 10000) in paragraph at lines 152--152
 []\OT1/ptm/m/n/9 Symbolic crease-pattern-to-sequence solver
  []
 
-) (./sections/08-tiers.tex [9]) (./sections/09-results.tex
+) (./sections/08-tiers.tex
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[8]) (./sections/09-results.tex
 Underfull \hbox (badness 6364) in paragraph at lines 4--8
 \OT1/ptm/m/n/9 All num-bers be-low come from \OT1/pcr/m/n/9 workspace/RESULTS/r
 esults.md\OT1/ptm/m/n/9 , pro-duced by \OT1/pcr/m/n/9 python3
@@ -836,10 +837,20 @@ esults.md\OT1/ptm/m/n/9 , pro-duced by \OT1/pcr/m/n/9 python3
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[10] (./sections/figure-bfs-effort.tex) [11]) (./sections/10-limitations.tex)
-(./sections/13-licence.tex) (./sections/14-llm-use.tex [12])
-(./iclr2026_conference.bbl) (./sections/appendix-folding-model.tex [13])
-(./sections/appendix-artifacts.tex
+(./sections/figure-bfs-effort.tex) [9] [10]) (./sections/10-limitations.tex)
+(./sections/13-licence.tex) (./sections/14-llm-use.tex
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [11])
+(./iclr2026_conference.bbl) (./sections/appendix-folding-model.tex [12]
+Overfull \hbox (4.87784pt too wide) in paragraph at lines 79--93
+ [][] 
+ []
+
+) (./sections/appendix-artifacts.tex
+Underfull \vbox (badness 6094) has occurred while \output is active []
+
+ [13]
 File: "../../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/tool_schemas.py"  (verbatim)
 
 Overfull \hbox (203.11458pt too wide) in paragraph at lines 8--8
@@ -861,7 +872,7 @@ Overfull \hbox (81.31467pt too wide) in paragraph at lines 8--8
 ription": "Required for top/bottom, omit for all."},[] 
  []
 
-[14]
+
 Overfull \hbox (30.9147pt too wide) in paragraph at lines 8--8
 []    \OT1/pcr/m/n/7 tool("get_images", "Render top, two oblique, X-ray, and ex
 ploded-stack PNGs at a completed step.",[] 
@@ -897,6 +908,7 @@ Overfull \hbox (22.51471pt too wide) in paragraph at lines 8--8
 Choose angle_index OR angle_degrees.")[] 
  []
 
+[14]
 File: "../../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/fold_prompt.md"  (verbatim)
 
 Overfull \hbox (39.91452pt too wide) in paragraph at lines 9--9
@@ -911,9 +923,6 @@ Overfull \hbox (29.11453pt too wide) in paragraph at lines 9--9
  []
 
 
-Underfull \vbox (badness 1194) has occurred while \output is active []
-
- [15]
 Overfull \hbox (39.91452pt too wide) in paragraph at lines 9--9
 []\OT1/pcr/m/n/9 result before proposing the next fold. Do not return an entire
  sequence in prose.[] 
@@ -1081,7 +1090,7 @@ Overfull \hbox (23.71454pt too wide) in paragraph at lines 9--9
 ayer separation.[] 
  []
 
-
+[15]
 Overfull \hbox (23.71454pt too wide) in paragraph at lines 9--9
 []\OT1/pcr/m/n/9 Oblique views look down from opposite directions, never exactl
 y edge-on. X-ray[] 
@@ -1166,9 +1175,6 @@ is ends the episode and evaluates your[]
  []
 
 (./figures/dataset/gallery.tex
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [16]
 File: figures/dataset/sample-1.png Graphic file (type png)
 <use figures/dataset/sample-1.png>
 Package pdftex.def Info: figures/dataset/sample-1.png  used on input line 2.
@@ -1181,36 +1187,34 @@ File: figures/dataset/sample-3.png Graphic file (type png)
 <use figures/dataset/sample-3.png>
 Package pdftex.def Info: figures/dataset/sample-3.png  used on input line 6.
 (pdftex.def)             Requested size: 397.48499pt x 158.99008pt.
+
+Underfull \vbox (badness 6412) has occurred while \output is active []
+
+ [16]
 File: figures/dataset/sample-4.png Graphic file (type png)
 <use figures/dataset/sample-4.png>
 Package pdftex.def Info: figures/dataset/sample-4.png  used on input line 8.
 (pdftex.def)             Requested size: 397.48499pt x 158.99008pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [17]
-<figures/dataset/sample-5.png, id=390, 963.6pt x 385.44pt>
+<figures/dataset/sample-5.png, id=374, 963.6pt x 385.44pt>
 File: figures/dataset/sample-5.png Graphic file (type png)
 <use figures/dataset/sample-5.png>
 Package pdftex.def Info: figures/dataset/sample-5.png  used on input line 10.
 (pdftex.def)             Requested size: 397.48499pt x 158.99008pt.
-<figures/dataset/sample-6.png, id=391, 963.6pt x 385.44pt>
+<figures/dataset/sample-6.png, id=375, 963.6pt x 385.44pt>
 File: figures/dataset/sample-6.png Graphic file (type png)
 <use figures/dataset/sample-6.png>
 Package pdftex.def Info: figures/dataset/sample-6.png  used on input line 12.
 (pdftex.def)             Requested size: 397.48499pt x 158.99008pt.
 )
 (./figures/dataset/sequences.tex
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [17 <./figures/dataset/sample-5.png (PNG copy)>]
 File: figures/dataset/sample-1-state-0.png Graphic file (type png)
 <use figures/dataset/sample-1-state-0.png>
 Package pdftex.def Info: figures/dataset/sample-1-state-0.png  used on input li
 ne 3.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [18 <./figures/dataset/sample-5.png (PNG copy)> <./figures/dataset/sample-6.pn
-g (PNG copy)>]
 File: figures/dataset/sample-1-state-1.png Graphic file (type png)
 <use figures/dataset/sample-1-state-1.png>
 Package pdftex.def Info: figures/dataset/sample-1-state-1.png  used on input li
@@ -1226,169 +1230,172 @@ File: figures/dataset/sample-1-state-3.png Graphic file (type png)
 Package pdftex.def Info: figures/dataset/sample-1-state-3.png  used on input li
 ne 9.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [18 <./figures/dataset/sample-6.png (PNG copy)>]
 File: figures/dataset/sample-1-state-4.png Graphic file (type png)
 <use figures/dataset/sample-1-state-4.png>
 Package pdftex.def Info: figures/dataset/sample-1-state-4.png  used on input li
 ne 11.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [19]
-<figures/dataset/sample-2-state-0.png, id=402, 963.6pt x 385.44pt>
+<figures/dataset/sample-2-state-0.png, id=385, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2-state-0.png Graphic file (type png)
 <use figures/dataset/sample-2-state-0.png>
 Package pdftex.def Info: figures/dataset/sample-2-state-0.png  used on input li
 ne 14.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-2-state-1.png, id=403, 963.6pt x 385.44pt>
+<figures/dataset/sample-2-state-1.png, id=386, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2-state-1.png Graphic file (type png)
 <use figures/dataset/sample-2-state-1.png>
 Package pdftex.def Info: figures/dataset/sample-2-state-1.png  used on input li
 ne 16.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-2-state-2.png, id=404, 963.6pt x 385.44pt>
+<figures/dataset/sample-2-state-2.png, id=387, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2-state-2.png Graphic file (type png)
 <use figures/dataset/sample-2-state-2.png>
 Package pdftex.def Info: figures/dataset/sample-2-state-2.png  used on input li
 ne 18.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-2-state-3.png, id=405, 963.6pt x 385.44pt>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [19 <./figures/dataset/sample-2-state-0.png (PNG copy)> <./figures/dataset/sam
+ple-2-state-1.png (PNG copy)>]
+<figures/dataset/sample-2-state-3.png, id=394, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2-state-3.png Graphic file (type png)
 <use figures/dataset/sample-2-state-3.png>
 Package pdftex.def Info: figures/dataset/sample-2-state-3.png  used on input li
 ne 20.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [20 <./figures/dataset/sample-2-state-0.png (PNG copy)> <./figures/dataset/sam
-ple-2-state-1.png (PNG copy)> <./figures/dataset/sample-2-state-2.png (PNG copy
-)>]
-<figures/dataset/sample-2-state-4.png, id=411, 963.6pt x 385.44pt>
+<figures/dataset/sample-2-state-4.png, id=395, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2-state-4.png Graphic file (type png)
 <use figures/dataset/sample-2-state-4.png>
 Package pdftex.def Info: figures/dataset/sample-2-state-4.png  used on input li
 ne 22.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-2-state-5.png, id=412, 963.6pt x 385.44pt>
+<figures/dataset/sample-2-state-5.png, id=396, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2-state-5.png Graphic file (type png)
 <use figures/dataset/sample-2-state-5.png>
 Package pdftex.def Info: figures/dataset/sample-2-state-5.png  used on input li
 ne 24.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-2-state-6.png, id=413, 963.6pt x 385.44pt>
+<figures/dataset/sample-2-state-6.png, id=397, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2-state-6.png Graphic file (type png)
 <use figures/dataset/sample-2-state-6.png>
 Package pdftex.def Info: figures/dataset/sample-2-state-6.png  used on input li
 ne 26.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-2-state-7.png, id=414, 963.6pt x 385.44pt>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [20 <./figures/dataset/sample-2-state-2.png (PNG copy)> <./figures/dataset/sam
+ple-2-state-3.png (PNG copy)> <./figures/dataset/sample-2-state-4.png (PNG copy
+)> <./figures/dataset/sample-2-state-5.png (PNG copy)>]
+<figures/dataset/sample-2-state-7.png, id=402, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2-state-7.png Graphic file (type png)
 <use figures/dataset/sample-2-state-7.png>
 Package pdftex.def Info: figures/dataset/sample-2-state-7.png  used on input li
 ne 28.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [21 <./figures/dataset/sample-2-state-3.png (PNG copy)> <./figures/dataset/sam
-ple-2-state-4.png (PNG copy)> <./figures/dataset/sample-2-state-5.png (PNG copy
-)> <./figures/dataset/sample-2-state-6.png (PNG copy)>]
-<figures/dataset/sample-2-state-8.png, id=419, 963.6pt x 385.44pt>
+<figures/dataset/sample-2-state-8.png, id=403, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2-state-8.png Graphic file (type png)
 <use figures/dataset/sample-2-state-8.png>
 Package pdftex.def Info: figures/dataset/sample-2-state-8.png  used on input li
 ne 30.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-2-state-9.png, id=420, 963.6pt x 385.44pt>
+<figures/dataset/sample-2-state-9.png, id=404, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2-state-9.png Graphic file (type png)
 <use figures/dataset/sample-2-state-9.png>
 Package pdftex.def Info: figures/dataset/sample-2-state-9.png  used on input li
 ne 32.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-2-state-10.png, id=421, 963.6pt x 385.44pt>
+<figures/dataset/sample-2-state-10.png, id=405, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2-state-10.png Graphic file (type png)
 <use figures/dataset/sample-2-state-10.png>
 Package pdftex.def Info: figures/dataset/sample-2-state-10.png  used on input l
 ine 34.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-2-state-11.png, id=422, 963.6pt x 385.44pt>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [21 <./figures/dataset/sample-2-state-6.png (PNG copy)> <./figures/dataset/sam
+ple-2-state-7.png (PNG copy)> <./figures/dataset/sample-2-state-8.png (PNG copy
+)> <./figures/dataset/sample-2-state-9.png (PNG copy)>]
+<figures/dataset/sample-2-state-11.png, id=410, 963.6pt x 385.44pt>
 File: figures/dataset/sample-2-state-11.png Graphic file (type png)
 <use figures/dataset/sample-2-state-11.png>
 Package pdftex.def Info: figures/dataset/sample-2-state-11.png  used on input l
 ine 36.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [22 <./figures/dataset/sample-2-state-7.png (PNG copy)> <./figures/dataset/sam
-ple-2-state-8.png (PNG copy)> <./figures/dataset/sample-2-state-9.png (PNG copy
-)> <./figures/dataset/sample-2-state-10.png (PNG copy)>]
-<figures/dataset/sample-3-state-0.png, id=427, 963.6pt x 385.44pt>
+<figures/dataset/sample-3-state-0.png, id=411, 963.6pt x 385.44pt>
 File: figures/dataset/sample-3-state-0.png Graphic file (type png)
 <use figures/dataset/sample-3-state-0.png>
 Package pdftex.def Info: figures/dataset/sample-3-state-0.png  used on input li
 ne 39.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-3-state-1.png, id=428, 963.6pt x 385.44pt>
+<figures/dataset/sample-3-state-1.png, id=412, 963.6pt x 385.44pt>
 File: figures/dataset/sample-3-state-1.png Graphic file (type png)
 <use figures/dataset/sample-3-state-1.png>
 Package pdftex.def Info: figures/dataset/sample-3-state-1.png  used on input li
 ne 41.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-3-state-2.png, id=429, 963.6pt x 385.44pt>
+<figures/dataset/sample-3-state-2.png, id=413, 963.6pt x 385.44pt>
 File: figures/dataset/sample-3-state-2.png Graphic file (type png)
 <use figures/dataset/sample-3-state-2.png>
 Package pdftex.def Info: figures/dataset/sample-3-state-2.png  used on input li
 ne 43.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-3-state-3.png, id=430, 963.6pt x 385.44pt>
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [22 <./figures/dataset/sample-2-state-10.png (PNG copy)> <./figures/dataset/sa
+mple-2-state-11.png (PNG copy)> <./figures/dataset/sample-3-state-0.png (PNG co
+py)> <./figures/dataset/sample-3-state-1.png (PNG copy)>]
+<figures/dataset/sample-3-state-3.png, id=419, 963.6pt x 385.44pt>
 File: figures/dataset/sample-3-state-3.png Graphic file (type png)
 <use figures/dataset/sample-3-state-3.png>
 Package pdftex.def Info: figures/dataset/sample-3-state-3.png  used on input li
 ne 45.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [23 <./figures/dataset/sample-2-state-11.png (PNG copy)> <./figures/dataset/sa
-mple-3-state-0.png (PNG copy)> <./figures/dataset/sample-3-state-1.png (PNG cop
-y)> <./figures/dataset/sample-3-state-2.png (PNG copy)>]
-<figures/dataset/sample-3-state-4.png, id=437, 963.6pt x 385.44pt>
+<figures/dataset/sample-3-state-4.png, id=420, 963.6pt x 385.44pt>
 File: figures/dataset/sample-3-state-4.png Graphic file (type png)
 <use figures/dataset/sample-3-state-4.png>
 Package pdftex.def Info: figures/dataset/sample-3-state-4.png  used on input li
 ne 47.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-<figures/dataset/sample-3-state-5.png, id=438, 963.6pt x 385.44pt>
+<figures/dataset/sample-3-state-5.png, id=421, 963.6pt x 385.44pt>
 File: figures/dataset/sample-3-state-5.png Graphic file (type png)
 <use figures/dataset/sample-3-state-5.png>
 Package pdftex.def Info: figures/dataset/sample-3-state-5.png  used on input li
 ne 49.
 (pdftex.def)             Requested size: 286.18967pt x 114.47426pt.
-)) [24 <./figures/dataset/sample-3-state-3.png (PNG copy)> <./figures/dataset/s
-ample-3-state-4.png (PNG copy)> <./figures/dataset/sample-3-state-5.png (PNG co
-py)>] (./iclr2026_conference.aux)
+)
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [23 <./figures/dataset/sample-3-state-2.png (PNG copy)> <./figures/dataset/sam
+ple-3-state-3.png (PNG copy)> <./figures/dataset/sample-3-state-4.png (PNG copy
+)> <./figures/dataset/sample-3-state-5.png (PNG copy)>]) [24] (./iclr2026_confe
+rence.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `iclr2026_conference.out' has not changed.
-(rerunfilecheck)             Checksum: 977DA02F1C782DE773380E2CF429845A;7121.
+(rerunfilecheck)             Checksum: BA234592A1FF0B5093D3172DC8EC1C6A;6739.
  )
 (\end occurred inside a group at level 1)
 
 ### simple group (level 1) entered at line 25 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 21789 strings out of 469006
- 403373 string characters out of 5454814
- 798260 words of memory out of 5000000
- 49927 multiletter control sequences out of 15000+600000
- 661200 words of font info for 110 fonts, out of 8000000 for 9000
+ 21774 strings out of 469006
+ 403124 string characters out of 5454814
+ 795908 words of memory out of 5000000
+ 49918 multiletter control sequences out of 15000+600000
+ 660583 words of font info for 108 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
- 84i,15n,94p,564b,926s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,15n,94p,564b,928s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmmi10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public
 /amsfonts/cm/cmmi7.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/pub
@@ -1401,15 +1408,14 @@ ts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2026basic/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2026basic/texmf-di
 st/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2026basic/texmf
 -dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2026basic/texmf-di
-st/fonts/type1/urw/courier/ucrro8a.pfb></usr/local/texlive/2026basic/texmf-dist
-/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2026basic/texmf-dist/f
-onts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/
-type1/urw/times/utmr8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1
-/urw/times/utmri8a.pfb>
-Output written on iclr2026_conference.pdf (24 pages, 577441 bytes).
+st/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2026basic/texmf-dist
+/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2026basic/texmf-dist/font
+s/type1/urw/times/utmr8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/typ
+e1/urw/times/utmri8a.pfb>
+Output written on iclr2026_conference.pdf (24 pages, 568484 bytes).
 PDF statistics:
- 537 PDF objects out of 1000 (max. 8388607)
- 434 compressed objects within 5 object streams
- 107 named destinations out of 1000 (max. 500000)
- 568 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 521 PDF objects out of 1000 (max. 8388607)
+ 420 compressed objects within 5 object streams
+ 103 named destinations out of 1000 (max. 500000)
+ 544 words of extra memory for PDF output out of 10000 (max. 10000000)
 

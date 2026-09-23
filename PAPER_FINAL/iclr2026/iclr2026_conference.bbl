@@ -1,4 +1,4 @@
-\begin{thebibliography}{8}
+\begin{thebibliography}{7}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -38,12 +38,6 @@ Creasy.
 \newblock {Creasy}, 2022.
 \newblock Open-source crease-pattern-to-sequence implementation, Java, GPL-3.0,
   unmaintained since 2022. \url{https://github.com/xkevio/Creasy}.
-
-\bibitem[Flat-Folder()]{flatfolder}
-Flat-Folder.
-\newblock {Flat-Folder}, 2024.
-\newblock \url{https://github.com/origamimagiro/flat-folder}, MIT licence.
-  Decides and enumerates flat-folded states.
 
 \bibitem[Spencer et~al.(2025)Spencer, Yaari, Vemavarapu, Yang, Ngo, and
   Sharma]{gamibench}

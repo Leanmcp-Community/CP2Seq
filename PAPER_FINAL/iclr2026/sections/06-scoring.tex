@@ -36,9 +36,17 @@ attempts they are consumed queries, not observed queries to solution.
 % EDITING NOTE: Compute CP edit distance for the final valid state of every saved attempt,
 % including unsuccessful and interrupted runs. Define edits, costs, normalization, and treatment
 % of missing state artifacts before adding numerical results. See IMPORTANT_TODO.md.
-CP edit distance is planned as an additional measure of the difference between the crease pattern
-constructed at termination and the supplied pattern. Its definition and evaluation across saved
-runs remain to be completed; no distance results are reported here.
+We measure CP edit distance between the accumulated crease pattern in the last recoverable
+state and the supplied pattern, in original-sheet coordinates. Collinear mountain and valley
+intervals are merged separately, excluding sheet boundaries. If $m$ intervals match under the
+crease comparator, the insertion/deletion distance is
+$d_{\mathrm{CP}}=|C_{\mathrm{target}}|+|C_{\mathrm{candidate}}|-2m$.
+Each missing or extra interval costs one; changing an assignment costs two. Partially overlapping
+intervals do not match unless their endpoints agree within tolerance. We also report
+$d_{\mathrm{CP}}/|C_{\mathrm{target}}|$, which can exceed one. Normalized distance is undefined
+for an empty target. Means weight attempts equally and exclude missing state artifacts,
+whose counts are reported separately. This metric compares crease patterns, not fold sequences,
+and zero distance does not establish folded-state agreement.
 
 \phantomsection
 \label{sec:scoring-validate}

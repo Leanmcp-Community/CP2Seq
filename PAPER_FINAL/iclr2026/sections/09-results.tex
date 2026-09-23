@@ -1,10 +1,22 @@
 \section{Results}
 \label{sec:results}
 
-All numbers below come from \texttt{workspace/RESULTS/results.md}, produced by
+Solve-rate and termination statistics come from \texttt{workspace/RESULTS/results.md}, produced by
 \texttt{python3 workspace/aggregate\_results.py} over every saved run. 1,211% fact:results.attempts
 attempts across 47 runs and 256 distinct samples. Every attempt is counted once, and an attempt with
 no recorded \texttt{solved} field is counted as unsolved.
+
+\paragraph{Crease-pattern distance.}
+The saved-run CP-distance scan covers 1,422 attempts, of which 1,421 have recoverable
+crease patterns. Mean insertion/deletion distance is 45.454; mean distance normalized
+by target crease count is 0.553. One attempt is excluded because its state could not be
+recovered. These averages pool models, baselines, configurations, and repeated samples;
+they describe the saved attempts rather than a matched comparison of methods. This scan
+includes runs outside the earlier 1,211-attempt solve-rate snapshot.
+% EDITING NOTE: Refresh the paragraph above with summary.json when new runs are scored.
+% Validate known complete, empty, partial, and wrong-assignment cases before submission.
+\IfFileExists{../../workspace/RESULTS/cp-distance/paper-table.tex}{%
+  \input{../../workspace/RESULTS/cp-distance/paper-table.tex}}{}
 
 \subsection{Model performance}
 \label{sec:results-headline}
