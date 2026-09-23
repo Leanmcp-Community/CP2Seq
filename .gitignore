@@ -52,6 +52,26 @@ htmlcov/
 DHEERAJ_WORKSPACE/viewer/*.log
 
 
+# Local experiment monitor logs, process IDs, and locks
+/CODEX_HARNESS_TESTING/matched40-state/
+
+# Detailed CP-distance exports; retain summary.json and paper-table.tex
+/workspace/RESULTS/cp-distance/per-attempt/
+/workspace/RESULTS/cp-distance/attempts.json
+/workspace/RESULTS/cp-distance/attempts.jsonl
+/workspace/RESULTS/cp-distance/index.json
+
+# LaTeX build intermediates; retain paper PDFs and bibliography output
+*.aux
+*.blg
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.toc
+/PAPER_FINAL/**/*.log
+/PAPER_FINAL/**/*.out
+
 # Local corpus and run artifacts; large, machine-local, regenerated rather than versioned
 workspace/corpus_provenance/
 workspace/mid_all_layers/
+
