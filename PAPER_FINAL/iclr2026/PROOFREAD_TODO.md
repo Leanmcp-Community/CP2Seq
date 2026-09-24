@@ -99,8 +99,10 @@
   （§1 贡献 2）改成与实际相符。与 C4 一并处理。〔= IMPORTANT_TODO 6〕
 - [x] **D6.〔`.bst` 与 natbib 用法本就正确；已删 `.bib` 第 55 行多余的 `}`，
   并把附录 A 里两条过期的「citation missing」改成正常引用说明〕参考文献格式。**
-  遗留：`origamibench` / `corigami` 的 `note = {VERIFIED ...}` 字段是否会被 `.bst`
-  排进参考文献，需编译确认；若会，须改成注释或删除。 核对 ICLR 2026 模板的 `\bibliographystyle`
+  已编译确认：`note = {VERIFIED ...}` 确实会被排进参考文献，四处已注释掉。
+  另修：参考文献原本只有 9 条（33 条 bib 里其余只在 `\ifdraftnotes` 的附录 A 中被引，
+  BibTeX 看不到），现将附录 A 改写为「扩展相关工作」并放出，§2 正文补引同期工作与
+  理论邻域，条目数 9 → 32。仅 `alphago` 仍未被引用。 核对 ICLR 2026 模板的 `\bibliographystyle`
   与 natbib 用法；同时清理附录 A 里 `⚠️ Citation missing` 一类条目
   （`origamibench`、`corigami`）。
 - [x] **D7.〔已加入 `05-environment.tex:20`〕§5 未点明「拒绝目标图样之外的折痕」本身是一种辅助。** 它泄露目标信息、
