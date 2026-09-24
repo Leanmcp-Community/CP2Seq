@@ -309,9 +309,17 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
         turn_dir.mkdir()
         manifest = ({**fixed_images, **historical_images} if args.image_history == "all" else
                     {**fixed_images, **{f"current-{k}": v for k, v in current_images.items()}})
+        current_state = browser.artifacts()["state"]
+        if getattr(args, "prompt_layout", "legacy") == "history-first":
+            # Dict insertion order is intentional: preserve the static inputs and existing
+            # history as a shared prefix; append changing state and turn metadata afterward.
+            payload = {"cp": cp, "target": target, "history": history,
+                       "current": current_state, "turn": turn, "max_turns": args.max_turns}
+        else:
+            payload = {"cp": cp, "target": target, "current": current_state,
+                       "history": history, "turn": turn, "max_turns": args.max_turns}
         prompt = (args.prompt_text + "\n\nFind the next action. Geometry and history:\n" +
-                  json.dumps(model_view({"cp": cp, "target": target, "current": browser.artifacts()["state"],
-                              "history": history, "turn": turn, "max_turns": args.max_turns})) +
+                  json.dumps(model_view(payload)) +
                   "\nAttached images, in order:\n" + "\n".join(manifest))
         write_json(turn_dir / "images.json", manifest)
         print(f"{sample_id}: Codex turn {turn}/{args.max_turns}", flush=True)
@@ -485,6 +493,8 @@ def main():
     parser.add_argument("--reasoning-effort", choices=["low", "medium", "high", "xhigh", "max"])
     parser.add_argument("--image-history", choices=["latest", "all"], default="latest",
                         help="all reattaches every prior feedback image, matching Tinker's visual history")
+    parser.add_argument("--prompt-layout", choices=["legacy", "history-first"], default="history-first",
+                        help="history-first puts accumulated history before changing state to improve prefix reuse")
     parser.add_argument("--max-turns", type=int, default=40)
     parser.add_argument("--stuck-limit", type=int, default=5,
                         help="End the episode after this many consecutive turns with no legal fold "

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-24T04:35:03.024Z",
+  "generated_at": "2026-09-24T23:13:33.275Z",
   "runs_root": "/Users/ddod/LEANMCP/ROBOTICS/FoldOrigami/CODEX_HARNESS_TESTING/runs",
   "recent_since": "20260923T034343",
   "definitions": {
@@ -157,6 +157,16 @@
       "recent": 3,
       "completed": 3,
       "unique_samples": 3,
+      "solved": 1
+    },
+    {
+      "model": "gpt-6-sol",
+      "effort": "high",
+      "condition": "legal",
+      "earlier": 0,
+      "recent": 1,
+      "completed": 1,
+      "unique_samples": 1,
       "solved": 1
     }
   ],
@@ -75479,8 +75489,8 @@
       "recent": true,
       "complete": false,
       "solved": null,
-      "termination": "no_result",
-      "error": null,
+      "termination": "error",
+      "error": "Codex exited 1; see /Users/ddod/LEANMCP/ROBOTICS/FoldOrigami/CODEX_HARNESS_TESTING/runs/codex-20260924T042815140874Z/easy-0003/turn-044/failed-attempt-01/stderr.log",
       "source": "/Users/ddod/LEANMCP/ROBOTICS/FoldOrigami/CODEX_HARNESS_TESTING/runs/codex-20260924T042815140874Z/results.json"
     },
     {
@@ -75496,6 +75506,20 @@
       "termination": "no_result",
       "error": null,
       "source": "/Users/ddod/LEANMCP/ROBOTICS/FoldOrigami/CODEX_HARNESS_TESTING/runs/codex-20260924T042815140874Z/results.json"
+    },
+    {
+      "run": "codex-20260924T044914878970Z",
+      "sample": "easy-0003",
+      "model": "gpt-6-sol",
+      "effort": "high",
+      "condition": "legal",
+      "corpus": "/Users/ddod/LEANMCP/ROBOTICS/FoldOrigami/workspace/corpus/out/release/all-layers/samples",
+      "recent": true,
+      "complete": true,
+      "solved": true,
+      "termination": "finished",
+      "error": null,
+      "source": "/Users/ddod/LEANMCP/ROBOTICS/FoldOrigami/CODEX_HARNESS_TESTING/runs/codex-20260924T044914878970Z/easy-0003/result.json"
     }
   ]
 }

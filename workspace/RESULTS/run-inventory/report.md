@@ -1,6 +1,6 @@
 # Run inventory and ablations
 
-Generated: 2026-09-24T04:35:03.024Z
+Generated: 2026-09-24T23:13:33.275Z
 
 Recent cohort starts at run timestamp 20260923T034343.
 
@@ -25,6 +25,7 @@ All completed Codex attempts, including repeats and differing budgets. Unique sa
 | gpt-6-luna | high | legal | 0 | 40 | 40 | 40 | 10 |
 | gpt-6-luna | high | auto-tier-3 | 0 | 40 | 40 | 40 | 11 |
 | gpt-6-sol | low | legal | 0 | 3 | 3 | 3 | 1 |
+| gpt-6-sol | high | legal | 0 | 1 | 1 | 1 | 1 |
 
 `basic`: editing/observation tools without legal enumeration. `legal`: legal enumeration without target comparison. `on-demand-tier-3`: model-requested comparison. `auto-tier-3`: automatically attached comparison.
 
