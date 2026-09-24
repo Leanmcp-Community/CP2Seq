@@ -83,6 +83,10 @@ run_group() {
       ' "$config" >/dev/null; then configs+=("$config"); fi
   done
   for sample in "$@"; do
+    # Space-separated sample IDs; exclusions apply to every tool condition.
+    case " ${SKIP_SAMPLES:-} " in
+      *" $sample "*) echo "SKIP $runner $sample (explicit exclusion)"; continue ;;
+    esac
     found=false
     for config in "${configs[@]}"; do
       result="${config%/config.json}/$sample/result.json"
