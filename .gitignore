@@ -51,6 +51,7 @@ htmlcov/
 # Local viewer logs
 DHEERAJ_WORKSPACE/viewer/*.log
 
+
 # Local experiment monitor logs, process IDs, and locks
 /CODEX_HARNESS_TESTING/matched40-state/
 
@@ -69,3 +70,8 @@ DHEERAJ_WORKSPACE/viewer/*.log
 *.toc
 /PAPER_FINAL/**/*.log
 /PAPER_FINAL/**/*.out
+
+# Local corpus and run artifacts; large, machine-local, regenerated rather than versioned
+workspace/corpus_provenance/
+workspace/mid_all_layers/
+

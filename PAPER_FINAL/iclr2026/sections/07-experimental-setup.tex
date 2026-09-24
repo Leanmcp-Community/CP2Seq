@@ -174,6 +174,19 @@ states. The baseline expands with the same enumerator the model is given, tests 
 same terminal comparator that decides \texttt{solved}, reads no reference sequence, and runs under
 a per-sample wall-clock budget with caps on states expanded and depth.
 
+\input{figures/depth-wall-plot}
+
+The same prune is also what bounds the baseline. Search cost is the product of two exponentials:
+the frontier grows with the branching factor, and the cost of expanding one node grows with depth
+as well, because one enumeration evaluates four candidates per crease line per facet and a fold of
+all layers at most doubles the facets. Fitting both from the saved searches gives a per-fold
+multiplier of 3.9 on the easy group, 4.6 on medium and 12.4 on hard
+(Figure~\ref{fig:depth-wall}). At those rates a search that closes an easy sample in tens of
+seconds needs days at the medium group's reference depth, and the fitted cost at the hard group's
+reference depth of 19 folds is around $10^{20}$ seconds. The groups differ in cost at equal depth, not
+only in the depth their references reach, because harder instances branch more and cost more per
+node.
+
 The comparison is therefore like-for-like by construction, and that is the point. The question a
 reader should ask is not whether a model can fold paper but how much of the task its tool has
 already done for it: if breadth-first search over the same enumerated actions solves most of the

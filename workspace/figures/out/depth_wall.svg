@@ -1,41 +1,51 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="580" height="380" viewBox="0 0 580 380" font-family="Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="580" height="398" viewBox="0 0 580 398" font-family="Helvetica, Arial, sans-serif">
 <title>Breadth-first search time against fold depth, by tier</title>
 <desc>Search time grows exponentially with fold depth. Cost model: t(d) = b^d * c0 * g^d, with the per-node enumeration cost fitted from measurement. Source: workspace/depth_wall/depth_wall.csv. easy: b=2.72, g=1.44, reference depth 6.8; mid: b=3.15, g=1.47, reference depth 12.0; hard: b=7.05, g=1.76, reference depth 19.0.</desc>
-<rect width="580" height="380" fill="#ffffff"/>
-<line x1="70" y1="312.9" x2="566.0" y2="312.9" stroke="#d4d4d4" stroke-width="0.6" stroke-dasharray="3 3"/>
-<text x="75" y="309.9" font-size="9" fill="#9a9a9a">1 second</text>
-<line x1="70" y1="275.5" x2="566.0" y2="275.5" stroke="#d4d4d4" stroke-width="0.6" stroke-dasharray="3 3"/>
-<text x="75" y="272.5" font-size="9" fill="#9a9a9a">1 minute</text>
-<line x1="70" y1="238.0" x2="566.0" y2="238.0" stroke="#d4d4d4" stroke-width="0.6" stroke-dasharray="3 3"/>
-<text x="75" y="235.0" font-size="9" fill="#9a9a9a">1 hour</text>
-<line x1="70" y1="208.9" x2="566.0" y2="208.9" stroke="#d4d4d4" stroke-width="0.6" stroke-dasharray="3 3"/>
-<text x="75" y="205.9" font-size="9" fill="#9a9a9a">1 day</text>
-<line x1="70" y1="155.0" x2="566.0" y2="155.0" stroke="#d4d4d4" stroke-width="0.6" stroke-dasharray="3 3"/>
-<text x="75" y="152.0" font-size="9" fill="#9a9a9a">1 year</text>
-<line x1="70" y1="112.8" x2="566.0" y2="112.8" stroke="#d4d4d4" stroke-width="0.6" stroke-dasharray="3 3"/>
-<text x="75" y="109.8" font-size="9" fill="#9a9a9a">1 century</text>
-<line x1="70" y1="28.6" x2="566.0" y2="28.6" stroke="#d4d4d4" stroke-width="0.6" stroke-dasharray="3 3"/>
-<text x="75" y="25.6" font-size="9" fill="#9a9a9a">age of the universe</text>
+<rect width="580" height="398" fill="#ffffff"/>
+<line x1="70" y1="319.6" x2="566.0" y2="319.6" stroke="#d4d4d4" stroke-width="0.6" stroke-dasharray="3 3"/>
+<text x="75" y="316.6" font-size="9" fill="#9a9a9a">1 second</text>
+<line x1="70" y1="294.1" x2="566.0" y2="294.1" stroke="#d4d4d4" stroke-width="0.6" stroke-dasharray="3 3"/>
+<text x="75" y="291.1" font-size="9" fill="#9a9a9a">1 minute</text>
+<line x1="70" y1="268.6" x2="566.0" y2="268.6" stroke="#d4d4d4" stroke-width="0.6" stroke-dasharray="3 3"/>
+<text x="75" y="265.6" font-size="9" fill="#9a9a9a">1 hour</text>
+<line x1="70" y1="248.7" x2="566.0" y2="248.7" stroke="#d4d4d4" stroke-width="0.6" stroke-dasharray="3 3"/>
+<text x="75" y="245.7" font-size="9" fill="#9a9a9a">1 day</text>
+<line x1="70" y1="211.9" x2="566.0" y2="211.9" stroke="#d4d4d4" stroke-width="0.6" stroke-dasharray="3 3"/>
+<text x="75" y="208.9" font-size="9" fill="#9a9a9a">1 year</text>
+<line x1="70" y1="183.2" x2="566.0" y2="183.2" stroke="#d4d4d4" stroke-width="0.6" stroke-dasharray="3 3"/>
+<text x="75" y="180.2" font-size="9" fill="#9a9a9a">1 century</text>
+<line x1="70" y1="125.7" x2="566.0" y2="125.7" stroke="#d4d4d4" stroke-width="0.6" stroke-dasharray="3 3"/>
+<text x="75" y="122.7" font-size="9" fill="#9a9a9a">1 million years</text>
+<line x1="70" y1="82.6" x2="566.0" y2="82.6" stroke="#d4d4d4" stroke-width="0.6" stroke-dasharray="3 3"/>
+<text x="75" y="79.6" font-size="9" fill="#9a9a9a">1 billion years</text>
 <line x1="70" y1="18" x2="70" y2="334" stroke="#444" stroke-width="0.8"/>
 <line x1="70" y1="334" x2="566" y2="334" stroke="#444" stroke-width="0.8"/>
 <line x1="66" y1="334.0" x2="70" y2="334.0" stroke="#444" stroke-width="0.8"/>
 <text x="63" y="337.5" font-size="9" fill="#444" text-anchor="end">10⁻¹</text>
-<line x1="66" y1="312.9" x2="70" y2="312.9" stroke="#444" stroke-width="0.8"/>
-<text x="63" y="316.4" font-size="9" fill="#444" text-anchor="end">10⁰</text>
-<line x1="66" y1="291.9" x2="70" y2="291.9" stroke="#444" stroke-width="0.8"/>
-<text x="63" y="295.4" font-size="9" fill="#444" text-anchor="end">10¹</text>
-<line x1="66" y1="249.7" x2="70" y2="249.7" stroke="#444" stroke-width="0.8"/>
-<text x="63" y="253.2" font-size="9" fill="#444" text-anchor="end">10³</text>
-<line x1="66" y1="207.6" x2="70" y2="207.6" stroke="#444" stroke-width="0.8"/>
-<text x="63" y="211.1" font-size="9" fill="#444" text-anchor="end">10⁵</text>
-<line x1="66" y1="165.5" x2="70" y2="165.5" stroke="#444" stroke-width="0.8"/>
-<text x="63" y="169.0" font-size="9" fill="#444" text-anchor="end">10⁷</text>
-<line x1="66" y1="123.3" x2="70" y2="123.3" stroke="#444" stroke-width="0.8"/>
-<text x="63" y="126.8" font-size="9" fill="#444" text-anchor="end">10⁹</text>
-<line x1="66" y1="81.2" x2="70" y2="81.2" stroke="#444" stroke-width="0.8"/>
-<text x="63" y="84.7" font-size="9" fill="#444" text-anchor="end">10¹¹</text>
-<line x1="66" y1="39.1" x2="70" y2="39.1" stroke="#444" stroke-width="0.8"/>
-<text x="63" y="42.6" font-size="9" fill="#444" text-anchor="end">10¹³</text>
+<line x1="66" y1="319.6" x2="70" y2="319.6" stroke="#444" stroke-width="0.8"/>
+<text x="63" y="323.1" font-size="9" fill="#444" text-anchor="end">10⁰</text>
+<line x1="66" y1="305.3" x2="70" y2="305.3" stroke="#444" stroke-width="0.8"/>
+<text x="63" y="308.8" font-size="9" fill="#444" text-anchor="end">10¹</text>
+<line x1="66" y1="276.5" x2="70" y2="276.5" stroke="#444" stroke-width="0.8"/>
+<text x="63" y="280.0" font-size="9" fill="#444" text-anchor="end">10³</text>
+<line x1="66" y1="247.8" x2="70" y2="247.8" stroke="#444" stroke-width="0.8"/>
+<text x="63" y="251.3" font-size="9" fill="#444" text-anchor="end">10⁵</text>
+<line x1="66" y1="219.1" x2="70" y2="219.1" stroke="#444" stroke-width="0.8"/>
+<text x="63" y="222.6" font-size="9" fill="#444" text-anchor="end">10⁷</text>
+<line x1="66" y1="190.4" x2="70" y2="190.4" stroke="#444" stroke-width="0.8"/>
+<text x="63" y="193.9" font-size="9" fill="#444" text-anchor="end">10⁹</text>
+<line x1="66" y1="161.6" x2="70" y2="161.6" stroke="#444" stroke-width="0.8"/>
+<text x="63" y="165.1" font-size="9" fill="#444" text-anchor="end">10¹¹</text>
+<line x1="66" y1="132.9" x2="70" y2="132.9" stroke="#444" stroke-width="0.8"/>
+<text x="63" y="136.4" font-size="9" fill="#444" text-anchor="end">10¹³</text>
+<line x1="66" y1="104.2" x2="70" y2="104.2" stroke="#444" stroke-width="0.8"/>
+<text x="63" y="107.7" font-size="9" fill="#444" text-anchor="end">10¹⁵</text>
+<line x1="66" y1="75.5" x2="70" y2="75.5" stroke="#444" stroke-width="0.8"/>
+<text x="63" y="79.0" font-size="9" fill="#444" text-anchor="end">10¹⁷</text>
+<line x1="66" y1="46.7" x2="70" y2="46.7" stroke="#444" stroke-width="0.8"/>
+<text x="63" y="50.2" font-size="9" fill="#444" text-anchor="end">10¹⁹</text>
+<line x1="66" y1="18.0" x2="70" y2="18.0" stroke="#444" stroke-width="0.8"/>
+<text x="63" y="21.5" font-size="9" fill="#444" text-anchor="end">10²¹</text>
 <line x1="96.1" y1="334" x2="96.1" y2="338" stroke="#444" stroke-width="0.8"/>
 <text x="96.1" y="350" font-size="9" fill="#444" text-anchor="middle">2</text>
 <line x1="148.3" y1="334" x2="148.3" y2="338" stroke="#444" stroke-width="0.8"/>
@@ -56,29 +66,38 @@
 <text x="513.8" y="350" font-size="9" fill="#444" text-anchor="middle">18</text>
 <line x1="566.0" y1="334" x2="566.0" y2="338" stroke="#444" stroke-width="0.8"/>
 <text x="566.0" y="350" font-size="9" fill="#444" text-anchor="middle">20</text>
-<path d="M70.0,334.0 L76.5,334.0 L83.1,334.0 L89.6,334.0 L96.1,334.0 L102.6,334.0 L109.2,331.6 L115.7,328.5 L122.2,325.4 L128.7,322.3 L135.3,319.1 L141.8,316.0 L148.3,312.9 L154.8,309.8 L161.4,306.6 L167.9,303.5 L174.4,300.4 L180.9,297.3 L187.5,294.1 L194.0,291.0 L200.5,287.9 L207.1,284.8 L213.6,281.6 L220.1,278.5 L226.6,275.4 L233.2,272.3 L239.7,269.1 L246.2,266.0 L252.7,262.9 L259.3,259.8 L265.8,256.6 L272.3,253.5 L278.8,250.4 L285.4,247.3 L291.9,244.1 L298.4,241.0 L304.9,237.9 L311.5,234.8 L318.0,231.6 L324.5,228.5 L331.1,225.4 L337.6,222.3 L344.1,219.1 L350.6,216.0 L357.2,212.9 L363.7,209.8 L370.2,206.6 L376.7,203.5 L383.3,200.4 L389.8,197.3 L396.3,194.1 L402.8,191.0 L409.4,187.9 L415.9,184.8 L422.4,181.6 L428.9,178.5 L435.5,175.4 L442.0,172.3 L448.5,169.1 L455.1,166.0 L461.6,162.9 L468.1,159.8 L474.6,156.6 L481.2,153.5 L487.7,150.4 L494.2,147.3 L500.7,144.2 L507.3,141.0 L513.8,137.9 L520.3,134.8 L526.8,131.7 L533.4,128.5 L539.9,125.4 L546.4,122.3 L552.9,119.2 L559.5,116.0 L566.0,112.9" fill="none" stroke="#1d7a56" stroke-width="1.9" stroke-linejoin="round"/>
-<line x1="221.4" y1="277.9" x2="221.4" y2="334.0" stroke="#1d7a56" stroke-width="0.7" stroke-dasharray="2 3" opacity="0.7"/>
-<rect x="217.9" y="274.4" width="7" height="7" fill="#1d7a56" transform="rotate(45 221.4 277.9)"/>
-<text x="229.4" y="278.9" font-size="9.5" fill="#1d7a56" text-anchor="start">46 s</text>
-<text x="562.0" y="106.9" font-size="10.5" fill="#1d7a56" text-anchor="end">easy  (b·g)=3.9</text>
-<path d="M70.0,334.0 L76.5,333.9 L83.1,330.4 L89.6,326.9 L96.1,323.4 L102.6,319.9 L109.2,316.4 L115.7,312.9 L122.2,309.4 L128.7,305.8 L135.3,302.3 L141.8,298.8 L148.3,295.3 L154.8,291.8 L161.4,288.3 L167.9,284.8 L174.4,281.3 L180.9,277.8 L187.5,274.3 L194.0,270.8 L200.5,267.3 L207.1,263.8 L213.6,260.3 L220.1,256.7 L226.6,253.2 L233.2,249.7 L239.7,246.2 L246.2,242.7 L252.7,239.2 L259.3,235.7 L265.8,232.2 L272.3,228.7 L278.8,225.2 L285.4,221.7 L291.9,218.2 L298.4,214.7 L304.9,211.2 L311.5,207.7 L318.0,204.1 L324.5,200.6 L331.1,197.1 L337.6,193.6 L344.1,190.1 L350.6,186.6 L357.2,183.1 L363.7,179.6 L370.2,176.1 L376.7,172.6 L383.3,169.1 L389.8,165.6 L396.3,162.1 L402.8,158.6 L409.4,155.1 L415.9,151.5 L422.4,148.0 L428.9,144.5 L435.5,141.0 L442.0,137.5 L448.5,134.0 L455.1,130.5 L461.6,127.0 L468.1,123.5 L474.6,120.0 L481.2,116.5 L487.7,113.0 L494.2,109.5 L500.7,106.0 L507.3,102.5 L513.8,98.9 L520.3,95.4 L526.8,91.9 L533.4,88.4 L539.9,84.9 L546.4,81.4 L552.9,77.9 L559.5,74.4 L566.0,70.9" fill="none" stroke="#b06a0f" stroke-width="1.9" stroke-linejoin="round"/>
-<line x1="357.2" y1="183.1" x2="357.2" y2="334.0" stroke="#b06a0f" stroke-width="0.7" stroke-dasharray="2 3" opacity="0.7"/>
-<rect x="353.7" y="179.6" width="7" height="7" fill="#b06a0f" transform="rotate(45 357.2 183.1)"/>
-<text x="365.2" y="184.1" font-size="9.5" fill="#b06a0f" text-anchor="start">17 d</text>
-<text x="562.0" y="64.9" font-size="10.5" fill="#b06a0f" text-anchor="end">mid  (b·g)=4.6</text>
-<path d="M70.0,300.4 L76.5,294.6 L83.1,288.9 L89.6,283.1 L96.1,277.3 L102.6,271.6 L109.2,265.8 L115.7,260.1 L122.2,254.3 L128.7,248.6 L135.3,242.8 L141.8,237.1 L148.3,231.3 L154.8,225.5 L161.4,219.8 L167.9,214.0 L174.4,208.3 L180.9,202.5 L187.5,196.8 L194.0,191.0 L200.5,185.2 L207.1,179.5 L213.6,173.7 L220.1,168.0 L226.6,162.2 L233.2,156.5 L239.7,150.7 L246.2,144.9 L252.7,139.2 L259.3,133.4 L265.8,127.7 L272.3,121.9 L278.8,116.2 L285.4,110.4 L291.9,104.6 L298.4,98.9 L304.9,93.1 L311.5,87.4 L318.0,81.6 L324.5,75.9 L331.1,70.1 L337.6,64.3 L344.1,58.6 L350.6,52.8 L357.2,47.1 L363.7,41.3 L370.2,35.6 L376.7,29.8 L383.3,24.0 L389.8,18.3 L396.3,18.0" fill="none" stroke="#a3322f" stroke-width="1.9" stroke-linejoin="round"/>
-<line x1="539.9" y1="18.0" x2="539.9" y2="334.0" stroke="#a3322f" stroke-width="0.7" stroke-dasharray="2 3" opacity="0.7"/>
-<rect x="536.4" y="14.5" width="7" height="7" fill="#a3322f" transform="rotate(45 539.9 18.0)"/>
-<text x="531.9" y="32.0" font-size="9.5" fill="#a3322f" text-anchor="end">5.9e+12 y</text>
-<text x="392.3" y="12.0" font-size="10.5" fill="#a3322f" text-anchor="end">hard  (b·g)=12.4</text>
-<circle cx="148.3" cy="332.3" r="2.6" fill="#ffffff" stroke="#1d7a56" stroke-width="1.3"/>
-<circle cx="174.4" cy="320.8" r="2.6" fill="#ffffff" stroke="#1d7a56" stroke-width="1.3"/>
-<circle cx="174.4" cy="328.5" r="2.6" fill="#ffffff" stroke="#1d7a56" stroke-width="1.3"/>
-<circle cx="174.4" cy="332.1" r="2.6" fill="#ffffff" stroke="#1d7a56" stroke-width="1.3"/>
-<circle cx="226.6" cy="292.7" r="2.6" fill="#ffffff" stroke="#1d7a56" stroke-width="1.3"/>
-<circle cx="226.6" cy="279.5" r="2.6" fill="#ffffff" stroke="#1d7a56" stroke-width="1.3"/>
-<text x="318.0" y="372" font-size="11" fill="#444" text-anchor="middle">fold depth (number of folds in the solution)</text>
+<path d="M70.0,334.0 L76.5,334.0 L83.1,334.0 L89.6,334.0 L96.1,334.0 L102.6,334.0 L109.2,332.4 L115.7,330.3 L122.2,328.1 L128.7,326.0 L135.3,323.9 L141.8,321.7 L148.3,319.6 L154.8,317.5 L161.4,315.3 L167.9,313.2 L174.4,311.1 L180.9,309.0 L187.5,306.8 L194.0,304.7 L200.5,302.6 L207.1,300.4 L213.6,298.3 L220.1,296.2 L226.6,294.0" fill="none" stroke="#1d7a56" stroke-width="1.9" stroke-linejoin="round"/>
+<path d="M226.6,294.0 L233.2,291.9 L239.7,289.8 L246.2,287.6 L252.7,285.5 L259.3,283.4 L265.8,281.3 L272.3,279.1 L278.8,277.0 L285.4,274.9 L291.9,272.7 L298.4,270.6 L304.9,268.5" fill="none" stroke="#1d7a56" stroke-width="1.9" stroke-linejoin="round" stroke-dasharray="6 4"/>
+
+<line x1="221.4" y1="295.7" x2="221.4" y2="334.0" stroke="#1d7a56" stroke-width="0.7" stroke-dasharray="2 3" opacity="0.7"/>
+<rect x="217.9" y="292.2" width="7" height="7" fill="#1d7a56" transform="rotate(45 221.4 295.7)"/>
+<text x="229.4" y="296.7" font-size="9.5" fill="#1d7a56" text-anchor="start">46 s</text>
+<text x="300.9" y="262.5" font-size="10.5" fill="#1d7a56" text-anchor="end">easy  (b·g)=3.9</text>
+<path d="M70.0,334.0 L76.5,333.9 L83.1,331.5 L89.6,329.1 L96.1,326.8 L102.6,324.4 L109.2,322.0 L115.7,319.6 L122.2,317.2 L128.7,314.8 L135.3,312.4 L141.8,310.0 L148.3,307.6 L154.8,305.2 L161.4,302.8 L167.9,300.5 L174.4,298.1 L180.9,295.7 L187.5,293.3 L194.0,290.9 L200.5,288.5 L207.1,286.1 L213.6,283.7 L220.1,281.3 L226.6,278.9 L233.2,276.5 L239.7,274.2 L246.2,271.8 L252.7,269.4" fill="none" stroke="#b06a0f" stroke-width="1.9" stroke-linejoin="round"/>
+<path d="M252.7,269.4 L259.3,267.0 L265.8,264.6 L272.3,262.2 L278.8,259.8 L285.4,257.4 L291.9,255.0 L298.4,252.6 L304.9,250.2 L311.5,247.9 L318.0,245.5 L324.5,243.1 L331.1,240.7 L337.6,238.3 L344.1,235.9 L350.6,233.5 L357.2,231.1 L363.7,228.7 L370.2,226.3 L376.7,223.9 L383.3,221.6" fill="none" stroke="#b06a0f" stroke-width="1.9" stroke-linejoin="round" stroke-dasharray="6 4"/>
+
+<line x1="357.2" y1="231.1" x2="357.2" y2="334.0" stroke="#b06a0f" stroke-width="0.7" stroke-dasharray="2 3" opacity="0.7"/>
+<rect x="353.7" y="227.6" width="7" height="7" fill="#b06a0f" transform="rotate(45 357.2 231.1)"/>
+<text x="365.2" y="232.1" font-size="9.5" fill="#b06a0f" text-anchor="start">17 d</text>
+<text x="379.3" y="215.6" font-size="10.5" fill="#b06a0f" text-anchor="end">mid  (b·g)=4.6</text>
+<path d="M70.0,311.1 L76.5,307.2 L83.1,303.2 L89.6,299.3 L96.1,295.4 L102.6,291.4 L109.2,287.5 L115.7,283.6 L122.2,279.7 L128.7,275.7 L135.3,271.8 L141.8,267.9 L148.3,264.0 L154.8,260.0 L161.4,256.1 L167.9,252.2 L174.4,248.3 L180.9,244.3 L187.5,240.4 L194.0,236.5 L200.5,232.6" fill="none" stroke="#a3322f" stroke-width="1.9" stroke-linejoin="round"/>
+<path d="M200.5,232.6 L207.1,228.6 L213.6,224.7 L220.1,220.8 L226.6,216.9 L233.2,212.9 L239.7,209.0 L246.2,205.1 L252.7,201.2 L259.3,197.2 L265.8,193.3 L272.3,189.4 L278.8,185.5 L285.4,181.5 L291.9,177.6 L298.4,173.7 L304.9,169.8 L311.5,165.8 L318.0,161.9 L324.5,158.0 L331.1,154.1 L337.6,150.1 L344.1,146.2 L350.6,142.3 L357.2,138.4 L363.7,134.4 L370.2,130.5 L376.7,126.6 L383.3,122.7 L389.8,118.7 L396.3,114.8 L402.8,110.9 L409.4,107.0 L415.9,103.0 L422.4,99.1 L428.9,95.2 L435.5,91.3 L442.0,87.3 L448.5,83.4 L455.1,79.5 L461.6,75.6 L468.1,71.6 L474.6,67.7 L481.2,63.8 L487.7,59.9 L494.2,55.9 L500.7,52.0 L507.3,48.1 L513.8,44.2 L520.3,40.2 L526.8,36.3 L533.4,32.4 L539.9,28.5" fill="none" stroke="#a3322f" stroke-width="1.9" stroke-linejoin="round" stroke-dasharray="6 4"/>
+
+<line x1="539.9" y1="28.5" x2="539.9" y2="334.0" stroke="#a3322f" stroke-width="0.7" stroke-dasharray="2 3" opacity="0.7"/>
+<rect x="536.4" y="25.0" width="7" height="7" fill="#a3322f" transform="rotate(45 539.9 28.5)"/>
+
+<text x="535.9" y="22.5" font-size="10.5" fill="#a3322f" text-anchor="end">hard  (b·g)=12.4</text>
+<circle cx="148.3" cy="332.9" r="2.6" fill="#ffffff" stroke="#1d7a56" stroke-width="1.3"/>
+<circle cx="174.4" cy="325.0" r="2.6" fill="#ffffff" stroke="#1d7a56" stroke-width="1.3"/>
+<circle cx="174.4" cy="330.3" r="2.6" fill="#ffffff" stroke="#1d7a56" stroke-width="1.3"/>
+<circle cx="174.4" cy="332.7" r="2.6" fill="#ffffff" stroke="#1d7a56" stroke-width="1.3"/>
+<circle cx="226.6" cy="305.8" r="2.6" fill="#ffffff" stroke="#1d7a56" stroke-width="1.3"/>
+<circle cx="226.6" cy="296.8" r="2.6" fill="#ffffff" stroke="#1d7a56" stroke-width="1.3"/>
+<text x="318.0" y="360" font-size="11" fill="#444" text-anchor="middle">search depth reached (folds)</text>
 <text x="14" y="176.0" font-size="11" fill="#444" text-anchor="middle" transform="rotate(-90 14 176.0)">search time (seconds, log scale)</text>
-<g font-size="9" fill="#777"><circle cx="88" cy="62" r="2.6" fill="#ffffff" stroke="#777" stroke-width="1.3"/><text x="96" y="65">observed solve</text>
-<rect x="85" y="73" width="6" height="6" fill="#777" transform="rotate(45 88 76)"/><text x="96" y="79">tier reference depth</text></g>
+<g font-size="9" fill="#777"><circle cx="148" cy="62" r="2.6" fill="#ffffff" stroke="#777" stroke-width="1.3"/><text x="156" y="65">observed solve</text>
+<line x1="143" y1="90" x2="154" y2="90" stroke="#777" stroke-width="1.6" stroke-dasharray="4 3"/><text x="158" y="93">extrapolated beyond observed depth</text>
+<rect x="145" y="73" width="6" height="6" fill="#777" transform="rotate(45 148 76)"/><text x="156" y="79">tier reference depth</text>
+<text x="70" y="378" font-size="8.5" fill="#999">log scale: a straight line is exponential growth, of slope log(b·g).</text>
+<text x="70" y="389" font-size="8.5" fill="#999">Each curve spans only the depths its own tier's corpus reaches.</text></g>
 </svg>
