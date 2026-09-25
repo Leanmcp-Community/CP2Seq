@@ -81,15 +81,9 @@ Our contributions are:
   is complemented by smaller ablations of model version, reasoning effort, and tool assistance.
 \end{enumerate}
 
-Our experiments comprise a broader evaluation of \texttt{gpt-5.6-luna} and a smaller
-ablation study targeting ten samples from each of the easy, medium, hard, and some-layers
-groups per configuration. The ablations compare \texttt{gpt-5.6-luna} at low reasoning
-effort with \texttt{gpt-6-luna} at low and high effort, using basic editing and observation
-tools, legal-fold enumeration, or enumeration with automatic target feedback. In this
-ablation set, high-effort \texttt{gpt-6-luna} solves easy and some-layers examples, but
-no completed Luna attempt solves a medium or hard example. Breadth-first search provides
-a separate baseline over the enumerated action space. Together, these evaluations
-examine sequence recovery across model settings and levels of tool assistance.
+In ablations over model version, reasoning effort, and tool assistance, models solve some
+short sequences but no medium or hard sample; in the broader evaluation, most unsuccessful
+episodes (215 of 384) end by cycling through earlier states rather than by illegal moves (Section~\ref{sec:results}).
 % Results source: workspace/RESULTS/run-inventory/report.md, generated 2026-09-24.
 % Some low-effort medium cells are incomplete (8 or 9 of 10); do not describe all
 % configurations as complete or pool this ablation set with the broader evaluation.

@@ -1,13 +1,17 @@
-\section{Licence and availability}
+\section*{Reproducibility statement}
 \label{sec:licence}
+\label{sec:reproducibility}
 
-The corpus generator, the environment and verifier, both corpus checks, the state comparator and the
-evaluation harness are released under the \textbf{BSD 3-Clause} licence.
-
-Code and data are released on publication; links are omitted here.
-
-The artifacts carry no personal data, no human-subject data and no scraped content. Every sample is
-synthesised by folding a square, so no licensing question attaches to the geometry and
-no attribution is owed to any origami designer. Flat-Folder's Instagram example collection, the
-one external corpus this paper measures against, is not redistributed; the scope measurement of
-Section~\ref{sec:limitations} was computed against it in place and is reported as a number.
+The task, action models and state representation are specified in Section~\ref{sec:problem} and
+Appendix~\ref{app:folding-model}; the generation procedure in Section~\ref{sec:cp2seq-generation}
+and Appendix~\ref{app:generation-procedure}; the scoring rule, comparator and every numerical
+tolerance in Section~\ref{sec:scoring} and Appendix~\ref{app:comparison-details}; the episode
+loop, tool interface, tool schemas and prompt in Appendices~\ref{app:evaluation-pipeline}
+and~\ref{app:tool-interface}; model versions, reasoning effort, turn and timeout limits in
+Section~\ref{sec:exp-protocol}; the software version in Appendix~\ref{app:software-versions};
+and the accounting of every planned ablation case, including failures, in
+Appendix~\ref{app:protocol-failures}. The corpus generator, environment and verifier, corpus
+checks, state comparator and evaluation harness are released under the BSD 3-Clause licence,
+with links omitted for anonymous review. Every sample is synthesised by folding a square, so the
+data carry no personal, human-subject or scraped content; Flat-Folder's example collection is
+neither used nor redistributed.
