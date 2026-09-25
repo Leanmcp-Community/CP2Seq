@@ -13,13 +13,9 @@ attempt per sample and configuration when available; retries do not add denomina
 % The prior Results section and its editorial notes are preserved in
 % sections/09-results-previous-snapshot.tex, but are not included in the paper.
 
-\subsection{Broader evaluation}
-\label{sec:results-headline}
-
-In the earlier GPT-5.6 Luna runs at low effort, solve rates rise with assistance, from 4/67
-attempts with basic tools to 31/272 with legal enumeration and 28/108 with on-demand target
-comparison (Table~\ref{tab:headline}, Appendix~\ref{app:supplementary-results}). These
-conditions differ in coverage, repetitions, and budgets, so we treat the trend as descriptive.
+\phantomsection\label{sec:results-headline}
+Earlier GPT-5.6 Luna runs used different samples and budgets per condition, so we list them
+without comparison (Table~\ref{tab:headline}); tool effects are measured only in the ablations.
 
 \subsection{Tool and reasoning-effort ablations}
 \label{sec:results-tiers}
@@ -64,6 +60,9 @@ GPT-6 Luna & High & B & 3/10 & 0/10 & 0/10 & 3/10 & 6/40 \\
 \hline
 \end{tabular}
 \end{table}
+
+\paragraph{Tools.} On identical samples, solves rise from B to L to A in every model setting (8, 18
+and 29 of 120 pooled), all from the easy and some-layers groups.
 
 \paragraph{Reasoning effort.} Pooled over the three tool conditions, GPT-6 Luna solves 6/30
 some-layers samples at low effort and 18/30 at high effort. Per condition the increases are
