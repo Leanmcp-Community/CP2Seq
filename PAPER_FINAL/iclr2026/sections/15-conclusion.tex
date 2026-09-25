@@ -1,12 +1,8 @@
 \section{Conclusion and future work}
 \label{sec:conclusion}
 
-CP2Seq asks a model to recover an executable folding sequence from a crease pattern and a target
-folded state, and checks every step and the finished construction exactly. It provides 600
-procedurally generated instances, a generator that can produce more at any depth, an interactive
-environment that rules on each fold, and a replay-based scorer that accepts any valid sequence.
-
-The experiments support three observations. First, difficulty rises steeply with sequence
+CP2Seq pairs 600 generated instances and an open-ended generator with an environment that rules on
+each fold and a scorer that accepts any valid sequence. The experiments support three observations. First, difficulty rises steeply with sequence
 depth: models solve some easy and some-layers samples, but no ablation configuration solves a
 medium or hard sample, and breadth-first search over the same actions solves 366/669 easy
 attempts but only 1/40 medium and 0/16 hard, in line with a search cost that grows
@@ -23,7 +19,6 @@ CP2Seq can also serve as an environment for training rather than only testing, a
 not yet evaluated. Next steps are to extend the evaluation to other model families and to a
 text-only condition that isolates the contribution of images; to add a random-legal baseline
 and a symbolic solver such as \citet{creasy}; to compare models and search under
-matched budgets; to extend the some-layers corpus beyond six folds and admit pre-creasing; and
-to analyse trajectories at the level of individual decisions, so that failures can be attributed
-to state tracking, target comparison or backtracking.
+matched budgets; and to analyse trajectories decision by decision, so that failures can be
+attributed to state tracking, target comparison or backtracking.
 \phantomsection\label{sec:main-text-end}

@@ -26,7 +26,7 @@ conditions differ in coverage, repetitions, and budgets, so we treat the trend a
 \label{sec:results-ablations}
 
 The recent study targets ten samples from each of four groups per configuration:
-easy, medium, hard, and some-layers. It compares GPT-5.6 Luna at low effort with
+easy, medium, hard, and some-layers; the some-layers samples all have five reference folds. It compares GPT-5.6 Luna at low effort with
 GPT-6 Luna at low and high effort. The three tool conditions are basic tools,
 legal-fold enumeration, and enumeration with automatic tier-3 target feedback.
 The run settings are specified in Section~\ref{sec:exp-protocol}. Of 360 planned sample--configuration pairs, 355 have completed episodes,
@@ -40,7 +40,9 @@ evaluations under the planned protocol (Appendix~\ref{app:protocol-failures}).
 has ten intended samples. B: basic tools; L: legal enumeration; A: legal enumeration
 with automatic tier-3 target feedback. $*$ includes one input-size error;
 $\dagger$ includes one service prompt rejection; $\ddagger$ includes two
-omissions after blocking errors. All five count as unsuccessful evaluations.}
+omissions after blocking errors. All five count as unsuccessful evaluations. In two A cells
+(easy, GPT-5.6 low and GPT-6 high) one wrong submission followed a false \emph{matches} from the
+comparison tool (Appendix~\ref{app:protocol-failures}).}
 \label{tab:luna-ablations}
 \small
 \setlength{\tabcolsep}{4pt}
@@ -70,7 +72,8 @@ significant on its own (two-sided Fisher exact test, $p\approx0.02$; $p\approx0.
 for the others), and a 95\% Wilson interval spans roughly $\pm0.3$ (e.g.\ 0.11--0.60 for
 3/10). Pairing outcomes by sample and condition, every discordant pair favours high effort
 (12 to 0; exact McNemar test, $p<0.001$), so the effect is consistent even where single cells
-are underpowered.
+are underpowered. It is measured on five-fold some-layers samples; on the easy group, which spans
+four to ten folds, solves rise less, from 4/30 to 9/30.
 
 \paragraph{Depth.} No Luna ablation solves a medium or hard sample, and the breadth-first
 baseline solves 1/40 medium and 0/16 hard attempts (Appendix~\ref{app:bfs-analysis}), against
@@ -82,18 +85,17 @@ factor of 3.9, 4.6 and 12.4 per fold on the easy, medium and hard groups
 (Figure~\ref{fig:depth-wall}, Appendix~\ref{app:bfs-analysis}). Depth is not isolated from other geometric differences
 between groups.
 
-Supplementary exploratory model results are reported in
-Appendix~\ref{app:supplementary-results}.
-
 \subsection{Failure analysis}
 \label{sec:results-failures}
 
-Rejected actions never end an episode, so failure is a matter of search rather than of
-rule-following. In the earlier 447-attempt GPT-5.6 Luna snapshot, 167 episodes submitted a
+Rejected actions never end an episode, although they consume turns, so episodes end on
+search-related stopping rules rather than on rule violations. In the earlier 447-attempt GPT-5.6 Luna snapshot, 167 episodes submitted a
 sequence (63 of them correct), 215 stopped after cycling through previously visited states,
 18 stopped on repetition and 47 exhausted the turn budget. Most unsuccessful episodes (215 of
 384) therefore end with the model returning to states it has already seen instead of committing
-to a new branch. The ablations show the same pattern: 191 of their 300 unsuccessful episodes end
+to a new branch. The cycling rule stops an episode when the same fold is played from the
+same position three times; we have not tested whether
+looser limits would turn some of these stops into solves. The ablations show the same pattern: 191 of their 300 unsuccessful episodes end
 in state cycling (Table~\ref{tab:ablation-terminations}).
 % EDITING NOTE: Recompute termination counts by cohort and condition from saved traces
 % (workspace/analysis/termination_summary.py) and fill the appendix table.

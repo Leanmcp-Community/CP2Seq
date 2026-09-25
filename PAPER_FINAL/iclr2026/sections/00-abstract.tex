@@ -19,6 +19,6 @@ translations, rotations, and reflections. Performance falls off sharply with seq
 in the Luna ablations no configuration solves a medium or hard sample (11 or more folds), while
 some-layers solves rise from 6/30 to 18/30 with higher reasoning effort. Failures are dominated by
 search rather than by illegal moves: in the broader evaluation, 48\% of episodes end by
-revisiting earlier states. A breadth-first search over the same actions solves 54.7\% of
-easy-group attempts, so the generated tasks leave substantial headroom for model planning.
+revisiting earlier states. A breadth-first search over the same actions, under its own time budget, solves 54.7\% of
+easy-group attempts, so short sequences are within reach of systematic search.
 \end{abstract}

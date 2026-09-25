@@ -11,5 +11,8 @@ every edit). Earlier runs instead let the model request tier-3 comparison on dem
 \phantomsection
 \label{sec:target-feedback}
 The automatic-feedback condition supplies layer counts, aligned layer discrepancies,
-and suggested corrections after edits. The three feedback levels are documented in
-Appendix~\ref{app:feedback-levels}.
+and suggested corrections after edits (Appendix~\ref{app:feedback-levels}). Because those
+corrections do much of the target comparison for the model, we treat this condition as an upper
+bound on what tool support can achieve, not as a measure of the model's own geometric reasoning;
+conclusions about the model rest on the basic-tools condition. Even that condition is assisted,
+since folds that would crease outside the target pattern are rejected (Section~\ref{sec:env}).

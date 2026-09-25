@@ -12,10 +12,8 @@ Origami provides a procedural setting for studying these decisions. A folding en
 generate instances across reference depths, record intermediate states, and check proposed
 actions under a specified folding model.
 
-Existing origami benchmarks assess some aspects of geometric understanding. GamiBench
-\citep{gamibench} uses visual question answering to assess folded configurations, viewpoint
-consistency, and impossible patterns. OrigamiSpace \citep{origamispace} includes spatial reasoning
-tasks and crease-pattern code generation with an interactive environment.
+Existing origami benchmarks ask questions about folds or generate crease patterns
+\citep{gamibench,origamispace}.
 CP2Seq evaluates whether a model can translate geometric information into a complete, executable
 folding sequence, with each action checked for validity and the resulting construction checked
 against the target. Given a crease pattern and target folded state, the model must select folds,

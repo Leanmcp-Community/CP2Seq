@@ -10,7 +10,10 @@ loop, tool interface, tool schemas and prompt in Appendices~\ref{app:evaluation-
 and~\ref{app:tool-interface}; model versions, reasoning effort, turn and timeout limits in
 Section~\ref{sec:exp-protocol}; the software version in Appendix~\ref{app:software-versions};
 and the accounting of every planned ablation case, including failures, in
-Appendix~\ref{app:protocol-failures}. The corpus generator, environment and verifier, corpus
+Appendix~\ref{app:protocol-failures}. The evaluated models are closed and served through the
+Codex CLI, so their weights and sampling cannot be pinned; we release the saved runs with each
+attempt's model identifier and reasoning effort, so reported numbers can be audited if not
+regenerated exactly. The corpus generator, environment and verifier, corpus
 checks, state comparator and evaluation harness are released under the BSD 3-Clause licence,
 with links omitted for anonymous review. Every sample is synthesised by folding a square, so the
 data carry no personal, human-subject or scraped content; Flat-Folder's example collection is
