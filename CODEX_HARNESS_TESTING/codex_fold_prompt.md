@@ -88,8 +88,10 @@ Use rejection feedback to change your plan:
   `off_target_creases` lists each proposed crease the CP does not contain, in
   original sheet coordinates, with `problem` one of `assignment_conflict` (the
   line is right, the M/V is wrong: flip over or move the other side),
-  `absent` (no CP crease lies on this line at all), or `partly_missing` (the CP
-  crease covers only part of this fold, so it would crease unfolded paper).
+  `mixed_assignment` (the CP has M on part of this crease and V on another part,
+  so no choice of over or moving side fixes it: fold fewer layers or a different
+  line), `absent` (no CP crease lies on this line at all), or `partly_missing`
+  (the CP crease covers only part of this fold, so it would crease unfolded paper).
   `uncovered` gives the exact sub-spans and `cp_creases_on_this_line` gives what
   the CP does have there. `proposed_creases` lists every crease the fold makes.
 - would-tear means moving and stationary faces share a connection away from the
