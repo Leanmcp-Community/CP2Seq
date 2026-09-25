@@ -1,5 +1,14 @@
 \subsection{Breadth-first search analysis}
 \label{app:bfs-analysis}
+\label{sec:exp-baselines}
+\label{sec:results-baseline}
+
+The saved BFS evaluation contains 725 attempts: 366/669 solved on easy samples
+(54.7\%), 1/40 on medium, and 0/16 on hard. These attempts include repeated samples
+and different budgets and are not paired with the recent ten-sample ablations.
+BFS uses wall-clock, state-expansion, and depth limits, while model runs use turn
+and call-timeout limits.
+% Source: workspace/RESULTS/results.md.
 
 A fold is specified by a line in current-plane coordinates together with a layer selection, and
 both are drawn from small finite sets. Candidate lines are read off the crease pattern itself: the distinct lines through its mountain and valley edges,

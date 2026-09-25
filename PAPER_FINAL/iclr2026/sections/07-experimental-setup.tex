@@ -13,27 +13,7 @@ One episode is one sample attempted by one model under one tier of assistance. T
 for every arm and every model, and the only thing that varies between arms is what the model is
 allowed to see and call.
 
-{\small\begin{verbatim}
-EPISODE(sample, model, condition, query_budget):
-    cp, target <- LOAD_INPUTS(sample)
-    session <- INITIALIZE(cp, target, unfolded_square)
-    history <- []
-    for query in 1..query_budget:
-        obs <- OBSERVE(session, condition)
-        call <- model(cp, target, obs, history, condition)
-        if call is finish: break
-        # Edits: add/remove fold, go to step, restore revision.
-        # Reads: state, images, candidates, target feedback.
-        result <- DISPATCH_TRANSACTIONALLY(session, call)
-        # Rejected edits leave session unchanged but consume a query.
-        # Read calls consume a query without changing the sequence.
-        history.append(call, result)
-        if STOPPING_RULE(session, history): break
-    return SCORE(REPLAY(session.actions), REFERENCE_AT_SCORING(sample))
-\end{verbatim}
-}
-
-The pseudocode describes one tool call per query. Accepted edits update the current sequence;
+Each query contains one tool call. Accepted edits update the current sequence;
 rejected edits preserve it, and both consume budget. Removing a fold replays the remaining actions;
 returning to an earlier step truncates the sequence, while revision restoration can recover a
 previous branch. The reference sequence is withheld until scoring. Run-specific turn, time, and
@@ -55,8 +35,8 @@ cycle limits must be reported alongside the query count.
 % A dashed boundary around the withheld items (intermediate frames, reference
 % sequence) carries point (3) without a sentence.
 % ===========================================================================
-The evaluation pipeline is shown in Appendix~\ref{app:evaluation-pipeline},
-Figure~\ref{fig:pipeline}.
+Episode pseudocode and the evaluation pipeline appear in
+Appendix~\ref{app:evaluation-pipeline}.
 
 \subsubsection{Tool configuration}
 \label{sec:exp-tools}
@@ -111,13 +91,7 @@ at low and high effort, using ten samples per group and configuration. Runs use 
 different coverage and budgets and are reported separately (Section~\ref{sec:results}).
 % EDITING NOTE: Report per-run stopping limits and repeat variability from the inventory.
 
-\subsubsection{Search baseline}
-\label{sec:exp-baselines}
-
-Deterministic breadth-first search uses the same legal candidate enumerator and
-terminal comparator as the model interface, without access to the reference sequence.
-It runs under per-sample wall-clock, state-expansion, and depth limits.
-Section~\ref{sec:results-baseline} reports measured outcomes; enumeration details
-and search-effort plots appear in Appendix~\ref{app:bfs-analysis}.
+We include breadth-first search over the same enumerated legal actions as a
+systematic-search baseline (Appendix~\ref{app:bfs-analysis}).
 % EDITING NOTE: Planned baselines retained for future work: uniform random search
 % over legal candidates and the symbolic crease-pattern solver cited as creasy.

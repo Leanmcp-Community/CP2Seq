@@ -92,18 +92,6 @@ solves 1/1 low-effort attempt. Earlier basic-tool runs record 0/7 for GPT-5.6 So
 model identity and is unsolved. These exploratory runs are reported separately from the Luna ablations.
 % EDITING NOTE: This paragraph reflects the generated inventory, not newer unaggregated runs.
 
-\subsection{Search baseline}
-\label{sec:results-baseline}
-
-The separate BFS snapshot in \texttt{workspace/RESULTS/results.md} contains 725
-attempts: 366/669 solved on easy samples, 1/40 on medium, and 0/16 on hard.
-The easy solve rate is 54.7\%. These attempts include repeated samples and different
-budgets and are not paired with the recent ten-sample ablations. BFS explores the
-same enumerated legal action space, but its wall-clock budget differs from the
-model's turn and call-timeout limits.
-
-Search-effort statistics and plots are provided in Appendix~\ref{app:bfs-analysis}.
-
 \subsection{Crease-pattern distance}
 \label{sec:results-distance}
 

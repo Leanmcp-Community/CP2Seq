@@ -19,24 +19,7 @@ more search and are therefore harder to recover. These groups describe expected 
 reference length need not equal the shortest valid solution length. We also record coupling,
 the number of creases created by a fold, to characterize the geometry of each instance.
 
-The generation procedure is summarized below.
-
-{\small\begin{verbatim}
-GENERATE(reference_depth, action_model):
-    state <- unfolded square
-    actions, frames <- [], []
-    for step in 1..reference_depth:
-        candidates <- LEGAL_FOLDS(state, action_model)
-        if candidates is empty: return FAILED
-        action <- SAMPLE(candidates)
-        state <- APPLY(state, action)
-        actions.append(action)
-        frames.append(state)
-    cp <- CREASE_PATTERN_IN_ORIGINAL_SHEET(state)
-    cp <- SPLIT_EDGES_AT_INTERSECTIONS(cp)
-    if not REPLAY_CHECK(cp, actions, state): return FAILED
-    return (cp, state, actions, frames, METADATA(actions))
-\end{verbatim}}
+Generation pseudocode is provided in Appendix~\ref{app:generation-procedure}.
 
 We provide inspection software to visualize crease patterns and folded states, replay
 reference sequences, and examine verification feedback. These views support manual
@@ -92,14 +75,14 @@ configured separately from dataset groups (Section~\ref{sec:target-feedback}).
 \label{sec:cp2seq-sample}
 \begin{tabular}{lp{0.68\textwidth}}
 \hline
-File & Contents \\
+Artifact & Contents \\
 \hline
-\texttt{cp.fold} & Input crease pattern. \\
-\texttt{steps.fold} & Folded states after each reference action; only the final state is supplied
+Crease pattern & Input crease geometry. \\
+State sequence & Folded states after each reference action; only the final state is supplied
 as the target. \\
-\texttt{seq.json} & Withheld reference actions: fold lines, directions, layer selections, and
+Reference actions & Withheld fold lines, directions, layer selections, and
 creases created. \\
-\texttt{meta.json} & Sample descriptors and generator version. \\
+Metadata & Sample descriptors and generator version. \\
 \hline
 \end{tabular}
 \end{table}

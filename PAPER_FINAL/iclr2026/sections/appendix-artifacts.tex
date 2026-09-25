@@ -14,8 +14,49 @@ version or binary hash; the installation was checked on 25 September 2026.
 
 \input{sections/appendix-bfs}
 
+\subsection{Dataset generation}
+\label{app:generation-procedure}
+
+{\small\begin{verbatim}
+GENERATE(reference_depth, action_model):
+    state <- unfolded square
+    actions, frames <- [], []
+    for step in 1..reference_depth:
+        candidates <- LEGAL_FOLDS(state, action_model)
+        if candidates is empty: return FAILED
+        action <- SAMPLE(candidates)
+        state <- APPLY(state, action)
+        actions.append(action)
+        frames.append(state)
+    cp <- CREASE_PATTERN_IN_ORIGINAL_SHEET(state)
+    cp <- SPLIT_EDGES_AT_INTERSECTIONS(cp)
+    if not REPLAY_CHECK(cp, actions, state): return FAILED
+    return (cp, state, actions, frames, METADATA(actions))
+\end{verbatim}}
+
 \subsection{Evaluation pipeline}
 \label{app:evaluation-pipeline}
+
+{\small\begin{verbatim}
+EPISODE(sample, model, condition, query_budget):
+    cp, target <- LOAD_INPUTS(sample)
+    session <- INITIALIZE(cp, target, unfolded_square)
+    history <- []
+    for query in 1..query_budget:
+        obs <- OBSERVE(session, condition)
+        call <- model(cp, target, obs, history, condition)
+        if call is finish: break
+        # Edits: add/remove fold, go to step, restore revision.
+        # Reads: state, images, candidates, target feedback.
+        result <- DISPATCH_TRANSACTIONALLY(session, call)
+        # Rejected edits leave session unchanged but consume a query.
+        # Read calls consume a query without changing the sequence.
+        history.append(call, result)
+        if STOPPING_RULE(session, history): break
+    return SCORE(REPLAY(session.actions), REFERENCE_AT_SCORING(sample))
+\end{verbatim}
+}
+
 \input{figures/pipeline}
 
 \subsection{Tool schemas and prompt}
