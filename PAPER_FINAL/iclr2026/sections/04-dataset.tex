@@ -41,7 +41,6 @@ Appendix~\ref{app:artifacts}.
 CP2Seq contains 600 samples: 400 all-layers examples grouped by reference depth and 200
 some-layers examples with three to six reference folds (Table~\ref{tab:dataset-statistics}).
 
-
 \begin{table}[h]
 \centering
 \caption{Dataset composition. Fold counts refer to recorded reference sequences.}
@@ -63,29 +62,9 @@ Total & & 600 & 3--19 \\
 \end{tabular}
 \end{table}
 
-Each sample contains the task inputs, a reference sequence, and metadata
-(Table~\ref{tab:sample-files}). The model receives the crease pattern and target state; reference
-actions and intermediate reference states are withheld. Tool availability and target feedback are
-configured separately from dataset groups (Section~\ref{sec:target-feedback}).
-
-\begin{table}[h]
-\centering
-\caption{Contents of a CP2Seq sample.}
-\label{tab:sample-files}
-\label{sec:cp2seq-sample}
-\begin{tabular}{lp{0.68\textwidth}}
-\hline
-Artifact & Contents \\
-\hline
-Crease pattern & Input crease geometry. \\
-State sequence & Folded states after each reference action; only the final state is supplied
-as the target. \\
-Reference actions & Withheld fold lines, directions, layer selections, and
-creases created. \\
-Metadata & Sample descriptors and generator version. \\
-\hline
-\end{tabular}
-\end{table}
+The model receives the crease pattern and target folded state; reference actions and
+intermediate reference states are withheld. Sample contents are documented in
+Appendix~\ref{app:sample-contents}.
 
 \phantomsection
 \label{sec:cp2seq-verify}

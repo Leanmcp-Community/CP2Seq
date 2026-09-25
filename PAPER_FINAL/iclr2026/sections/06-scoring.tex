@@ -43,12 +43,5 @@ whose counts are reported separately.
 
 \phantomsection
 \label{sec:scoring-validate}
-The comparator that scores every reported run is validated by a test that must accept the global
-transformations and reject everything else. Acceptance is checked across rotations, turnovers and
-translations, in both comparison directions, and under changes to polygon start vertex and winding
-that do not change the folded object. Rejection is checked for a turnover without stack reversal,
-a turnover without parity flips, a coordinate mirror presented as a turnover, a permuted layer
-order, a missing layer, a uniform scaling, a per-layer transformation that no single isometry
-explains, and an empty stack. The polygons used are asymmetric, so an incorrect reflection cannot
-pass through a symmetry of the square. Appendix~\ref{app:comparison-details} documents
-the separate corpus-side comparator and its negative control.
+Comparator implementation and validation cases are described in
+Appendix~\ref{app:comparison-details}.

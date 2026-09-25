@@ -23,7 +23,6 @@ selection, and whether the moving paper folds over or under the stationary paper
 paper is reflected across the line, with the corresponding orientation and stack-order updates.
 In the implemented some-layers model, a top run folds over and a bottom run folds under.
 
-
 \subsection{Connectivity and tearing}
 \label{app:tearing}
 
@@ -111,6 +110,12 @@ explicitly compare original-sheet region identities. Any identity-aware offline 
 be distinguished from this path, and the comparator version used for each reported result must
 be recorded. In particular, equal shapes at different original-sheet locations can require a
 stronger correspondence check than current-plane geometry alone.
+
+Comparator test cases cover translations, rotations, turnovers, and equivalent polygon
+representations, including changes in start vertex and winding. Negative cases include
+incorrect stack order or face orientation, missing layers, scaling, inconsistent
+per-layer transformations, and empty stacks. Asymmetric polygons distinguish
+reflections from rotations. The corpus-side comparator has a separate negative control.
 
 The repository contains comparison and verification tests; executed test results and the exact
 comparator revision must accompany any reported validation.

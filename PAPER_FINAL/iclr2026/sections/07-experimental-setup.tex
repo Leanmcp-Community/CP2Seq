@@ -41,31 +41,10 @@ Appendix~\ref{app:evaluation-pipeline}.
 \subsubsection{Tool configuration}
 \label{sec:exp-tools}
 
-Table~\ref{tab:tools} lists the tool interface. Basic tools comprise all entries except
-the optional \texttt{list\_legal\_folds} and \texttt{compare\_to\_target} tools.
-Loading and configuration are described in
-Appendix~\ref{app:tool-loading}.
-
-\begin{table}[h]
-\centering
-\caption{Tools available to the evaluation harness; exposure depends on run configuration.}
-\label{tab:tools}
-\begin{tabular}{lp{0.65\textwidth}}
-\hline
-Tool & Operation \\
-\hline
-\texttt{add\_fold} & Append a checked fold; reject invalid actions without changing state. \\
-\texttt{remove\_fold} & Remove a specified fold and replay the remainder transactionally. \\
-\texttt{go\_to\_step} & Retain the first specified number of folds. \\
-\texttt{restore\_revision} & Restore a previously recorded branch state. \\
-\texttt{get\_state} & Return the current sequence and layer geometry. \\
-\texttt{get\_images} & Render top, oblique, reverse, X-ray, and exploded views of a completed step; exposed views depend on run configuration. \\
-\texttt{list\_legal\_folds} & Optionally enumerate legal candidates compatible with the target CP. \\
-\texttt{compare\_to\_target} & Optionally return feedback at the configured level (Section~\ref{sec:target-feedback}). \\
-\texttt{finish} & End the episode and evaluate the current sequence. \\
-\hline
-\end{tabular}
-\end{table}
+All conditions provide fold editing, backtracking, and state observations. Additional
+conditions provide legal-fold enumeration and target feedback
+(Section~\ref{sec:ablations}). The full tool interface and loading configuration
+appear in Appendix~\ref{app:tool-interface}.
 
 % ===========================================================================
 % FIGURE 5 -- A REFUSAL AS THE MODEL RECEIVES IT.  [TO DRAW]
@@ -80,7 +59,6 @@ Tool & Operation \\
 % why error analysis is a taxonomy that exists before the experiment.
 % ===========================================================================
 % EDITING NOTE: Refusal figure moved to the appendix plan; use an actual rejected action.
-
 
 \subsubsection{Models and budgets}
 \label{sec:exp-protocol}

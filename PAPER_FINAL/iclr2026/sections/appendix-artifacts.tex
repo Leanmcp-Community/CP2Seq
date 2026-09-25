@@ -59,10 +59,82 @@ EPISODE(sample, model, condition, query_budget):
 
 \input{figures/pipeline}
 
+\subsection{Tool interface and feedback}
+\label{app:tool-interface}
+Basic tools comprise all entries in Table~\ref{tab:tools} except the optional
+\texttt{list\_legal\_folds} and \texttt{compare\_to\_target} tools.
+Loading and configuration are described in Appendix~\ref{app:tool-loading}.
+
+\begin{table}[h]
+\centering
+\caption{Tools available to the evaluation harness; exposure depends on run configuration.}
+\label{tab:tools}
+\begin{tabular}{lp{0.65\textwidth}}
+\hline
+Tool & Operation \\
+\hline
+\texttt{add\_fold} & Append a checked fold; reject invalid actions without changing state. \\
+\texttt{remove\_fold} & Remove a specified fold and replay the remainder transactionally. \\
+\texttt{go\_to\_step} & Retain the first specified number of folds. \\
+\texttt{restore\_revision} & Restore a previously recorded branch state. \\
+\texttt{get\_state} & Return the current sequence and layer geometry. \\
+\texttt{get\_images} & Render top, oblique, reverse, X-ray, and exploded views of a completed step; exposed views depend on run configuration. \\
+\texttt{list\_legal\_folds} & Optionally enumerate legal candidates compatible with the target CP. \\
+\texttt{compare\_to\_target} & Optionally return feedback at the configured level (Section~\ref{sec:target-feedback}). \\
+\texttt{finish} & End the episode and evaluate the current sequence. \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Target-feedback levels}
+\label{app:feedback-levels}
+The run configuration selects one of three feedback levels for
+\texttt{compare\_to\_target}. The tool compares the current and target stacks.
+
+\begin{table}[h]
+\centering
+\caption{Information returned at each target-feedback level.}
+\begin{tabular}{lp{0.72\textwidth}}
+\hline
+Level & Information returned \\
+\hline
+1: Counts & Current and target layer counts, their difference, and a count-based summary. \\
+2: Diagnosis & Level 1 plus aligned layer matches, mismatched ranks, and a diagnosis of count,
+shape, orientation, or ordering disagreement. \\
+3: Corrections & Level 2 plus suggested corrections for up to twelve mismatched ranks, such as
+orientation changes or a different target rank for a layer shape. \\
+\hline
+\end{tabular}
+\end{table}
+
 \subsection{Tool schemas and prompt}
 The following listings document the tool schemas and folding prompt; tool exposure is configured per run.
 {\scriptsize\verbatiminput{../../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/tool_schemas.py}}
 {\small\verbatiminput{../../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/fold_prompt.md}}
+
+\subsection{Sample contents}
+\label{app:sample-contents}
+Each sample contains the input crease pattern, a reference state sequence, reference
+fold actions, and metadata (Table~\ref{tab:sample-files}).
+
+\begin{table}[h]
+\centering
+\caption{Contents of a CP2Seq sample.}
+\label{tab:sample-files}
+\label{sec:cp2seq-sample}
+\begin{tabular}{lp{0.68\textwidth}}
+\hline
+Artifact & Contents \\
+\hline
+Crease pattern & Input crease geometry. \\
+State sequence & Folded states after each reference action; only the final state is supplied
+as the target. \\
+Reference actions & Withheld fold lines, directions, layer selections, and
+creases created. \\
+Metadata & Sample descriptors and generator version. \\
+\hline
+\end{tabular}
+\end{table}
 
 \subsection{Dataset gallery and reference sequences}
 Each rendered panel contains the crease pattern, top view, and an oblique view with illustrative
@@ -128,6 +200,19 @@ a \texttt{would-tear} response using the shared verification fixtures. The compa
 holds the initial state and hinge fixed and changes the selected layers. The export
 script records both engine responses and checks that rejection preserves the state.
 \input{figures/rejection-feedback}
+
+\subsection{Supplementary results}
+\label{app:supplementary-results}
+
+The inventory also contains small exploratory runs: GPT-6 Sol with legal enumeration
+solves 1/3 low-effort attempts and 1/1 high-effort attempt; GPT-6 Astra with basic tools
+solves 1/1 low-effort attempt. Earlier basic-tool runs record 0/7 for GPT-5.6 Sol and
+0/1 for GPT-5.6 Terra. One additional completed basic-tool attempt has no recorded
+model identity and is unsolved. These exploratory runs are reported separately from the Luna ablations.
+% EDITING NOTE: This paragraph reflects the generated inventory, not newer unaggregated runs.
+
+\IfFileExists{../../workspace/RESULTS/cp-distance/paper-table.tex}{%
+  \input{../../workspace/RESULTS/cp-distance/paper-table.tex}}{}
 
 \subsection{Protocol failure accounting}
 \label{app:protocol-failures}

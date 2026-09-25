@@ -4,8 +4,8 @@
 % EDITING NOTE: Planned comparisons retained: no visual feedback and verifier only.
 The recent ablations compare basic tools, legal-fold enumeration, and enumeration with
 automatic tier-3 target feedback. Earlier runs also include on-demand target comparison.
-Table~\ref{tab:ablations} specifies the additions to the basic interface defined in
-Table~\ref{tab:tools}.
+Table~\ref{tab:ablations} specifies additions to the basic interface described in
+Section~\ref{sec:exp-tools}.
 
 \begin{table}[h]
 \centering
@@ -26,24 +26,8 @@ On-demand target comparison & Candidate filtering plus model-requested tier-3 fe
 The recent ablations use common sample IDs and budgets across assistance conditions
 (Section~\ref{sec:results-ablations}).
 
-\subsubsection{Target-comparison feedback}
+\phantomsection
 \label{sec:target-feedback}
-
-The run configuration selects one of three feedback levels for
-\texttt{compare\_to\_target}. The tool compares the current and target stacks.
-
-\begin{table}[h]
-\centering
-\caption{Information returned at each target-feedback level.}
-\begin{tabular}{lp{0.72\textwidth}}
-\hline
-Level & Information returned \\
-\hline
-1: Counts & Current and target layer counts, their difference, and a count-based summary. \\
-2: Diagnosis & Level 1 plus aligned layer matches, mismatched ranks, and a diagnosis of count,
-shape, orientation, or ordering disagreement. \\
-3: Corrections & Level 2 plus suggested corrections for up to twelve mismatched ranks, such as
-orientation changes or a different target rank for a layer shape. \\
-\hline
-\end{tabular}
-\end{table}
+The automatic-feedback condition supplies layer counts, aligned layer discrepancies,
+and suggested corrections after edits. The three feedback levels are documented in
+Appendix~\ref{app:feedback-levels}.
