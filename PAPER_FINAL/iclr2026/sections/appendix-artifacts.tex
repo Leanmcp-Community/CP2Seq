@@ -204,6 +204,24 @@ script records both engine responses and checks that rejection preserves the sta
 \subsection{Supplementary results}
 \label{app:supplementary-results}
 
+\begin{table}[htbp]
+\centering
+\caption{Earlier GPT-5.6 Luna evaluation at low reasoning effort. Counts are solved
+attempts over completed attempts, including repeats across samples and budgets.}
+\label{tab:headline}
+\begin{tabular}{lrr}
+\hline
+Condition & Solved / completed & Solve rate \\
+\hline
+Basic tools & 4/67 & 6.0\% \\
+Legal enumeration & 31/272 & 11.4\% \\
+Legal enumeration + on-demand comparison & 28/108 & 25.9\% \\
+\hline
+\end{tabular}
+\end{table}
+% Earlier solved counts: inventory totals minus recent ablation solves:
+% basic 6-2=4; legal 37-6=31; on-demand comparison 28-0=28.
+
 The inventory also contains small exploratory runs: GPT-6 Sol with legal enumeration
 solves 1/3 low-effort attempts and 1/1 high-effort attempt; GPT-6 Astra with basic tools
 solves 1/1 low-effort attempt. Earlier basic-tool runs record 0/7 for GPT-5.6 Sol and
