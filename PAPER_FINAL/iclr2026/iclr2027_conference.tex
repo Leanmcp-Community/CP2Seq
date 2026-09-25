@@ -24,8 +24,14 @@
 % With \iclrfinalcopy commented out, iclr2027_conference.sty replaces this
 % block with "Anonymous authors / Paper under double-blind review", so the
 % submission is anonymous regardless of what is written here.
+\ifdefined\arxivversion
+\author{Dheeraj Mohandas Pai \qquad Lu Xian \\
+Leanmcp.com \\
+\url{https://leanmcp.com}}
+\else
 \author{Anonymous authors \\
 Paper under double-blind review}
+\fi
 
 % Draft-only appendices (editorial rules, draft status, changes). These are working notes,
 % NOT paper content, and must be OFF for any submitted or shared PDF.
@@ -48,10 +54,17 @@ Paper under double-blind review}
 \newcommand{\new}{\marginpar{NEW}}
 
 %\iclrfinalcopy % Uncomment for camera-ready version, but NOT for submission.
+\ifdefined\arxivversion
+\iclrfinalcopy
+\hypersetup{pdfauthor={Dheeraj Mohandas Pai and Lu Xian}}
+\fi
 \begin{document}
 
 
 \maketitle
+\ifdefined\arxivversion
+\lhead{Preprint}
+\fi
 
 
 \input{sections/00-abstract}
@@ -74,9 +87,12 @@ Paper under double-blind review}
 \input{sections/13-licence}
 \input{sections/14-llm-use}
 
+\ifdefined\arxivversion
+\else
 \subsubsection*{Acknowledgments}
 
 Withheld for anonymous review.
+\fi
 
 \bibliography{iclr2027_conference}
 \bibliographystyle{iclr2027_conference}
