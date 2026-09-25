@@ -16,6 +16,8 @@ import codex_fold_loop as harness
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("episode", type=Path, help="Existing run/sample directory")
+    parser.add_argument("--conversation-transport", choices=["resume", "fork"],
+                        help="Explicitly change transport for subsequent native continuation calls")
     options = parser.parse_args()
     source = options.episode.expanduser().resolve()
     if (source / "result.json").exists():
@@ -30,6 +32,10 @@ def main():
     saved_prompt = (source.parent / "prompt.md").read_text()
     saved_tools = json.loads((source.parent / "tools.json").read_text())
     turns = sorted(source.glob("turn-[0-9][0-9][0-9]"))
+    for folder in turns:
+        if (folder / "continuation-pending.json").exists():
+            parser.error(f"Unreconciled native continuation at {folder.name}; inspect its native "
+                         "thread before retrying, to avoid duplicating an interrupted message.")
     cached = {}
     for number, folder in enumerate(turns, 1):
         if folder.name != f"turn-{number:03d}":
@@ -67,7 +73,9 @@ def main():
             normalized = prompt.replace(str(new_episode), str(source))
             if normalized != old_prompt.read_text():
                 raise RuntimeError(f"State/history prompt differs at {turn_dir.name}; refusing lossy resume.")
-        old_manifest_file = original_turn / "images.json"
+        old_manifest_file = original_turn / "request-images.json"
+        if not old_manifest_file.exists():
+            old_manifest_file = original_turn / "images.json"
         if old_manifest_file.exists():
             old_manifest = json.loads(old_manifest_file.read_text())
             if list(old_manifest) != list(manifest):
@@ -83,10 +91,14 @@ def main():
         harness.write_json(new_episode.parent / "resume.json", {
             "source_episode": str(source), "replayed_responses": len(cached),
             "first_new_turn": len(cached)+1,
+            "source_codex_provenance": config.get("codex_provenance"),
+            "current_codex_provenance": json.loads(
+                (new_episode.parent / "config.json").read_text()).get("codex_provenance"),
             "note": "Replayed turns reuse historical usage, not new billed model calls."})
         if turn_dir.name in cached:
             (turn_dir / "prompt.md").write_text(prompt)
-            for filename in ("events.jsonl", "process.json", "response.json", "stderr.log", "command.json"):
+            for filename in ("events.jsonl", "process.json", "response.json", "stderr.log", "command.json",
+                             "session.json"):
                 src = original_turn / filename
                 if src.exists():
                     shutil.copy2(src, turn_dir / filename)
@@ -102,7 +114,10 @@ def main():
              "retry_wait", "retry_max_wait", "render_size", "max_image_edge", "max_image_bytes"]
     # Older configs predate this option. Preserve their exact prompt order during replay.
     argv = [str(Path(harness.__file__)), "--samples", source.name,
-            "--prompt-layout", config.get("prompt_layout", "legacy")]
+            "--prompt-layout", config.get("prompt_layout", "legacy"),
+            "--conversation-mode", config.get("conversation_mode", "fresh"),
+            "--conversation-transport", options.conversation_transport or
+            config.get("conversation_transport", "fork")]
     for name in flags:
         if name in config and config[name] is not None:
             argv += ["--" + name.replace("_", "-"), str(config[name])]
