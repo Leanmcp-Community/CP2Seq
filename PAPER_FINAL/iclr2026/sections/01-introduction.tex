@@ -11,23 +11,25 @@ models can use visual and geometric observations to make these decisions over su
 Origami provides a procedural setting for studying these decisions. A folding engine can
 generate instances across reference depths, record intermediate states, and check proposed
 actions under a specified folding model.
+Sequence planning also arises in engineering: robotic origami folding requires choosing the order
+of simple folds \citep{balkcom-robotic-origami}, self-folding machines fold flat sheets into
+functional structures \citep{felton-self-folding}, and deployable arrays must accommodate panel
+thickness when stowed \citep{zirbel-thickness}. CP2Seq isolates the combinatorial part of this
+problem; physical feasibility, including thickness and contact, is outside the current model
+(Section~\ref{sec:limitations}).
 
 Existing origami benchmarks ask questions about folds or generate crease patterns
 \citep{gamibench,origamispace}.
 CP2Seq evaluates whether a model can translate geometric information into a complete, executable
 folding sequence, with each action checked for validity and the resulting construction checked
-against the target. Given a crease pattern and target folded state, the model must select folds,
-track their effects, and revise its choices until execution reproduces both the crease pattern
-and the target state.
+against the target.
 
 We introduce \textbf{CP2Seq}, a benchmark of 600 procedurally generated origami samples and a
 framework for generating, executing, and evaluating folding sequences. Each task supplies a crease
 pattern and a target folded state; the reference sequence and intermediate reference states are
 withheld. Starting from an unfolded square, the model must produce a valid sequence of simple
-folds under the specified action model. In the visual setting, it receives images of both inputs
-and views of its current folded state. The crease pattern constrains which creases must be
+folds under the specified action model. The crease pattern constrains which creases must be
 produced, while the target specifies the arrangement of the folded sheet, including layer order.
-Together, these inputs guide the model's choice of where to fold and which layers to move.
 
 The task combines \emph{geometric reasoning}, \emph{spatial state tracking}, and
 \emph{sequential planning}. A fold line is specified in the current folded coordinates, whereas
@@ -35,8 +37,6 @@ the target crease pattern describes the original sheet. Connecting these represe
 tracking reflections and the correspondence between paper regions. Selecting a fold also requires
 reasoning about overlapping layers and their connectivity. Subsequent decisions depend on the
 state produced by earlier actions, so increasing sequence depth extends the planning horizon.
-We evaluate these abilities through the construction of valid folding sequences across increasing
-reference depths. The environment represents flat-folded states with explicit layer ordering.
 
 We generate examples procedurally by applying legal folds and recording the resulting sequence,
 crease pattern, and folded state. This supplies reference solutions without manual annotation and
@@ -46,8 +46,7 @@ reliance on fixed examples that future models may encounter during training
 (Section~\ref{sec:cp2seq}).
 
 We also provide an evaluation framework that presents images of the input crease pattern, the
-target folded state, and the current state after each accepted edit. These observations let the
-model compare its progress with the target and choose its next action. Tools support adding and
+target folded state, and the current state after each accepted edit. Tools support adding and
 removing folds, inspecting geometry, and returning to a specified earlier step to explore another
 sequence. The engine checks proposed edits and returns feedback, while the model directs the
 search. Different levels of tool assistance allow us to study how this support affects performance
@@ -55,20 +54,18 @@ search. Different levels of tool assistance allow us to study how this support a
 
 Evaluation checks both individual actions and the completed construction. Candidate sequences
 are replayed and assessed for crease-pattern agreement and agreement with the target folded
-state. Alternative valid sequences are accepted. Folded-state comparison
+state. Folded-state comparison
 accounts for a global translation, rotation, or turnover of the completed object, with the
 corresponding changes to layer order and face orientation (Section~\ref{sec:scoring}).
 We also provide a deterministic breadth-first search
 baseline using the same candidate-fold enumerator and terminal-state comparator. This baseline
-measures how much can be achieved by systematic search with the available filtering, providing
-context for model performance beyond comparisons between language models.
+shows what systematic search achieves with the same filtering.
 
 Our contributions are:
 \begin{enumerate}
 \item \textbf{A dataset and generation framework.} CP2Seq contains 600 samples with
   crease patterns, target states, recorded fold sequences, and intermediate states. Configurable
-  generation supports experiments across reference depths and action
-  models, with coupling recorded to characterize geometric structure.
+  generation supports experiments across reference depths and action models.
 \item \textbf{An interactive evaluation and verification pipeline.} The framework connects visual
   and geometric inputs to tools for constructing and revising sequences, step-level legality
   checks, and final replay-based scoring. It includes corpus checks and a folded-state comparator.
