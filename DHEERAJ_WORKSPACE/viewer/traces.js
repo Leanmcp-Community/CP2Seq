@@ -355,7 +355,7 @@ function renderExamples() {
     for (const sample of visible) listRow(list, {
       title: sample.id,
       status: outcome(sample),
-      meta: [`${sample.turns.length} turn${sample.turns.length === 1 ? '' : 's'}`],
+      meta: [sample.summary_only ? 'Saved results · no turn logs' : `${sample.turns.length} turn${sample.turns.length === 1 ? '' : 's'}`],
       chosen: sample.id === location().sample,
       action: () => selectSample(sample.id).catch(fail),
     });
@@ -372,6 +372,10 @@ function renderTurns() {
   const turns = sample?.turns || [];
   $('turns-count').textContent = turns.length ? String(turns.length) : '';
   if (!sample) { node('p', '—', parent).className = 'note'; return; }
+  if (sample.summary_only) {
+    node('p', 'Turn logs are not included in this example.', parent).className = 'note';
+    restoreScroll('turns'); return;
+  }
   const list = node('div', undefined, parent); list.className = 'row-list';
   if (state.mode === 'sequence') listRow(list, {title: 'Initial sheet', chosen: Number(location().turn) === 0,
     action: () => selectTurn(0).catch(fail)});
@@ -421,6 +425,21 @@ async function renderConversation(force = false) {
     node('p', 'Select an example to open its conversation.', parent).className = 'note';
     if (run.legacy_image) block(parent, 'Single-image input and response', run.legacy_image);
     return;
+  }
+  if (sample.summary_only) {
+    ++ticket; pausePlayback(); playbackFrames = []; $('sequence-stage').hidden = true;
+    $('conversation-title').textContent = sample.id;
+    meta.replaceChildren();
+    const status = outcome(sample); badge(meta, status.text, status.tone);
+    node('span', 'Saved results', meta);
+    $('conversation-toolbar').replaceChildren();
+    const body = $('conversation-body'); body.replaceChildren();
+    node('p', 'This example contains saved artifacts without per-turn logs. Conversation and turn-by-turn playback are unavailable.', body).className = 'note';
+    if (sample.result) block(body, 'Episode result', sample.result);
+    if (sample.error) block(body, 'Episode error', sample.error);
+    const links = node('div', undefined, body); links.className = 'artifact-links';
+    for (const file of sample.artifacts || []) link(links, run, `${sample.id}/${file}`, file);
+    renderTurns(); bindDetails(body); restoreScroll('conversation'); persist(); return;
   }
   const focused = state.mode === 'sequence';
   if (loc.turn == null || (!sample.turns.includes(Number(loc.turn)) && !(focused && Number(loc.turn) === 0))) {

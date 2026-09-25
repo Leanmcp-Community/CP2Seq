@@ -6,8 +6,6 @@ Run from any directory: python3 scripts/package_supplement.py --dry-run
 """
 import argparse
 import hashlib
-import gzip
-import io
 import json
 import os
 from pathlib import Path
@@ -15,11 +13,30 @@ import re
 import stat
 import sys
 import tempfile
-import tarfile
 import zipfile
 from collections import Counter
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def anonymous_text(text):
+    """Apply the same replacements to member names, source, records and docs."""
+    # Project-local absolute paths become relative to the extracted package.
+    text = text.replace(str(ROOT) + '/', './').replace(str(ROOT), '.')
+    text = text.replace('DHEERAJ_WORKSPACE', 'AUTHOR_WORKSPACE')
+    # Other historical home directories may refer to executables outside the repo.
+    # Keep them visibly nonportable rather than inventing a working local path.
+    text = re.sub('/' + '(?:Users|home)' + r'/[^/\s"\'\\]+', '/home/author', text)
+    text = re.sub('dheeraj', 'author', text, flags=re.IGNORECASE)
+    text = re.sub('ddod', 'author', text, flags=re.IGNORECASE)
+    return text
+
+
+def anonymous_bytes(data):
+    # All allowlisted payloads are text. Refuse unexpected binary content rather
+    # than shipping it without applying the replacements.
+    return anonymous_text(data.decode('utf-8')).encode('utf-8')
+
 CODE = {'.py', '.mjs', '.js', '.sh', '.html', '.css', '.json'}
 DATA = {'.json', '.jsonl', '.fold', '.csv', '.md', '.tex'}
 BLOCKED = {'.git', '.venv', 'venv', 'node_modules', '__pycache__',
@@ -38,13 +55,18 @@ def main(include_runs=False):
     ap = argparse.ArgumentParser(description=__doc__)
     mode = 'paper-runs' if include_runs else 'no-runs'
     ap.add_argument('--output', type=Path, default=ROOT / f'dist/foldorigami-{mode}',
-                    help='Output basename without extension; .zip or .tar.gz is selected automatically')
+                    help='Output basename without extension; creates .zip')
     ap.add_argument('--max-mb', type=float, default=99.0,
                     help='Decimal MB, maximum 100; final ZIP must be strictly smaller (default 99)')
     ap.add_argument('--dry-run', action='store_true', help='List selection and raw sizes; do not write files')
     ap.add_argument('--trace', action='append', default=[], metavar='RUN/SAMPLE',
                     help='Add decision/tool JSON for one saved episode; repeat for more episodes')
-    ap.add_argument('--force', action='store_true', help='Replace an existing output only after successful validation')
+    overwrite = ap.add_mutually_exclusive_group()
+    overwrite.add_argument('--force', dest='force', action='store_true',
+                           help='Replace existing output after validation (default)')
+    overwrite.add_argument('--no-force', dest='force', action='store_false',
+                           help='Refuse to replace existing output')
+    ap.set_defaults(force=True)
     args = ap.parse_args()
     if args.trace and not include_runs:
         ap.error('--trace is available only with package_with_paper_runs.py')
@@ -102,6 +124,14 @@ def main(include_runs=False):
         add(p, 'prompts')
     add(ROOT / 'DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/fold_prompt.md', 'prompts')
     add(ROOT / 'package.json', 'code')
+    add(ROOT / 'pyproject.toml', 'environment')
+    add(ROOT / '.python-version', 'environment')
+    if (ROOT / 'uv.lock').is_file():
+        add(ROOT / 'uv.lock', 'environment')
+    else:
+        warnings.append('uv.lock is missing. Run uv lock in the original repository and rebuild before publishing.')
+    add(ROOT / 'scripts/verify_manifest.py', 'verification')
+    add(ROOT / 'scripts/verify_supplement.sh', 'verification')
     add(ROOT / 'scripts/package_supplement.py', 'packaging')
     add(ROOT / 'scripts/package_without_runs.py', 'packaging')
     add(ROOT / 'scripts/package_with_paper_runs.py', 'packaging')
@@ -224,7 +254,7 @@ def main(include_runs=False):
         warnings.append('No root project licence found. The paper promises BSD 3-Clause; '
                         'add the agreed licence and copyright holder before public release.')
     warnings += [
-        'Public-release layout, NOT anonymized: original directory names and record contents are preserved.',
+        'Archive paths and text are anonymized by replacement; source files are unchanged.',
         'Historical absolute paths and executable paths may require local overrides when rerunning.',
         'Saved analyses may predate live runs. No paper numbers are regenerated or verified by packaging.',
         'Full model transcripts, per-turn renders and logs are excluded; this is not a complete trace archive.',
@@ -244,13 +274,14 @@ def main(include_runs=False):
     base_output = args.output.expanduser().absolute()
     if str(base_output).endswith(('.zip', '.tar.gz')):
         raise ValueError('--output is a basename; omit .zip/.tar.gz')
-    outputs = {ext: Path(str(base_output) + ext) for ext in ('.zip', '.tar.gz')}
+    outputs = {'.zip': Path(str(base_output) + '.zip')}
     if any(p.exists() for p in outputs.values()) and not args.force:
         raise ValueError('An output already exists; choose a new basename or use --force')
     base_output.parent.mkdir(parents=True, exist_ok=True)
     manifest = {'format': 1, 'archive_root': 'foldorigami-supplement',
                 'size_limit_bytes_exclusive': limit, 'warnings': warnings,
-                'mode': mode, 'runs': run_count, 'episodes': episode_count, 'traces': args.trace,
+                'mode': mode, 'anonymized': True,
+                'runs': run_count, 'episodes': episode_count, 'traces': args.trace,
                 'paper_episodes': [{'run': run, 'sample': sample, 'sources': sorted(reasons)}
                                    for (run, sample), reasons in sorted(paper_episodes.items())],
                 'files': []}
@@ -263,47 +294,45 @@ def main(include_runs=False):
     def signature(info):
         return info.st_size, info.st_mtime_ns, info.st_ino
 
-    def put(zf, tf, relative, data, executable=False):
+    def put(zf, relative, data, executable=False):
         info = zipfile.ZipInfo('foldorigami-supplement/' + relative, (2026, 1, 1, 0, 0, 0))
         info.create_system = 3
         info.compress_type = zipfile.ZIP_DEFLATED
         info.external_attr = (stat.S_IFREG | (0o755 if executable else 0o644)) << 16
         zf.writestr(info, data, compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)
-        member = tarfile.TarInfo('foldorigami-supplement/' + relative)
-        member.size = len(data)
-        member.mode = 0o755 if executable else 0o644
-        member.mtime = 0
-        tf.addfile(member, io.BytesIO(data))
 
+    member_names = set()
     try:
-        with zipfile.ZipFile(temporaries['.zip'], 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zf, \
-                temporaries['.tar.gz'].open('wb') as raw, \
-                gzip.GzipFile(filename='', mode='wb', fileobj=raw, compresslevel=9, mtime=0) as gz, \
-                tarfile.open(fileobj=gz, mode='w|') as tf:
+        with zipfile.ZipFile(temporaries['.zip'], 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
             for relative, (p, category, original) in sorted(selected.items()):
                 data = p.read_bytes()
                 if signature(p.stat()) != signature(original):
                     raise ValueError(f'Input changed while packaging: {relative}; stop writers and retry')
                 if SECRET.search(data):
                     raise ValueError(f'Possible credential in {relative}; inspect locally (value not printed)')
-                put(zf, tf, relative, data, bool(original.st_mode & 0o111))
+                relative = anonymous_text(relative)
+                data = anonymous_bytes(data)
+                if relative in member_names:
+                    raise ValueError(f'Anonymized archive path collision: {relative}')
+                member_names.add(relative)
+                put(zf, relative, data, bool(original.st_mode & 0o111))
                 manifest['files'].append({'path': relative, 'category': category,
                                           'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()})
             # Recheck every selected file before publishing a snapshot.
             for relative, (p, _, original) in selected.items():
                 if signature(p.stat()) != signature(original):
                     raise ValueError(f'Input changed while packaging: {relative}; stop writers and retry')
-            manifest_data = (json.dumps(manifest, indent=2) + '\n').encode()
-            readme_data = (ROOT / 'supplement/README.md').read_bytes()
-            put(zf, tf, 'MANIFEST.json', manifest_data)
-            put(zf, tf, 'README.md', readme_data)
+            manifest_data = anonymous_bytes((json.dumps(manifest, indent=2) + '\n').encode())
+            readme_data = anonymous_bytes((ROOT / 'supplement/README.md').read_bytes())
+            put(zf, 'MANIFEST.json', manifest_data)
+            put(zf, 'README.md', readme_data)
         archive_sizes = {ext: p.stat().st_size for ext, p in temporaries.items()}
-        ext = min(archive_sizes, key=archive_sizes.get)
+        ext = '.zip'
         temporary, output, size = temporaries[ext], outputs[ext], archive_sizes[ext]
         for kind, count in archive_sizes.items():
             print(f'{kind}: {count:,} bytes ({count / 1_000_000:.3f} MB)')
         if size >= limit:
-            raise ValueError(f'Smaller archive is {size:,} bytes; must be strictly below {limit:,}. '
+            raise ValueError(f'ZIP is {size:,} bytes; must be strictly below {limit:,}. '
                              'Nothing was dropped; no output published.')
         expected = {'foldorigami-supplement/' + e['path']: e['sha256'] for e in manifest['files']}
         expected['foldorigami-supplement/MANIFEST.json'] = hashlib.sha256(manifest_data).hexdigest()
@@ -311,20 +340,9 @@ def main(include_runs=False):
         def verify(name, data):
             if name not in expected or hashlib.sha256(data).hexdigest() != expected.pop(name):
                 raise ValueError(f'Unexpected member or hash mismatch: {name}')
-        if ext == '.zip':
-            with zipfile.ZipFile(temporary) as zf:
-                for name in zf.namelist():
-                    verify(name, zf.read(name))
-        else:
-            with tarfile.open(temporary, 'r:gz') as tf:
-                for member in tf:
-                    if not member.isfile():
-                        raise ValueError(f'Unexpected non-file member: {member.name}')
-                    verify(member.name, tf.extractfile(member).read())
-            # Read the complete gzip stream to validate its trailer CRC as well.
-            with gzip.open(temporary, 'rb') as stream:
-                while stream.read(1024 * 1024):
-                    pass
+        with zipfile.ZipFile(temporary) as zf:
+            for name in zf.namelist():
+                verify(name, zf.read(name))
         if expected:
             raise ValueError('Archive is missing expected members')
         if args.force:
@@ -338,7 +356,7 @@ def main(include_runs=False):
                 if other != output:
                     other.unlink(missing_ok=True)
         print(f'Created {output}\nSize: {size:,} bytes ({size / 1_000_000:.3f} MB) < {limit:,} bytes')
-        print('Kept the smaller format; archive integrity and payload SHA-256 hashes verified.')
+        print('ZIP integrity and payload SHA-256 hashes verified.')
     finally:
         for temporary in temporaries.values():
             temporary.unlink(missing_ok=True)
@@ -347,6 +365,6 @@ def main(include_runs=False):
 if __name__ == '__main__':
     try:
         main()
-    except (OSError, ValueError, zipfile.BadZipFile, tarfile.TarError) as exc:
+    except (OSError, ValueError, zipfile.BadZipFile) as exc:
         print(f'Packaging failed: {exc}', file=sys.stderr)
         sys.exit(1)

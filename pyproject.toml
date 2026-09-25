@@ -1,0 +1,17 @@
+[project]
+name = "foldorigami-supplement"
+version = "0.1.0"
+description = "FoldOrigami simulator, browser harness, and offline reproducibility checks"
+requires-python = ">=3.12,<3.13"
+# Observed in the original local environment on 2026-09-25.
+# These pins are not evidence of the versions used by every historical run.
+dependencies = [
+    "playwright==1.63.0",
+    "pillow==12.3.0",
+    "greenlet==3.5.6",
+    "pyee==13.0.1",
+    "typing-extensions==4.16.0",
+]
+
+[tool.uv]
+package = false

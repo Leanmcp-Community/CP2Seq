@@ -73,9 +73,14 @@ def trace_index(root, run):
                         if path.is_dir() and not path.is_symlink()
                         and (m := re.fullmatch(r"turn-(\d+)", path.name))}
         turns = sorted(flat_turns | folder_turns)
-        if not turns and not (sample / "error.json").exists() and not (sample / "meta.json").exists():
+        artifacts = [name for name in ("result.json", "error.json", "seq.json", "cp.fold",
+                                       "target.fold", "final.fold", "search.json")
+                     if (sample / name).is_file()]
+        if not turns and not artifacts and not (sample / "meta.json").exists():
             continue
         samples.append({"id": sample.name, "turns": turns,
+                        "artifacts": artifacts,
+                        "summary_only": not turns and bool(artifacts),
                         "layout": "codex" if folder_turns else "tinker",
                         "modified": max((p.stat().st_mtime_ns for p in sample.rglob("*")
                                          if p.is_file() and not p.is_symlink()), default=0),
