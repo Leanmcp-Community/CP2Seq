@@ -359,3 +359,78 @@ as your Tinker pilot.
 No install, Python/Node command, simulator startup, login, or Codex inference
 was executed while preparing these files. The implementation has been inspected
 statically; runtime validation remains for you to perform with the commands above.
+# Incremental Codex conversations and caching
+
+Existing launchers default to independent (`fresh`) calls. The new
+`run_astra6_low_legal_autocompare.sh` and `run_sol6_low_legal_autocompare.sh`
+launchers explicitly use append-only, same-thread continuation and default to
+one sample, `mid-0001`, with low reasoning and automatic tier-3 comparison.
+The optional `--conversation-mode auto` selects append-only with image-history
+`all`, and fresh calls with `latest`.
+
+The first call sends the instructions, task inputs, initial state and images.
+Later calls send only the latest action/result, current state, and new images.
+Previous messages and images remain in the persisted Codex conversation. Full
+simulator history and cumulative image manifests are still saved locally.
+
+Subsequent calls use `codex exec resume` with the same thread ID. The earlier
+per-turn fork pilot changed thread identity and reported zero cache hits. The
+`--conversation-transport fork` option remains for reproducing that pilot;
+new runs default to `resume`. CLI behavior was inspected against 0.155.1.
+Failed/interrupted same-thread calls stop without automatic replay: a pending
+marker prevents blind resume until the native turn has been reconciled, because
+resubmitting might duplicate a message already recorded by Codex.
+Persisted Codex session files must be retained to continue incremental episodes.
+The existing read-only sandbox, disabled shell tools, disabled web search, action
+schema, model and reasoning settings remain in use.
+
+`turn-NNN/session.json` records thread lineage; `request-images.json` records only
+the images sent in that request; `images.json` remains the cumulative manifest.
+`request-usage.json` and the terminal cache line subtract previous thread totals
+to report per-request usage. The raw `events.jsonl` retains Codex's cumulative
+thread totals. Inspect per-request `cached_input_tokens` to measure actual reuse.
+Server routing, retention and native context compaction can affect cache hits;
+this change does not remove context limits or guarantee a particular saving.
+
+Resuming a saved episode preserves its recorded mode. Older runs without the
+setting keep fresh calls and their exact saved prompt layout. They are not
+restarted or silently migrated. Use `--conversation-mode fresh` for new runs
+that must reproduce the earlier independent-call protocol. Append-only runs
+retain native assistant conversation history as well as harness feedback, so
+record this protocol change when comparing experimental results. Claude runs are
+unchanged.
+
+An interrupted fork-based pilot can explicitly switch subsequent calls to
+same-thread continuation by adding `--conversation-transport resume` to the
+episode-resume script. Stop its original worker first. Completed episodes stay
+completed and are not resumed.
+
+Offline tests (run yourself from the repository root; no model calls):
+
+```bash
+.venv/bin/python -m unittest discover -s CODEX_HARNESS_TESTING -p 'test_conversation_cache.py'
+```
+
+Existing scripts also accept an explicit `--conversation-mode append-only`.
+This mode requires `--image-history all`.
+
+## Codex provenance in run configurations
+
+New `config.json` files include `codex_provenance`, captured once at startup:
+the CLI version output, executable path, resolved launcher SHA-256, npm package
+metadata when available, and native payload paths and SHA-256 hashes. For npm
+installs, the JS launcher and native executables are recorded separately. If several
+native payloads are installed, all are listed rather than guessing which one ran.
+
+The verified release-source commit is recorded for known releases (currently
+0.155.1); other versions retain a null commit until verified. A release commit is
+not proof of reproducible-build equivalence with the installed binary. No network
+lookup or model request is made by provenance capture; it reads local files and
+invokes `codex --version` when you launch the harness.
+
+Resumes record original and current provenance separately in `resume.json`.
+Old configurations are not backfilled. Offline provenance checks:
+
+```bash
+.venv/bin/python -m unittest discover -s CODEX_HARNESS_TESTING -p 'test_software_provenance.py'
+```

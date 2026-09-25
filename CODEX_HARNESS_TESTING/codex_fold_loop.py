@@ -18,6 +18,8 @@ import sys
 import tempfile
 import time
 import traceback
+from conversation_cache import incremental_input, thread_id, request_usage
+from software_provenance import codex_provenance
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
@@ -193,8 +195,14 @@ def archive_attempt(turn_dir, attempt):
 
 
 def ask_codex(args, prompt, manifest, turn_dir, workdir, schema_path, run=None):
+    append_only = getattr(args, "conversation_mode", "fresh") == "append-only"
+    transport = getattr(args, "conversation_transport", "resume")
+    parent = None
+    if append_only and int(turn_dir.name.split("-")[1]) > 1:
+        previous = turn_dir.parent / f"turn-{int(turn_dir.name.split('-')[1])-1:03d}"
+        parent = json.loads((previous / "session.json").read_text())["thread_id"]
     command = [args.codex_bin, "-a", "never", "exec", "--sandbox", "read-only",
-               "--skip-git-repo-check", "--ephemeral", "--json", "-C", str(workdir),
+               "--skip-git-repo-check", "--json", "-C", str(workdir),
                "-c", 'forced_login_method="chatgpt"', "-c", 'model_provider="openai"',
                "-c", "features.shell_tool=false", "-c", "features.unified_exec=false",
                "-c", 'web_search="disabled"', "--output-schema", str(schema_path),
@@ -208,6 +216,10 @@ def ask_codex(args, prompt, manifest, turn_dir, workdir, schema_path, run=None):
                 "-c", 'model_reasoning_summary="detailed"']
     if args.model:
         command += ["--model", args.model]
+    if not append_only:
+        command += ["--ephemeral"]
+    elif parent:
+        command += [transport, parent]
     for info in manifest.values():
         command += ["--image", info["path"]]
     command += ["-"]
@@ -218,7 +230,12 @@ def ask_codex(args, prompt, manifest, turn_dir, workdir, schema_path, run=None):
         environment.pop(key, None)
     attempts_allowed = args.max_retries + 1
     history = []
+    pending = turn_dir / "continuation-pending.json"
     for attempt in range(1, attempts_allowed + 1):
+        if parent and transport == "resume":
+            # Native continuation mutates a thread. A failed or interrupted call
+            # must be reconciled before the same message can be sent again.
+            write_json(pending, {"thread_id": parent, "turn": turn_dir.name})
         started = time.monotonic()
         with (turn_dir / "events.jsonl").open("w") as stdout, (turn_dir / "stderr.log").open("w") as stderr:
             try:
@@ -230,6 +247,10 @@ def ask_codex(args, prompt, manifest, turn_dir, workdir, schema_path, run=None):
                 write_json(turn_dir / "process.json",
                            {"timeout": True, "attempt": attempt, "duration_s": duration})
                 archive = archive_attempt(turn_dir, attempt)
+                if parent and transport == "resume":
+                    raise EpisodeError("Continuation timed out; native thread may contain a partial "
+                                       "turn. Automatic retry disabled to prevent duplicate messages. "
+                                       f"Inspect {archive} before recovering this episode.")
                 record = {"attempt": attempt, "returncode": None, "reason": "timeout",
                           "duration_s": duration, "artifacts": archive.name}
                 history.append(record)
@@ -249,9 +270,18 @@ def ask_codex(args, prompt, manifest, turn_dir, workdir, schema_path, run=None):
         write_json(turn_dir / "process.json",
                    {"returncode": result.returncode, "attempt": attempt, "duration_s": duration})
         if not result.returncode:
+            response = json.loads((turn_dir / "response.json").read_text())
+            if append_only:
+                current_thread = thread_id(read_jsonl(turn_dir / "events.jsonl"))
+                if parent and transport == "resume" and current_thread != parent:
+                    raise EpisodeError("Continuation unexpectedly changed Codex thread ID.")
+                write_json(turn_dir / "session.json", {
+                    "thread_id": current_thread,
+                    "parent_thread_id": parent, "transport": transport})
+                pending.unlink(missing_ok=True)
             if history:
                 write_json(turn_dir / "retries.json", history)
-            return json.loads((turn_dir / "response.json").read_text())
+            return response
         reason = retry_reason(turn_dir)
         archive = archive_attempt(turn_dir, attempt)
         record = {"attempt": attempt, "returncode": result.returncode, "reason": reason,
@@ -260,6 +290,10 @@ def ask_codex(args, prompt, manifest, turn_dir, workdir, schema_path, run=None):
         write_json(turn_dir / "retries.json", history)
         if run is not None:
             run.event("codex_retry", turn_dir=str(turn_dir), **record)
+        if parent and transport == "resume":
+            raise EpisodeError("Continuation failed; native thread may contain a partial turn. "
+                               "Automatic retry disabled to prevent duplicate messages. "
+                               f"Inspect {archive} before recovering this episode.")
         if reason is None:
             raise RuntimeError(f"Codex exited {result.returncode}; see {archive / 'stderr.log'}")
         if attempt >= attempts_allowed:
@@ -321,21 +355,40 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
         prompt = (args.prompt_text + "\n\nFind the next action. Geometry and history:\n" +
                   json.dumps(model_view(payload)) +
                   "\nAttached images, in order:\n" + "\n".join(manifest))
+        request_manifest = manifest
+        if getattr(args, "conversation_mode", "fresh") == "append-only" and turn > 1:
+            previous_manifest = json.loads((out / f"turn-{turn-1:03d}" / "images.json").read_text())
+            prompt, request_manifest = incremental_input(
+                model_view(history), model_view(current_state), turn, args.max_turns,
+                manifest, previous_manifest)
         write_json(turn_dir / "images.json", manifest)
+        write_json(turn_dir / "request-images.json", request_manifest)
         print(f"{sample_id}: Codex turn {turn}/{args.max_turns}", flush=True)
         sample_calls += 1
         run.event("codex_request", turn=turn, model=args.model, reasoning_effort=args.reasoning_effort,
-                  prompt_artifact=str(turn_dir / "prompt.md"), image_artifacts=manifest)
-        # args.ask is the backend. Everything else in this loop -- the prompt, the schema, the
-        # stop conditions, the artifacts -- is identical whichever model answers, which is what
-        # makes a Codex arm and a Claude arm comparable rather than two separate experiments.
-        response = args.ask(args, prompt, manifest, turn_dir, workdir, schema_path, run)
+                  prompt_artifact=str(turn_dir / "prompt.md"), image_artifacts=request_manifest,
+                  conversation_mode=getattr(args, "conversation_mode", "fresh"))
+        # The backend receives either a complete independent prompt or an incremental
+        # message; record that protocol separately from simulator settings.
+        response = args.ask(args, prompt, request_manifest, turn_dir, workdir, schema_path, run)
         cli_events = read_jsonl(turn_dir / "events.jsonl")
         completed = [e for e in cli_events if e.get("type") == "turn.completed"]
         cli_usage = completed[-1].get("usage", {}) if completed else {}
-        usage = {"prompt_tokens": cli_usage.get("input_tokens"),
-                 "completion_tokens": cli_usage.get("output_tokens"),
-                 "cached_input_tokens": cli_usage.get("cached_input_tokens")}
+        per_request = cli_usage
+        if getattr(args, "conversation_mode", "fresh") == "append-only":
+            previous_usage = {}
+            if turn > 1:
+                previous_events = read_jsonl(out / f"turn-{turn-1:03d}" / "events.jsonl")
+                previous_completed = [e for e in previous_events if e.get("type") == "turn.completed"]
+                previous_usage = previous_completed[-1].get("usage", {}) if previous_completed else {}
+            per_request = request_usage(cli_usage, previous_usage)
+        write_json(turn_dir / "request-usage.json", per_request)
+        usage = {"prompt_tokens": per_request.get("input_tokens"),
+                 "completion_tokens": per_request.get("output_tokens"),
+                 "cached_input_tokens": per_request.get("cached_input_tokens")}
+        if getattr(args, "conversation_mode", "fresh") == "append-only":
+            print(f"{sample_id}: cache {usage['cached_input_tokens']} / "
+                  f"{usage['prompt_tokens']} input tokens (this request)", flush=True)
         summaries = [e["item"].get("text", "") for e in cli_events
                      if e.get("type") == "item.completed" and e.get("item", {}).get("type") == "reasoning"]
         process = json.loads((turn_dir / "process.json").read_text())
@@ -451,6 +504,8 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
     reference = json.loads((args.corpus / sample_id / "seq.json").read_text())["folds"]
     result = {"sample_id": sample_id, "backend": "codex-cli-chatgpt", "model_requested": args.model,
               "reasoning_effort": args.reasoning_effort, "image_history": args.image_history,
+              "conversation_mode": getattr(args, "conversation_mode", "fresh"),
+              "conversation_transport": getattr(args, "conversation_transport", "resume"),
               "tools": args.tools, "action_space": args.action_space,
               "termination": termination, "sample_calls": sample_calls, "tool_calls": tool_calls,
               **artifacts["evaluation"], **sequence_metrics(artifacts["sequence"]["folds"], reference)}
@@ -495,6 +550,11 @@ def main():
                         help="all reattaches every prior feedback image, matching Tinker's visual history")
     parser.add_argument("--prompt-layout", choices=["legacy", "history-first"], default="history-first",
                         help="history-first puts accumulated history before changing state to improve prefix reuse")
+    parser.add_argument("--conversation-mode", choices=["auto", "fresh", "append-only"], default="fresh",
+                        help="auto uses persisted, incremental Codex threads with image-history=all; "
+                             "fresh preserves independent calls for historical comparisons")
+    parser.add_argument("--conversation-transport", choices=["resume", "fork"], default="resume",
+                        help="resume preserves thread identity; fork reproduces the earlier cache pilot")
     parser.add_argument("--max-turns", type=int, default=40)
     parser.add_argument("--stuck-limit", type=int, default=5,
                         help="End the episode after this many consecutive turns with no legal fold "
@@ -516,6 +576,10 @@ def main():
                         help="Upper bound on the backoff wait")
     add_image_options(parser)
     args = parser.parse_args()
+    if args.conversation_mode == "auto":
+        args.conversation_mode = "append-only" if args.image_history == "all" else "fresh"
+    if args.conversation_mode == "append-only" and args.image_history != "all":
+        parser.error("append-only conversation mode requires --image-history all")
     if args.max_turns < 1 or not math.isfinite(args.timeout) or args.timeout <= 0:
         parser.error("Require max-turns > 0 and finite timeout > 0")
     if args.compare_auto and not args.compare_tier:
@@ -561,6 +625,7 @@ def main():
     # them inline would bury the settings the config file exists to show.
     config_view = {k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()
                    if k not in ("tool_specs", "prompt_text", "ask")}
+    config_view["codex_provenance"] = codex_provenance(args.codex_bin)
     write_json(run_dir / "config.json", config_view)
     (run_dir / "prompt.md").write_text(args.prompt_text)
     schema_path = run_dir / "action.schema.json"
