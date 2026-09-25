@@ -21,14 +21,13 @@ without comparison (Table~\ref{tab:headline}); tool effects are measured only in
 \label{sec:results-tiers}
 \label{sec:results-ablations}
 
-The recent study targets ten samples from each of four groups per configuration:
-easy, medium, hard, and some-layers; the some-layers samples all have five reference folds. It compares GPT-5.6 Luna at low effort with
-GPT-6 Luna at low and high effort. The three tool conditions are basic tools,
-legal-fold enumeration, and enumeration with automatic tier-3 target feedback.
-The run settings are specified in Section~\ref{sec:exp-protocol}. Of 360 planned sample--configuration pairs, 355 have completed episodes,
-three have observed execution errors without a completed replacement, and two were
-omitted from the restarted batch after blocking errors. All five count as unsuccessful
-evaluations under the planned protocol (Appendix~\ref{app:protocol-failures}).
+The recent study uses the first ten samples of each group in every configuration:
+\texttt{easy-}, \texttt{mid-} and \texttt{hard-0001}--\texttt{0010} from the all-layers corpus and
+\texttt{layers-0001}--\texttt{0010} from the some-layers corpus, all of which have five reference folds. It compares GPT-5.6 Luna at low effort with
+GPT-6 Luna at low and high effort. Tool conditions and run settings are
+given in Sections~\ref{sec:ablations} and~\ref{sec:exp-protocol}. Of the 360 planned
+sample--configuration pairs, five are protocol failures counted as unsolved
+(Appendix~\ref{app:protocol-failures}).
 
 \begin{table}[htbp]
 \centering
@@ -61,8 +60,11 @@ GPT-6 Luna & High & B & 3/10 & 0/10 & 0/10 & 3/10 & 6/40 \\
 \end{tabular}
 \end{table}
 
-\paragraph{Tools.} On identical samples, solves rise from B to L to A in every model setting (8, 18
-and 29 of 120 pooled), all from the easy and some-layers groups.
+\paragraph{Tools.} Summing the Total column of Table~\ref{tab:luna-ablations} over the three model
+settings gives, for the same 40 samples in each, 8/120 solves with B, 18/120 with L and 29/120
+with A (two L and three A pairs are protocol failures counted as unsolved); the order B$<$L$<$A
+holds in each setting. By group, easy gives 5, 5 and 10 of 30 and some-layers 3, 13 and 19 of 30;
+medium and hard give none.
 
 \paragraph{Reasoning effort.} Pooled over the three tool conditions, GPT-6 Luna solves 6/30
 some-layers samples at low effort and 18/30 at high effort. Per condition the increases are
