@@ -10,12 +10,15 @@ directly; the rest are recorded here.
 recognition of infeasible patterns. \citet{origamispace} evaluates pattern prediction, multi-step
 spatial reasoning and crease-pattern code generation, and ships an interactive environment for the
 last of these. \citet{origamibench} synthesises flat-foldable patterns in an interactive
-environment; its instances are the 366
+environment over 366
 % fact:corpus.instagram.total
-patterns distributed with Flat-Folder, and it is one source of the metrics surveyed while our
-scoring was designed. \citet{corigami} co-designs flat-foldable and recognisable models, scoring
-candidates by flat-foldability as a boolean and by a vision-language aesthetic judgement.
-\citet{learn2fold} plans structured generation against a learned world model.
+designs collected from Flat-Folder, and evaluates query efficiency, geometric similarity through
+intersection over union, and semantic similarity through CLIP embeddings; its query efficiency is
+the proportion of fold steps that contribute to the final model, not the number of queries to a
+solution. It is one source of the metrics surveyed while our scoring was designed.
+\citet{corigami} co-designs flat-foldable and recognisable models, using a vision-language model
+for aesthetic and semantic evaluation and reporting the flat-foldability of generated crease
+patterns separately. \citet{learn2fold} plans structured generation against a learned world model.
 \citet{foldingagent} reconstructs folding processes from instructional video, over the
 sequence-level corpus of \citet{purelandfold}.
 
@@ -27,29 +30,30 @@ and all-layers models this action space is drawn from, and \citet{akitaya-hard} 
 complexity of deciding it for square paper with creases at multiples of $45^\circ$.
 \citet{akitaya-infinite} treats the all-layers model, which is also the model of sheet-metal
 bending, and \citet{mixed-orthogonal} treats mixed orthogonal crease patterns.
-\citet{akitaya-flatfolder} decides whether a pattern admits a flat-folded state at all.
-\citet{layer-algebra} gives an algebraic treatment of the layer-ordering constraints, and
-\citet{flat-folding-graphs} studies the graphs of flat foldings themselves.
-\citet{continuous} separates a folded state from a folding motion, with \citet{reaching-folded}
-as its predecessor: reachability is free, so the hard question is the discrete step structure.
-\citet{turing} establishes that flat origami is Turing complete, which bounds what any general
-claim about foldability can promise.
+\citet{akitaya-flatfolder} gives a method for deciding whether a pattern admits a flat-folded
+state at all, a problem that is NP hard in general. \citet{layer-algebra} gives an algebraic
+treatment of the layer-ordering constraints, and \citet{flat-folding-graphs} studies the graphs of
+flat foldings themselves. \citet{continuous} and its predecessor \citet{reaching-folded} separate a
+folded state from a continuous folding motion, for simple polygonal and rectangular paper
+respectively. Those results concern continuous motion; they do not establish that a folded state
+is reachable by the restricted sequence of simple folds used here, and the discrete step structure
+is the question this benchmark poses. \citet{turing} establishes that flat origami is Turing
+complete, which bounds what any general claim about foldability can promise.
 
 \paragraph{The crease-pattern-to-sequence problem itself.}
 \citet{akitaya-cp2seq} named the problem and supplied the tools the area still uses: reflection
-paths, graph rewriting and step graphs. Its reported costs make the case for a benchmark as well
-as any argument here does, with a frog base expanding to 22,665 nodes and half an hour of search,
-and its future work asks for exactly the priority heuristic the models in this paper are being
-asked to supply. \citet{creasy} is an open-source implementation of that line and is usable as a
-symbolic baseline; Section~\ref{sec:exp-baselines} lists it among the baselines not yet run.
+paths, graph rewriting, and a step sequence graph whose paths yield folding sequences.
+\citet{creasy} is an open-source implementation of that line and is usable as a symbolic baseline;
+Section~\ref{sec:exp-baselines} lists it among the baselines not yet run.
 
 \paragraph{Counting folded states.}
 The number of ways to fold a strip of $n$ labelled stamps runs 1, 2, 6, 16, 50, 144, 462, 1392,
-4536, 14060 and has no closed form \citep{oeis-a000136}. The problem is old \citep{lucas} and has
-been attacked repeatedly since \citep{koehler,lunnon}; meanders and stamp foldings are the same
-combinatorial object \citep{meanders}. The relevance here is that the number of valid states grows
-fast enough that scoring against any single reference sequence would be wrong, which is why
-Section~\ref{sec:scoring} scores by execution instead.
+4536, 14060 for $n=1,\ldots,10$ \citep{oeis-a000136}. The problem was posed by \citet{lucas} in
+1891 and has been attacked repeatedly since \citep{koehler,lunnon}; the related enumeration of
+meanders is surveyed by \citet{meanders}, which reports that no closed formula was known. The
+relevance here is that the number of valid states grows fast enough that scoring against any
+single reference sequence would be wrong, which is why Section~\ref{sec:scoring} scores by
+execution instead.
 
 \paragraph{Spatial reasoning context.}
 \citet{spatial-survey} surveys spatial reasoning in multimodal models. \citet{vot} names the
@@ -57,17 +61,20 @@ mental-imagery question this benchmark turns into a measurement: whether a model
 update a spatial representation across steps rather than describe one.
 
 \paragraph{Statistical physics of random flat foldability.}
-That one crease pattern admits many valid folded states is the normal case rather than a
-curiosity, and the statistical-physics literature on random flat foldability reaches the same
-conclusion from another direction \citep{spin-model,random-locally}.
+\citet{spin-model} represents layer-order constraints as spin interactions, and
+\citet{random-locally} proves that for random locally flat-foldable mountain-valley assignments on
+the square grid, global flat foldability is exponentially unlikely under its sampling
+distribution. Neither result concerns the number of terminal states of the patterns in this
+corpus, and we do not extrapolate them to it.
 
 \paragraph{Tools, formats and data.}
 \citet{flatfolder} is the implementation that decides and enumerates flat-folded states, for the
 method of \citet{akitaya-flatfolder}; together they are the source of the four constraint classes
 cited in Section~\ref{sec:env-refusals}. \citet{fold-format} is the de facto standard used by
 every artifact we ship. \citet{oripa} is a crease-pattern editor with folded-form estimation.
-\citet{purelandfold} is the closest existing sequence-level corpus and is FoldingAgent's data; it
-is not used here as training or evaluation data.
+\citet{purelandfold} is the closest existing sequence-level corpus, with 27 sequences and 337
+annotated keyframes released under CC-BY-4.0 as the ground truth for FoldingAgent; it is not used
+here as training or evaluation data.
 
 \paragraph{Scope, and what is left out.}
 Thick folding, bar-and-hinge mechanics and the creased-sheet mechanics literature belong to a

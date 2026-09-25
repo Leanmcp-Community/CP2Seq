@@ -13,31 +13,19 @@ applies it, and records the action and resulting state. This process continues t
 reference depth; attempts with no available legal continuation are discarded. The accumulated
 creases are mapped to the original sheet to form the input crease pattern, with edges split at
 intersections. The last state supplies the target, and the recorded actions supply a reference
-solution. A replay check compares the generated sample with its recorded construction.
-
+solution.
 We group samples by reference fold count, hypothesizing that longer sequences generally require
 more search and are therefore harder to recover. These groups describe expected difficulty;
 reference length need not equal the shortest valid solution length. We also record coupling,
 the number of creases created by a fold, to characterize the geometry of each instance.
 
-The generation procedure is summarized below.
+Generation pseudocode is provided in Appendix~\ref{app:generation-procedure}.
 
-{\small\begin{verbatim}
-GENERATE(reference_depth, action_model):
-    state <- unfolded square
-    actions, frames <- [], []
-    for step in 1..reference_depth:
-        candidates <- LEGAL_FOLDS(state, action_model)
-        if candidates is empty: return FAILED
-        action <- SAMPLE(candidates)
-        state <- APPLY(state, action)
-        actions.append(action)
-        frames.append(state)
-    cp <- CREASE_PATTERN_IN_ORIGINAL_SHEET(state)
-    cp <- SPLIT_EDGES_AT_INTERSECTIONS(cp)
-    if not REPLAY_CHECK(cp, actions, state): return FAILED
-    return (cp, state, actions, frames, METADATA(actions))
-\end{verbatim}}
+We provide inspection software to visualize crease patterns and folded states, replay
+reference sequences, and examine verification feedback. These views support manual
+review to identify samples with inconsistent geometry or failed checks for exclusion
+from the dataset. Example interfaces and rejection feedback appear in
+Appendix~\ref{app:artifacts}.
 
 \input{figures/dataset-examples}
 
@@ -52,7 +40,6 @@ GENERATE(reference_depth, action_model):
 
 CP2Seq contains 600 samples: 400 all-layers examples grouped by reference depth and 200
 some-layers examples with three to six reference folds (Table~\ref{tab:dataset-statistics}).
-These counts describe distinct dataset samples, not evaluation attempts.
 
 \begin{table}[h]
 \centering
@@ -75,35 +62,14 @@ Total & & 600 & 3--19 \\
 \end{tabular}
 \end{table}
 
-Each sample contains the task inputs, a reference sequence, and metadata
-(Table~\ref{tab:sample-files}). The model receives the crease pattern and target state; reference
-actions and intermediate reference states are withheld. Tool availability and target feedback are
-configured separately from dataset groups (Section~\ref{sec:target-feedback}).
-
-\begin{table}[h]
-\centering
-\caption{Contents of a CP2Seq sample.}
-\label{tab:sample-files}
-\label{sec:cp2seq-sample}
-\begin{tabular}{lp{0.68\textwidth}}
-\hline
-File & Contents \\
-\hline
-\texttt{cp.fold} & Input crease pattern. \\
-\texttt{steps.fold} & Folded states after each reference action; only the final state is supplied
-as the target. \\
-\texttt{seq.json} & Withheld reference actions: fold lines, directions, layer selections, and
-creases created. \\
-\texttt{meta.json} & Sample descriptors and generator version. \\
-\hline
-\end{tabular}
-\end{table}
+The model receives the crease pattern and target folded state; reference actions and
+intermediate reference states are withheld. Sample contents are documented in
+Appendix~\ref{app:sample-contents}.
 
 \phantomsection
 \label{sec:cp2seq-verify}
-Reference sequences are checked by replaying them and comparing the resulting creases with the
-stored pattern. The two corpus checks reported in this release pass on all 600 samples; they
-share the folding engine and therefore do not independently validate its physical assumptions.
+The two replay-based corpus checks pass on all 600 samples; their shared-engine
+validation scope is discussed in Section~\ref{sec:limitations}.
 
 \input{figures/difficulty-grid-plot}
 
@@ -114,7 +80,7 @@ share the folding engine and therefore do not independently validate its physica
 % the six-fold maximum reference depth of the some-layers subset.
 Coverage is limited in two respects: long reference sequences with low coupling are sparsely
 represented by the generation procedure, and some-layers examples extend only to six reference
-folds. These are limits of the present corpus, not proofs that other configurations are impossible.
+folds.
 
 % FIGURE NOTE (retained): Plot fold depth against coupling, shaded by sample count.
 % Check the actual counts before describing a cell as empty; the earlier draft

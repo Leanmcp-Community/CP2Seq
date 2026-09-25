@@ -1,0 +1,886 @@
+{
+  "rejected": {
+    "fixture": "tear-single",
+    "before": {
+      "state_id": 2,
+      "layers_bottom_to_top": [
+        {
+          "polygon": [
+            [
+              0,
+              0
+            ],
+            [
+              0.25,
+              0
+            ],
+            [
+              0.25,
+              1
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              0,
+              0
+            ],
+            [
+              0.25,
+              0
+            ],
+            [
+              0.25,
+              1
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.25,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0.25,
+              1
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              0.75,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0.75,
+              1
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0,
+              0
+            ],
+            [
+              0.125,
+              0
+            ],
+            [
+              0.25,
+              0
+            ],
+            [
+              0.25,
+              1
+            ],
+            [
+              0.125,
+              1
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              0.5,
+              0
+            ],
+            [
+              0.625,
+              0
+            ],
+            [
+              0.75,
+              0
+            ],
+            [
+              0.75,
+              1
+            ],
+            [
+              0.625,
+              1
+            ],
+            [
+              0.5,
+              1
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.25,
+              0
+            ],
+            [
+              0.125,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0.125,
+              1
+            ],
+            [
+              0.25,
+              1
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              0.25,
+              0
+            ],
+            [
+              0.375,
+              0
+            ],
+            [
+              0.5,
+              0
+            ],
+            [
+              0.5,
+              1
+            ],
+            [
+              0.375,
+              1
+            ],
+            [
+              0.25,
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    "action": {
+      "angle_index": 2,
+      "offset": 0.125,
+      "move_positive": false,
+      "over": true,
+      "selection_mode": "top",
+      "layer_count": 1
+    },
+    "response": {
+      "ok": false,
+      "error": "would-tear",
+      "detail": "Selected moving paper is attached to stationary paper away from the fold line. Moving it would tear that connection. Change the selected run or fold line. these two layers are one piece of paper, joined along a crease that is not the fold line, so moving one and not the other would tear the sheet there",
+      "between_faces": [
+        4,
+        3
+      ],
+      "diagnostic": {
+        "why": "these two layers are one piece of paper, joined along a crease that is not the fold line, so moving one and not the other would tear the sheet there",
+        "moving_layer_rank": 3,
+        "stationary_layer_rank": 2,
+        "join_sheet_coords": [
+          [
+            0.5,
+            0
+          ],
+          [
+            0.5,
+            1
+          ]
+        ],
+        "join_current_coords": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "join_distance_from_fold_line": [
+          -0.125,
+          -0.125
+        ],
+        "fix": "select a run that includes both joined layers, or put the fold line on that join"
+      }
+    },
+    "after": {
+      "state_id": 2,
+      "layers_bottom_to_top": [
+        {
+          "polygon": [
+            [
+              0,
+              0
+            ],
+            [
+              0.25,
+              0
+            ],
+            [
+              0.25,
+              1
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              0,
+              0
+            ],
+            [
+              0.25,
+              0
+            ],
+            [
+              0.25,
+              1
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.25,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0.25,
+              1
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              0.75,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0.75,
+              1
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0,
+              0
+            ],
+            [
+              0.125,
+              0
+            ],
+            [
+              0.25,
+              0
+            ],
+            [
+              0.25,
+              1
+            ],
+            [
+              0.125,
+              1
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              0.5,
+              0
+            ],
+            [
+              0.625,
+              0
+            ],
+            [
+              0.75,
+              0
+            ],
+            [
+              0.75,
+              1
+            ],
+            [
+              0.625,
+              1
+            ],
+            [
+              0.5,
+              1
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.25,
+              0
+            ],
+            [
+              0.125,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0.125,
+              1
+            ],
+            [
+              0.25,
+              1
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              0.25,
+              0
+            ],
+            [
+              0.375,
+              0
+            ],
+            [
+              0.5,
+              0
+            ],
+            [
+              0.5,
+              1
+            ],
+            [
+              0.375,
+              1
+            ],
+            [
+              0.25,
+              1
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  "accepted": {
+    "fixture": "legal-pair",
+    "before": {
+      "state_id": 2,
+      "layers_bottom_to_top": [
+        {
+          "polygon": [
+            [
+              0,
+              0
+            ],
+            [
+              0.25,
+              0
+            ],
+            [
+              0.25,
+              1
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              0,
+              0
+            ],
+            [
+              0.25,
+              0
+            ],
+            [
+              0.25,
+              1
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.25,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0.25,
+              1
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              0.75,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0.75,
+              1
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0,
+              0
+            ],
+            [
+              0.125,
+              0
+            ],
+            [
+              0.25,
+              0
+            ],
+            [
+              0.25,
+              1
+            ],
+            [
+              0.125,
+              1
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              0.5,
+              0
+            ],
+            [
+              0.625,
+              0
+            ],
+            [
+              0.75,
+              0
+            ],
+            [
+              0.75,
+              1
+            ],
+            [
+              0.625,
+              1
+            ],
+            [
+              0.5,
+              1
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.25,
+              0
+            ],
+            [
+              0.125,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0.125,
+              1
+            ],
+            [
+              0.25,
+              1
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              0.25,
+              0
+            ],
+            [
+              0.375,
+              0
+            ],
+            [
+              0.5,
+              0
+            ],
+            [
+              0.5,
+              1
+            ],
+            [
+              0.375,
+              1
+            ],
+            [
+              0.25,
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    "action": {
+      "angle_index": 2,
+      "offset": 0.125,
+      "move_positive": false,
+      "over": true,
+      "selection_mode": "top",
+      "layer_count": 2
+    },
+    "response": {
+      "ok": true,
+      "state_id": 3,
+      "created_segments": 2
+    },
+    "after": {
+      "state_id": 3,
+      "layers_bottom_to_top": [
+        {
+          "polygon": [
+            [
+              0,
+              0
+            ],
+            [
+              0.25,
+              0
+            ],
+            [
+              0.25,
+              1
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              0,
+              0
+            ],
+            [
+              0.25,
+              0
+            ],
+            [
+              0.25,
+              1
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.25,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0.25,
+              1
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              0.75,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0.75,
+              1
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.125,
+              0
+            ],
+            [
+              0.25,
+              0
+            ],
+            [
+              0.25,
+              1
+            ],
+            [
+              0.125,
+              1
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              0.625,
+              0
+            ],
+            [
+              0.75,
+              0
+            ],
+            [
+              0.75,
+              1
+            ],
+            [
+              0.625,
+              1
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.25,
+              0
+            ],
+            [
+              0.125,
+              0
+            ],
+            [
+              0.125,
+              1
+            ],
+            [
+              0.25,
+              1
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              0.25,
+              0
+            ],
+            [
+              0.375,
+              0
+            ],
+            [
+              0.375,
+              1
+            ],
+            [
+              0.25,
+              1
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.125,
+              0
+            ],
+            [
+              0.25,
+              0
+            ],
+            [
+              0.25,
+              1
+            ],
+            [
+              0.125,
+              1
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              0.375,
+              0
+            ],
+            [
+              0.5,
+              0
+            ],
+            [
+              0.5,
+              1
+            ],
+            [
+              0.375,
+              1
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.25,
+              0
+            ],
+            [
+              0.125,
+              0
+            ],
+            [
+              0.125,
+              1
+            ],
+            [
+              0.25,
+              1
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              0.5,
+              0
+            ],
+            [
+              0.625,
+              0
+            ],
+            [
+              0.625,
+              1
+            ],
+            [
+              0.5,
+              1
+            ]
+          ]
+        }
+      ]
+    }
+  }
+}

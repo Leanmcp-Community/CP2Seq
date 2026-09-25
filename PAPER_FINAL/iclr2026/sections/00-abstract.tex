@@ -7,7 +7,7 @@ scene. We introduce \textbf{CP2Seq}, a benchmark for evaluating geometric reason
 planning in multimodal language models through origami. The benchmark contains 600 procedurally
 generated samples, each requiring a model to produce a valid sequence of folds from a crease pattern
 and a target folded state. Samples are produced by a deterministic folding engine. Ground truth is
-recorded as each fold happens rather than annotated afterwards. We release the generation and
+recorded during generation. We release the generation and
 evaluation framework to support additional samples and experiments across reference depths and
 action models. During evaluation, the
 engine executes proposed folds or rejects invalid actions with explicit feedback, while the model
@@ -15,10 +15,9 @@ remains responsible for selecting actions and searching for a solution. We evalu
 multimodal language models under progressively greater tool assistance, and against a
 deterministic breadth-first search over the same action set. Candidate sequences are assessed by
 executing them and comparing the resulting folded state with the target, allowing for planar
-translations, rotations, and reflections. Under the low reasoning effort setting, none of the
-evaluated models solves a sample outside the easy subset. On that subset, the best model achieves a
-success rate of 20.4\%, compared with 54.7\% for the search baseline. Its dominant failure mode is
-not an exhausted query budget but the repeated proposal of states it has already visited, which
-terminates 48\% of its attempts. These results identify a substantial gap between
-multimodal language models and explicit search on this origami planning task.
+translations, rotations, and reflections. In the recent Luna ablations, higher reasoning effort
+improves some-layers performance across all three tool conditions; no configuration solves
+a medium or hard sample. A separate breadth-first search evaluation solves 54.7\% of easy-group
+attempts. These experiments characterize sequence recovery under different reasoning settings
+and levels of tool assistance.
 \end{abstract}

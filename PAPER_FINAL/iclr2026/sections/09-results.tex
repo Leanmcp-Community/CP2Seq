@@ -1,165 +1,125 @@
 \section{Results}
 \label{sec:results}
 
-Solve-rate and termination statistics come from \texttt{workspace/RESULTS/results.md}, produced by
-\texttt{python3 workspace/aggregate\_results.py} over every saved run. 1,211% fact:results.attempts
-attempts across 47 runs and 256 distinct samples. Every attempt is counted once, and an attempt with
-no recorded \texttt{solved} field is counted as unsolved.
+We report the completed Codex runs in the inventory generated on 24 September 2026,
+separating the broader GPT-5.6 Luna evaluation from the recent ablations. The inventory
+counts completed attempts, including unsuccessful submissions and stopping-limit
+terminations. For the ablations, all 360 planned sample--configuration pairs enter
+the denominator. Execution errors and omissions after blocking errors count as
+unsuccessful evaluations, with causes marked separately. We retain the first completed
+attempt per sample and configuration when available; retries do not add denominator entries.
+% Source: workspace/RESULTS/run-inventory/report.md (2026-09-24T23:13:33.275Z).
+% Generated with workspace/report_run_inventory.mjs; per-attempt provenance is in report.json.
+% The prior Results section and its editorial notes are preserved in
+% sections/09-results-previous-snapshot.tex, but are not included in the paper.
 
-\paragraph{Crease-pattern distance.}
-The saved-run CP-distance scan covers 1,422 attempts, of which 1,421 have recoverable
-crease patterns. Mean insertion/deletion distance is 45.454; mean distance normalized
-by target crease count is 0.553. One attempt is excluded because its state could not be
-recovered. These averages pool models, baselines, configurations, and repeated samples;
-they describe the saved attempts rather than a matched comparison of methods. This scan
-includes runs outside the earlier 1,211-attempt solve-rate snapshot.
-% EDITING NOTE: Refresh the paragraph above with summary.json when new runs are scored.
-% Validate known complete, empty, partial, and wrong-assignment cases before submission.
-\IfFileExists{../../workspace/RESULTS/cp-distance/paper-table.tex}{%
-  \input{../../workspace/RESULTS/cp-distance/paper-table.tex}}{}
-
-\subsection{Model performance}
+\subsection{Broader evaluation}
 \label{sec:results-headline}
 
-\textbf{No language model solved a single sample beyond the easy group.} Across every model arm,
-medium is 0 of 70 and hard is 0 of 27. On the easy group a deterministic breadth-first search over
-exactly the action set the models are given solves 54.7\%, against 20.4\% for the best-covered model
-at the same tier.
+Table~\ref{tab:headline} reports the earlier GPT-5.6 Luna runs, before the recent
+ablation cohort. These conditions differ in coverage, repetitions, and budgets.
 
-\begin{table}[h]
-\caption{Solve rate per group, all saved runs. Denominators are attempts, not distinct samples.
-Rows with fewer than ten attempts come from exploratory runs that were never extended into a
-configured arm; they support no rate and are shown only so that reporting is not selective. The
-single solved attempt by \texttt{gpt-6-astra} is one attempt, not a 100\% rate.}
+\begin{table}[htbp]
+\centering
+\caption{Earlier GPT-5.6 Luna evaluation at low reasoning effort. Counts are solved
+attempts over completed attempts, including repeats across samples and budgets.}
 \label{tab:headline}
-\begin{center}
-\footnotesize
-\setlength{\tabcolsep}{2.5pt}
-\begin{tabular}{llrrrrr}
-\multicolumn{1}{c}{\bf ARM} &\multicolumn{1}{c}{\bf TIER} &\multicolumn{1}{c}{\bf EASY} &\multicolumn{1}{c}{\bf MEDIUM} &\multicolumn{1}{c}{\bf HARD} &\multicolumn{1}{c}{\bf OVERALL} &\multicolumn{1}{c}{\bf CALLS} \\
-\hline \\
-\texttt{deterministic-bfs} & legal-folds & {\bf 366/669 (54.7\%)} & 1/40 (2.5\%) & 0/16 & 367/725 (50.6\%) & 5 \\
-\texttt{gpt-5.6-luna}      & legal-folds & 59/289 (20.4\%) & 0/66 & 0/25 & 59/380 (15.5\%) & 23.5 \\
-\texttt{gpt-5.6-luna}      & basic tools & 4/65 (6.2\%)    & 0/1  & 0/1  & 4/67 (6.0\%)    & 29 \\
-\texttt{claude-sonnet-5}   & legal-folds & 0/5  & -- & -- & 0/5 & 10 \\
-\texttt{gpt-5.6-sol}       & basic tools & 0/7  & -- & -- & 0/7 & 20 \\
-\texttt{gpt-5.6-terra}     & basic tools & 0/1  & -- & -- & 0/1 & 35 \\
-\texttt{gpt-6-astra}       & basic tools & 1/1  & -- & -- & 1/1 & 5 \\
-\texttt{codex-cli-chatgpt} & none        & 0/1  & -- & -- & 0/1 & 2 \\
-\emph{errored, model unrecorded} & -- & 0/20 & 0/3 & 0/1 & 0/24 & -- \\
+\begin{tabular}{lrr}
+\hline
+Condition & Solved / completed & Solve rate \\
+\hline
+Basic tools & 4/67 & 6.0\% \\
+Legal enumeration & 31/272 & 11.4\% \\
+Legal enumeration + on-demand comparison & 28/108 & 25.9\% \\
+\hline
 \end{tabular}
-\end{center}
+\end{table}
+% Earlier solved counts: inventory totals minus recent ablation solves:
+% basic 6-2=4; legal 37-6=31; on-demand comparison 28-0=28.
+
+\subsection{Tool and reasoning-effort ablations}
+\label{sec:results-tiers}
+\label{sec:results-ablations}
+
+The recent study targets ten samples from each of four groups per configuration:
+easy, medium, hard, and some-layers. It compares GPT-5.6 Luna at low effort with
+GPT-6 Luna at low and high effort. The three tool conditions are basic tools,
+legal-fold enumeration, and enumeration with automatic tier-3 target feedback.
+The run settings are specified in Section~\ref{sec:exp-protocol}. Of 360 planned sample--configuration pairs, 355 have completed episodes,
+three have observed execution errors without a completed replacement, and two were
+omitted from the restarted batch after blocking errors. All five count as unsuccessful
+evaluations under the planned protocol (Appendix~\ref{app:protocol-failures}).
+
+\begin{table}[htbp]
+\centering
+\caption{Recent Luna ablations. Cells show solved/evaluated samples; each group
+has ten intended samples. B: basic tools; L: legal enumeration; A: legal enumeration
+with automatic tier-3 target feedback. $*$ includes one input-size error;
+$\dagger$ includes one service prompt rejection; $\ddagger$ includes two
+omissions after blocking errors. All five count as unsuccessful evaluations.}
+\label{tab:luna-ablations}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lllrrrrr}
+\hline
+Model & Effort & Tools & Easy & Medium & Hard & Some-layers & Total \\
+\hline
+GPT-5.6 Luna & Low & B & 2/10 & 0/10 & 0/10 & 0/10 & 2/40 \\
+ & Low & L & 1/10 & 0/10 & 0/10 & 5/10 & 6/40 \\
+ & Low & A & 4/10 & $0/10^{*}$ & 0/10 & 6/10 & $10/40^{*}$ \\
+\hline
+GPT-6 Luna & Low & B & 0/10 & 0/10 & 0/10 & 0/10 & 0/40 \\
+ & Low & L & 1/10 & $0/10^{*\dagger}$ & 0/10 & 1/10 & $2/40^{*\dagger}$ \\
+ & Low & A & 3/10 & $0/10^{\ddagger}$ & 0/10 & 5/10 & $8/40^{\ddagger}$ \\
+\hline
+GPT-6 Luna & High & B & 3/10 & 0/10 & 0/10 & 3/10 & 6/40 \\
+ & High & L & 3/10 & 0/10 & 0/10 & 7/10 & 10/40 \\
+ & High & A & 3/10 & 0/10 & 0/10 & 8/10 & 11/40 \\
+\hline
+\end{tabular}
 \end{table}
 
-\textbf{Caveat: read the denominators before the percentages.} Only \texttt{gpt-5.6-luna} and the
-baseline have coverage worth a rate. \texttt{gpt-6-astra} shows 1/1; \textbf{that is one attempt and
-must not be reported as 100\%.} \texttt{claude-sonnet-5}, \texttt{gpt-5.6-sol},
-\texttt{gpt-5.6-terra} and \texttt{codex-cli-chatgpt} have between one and seven attempts each.
-These rows are present because omitting them would be selective reporting, not because they support
-a comparison. Any main table in the submitted paper prints $n$ in every cell or drops the row.
+For GPT-6 Luna, higher effort improves observed some-layers performance in every
+tool condition. At high effort, easy-group performance remains 3/10 across conditions;
+automatic feedback adds one solved some-layers sample over legal enumeration alone.
+No Luna ablation solves a medium or hard sample. These observations concern ten
+samples per group and condition.
 
-\subsection{Search baseline}
-\label{sec:results-baseline}
+Supplementary exploratory model results are reported in
+Appendix~\ref{app:supplementary-results}.
 
-\input{sections/figure-bfs-effort}
+\subsection{Crease-pattern distance}
+\label{sec:results-distance}
 
-\texttt{deterministic-bfs} solves 367 of 725 attempts overall. Per group: 366/669 easy, 1/40 medium,
-0/16 hard. Median states expanded is 65 on easy, 1051.5 on medium, 532 on hard. 358% fact:results.bfs.timeouts
-of its 725 attempts ended in timeout rather than exhaustion, so \textbf{50.6\% is a lower bound
-under the baseline's time budget, not the ceiling of exhaustive search.} Timeouts also explain why
-the hard median falls below the medium one: an attempt stopped by the clock contributes the states
-it had expanded when it stopped, so the groups where the budget binds hardest report the smaller
-counts. The medians describe observed effort under that budget and are not estimates of the search
-each group requires.
-
-Candidate enumeration filters for legality and compatibility with the target crease pattern, which
-is a prune of roughly 570 times and leaves a branching factor near 3.5
-(Section~\ref{sec:exp-baselines}). The baseline measures systematic exploration under that
-filtering; its success rate does not by itself identify which reasoning abilities a model uses.
-
-\phantomsection
-\label{sec:results-tiers}
-
-On easy instances, Luna solves 59/289 attempts (20.4\%) with candidate filtering and 4/65
-(6.2\%) with basic tools. These are descriptive rates from unmatched attempt sets; controlled
-comparisons and the remaining assistance experiments are pending.
-% EDITING NOTE: Update this comparison after the remaining experiments.
+The separate saved-run CP-distance scan covers 1,422 attempts, of which 1,421 have
+recoverable crease patterns. Mean insertion/deletion distance is 45.454; mean distance
+normalized by target crease count is 0.553. One attempt is excluded because its state
+could not be recovered. These averages pool models, baselines, configurations, and
+repeated samples and predate the recent ablation table.
+% EDITING NOTE: Refresh from cp-distance/summary.json after scoring the new runs.
+% Validate complete, empty, partial, and wrong-assignment cases before submission.
+Per-model distances are reported in Appendix~\ref{app:supplementary-results}.
 
 \subsection{Failure analysis}
 \label{sec:results-failures}
 
-\begin{table}[h]
-\caption{Termination reasons for \texttt{gpt-5.6-luna}, 447 attempts.}
-\label{tab:terminations}
-\begin{center}
-\begin{tabular}{lrr}
-\multicolumn{1}{c}{\bf TERMINATION} &\multicolumn{1}{c}{\bf $n$} &\multicolumn{1}{c}{\bf SHARE} \\
-\hline \\
-\texttt{state\_cycling}       & 215 & 48.1\% \\
-\texttt{finished}             & 167 & 37.4\% \\
-\texttt{turn\_budget}         & 47  & 10.5\% \\
-\texttt{repetition\_detected} & 18  & 4.0\% \\
-\end{tabular}
-\end{center}
-\end{table}
-
-State cycling terminates 215 of 447 Luna attempts (48.1\%), while another 18 terminate with a
-repetition label and 47 reach the turn budget. These labels describe stopping behavior rather
-than proving the absence of reasoning. Repeated exploration without reaching the target indicates
-ineffective search in those attempts; attributing it to state tracking or action selection
-requires trajectory analysis. A \texttt{finished} label denotes submission, not necessarily success.
-
-The harness defaults include a limit of three repetitions of the same action from the same
-position and fifteen arrivals at the same position by any route. The latter is a revisit limit,
-not a limit of fifteen distinct branches. Such limits can stop repeated exploration and must be
-reported from each run's configuration rather than inferred from defaults. The aggregate table
-does not separately identify all revisit-limit events.
-% EDITING NOTE: Audit per-run cycle and revisit limits and classify capped exploration separately.
+The earlier 447-attempt GPT-5.6 Luna termination snapshot records 215 state-cycling
+stops, 18 repetition stops, 47 turn-budget stops, and 167 submitted sequences.
+Termination breakdowns for the recent ablations remain to be aggregated.
+% EDITING NOTE: Recompute termination counts by cohort and condition from saved traces.
+% Preserve per-run cycle/revisit limits; a revisit cap is not a count of distinct branches.
 
 \phantomsection
 \label{sec:results-difficulty}
-
-No model attempt solves a medium or hard instance in the reported aggregate; BFS solves one
-medium instance. This observation is consistent with greater search difficulty at larger reference
-depths, but does not establish a causal effect of depth.
-
-Coupling separates instances at equal depth, for the search baseline.
-Table~\ref{tab:coupling} holds the fold count fixed and splits samples at a coupling of four.
-Counts are samples rather than attempts: the baseline is deterministic and its attempts repeat
-samples under different budgets, so an attempt-weighted rate would weight a sample by how often
-it was re-run. Depths below eight are omitted because the baseline closes them at any coupling.
-The separation it shows is consistent with the cost model of Section~\ref{sec:exp-baselines},
-where a fold that cuts more layers raises both the branching factor and the cost of expanding
-one node.
-
-\begin{table}[h]
-\caption{Samples solved, split by coupling at equal fold depth. Counts are distinct samples, not
-attempts. Cells hold between six and twenty samples, which is too few for a rate to be read
-closely; they are given as counts for that reason.}
-\label{tab:coupling}
-\begin{center}
-\small
-\begin{tabular}{lcccc}
-& \multicolumn{2}{c}{\texttt{deterministic-bfs}} & \multicolumn{2}{c}{\texttt{gpt-5.6-luna}} \\
-Fold depth & coupling $<4$ & coupling $\geq 4$ & coupling $<4$ & coupling $\geq 4$ \\
-\hline \\
-8  & 13/13 & 11/16 & 2/11 & 0/9 \\
-9  & 8/10  & 5/20  & 0/7  & 0/10 \\
-10 & 4/6   & 2/15  & 0/4  & 1/11 \\
-\end{tabular}
-\end{center}
-\end{table}
-
-\textbf{The model arm shows no comparable separation.} Its direction changes between depths and
-every cell is single digits, so these data do not establish that coupling affects the model. The
-failure analysis above points elsewhere, to revisiting states rather than to the difficulty of
-any one fold. Samples were not assigned to coupling bins, so both readings are observational.
+The medium and hard ablation outcomes are consistent with our hypothesis that longer
+reference sequences demand more search. They do not isolate sequence length from
+other geometric differences between groups.
 
 \phantomsection
 \label{sec:results-threats}
-The aggregate contains 725 BFS attempts and 447 Luna attempts, with much smaller counts for other
-models. Recorded reasoning settings are low for 461 model attempts and absent for 25. Twenty-four
-attempts with missing model identity ended in error and are reported separately as unsolved.
-Per-sample repeat statistics and matched-budget comparisons remain to be reported.
-
-\input{figures/main-result-plot}
+The broader evaluation, recent ablations, BFS snapshot, and CP-distance scan cover
+different attempt sets. We report their denominators separately. Repeated attempts
+in the broader inventory are not independent samples, and the pooled counts do not
+constitute a single controlled comparison.
+% EDITING NOTE: The old coupling table and main-result plot are preserved in their
+% source files and 09-results-previous-snapshot.tex; update their cohorts before reuse.
