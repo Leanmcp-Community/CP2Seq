@@ -76,3 +76,12 @@ workspace/corpus_provenance/
 workspace/mid_all_layers/
 
 **.pdf
+
+# Archived harness runs (moved out of runs/ so the matched launcher does not count them)
+/CODEX_HARNESS_TESTING/runs-archive/
+
+# paper_stats.py output; regenerate with python3 workspace/analysis/paper_stats.py
+/workspace/RESULTS/paper-stats/
+
+# Any harness log file
+/CODEX_HARNESS_TESTING/**/*.log
