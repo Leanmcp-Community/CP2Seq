@@ -6,6 +6,7 @@
 #   bash CODEX_HARNESS_TESTING/run_textonly_part.sh <arm> <slice>
 #     arm:   basic | legal | autocompare
 #     slice: easy | mid | hard | layers | easy-mid (easy-0010 + mid-0001..0010)
+#            or explicit IDs from one group, e.g. hard-0009 hard-0010
 #   e.g. bash CODEX_HARNESS_TESTING/run_textonly_part.sh autocompare hard
 #
 # Same settings as run_textonly_matched40.sh (GPT-5.6 Luna, low effort, no images, 80 turns,
@@ -31,6 +32,11 @@ case "$arm" in
 esac
 
 case "${2:-}" in
+  easy-[0-9]*|mid-[0-9]*|hard-[0-9]*|layers-[0-9]*)
+    # Explicit sample IDs, e.g. `basic hard-0009 hard-0010`; all must share one corpus.
+    samples="${*:2}"; first=${2%%-*}
+    for s in $samples; do [[ "${s%%-*}" == "$first" && "$s" =~ ^[a-z]+-[0-9]{4}$ ]] || { echo "bad or mixed sample list: $samples" >&2; exit 2; }; done
+    if [[ "$first" == layers ]]; then corpus=$some_corpus; action=any; else corpus=$all_corpus; action=all-layers; fi ;;
   easy-mid) samples="easy-0010 $(seq10 mid)"; corpus=$all_corpus; action=all-layers ;;
   easy)     samples=$(seq10 easy);  corpus=$all_corpus;  action=all-layers ;;
   mid)      samples=$(seq10 mid);   corpus=$all_corpus;  action=all-layers ;;
