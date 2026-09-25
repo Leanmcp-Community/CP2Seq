@@ -1,0 +1,24 @@
+\begin{table}[t]
+\centering
+\small
+\caption{CP insertion/deletion distance over saved attempts. Means exclude unscored attempts. Normalization divides each distance by its target merged crease count before averaging.}
+\label{tab:cp-distance}
+\begin{tabular}{lrrrr}
+\hline
+Model & Attempts & Scored & Mean distance & Mean normalized \\
+\hline
+claude-sonnet-5 & 5 & 5 & 12.800 & 0.481 \\
+codex-cli-chatgpt & 1 & 1 & 8.000 & 1.000 \\
+deterministic-bfs & 725 & 725 & 38.810 & 0.494 \\
+deterministic-reverse & 203 & 203 & 24.212 & 0.764 \\
+gpt-5.6-luna & 447 & 447 & 67.159 & 0.538 \\
+gpt-5.6-sol & 7 & 7 & 15.857 & 0.586 \\
+gpt-5.6-terra & 1 & 1 & 0.000 & 0.000 \\
+gpt-6-astra & 1 & 1 & 0.000 & 0.000 \\
+unknown & 32 & 31 & 43.065 & 0.804 \\
+\hline
+All attempts & 1422 & 1421 & 45.454 & 0.553 \\
+\hline
+\end{tabular}
+\end{table}
+These attempt-weighted averages pool saved configurations and repeated samples; they are descriptive and do not constitute matched model comparisons. The CP-distance scan may cover more runs than the earlier solve-rate snapshot.
