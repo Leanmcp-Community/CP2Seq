@@ -116,14 +116,15 @@ if [[ -n "${MATCHED_GROUP:-}" ]]; then
   esac
   export PYTHONUNBUFFERED=1
   echo "Model: $matched_model. Effort: $REASONING_EFFORT. Foreground group: $MATCHED_GROUP. Ctrl-C stops this terminal's run."
-  for arm in basic legal autocompare; do
+  # ARMS restricts the tool conditions, e.g. ARMS="legal autocompare"; unset runs all three.
+  for arm in ${ARMS:-basic legal autocompare}; do
     case "$arm" in
       basic) runner=run_luna_low.sh; tools=base; tier=0; auto=false ;;
       legal) runner=run_luna_low_legal.sh; tools=legal-folds; tier=0; auto=false ;;
       autocompare) runner=run_luna_low_legal_autocompare.sh; tools=legal-folds; tier=$COMPARE_TIER; auto=true ;;
     esac
     run_group "$runner" "$corpus" "$action" "$tools" "$tier" "$auto" "${selected[@]}"
-    if [[ "$arm" != autocompare ]]; then sleep 2; fi
+    sleep 2
   done
   exit 0
 fi

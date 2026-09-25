@@ -341,8 +341,14 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
     for turn in range(1, args.max_turns + 1):
         turn_dir = out / f"turn-{turn:03d}"
         turn_dir.mkdir()
-        manifest = ({**fixed_images, **historical_images} if args.image_history == "all" else
-                    {**fixed_images, **{f"current-{k}": v for k, v in current_images.items()}})
+        if args.image_history == "none":
+            # Text-only arm: images are still rendered and saved for the trace viewer, but
+            # nothing is attached, so the model works from the JSON geometry alone.
+            manifest = {}
+        elif args.image_history == "all":
+            manifest = {**fixed_images, **historical_images}
+        else:
+            manifest = {**fixed_images, **{f"current-{k}": v for k, v in current_images.items()}}
         current_state = browser.artifacts()["state"]
         if getattr(args, "prompt_layout", "legacy") == "history-first":
             # Dict insertion order is intentional: preserve the static inputs and existing
@@ -354,13 +360,16 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
                        "history": history, "turn": turn, "max_turns": args.max_turns}
         prompt = (args.prompt_text + "\n\nFind the next action. Geometry and history:\n" +
                   json.dumps(model_view(payload)) +
-                  "\nAttached images, in order:\n" + "\n".join(manifest))
+                  ("\nAttached images, in order:\n" + "\n".join(manifest)
+                   if args.image_history != "none" else ""))
         request_manifest = manifest
         if getattr(args, "conversation_mode", "fresh") == "append-only" and turn > 1:
             previous_manifest = json.loads((out / f"turn-{turn-1:03d}" / "images.json").read_text())
             prompt, request_manifest = incremental_input(
                 model_view(history), model_view(current_state), turn, args.max_turns,
                 manifest, previous_manifest)
+            if args.image_history == "none":
+                prompt = prompt.split("\nNew attached images, in order:\n")[0]
         write_json(turn_dir / "images.json", manifest)
         write_json(turn_dir / "request-images.json", request_manifest)
         print(f"{sample_id}: Codex turn {turn}/{args.max_turns}", flush=True)
@@ -546,8 +555,9 @@ def main():
                         help="Appended to --prompt only when --tools legal-folds")
     parser.add_argument("--model", help="An explicit model available to your Codex account; otherwise CLI default")
     parser.add_argument("--reasoning-effort", choices=["low", "medium", "high", "xhigh", "max"])
-    parser.add_argument("--image-history", choices=["latest", "all"], default="latest",
-                        help="all reattaches every prior feedback image, matching Tinker's visual history")
+    parser.add_argument("--image-history", choices=["none", "latest", "all"], default="latest",
+                        help="all reattaches every prior feedback image, matching Tinker's visual history; "
+                             "none attaches no images and removes get_images (text-only ablation)")
     parser.add_argument("--prompt-layout", choices=["legacy", "history-first"], default="history-first",
                         help="history-first puts accumulated history before changing state to improve prefix reuse")
     parser.add_argument("--conversation-mode", choices=["auto", "fresh", "append-only"], default="fresh",
@@ -578,8 +588,8 @@ def main():
     args = parser.parse_args()
     if args.conversation_mode == "auto":
         args.conversation_mode = "append-only" if args.image_history == "all" else "fresh"
-    if args.conversation_mode == "append-only" and args.image_history != "all":
-        parser.error("append-only conversation mode requires --image-history all")
+    if args.conversation_mode == "append-only" and args.image_history not in ("all", "none"):
+        parser.error("append-only conversation mode requires --image-history all or none")
     if args.max_turns < 1 or not math.isfinite(args.timeout) or args.timeout <= 0:
         parser.error("Require max-turns > 0 and finite timeout > 0")
     if args.compare_auto and not args.compare_tier:
@@ -600,6 +610,8 @@ def main():
     args.corpus = args.corpus.expanduser().resolve()
     args.prompt = args.prompt.expanduser().resolve()
     args.tool_specs = tools_for(args.tools, args.compare_tier, args.action_space)
+    if args.image_history == "none":
+        args.tool_specs = [t for t in args.tool_specs if t["function"]["name"] != "get_images"]
     args.ask = ask_codex
     # The baseline prompt stays byte-identical under --tools base, so base runs remain
     # comparable with every run recorded before the enumerator existed.
@@ -616,6 +628,9 @@ def main():
     if args.compare_auto:
         # Its own appendix so the plain compare arm's prompt stays byte-identical.
         args.prompt_text += "\n" + (HERE / "codex_fold_prompt_compare_auto.md").read_text()
+    if args.image_history == "none":
+        # Its own appendix, like the others, so every image arm keeps a byte-identical prompt.
+        args.prompt_text += "\n" + (HERE / "codex_fold_prompt_text_only.md").read_text()
     for sample_id in args.samples:
         load_task(sample_id, args.corpus)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
