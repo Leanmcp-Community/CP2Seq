@@ -68,27 +68,20 @@ some-layers samples at low effort and 18/30 at high effort. Per condition the in
 0/10 to 3/10, 1/10 to 7/10 and 5/10 to 8/10; with ten samples per cell only the second is
 significant on its own (two-sided Fisher exact test, $p\approx0.02$; $p\approx0.21$ and $0.35$
 for the others), and a 95\% Wilson interval spans roughly $\pm0.3$ (e.g.\ 0.11--0.60 for
-3/10). We therefore read the effect of effort as consistent across conditions but individually
-underpowered. It does not extend to the easy group, where high-effort GPT-6 Luna stays at 3/10
+3/10). Pairing outcomes by sample and condition, every discordant pair favours high effort
+(12 to 0; exact McNemar test, $p<0.001$), so the effect is consistent even where single cells
+are underpowered. It does not extend to the easy group, where high-effort GPT-6 Luna stays at 3/10
 in every condition and low-effort GPT-5.6 Luna with automatic feedback reaches 4/10.
 
 \paragraph{Depth.} No Luna ablation solves a medium or hard sample, and the breadth-first
 baseline solves 1/40 medium and 0/16 hard attempts (Appendix~\ref{app:bfs-analysis}), against
-366/669 on the easy group. Beyond ten reference folds the benchmark is currently out of reach
-for these models and nearly so for systematic search. Depth is not isolated from other geometric differences
+366/669 on the easy group. Within the easy group, the model solve rate falls from 32\% at four folds to
+0--15\% at eight to ten (Table~\ref{tab:easy-depth}); beyond ten reference folds the benchmark is
+currently out of reach for these models and nearly so for systematic search. Depth is not isolated from other geometric differences
 between groups.
 
 Supplementary exploratory model results are reported in
 Appendix~\ref{app:supplementary-results}.
-
-\subsection{Crease-pattern distance}
-\label{sec:results-distance}
-
-A separate scan of 1,421 saved attempts with recoverable states gives a mean crease-pattern
-insertion/deletion distance of 45.5, or 0.55 of the target crease count. These averages pool
-models, baselines, configurations and repeated samples, and predate the ablations; per-model
-values are in Appendix~\ref{app:supplementary-results}.
-% EDITING NOTE: Refresh from cp-distance/summary.json after scoring the new runs.
 
 \subsection{Failure analysis}
 \label{sec:results-failures}
@@ -98,7 +91,8 @@ rule-following. In the earlier 447-attempt GPT-5.6 Luna snapshot, 167 episodes s
 sequence (63 of them correct), 215 stopped after cycling through previously visited states,
 18 stopped on repetition and 47 exhausted the turn budget. Most unsuccessful episodes (215 of
 384) therefore end with the model returning to states it has already seen instead of committing
-to a new branch.
+to a new branch. The ablations show the same pattern: 191 of their 300 unsuccessful episodes end
+in state cycling (Table~\ref{tab:ablation-terminations}).
 % EDITING NOTE: Recompute termination counts by cohort and condition from saved traces
 % (workspace/analysis/termination_summary.py) and fill the appendix table.
 
