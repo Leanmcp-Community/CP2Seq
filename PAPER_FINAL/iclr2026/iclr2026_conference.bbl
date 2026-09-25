@@ -1,4 +1,4 @@
-\begin{thebibliography}{38}
+\begin{thebibliography}{37}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -153,15 +153,6 @@ Jason~S. Ku, Akira Terao, and Kenji~N. Terao.
 St{\'e}phane Legendre.
 \newblock Foldings and meanders.
 \newblock \emph{arXiv preprint arXiv:1302.2025}, 2013.
-
-\bibitem[Liu \& Paulino(2018)Liu and Paulino]{merlin2}
-Ke~Liu and Glaucio~H. Paulino.
-\newblock Highly efficient nonlinear structural analysis of origami assemblages
-  using the {MERLIN2} software.
-\newblock In Robert~J. Lang, Mark Bolitho, and Zhong You (eds.),
-  \emph{Origami$^7$: Proceedings of the 7th International Meeting on Origami in
-  Science, Mathematics and Education}, volume~4, pp.\  1167--1182. Tarquin,
-  2018.
 
 \bibitem[Liu et~al.(2025)Liu, Xue, Wang, Yin, Yang, and Gao]{spatial-survey}
 Weichen Liu, Qiyao Xue, Haoming Wang, Xiangyu Yin, Boyuan Yang, and Wei Gao.
