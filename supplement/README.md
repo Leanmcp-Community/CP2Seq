@@ -6,8 +6,13 @@ folding environment, evaluation harness and prompts, browser viewer, and existin
 analysis outputs. The paper-runs variant also includes compact run records. `MANIFEST.json` lists
 every packaged source file, its size and SHA-256 hash.
 
-This is a public-release package, not an anonymized review submission. Original
-directory names, comments and historical record contents are retained. It does
+The packager replaces personal workspace names with `AUTHOR_WORKSPACE` in archive
+paths and all text, including imports, browser URLs, scripts and saved records.
+It also replaces the author's name and username, converts current repository
+absolute paths to relative paths, and replaces other home directories with
+`/home/author`. Manifest hashes describe the transformed files. Original source
+files stay unchanged. These targeted replacements are not a comprehensive
+review of affiliations or identifying information in arbitrary prose. The archive does
 not contain the paper PDF or LaTeX sources; submit the paper and textual appendix
 separately. Historical planning notes are excluded because some describe superseded
 protocols.
@@ -47,15 +52,14 @@ python3 scripts/package_without_runs.py
 python3 scripts/package_with_paper_runs.py
 ```
 
-The two entry scripts share `scripts/package_supplement.py`. Each builds ZIP and
-tar.gz from identical payloads, measures both, verifies the smaller archive,
-and discards the larger one. Outputs are `dist/foldorigami-no-runs.zip` or
-`.tar.gz`, and `dist/foldorigami-paper-runs.zip` or `.tar.gz`.
-Allow temporary disk space for both compressed candidates. The finished archive
+The two entry scripts share `scripts/package_supplement.py`. Both output ZIP
+for submission-system compatibility. Outputs are `dist/foldorigami-no-runs.zip`
+and `dist/foldorigami-paper-runs.zip`. The finished archive
 must be strictly smaller than **99,000,000 bytes**, leaving room below a decimal
 100 MB upload limit. If it exceeds the budget, the build fails without silently
-removing any data. Existing output is preserved unless `--force` is supplied,
-and even then it is replaced only after archive integrity and payload hashes pass.
+removing any data. Both scripts replace existing output by default;
+use `--no-force` to refuse replacement. Replacement happens only after archive integrity
+and payload hashes pass.
 
 The no-runs variant excludes every raw run directory while retaining the saved
 analysis tables. The paper-runs variant selects episodes from the earlier and
@@ -83,6 +87,50 @@ snapshot. A narrow credential-pattern check is included; it is not an anonymity
 audit or a guarantee that arbitrary secrets are absent.
 
 ## Offline checks and analysis
+
+### Recommended setup and verification
+
+From the extracted package root (the folder containing `pyproject.toml`), run:
+
+```sh
+uv sync
+uv run --locked python -m playwright install chromium
+bash scripts/verify_supplement.sh
+```
+
+On Linux, Chromium may additionally require system libraries; use
+`uv run --locked python -m playwright install --with-deps chromium` there.
+Node.js must also be installed and available as `node`. No npm dependencies are
+needed for these checks. Setup downloads dependencies; the verification script
+makes no model-service requests.
+
+`pyproject.toml` pins the browser harness dependencies observed in the original
+local environment on 25 September 2026. `.python-version` requests Python 3.12.4.
+These pins do not establish the environment of every historical experiment.
+Before publishing, run `uv lock` in the original repository and rebuild the
+archive so recipients receive the resolved `uv.lock`. The packager includes it
+when present. No lockfile or successful environment resolution is claimed until
+that command has been run.
+
+The verification script checks original manifest hashes, selected simulator and
+browser regression tests, every released reference sequence and terminal state,
+mutated-state rejection, and a small BFS execution. A timed BFS smoke run need
+not solve the sample to complete. Corpus checks run on a copy so the original
+manifest stays valid. With runs included, the script also regenerates saved-run
+summaries. Output and runtime versions go to `reproduced/check-*/`.
+Inspect failures and analysis warnings; the script does not compare every paper
+table automatically. A successful script is software/data validation, not proof
+that all reported numbers have been reproduced.
+
+To inspect the dataset interactively:
+
+```sh
+uv run --locked python DHEERAJ_WORKSPACE/viewer/server.py --port 8000
+```
+
+Open `http://127.0.0.1:8000/corpus`. Stop the server with Ctrl-C.
+
+### Individual commands
 
 After extracting, change into `foldorigami-supplement`. A modern Node.js runtime
 is needed for the JavaScript commands below. The corpus checks and analysis
@@ -126,18 +174,16 @@ establish physical validity.
 
 ## Rendering and new model runs
 
-The Python browser harness imports Playwright and Pillow. To prepare an environment:
+The Python browser harness imports Playwright and Pillow. Use the pinned environment:
 
 ```sh
-python3 -m venv .venv
-.venv/bin/python -m pip install playwright pillow
-.venv/bin/python -m playwright install chromium
+uv sync
+uv run --locked python -m playwright install chromium
 ```
 
-These are setup instructions, not a historically verified dependency lock.
 Use contemporaneous software provenance in saved records where available.
-Historical records may lack exact versions; installing current packages does not
-reconstruct the original environment. Optional Tinker/Anthropic branches have
+Historical records may lack exact versions; the supplied pins describe the
+inspected local environment. Optional Tinker/Anthropic branches have
 additional dependencies and are not needed for offline scoring or Codex runs.
 
 New Codex experiments also require an installed, authenticated Codex CLI and
@@ -165,8 +211,8 @@ their provenance. Exact outputs from hosted models are not guaranteed to repeat.
   3-Clause; the packager includes a root licence when present but does not invent
   ownership information. The vendored viewer licence is retained separately.
 - Run the offline commands above and record their results and runtime versions.
-- For double-blind review, prepare an anonymized variant: this public package
-  retains author-identifying paths and potentially identifying text in records.
+- For double-blind review, inspect the transformed package for any identifying
+  prose or links beyond the names and paths covered by the replacements.
 
 The package build verifies archive integrity and file hashes. It does not certify
 experimental correctness, dependency completeness for every historical branch,

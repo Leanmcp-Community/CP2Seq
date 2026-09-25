@@ -16,26 +16,10 @@ attempt per sample and configuration when available; retries do not add denomina
 \subsection{Broader evaluation}
 \label{sec:results-headline}
 
-Table~\ref{tab:headline} reports the earlier GPT-5.6 Luna runs, before the recent
-ablation cohort. These conditions differ in coverage, repetitions, and budgets.
-
-\begin{table}[htbp]
-\centering
-\caption{Earlier GPT-5.6 Luna evaluation at low reasoning effort. Counts are solved
-attempts over completed attempts, including repeats across samples and budgets.}
-\label{tab:headline}
-\begin{tabular}{lrr}
-\hline
-Condition & Solved / completed & Solve rate \\
-\hline
-Basic tools & 4/67 & 6.0\% \\
-Legal enumeration & 31/272 & 11.4\% \\
-Legal enumeration + on-demand comparison & 28/108 & 25.9\% \\
-\hline
-\end{tabular}
-\end{table}
-% Earlier solved counts: inventory totals minus recent ablation solves:
-% basic 6-2=4; legal 37-6=31; on-demand comparison 28-0=28.
+In the earlier GPT-5.6 Luna runs at low effort, solve rates rise with assistance, from 4/67
+attempts with basic tools to 31/272 with legal enumeration and 28/108 with on-demand target
+comparison (Table~\ref{tab:headline}, Appendix~\ref{app:supplementary-results}). These
+conditions differ in coverage, repetitions, and budgets, so we treat the trend as descriptive.
 
 \subsection{Tool and reasoning-effort ablations}
 \label{sec:results-tiers}
@@ -79,47 +63,47 @@ GPT-6 Luna & High & B & 3/10 & 0/10 & 0/10 & 3/10 & 6/40 \\
 \end{tabular}
 \end{table}
 
-For GPT-6 Luna, higher effort improves observed some-layers performance in every
-tool condition. At high effort, easy-group performance remains 3/10 across conditions;
-automatic feedback adds one solved some-layers sample over legal enumeration alone.
-No Luna ablation solves a medium or hard sample. These observations concern ten
-samples per group and condition.
+\paragraph{Reasoning effort.} Pooled over the three tool conditions, GPT-6 Luna solves 6/30
+some-layers samples at low effort and 18/30 at high effort. Per condition the increases are
+0/10 to 3/10, 1/10 to 7/10 and 5/10 to 8/10; with ten samples per cell only the second is
+significant on its own (two-sided Fisher exact test, $p\approx0.02$; $p\approx0.21$ and $0.35$
+for the others), and a 95\% Wilson interval spans roughly $\pm0.3$ (e.g.\ 0.11--0.60 for
+3/10). Pairing outcomes by sample and condition, every discordant pair favours high effort
+(12 to 0; exact McNemar test, $p<0.001$), so the effect is consistent even where single cells
+are underpowered.
+
+\paragraph{Depth.} No Luna ablation solves a medium or hard sample, and the breadth-first
+baseline solves 1/40 medium and 0/16 hard attempts (Appendix~\ref{app:bfs-analysis}), against
+366/669 on the easy group. Within the easy group, the model solve rate falls from 32\% at four folds to
+0--15\% at eight to ten (Table~\ref{tab:easy-depth}); beyond ten reference folds the benchmark is
+currently out of reach for these models and nearly so for systematic search. This matches the
+cost of search itself: breadth-first search time grows exponentially with depth, by a fitted
+factor of 3.9, 4.6 and 12.4 per fold on the easy, medium and hard groups
+(Figure~\ref{fig:depth-wall}, Appendix~\ref{app:bfs-analysis}). Depth is not isolated from other geometric differences
+between groups.
 
 Supplementary exploratory model results are reported in
 Appendix~\ref{app:supplementary-results}.
 
-\subsection{Crease-pattern distance}
-\label{sec:results-distance}
-
-The separate saved-run CP-distance scan covers 1,422 attempts, of which 1,421 have
-recoverable crease patterns. Mean insertion/deletion distance is 45.454; mean distance
-normalized by target crease count is 0.553. One attempt is excluded because its state
-could not be recovered. These averages pool models, baselines, configurations, and
-repeated samples and predate the recent ablation table.
-% EDITING NOTE: Refresh from cp-distance/summary.json after scoring the new runs.
-% Validate complete, empty, partial, and wrong-assignment cases before submission.
-Per-model distances are reported in Appendix~\ref{app:supplementary-results}.
-
 \subsection{Failure analysis}
 \label{sec:results-failures}
 
-The earlier 447-attempt GPT-5.6 Luna termination snapshot records 215 state-cycling
-stops, 18 repetition stops, 47 turn-budget stops, and 167 submitted sequences.
-Termination breakdowns for the recent ablations remain to be aggregated.
-% EDITING NOTE: Recompute termination counts by cohort and condition from saved traces.
-% Preserve per-run cycle/revisit limits; a revisit cap is not a count of distinct branches.
+Rejected actions never end an episode, so failure is a matter of search rather than of
+rule-following. In the earlier 447-attempt GPT-5.6 Luna snapshot, 167 episodes submitted a
+sequence (63 of them correct), 215 stopped after cycling through previously visited states,
+18 stopped on repetition and 47 exhausted the turn budget. Most unsuccessful episodes (215 of
+384) therefore end with the model returning to states it has already seen instead of committing
+to a new branch. The ablations show the same pattern: 191 of their 300 unsuccessful episodes end
+in state cycling (Table~\ref{tab:ablation-terminations}).
+% EDITING NOTE: Recompute termination counts by cohort and condition from saved traces
+% (workspace/analysis/termination_summary.py) and fill the appendix table.
 
 \phantomsection
 \label{sec:results-difficulty}
-The medium and hard ablation outcomes are consistent with our hypothesis that longer
-reference sequences demand more search. They do not isolate sequence length from
-other geometric differences between groups.
-
 \phantomsection
 \label{sec:results-threats}
-The broader evaluation, recent ablations, BFS snapshot, and CP-distance scan cover
-different attempt sets. We report their denominators separately. Repeated attempts
-in the broader inventory are not independent samples, and the pooled counts do not
-constitute a single controlled comparison.
+The broader evaluation, ablations, BFS snapshot and CP-distance scan cover different attempt
+sets with different budgets; we report their denominators separately and do not pool them into
+a single controlled comparison.
 % EDITING NOTE: The old coupling table and main-result plot are preserved in their
 % source files and 09-results-previous-snapshot.tex; update their cohorts before reuse.

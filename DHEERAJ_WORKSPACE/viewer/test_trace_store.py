@@ -43,6 +43,21 @@ class TraceTests(unittest.TestCase):
         self.assertEqual(len(list_traces(self.root)["runs"]), 2)
         self.assertEqual(trace_index(self.root, old.name)["legacy_image"]["text"], "volcano")
 
+    def test_compact_episode_is_visible_without_turn_logs(self):
+        compact = self.run / 'easy-0002'
+        compact.mkdir()
+        (compact / 'result.json').write_text('{"solved":false}')
+        (compact / 'seq.json').write_text('{"folds":[]}')
+        (self.run / 'unrelated-empty-directory').mkdir()
+        samples = {s['id']: s for s in trace_index(self.root, self.run.name)['samples']}
+        self.assertNotIn('unrelated-empty-directory', samples)
+        self.assertFalse(samples['easy-0001']['summary_only'])
+        sample = samples['easy-0002']
+        self.assertTrue(sample['summary_only'])
+        self.assertEqual(sample['turns'], [])
+        self.assertEqual(sample['artifacts'], ['result.json', 'seq.json'])
+        self.assertFalse(sample['result']['solved'])
+
     def test_codex_turn_directories_and_log_artifacts(self):
         codex = self.root / "codex-test"
         turn = codex / "easy-0002" / "turn-001"

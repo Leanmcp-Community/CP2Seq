@@ -2,29 +2,11 @@
 \label{sec:ablations}
 
 % EDITING NOTE: Planned comparisons retained: no visual feedback and verifier only.
-The recent ablations compare basic tools, legal-fold enumeration, and enumeration with
-automatic tier-3 target feedback. Earlier runs also include on-demand target comparison.
-Table~\ref{tab:ablations} specifies additions to the basic interface described in
-Section~\ref{sec:exp-tools}.
-
-\begin{table}[h]
-\centering
-\caption{Assistance configurations and current reporting status.}
-\label{tab:ablations}
-\begin{tabular}{lp{0.60\textwidth}}
-\hline
-Configuration & Status and interpretation \\
-\hline
-Basic tools & Base interface only. \\
-Candidate filtering & Base interface plus \texttt{list\_legal\_folds}. \\
-Automatic target feedback & Candidate filtering plus automatic tier-3 feedback; recent ablations. \\
-On-demand target comparison & Candidate filtering plus model-requested tier-3 feedback; earlier runs. \\
-\hline
-\end{tabular}
-\end{table}
-
-The recent ablations use common sample IDs and budgets across assistance conditions
-(Section~\ref{sec:results-ablations}).
+The ablations compare three conditions with common sample IDs and budgets: \emph{basic tools}
+(the interface of Section~\ref{sec:exp-tools}), \emph{legal enumeration} (adding
+\texttt{list\_legal\_folds}), and \emph{automatic feedback} (adding tier-3 target feedback after
+every edit). Earlier runs instead let the model request tier-3 comparison on demand.
+\phantomsection\label{tab:ablations}
 
 \phantomsection
 \label{sec:target-feedback}

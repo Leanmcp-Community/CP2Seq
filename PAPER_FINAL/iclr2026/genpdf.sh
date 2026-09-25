@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 #
-# genpdf.sh — build the ICLR 2026 PDF from LaTeX source.
+# genpdf.sh — build the ICLR 2027 PDF from LaTeX source.
 #
 # Usage:
-#   ./genpdf.sh                        # build iclr2026_conference.pdf
+#   ./genpdf.sh                        # build iclr2027_conference.pdf
 #   ./genpdf.sh SomeOther              # build a different .tex (with or without extension)
 #   ./genpdf.sh --open                 # build, then open the PDF (macOS)
 #   ./genpdf.sh --clean                # delete build artifacts and exit
@@ -20,7 +20,7 @@ set -uo pipefail
 
 cd "$(dirname "$0")"
 
-JOB="iclr2026_conference"
+JOB="iclr2027_conference"
 OPEN=0
 
 for arg in "$@"; do
