@@ -1,4 +1,4 @@
-\begin{thebibliography}{33}
+\begin{thebibliography}{38}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -96,6 +96,15 @@ David Eppstein.
   257--280, 2019.
 \newblock \doi{10.20382/jocg.v10i1a10}.
 
+\bibitem[Filipov et~al.(2017)Filipov, Liu, Tachi, Schenk, and
+  Paulino]{bar-and-hinge}
+Evgueni~T. Filipov, Ke~Liu, Tomohiro Tachi, Mark Schenk, and Glaucio~H.
+  Paulino.
+\newblock Bar and hinge models for scalable analysis of origami.
+\newblock \emph{International Journal of Solids and Structures}, 124:\penalty0
+  26--45, 2017.
+\newblock \doi{10.1016/j.ijsolstr.2017.05.028}.
+
 \bibitem[Huang et~al.(2026)Huang, Chen, Jiang, Han, Tu, Yang, and
   Jiang]{learn2fold}
 Yanjia Huang, Yunuo Chen, Ying Jiang, Jinru Han, Zhengzhong Tu, Yin Yang, and
@@ -125,6 +134,13 @@ Jason~S. Ku.
 \newblock URL \url{https://github.com/origamimagiro/flat-folder}.
 \newblock Software repository, accessed 25 September 2026.
 
+\bibitem[Ku \& Demaine(2016)Ku and Demaine]{thick-folding}
+Jason~S. Ku and Erik~D. Demaine.
+\newblock Folding flat crease patterns with thick materials.
+\newblock \emph{Journal of Mechanisms and Robotics}, 8\penalty0 (3):\penalty0
+  031003, 2016.
+\newblock \doi{10.1115/1.4031954}.
+
 \bibitem[Ku et~al.(2026)Ku, Terao, and Terao]{layer-algebra}
 Jason~S. Ku, Akira Terao, and Kenji~N. Terao.
 \newblock An algebraic approach to layer ordering constraints for origami
@@ -137,6 +153,15 @@ Jason~S. Ku, Akira Terao, and Kenji~N. Terao.
 St{\'e}phane Legendre.
 \newblock Foldings and meanders.
 \newblock \emph{arXiv preprint arXiv:1302.2025}, 2013.
+
+\bibitem[Liu \& Paulino(2018)Liu and Paulino]{merlin2}
+Ke~Liu and Glaucio~H. Paulino.
+\newblock Highly efficient nonlinear structural analysis of origami assemblages
+  using the {MERLIN2} software.
+\newblock In Robert~J. Lang, Mark Bolitho, and Zhong You (eds.),
+  \emph{Origami$^7$: Proceedings of the 7th International Meeting on Origami in
+  Science, Mathematics and Education}, volume~4, pp.\  1167--1182. Tarquin,
+  2018.
 
 \bibitem[Liu et~al.(2025)Liu, Xue, Wang, Yin, Yang, and Gao]{spatial-survey}
 Weichen Liu, Qiyao Xue, Haoming Wang, Xiangyu Yin, Boyuan Yang, and Wei Gao.
@@ -245,5 +270,21 @@ Tom Zahavy, Shaobo Hou, Thomas Tumiel, James Doran, Francesco Faccio, Xidong
 \newblock {COrigami}: An {AI} pipeline for co-designing flat-foldable visually
   recognisable origami.
 \newblock \emph{arXiv preprint arXiv:2606.26299}, 2026.
+
+\bibitem[Zhu(2026)]{simfast}
+Yi~Zhu.
+\newblock {Sim-FAST}: Simulator for active structures, 2026.
+\newblock URL \url{https://github.com/zzhuyii/Sim-FAST}.
+\newblock Software repository, accessed 25 September 2026.
+
+\bibitem[Zhu \& Filipov(2021)Zhu and Filipov]{swomps}
+Yi~Zhu and Evgueni~T. Filipov.
+\newblock Sequentially working origami multi-physics simulator ({SWOMPS}): A
+  versatile implementation.
+\newblock In \emph{Proceedings of the ASME 2021 International Design
+  Engineering Technical Conferences and Computers and Information in
+  Engineering Conference (IDETC-CIE), Volume 8B: 45th Mechanisms and Robotics
+  Conference}, pp.\  V08BT08A034, 2021.
+\newblock \doi{10.1115/DETC2021-68042}.
 
 \end{thebibliography}
