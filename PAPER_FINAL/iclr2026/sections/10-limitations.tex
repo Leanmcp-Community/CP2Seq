@@ -2,10 +2,11 @@
 \label{sec:limitations}
 
 The evaluation covers Luna and BFS, and the ablations use ten samples per group and
-configuration; both limits are set by cost. In pilots, Qwen3.5-9B, served through Tinker, cycled between previously visited states on
-both pilot samples without producing a solution, and a single 80-turn GPT-6 Astra episode cost
-about US\$400. With full image history, one Luna episode consumed about 3.1 million input tokens (mean
-of 20 episodes), a substantial expense for an unfunded study.
+configuration. This study is currently privately funded, and these limits follow from the cost of
+evaluation: with full image history, one Luna episode consumed about 3.1 million input tokens on
+average over 20 episodes. In pilots, Qwen3.5-9B (via Tinker) cycled without solving either of two samples, and one
+80-turn GPT-6 Astra episode cost about US\$400. We are seeking research funding to extend the evaluation to further
+model families and to the full corpus.
 
 The action space covers all-layers and selected some-layers simple folds, excluding
 pre-creasing; the some-layers corpus currently extends to six reference folds. The environment

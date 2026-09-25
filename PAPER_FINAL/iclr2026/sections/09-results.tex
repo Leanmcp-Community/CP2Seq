@@ -13,26 +13,21 @@ attempt per sample and configuration when available; retries do not add denomina
 % The prior Results section and its editorial notes are preserved in
 % sections/09-results-previous-snapshot.tex, but are not included in the paper.
 
-\subsection{Broader evaluation}
-\label{sec:results-headline}
-
-In the earlier GPT-5.6 Luna runs at low effort, solve rates rise with assistance, from 4/67
-attempts with basic tools to 31/272 with legal enumeration and 28/108 with on-demand target
-comparison (Table~\ref{tab:headline}, Appendix~\ref{app:supplementary-results}). These
-conditions differ in coverage, repetitions, and budgets, so we treat the trend as descriptive.
+\phantomsection\label{sec:results-headline}
+Earlier GPT-5.6 Luna runs used different samples and budgets per condition, so we list them
+without comparison (Table~\ref{tab:headline}); tool effects are measured only in the ablations.
 
 \subsection{Tool and reasoning-effort ablations}
 \label{sec:results-tiers}
 \label{sec:results-ablations}
 
-The recent study targets ten samples from each of four groups per configuration:
-easy, medium, hard, and some-layers; the some-layers samples all have five reference folds. It compares GPT-5.6 Luna at low effort with
-GPT-6 Luna at low and high effort. The three tool conditions are basic tools,
-legal-fold enumeration, and enumeration with automatic tier-3 target feedback.
-The run settings are specified in Section~\ref{sec:exp-protocol}. Of 360 planned sample--configuration pairs, 355 have completed episodes,
-three have observed execution errors without a completed replacement, and two were
-omitted from the restarted batch after blocking errors. All five count as unsuccessful
-evaluations under the planned protocol (Appendix~\ref{app:protocol-failures}).
+The recent study uses the first ten samples of each group in every configuration:
+\texttt{easy-}, \texttt{mid-} and \texttt{hard-0001}--\texttt{0010} from the all-layers corpus and
+\texttt{layers-0001}--\texttt{0010} from the some-layers corpus; the some-layers samples all have five reference folds. It compares GPT-5.6 Luna at low effort with
+GPT-6 Luna at low and high effort. Tool conditions and run settings are
+given in Sections~\ref{sec:ablations} and~\ref{sec:exp-protocol}. Of the 360 planned
+sample--configuration pairs, five are protocol failures counted as unsolved
+(Appendix~\ref{app:protocol-failures}).
 
 \begin{table}[htbp]
 \centering
@@ -64,6 +59,12 @@ GPT-6 Luna & High & B & 3/10 & 0/10 & 0/10 & 3/10 & 6/40 \\
 \hline
 \end{tabular}
 \end{table}
+
+\paragraph{Tools.} Summing the Total column of Table~\ref{tab:luna-ablations} over the three model
+settings gives, for the same 40 samples in each, 8/120 solves with B, 18/120 with L and 29/120
+with A (two L and three A pairs are protocol failures counted as unsolved); the order B$<$L$<$A
+holds in each setting. By group, easy gives 5, 5 and 10 of 30 and some-layers 3, 13 and 19 of 30;
+medium and hard give none.
 
 \paragraph{Reasoning effort.} Pooled over the three tool conditions, GPT-6 Luna solves 6/30
 some-layers samples at low effort and 18/30 at high effort. Per condition the increases are
