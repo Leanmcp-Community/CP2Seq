@@ -112,6 +112,15 @@ export function compareToTarget(layers, target, tier = 1) {
 
   const best = bestAlignment(layers, target);
   const depth = Math.min(layers.length, target.length);
+  // No rigid motion carries the bottom layer onto the target's, so nothing was compared and
+  // best.ranks is empty. That must read as every rank disagreeing, not as a match: before this
+  // guard, easy-0001 was told "matches" with 0 of 9 layers matching and submitted a wrong answer.
+  if (best.matched < 0) {
+    best.ranks = Array.from({length: depth}, (_, i) => ({
+      rank: i, shape_ok: false, parity_ok: layers[i].par === target[i].par,
+      parity_now: layers[i].par, parity_target: target[i].par,
+    }));
+  }
   out.alignment = {
     compared_under: best.turned ? 'the target turned over (stack reversed, parities flipped)'
                                 : 'a direct rotation/translation of the target',
@@ -121,7 +130,7 @@ export function compareToTarget(layers, target, tier = 1) {
   const parityOnly = best.ranks.length && best.ranks.every(r => r.shape_ok && !r.parity_ok);
   const order = orderingDiagnosis(best.aligned, target, best.transform);
   out.diagnosis = counts.layer_difference !== 0 ? 'layer_count'
-    : !best.ranks.length ? 'matches'
+    : best.matched === depth ? 'matches'
     : parityOnly ? 'parity'
     : order ? 'order'
     : 'shape';
