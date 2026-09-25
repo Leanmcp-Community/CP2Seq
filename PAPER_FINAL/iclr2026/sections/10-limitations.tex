@@ -3,7 +3,10 @@
 
 The evaluation concentrates on Luna and BFS, with limited coverage of other models.
 The recent low- and high-effort ablations use ten samples per group and configuration.
-Cohort and budget differences are documented in Section~\ref{sec:results-threats}.
+Both limits are set by cost rather than by the benchmark: with full image history, one episode
+consumed about 3.1 million input tokens on average over 20 measured episodes, so every
+additional model or configuration on the full corpus is a substantial expense for an unfunded
+study.
 
 The action space covers all-layers and selected some-layers simple folds, excluding
 pre-creasing; the some-layers corpus currently extends to six reference folds. The environment

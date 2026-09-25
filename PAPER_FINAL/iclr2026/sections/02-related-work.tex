@@ -5,11 +5,11 @@
 \label{sec:related-benchmarks}
 
 GamiBench \citep{gamibench} evaluates multimodal models through visual questions about folded
-configurations, viewpoints, and impossible crease patterns. Its viewpoint-consistency and
-impossible-fold-selection metrics assess whether predictions remain consistent across views and
-whether models recognize infeasible patterns. OrigamiSpace \citep{origamispace} evaluates pattern
+configurations, viewpoints, and impossible crease patterns. OrigamiSpace \citep{origamispace} evaluates pattern
 prediction, multi-step spatial reasoning, spatial relationships, and crease-pattern code generation.
-It also provides an interactive environment for the code-generation task. These benchmarks connect
+It also provides an interactive environment for the code-generation task, in which the model
+writes a crease pattern; CP2Seq instead gives the crease pattern and asks for the fold sequence
+that produces it, verified one fold at a time. These benchmarks connect
 origami geometry to visual reasoning and generation, with different requirements on the model's
 output.
 
