@@ -1,87 +1,86 @@
-\section{Reference notes}
+\section{Extended related work}
 \label{app:references}
 
-The bibliography is grouped in \texttt{iclr2026\_conference.bib} by the role each work plays in
-the argument rather than alphabetically, so that a co-author can see what is load-bearing. The
-notes below record what is still outstanding.
-Metadata corrections and source links are recorded in \texttt{REFERENCE\_AUDIT.md}
-(25 September 2026). Source checks for the notes below are recorded there;
-software provenance is recorded separately in \texttt{SOFTWARE\_PROVENANCE.md}.
+This appendix collects the literature the benchmark rests on, grouped by the role each work plays
+rather than alphabetically. Section~\ref{sec:related} discusses the works the design depends on
+directly; the rest are recorded here.
 
 \paragraph{Origami benchmarks and systems for language models.}
-\citet{origamispace} is listed in the official NeurIPS 2025 program and is cited as a
-conference paper; the absence of a venue on arXiv does not establish preprint-only status.
-\citet{gamibench} has code and data released. \citet{foldingagent}
-reconstructs folding processes from instructional video and is built on the PurelandFold dataset;
-code at \url{https://github.com/maya-moriya/FoldingAgent}.
-\citet{origamibench}, Section 2, reports 366 designs collected from Flat-Folder and
-evaluates query efficiency, geometric similarity through intersection over union,
-and semantic similarity through CLIP embeddings. Its query-efficiency definition
-is the proportion of fold steps contributing to the final origami, not queries to solution.
-\citet{corigami}, Section 3.8, uses a VLM for aesthetic and semantic evaluation;
-Appendix B separately reports flat-foldability of generated crease patterns.
+\citet{gamibench} releases both code and data, and evaluates viewpoint consistency and the
+recognition of infeasible patterns. \citet{origamispace} evaluates pattern prediction, multi-step
+spatial reasoning and crease-pattern code generation, and ships an interactive environment for the
+last of these. \citet{origamibench} synthesises flat-foldable patterns in an interactive
+environment over 366
+% fact:corpus.instagram.total
+designs collected from Flat-Folder, and evaluates query efficiency, geometric similarity through
+intersection over union, and semantic similarity through CLIP embeddings; its query efficiency is
+the proportion of fold steps that contribute to the final model, not the number of queries to a
+solution. It is one source of the metrics surveyed while our scoring was designed.
+\citet{corigami} co-designs flat-foldable and recognisable models, using a vision-language model
+for aesthetic and semantic evaluation and reporting the flat-foldability of generated crease
+patterns separately. \citet{learn2fold} plans structured generation against a learned world model.
+\citet{foldingagent} reconstructs folding processes from instructional video, over the
+sequence-level corpus of \citet{purelandfold}.
 
 \paragraph{Complexity and theory of flat folding.}
-\citet{bern-hayes} is the citation under the paper's central claim: geometry does not determine
-layer order, and deciding overlap order is NP hard even given a valid mountain-valley assignment.
-\citet{arkin-map} defines simple foldability; the action space comes from here.
-\citet{akitaya-infinite} covers the all-layers model, which corresponds to sheet-metal bending.
-\citet{akitaya-flatfolder} is the Flat-Folder paper, presented at OSME 2024 and
-published in \emph{Origami8, Volume III} in 2026; deciding a global flat-folded state is NP
-hard. See also \citet{mixed-orthogonal}, \citet{layer-algebra} and \citet{flat-folding-graphs}.
-\citet{turing} is optional background. \citet{continuous} and its predecessor
-\citet{reaching-folded} concern continuous folding motion.
-The 2004 result concerns well-behaved folded states of simple polygonal paper;
-the 2001 result treats rectangular paper. These continuous-motion results do not
-establish reachability using our restricted sequence of simple folds.
+\citet{bern-hayes} carries the claim the task rests on: geometry does not determine layer order,
+and deciding the overlap order of a flat folding is NP hard even when a valid mountain-valley
+assignment is given. \citet{arkin-map} defines simple foldability and the one-layer, some-layers
+and all-layers models this action space is drawn from, and \citet{akitaya-hard} settles the
+complexity of deciding it for square paper with creases at multiples of $45^\circ$.
+\citet{akitaya-infinite} treats the all-layers model, which is also the model of sheet-metal
+bending, and \citet{mixed-orthogonal} treats mixed orthogonal crease patterns.
+\citet{akitaya-flatfolder} gives a method for deciding whether a pattern admits a flat-folded
+state at all, a problem that is NP hard in general. \citet{layer-algebra} gives an algebraic
+treatment of the layer-ordering constraints, and \citet{flat-folding-graphs} studies the graphs of
+flat foldings themselves. \citet{continuous} and its predecessor \citet{reaching-folded} separate a
+folded state from a continuous folding motion, for simple polygonal and rectangular paper
+respectively. Those results concern continuous motion; they do not establish that a folded state
+is reachable by the restricted sequence of simple folds used here, and the discrete step structure
+is the question this benchmark poses. \citet{turing} establishes that flat origami is Turing
+complete, which bounds what any general claim about foldability can promise.
 
 \paragraph{The crease-pattern-to-sequence problem itself.}
-\citet{akitaya-cp2seq} appeared in \emph{ACM SIGGRAPH 2013 Posters}; the Student
-Research Competition is not its publication venue.
-Section 2 describes reflection paths, graph rewriting, and a step sequence graph
-whose paths yield folding sequences. The cited one-page poster does not report
-the previously quoted frog-base runtime or node count.
-% EDITING NOTE (preserved): Earlier notes claimed 22,665 nodes and 30 minutes for
-% a frog base and a future-work priority heuristic. These were not found in the
-% cited poster; require a separate source before reinstating them.
-\citet{creasy} is a candidate software baseline. \texttt{[TO RUN if used]}
+\citet{akitaya-cp2seq} named the problem and supplied the tools the area still uses: reflection
+paths, graph rewriting, and a step sequence graph whose paths yield folding sequences.
+\citet{creasy} is an open-source implementation of that line and is usable as a symbolic baseline;
+Section~\ref{sec:exp-baselines} lists it among the baselines not yet run.
 
 \paragraph{Counting folded states.}
-\citet{oeis-a000136} lists the foldings of a strip of stamps: 1, 2, 6, 16, 50, 144, 462, 1392,
-4536, 14060, \ldots{} for $n=1,\ldots,10$. See also
-\citet{lucas,koehler,lunnon,meanders}. Foldings and meanders are related enumeration
-problems; do not identify them as the same object without specifying a correspondence.
-\citet{meanders}, Section 1, attributes the 1891 statement of the problem to Lucas,
-crediting Lemoine for suggesting it, and reports that no closed formula was known.
-This is an attribution to Legendre's historical account, not a direct inspection
-of Lucas's original page or a claim about present-day absence of a formula.
+The number of ways to fold a strip of $n$ labelled stamps runs 1, 2, 6, 16, 50, 144, 462, 1392,
+4536, 14060 for $n=1,\ldots,10$ \citep{oeis-a000136}. The problem was posed by \citet{lucas} in
+1891 and has been attacked repeatedly since \citep{koehler,lunnon}; the related enumeration of
+meanders is surveyed by \citet{meanders}, which reports that no closed formula was known. The
+relevance here is that the number of valid states grows fast enough that scoring against any
+single reference sequence would be wrong, which is why Section~\ref{sec:scoring} scores by
+execution instead.
 
 \paragraph{Spatial reasoning context.}
-\citet{spatial-survey} surveys the area. \citet{vot} names the mental-imagery question this
-benchmark can turn into a measurement.
+\citet{spatial-survey} surveys spatial reasoning in multimodal models. \citet{vot} names the
+mental-imagery question this benchmark turns into a measurement: whether a model can maintain and
+update a spatial representation across steps rather than describe one.
+
+\paragraph{Statistical physics of random flat foldability.}
+\citet{spin-model} represents layer-order constraints as spin interactions, and
+\citet{random-locally} proves that for random locally flat-foldable mountain-valley assignments on
+the square grid, global flat foldability is exponentially unlikely under its sampling
+distribution. Neither result concerns the number of terminal states of the patterns in this
+corpus, and we do not extrapolate them to it.
 
 \paragraph{Tools, formats and data.}
 \citet{flatfolder} is the implementation that decides and enumerates flat-folded states, for the
 method of \citet{akitaya-flatfolder}; together they are the source of the four constraint classes
-cited in Section~\ref{sec:env-refusals}. \citet{fold-format} is the de facto
-standard used by every artifact we ship. \citet{oripa} is a crease-pattern editor with folded-form
-estimation; its bibliography entry refers to Mitani's 2007 journal article.
-\citet{purelandfold} is not used as training or evaluation data here.
-Its dataset card identifies it as FoldingAgent's ground-truth benchmark and reports
-27 sequences and 337 annotated keyframes under CC-BY-4.0. The card requests citation
-of the FoldingAgent paper when using the dataset.
+cited in Section~\ref{sec:env-refusals}. \citet{fold-format} is the de facto standard used by
+every artifact we ship. \citet{oripa} is a crease-pattern editor with folded-form estimation.
+\citet{purelandfold} is the closest existing sequence-level corpus, with 27 sequences and 337
+annotated keyframes released under CC-BY-4.0 as the ground truth for FoldingAgent; it is not used
+here as training or evaluation data.
 
-\paragraph{Statistical physics of random flat-foldability.}
-\citet{spin-model} represents layer-order constraints using spin interactions.
-\citet{random-locally} studies random locally flat-foldable mountain--valley
-assignments and proves that global flat-foldability is exponentially unlikely
-on the square grid under its sampling distribution (Theorem 2). Neither result
-establishes that multiple terminal states are typical in CP2Seq. For examples
-and bounds on multiplicity, use \citet{akitaya-flatfolder}, without extrapolating
-to the distribution of this corpus.
-
-\paragraph{Deliberately not cited.}
-Thick folding (Ku \& Demaine 2016), bar-and-hinge mechanics, MERLIN2, SWOMPS, Sim-FAST-PY, and the
-creased-sheet mechanics literature all belong to the thickness and mechanics line of work. They are
-outside the implemented zero-thickness, discrete-fold model. They should be
-cited if discussing those physical effects; no runtime comparison is established here.
+\paragraph{Scope, and what is left out.}
+Thick folding \citep{thick-folding}, bar-and-hinge mechanics \citep{bar-and-hinge} and its
+simulators \citep{swomps,simfast}, and the wider creased-sheet mechanics literature belong
+to a different line of work, one in which the sheet has thickness and the verifier is a simulation
+rather than a decision. That line asks a question this benchmark does not: the states here are
+zero-thickness and flat, and the environment rules on a fold in one pass rather than integrating a
+deformation. Those works are therefore not treated as neighbouring work, and the limits of the
+model used here are stated in Section~\ref{sec:limitations}.

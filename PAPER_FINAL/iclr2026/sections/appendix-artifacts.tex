@@ -109,8 +109,8 @@ orientation changes or a different target rank for a layer shape. \\
 
 \subsection{Tool schemas and prompt}
 The following listings document the tool schemas and folding prompt; tool exposure is configured per run.
-{\scriptsize\verbatiminput{../../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/tool_schemas.py}}
-{\small\verbatiminput{../../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/fold_prompt.md}}
+\lstinputlisting{listings/tool_schemas.py}
+\lstinputlisting{listings/fold_prompt.md}
 
 \subsection{Sample contents}
 \label{app:sample-contents}
@@ -157,7 +157,7 @@ reference sequences and recorded model episodes.
 
 \begin{figure}[tbp]
 \centering
-\includegraphics[width=\linewidth,height=.34\textheight,keepaspectratio]{\detokenize{../../assets/screenshots/Screenshot 2026-09-25 at 07.44.50.png}}
+\includegraphics[width=\linewidth,height=.34\textheight,keepaspectratio]{figures/screenshots/dataset-browser.png}
 \caption{Dataset browser with \texttt{easy-0028} selected. The interface displays
 sample metadata, the target crease pattern, and reference-sequence playback controls.
 The right panel shows the unfolded sheet at step zero.}
@@ -166,7 +166,7 @@ The right panel shows the unfolded sheet at step zero.}
 
 \begin{figure}[tbp]
 \centering
-\includegraphics[width=\linewidth,height=.34\textheight,keepaspectratio]{\detokenize{../../assets/screenshots/Screenshot 2026-09-25 at 07.43.22.png}}
+\includegraphics[width=\linewidth,height=.34\textheight,keepaspectratio]{figures/screenshots/trace-viewer.png}
 \caption{Trace viewer for a saved GPT-6 Luna attempt on \texttt{mid-0007}.
 Run and turn navigation appear beside the current and target states. The selected
 episode is marked unsolved; the displayed frame is at turn 12. Playback controls allow inspection of saved actions
@@ -211,8 +211,7 @@ solves 1/1 low-effort attempt. Earlier basic-tool runs record 0/7 for GPT-5.6 So
 model identity and is unsolved. These exploratory runs are reported separately from the Luna ablations.
 % EDITING NOTE: This paragraph reflects the generated inventory, not newer unaggregated runs.
 
-\IfFileExists{../../workspace/RESULTS/cp-distance/paper-table.tex}{%
-  \input{../../workspace/RESULTS/cp-distance/paper-table.tex}}{}
+\input{figures/cp-distance-table}
 
 \subsection{Protocol failure accounting}
 \label{app:protocol-failures}

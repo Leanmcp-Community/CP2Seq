@@ -6,6 +6,8 @@
 
 \usepackage{multirow}
 \usepackage{verbatim}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\scriptsize,columns=fullflexible,breaklines=true,breakatwhitespace=false,keepspaces=true,showstringspaces=false,postbreak=\mbox{\ensuremath{\hookrightarrow}\space}}
 \usepackage{hyperref}
 \usepackage{url}
 \usepackage{graphicx}
@@ -83,11 +85,12 @@ Withheld for anonymous review.
 
 \input{sections/appendix-folding-model}
 \input{sections/appendix-artifacts}
+\input{sections/appendix-a-reference-notes}
 
 \ifdraftnotes
-\input{sections/appendix-a-reference-notes}
 \input{sections/appendix-b-editorial-rules}
-\input{sections/appendix-c-changes}
+% Internal decision log, not part of the paper:
+% \input{sections/appendix-c-changes}
 \fi
 
 \end{document}
