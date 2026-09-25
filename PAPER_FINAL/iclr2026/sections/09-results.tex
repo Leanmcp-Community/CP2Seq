@@ -17,10 +17,7 @@ attempt per sample and configuration when available; retries do not add denomina
 \label{sec:results-headline}
 
 Table~\ref{tab:headline} reports the earlier GPT-5.6 Luna runs, before the recent
-ablation cohort. Basic tools provide editing and observation; legal enumeration adds
-candidate folds. On-demand target comparison is distinct from automatically supplied
-feedback. Coverage, repetitions, and budgets differ across these earlier conditions,
-so their aggregate solve rates do not isolate the effect of a tool.
+ablation cohort. These conditions differ in coverage, repetitions, and budgets.
 
 \begin{table}[htbp]
 \centering
@@ -92,8 +89,7 @@ The inventory also contains small exploratory runs: GPT-6 Sol with legal enumera
 solves 1/3 low-effort attempts and 1/1 high-effort attempt; GPT-6 Astra with basic tools
 solves 1/1 low-effort attempt. Earlier basic-tool runs record 0/7 for GPT-5.6 Sol and
 0/1 for GPT-5.6 Terra. One additional completed basic-tool attempt has no recorded
-model identity and is unsolved. These exploratory runs are outside the Luna ablation
-set and do not support cross-model rate comparisons.
+model identity and is unsolved. These exploratory runs are reported separately from the Luna ablations.
 % EDITING NOTE: This paragraph reflects the generated inventory, not newer unaggregated runs.
 
 \subsection{Search baseline}
@@ -115,8 +111,7 @@ The separate saved-run CP-distance scan covers 1,422 attempts, of which 1,421 ha
 recoverable crease patterns. Mean insertion/deletion distance is 45.454; mean distance
 normalized by target crease count is 0.553. One attempt is excluded because its state
 could not be recovered. These averages pool models, baselines, configurations, and
-repeated samples. This earlier distance snapshot does not provide condition-specific
-CP distances for the recent ablation table.
+repeated samples and predate the recent ablation table.
 % EDITING NOTE: Refresh from cp-distance/summary.json after scoring the new runs.
 % Validate complete, empty, partial, and wrong-assignment cases before submission.
 \IfFileExists{../../workspace/RESULTS/cp-distance/paper-table.tex}{%
@@ -126,11 +121,8 @@ CP distances for the recent ablation table.
 \label{sec:results-failures}
 
 The earlier 447-attempt GPT-5.6 Luna termination snapshot records 215 state-cycling
-stops, 18 repetition stops, 47 turn-budget stops, and 167 completions. A completion
-label does not imply a solved construction. These counts concern the earlier snapshot;
-the updated inventory does not tabulate termination reasons for the recent ablations.
-Repeated exploration without reaching the target indicates ineffective search in those
-attempts, but the stopping labels alone do not identify its cognitive cause.
+stops, 18 repetition stops, 47 turn-budget stops, and 167 submitted sequences.
+Termination breakdowns for the recent ablations remain to be aggregated.
 % EDITING NOTE: Recompute termination counts by cohort and condition from saved traces.
 % Preserve per-run cycle/revisit limits; a revisit cap is not a count of distinct branches.
 

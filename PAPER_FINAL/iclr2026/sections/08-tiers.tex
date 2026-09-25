@@ -23,23 +23,18 @@ On-demand target comparison & Candidate filtering plus model-requested tier-3 fe
 \end{tabular}
 \end{table}
 
-A controlled comparison should hold the model, sample set, budgets, and other settings fixed while
-changing the specified assistance. The earlier aggregate has differing coverage and budgets.
-The recent ablations select common sample IDs and settings; execution errors and
-omissions after blocking errors are distinguished in Section~\ref{sec:results-ablations}.
+The recent ablations use common sample IDs and budgets across assistance conditions
+(Section~\ref{sec:results-ablations}).
 
 \subsubsection{Target-comparison feedback}
 \label{sec:target-feedback}
 
-The optional \texttt{compare\_to\_target} tool has three feedback levels, configured for the run
-rather than selected by the model. These levels are separate from the assistance conditions above
-and from final verification in Section~\ref{sec:scoring}. The tool reads the current
-and target stacks without consulting the reference sequence or changing the state.
+The run configuration selects one of three feedback levels for
+\texttt{compare\_to\_target}. The tool compares the current and target stacks.
 
 \begin{table}[h]
 \centering
-\caption{Implemented target-feedback levels. Their availability does not establish an experimental
-benefit; comparisons require matched runs.}
+\caption{Information returned at each target-feedback level.}
 \begin{tabular}{lp{0.72\textwidth}}
 \hline
 Level & Information returned \\
@@ -52,7 +47,3 @@ orientation changes or a different target rank for a layer shape. \\
 \hline
 \end{tabular}
 \end{table}
-
-The richer levels supply more target-specific guidance. Their diagnoses are geometric feedback,
-not proofs of a valid repair or substitutes for the final state comparator. In particular, a
-matching layer count does not establish that the sequence is complete or correct.

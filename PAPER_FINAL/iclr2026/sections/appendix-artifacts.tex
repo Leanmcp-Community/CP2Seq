@@ -6,7 +6,7 @@
 The inspected Codex CLI installation is version \texttt{0.155.1}
 \citep{openai-codex}. Its upstream release tag \texttt{rust-v0.155.1} resolves to
 commit \texttt{be2951ea34f0d295ed0becf97079f92fa5f6950e}.
-This identifies the client software, not the model weights or server implementation.
+
 The saved run configurations record the executable path but do not record its
 version or binary hash; the installation was checked on 25 September 2026.
 % EDITING NOTE: Do not assert that every historical run used this release without
@@ -19,15 +19,13 @@ version or binary hash; the installation was checked on 25 September 2026.
 \input{figures/pipeline}
 
 \subsection{Tool schemas and prompt}
-The following source listings document the available arguments and the folding prompt. Tool
-exposure varies by run configuration; the full schema listing is not a claim that every run
-exposed every tool.
+The following listings document the tool schemas and folding prompt; tool exposure is configured per run.
 {\scriptsize\verbatiminput{../../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/tool_schemas.py}}
 {\small\verbatiminput{../../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/fold_prompt.md}}
 
 \subsection{Dataset gallery and reference sequences}
 Each rendered panel contains the crease pattern, top view, and an oblique view with illustrative
-layer separation. Layer separation is a visualization aid, not simulated paper thickness.
+layer separation.
 \IfFileExists{figures/dataset/gallery.tex}{\input{figures/dataset/gallery}}{
 \noindent\fbox{\parbox{.9\linewidth}{Dataset gallery pending export: short all-layers,
 longer all-layers, and some-layers examples.}}}
@@ -37,8 +35,7 @@ longer all-layers, and some-layers examples.}}}
 We provide a trace-inspection interface for browsing saved runs, replaying recorded folding
 trajectories, and examining model actions alongside tool feedback and rendered states. This
 supports qualitative analysis of successful construction, repeated exploration, and unsuccessful
-termination. The interface presents recorded artifacts; it does not establish the model's internal
-reasoning process. A command-line trace viewer additionally supports filtering by task, trial,
+termination. A command-line trace viewer additionally supports filtering by task, trial,
 session, role, and event type.
 
 Figures~\ref{fig:dataset-browser-ui} and~\ref{fig:trace-viewer-ui} show the dataset
@@ -50,8 +47,7 @@ reference sequences and recorded model episodes.
 \includegraphics[width=\linewidth,height=.34\textheight,keepaspectratio]{\detokenize{../../assets/screenshots/Screenshot 2026-09-25 at 07.44.50.png}}
 \caption{Dataset browser with \texttt{easy-0028} selected. The interface displays
 sample metadata, the target crease pattern, and reference-sequence playback controls.
-The replay is at step zero: the right panel shows the unfolded sheet, not the target
-folded state.}
+The right panel shows the unfolded sheet at step zero.}
 \label{fig:dataset-browser-ui}
 \end{figure}
 
@@ -60,8 +56,7 @@ folded state.}
 \includegraphics[width=\linewidth,height=.34\textheight,keepaspectratio]{\detokenize{../../assets/screenshots/Screenshot 2026-09-25 at 07.43.22.png}}
 \caption{Trace viewer for a saved GPT-6 Luna attempt on \texttt{mid-0007}.
 Run and turn navigation appear beside the current and target states. The selected
-episode is marked unsolved; the displayed frame is an intermediate state at turn 12,
-not its terminal construction. Playback controls allow inspection of saved actions
+episode is marked unsolved; the displayed frame is at turn 12. Playback controls allow inspection of saved actions
 and feedback.}
 \label{fig:trace-viewer-ui}
 \end{figure}

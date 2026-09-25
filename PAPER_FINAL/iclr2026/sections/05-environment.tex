@@ -15,8 +15,7 @@ previous state.
 For a some-layers fold, moving and stationary regions may share an edge away from the hinge.
 Reflecting only the moving region would separate that shared edge, so the engine rejects the
 proposal as \texttt{would-tear}. A \texttt{no-crease} rejection means that paper was selected to
-move but the operation did not create a crease segment; it is distinct from the connectivity
-check. Other rejections cover an empty moving region, an incompatible over/under direction,
+move but the operation did not create a crease segment. Other rejections cover an empty moving region, an incompatible over/under direction,
 and creases absent from the target pattern. That last check is a form of assistance: it prevents a
 class of unrecoverable moves, and the rates reported here are therefore rates under that
 constraint. Detailed conditions are listed in
@@ -30,9 +29,8 @@ layers it leaves behind, so the action space excludes self-intersection by const
 \label{sec:env-observes}
 % EDITING NOTE (retained): Add a screenshot of the simulator interface.
 Observation tools are listed in Table~\ref{tab:tools}. Exploded views use illustrative
-layer separation rather than simulated paper thickness.
+layer separation.
 
 The repository also provides a separate Flat-Folder check for the existence of a flat-folded state
-consistent with a crease pattern \citep{akitaya-flatfolder}. This check is distinct from action
-execution and target matching, takes no part in scoring, and is not invoked during an episode; its
-scope is described in Appendix~\ref{app:action-errors}.
+consistent with a crease pattern \citep{akitaya-flatfolder}, used outside the evaluation
+episodes (Appendix~\ref{app:action-errors}).

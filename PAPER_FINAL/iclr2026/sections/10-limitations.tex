@@ -5,20 +5,16 @@ The evaluation concentrates on Luna and BFS, with limited coverage of other mode
 The recent low- and high-effort ablations use ten samples per group and configuration.
 Cohort and budget differences are documented in Section~\ref{sec:results-threats}.
 
-Fold-count groups express the hypothesis that longer reference sequences generally require more
-search. They do not establish minimum solution length or guarantee an ordering of instance
-difficulty. The action space covers all-layers and selected some-layers simple folds, excluding
+The action space covers all-layers and selected some-layers simple folds, excluding
 pre-creasing; the some-layers corpus currently extends to six reference folds. The environment
 represents zero-thickness flat states and does not model material mechanics or continuous
 collisions during folding.
 
-Success requires geometric reasoning, state tracking, and planning together. Termination labels
-identify observed behavior but do not isolate the underlying cause of failure. Revisit and budget
-limits also constrain the search trajectories that can be observed. Generating new samples reduces
-reliance on a fixed public test set but cannot guarantee absence of training overlap.
+Termination labels record stopping conditions; attributing failures to individual capabilities
+requires further trajectory analysis. Revisit and budget limits constrain the observed search.
+Training overlap with the public corpus is unknown.
 
-Corpus replay checks share the generation engine and therefore test consistency rather than
-independent physical validity. The terminal comparator
+Corpus replay checks assess consistency with the shared generation engine. The terminal comparator
 compares current-plane polygons, parity and rank, and does not explicitly match original-sheet
 region identities, as detailed in Appendix~\ref{app:comparison-details}; equal shapes at different
 original-sheet locations can therefore require a correspondence check this path does not perform.
