@@ -14,25 +14,20 @@ origami geometry to visual reasoning and generation, with different requirements
 output.
 
 Other recent systems generate origami rather than answer questions about it.
-\citet{origamibench} provides an interactive environment for synthesising flat-foldable patterns,
-and supplies two of the metrics our own survey drew on, query efficiency and geometric or semantic
-similarity; its instances are the 366
+\citet{origamibench} provides an interactive environment for synthesising flat-foldable patterns
+over 366
 % fact:corpus.instagram.total
-patterns distributed with Flat-Folder. \citet{corigami} pairs a generator with a designer in a
-pipeline for flat-foldable and visually recognisable models, scoring candidates by
-flat-foldability as a boolean and by a vision-language aesthetic judgement.
+designs collected from Flat-Folder, and evaluates query efficiency, defined as the proportion of
+fold steps that contribute to the final model, together with geometric and semantic similarity.
+\citet{corigami} pairs a generator with a designer in a pipeline for flat-foldable and visually
+recognisable models, using a vision-language model for aesthetic and semantic evaluation and
+reporting the flat-foldability of generated crease patterns separately.
 \citet{learn2fold} plans structured origami generation against a learned world model.
 \citet{foldingagent} works in the opposite direction from generation and the closest to ours: it
 reconstructs a folding process from instructional video, using the sequence-level corpus of
 \citet{purelandfold}. That corpus is the nearest existing collection to what CP2Seq needs, and we
 neither train nor evaluate on it: its sequences are human-authored and its 27 sequences over 337
 frames are too few to stratify, whereas ours are generated to order and correct by construction.
-
-CP2Seq focuses on recovering a complete folding sequence from a crease pattern and a target
-folded state. The model selects and revises actions, and evaluation checks their execution and the
-resulting construction. Our procedural generator records reference sequences as folds are performed,
-allowing new instances to be produced without manually annotating solutions. The environment
-checks proposed actions under its supported folding model and supplies feedback during the search.
 
 \subsection{Computational origami and sequence planning}
 \label{sec:related-theory}

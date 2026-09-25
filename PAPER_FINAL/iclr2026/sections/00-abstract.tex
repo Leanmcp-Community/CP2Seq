@@ -15,9 +15,10 @@ remains responsible for selecting actions and searching for a solution. We evalu
 multimodal language models under progressively greater tool assistance, and against a
 deterministic breadth-first search over the same action set. Candidate sequences are assessed by
 executing them and comparing the resulting folded state with the target, allowing for planar
-translations, rotations, and reflections. In the recent Luna ablations, higher reasoning effort
-improves some-layers performance across all three tool conditions; no configuration solves
-a medium or hard sample. A separate breadth-first search evaluation solves 54.7\% of easy-group
-attempts. These experiments characterize sequence recovery under different reasoning settings
-and levels of tool assistance.
+translations, rotations, and reflections. Performance falls off sharply with sequence depth:
+in the Luna ablations no configuration solves a medium or hard sample (11 or more folds), while
+some-layers solves rise from 6/30 to 18/30 with higher reasoning effort. Failures are dominated by
+search rather than by illegal moves: in the broader evaluation, 48\% of episodes end by
+revisiting earlier states. A breadth-first search over the same actions solves 54.7\% of
+easy-group attempts, so the generated tasks leave substantial headroom for model planning.
 \end{abstract}

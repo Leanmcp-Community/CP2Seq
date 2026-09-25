@@ -204,12 +204,84 @@ script records both engine responses and checks that rejection preserves the sta
 \subsection{Supplementary results}
 \label{app:supplementary-results}
 
+\begin{table}[htbp]
+\centering
+\caption{Earlier GPT-5.6 Luna evaluation at low reasoning effort. Counts are solved
+attempts over completed attempts, including repeats across samples and budgets.}
+\label{tab:headline}
+\begin{tabular}{lrr}
+\hline
+Condition & Solved / completed & Solve rate \\
+\hline
+Basic tools & 4/67 & 6.0\% \\
+Legal enumeration & 31/272 & 11.4\% \\
+Legal enumeration + on-demand comparison & 28/108 & 25.9\% \\
+\hline
+\end{tabular}
+\end{table}
+% Earlier solved counts: inventory totals minus recent ablation solves:
+% basic 6-2=4; legal 37-6=31; on-demand comparison 28-0=28.
+
+% Source for the two tables below: workspace/analysis/paper_stats.py over
+% workspace/RESULTS/run-inventory/report.json (2026-09-24T23:13:33.275Z).
+\begin{table}[htbp]
+\centering
+\caption{How each Luna ablation episode ended. Solved: correct submission. Wrong: incorrect
+submission. Cycling: stopped after revisiting earlier states. Dead end: no recoverable legal
+continuation. The five protocol failures of Appendix~\ref{app:protocol-failures} have no
+completed episode and are not listed, so rows can sum to fewer than 40.}
+\label{tab:ablation-terminations}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lllrrrrrr}
+\hline
+Model & Effort & Tools & Solved & Wrong & Cycling & Repetition & Turn budget & Dead end \\
+\hline
+GPT-5.6 Luna & Low & B & 2 & 6 & 14 & 3 & 5 & 10 \\
+ & Low & L & 6 & 12 & 22 & 0 & 0 & 0 \\
+ & Low & A & 10 & 2 & 27 & 0 & 0 & 0 \\
+\hline
+GPT-6 Luna & Low & B & 0 & 2 & 12 & 20 & 1 & 5 \\
+ & Low & L & 2 & 10 & 25 & 1 & 0 & 0 \\
+ & Low & A & 8 & 0 & 29 & 0 & 0 & 1 \\
+\hline
+GPT-6 Luna & High & B & 6 & 4 & 13 & 5 & 5 & 7 \\
+ & High & L & 10 & 8 & 21 & 0 & 1 & 0 \\
+ & High & A & 11 & 1 & 28 & 0 & 0 & 0 \\
+\hline
+Total & & & 55 & 45 & 191 & 29 & 12 & 23 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Easy-group solve rate by reference fold count, over all completed model attempts in the
+inventory. Attempts include repeats and differing budgets, so rates are descriptive.}
+\label{tab:easy-depth}
+\small
+\begin{tabular}{lrrrrrrr}
+\hline
+Reference folds & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+\hline
+Solved / attempts & 19/59 & 35/115 & 12/46 & 10/97 & 3/60 & 0/33 & 7/47 \\
+Solve rate & 32.2\% & 30.4\% & 26.1\% & 10.3\% & 5.0\% & 0.0\% & 14.9\% \\
+\hline
+\end{tabular}
+\end{table}
+
 The inventory also contains small exploratory runs: GPT-6 Sol with legal enumeration
 solves 1/3 low-effort attempts and 1/1 high-effort attempt; GPT-6 Astra with basic tools
 solves 1/1 low-effort attempt. Earlier basic-tool runs record 0/7 for GPT-5.6 Sol and
 0/1 for GPT-5.6 Terra. One additional completed basic-tool attempt has no recorded
 model identity and is unsolved. These exploratory runs are reported separately from the Luna ablations.
 % EDITING NOTE: This paragraph reflects the generated inventory, not newer unaggregated runs.
+
+\phantomsection\label{sec:results-distance}
+A separate scan of 1,421 saved attempts with recoverable states gives a mean crease-pattern
+insertion/deletion distance of 45.5, or 0.55 of the target crease count
+(Table~\ref{tab:cp-distance}). These averages pool models, baselines, configurations and repeated
+samples, and predate the ablations.
 
 \input{figures/cp-distance-table}
 
