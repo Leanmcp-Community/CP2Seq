@@ -14,13 +14,14 @@ origami geometry to visual reasoning and generation, with different requirements
 output.
 
 Other recent systems generate origami rather than answer questions about it.
-\citet{origamibench} provides an interactive environment for synthesising flat-foldable patterns,
-and supplies two of the metrics our own survey drew on, query efficiency and geometric or semantic
-similarity; its instances are the 366
+\citet{origamibench} provides an interactive environment for synthesising flat-foldable patterns
+over 366
 % fact:corpus.instagram.total
-patterns distributed with Flat-Folder. \citet{corigami} pairs a generator with a designer in a
-pipeline for flat-foldable and visually recognisable models, scoring candidates by
-flat-foldability as a boolean and by a vision-language aesthetic judgement.
+designs collected from Flat-Folder, and evaluates query efficiency, defined as the proportion of
+fold steps that contribute to the final model, together with geometric and semantic similarity.
+\citet{corigami} pairs a generator with a designer in a pipeline for flat-foldable and visually
+recognisable models, using a vision-language model for aesthetic and semantic evaluation and
+reporting the flat-foldability of generated crease patterns separately.
 \citet{learn2fold} plans structured origami generation against a learned world model.
 \citet{foldingagent} works in the opposite direction from generation and the closest to ours: it
 reconstructs a folding process from instructional video, using the sequence-level corpus of
