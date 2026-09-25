@@ -13,8 +13,7 @@ applies it, and records the action and resulting state. This process continues t
 reference depth; attempts with no available legal continuation are discarded. The accumulated
 creases are mapped to the original sheet to form the input crease pattern, with edges split at
 intersections. The last state supplies the target, and the recorded actions supply a reference
-solution. A replay check compares the generated sample with its recorded construction.
-
+solution.
 We group samples by reference fold count, hypothesizing that longer sequences generally require
 more search and are therefore harder to recover. These groups describe expected difficulty;
 reference length need not equal the shortest valid solution length. We also record coupling,
@@ -38,6 +37,12 @@ GENERATE(reference_depth, action_model):
     if not REPLAY_CHECK(cp, actions, state): return FAILED
     return (cp, state, actions, frames, METADATA(actions))
 \end{verbatim}}
+
+We provide inspection software to visualize crease patterns and folded states, replay
+reference sequences, and examine verification feedback. These views support manual
+review to identify samples with inconsistent geometry or failed checks for exclusion
+from the dataset. Example interfaces and rejection feedback appear in
+Appendix~\ref{app:artifacts}.
 
 \input{figures/dataset-examples}
 
@@ -101,9 +106,8 @@ creases created. \\
 
 \phantomsection
 \label{sec:cp2seq-verify}
-Reference sequences are checked by replaying them and comparing the resulting creases with the
-stored pattern. The two corpus checks reported in this release pass on all 600 samples; they
-share the folding engine and therefore do not independently validate its physical assumptions.
+The two replay-based corpus checks pass on all 600 samples; their shared-engine
+validation scope is discussed in Section~\ref{sec:limitations}.
 
 \input{figures/difficulty-grid-plot}
 

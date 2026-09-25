@@ -1,0 +1,20 @@
+\begin{figure}[tbp]
+\centering
+\IfFileExists{figures/rejection-feedback-panels.tex}{
+  \input{figures/rejection-feedback-panels}
+}{
+  \fbox{\parbox{.9\linewidth}{\small Rejection-feedback figure pending local export.
+  Run \texttt{node workspace/export\_rejection\_figure.mjs} from the repository root.
+  The exporter checks rejected and accepted proposals from the same four-layer state
+  before writing the panels and response evidence.}}
+}
+\caption{Rejection feedback and a legal alternative from the same state. Dashed blue
+lines mark the proposed hinge; red segments mark the shared material edge identified
+by the tearing diagnostic. Blue shading identifies selected layers. Selecting only
+the top leaf would separate it from its connected neighbour away from the hinge;
+selecting the connected top pair permits the fold. Both panels show the pre-action
+state, with layers separated only for visibility. This is a visualization of the
+verification fixtures and structured feedback, not an image returned to the model
+or a recorded model attempt.}
+\label{fig:rejection-feedback}
+\end{figure}

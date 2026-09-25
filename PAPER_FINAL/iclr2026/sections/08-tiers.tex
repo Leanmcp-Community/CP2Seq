@@ -1,13 +1,11 @@
 \subsection{Assistance conditions}
 \label{sec:ablations}
 
-% EDITING NOTE (retained): [TO RUN] complete the matched assistance study.
-The reported conditions are \emph{basic tools} and \emph{basic tools with candidate filtering}.
-Basic tools let the model add and remove folds, return to an earlier step or revision, inspect
-the current state and images, and submit its sequence. Candidate filtering additionally provides
-\texttt{list\_legal\_folds}. The basic-tools condition does not provide candidate enumeration or
-the optional target-comparison tool. No-vision and verifier-only comparisons are not reported in
-the current results.
+% EDITING NOTE: Planned comparisons retained: no visual feedback and verifier only.
+The recent ablations compare basic tools, legal-fold enumeration, and enumeration with
+automatic tier-3 target feedback. Earlier runs also include on-demand target comparison.
+Table~\ref{tab:ablations} specifies the additions to the basic interface defined in
+Table~\ref{tab:tools}.
 
 \begin{table}[h]
 \centering
@@ -17,17 +15,18 @@ the current results.
 \hline
 Configuration & Status and interpretation \\
 \hline
-Candidate filtering & Results reported for \texttt{legal-folds}; available tools must be recorded per run. \\
-Basic tools & Fold editing, backtracking, state inspection, images, and submission; no candidate enumeration. \\
-No visual feedback & Planned controlled comparison; no results reported. \\
-Verifier only & Planned controlled comparison; no results reported. \\
+Basic tools & Base interface only. \\
+Candidate filtering & Base interface plus \texttt{list\_legal\_folds}. \\
+Automatic target feedback & Candidate filtering plus automatic tier-3 feedback; recent ablations. \\
+On-demand target comparison & Candidate filtering plus model-requested tier-3 feedback; earlier runs. \\
 \hline
 \end{tabular}
 \end{table}
 
 A controlled comparison should hold the model, sample set, budgets, and other settings fixed while
-changing the specified assistance. The saved aggregate does not establish this matching, so its
-rates describe observed configurations rather than isolated causal effects of individual tools.
+changing the specified assistance. The earlier aggregate has differing coverage and budgets.
+The recent ablations select common sample IDs and settings; execution errors and
+omissions after blocking errors are distinguished in Section~\ref{sec:results-ablations}.
 
 \subsubsection{Target-comparison feedback}
 \label{sec:target-feedback}

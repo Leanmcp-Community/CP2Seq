@@ -7,7 +7,7 @@ The model edits a folding sequence through the tools in Table~\ref{tab:tools}. F
 fold, the engine reflects the selected paper across the fold line, updates layer order and
 orientation, and checks sheet connectivity and compatibility with the input crease pattern.
 Accepted edits update the current state; rejected edits return an error code and preserve the
-previous state. Candidate enumeration and target-comparison feedback are optional run settings.
+previous state.
 
 \phantomsection
 \label{sec:env-refusals}
@@ -29,11 +29,8 @@ layers it leaves behind, so the action space excludes self-intersection by const
 \phantomsection
 \label{sec:env-observes}
 % EDITING NOTE (retained): Add a screenshot of the simulator interface.
-Observations include the current sequence, layer geometry, and rendered views. The image tools
-provide top, oblique, reverse, X-ray, and exploded views; the exposed views depend on the run
-configuration. Exploded views use illustrative layer separation. Final evaluation compares the
-constructed crease pattern and folded state with the supplied targets
-(Section~\ref{sec:scoring-what}).
+Observation tools are listed in Table~\ref{tab:tools}. Exploded views use illustrative
+layer separation rather than simulated paper thickness.
 
 The repository also provides a separate Flat-Folder check for the existence of a flat-folded state
 consistent with a crease pattern \citep{akitaya-flatfolder}. This check is distinct from action

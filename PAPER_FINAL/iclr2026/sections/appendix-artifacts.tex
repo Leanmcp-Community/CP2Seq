@@ -1,5 +1,22 @@
-\section{Tools, prompts, and run inspection}
+\section{Software and supplementary examples}
 \label{app:artifacts}
+
+\subsection{Software versions}
+\label{app:software-versions}
+The inspected Codex CLI installation is version \texttt{0.155.1}
+\citep{openai-codex}. Its upstream release tag \texttt{rust-v0.155.1} resolves to
+commit \texttt{be2951ea34f0d295ed0becf97079f92fa5f6950e}.
+This identifies the client software, not the model weights or server implementation.
+The saved run configurations record the executable path but do not record its
+version or binary hash; the installation was checked on 25 September 2026.
+% EDITING NOTE: Do not assert that every historical run used this release without
+% contemporaneous version evidence. See SOFTWARE_PROVENANCE.md for local evidence.
+
+\input{sections/appendix-bfs}
+
+\subsection{Evaluation pipeline}
+\label{app:evaluation-pipeline}
+\input{figures/pipeline}
 
 \subsection{Tool schemas and prompt}
 The following source listings document the available arguments and the folding prompt. Tool
@@ -24,20 +41,41 @@ termination. The interface presents recorded artifacts; it does not establish th
 reasoning process. A command-line trace viewer additionally supports filtering by task, trial,
 session, role, and event type.
 
+Figures~\ref{fig:dataset-browser-ui} and~\ref{fig:trace-viewer-ui} show the dataset
+browser and trace viewer, respectively. These interfaces support inspection of
+reference sequences and recorded model episodes.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth,height=.34\textheight,keepaspectratio]{\detokenize{../../assets/screenshots/Screenshot 2026-09-25 at 07.44.50.png}}
+\caption{Dataset browser with \texttt{easy-0028} selected. The interface displays
+sample metadata, the target crease pattern, and reference-sequence playback controls.
+The replay is at step zero: the right panel shows the unfolded sheet, not the target
+folded state.}
+\label{fig:dataset-browser-ui}
+\end{figure}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth,height=.34\textheight,keepaspectratio]{\detokenize{../../assets/screenshots/Screenshot 2026-09-25 at 07.43.22.png}}
+\caption{Trace viewer for a saved GPT-6 Luna attempt on \texttt{mid-0007}.
+Run and turn navigation appear beside the current and target states. The selected
+episode is marked unsolved; the displayed frame is an intermediate state at turn 12,
+not its terminal construction. Playback controls allow inspection of saved actions
+and feedback.}
+\label{fig:trace-viewer-ui}
+\end{figure}
+
+% EDITING NOTE: 07.44.33 is a second dataset-browser capture, not a verification
+% capture; retained in assets/screenshots but omitted as redundant. Add an actual
+% Verification-tab capture when available. Screenshots above are user-provided.
+
 % EDITING NOTE: Select actual saved episodes after inspecting their terminal verdicts.
 % Include one solved, one cycling, and one unsuccessful non-cycling attempt. For each,
 % give run/sample IDs, configuration, terminal reason, and selected actions/tool responses.
 % Include screenshots from traces.html: target/current state plus action and feedback panes.
 % Include actual request/response excerpts; do not invent representative tool responses.
 % Attach per-run budgets, effort, tool schemas, comparison tier, and supplementary results.
-
-\subsection{Comparator validation}
-Implementation details and current representation limits are described in
-Appendix~\ref{app:comparison-details}. The repository contains comparison and verification tests;
-executed test results and the exact comparator revision must accompany any reported validation.
-% EDITING NOTE: Capture fresh test output and resolve identity-aware versus shared comparator
-% differences before claiming all positive and corrupted-state controls pass.
-
 
 \subsection{Tool loading and configuration}
 \label{app:tool-loading}
@@ -48,6 +86,25 @@ from the exposed action schemas. The run configuration therefore records tool mo
 level, and action model separately.
 
 % REFUSAL FIGURE PLAN: Use a saved some-layers would-tear response with geometric diagnostics.
+\subsection{Rejection feedback}
+Figure~\ref{fig:rejection-feedback} illustrates the geometric evidence associated with
+a \texttt{would-tear} response using the shared verification fixtures. The comparison
+holds the initial state and hinge fixed and changes the selected layers. The export
+script records both engine responses and checks that rejection preserves the state.
+\input{figures/rejection-feedback}
+
+\subsection{Protocol failure accounting}
+\label{app:protocol-failures}
+All 360 planned Luna ablation cases enter the solve-rate denominator. Of these,
+355 have completed episodes. Two cases end at the request input-size limit:
+\texttt{mid-0006} for GPT-5.6 Luna low with automatic feedback and GPT-6 Luna low
+with legal enumeration. GPT-6 Luna low with legal enumeration on \texttt{mid-0010}
+ends in a service prompt rejection. For GPT-6 Luna low with automatic feedback,
+\texttt{mid-0006} and \texttt{mid-0010} were omitted from the restarted batch after
+these blocking errors. These two cases are classified as omissions after blocking errors;
+no direct service error is recorded for them in that condition. All five cases
+count as unsuccessful evaluations under the planned protocol.
+
 % Panel A: current stack, selected moving region, proposed hinge, and shared off-hinge edge.
 % Panel B: original-sheet connectivity showing which moving/stationary regions share that edge.
 % Label the rejection and note that the simulator retains the pre-action state.

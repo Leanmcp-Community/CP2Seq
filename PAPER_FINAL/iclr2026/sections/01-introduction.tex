@@ -80,20 +80,22 @@ Our contributions are:
 \item \textbf{An interactive evaluation and verification pipeline.} The framework connects visual
   and geometric inputs to tools for constructing and revising sequences, step-level legality
   checks, and final replay-based scoring. It includes corpus checks and a folded-state comparator.
-  It defines four assistance conditions;
-  the current experiments cover the filtered and basic-tools conditions.
+  Experiments vary access to legal-fold enumeration and target-comparison feedback.
 \item \textbf{A search baseline and an empirical analysis of model behavior.} We provide
   breadth-first search over the same candidate actions, report performance by difficulty group,
-  and analyze episode termination. The current evaluation concentrates on
-  \texttt{gpt-5.6-luna}; other model runs have insufficient coverage for a cross-model ranking.
+  and analyze episode termination. A broader evaluation of \texttt{gpt-5.6-luna}
+  is complemented by smaller ablations of model version, reasoning effort, and tool assistance.
 \end{enumerate}
 
-In the current aggregate results, breadth-first search solves 54.7\% of easy-group attempts,
-compared with 20.4\% for \texttt{gpt-5.6-luna} with filtering and 6.2\% with basic tools.
-These rates summarize different sets of attempts rather than a paired comparison on an identical
-sample set. No evaluated language-model attempt succeeds on the medium or hard groups. All
-recorded reasoning-effort settings are low, so these results do not establish a general limit on
-the evaluated models. State cycling terminates 48.1\% of Luna's attempts, motivating further
-experiments on state tracking and backtracking. Section~\ref{sec:results} reports the coverage,
-budgets, and limitations of these measurements. The findings motivate evaluating geometric
-planning through both the constructions models produce and the search behavior that leads to them.
+Our experiments comprise a broader evaluation of \texttt{gpt-5.6-luna} and a smaller
+ablation study targeting ten samples from each of the easy, medium, hard, and some-layers
+groups per configuration. The ablations compare \texttt{gpt-5.6-luna} at low reasoning
+effort with \texttt{gpt-6-luna} at low and high effort, using basic editing and observation
+tools, legal-fold enumeration, or enumeration with automatic target feedback. In this
+ablation set, high-effort \texttt{gpt-6-luna} solves easy and some-layers examples, but
+no completed Luna attempt solves a medium or hard example. Breadth-first search provides
+a separate baseline over the enumerated action space. Together, these evaluations
+examine sequence recovery across model settings and levels of tool assistance.
+% Results source: workspace/RESULTS/run-inventory/report.md, generated 2026-09-24.
+% Some low-effort medium cells are incomplete (8 or 9 of 10); do not describe all
+% configurations as complete or pool this ablation set with the broader evaluation.
