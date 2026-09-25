@@ -1,9 +1,26 @@
-\begin{thebibliography}{9}
+\begin{thebibliography}{37}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Agarwal et~al.(2026)Agarwal, Wu, Jian, Hu, Mansoor, Li, Peng, Dai,
+  Ding, and Sansone]{origamibench}
+Naaisha Agarwal, Yihan Wu, Yichang Jian, Yikuan Hu, Nishad Mansoor, Mohan Li,
+  Yifei Peng, Wang-Zhou Dai, Yao-Xiang Ding, and Emanuele Sansone.
+\newblock {OrigamiBench}: An interactive environment to synthesize
+  flat-foldable origamis.
+\newblock \emph{arXiv preprint arXiv:2603.13856}, 2026.
+
+\bibitem[Akitaya et~al.(2023)Akitaya, Brunner, Demaine, Hendrickson, Luo, and
+  Tockman]{mixed-orthogonal}
+Hugo Akitaya, Josh Brunner, Erik~D. Demaine, Della Hendrickson, Victor Luo, and
+  Andy Tockman.
+\newblock Complexity of simple folding of mixed orthogonal crease patterns.
+\newblock \emph{Thai Journal of Mathematics}, 21\penalty0 (4):\penalty0
+  1025--1046, 2023.
+\newblock URL \url{https://erikdemaine.org/papers/MixedSimpleFolds_TJM/}.
 
 \bibitem[Akitaya et~al.(2013)Akitaya, Mitani, Kanamori, and
   Fukui]{akitaya-cp2seq}
@@ -20,6 +37,15 @@ Hugo~A. Akitaya, Erik~D. Demaine, and Jason~S. Ku.
 \newblock \emph{Journal of Information Processing}, 25:\penalty0 580--589,
   2017.
 \newblock \doi{10.2197/ipsjjip.25.580}.
+
+\bibitem[Akitaya et~al.(2020)Akitaya, Avery, Bergeron, Demaine, Kopinsky, and
+  Ku]{akitaya-infinite}
+Hugo~A. Akitaya, Cordelia Avery, Joseph Bergeron, Erik~D. Demaine, Justin
+  Kopinsky, and Jason~S. Ku.
+\newblock Infinite all-layers simple foldability.
+\newblock \emph{Graphs and Combinatorics}, 36\penalty0 (2):\penalty0 231--244,
+  2020.
+\newblock \doi{10.1007/s00373-019-02079-2}.
 
 \bibitem[Akitaya et~al.(2026)Akitaya, Demaine, and Ku]{akitaya-flatfolder}
 Hugo~A. Akitaya, Erik~D. Demaine, and Jason~S. Ku.
@@ -42,11 +68,144 @@ Marshall Bern and Barry Hayes.
 \newblock In \emph{Proceedings of the Seventh Annual {ACM}-{SIAM} Symposium on
   Discrete Algorithms ({SODA})}, pp.\  175--183, 1996.
 
+\bibitem[Demaine \& Mitchell(2001)Demaine and Mitchell]{reaching-folded}
+Erik~D. Demaine and Joseph S.~B. Mitchell.
+\newblock Reaching folded states of a rectangular piece of paper.
+\newblock In \emph{Proceedings of the 13th Canadian Conference on Computational
+  Geometry ({CCCG})}, 2001.
+
+\bibitem[Demaine et~al.(2004)Demaine, Devadoss, Mitchell, and
+  O'Rourke]{continuous}
+Erik~D. Demaine, Satyan~L. Devadoss, Joseph S.~B. Mitchell, and Joseph
+  O'Rourke.
+\newblock Continuous foldability of polygonal paper.
+\newblock In \emph{Proceedings of the 16th Canadian Conference on Computational
+  Geometry ({CCCG})}, 2004.
+
+\bibitem[Demaine et~al.(2026)Demaine, Ku, and Lang]{fold-format}
+Erik~D. Demaine, Jason~S. Ku, and Robert~J. Lang.
+\newblock The {FOLD} file format, 2026.
+\newblock URL \url{https://github.com/edemaine/fold}.
+\newblock Format specification and software repository, accessed 25 September
+  2026.
+
+\bibitem[Eppstein(2019)]{flat-folding-graphs}
+David Eppstein.
+\newblock Realization and connectivity of the graphs of origami flat foldings.
+\newblock \emph{Journal of Computational Geometry}, 10\penalty0 (1):\penalty0
+  257--280, 2019.
+\newblock \doi{10.20382/jocg.v10i1a10}.
+
+\bibitem[Filipov et~al.(2017)Filipov, Liu, Tachi, Schenk, and
+  Paulino]{bar-and-hinge}
+Evgueni~T. Filipov, Ke~Liu, Tomohiro Tachi, Mark Schenk, and Glaucio~H.
+  Paulino.
+\newblock Bar and hinge models for scalable analysis of origami.
+\newblock \emph{International Journal of Solids and Structures}, 124:\penalty0
+  26--45, 2017.
+\newblock \doi{10.1016/j.ijsolstr.2017.05.028}.
+
+\bibitem[Huang et~al.(2026)Huang, Chen, Jiang, Han, Tu, Yang, and
+  Jiang]{learn2fold}
+Yanjia Huang, Yunuo Chen, Ying Jiang, Jinru Han, Zhengzhong Tu, Yin Yang, and
+  Chenfanfu Jiang.
+\newblock {Learn2Fold}: Structured origami generation with world model
+  planning.
+\newblock \emph{arXiv preprint arXiv:2603.29585}, 2026.
+
+\bibitem[Hull \& Zakharevich(2023)Hull and Zakharevich]{turing}
+Thomas~C. Hull and Inna Zakharevich.
+\newblock Flat origami is {T}uring complete.
+\newblock \emph{arXiv preprint arXiv:2309.07932}, 2023.
+
+\bibitem[Hull et~al.(2025)Hull, Michelen, and Yap]{random-locally}
+Thomas~C. Hull, Marcus Michelen, and Corrine Yap.
+\newblock On random locally flat-foldable origami.
+\newblock \emph{arXiv preprint arXiv:2502.04279}, 2025.
+
+\bibitem[Koehler(1968)]{koehler}
+John~E. Koehler.
+\newblock Folding a strip of stamps.
+\newblock \emph{Journal of Combinatorial Theory}, 5:\penalty0 135--152, 1968.
+
 \bibitem[Ku(2022)]{flatfolder}
 Jason~S. Ku.
 \newblock {Flat-Folder}: A crease pattern solver, 2022.
 \newblock URL \url{https://github.com/origamimagiro/flat-folder}.
 \newblock Software repository, accessed 25 September 2026.
+
+\bibitem[Ku \& Demaine(2016)Ku and Demaine]{thick-folding}
+Jason~S. Ku and Erik~D. Demaine.
+\newblock Folding flat crease patterns with thick materials.
+\newblock \emph{Journal of Mechanisms and Robotics}, 8\penalty0 (3):\penalty0
+  031003, 2016.
+\newblock \doi{10.1115/1.4031954}.
+
+\bibitem[Ku et~al.(2026)Ku, Terao, and Terao]{layer-algebra}
+Jason~S. Ku, Akira Terao, and Kenji~N. Terao.
+\newblock An algebraic approach to layer ordering constraints for origami
+  flat-foldability.
+\newblock In Guoxing Lu, Zhong You, and Michael Assis (eds.), \emph{Origami8,
+  Volume III}, pp.\  317--333. Springer, 2026.
+\newblock \doi{10.1007/978-981-96-6561-7_21}.
+
+\bibitem[Legendre(2013)]{meanders}
+St{\'e}phane Legendre.
+\newblock Foldings and meanders.
+\newblock \emph{arXiv preprint arXiv:1302.2025}, 2013.
+
+\bibitem[Liu et~al.(2025)Liu, Xue, Wang, Yin, Yang, and Gao]{spatial-survey}
+Weichen Liu, Qiyao Xue, Haoming Wang, Xiangyu Yin, Boyuan Yang, and Wei Gao.
+\newblock Spatial reasoning in multimodal large language models: A survey of
+  tasks, benchmarks and methods.
+\newblock \emph{arXiv preprint arXiv:2511.15722}, 2025.
+
+\bibitem[Lucas(1891)]{lucas}
+{\'E}douard Lucas.
+\newblock \emph{Th{\'e}orie des Nombres}, volume~1.
+\newblock Gauthier-Villars, Paris, 1891.
+
+\bibitem[Lunnon(1971)]{lunnon}
+W.~F. Lunnon.
+\newblock Multi-dimensional map-folding.
+\newblock \emph{The Computer Journal}, 14\penalty0 (1):\penalty0 75--80, 1971.
+\newblock \doi{10.1093/comjnl/14.1.75}.
+
+\bibitem[Mitani(2007)]{oripa}
+Jun Mitani.
+\newblock Development of origami pattern editor ({ORIPA}) and a method for
+  estimating a folded configuration of origami from the crease pattern.
+\newblock \emph{IPSJ Journal}, 48\penalty0 (9):\penalty0 3309--3317, 2007.
+\newblock URL \url{https://mitani.cs.tsukuba.ac.jp/dl/IPSJ-JNL4809039.pdf}.
+\newblock In Japanese.
+
+\bibitem[Moriya et~al.(2026{\natexlab{a}})Moriya, Raab, Vinker, and
+  Dekel]{foldingagent}
+Maya Moriya, Sigal Raab, Yael Vinker, and Tali Dekel.
+\newblock {FoldingAgent}: Inferring parametric origami procedures from
+  demonstration videos.
+\newblock \emph{arXiv preprint arXiv:2609.00377}, 2026{\natexlab{a}}.
+\newblock URL \url{https://arxiv.org/abs/2609.00377}.
+
+\bibitem[Moriya et~al.(2026{\natexlab{b}})Moriya, Raab, Vinker, and
+  Dekel]{purelandfold}
+Maya Moriya, Sigal Raab, Yael Vinker, and Tali Dekel.
+\newblock {PurelandFold}, 2026{\natexlab{b}}.
+\newblock URL \url{https://huggingface.co/datasets/mayaweiz/PurelandFold}.
+\newblock Dataset accompanying FoldingAgent; CC-BY-4.0; accessed 25 September
+  2026.
+
+\bibitem[Nakajima(2024)]{spin-model}
+Chihiro Nakajima.
+\newblock A spin model for global flat-foldability of random origami.
+\newblock \emph{arXiv preprint arXiv:2403.07306}, 2024.
+
+\bibitem[{OEIS Foundation Inc.}(2026)]{oeis-a000136}
+{OEIS Foundation Inc.}
+\newblock The on-line encyclopedia of integer sequences, {A000136}: Number of
+  ways of folding a strip of $n$ labeled stamps, 2026.
+\newblock URL \url{https://oeis.org/A000136}.
+\newblock Accessed 25 September 2026.
 
 \bibitem[{OpenAI}(2026)]{openai-codex}
 {OpenAI}.
@@ -65,6 +224,23 @@ Ryan Spencer, Roey Yaari, Ritvik Vemavarapu, Joyce Yang, Steven Ngo, and
 \newblock \emph{arXiv preprint arXiv:2512.22207}, 2025.
 \newblock URL \url{https://arxiv.org/abs/2512.22207}.
 
+\bibitem[Wu et~al.(2024)Wu, Mao, Zhang, Xia, Dong, Cui, and Wei]{vot}
+Wenshan Wu, Shaoguang Mao, Yadong Zhang, Yan Xia, Li~Dong, Lei Cui, and Furu
+  Wei.
+\newblock Mind's eye of {LLM}s: Visualization-of-thought elicits spatial
+  reasoning in large language models.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  ({NeurIPS})}, volume~37, 2024.
+\newblock URL
+  \url{https://proceedings.neurips.cc/paper_files/paper/2024/hash/a45296e83b19f656392e0130d9e53cb1-Abstract-Conference.html}.
+\newblock arXiv:2404.03622.
+
+\bibitem[{xkevio}(2026)]{creasy}
+{xkevio}.
+\newblock {Creasy}, 2026.
+\newblock URL \url{https://github.com/xkevio/Creasy}.
+\newblock Software repository, accessed 25 September 2026.
+
 \bibitem[Xu et~al.(2025)Xu, Lu, Zhao, Tan, Wang, Yuan, Chen, and
   Xu]{origamispace}
 Rui Xu, Dakuan Lu, Zicheng Zhao, Xiaoyu Tan, Xintao Wang, Siyu Yuan, Jiangjie
@@ -74,5 +250,32 @@ Rui Xu, Dakuan Lu, Zicheng Zhao, Xiaoyu Tan, Xintao Wang, Siyu Yuan, Jiangjie
 \newblock In \emph{Advances in Neural Information Processing Systems
   ({NeurIPS})}, 2025.
 \newblock URL \url{https://neurips.cc/virtual/2025/poster/115182}.
+
+\bibitem[Zahavy et~al.(2026)Zahavy, Hou, Tumiel, Doran, Faccio, Feng, Havrilla,
+  Khytryi, Li, Schut, Veeriah, Abrashi, Kosmulski, Lang, Robinson, Wong, Chiam,
+  Fang, and Singh]{corigami}
+Tom Zahavy, Shaobo Hou, Thomas Tumiel, James Doran, Francesco Faccio, Xidong
+  Feng, Alex Havrilla, Igor Khytryi, Chenglei Li, Lisa Schut, Vivek Veeriah,
+  Arijan Abrashi, Micha{\l} Kosmulski, Robert~J. Lang, Nick Robinson, Brandon
+  Wong, Marcus Chiam, Gloria Fang, and Satinder Singh.
+\newblock {COrigami}: An {AI} pipeline for co-designing flat-foldable visually
+  recognisable origami.
+\newblock \emph{arXiv preprint arXiv:2606.26299}, 2026.
+
+\bibitem[Zhu(2026)]{simfast}
+Yi~Zhu.
+\newblock {Sim-FAST}: Simulator for active structures, 2026.
+\newblock URL \url{https://github.com/zzhuyii/Sim-FAST}.
+\newblock Software repository, accessed 25 September 2026.
+
+\bibitem[Zhu \& Filipov(2021)Zhu and Filipov]{swomps}
+Yi~Zhu and Evgueni~T. Filipov.
+\newblock Sequentially working origami multi-physics simulator ({SWOMPS}): A
+  versatile implementation.
+\newblock In \emph{Proceedings of the ASME 2021 International Design
+  Engineering Technical Conferences and Computers and Information in
+  Engineering Conference (IDETC-CIE), Volume 8B: 45th Mechanisms and Robotics
+  Conference}, pp.\  V08BT08A034, 2021.
+\newblock \doi{10.1115/DETC2021-68042}.
 
 \end{thebibliography}
