@@ -70,14 +70,16 @@ significant on its own (two-sided Fisher exact test, $p\approx0.02$; $p\approx0.
 for the others), and a 95\% Wilson interval spans roughly $\pm0.3$ (e.g.\ 0.11--0.60 for
 3/10). Pairing outcomes by sample and condition, every discordant pair favours high effort
 (12 to 0; exact McNemar test, $p<0.001$), so the effect is consistent even where single cells
-are underpowered. It does not extend to the easy group, where high-effort GPT-6 Luna stays at 3/10
-in every condition and low-effort GPT-5.6 Luna with automatic feedback reaches 4/10.
+are underpowered.
 
 \paragraph{Depth.} No Luna ablation solves a medium or hard sample, and the breadth-first
 baseline solves 1/40 medium and 0/16 hard attempts (Appendix~\ref{app:bfs-analysis}), against
 366/669 on the easy group. Within the easy group, the model solve rate falls from 32\% at four folds to
 0--15\% at eight to ten (Table~\ref{tab:easy-depth}); beyond ten reference folds the benchmark is
-currently out of reach for these models and nearly so for systematic search. Depth is not isolated from other geometric differences
+currently out of reach for these models and nearly so for systematic search. This matches the
+cost of search itself: breadth-first search time grows exponentially with depth, by a fitted
+factor of 3.9, 4.6 and 12.4 per fold on the easy, medium and hard groups
+(Figure~\ref{fig:depth-wall}, Appendix~\ref{app:bfs-analysis}). Depth is not isolated from other geometric differences
 between groups.
 
 Supplementary exploratory model results are reported in

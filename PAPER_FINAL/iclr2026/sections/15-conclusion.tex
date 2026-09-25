@@ -9,7 +9,8 @@ environment that rules on each fold, and a replay-based scorer that accepts any 
 The experiments support three observations. First, difficulty rises steeply with sequence
 depth: models solve some easy and some-layers samples, but no ablation configuration solves a
 medium or hard sample, and breadth-first search over the same actions solves 366/669 easy
-attempts but only 1/40 medium and 0/16 hard. Second, failure is a search failure: rejected
+attempts but only 1/40 medium and 0/16 hard, in line with a search cost that grows
+exponentially with depth. Second, failure is a search failure: rejected
 actions never end an episode, and most unsuccessful episodes in the broader evaluation end with
 the model cycling through states it has already visited. Third, assistance and reasoning effort
 help within reach but do not move that reach: legal-fold enumeration, target feedback and higher
