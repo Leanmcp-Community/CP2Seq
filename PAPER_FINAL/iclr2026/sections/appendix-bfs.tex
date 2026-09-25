@@ -1,0 +1,43 @@
+\subsection{Breadth-first search analysis}
+\label{app:bfs-analysis}
+\label{sec:exp-baselines}
+\label{sec:results-baseline}
+
+The saved BFS evaluation contains 725 attempts: 366/669 solved on easy samples
+(54.7\%), 1/40 on medium, and 0/16 on hard. These attempts include repeated samples
+and different budgets and are not paired with the recent ten-sample ablations.
+BFS uses wall-clock, state-expansion, and depth limits, while model runs use turn
+and call-timeout limits.
+% Source: workspace/RESULTS/results.md.
+
+A fold is specified by a line in current-plane coordinates together with a layer selection, and
+both are drawn from small finite sets. Candidate lines are read off the crease pattern itself: the distinct lines through its mountain and valley edges,
+carried forward through each distinct face transform into current coordinates, then deduplicated.
+On a box-pleated pattern thousands of crease edges collapse to a few dozen lines. Layer selections
+are not arbitrary subsets either, because a partial fold must be a contiguous run at one extremity
+of the stack; the selections are the whole stack, the top $k$, and the bottom $k$, which is about
+$2N$ for $N$ layers rather than $2^N$, with the over or under direction forced for partials. Each
+surviving candidate is judged by the same function the \texttt{add\_fold} tool calls, so a listed
+fold cannot be one the tool would then reject, and it is dropped if it fails any material check of
+Section~\ref{sec:env-refusals} or would crease the sheet where the target pattern carries no
+crease.
+
+Across 73,750 enumerations recorded in the saved runs, this evaluates a mean of about 2,010
+candidate actions per state and returns 3.51 of them, a ratio of approximately 570 between evaluated and returned candidates.
+The baseline expands with the same enumerator the model is given, tests goals with the
+same terminal comparator that decides \texttt{solved}, reads no reference sequence, and runs under
+a per-sample wall-clock budget with caps on states expanded and depth.
+
+\input{figures/depth-wall-plot}
+
+The supplementary cost model approximates search time as the product of two exponential factors:
+the frontier grows with the branching factor, and the cost of expanding one node grows with depth
+as well, because one enumeration evaluates four candidates per crease line per facet and a fold of
+all layers at most doubles the facets. Fitting both from the saved searches gives a per-fold
+multiplier of 3.9 on the easy group, 4.6 on medium and 12.4 on hard
+(Figure~\ref{fig:depth-wall}). These fitted curves extrapolate beyond the observed depths; they are not measured
+solution times or lower bounds. The hard-group fit uses only two samples.
+% EDITING NOTE: Validate the cost model and extrapolations before submission.
+
+
+\input{sections/figure-bfs-effort}

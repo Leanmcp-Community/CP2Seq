@@ -3,11 +3,7 @@
 
 \phantomsection
 \label{sec:scoring-why}
-The recorded sequence provides one solution, but other sequences may produce the required
-construction. We therefore assess correctness by execution rather than agreement with the
-reference actions. Distance between the constructed crease pattern and the input crease pattern
-is a separate measure of geometric progress; it does not compare action sequences or replace
-final-state verification.
+We accept any executable sequence that produces the required crease pattern and folded state.
 
 \subsubsection{Verification}
 \label{sec:scoring-what}
@@ -16,22 +12,20 @@ We execute the proposed sequence and compare its accumulated creases with the in
 including mountain--valley assignments. We then compare the final stack with the target after
 alignment by a single global translation, rotation, or turnover. A turnover reflects the geometry,
 reverses the stack order, and flips face orientations. The same transformation must align all
-layers; independent layer transformations and arbitrary layer permutations are not accepted.
+layers in their corresponding stack order.
 A successful construction must satisfy both crease-pattern and folded-state agreement.
 
-Neither comparison is tolerance-free. The crease comparator and the shared folded-state
+The crease comparator and the shared folded-state
 comparator both match positions within $2\times10^{-6}$; Table~\ref{tab:tolerances} lists every
 tolerance in the pipeline, and Appendix~\ref{app:comparison-details} describes the alignment and
-representation details. These final checks are distinct from the three optional
-levels of target feedback supplied during an episode.
+representation details.
 
 \subsubsection{Reported metrics}
 \label{sec:scoring-metrics}
 
 We report solve rate by fold-count group, with the number of attempts and the applicable run
 budgets. Termination reasons distinguish successful submission, unsuccessful completion, budget
-limits, and repetition-related stopping. Query counts describe search effort; for unsuccessful
-attempts they are consumed queries, not observed queries to solution.
+limits, and repetition-related stopping. Query counts measure calls consumed before termination.
 
 % EDITING NOTE: Compute CP edit distance for the final valid state of every saved attempt,
 % including unsuccessful and interrupted runs. Define edits, costs, normalization, and treatment
@@ -45,18 +39,9 @@ Each missing or extra interval costs one; changing an assignment costs two. Part
 intervals do not match unless their endpoints agree within tolerance. We also report
 $d_{\mathrm{CP}}/|C_{\mathrm{target}}|$, which can exceed one. Normalized distance is undefined
 for an empty target. Means weight attempts equally and exclude missing state artifacts,
-whose counts are reported separately. This metric compares crease patterns, not fold sequences,
-and zero distance does not establish folded-state agreement.
+whose counts are reported separately.
 
 \phantomsection
 \label{sec:scoring-validate}
-The comparator that scores every reported run is validated by a test that must accept the global
-transformations and reject everything else. Acceptance is checked across rotations, turnovers and
-translations, in both comparison directions, and under changes to polygon start vertex and winding
-that do not change the folded object. Rejection is checked for a turnover without stack reversal,
-a turnover without parity flips, a coordinate mirror presented as a turnover, a permuted layer
-order, a missing layer, a uniform scaling, a per-layer transformation that no single isometry
-explains, and an empty stack. The polygons used are asymmetric, so an incorrect reflection cannot
-pass through a symmetry of the square. This validates the implementation on the scoring path. The
-corpus-side comparator is a separate implementation with its own negative control, described in
-Appendix~\ref{app:comparison-details}, and does not stand in for it.
+Comparator implementation and validation cases are described in
+Appendix~\ref{app:comparison-details}.

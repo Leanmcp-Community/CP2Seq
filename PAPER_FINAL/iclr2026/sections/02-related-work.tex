@@ -15,13 +15,9 @@ output.
 
 CP2Seq focuses on recovering a complete folding sequence from a crease pattern and a target
 folded state. The model selects and revises actions, and evaluation checks their execution and the
-resulting construction. This differs from selecting a folded configuration or generating a pattern
-specification. Our procedural generator records reference sequences as folds are performed,
+resulting construction. Our procedural generator records reference sequences as folds are performed,
 allowing new instances to be produced without manually annotating solutions. The environment
 checks proposed actions under its supported folding model and supplies feedback during the search.
-Rejecting an invalid action in a reachable instance is distinct from identifying an impossible
-crease pattern: the former concerns a particular move, while the latter concerns the feasibility
-of the pattern itself.
 
 \subsection{Computational origami and sequence planning}
 \label{sec:related-theory}

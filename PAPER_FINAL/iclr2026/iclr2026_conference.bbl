@@ -10,20 +10,23 @@
 Hugo~A. Akitaya, Jun Mitani, Yoshihiro Kanamori, and Yukio Fukui.
 \newblock Generating folding sequences from crease patterns of flat-foldable
   origami.
-\newblock In \emph{{ACM} {SIGGRAPH} Posters / Student Research Competition},
-  2013.
+\newblock In \emph{{ACM SIGGRAPH 2013 Posters}}, pp.\ ~1. Association for
+  Computing Machinery, 2013.
+\newblock \doi{10.1145/2503385.2503407}.
 
 \bibitem[Akitaya et~al.(2017)Akitaya, Demaine, and Ku]{akitaya-hard}
 Hugo~A. Akitaya, Erik~D. Demaine, and Jason~S. Ku.
 \newblock Simple folding is really hard.
 \newblock \emph{Journal of Information Processing}, 25:\penalty0 580--589,
   2017.
+\newblock \doi{10.2197/ipsjjip.25.580}.
 
-\bibitem[Akitaya et~al.(2024)Akitaya, Demaine, and Ku]{akitaya-flatfolder}
+\bibitem[Akitaya et~al.(2026)Akitaya, Demaine, and Ku]{akitaya-flatfolder}
 Hugo~A. Akitaya, Erik~D. Demaine, and Jason~S. Ku.
 \newblock Computing flat-folded states.
-\newblock In \emph{Origami$^8$: Eighth International Meeting on Origami in
-  Science, Mathematics and Education ({OSME})}, 2024.
+\newblock In Guoxing Lu, Zhong You, and Michael Assis (eds.), \emph{Origami8,
+  Volume III}, pp.\  201--219. Springer, 2026.
+\newblock \doi{10.1007/978-981-96-6561-7_14}.
 
 \bibitem[Arkin et~al.(2004)Arkin, Bender, Demaine, Demaine, Mitchell, Sethia,
   and Skiena]{arkin-map}
@@ -39,31 +42,37 @@ Marshall Bern and Barry Hayes.
 \newblock In \emph{Proceedings of the Seventh Annual {ACM}-{SIAM} Symposium on
   Discrete Algorithms ({SODA})}, pp.\  175--183, 1996.
 
-\bibitem[Creasy()]{creasy}
-Creasy.
-\newblock {Creasy}, 2022.
-\newblock Open-source crease-pattern-to-sequence implementation, Java, GPL-3.0,
-  unmaintained since 2022. \url{https://github.com/xkevio/Creasy}.
+\bibitem[Ku(2022)]{flatfolder}
+Jason~S. Ku.
+\newblock {Flat-Folder}: A crease pattern solver, 2022.
+\newblock URL \url{https://github.com/origamimagiro/flat-folder}.
+\newblock Software repository, accessed 25 September 2026.
 
-\bibitem[Flat-Folder()]{flatfolder}
-Flat-Folder.
-\newblock {Flat-Folder}, 2024.
-\newblock \url{https://github.com/origamimagiro/flat-folder}, MIT licence.
-  Decides and enumerates flat-folded states.
+\bibitem[{OpenAI}(2026)]{openai-codex}
+{OpenAI}.
+\newblock {Codex CLI}.
+\newblock Open-source software, version 0.155.1, 2026.
+\newblock URL
+  \url{https://github.com/openai/codex/tree/be2951ea34f0d295ed0becf97079f92fa5f6950e}.
+\newblock Release tag rust-v0.155.1; accessed 25 September 2026.
 
 \bibitem[Spencer et~al.(2025)Spencer, Yaari, Vemavarapu, Yang, Ngo, and
   Sharma]{gamibench}
-R.~Spencer, R.~Yaari, R.~Vemavarapu, J.~Yang, S.~Ngo, and U.~Sharma.
+Ryan Spencer, Roey Yaari, Ritvik Vemavarapu, Joyce Yang, Steven Ngo, and
+  Utkarsh Sharma.
 \newblock {GamiBench}: Evaluating spatial reasoning and {2D}-to-{3D} planning
   capabilities of {MLLMs} with origami folding tasks.
 \newblock \emph{arXiv preprint arXiv:2512.22207}, 2025.
+\newblock URL \url{https://arxiv.org/abs/2512.22207}.
 
 \bibitem[Xu et~al.(2025)Xu, Lu, Zhao, Tan, Wang, Yuan, Chen, and
   Xu]{origamispace}
-R.~Xu, D.~Lu, Z.~Zhao, X.~Tan, X.~Wang, S.~Yuan, J.~Chen, and Y.~Xu.
+Rui Xu, Dakuan Lu, Zicheng Zhao, Xiaoyu Tan, Xintao Wang, Siyu Yuan, Jiangjie
+  Chen, and Yinghui Xu.
 \newblock {OrigamiSpace}: Benchmarking multimodal {LLMs} in multi-step spatial
   reasoning with mathematical constraints.
 \newblock In \emph{Advances in Neural Information Processing Systems
   ({NeurIPS})}, 2025.
+\newblock URL \url{https://neurips.cc/virtual/2025/poster/115182}.
 
 \end{thebibliography}

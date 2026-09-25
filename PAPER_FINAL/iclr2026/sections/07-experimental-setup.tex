@@ -1,6 +1,10 @@
 \subsection{Evaluation protocol}
 \label{sec:experiments}
 
+The model interface uses OpenAI Codex CLI \citep{openai-codex} through a custom
+episode harness. Software version evidence is documented in
+Appendix~\ref{app:software-versions}.
+
 % EDITING NOTE (retained): The pipeline -----should have a hand drawn graph
 \subsubsection{Episode procedure}
 \label{sec:exp-pipeline}
@@ -9,27 +13,7 @@ One episode is one sample attempted by one model under one tier of assistance. T
 for every arm and every model, and the only thing that varies between arms is what the model is
 allowed to see and call.
 
-{\small\begin{verbatim}
-EPISODE(sample, model, condition, query_budget):
-    cp, target <- LOAD_INPUTS(sample)
-    session <- INITIALIZE(cp, target, unfolded_square)
-    history <- []
-    for query in 1..query_budget:
-        obs <- OBSERVE(session, condition)
-        call <- model(cp, target, obs, history, condition)
-        if call is finish: break
-        # Edits: add/remove fold, go to step, restore revision.
-        # Reads: state, images, candidates, target feedback.
-        result <- DISPATCH_TRANSACTIONALLY(session, call)
-        # Rejected edits leave session unchanged but consume a query.
-        # Read calls consume a query without changing the sequence.
-        history.append(call, result)
-        if STOPPING_RULE(session, history): break
-    return SCORE(REPLAY(session.actions), REFERENCE_AT_SCORING(sample))
-\end{verbatim}
-}
-
-The pseudocode describes one tool call per query. Accepted edits update the current sequence;
+Each query contains one tool call. Accepted edits update the current sequence;
 rejected edits preserve it, and both consume budget. Removing a fold replays the remaining actions;
 returning to an earlier step truncates the sequence, while revision restoration can recover a
 previous branch. The reference sequence is withheld until scoring. Run-specific turn, time, and
@@ -51,34 +35,16 @@ cycle limits must be reported alongside the query count.
 % A dashed boundary around the withheld items (intermediate frames, reference
 % sequence) carries point (3) without a sentence.
 % ===========================================================================
-\input{figures/pipeline}
+Episode pseudocode and the evaluation pipeline appear in
+Appendix~\ref{app:evaluation-pipeline}.
 
 \subsubsection{Tool configuration}
 \label{sec:exp-tools}
 
-Table~\ref{tab:tools} lists the tool interface. Loading and configuration are described in
-Appendix~\ref{app:tool-loading}.
-
-\begin{table}[h]
-\centering
-\caption{Tools available to the evaluation harness; exposure depends on run configuration.}
-\label{tab:tools}
-\begin{tabular}{lp{0.65\textwidth}}
-\hline
-Tool & Operation \\
-\hline
-\texttt{add\_fold} & Append a checked fold; reject invalid actions without changing state. \\
-\texttt{remove\_fold} & Remove a specified fold and replay the remainder transactionally. \\
-\texttt{go\_to\_step} & Retain the first specified number of folds. \\
-\texttt{restore\_revision} & Restore a previously recorded branch state. \\
-\texttt{get\_state} & Return the current sequence and layer geometry. \\
-\texttt{get\_images} & Render views of a completed step, including X-ray and exploded views. \\
-\texttt{list\_legal\_folds} & Optionally enumerate legal candidates compatible with the target CP. \\
-\texttt{compare\_to\_target} & Optionally return feedback at the configured level (Section~\ref{sec:target-feedback}). \\
-\texttt{finish} & End the episode and evaluate the current sequence. \\
-\hline
-\end{tabular}
-\end{table}
+All conditions provide fold editing, backtracking, and state observations. Additional
+conditions provide legal-fold enumeration and target feedback
+(Section~\ref{sec:ablations}). The full tool interface and loading configuration
+appear in Appendix~\ref{app:tool-interface}.
 
 % ===========================================================================
 % FIGURE 5 -- A REFUSAL AS THE MODEL RECEIVES IT.  [TO DRAW]
@@ -94,102 +60,16 @@ Tool & Operation \\
 % ===========================================================================
 % EDITING NOTE: Refusal figure moved to the appendix plan; use an actual rejected action.
 
-
 \subsubsection{Models and budgets}
 \label{sec:exp-protocol}
 
-\textbf{Conditions.} Section~\ref{sec:ablations} distinguishes completed configurations from
-planned comparisons. Matched samples and budgets are required for controlled comparisons; the
-current aggregate does not establish such matching.
+The recent ablations evaluate GPT-5.6 Luna at low reasoning effort and GPT-6 Luna
+at low and high effort, using ten samples per group and configuration. Runs use an
+80-turn limit, a 300-second call timeout, and full image history. Earlier runs have
+different coverage and budgets and are reported separately (Section~\ref{sec:results}).
+% EDITING NOTE: Report per-run stopping limits and repeat variability from the inventory.
 
-\textbf{Models.} \texttt{[TO FILL from the aggregation: the models actually run, their versions, and
-the reasoning-effort and image-history settings used. Held fixed across tiers, because comparing
-across models and across tiers at once would confound the two.]}
-
-\textbf{Protocol.} Report budgets, repeat counts, and stopping rules for each configuration.
-The current results aggregate attempts; per-sample repeats and their variability have not yet
-been reported (Section~\ref{sec:results-threats}).
-
-\textbf{Transforms are applied in every reported result.} Every solve rate in
-Section~\ref{sec:results} is computed after quotienting out the plane isometry group of
-Section~\ref{sec:scoring-what}: translation, rotation and reflection, with reflections reversing the
-stack and flipping face parity. A candidate is counted correct if one single isometry carries every
-layer onto its reference counterpart. This is not a post-hoc leniency applied to borderline cases;
-it is part of the definition of a correct answer, applied identically to every arm, every model and
-every baseline. Turning it off would mark correct answers wrong, because where a folded model lands
-on the table is an accident of which half of the sheet travelled.
-
-\textbf{Matching under transforms requires a floating-point tolerance, and it is stated.} Admitting
-arbitrary rotation means candidate and reference coordinates agree only to within floating-point
-representation, so the comparator matches polygons within $2\times10^{-6}$; the remaining
-tolerances are listed in Table~\ref{tab:tolerances}. Every result record carries the tolerances it
-was scored under, so the values are visible in the released runs rather than buried in a constant. Crease compatibility and terminal-state comparison both involve numerical
-tolerances; these checks must not be described as tolerance-free.
-
-\textbf{Error verbosity is itself a variable.} The richer a refusal, the more of the reasoning the
-environment performs rather than the model; at the limit a message that names the fix has solved the
-step. Verbosity is fixed before the first run and reported, otherwise the comparison between tiers
-measures message design rather than reasoning.
-
-\subsubsection{Baselines}
-\label{sec:exp-baselines}
-
-Breadth-first search has recorded results. Uniform random search and the symbolic solver below
-remain planned baselines; they are not included in the reported comparison.
-
-\begin{table}[h]
-\caption{Baseline configurations and status. % EDITING NOTE: [TO RUN] remaining baselines
-}
-\label{tab:baselines}
-\begin{center}
-\small
-\begin{tabular}{p{0.43\textwidth}p{0.45\textwidth}}
-\multicolumn{1}{c}{\bf BASELINE}  &\multicolumn{1}{c}{\bf WHAT IT ESTABLISHES} \\
-\hline \\
-Uniform random over enumerated legal actions (planned) & The floor. What the tool alone achieves with no reasoning at all \\[3pt]
-Deterministic breadth-first over the same action set (\texttt{workspace/search\_baseline.mjs}) & How much of the task the enumerator already solves, and the depth at which exhaustive search stops being affordable \\[3pt]
-Symbolic crease-pattern-to-sequence solver \citep{creasy} (planned) & The closest thing to prior art on the task itself \\
-\end{tabular}
-\end{center}
-\end{table}
-
-\paragraph{What the enumerator does, and why exhaustive search is affordable.}
-A fold is specified by a line in current-plane coordinates together with a layer selection, and
-both are drawn from small finite sets. Candidate lines are read off the crease pattern itself: the distinct lines through its mountain and valley edges,
-carried forward through each distinct face transform into current coordinates, then deduplicated.
-On a box-pleated pattern thousands of crease edges collapse to a few dozen lines. Layer selections
-are not arbitrary subsets either, because a partial fold must be a contiguous run at one extremity
-of the stack; the selections are the whole stack, the top $k$, and the bottom $k$, which is about
-$2N$ for $N$ layers rather than $2^N$, with the over or under direction forced for partials. Each
-surviving candidate is judged by the same function the \texttt{add\_fold} tool calls, so a listed
-fold cannot be one the tool would then reject, and it is dropped if it fails any material check of
-Section~\ref{sec:env-refusals} or would crease the sheet where the target pattern carries no
-crease.
-
-Across 73,750 enumerations recorded in the saved runs, this evaluates a mean of about 2,010
-candidate actions per state and returns 3.51 of them, a prune of roughly 570 times performed by
-the environment rather than by the model. That factor is what makes exhaustive search affordable
-at all: at a branching factor near 3.5, an easy sample of five folds is a tree of a few hundred
-states. The baseline expands with the same enumerator the model is given, tests goals with the
-same terminal comparator that decides \texttt{solved}, reads no reference sequence, and runs under
-a per-sample wall-clock budget with caps on states expanded and depth.
-
-\input{figures/depth-wall-plot}
-
-The same prune is also what bounds the baseline. Search cost is the product of two exponentials:
-the frontier grows with the branching factor, and the cost of expanding one node grows with depth
-as well, because one enumeration evaluates four candidates per crease line per facet and a fold of
-all layers at most doubles the facets. Fitting both from the saved searches gives a per-fold
-multiplier of 3.9 on the easy group, 4.6 on medium and 12.4 on hard
-(Figure~\ref{fig:depth-wall}). At those rates a search that closes an easy sample in tens of
-seconds needs days at the medium group's reference depth, and the fitted cost at the hard group's
-reference depth of 19 folds is around $10^{20}$ seconds. The groups differ in cost at equal depth, not
-only in the depth their references reach, because harder instances branch more and cost more per
-node.
-
-The comparison is therefore like-for-like by construction, and that is the point. The question a
-reader should ask is not whether a model can fold paper but how much of the task its tool has
-already done for it: if breadth-first search over the same enumerated actions solves most of the
-easy group outright, a model scoring below it is losing on a tree that tool had already pruned.
-This answers the ``the simulator did all the work'' objection numerically rather than
-structurally, which is the stronger form of that answer.
+We include breadth-first search over the same enumerated legal actions as a
+systematic-search baseline (Appendix~\ref{app:bfs-analysis}).
+% EDITING NOTE: Planned baselines retained for future work: uniform random search
+% over legal candidates and the symbolic crease-pattern solver cited as creasy.

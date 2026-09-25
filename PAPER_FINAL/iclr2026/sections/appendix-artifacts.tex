@@ -1,16 +1,144 @@
-\section{Tools, prompts, and run inspection}
+\section{Software and supplementary examples}
 \label{app:artifacts}
 
+\subsection{Software versions}
+\label{app:software-versions}
+The inspected Codex CLI installation is version \texttt{0.155.1}
+\citep{openai-codex}. Its upstream release tag \texttt{rust-v0.155.1} resolves to
+commit \texttt{be2951ea34f0d295ed0becf97079f92fa5f6950e}.
+
+The saved run configurations record the executable path but do not record its
+version or binary hash; the installation was checked on 25 September 2026.
+% EDITING NOTE: Do not assert that every historical run used this release without
+% contemporaneous version evidence. See SOFTWARE_PROVENANCE.md for local evidence.
+
+\input{sections/appendix-bfs}
+
+\subsection{Dataset generation}
+\label{app:generation-procedure}
+
+{\small\begin{verbatim}
+GENERATE(reference_depth, action_model):
+    state <- unfolded square
+    actions, frames <- [], []
+    for step in 1..reference_depth:
+        candidates <- LEGAL_FOLDS(state, action_model)
+        if candidates is empty: return FAILED
+        action <- SAMPLE(candidates)
+        state <- APPLY(state, action)
+        actions.append(action)
+        frames.append(state)
+    cp <- CREASE_PATTERN_IN_ORIGINAL_SHEET(state)
+    cp <- SPLIT_EDGES_AT_INTERSECTIONS(cp)
+    if not REPLAY_CHECK(cp, actions, state): return FAILED
+    return (cp, state, actions, frames, METADATA(actions))
+\end{verbatim}}
+
+\subsection{Evaluation pipeline}
+\label{app:evaluation-pipeline}
+
+{\small\begin{verbatim}
+EPISODE(sample, model, condition, query_budget):
+    cp, target <- LOAD_INPUTS(sample)
+    session <- INITIALIZE(cp, target, unfolded_square)
+    history <- []
+    for query in 1..query_budget:
+        obs <- OBSERVE(session, condition)
+        call <- model(cp, target, obs, history, condition)
+        if call is finish: break
+        # Edits: add/remove fold, go to step, restore revision.
+        # Reads: state, images, candidates, target feedback.
+        result <- DISPATCH_TRANSACTIONALLY(session, call)
+        # Rejected edits leave session unchanged but consume a query.
+        # Read calls consume a query without changing the sequence.
+        history.append(call, result)
+        if STOPPING_RULE(session, history): break
+    return SCORE(REPLAY(session.actions), REFERENCE_AT_SCORING(sample))
+\end{verbatim}
+}
+
+\input{figures/pipeline}
+
+\subsection{Tool interface and feedback}
+\label{app:tool-interface}
+Basic tools comprise all entries in Table~\ref{tab:tools} except the optional
+\texttt{list\_legal\_folds} and \texttt{compare\_to\_target} tools.
+Loading and configuration are described in Appendix~\ref{app:tool-loading}.
+
+\begin{table}[h]
+\centering
+\caption{Tools available to the evaluation harness; exposure depends on run configuration.}
+\label{tab:tools}
+\begin{tabular}{lp{0.65\textwidth}}
+\hline
+Tool & Operation \\
+\hline
+\texttt{add\_fold} & Append a checked fold; reject invalid actions without changing state. \\
+\texttt{remove\_fold} & Remove a specified fold and replay the remainder transactionally. \\
+\texttt{go\_to\_step} & Retain the first specified number of folds. \\
+\texttt{restore\_revision} & Restore a previously recorded branch state. \\
+\texttt{get\_state} & Return the current sequence and layer geometry. \\
+\texttt{get\_images} & Render top, oblique, reverse, X-ray, and exploded views of a completed step; exposed views depend on run configuration. \\
+\texttt{list\_legal\_folds} & Optionally enumerate legal candidates compatible with the target CP. \\
+\texttt{compare\_to\_target} & Optionally return feedback at the configured level (Section~\ref{sec:target-feedback}). \\
+\texttt{finish} & End the episode and evaluate the current sequence. \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Target-feedback levels}
+\label{app:feedback-levels}
+The run configuration selects one of three feedback levels for
+\texttt{compare\_to\_target}. The tool compares the current and target stacks.
+
+\begin{table}[h]
+\centering
+\caption{Information returned at each target-feedback level.}
+\begin{tabular}{lp{0.72\textwidth}}
+\hline
+Level & Information returned \\
+\hline
+1: Counts & Current and target layer counts, their difference, and a count-based summary. \\
+2: Diagnosis & Level 1 plus aligned layer matches, mismatched ranks, and a diagnosis of count,
+shape, orientation, or ordering disagreement. \\
+3: Corrections & Level 2 plus suggested corrections for up to twelve mismatched ranks, such as
+orientation changes or a different target rank for a layer shape. \\
+\hline
+\end{tabular}
+\end{table}
+
 \subsection{Tool schemas and prompt}
-The following source listings document the available arguments and the folding prompt. Tool
-exposure varies by run configuration; the full schema listing is not a claim that every run
-exposed every tool.
+The following listings document the tool schemas and folding prompt; tool exposure is configured per run.
 {\scriptsize\verbatiminput{../../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/tool_schemas.py}}
 {\small\verbatiminput{../../DHEERAJ_WORKSPACE/EXPERIMENT_SETUP/fold_prompt.md}}
 
+\subsection{Sample contents}
+\label{app:sample-contents}
+Each sample contains the input crease pattern, a reference state sequence, reference
+fold actions, and metadata (Table~\ref{tab:sample-files}).
+
+\begin{table}[h]
+\centering
+\caption{Contents of a CP2Seq sample.}
+\label{tab:sample-files}
+\label{sec:cp2seq-sample}
+\begin{tabular}{lp{0.68\textwidth}}
+\hline
+Artifact & Contents \\
+\hline
+Crease pattern & Input crease geometry. \\
+State sequence & Folded states after each reference action; only the final state is supplied
+as the target. \\
+Reference actions & Withheld fold lines, directions, layer selections, and
+creases created. \\
+Metadata & Sample descriptors and generator version. \\
+\hline
+\end{tabular}
+\end{table}
+
 \subsection{Dataset gallery and reference sequences}
 Each rendered panel contains the crease pattern, top view, and an oblique view with illustrative
-layer separation. Layer separation is a visualization aid, not simulated paper thickness.
+layer separation.
 \IfFileExists{figures/dataset/gallery.tex}{\input{figures/dataset/gallery}}{
 \noindent\fbox{\parbox{.9\linewidth}{Dataset gallery pending export: short all-layers,
 longer all-layers, and some-layers examples.}}}
@@ -20,9 +148,35 @@ longer all-layers, and some-layers examples.}}}
 We provide a trace-inspection interface for browsing saved runs, replaying recorded folding
 trajectories, and examining model actions alongside tool feedback and rendered states. This
 supports qualitative analysis of successful construction, repeated exploration, and unsuccessful
-termination. The interface presents recorded artifacts; it does not establish the model's internal
-reasoning process. A command-line trace viewer additionally supports filtering by task, trial,
+termination. A command-line trace viewer additionally supports filtering by task, trial,
 session, role, and event type.
+
+Figures~\ref{fig:dataset-browser-ui} and~\ref{fig:trace-viewer-ui} show the dataset
+browser and trace viewer, respectively. These interfaces support inspection of
+reference sequences and recorded model episodes.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth,height=.34\textheight,keepaspectratio]{\detokenize{../../assets/screenshots/Screenshot 2026-09-25 at 07.44.50.png}}
+\caption{Dataset browser with \texttt{easy-0028} selected. The interface displays
+sample metadata, the target crease pattern, and reference-sequence playback controls.
+The right panel shows the unfolded sheet at step zero.}
+\label{fig:dataset-browser-ui}
+\end{figure}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth,height=.34\textheight,keepaspectratio]{\detokenize{../../assets/screenshots/Screenshot 2026-09-25 at 07.43.22.png}}
+\caption{Trace viewer for a saved GPT-6 Luna attempt on \texttt{mid-0007}.
+Run and turn navigation appear beside the current and target states. The selected
+episode is marked unsolved; the displayed frame is at turn 12. Playback controls allow inspection of saved actions
+and feedback.}
+\label{fig:trace-viewer-ui}
+\end{figure}
+
+% EDITING NOTE: 07.44.33 is a second dataset-browser capture, not a verification
+% capture; retained in assets/screenshots but omitted as redundant. Add an actual
+% Verification-tab capture when available. Screenshots above are user-provided.
 
 % EDITING NOTE: Select actual saved episodes after inspecting their terminal verdicts.
 % Include one solved, one cycling, and one unsuccessful non-cycling attempt. For each,
@@ -30,14 +184,6 @@ session, role, and event type.
 % Include screenshots from traces.html: target/current state plus action and feedback panes.
 % Include actual request/response excerpts; do not invent representative tool responses.
 % Attach per-run budgets, effort, tool schemas, comparison tier, and supplementary results.
-
-\subsection{Comparator validation}
-Implementation details and current representation limits are described in
-Appendix~\ref{app:comparison-details}. The repository contains comparison and verification tests;
-executed test results and the exact comparator revision must accompany any reported validation.
-% EDITING NOTE: Capture fresh test output and resolve identity-aware versus shared comparator
-% differences before claiming all positive and corrupted-state controls pass.
-
 
 \subsection{Tool loading and configuration}
 \label{app:tool-loading}
@@ -48,6 +194,38 @@ from the exposed action schemas. The run configuration therefore records tool mo
 level, and action model separately.
 
 % REFUSAL FIGURE PLAN: Use a saved some-layers would-tear response with geometric diagnostics.
+\subsection{Rejection feedback}
+Figure~\ref{fig:rejection-feedback} illustrates the geometric evidence associated with
+a \texttt{would-tear} response using the shared verification fixtures. The comparison
+holds the initial state and hinge fixed and changes the selected layers. The export
+script records both engine responses and checks that rejection preserves the state.
+\input{figures/rejection-feedback}
+
+\subsection{Supplementary results}
+\label{app:supplementary-results}
+
+The inventory also contains small exploratory runs: GPT-6 Sol with legal enumeration
+solves 1/3 low-effort attempts and 1/1 high-effort attempt; GPT-6 Astra with basic tools
+solves 1/1 low-effort attempt. Earlier basic-tool runs record 0/7 for GPT-5.6 Sol and
+0/1 for GPT-5.6 Terra. One additional completed basic-tool attempt has no recorded
+model identity and is unsolved. These exploratory runs are reported separately from the Luna ablations.
+% EDITING NOTE: This paragraph reflects the generated inventory, not newer unaggregated runs.
+
+\IfFileExists{../../workspace/RESULTS/cp-distance/paper-table.tex}{%
+  \input{../../workspace/RESULTS/cp-distance/paper-table.tex}}{}
+
+\subsection{Protocol failure accounting}
+\label{app:protocol-failures}
+All 360 planned Luna ablation cases enter the solve-rate denominator. Of these,
+355 have completed episodes. Two cases end at the request input-size limit:
+\texttt{mid-0006} for GPT-5.6 Luna low with automatic feedback and GPT-6 Luna low
+with legal enumeration. GPT-6 Luna low with legal enumeration on \texttt{mid-0010}
+ends in a service prompt rejection. For GPT-6 Luna low with automatic feedback,
+\texttt{mid-0006} and \texttt{mid-0010} were omitted from the restarted batch after
+these blocking errors. These two cases are classified as omissions after blocking errors;
+no direct service error is recorded for them in that condition. All five cases
+count as unsuccessful evaluations under the planned protocol.
+
 % Panel A: current stack, selected moving region, proposed hinge, and shared off-hinge edge.
 % Panel B: original-sheet connectivity showing which moving/stationary regions share that edge.
 % Label the rejection and note that the simulator retains the pre-action state.
