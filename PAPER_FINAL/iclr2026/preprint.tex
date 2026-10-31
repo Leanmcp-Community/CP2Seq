@@ -1,5 +1,5 @@
 \documentclass{article} % For LaTeX2e
-\usepackage{iclr2027_conference,times}
+\usepackage{preprint,times}
 
 % Optional math commands from https://github.com/goodfeli/dlbook_notation.
 \input{math_commands.tex}
@@ -17,16 +17,9 @@
 
 \title{Origami as a Spatial and Geometric Reasoning Benchmark}
 
-% Authors must not appear in the submitted version. They should be hidden
-% as long as the \iclrfinalcopy macro remains commented out below.
-% Non-anonymous submissions will be rejected without review.
-%
-% With \iclrfinalcopy commented out, iclr2027_conference.sty replaces this
-% block with "Anonymous authors / Paper under double-blind review", so the
-% submission is anonymous regardless of what is written here.
 \author{Lu Xian \\
 LeanMCP \\
-\texttt{lu@leanmcp.com}
+\texttt{lu@leanmcp.com}\thanks{Corresponding author: Lu Xian, lu@leanmcp.com.}
 \And
 Dheeraj Pai \\
 LeanMCP \\
@@ -52,7 +45,7 @@ LeanMCP \\
 \newcommand{\fix}{\marginpar{FIX}}
 \newcommand{\new}{\marginpar{NEW}}
 
-\iclrfinalcopy % Uncomment for camera-ready version, but NOT for submission.
+\iclrfinalcopy
 \begin{document}
 
 
@@ -61,6 +54,8 @@ LeanMCP \\
 
 
 \input{sections/00-abstract}
+
+\noindent\textbf{Keywords:} origami; spatial reasoning; geometric reasoning; benchmark; multimodal language models; sequential planning
 
 \input{sections/01-introduction}
 \input{sections/02-related-work}
@@ -80,12 +75,12 @@ LeanMCP \\
 \input{sections/13-licence}
 \input{sections/14-llm-use}
 
-\subsubsection*{Acknowledgments}
+\subsubsection*{Conflicts of Interest}
 
-Withheld for anonymous review.
+Both authors are employed by LeanMCP. The authors declare no other conflicts of interest.
 
-\bibliography{iclr2027_conference}
-\bibliographystyle{iclr2027_conference}
+\bibliography{preprint}
+\bibliographystyle{preprint}
 
 \appendix
 
