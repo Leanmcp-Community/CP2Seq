@@ -41,6 +41,16 @@ from capture_fold import (BrowserSession, CORPUS, DEFAULT_SAMPLES, load_task,
 from codex_fold_loop import save_candidate, sequence_metrics, model_view
 
 
+def arm(strategy):
+    """The label the viewer's sidebar and every results row carry.
+
+    bfs and astar both keep "deterministic-bfs", which is the string every run recorded
+    before the reverse arm existed. Renaming them would make the published numbers
+    incomparable with the runs already on disk for no gain, so only the new arm is new.
+    """
+    return "deterministic-reverse" if strategy == "reverse" else "deterministic-bfs"
+
+
 def search(samples, seconds, max_states, node_bin, strategy="bfs"):
     """Run the search in node and return its verdict per sample."""
     command = [node_bin, str(ROOT / "workspace/search_baseline.mjs"), "--json",
@@ -96,8 +106,9 @@ def episode(args, sample_id, browser, run_dir, verdict):
     save_candidate(out, artifacts)
     save_images(browser.call("get_images")["images"], out / "final", **image_options)
     reference = json.loads((args.corpus / sample_id / "seq.json").read_text())["folds"]
-    result = {"sample_id": sample_id, "backend": "deterministic-bfs",
-              "model_requested": "deterministic-bfs", "tools": "legal-folds",
+    label = arm(args.strategy)
+    result = {"sample_id": sample_id, "backend": label,
+              "model_requested": label, "tools": "legal-folds",
               "termination": "finished" if verdict.get("status") == "solved" else verdict.get("status"),
               "sample_calls": 0, "tool_calls": len(actions) + 1,
               "search_strategy": verdict.get("strategy", "bfs"),
@@ -116,11 +127,15 @@ def main():
     parser.add_argument("--corpus", type=Path, default=CORPUS)
     parser.add_argument("--out", type=Path, default=HERE / "runs")
     parser.add_argument("--node-bin", default="node")
-    parser.add_argument("--strategy", choices=["bfs", "astar"], default="bfs",
+    parser.add_argument("--strategy", choices=["bfs", "astar", "reverse"], default="bfs",
                         help="bfs is the published floor: uninformed, obviously untuned. astar "
                              "orders the frontier by depth plus an estimate of folds remaining, "
                              "so it goes deeper on the same clock but its solutions are not "
-                             "guaranteed shortest.")
+                             "guaranteed shortest. reverse unfolds the target back to the flat "
+                             "sheet instead: every state it visits is inside the CP by "
+                             "construction, and because unfolding strictly reduces the layer "
+                             "count its depth is bounded by the target's own stack, so an "
+                             "exhausted reverse search is a proof rather than a timeout.")
     parser.add_argument("--seconds", type=float, default=10,
                         help="Search budget per sample. Shallow samples finish in well under a "
                              "second; deep ones blow past any budget, so a small number costs "
@@ -143,12 +158,13 @@ def main():
         load_task(sample_id, args.corpus)
 
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
-    run_dir = args.out / f"deterministic-{stamp}"
+    prefix = "deterministic" if args.strategy != "reverse" else "deterministic-reverse"
+    run_dir = args.out / f"{prefix}-{stamp}"
     run_dir.mkdir(parents=True)
     config = {k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()}
     # model/tools are what the viewer's sidebar reads to label the arm.
-    config.update(model="deterministic-bfs", tools="legal-folds", compare_tier=0,
-                  backend="deterministic-bfs")
+    config.update(model=arm(args.strategy), tools="legal-folds", compare_tier=0,
+                  backend=arm(args.strategy))
     write_json(run_dir / "config.json", config)
     print(json.dumps(config, indent=2), flush=True)
 
@@ -204,7 +220,7 @@ def main():
                 record(index, sample_id, verdict, one, browser, results)
     solved = sum(1 for r in results if r["solved"])
     print(f"Saved: {run_dir}", flush=True)
-    print(f"deterministic BFS solved {solved} of {len(results)}", flush=True)
+    print(f"{arm(args.strategy)} solved {solved} of {len(results)}", flush=True)
 
 
 if __name__ == "__main__":
