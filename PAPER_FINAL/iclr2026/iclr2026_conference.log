@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.1)  21 SEP 2026 18:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.1)  21 SEP 2026 18:37
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -307,8 +307,8 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip65
 )
-LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 5
-0.
+LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 2
+6.
  (/usr/local/texlive/2026basic/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
@@ -319,24 +319,24 @@ File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 ) (./iclr2026_conference.aux)
 \openout1 = `iclr2026_conference.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
 
 (/usr/local/texlive/2026basic/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -352,106 +352,122 @@ LaTeX Font Info:    ... okay on input line 50.
 \makeMPintoPDFobject=\count319
 \everyMPtoPDFconversion=\toks24
 )
-Package hyperref Info: Link coloring OFF on input line 50.
+Package hyperref Info: Link coloring OFF on input line 26.
  (./iclr2026_conference.out) (./iclr2026_conference.out)
 \@outlinefile=\write3
 \openout3 = `iclr2026_conference.out'.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 54.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 30.
 
 
 (/usr/local/texlive/2026basic/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 54.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 30.
 
 
 (/usr/local/texlive/2026basic/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 6
-6.
+) [1{/usr/local/texlive/2026basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+{/usr/local/texlive/2026basic/texmf-dist/fonts/enc/dvips/base/8r.enc}
+
+] [2]
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 1
+59.
 
 (/usr/local/texlive/2026basic/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)
-LaTeX Font Info:    Trying to load font information for OMS+pcr on input line 6
-9.
+) [3]
 
-(/usr/local/texlive/2026basic/texmf-dist/tex/latex/psnfss/omspcr.fd
-File: omspcr.fd 
-)
-LaTeX Font Info:    Font shape `OMS/pcr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 69.
- [1{/usr/local/texlive/2026basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{
-/usr/local/texlive/2026basic/texmf-dist/fonts/enc/dvips/base/8r.enc}
+LaTeX Warning: `h' float specifier changed to `ht'.
 
-] [2]
-LaTeX Font Info:    Trying to load font information for OT1+phv on input line 2
-44.
-
-(/usr/local/texlive/2026basic/texmf-dist/tex/latex/psnfss/ot1phv.fd
-File: ot1phv.fd 2020/03/25 scalable font definitions for OT1/phv.
-)
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 244.
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <7> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 244.
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <5> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 244.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [3]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [4]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+[4]
+Underfull \vbox (badness 2707) has occurred while \output is active []
 
  [5]
-(./iclr2026_conference.bbl) [6] [7] (./iclr2026_conference.aux)
+Overfull \hbox (11.57172pt too wide) in paragraph at lines 423--429
+ [] 
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[6]
+Overfull \hbox (8.85657pt too wide) in paragraph at lines 449--461
+ [] 
+ []
+
+[7] [8]
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 6
+24.
+ (/usr/local/texlive/2026basic/texmf-dist/tex/latex/psnfss/ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+)
+[9]
+Underfull \hbox (badness 3623) in paragraph at lines 648--649
+[]\OT1/ptm/m/n/10 The value of vi-sual feed-back
+ []
+
+
+Overfull \hbox (286.30307pt too wide) in paragraph at lines 701--712
+ [] 
+ []
+
+[10] (./iclr2026_conference.bbl
+Underfull \hbox (badness 4543) in paragraph at lines 23--26
+[]\OT1/ptm/m/n/10 PurelandFold.  []$\OT1/pcr/m/n/10 https : / / huggingface . c
+o / datasets / mayaweiz / PurelandFold$[]\OT1/ptm/m/n/10 ,
+ []
+
+
+Underfull \hbox (badness 5622) in paragraph at lines 41--43
+[]\OT1/ptm/m/n/10 Complexity of sim-ple fold-ing of mixed or-thog-o-nal crease 
+pat-terns.  \OT1/ptm/m/it/10 arXiv preprint
+ []
+
+[11]) [12] [13]
+Underfull \hbox (badness 10000) in paragraph at lines 830--835
+[]\OT1/ptm/m/n/10 Ownership: \OT1/pcr/m/n/10 paper/DRAFT.md \OT1/ptm/m/n/10 own
+s the pa-per's prose. It cites \OT1/pcr/m/n/10 DATASET.md\OT1/ptm/m/n/10 ,
+ []
+
+
+Underfull \hbox (badness 2837) in paragraph at lines 830--835
+\OT1/pcr/m/n/10 EXPERIMENTS[]SETUP.md \OT1/ptm/m/n/10 and \OT1/pcr/m/n/10 notes
+/plan/* \OT1/ptm/m/n/10 rather than re-stat-ing them. Num-bers
+ []
+
+[14] (./iclr2026_conference.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
 Package rerunfilecheck Info: File `iclr2026_conference.out' has not changed.
-(rerunfilecheck)             Checksum: 573DAE6E512C915F659E35CB3735C9CC;2689.
- )
-(\end occurred inside a group at level 1)
-
-### simple group (level 1) entered at line 257 ({)
-### bottom level 
+(rerunfilecheck)             Checksum: EA47169514FD6C892A16DF061842A2A0;6072.
+ ) 
 Here is how much of TeX's memory you used:
- 10771 strings out of 469006
- 157645 string characters out of 5454814
- 594344 words of memory out of 5000000
- 39274 multiletter control sequences out of 15000+600000
- 664813 words of font info for 111 fonts, out of 8000000 for 9000
+ 10901 strings out of 469006
+ 159902 string characters out of 5454814
+ 596851 words of memory out of 5000000
+ 39349 multiletter control sequences out of 15000+600000
+ 648406 words of font info for 80 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
- 75i,17n,90p,331b,535s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmbx10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmex10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2026basic/texmf-dist/fo
-nts/type1/public/amsfonts/cmextra/cmmib7.pfb></usr/local/texlive/2026basic/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026basic/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026basic
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026b
-asic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/20
-26basic/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/t
-exlive/2026basic/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr
-/local/texlive/2026basic/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/lo
-cal/texlive/2026basic/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/loca
-l/texlive/2026basic/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb></usr/local
-/texlive/2026basic/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texl
-ive/2026basic/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2
-026basic/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on iclr2026_conference.pdf (7 pages, 199189 bytes).
+ 75i,12n,90p,413b,587s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi1
+0.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmr7.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmsy10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmsy7.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/cour
+ier/ucrb8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/courier
+/ucrr8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/helvetic/u
+hvb8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/times/utmb8a
+.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
+</usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on iclr2026_conference.pdf (14 pages, 185490 bytes).
 PDF statistics:
- 235 PDF objects out of 1000 (max. 8388607)
- 188 compressed objects within 2 object streams
- 35 named destinations out of 1000 (max. 500000)
- 137 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 499 PDF objects out of 1000 (max. 8388607)
+ 456 compressed objects within 5 object streams
+ 111 named destinations out of 1000 (max. 500000)
+ 297 words of extra memory for PDF output out of 10000 (max. 10000000)
 
