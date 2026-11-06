@@ -1,7 +1,7 @@
 \section{Limitations}
 \label{sec:limitations}
 
-The evaluation covers Luna and BFS, and the ablations use ten samples per group and
+The evaluation covers Luna models, BFS and a random-legal baseline, and the ablations use ten samples per group and
 configuration. This study is currently privately funded, and these limits follow from the cost of
 evaluation: with full image history, one Luna episode consumed about 3.1 million input tokens on
 average over 20 episodes. In pilots, Qwen3.5-9B (via Tinker) cycled without solving either of two samples, and one
@@ -13,11 +13,15 @@ pre-creasing; the some-layers corpus currently extends to six reference folds. T
 represents zero-thickness flat states and does not model material mechanics or continuous
 collisions during folding.
 
-Termination labels record stopping conditions; attributing failures to individual capabilities
-requires further trajectory analysis. Revisit and budget limits constrain the observed search.
+Termination labels record stopping conditions. The trajectory categories of
+Section~\ref{sec:results-failures} locate where an episode broke down, but they are mechanical
+rules over observable states and do not identify which internal capability failed. Revisit and
+budget limits constrain the observed search; one configuration was rerun with a looser cycling limit.
 Training overlap with the public corpus is unknown.
 
-Corpus replay checks assess consistency with the shared generation engine. The terminal comparator
-compares current-plane polygons, parity and rank, and does not explicitly match original-sheet
-region identities, as detailed in Appendix~\ref{app:comparison-details}; equal shapes at different
-original-sheet locations can therefore require a correspondence check this path does not perform.
+Corpus replay checks assess consistency with the shared generation engine. The submitted results
+were scored with a plane-only terminal comparator that did not check original-sheet region
+identity; the identity audit (Appendix~\ref{app:identity-audit}) found accepted solutions that
+fail the identity-aware relation, and all results are now re-scored under it. The comparison
+tool shown to models still uses the plane-only relation, so its \emph{matches} can be wrong in
+the same way; the affected calls are counted in Appendix~\ref{app:protocol-failures}.

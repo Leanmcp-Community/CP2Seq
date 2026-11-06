@@ -300,15 +300,44 @@ count as unsuccessful evaluations under the planned protocol.
 \paragraph{Comparison-tool defect.} The target-comparison tool aligns stacks by their bottom
 layer. When no rigid motion aligned the two bottom layers and the layer counts were equal, it
 reported the diagnosis \emph{matches} with zero matching layers. Scoring uses a separate
-comparator and was not affected, so every reported solve is correct. Replaying the final state of
-every incorrect submission made under a comparison condition shows that five followed this false
-report: \texttt{easy-0001} in the automatic-feedback ablations for GPT-5.6 Luna (low) and GPT-6
-Luna (high), and \texttt{easy-0001}, \texttt{easy-0058} and \texttt{easy-0095} in the earlier
-on-demand comparison runs. These episodes are reported as measured; the comparison conditions
-are therefore slightly understated: by at most one solve in each affected ablation cell, and at most three
-of 108 attempts in the earlier on-demand condition. The defect is fixed
-in the released harness, and all 536 solved episodes in the supplementary runs still receive
-\emph{matches} from the corrected tool.
+comparator and was not affected by this defect. Replaying the final state of every incorrect
+submission made under a comparison condition shows that five followed this false report:
+\texttt{easy-0001} in the automatic-feedback ablations for GPT-5.6 Luna (low) and GPT-6 Luna
+(high), and \texttt{easy-0001}, \texttt{easy-0058} and \texttt{easy-0095} in the earlier on-demand
+comparison runs.
+
+Inspecting final states does not bound the defect's effect: a wrong diagnosis at any turn can
+redirect the rest of the search, and the correction need not only add solves. We therefore
+audited every comparison a model was shown, on demand or attached automatically, in every run.
+For each call we replayed the accepted sequence recorded with it, recomputed the comparison with
+the corrected tool at the same tier, and recorded any change in diagnosis or in the number of
+matching layers. Of \pending{C} calls in \pending{E} episodes, \pending{c} differ, in \pending{e}
+episodes; \pending{e$_a$} of these are Luna ablation episodes (all in condition A). The comparison
+tool, like the submitted scorer, used $E_{\mathrm{plane}}$; \pending{q} calls reported
+\emph{matches} on a state that is plane- but not identity-equivalent to the target.
+
+We reran every affected ablation episode with the corrected tool, under the original protocol
+(80 turns, full image history, same model and effort). Table~\ref{tab:feedback-reruns} gives the
+original and corrected outcomes side by side; the corrected outcome replaces the original in
+Table~\ref{tab:luna-ablations}. The earlier on-demand runs used other budgets and are reported as
+measured, with the \pending{e$_o$} affected episodes marked.
+
+\begin{table}[h]
+\centering
+\caption{Ablation episodes whose comparison feedback changed under the corrected tool. First
+divergent turn, original outcome, and outcome on rerun with the corrected tool.}
+\label{tab:feedback-reruns}
+\small
+\begin{tabular}{lllrll}
+\hline
+Model & Effort & Sample & First divergent turn & Original & Rerun \\
+\hline
+GPT-5.6 Luna & Low & \texttt{easy-0001} & \pending{} & wrong submission & \pending{} \\
+GPT-6 Luna & High & \texttt{easy-0001} & \pending{} & wrong submission & \pending{} \\
+\pending{further rows from rerun.tsv} & & & & & \\
+\hline
+\end{tabular}
+\end{table}
 
 % Panel A: current stack, selected moving region, proposed hinge, and shared off-hinge edge.
 % Panel B: original-sheet connectivity showing which moving/stationary regions share that edge.
@@ -316,3 +345,96 @@ in the released harness, and all 536 solved episodes in the supplementary runs s
 % Do not render a torn state as an accepted simulation result. A counterfactual separation may
 % be shown only as a clearly labelled explanatory schematic. Add a legal alternative only if
 % the same-state action has been checked by the engine. Pending selection of a suitable trace.
+
+\subsection{Matched baselines and trajectory analysis}
+\label{app:matched-trajectories}
+
+\paragraph{Baselines.} We ran two baselines on exactly the 40 ablation
+instances, with the same action space and legal-fold enumerator as the models and the same
+success criterion ($E_{\mathrm{id}}$), and with every budget stated (Table~\ref{tab:matched}).
+\emph{Random-legal} applies a uniformly random legal fold at each of 80 steps (the model's turn
+budget), restarting from the flat sheet when no fold is legal or the stack exceeds the target's
+layer count; success is checked after every fold, which is more generous than the model, which must
+decide to submit. We run 100 such episodes per instance. \emph{BFS} expands distinct states
+(keyed by layer polygons, parities and sheet regions) breadth first, to the reference depth plus
+four, under a 600-second wall-clock cap; we record the expansion at which it first reaches a
+solution, and read off solves at budgets of 80, $10^3$, $10^4$ and $10^5$ expansions.
+
+\paragraph{Failure categories.} Each unsuccessful episode is assigned the first of four mechanical categories that applies.
+\emph{F1, state tracking}: more than half of the proposed folds are geometrically illegal in the
+current state (tearing, no crease, nothing to move, impossible direction, invalid selection).
+\emph{F2, off pattern}: most rejections are legal folds outside the target crease pattern, and the
+crease pattern is never completed. \emph{F3, wrong stack}: the episode reaches a state with the
+full crease pattern and the target layer count, but in the wrong order, orientation or shape.
+\emph{F4, shallow search}: none of the above; the episode never reaches the target depth with a
+consistent crease pattern. The categories are descriptive. They separate where in the task an
+episode broke down, not which internal capability failed.
+
+
+\begin{table}[htbp]
+\centering
+\caption{Baselines on the 40 ablation instances (ten per group), under $E_{\mathrm{id}}$.
+Random-legal: instances with at least one solve in 100 episodes of 80 folds, and the mean
+per-episode solve rate. BFS: instances solved within each node-expansion budget (600\,s cap).
+The best Luna configuration is shown for reference.}
+\label{tab:matched}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrrrrr}
+\hline
+ & \multicolumn{2}{c}{Random-legal} & \multicolumn{4}{c}{BFS, expansions} & Best Luna \\
+Group & any & mean & 80 & $10^3$ & $10^4$ & $10^5$ & (of 10) \\
+\hline
+Easy        & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & \pending{4} \\
+Medium      & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & 0 \\
+Hard        & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & 0 \\
+Some-layers & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & \pending{8} \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Trajectory-level analysis of the Luna ablations. Rejection: share of proposed folds
+rejected (all causes / geometric only). Backtracks: accepted remove, go-to-step and restore
+calls per episode. F1--F4: unsuccessful episodes by category (see text).}
+\label{tab:trajectories}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lllrrrrrrr}
+\hline
+Model & Effort & Tools & Rejection & Geom. & Backtracks & F1 & F2 & F3 & F4 \\
+\hline
+GPT-5.6 Luna & Low & B & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} \\
+ & Low & L & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} \\
+ & Low & A & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} \\
+\hline
+GPT-6 Luna & Low & B & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} \\
+ & Low & L & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} \\
+ & Low & A & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} \\
+\hline
+GPT-6 Luna & High & B & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} \\
+ & High & L & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} \\
+ & High & A & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} & \pending{} \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Ablation sample selection}
+\label{app:sample-selection}
+\paragraph{Sample selection.} Sample IDs are assigned in generation order, which follows
+consecutive generator seeds (\texttt{easy-0001}--\texttt{0010} use seeds 20260918--20260927); the
+corpus manifest was written on 17 September 2026, before any ablation run (from 23 September), so
+the selection could not depend on model performance. The selected samples match their groups in
+reference depth (mean 6.2 vs.\ 6.8 folds on easy, 11.9 vs.\ 12.0 on medium, 16.4 vs.\ 16.2 on hard,
+5 vs.\ 5 on some-layers) but are somewhat simpler in final layer count (26.4 vs.\ 33.0 on easy,
+116 vs.\ 134 on medium, 860 vs.\ 933 on hard, 10.5 vs.\ 11.6 on some-layers) and in crease count.
+If anything, solve rates on the selected samples overstate those on the full groups.
+
+\paragraph{Sensitivity to the cycling limit.} Replaying the logged trajectories, a stricter
+limit of two repeats would have stopped \pending{n} episodes earlier, \pending{m} of them
+eventually solved. A looser limit cannot be replayed, because the episodes were not observed
+past their stop; we therefore reran GPT-6 Luna (high effort, A) on its 40 instances with a limit
+of six repeats. \pending{c} of its \pending{28} cycling stops then end in a solve, and its total
+changes from \pending{11}/40 to \pending{s}/40.
+

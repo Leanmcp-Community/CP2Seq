@@ -14,11 +14,13 @@ engine executes proposed folds or rejects invalid actions with explicit feedback
 remains responsible for selecting actions and searching for a solution. We evaluate
 multimodal language models under progressively greater tool assistance, and against a
 deterministic breadth-first search over the same action set. Candidate sequences are assessed by
-executing them and comparing the resulting folded state with the target, allowing for planar
-translations, rotations, and reflections. Performance falls off sharply with sequence depth:
+executing them and comparing the resulting folded state with the target, layer by layer and
+including which region of the sheet each layer comes from, allowing for planar translations,
+rotations, and reflections. Performance falls off sharply with sequence depth:
 in the Luna ablations no configuration solves a medium or hard sample (11 or more folds), while
-some-layers solves rise from 6/30 to 18/30 with higher reasoning effort. Failures are dominated by
-search rather than by illegal moves: in the broader evaluation, 48\% of episodes end by
-revisiting earlier states. A breadth-first search over the same actions, under its own time budget, solves 54.7\% of
-easy-group attempts, so short sequences are within reach of systematic search.
+some-layers solves rise from \pending{6/30 to 18/30} with higher reasoning effort, and removing images
+does not reduce solve rate. \pending{Check against Table 6:} with legal-fold enumeration, most failed episodes never reach the target
+depth, and the rest reach it with the layers in the wrong order. On the same instances and budgets, breadth-first search over the same actions solves
+\pending{x/10} easy and \pending{y/10} medium instances within \pending{$10^4$} expansions, so short sequences
+are within reach of systematic search.
 \end{abstract}

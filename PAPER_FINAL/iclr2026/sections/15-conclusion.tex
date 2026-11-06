@@ -5,10 +5,10 @@ CP2Seq pairs 600 generated instances and an open-ended generator with an environ
 each fold and a scorer that accepts any valid sequence. The experiments support three observations. First, difficulty rises steeply with sequence
 depth: models solve some easy and some-layers samples, but no ablation configuration solves a
 medium or hard sample, and breadth-first search over the same actions solves 366/669 easy
-attempts but only 1/40 medium and 0/16 hard, in line with a search cost that grows
-exponentially with depth. Second, unsuccessful episodes end mostly under
-the cycling stop rule, with the model returning to states it has already visited, rather than on illegal moves, which are rejected
-without ending the episode. Third, assistance and reasoning effort
+attempts but only 1/40 medium and 0/16 hard, consistent with a search cost that rises steeply on the deeper groups, which
+also have many more layers and creases. Second, once legal-fold enumeration removes illegal and off-pattern moves, unsuccessful episodes mostly
+never reach the target depth, and many of the rest reach it with the layers in the wrong order;
+most of them stop under the cycling rule, which describes how they ended rather than why. Third, assistance and reasoning effort
 help within reach but do not move that reach: on matched samples, legal-fold enumeration, target
 feedback and higher effort raise solve rates on short sequences, while medium and hard samples stay unsolved in every
 condition. Because each ablation result rests on ten samples per cell, we report these as trends with
@@ -16,11 +16,10 @@ their uncertainty rather than as rankings of models.
 
 Because the generator produces fresh instances with exact, programmatically checkable success,
 CP2Seq can also serve as an environment for training rather than only testing, a use we have
-not yet evaluated. Next steps are to extend the evaluation to other model families and to a
-text-only condition that isolates the contribution of images; to add a random-legal baseline
-and a symbolic solver such as \citet{creasy}; to compare models and search under
-matched budgets; and to analyse trajectories decision by decision, so that failures can be
-attributed to state tracking, target comparison or backtracking. A natural extension is to check generated sequences
+not yet evaluated. Next steps are to extend the evaluation to other model families and to the full corpus; to add
+a symbolic solver such as \citet{creasy}; and to probe model reasoning directly, so that
+failures can be attributed to state tracking, target comparison or backtracking rather than
+located by observable state alone. A natural extension is to check generated sequences
 with a bar-and-hinge simulator that models contact \citep{swomps}, connecting the benchmark to
 engineering folding problems.
 \phantomsection\label{sec:main-text-end}
