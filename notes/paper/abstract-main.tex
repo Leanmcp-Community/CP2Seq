@@ -1,0 +1,50 @@
+% Abstract -- MAIN paper (tool-augmented VLM vs. search baselines).
+%
+% /!\ THIS IS A TEMPLATE. Every [[SLOT]] is a result that DOES NOT EXIST YET -- no model run has
+% been made. Nothing here may be quoted, pasted into a submission, or shown to a collaborator as
+% a finding until its slot is filled from a real run. The prose around the slots is a commitment
+% about WHAT will be reported, chosen so that a disappointing number still makes a publishable
+% sentence; it is not a prediction of what the number will be.
+%
+% The numbers that ARE real are the baselines and the ceiling, and they are marked [measured].
+% Their provenance is notes/paper/abstract-numbers.md.
+%
+% DIVISION OF LABOUR WITH THE DATASET PAPER: that one stops at "here is the baseline". This one
+% starts there. If both are submitted, the dataset paper must not claim a method result and this
+% one must not re-derive the corpus contribution -- otherwise the two compete for the same
+% conclusion and each weakens the other.
+
+\begin{abstract}
+% -- the setup: why the task, and why the obvious evaluation of it is broken -------------------
+Recovering the fold sequence that produced a crease pattern is a multi-step spatial planning
+problem with an unusual property: instances are trivial to generate and expensive to solve.
+We evaluate tool-augmented vision-language models on this task against exhaustive search, on a
+synthesized corpus whose (pattern, sequence) pairs are correct by construction.
+
+% -- the framing measurement, already established -----------------------------------------------
+Evaluation on existing collections is capped before a model is involved: of 366 published
+patterns, 338 (92.3\%) are \emph{proven} to admit no simple-fold sequence, so a pooled
+``percent solved'' has a ceiling of 7.7\% [measured]. We therefore report every dataset-level
+number in strata --- proven foldable, proven not, and unknown --- and never pooled.
+
+% -- the baseline the method is measured against, already established ---------------------------
+Exhaustive search solves a five-fold pattern in a median of 4{,}002 simulated folds in the
+all-layers action space and 99{,}016 in the some-layers space, rising to 56{,}250 and 754{,}552
+at six folds, where 18 of 30 some-layers instances go unsolved within a million [measured].
+This is the query budget a learned method has to beat, and it is reported over \emph{all}
+attempts rather than only the solved ones, because conditioning on success hides the long tail
+that is the whole difficulty.
+
+% -- the contribution: fill from the runs --------------------------------------------------------
+Our loop gives the model a verified forward folding engine as a tool, so every proposed fold is
+simulated rather than imagined. Across [[N_INSTANCES]] instances it reaches [[ACCEPT_RATE]]
+terminal-match and [[SEQ_METRIC]] on the sequence-level metric, using a median of
+[[TOOL_CALLS]] tool calls --- [[SPEEDUP]] against the search baseline at the same fold count.
+[[HEADLINE_QUALIFIER: the one honest sentence about where it does NOT hold -- depth, tier, or
+stratum. Write this before the others, not after.]]
+
+% -- what the failures say -----------------------------------------------------------------------
+[[ERROR_ANALYSIS: one sentence. The intended claim is that failures are concentrated in a named
+structural property rather than spread uniformly; if they turn out to be spread uniformly, say
+so, because that is also a result about the task.]]
+\end{abstract}

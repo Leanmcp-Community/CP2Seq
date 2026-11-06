@@ -1,0 +1,24 @@
+Crease-pattern-to-sequence is a natural testbed for multi-step spatial planning, but the
+available resources do not support it: existing origami datasets provide crease patterns without
+sequences, final states without intermediate steps, or sequences that were never released. We
+contribute a synthesized corpus in which every sample is a (crease pattern, fold sequence) pair
+by construction -- folded forward from a square and unfolded to recover the pattern -- so the
+ground truth requires no annotation and no trust, together with exact forward engines and
+exhaustive solvers for two action-space tiers.
+
+The all-layers tier restricts each fold to move the whole stack rigidly. We show this buys three
+properties, of which the third is not usually named: no self-intersection, no layer ordering,
+and no tearing is possible at all -- a fold across a line moves no two connected pieces relative
+to each other. The some-layers tier lets a fold move a contiguous run of layers at either face
+of the stack, reinstating all three and making tearing a question about the sheet's connectivity
+that is decidable only in the original coordinates.
+
+Two measurements frame what the corpus is for. First, a ceiling: over an existing 366-pattern
+collection, 338 (92.3%) are proven to admit no simple-fold sequence, so a pooled "percent
+solved" on such data is capped at 7.7% and reports the task definition rather than the model.
+Second, an asymmetry that compounds: generation is linear in fold count while search is not.
+Median search cost rises 45.5x and 91.9x per two folds in the all-layers tier and 247.5x in the
+some-layers tier, whose cost relative to all-layers grows from 4.5x at three folds to 24.7x at
+five; at six folds 18 of 30 some-layers instances are unsolved within a million simulated folds.
+Both solvers double as verified ground truth and as the pure-search query baseline any learned
+method must be measured against.
