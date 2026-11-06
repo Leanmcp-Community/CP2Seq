@@ -65,7 +65,79 @@ function isometry(a1, a2, b1, b2, mirror) {
 }
 
 export function terminalMatch(layers, target) {
-  if (!layers.length || layers.length !== target.length) return false;
+  return terminalAlignment(layers, target, false) !== null;
+}
+
+// Identity-aware terminal match (equivalence relation E_id in the paper).
+//
+// terminalMatch (E_plane) asks whether the two stacks look the same: one plane isometry
+// carries every current-plane polygon and parity onto the target's at the same rank. It
+// never asks WHICH part of the original sheet each layer is. Two stacks can agree in the
+// plane while a layer at some rank comes from a different region of the sheet, e.g. when
+// two congruent flaps trade places. E_id additionally requires that, under the same
+// alignment, the layer at every rank occupies the same original-sheet polygon as the
+// target's layer at that rank. Sheet coordinates are the CP's own frame, which both
+// constructions share, so they are compared directly, with no isometry.
+//
+// Each layer must carry `sheet` (its polygon in original-sheet coordinates); a layer
+// without one makes the check fail closed rather than silently fall back to E_plane.
+//
+// `symmetries` (optional) are maps of the sheet onto itself that preserve the CP, including
+// M/V assignments (see cpSymmetries). Folding the sheet relabelled by such a map yields an
+// object no observer of the CP and the target can tell apart, so E_id accepts it: the
+// candidate's sheet region at every rank must equal sigma(target region) for ONE sigma.
+// The identity map is always included.
+export function identityTerminalMatch(layers, target, symmetries = []) {
+  if ([...layers, ...target].some(l => !Array.isArray(l.sheet))) return false;
+  return [p => p, ...symmetries].some(sigma => terminalAlignment(layers,
+    target.map(l => ({...l, sheet: l.sheet.map(sigma)})), true) !== null);
+}
+
+// The symmetries of the square sheet [x0,x1]x[y0,y1] (dihedral group D4 about its centre)
+// that map the CP's crease set onto itself with assignments preserved. Identity excluded.
+export function cpSymmetries(cp) {
+  const xs = cp.vertices_coords.map(v => v[0]), ys = cp.vertices_coords.map(v => v[1]);
+  const cx = (Math.min(...xs) + Math.max(...xs)) / 2, cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+  if (Math.abs((Math.max(...xs) - Math.min(...xs)) - (Math.max(...ys) - Math.min(...ys))) > MATCH_TOL) return [];
+  const maps = [
+    ([x, y]) => [cx - (y - cy), cy + (x - cx)], ([x, y]) => [2 * cx - x, 2 * cy - y],
+    ([x, y]) => [cx + (y - cy), cy - (x - cx)], ([x, y]) => [2 * cx - x, y],
+    ([x, y]) => [x, 2 * cy - y], ([x, y]) => [cx + (y - cy), cy + (x - cx)],
+    ([x, y]) => [cx - (y - cy), cy - (x - cx)],
+  ];
+  const key = (p, q, a) => {
+    const r = v => Math.round(v / 1e-5);
+    const [s, t] = [`${r(p[0])},${r(p[1])}`, `${r(q[0])},${r(q[1])}`].sort();
+    return `${a}:${s}:${t}`;
+  };
+  const edges = cp.edges_vertices.map((e, i) => [cp.vertices_coords[e[0]], cp.vertices_coords[e[1]],
+    cp.edges_assignment[i]]).filter(e => e[2] === 'M' || e[2] === 'V');
+  const base = new Set(edges.map(([p, q, a]) => key(p, q, a)));
+  return maps.filter(m => edges.every(([p, q, a]) => base.has(key(m(p), m(q), a))));
+}
+
+// Both checks in one pass, for audits: which alignment (if any) passed each relation.
+export function terminalMatchDetail(layers, target, symmetries = []) {
+  const plane = terminalAlignment(layers, target, false);
+  const hasSheets = [...layers, ...target].every(l => Array.isArray(l.sheet));
+  const strict = hasSheets ? terminalAlignment(layers, target, true) : null;
+  return {plane_match: plane !== null, identity_strict_match: strict !== null,
+    identity_match: hasSheets && identityTerminalMatch(layers, target, symmetries),
+    identity_checked: hasSheets, cp_symmetries: symmetries.length,
+    plane_alignment: plane, identity_alignment: strict};
+}
+
+// Layers of a live FoldSession with their original-sheet polygons attached, bottom to top.
+export function sessionLayers(session) {
+  const {paper} = session;
+  return session.layers.map((l, rank) => ({...l, sheet: paper.faces[paper.order[rank]].poly}));
+}
+
+// Returns {mirror, start, sign} for the first alignment that satisfies the relation, else null.
+// Every alignment is tried before giving up, so E_id is not hostage to the first E_plane hit:
+// a symmetric stack can admit several plane alignments, only some of them identity-preserving.
+function terminalAlignment(layers, target, identity) {
+  if (!layers.length || layers.length !== target.length) return null;
   // Every alignment of the first layer's vertex cycle, direct and mirrored,
   // proposes one isometry; a proposal counts only if it carries all layers.
   for (const mirror of [false, true]) {
@@ -77,11 +149,12 @@ export function terminalMatch(layers, target) {
       for (const sign of [1, -1]) {
         const b2 = onto[(start + sign + onto.length) % onto.length];
         const T = isometry(from[0], from[1], onto[start], b2, mirror);
-        if (T && aligned.every((l, i) => samePolygon(l.poly.map(T), target[i].poly))) return true;
+        if (T && aligned.every((l, i) => samePolygon(l.poly.map(T), target[i].poly)
+            && (!identity || samePolygon(l.sheet, target[i].sheet)))) return {mirror, start, sign};
       }
     }
   }
-  return false;
+  return null;
 }
 
 export function framesMatch(candidateFrame, targetFrame) {
@@ -91,3 +164,7 @@ export function framesMatch(candidateFrame, targetFrame) {
 export const TERMINAL_METRIC =
   'Polygon, parity and bottom-to-top layer equality under a single plane isometry ' +
   '(arbitrary translation and rotation; reflections reverse stack order and flip every parity)';
+
+export const IDENTITY_TERMINAL_METRIC = TERMINAL_METRIC +
+  '; additionally, under that same isometry, every layer occupies the same original-sheet polygon ' +
+  'as the target layer at its rank';

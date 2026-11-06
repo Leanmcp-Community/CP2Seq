@@ -1,0 +1,104 @@
+\documentclass{article} % For LaTeX2e
+\usepackage{preprint,times}
+
+% Optional math commands from https://github.com/goodfeli/dlbook_notation.
+\input{math_commands.tex}
+
+\usepackage{multirow}
+\usepackage{verbatim}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily\scriptsize,columns=fullflexible,breaklines=true,breakatwhitespace=false,keepspaces=true,showstringspaces=false,postbreak=\mbox{\ensuremath{\hookrightarrow}\space}}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+% Rebuttal revision: numbers produced by scripts/rebuttal/*.sh that have not been run yet.
+% Every \pending{} must be replaced by the script output before the revision is uploaded.
+\newcommand{\pending}[1]{\textcolor{red}{\textbf{[#1]}}}
+\pgfplotsset{compat=1.18}
+
+\title{Origami as a Spatial and Geometric Reasoning Benchmark}
+
+\author{Lu Xian \\
+LeanMCP \\
+\texttt{lu@leanmcp.com}\thanks{Corresponding author: Lu Xian, lu@leanmcp.com.}
+\And
+Dheeraj Pai \\
+LeanMCP \\
+\texttt{dheeraj.pai@leanmcp.com}}
+
+% Draft-only appendices (editorial rules, draft status, changes). These are working notes,
+% NOT paper content, and must be OFF for any submitted or shared PDF.
+% Set \draftnotestrue while drafting; \draftnotesfalse before uploading.
+\newif\ifdraftnotes
+\draftnotesfalse
+
+\newcommand{\draftimage}[1]{%
+  \begin{center}
+  \fbox{\parbox[c][#1\baselineskip][c]{0.92\textwidth}{\centering
+    \textbf{\footnotesize DRAFT IMAGE: PLACEHOLDER, NOT FINAL}\\[2pt]
+    \scriptsize This figure is a draft. It will be replaced with a human-authored
+    figure before submission. Drafts are generated with OpenAI \texttt{gpt-image-2}
+    via \texttt{paper/figures/gen\_figures.sh} and used only as tracing references;
+    no generated image carries data or geometry.\\[6pt]
+    \itshape\footnotesize}}
+  \end{center}}
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+\iclrfinalcopy
+\begin{document}
+
+
+\maketitle
+\lhead{Preprint}
+
+
+\input{sections/00-abstract}
+
+\noindent\textbf{Keywords:} origami; spatial reasoning; geometric reasoning; benchmark; multimodal language models; sequential planning
+
+\input{sections/01-introduction}
+\input{sections/02-related-work}
+\input{sections/04-dataset}
+\section{Experimental setup}
+\label{sec:experimental-setup}
+\input{sections/05-environment}
+\input{sections/06-scoring}
+\input{sections/07-experimental-setup}
+\input{sections/08-tiers}
+\input{sections/09-results}
+\input{sections/10-limitations}
+\input{sections/15-conclusion}
+\ifdraftnotes
+\input{sections/11-figures}
+\fi
+\input{sections/13-licence}
+\input{sections/14-llm-use}
+
+\subsubsection*{Data Availability}
+
+The dataset, generation code, and evaluation framework are available from the corresponding author on request.
+
+\subsubsection*{Conflicts of Interest}
+
+Both authors are employed by LeanMCP. The authors declare no other conflicts of interest.
+
+\bibliography{preprint}
+\bibliographystyle{preprint}
+
+\appendix
+
+\input{sections/appendix-folding-model}
+\input{sections/appendix-artifacts}
+\input{sections/appendix-a-reference-notes}
+
+\ifdraftnotes
+\input{sections/appendix-b-editorial-rules}
+% Internal decision log, not part of the paper:
+% \input{sections/appendix-c-changes}
+\fi
+
+\end{document}

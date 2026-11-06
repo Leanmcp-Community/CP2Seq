@@ -15,6 +15,14 @@ reverses the stack order, and flips face orientations. The same transformation m
 layers in their corresponding stack order.
 A successful construction must satisfy both crease-pattern and folded-state agreement.
 
+\paragraph{Equivalence relation.} The submitted results used plane equivalence
+($E_{\mathrm{plane}}$): one isometry carries every layer polygon and parity onto the target's at
+the same rank. The task definition also requires each rank to hold the same region of the
+original sheet, up to a symmetry of the crease pattern ($E_{\mathrm{id}}$,
+Appendix~\ref{app:comparison-details}). Two stacks equal in the plane but interleaving the sheet
+differently are different objects. We now score with $E_{\mathrm{id}}$, report both, and count
+$E_{\mathrm{plane}}$-only solves as unsolved (Appendix~\ref{app:identity-audit}).
+
 The crease comparator and the shared folded-state
 comparator both match positions within $2\times10^{-6}$; Table~\ref{tab:tolerances} lists every
 tolerance in the pipeline, and Appendix~\ref{app:comparison-details} describes the alignment and

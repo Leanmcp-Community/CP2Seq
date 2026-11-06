@@ -32,7 +32,8 @@ GENERATE(reference_depth, action_model):
     cp <- SPLIT_EDGES_AT_INTERSECTIONS(cp)
     if not REPLAY_CHECK(cp, actions, state): return FAILED
     return (cp, state, actions, frames, METADATA(actions))
-\end{verbatim}}
+\end{verbatim}
+}
 
 \subsection{Evaluation pipeline}
 \label{app:evaluation-pipeline}
@@ -300,15 +301,25 @@ count as unsuccessful evaluations under the planned protocol.
 \paragraph{Comparison-tool defect.} The target-comparison tool aligns stacks by their bottom
 layer. When no rigid motion aligned the two bottom layers and the layer counts were equal, it
 reported the diagnosis \emph{matches} with zero matching layers. Scoring uses a separate
-comparator and was not affected, so every reported solve is correct. Replaying the final state of
-every incorrect submission made under a comparison condition shows that five followed this false
-report: \texttt{easy-0001} in the automatic-feedback ablations for GPT-5.6 Luna (low) and GPT-6
-Luna (high), and \texttt{easy-0001}, \texttt{easy-0058} and \texttt{easy-0095} in the earlier
-on-demand comparison runs. These episodes are reported as measured; the comparison conditions
-are therefore slightly understated: by at most one solve in each affected ablation cell, and at most three
-of 108 attempts in the earlier on-demand condition. The defect is fixed
-in the released harness, and all 536 solved episodes in the supplementary runs still receive
-\emph{matches} from the corrected tool.
+comparator and was not affected by this defect. Replaying the final state of every incorrect
+submission made under a comparison condition shows that five followed this false report:
+\texttt{easy-0001} in the automatic-feedback ablations for GPT-5.6 Luna (low) and GPT-6 Luna
+(high), and \texttt{easy-0001}, \texttt{easy-0058} and \texttt{easy-0095} in the earlier on-demand
+comparison runs.
+
+Inspecting final states does not bound the defect's effect: a wrong diagnosis at any turn can
+redirect the rest of the search, and the correction need not only add solves. A full bound
+requires every comparison the model was shown, and the per-turn logs of the image ablations were
+not retained, so we cannot audit them call by call or rerun them under identical conditions. The
+two affected ablation cells (easy, GPT-5.6 Luna low A and GPT-6 Luna high A) should therefore be
+read as measured under a defective tool, with an effect of unknown sign.
+
+Where per-turn logs survive, in 65 GPT-5.6 Luna episodes with automatic feedback outside the
+ablations, we replayed the accepted sequence recorded with each of the 1,025 comparisons shown and
+recomputed it with the corrected tool. One call, in one episode, differs. The comparison tool,
+like the submitted scorer, used $E_{\mathrm{plane}}$, and two calls reported \emph{matches} on a
+state that is plane- but not identity-equivalent to the target. On this sample the defect is rare,
+but the sample is not the ablation set.
 
 % Panel A: current stack, selected moving region, proposed hinge, and shared off-hinge edge.
 % Panel B: original-sheet connectivity showing which moving/stationary regions share that edge.
@@ -316,3 +327,52 @@ in the released harness, and all 536 solved episodes in the supplementary runs s
 % Do not render a torn state as an accepted simulation result. A counterfactual separation may
 % be shown only as a clearly labelled explanatory schematic. Add a legal alternative only if
 % the same-state action has been checked by the engine. Pending selection of a suitable trace.
+
+\subsection{Trajectory analysis}
+\label{app:matched-trajectories}
+
+\paragraph{Failure categories.} Each unsuccessful episode is assigned the first of four
+mechanical categories that applies. \emph{F1, state tracking}: more than half of the proposed folds
+are geometrically illegal in the current state (tearing, no crease, nothing to move, impossible
+direction, invalid selection). \emph{F2, off pattern}: most rejections are legal folds outside the
+target crease pattern, and the crease pattern is never completed. \emph{F3, wrong stack}: the
+episode reaches a state with the full crease pattern and the target layer count, but in the wrong
+order, orientation or shape. \emph{F4, shallow search}: none of the above; the episode never
+reaches the target depth with a consistent crease pattern. The categories are descriptive. They
+separate where in the task an episode broke down, not which internal capability failed.
+
+\begin{table}[htbp]
+\centering
+\caption{Trajectory-level analysis of the completed text-only GPT-5.6 Luna (low effort)
+episodes, the runs whose per-turn logs were retained. Rejection: share of proposed folds rejected
+(all causes / geometric only). Backtracks: accepted remove, go-to-step and restore calls per
+episode. F1--F4: unsuccessful episodes by category. Outcomes as submitted ($E_{\mathrm{plane}}$).}
+\label{tab:trajectories}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrrrrrrr}
+\hline
+Tools & Episodes & Solved & Rejection & Geom. & Backtracks & F1 & F2 & F3 & F4 \\
+\hline
+B & 39 & 3 & 82.0\% & 20.5\% & 1.2 & 3 & 29 & 0 & 4 \\
+L & 39 & 7 & 13.0\% & 8.4\% & 3.4 & 0 & 5 & 6 & 21 \\
+\hline
+\end{tabular}
+\end{table}
+
+\paragraph{Cycling limit.} The cycling rule stops an episode when the same fold is played from the
+same position three times. A looser limit cannot be evaluated from logs, because episodes were not
+observed past their stop, and we have not rerun any configuration with a different limit. Cycling
+counts are therefore a property of the protocol as well as of the models.
+
+\subsection{Ablation sample selection}
+\label{app:sample-selection}
+\paragraph{Sample selection.} Sample IDs are assigned in generation order, which follows
+consecutive generator seeds (\texttt{easy-0001}--\texttt{0010} use seeds 20260918--20260927); the
+corpus manifest was written on 17 September 2026, before any ablation run (from 23 September), so
+the selection could not depend on model performance. The selected samples match their groups in
+reference depth (mean 6.2 vs.\ 6.8 folds on easy, 11.9 vs.\ 12.0 on medium, 16.4 vs.\ 16.2 on hard,
+5 vs.\ 5 on some-layers) but are somewhat simpler in final layer count (26.4 vs.\ 33.0 on easy,
+116 vs.\ 134 on medium, 860 vs.\ 933 on hard, 10.5 vs.\ 11.6 on some-layers) and in crease count.
+If anything, solve rates on the selected samples overstate those on the full groups.
+

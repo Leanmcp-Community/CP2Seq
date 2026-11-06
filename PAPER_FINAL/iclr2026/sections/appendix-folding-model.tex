@@ -73,6 +73,24 @@ determine that burden.
 \subsection{Comparison implementation}
 \label{app:comparison-details}
 
+\paragraph{Equivalence relation.} Write a flat-folded state as a stack $(\ell_1,\dots,\ell_n)$,
+bottom to top, where layer $\ell_i=(P_i,\pi_i,S_i)$ has current-plane polygon $P_i$, face parity
+$\pi_i$, and original-sheet region $S_i$ (its polygon in the coordinates of the crease pattern).
+Two final states are \emph{plane-equivalent} ($E_{\mathrm{plane}}$) if some plane isometry $T$,
+with turnover acting as above, gives $T(P_i)=P'_i$ and $\pi_i=\pi'_i$ for every rank $i$.
+They are \emph{identity-equivalent} ($E_{\mathrm{id}}$) if, in addition, there is a symmetry
+$\sigma$ of the square sheet that maps the crease pattern, with its assignments, onto itself
+(possibly the identity) such that $S_i=\sigma(S'_i)$ for every $i$ under the same alignment.
+$E_{\mathrm{id}}$ is the relation the task definition intends (Appendix~\ref{sec:problem-states}):
+two stacks that look the same in the plane but place different parts of the sheet at some rank
+are different folded objects. Quotienting by $\sigma$ admits only constructions that no observer
+of the crease pattern and the target could distinguish.
+
+The comparator used for the originally submitted results implemented $E_{\mathrm{plane}}$. We now
+score with $E_{\mathrm{id}}$ and report both: an $E_{\mathrm{plane}}$ solve that fails
+$E_{\mathrm{id}}$ is counted as unsolved in every table, and the number of such reversals is
+given with each result (Appendix~\ref{app:identity-audit}).
+
 The engine compares creases in original-sheet coordinates after grouping and merging collinear
 intervals by assignment. Interval endpoints are matched within $2\times10^{-6}$.
 
@@ -105,22 +123,66 @@ $10^{-5}$ & CP edit distance & Gap below which two intervals on one line are mer
 \end{tabular}
 \end{table}
 
-The shared implementation represents current-plane polygons, parity, and rank. It does not
-explicitly compare original-sheet region identities. Any identity-aware offline comparator must
-be distinguished from this path, and the comparator version used for each reported result must
-be recorded. In particular, equal shapes at different original-sheet locations can require a
-stronger correspondence check than current-plane geometry alone.
+The identity-aware comparator ($E_{\mathrm{id}}$, Section~\ref{sec:scoring-what}) attaches to
+each layer its original-sheet polygon, read from the engine state, and requires that, under the
+alignment found for the plane check, the layer at every rank occupy the same sheet region as the
+target's layer at that rank, up to one crease-pattern symmetry $\sigma$ of the square sheet.
+Sheet regions are compared in the crease pattern's own frame, which both constructions share, so
+no isometry is applied to them; a turnover reverses the stack and carries each region with its
+layer. Target sheet regions come from replaying the recorded reference sequence. The symmetry
+group is computed per sample as the elements of $D_4$ about the sheet centre that map every
+mountain and valley segment onto a segment of the same assignment. A layer without sheet data
+makes the check fail rather than fall back to $E_{\mathrm{plane}}$.
 
 Comparator test cases cover translations, rotations, turnovers, and equivalent polygon
 representations, including changes in start vertex and winding. Negative cases include
 incorrect stack order or face orientation, missing layers, scaling, inconsistent
 per-layer transformations, and empty stacks. Asymmetric polygons distinguish
-reflections from rotations. The corpus-side comparator has a separate negative control.
+reflections from rotations. Identity-sensitive cases add a stack of three congruent layers whose
+sheet regions are permuted, which $E_{\mathrm{plane}}$ accepts and $E_{\mathrm{id}}$ rejects;
+invariance of $E_{\mathrm{id}}$ under rotation, translation and turnover; failure on missing
+sheet data; and, on replayed reference sequences of \texttt{easy-0001}, \texttt{easy-0002} and
+\texttt{mid-0001}, acceptance of the reference against itself and rejection of the same stack
+with its sheet regions cyclically shifted by one rank. All cases pass
+(\texttt{test\_terminal\_match.mjs}).
 
-The repository contains comparison and verification tests; executed test results and the exact
-comparator revision must accompany any reported validation.
-% EDITING NOTE: Capture fresh test output and resolve identity-aware versus shared comparator
-% differences before claiming all positive and corrupted-state controls pass.
+\subsection{Identity audit}
+\label{app:identity-audit}
+
+$E_{\mathrm{plane}}$ and $E_{\mathrm{id}}$ can disagree only when every layer polygon and parity
+already agrees. We measured how often this happens in two ways.
+
+\paragraph{Accepted solutions.} We replayed all 536 episodes scored as solved in the
+supplementary runs and compared each with the replayed reference under both relations. All 536
+replay legally and pass $E_{\mathrm{plane}}$; 514 pass $E_{\mathrm{id}}$. None of the 22 reversals is
+explained by a crease-pattern symmetry. Eighteen are model solutions and four are breadth-first
+search solutions, whose goal test used the same plane-only comparator. All 22 are on easy
+samples, and they concentrate on few patterns: 14 of the 18 model reversals are on
+\texttt{easy-0003} (10 folds) and \texttt{easy-0004} (5 folds), the rest on \texttt{easy-0053},
+\texttt{easy-0088} (twice) and \texttt{easy-0127}. In \texttt{easy-0004}, for example, the two
+stacks agree on 32 congruent layers in the plane, but 28 of the 32 ranks hold a different region
+of the sheet: the construction folds the same flaps in a different interleaving. No medium, hard or
+some-layers solve is affected.
+
+Five of the reversals fall in Luna ablation cells, one each in GPT-5.6 Luna L and A, GPT-6 Luna low
+L and A, and GPT-6 Luna high L, all on the easy group; Table~\ref{tab:luna-ablations} reports
+the corrected counts (55 to 50 of 360 solves). The four breadth-first reversals are in the
+supplementary search runs (928 attempts); we could not match them to the 725-attempt snapshot of
+Appendix~\ref{app:bfs-analysis}, so we state the bound: at most four of its 366 easy solves fail
+$E_{\mathrm{id}}$.
+
+\paragraph{Adversarial rollouts.} For each of the 40 ablation samples we drew 200 random legal
+rollouts of exactly the reference depth from the flat sheet, sampling uniformly among the
+distinct legal folds the model's own enumerator returns, and checked every terminal state.
+On the 20 easy and medium instances, 1,509 of the 4,000 rollouts reach the
+reference depth without a dead end; 339 of these reproduce the crease pattern (336 easy, 3
+medium), 233 satisfy $E_{\mathrm{plane}}$ (all easy), and 8 satisfy $E_{\mathrm{plane}}$ but not
+$E_{\mathrm{id}}$: seven on \texttt{easy-0007} and one on \texttt{easy-0003}. On the other eight easy
+instances the two relations never disagree. Plane-equivalent but identity-distinct constructions
+are therefore a property of a few specific patterns, which a model or a search can reach by
+chance. Rollouts on the hard and some-layers instances were not completed.
+The audit script and its outputs are \texttt{workspace/audit\_identity.mjs} and
+\texttt{workspace/RESULTS/identity-audit/}.
 
 \subsection{Action rejection conditions}
 \label{app:action-errors}
