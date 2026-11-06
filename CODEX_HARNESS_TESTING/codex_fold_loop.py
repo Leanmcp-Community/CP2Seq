@@ -51,6 +51,55 @@ def model_view(value):
     return value
 
 
+# --geometry images-only: the model receives no coordinates, only rendered images.
+# Every key below carries vertex positions (current-plane or original-sheet) or a crease
+# segment; dropping them leaves the model with images, its own actions, and non-geometric
+# feedback (ok/error, state id, layer counts and ranks from the comparison tool).
+GEOMETRY_KEYS = {"vertices_coords", "edges_vertices", "edges_assignment", "faces_vertices",
+                 "file_frames", "layers_bottom_to_top", "polygon", "sheet_polygon", "creates",
+                 "proposed_creases", "off_target_creases", "between_faces", "diagnostic",
+                 "legal_folds_now", "from", "to", "P", "Q"}
+
+
+def strip_geometry(value):
+    if isinstance(value, dict):
+        return {k: strip_geometry(v) for k, v in value.items() if k not in GEOMETRY_KEYS}
+    if isinstance(value, list):
+        return [strip_geometry(v) for v in value]
+    return value
+
+
+def stack_bbox(state):
+    """Bounding box of the current stack, the one scale cue images-only keeps.
+
+    Renders are fitted to the canvas with no axes, so without this an action's offset (a
+    coordinate in the current folded frame) could not be read off any image at all.
+    """
+    pts = [p for layer in (state or {}).get("layers_bottom_to_top", []) for p in layer.get("polygon", [])]
+    if not pts:
+        return None
+    xs, ys = [p[0] for p in pts], [p[1] for p in pts]
+    return {"x_min": min(xs), "x_max": max(xs), "y_min": min(ys), "y_max": max(ys)}
+
+
+def geometry_view(args, value):
+    """What the model is shown: rounded JSON, minus coordinates under --geometry images-only."""
+    shown = model_view(value)
+    if getattr(args, "geometry", "json") != "images-only":
+        return shown
+    if isinstance(value, dict) and "layers_bottom_to_top" in value:
+        bbox = stack_bbox(value)
+        stripped = strip_geometry(shown)
+        return {**stripped, "stack_bounding_box": model_view(bbox)} if bbox else stripped
+    if isinstance(value, dict) and isinstance(value.get("current"), dict):
+        stripped = strip_geometry(shown)
+        bbox = stack_bbox(value["current"])
+        if bbox:
+            stripped["current"] = {**stripped.get("current", {}), "stack_bounding_box": model_view(bbox)}
+        return stripped
+    return strip_geometry(shown)
+
+
 def action_schema(tools):
     variants = []
     for tool in tools:
@@ -353,13 +402,13 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
             payload = {"cp": cp, "target": target, "current": current_state,
                        "history": history, "turn": turn, "max_turns": args.max_turns}
         prompt = (args.prompt_text + "\n\nFind the next action. Geometry and history:\n" +
-                  json.dumps(model_view(payload)) +
+                  json.dumps(geometry_view(args, payload)) +
                   "\nAttached images, in order:\n" + "\n".join(manifest))
         request_manifest = manifest
         if getattr(args, "conversation_mode", "fresh") == "append-only" and turn > 1:
             previous_manifest = json.loads((out / f"turn-{turn-1:03d}" / "images.json").read_text())
             prompt, request_manifest = incremental_input(
-                model_view(history), model_view(current_state), turn, args.max_turns,
+                geometry_view(args, history), geometry_view(args, current_state), turn, args.max_turns,
                 manifest, previous_manifest)
         write_json(turn_dir / "images.json", manifest)
         write_json(turn_dir / "request-images.json", request_manifest)
@@ -542,6 +591,9 @@ def main():
     parser.add_argument("--tools", choices=["base", "legal-folds"], default="base",
                         help="base keeps the original action set; legal-folds adds list_legal_folds "
                              "and its prompt appendix, which is a different experimental condition")
+    parser.add_argument("--geometry", choices=["json", "images-only"], default="json",
+                        help="json (default) shows coordinates; images-only removes every coordinate from "
+                             "prompts and tool results, leaving rendered images. Needs --tools base.")
     parser.add_argument("--prompt-appendix", type=Path, default=HERE / "codex_fold_prompt_legal_folds.md",
                         help="Appended to --prompt only when --tools legal-folds")
     parser.add_argument("--model", help="An explicit model available to your Codex account; otherwise CLI default")
@@ -616,6 +668,10 @@ def main():
     if args.compare_auto:
         # Its own appendix so the plain compare arm's prompt stays byte-identical.
         args.prompt_text += "\n" + (HERE / "codex_fold_prompt_compare_auto.md").read_text()
+    if args.geometry == "images-only":
+        if args.tools != "base":
+            parser.error("--geometry images-only needs --tools base: legal-fold listings carry coordinates")
+        args.prompt_text += "\n" + (HERE / "codex_fold_prompt_images_only.md").read_text()
     for sample_id in args.samples:
         load_task(sample_id, args.corpus)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
