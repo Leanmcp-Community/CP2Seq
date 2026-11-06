@@ -144,10 +144,24 @@ export function diagnoseSegment(segment, cp) {
             cp_assignment_here: other ? other.assignment : null};
   });
   const conflicts = uncovered.filter(u => u.cp_assignment_here);
-  const problem = conflicts.length === uncovered.length ? 'assignment_conflict'
+  // "Flip it" is only true when the flipped crease is covered end to end. Where the CP has M
+  // on part of this crease and V on another part, the uncovered spans all conflict, but
+  // flipping breaks the spans that were right: one fold lays one assignment along its whole
+  // crease. hard-0002 (text-only basic) was told to flip, flipped, and was told to flip back.
+  const opposite = segment.a === 'M' ? 'V' : segment.a === 'V' ? 'M' : null;
+  const flipCovers = opposite !== null &&
+      !gapsIn(edges.filter(e => e.assignment === opposite), length).length;
+  const problem = conflicts.length === uncovered.length
+      ? (flipCovers ? 'assignment_conflict' : 'mixed_assignment')
       : edges.length ? 'partly_missing' : 'absent';
   const first = uncovered[0];
-  const message = problem === 'assignment_conflict'
+  const message = problem === 'mixed_assignment'
+      ? `The CP has both M and V along this crease: this fold makes ${segment.a} from ` +
+        `${show(segment.P)} to ${show(segment.Q)}, and the CP has ${first.cp_assignment_here} from ` +
+        `${show(first.from)} to ${show(first.to)}. One fold makes one assignment along its whole ` +
+        `crease, so neither over nor the other moving side makes it on-target. Fold fewer layers so ` +
+        `the crease spans only one assignment, or fold a different line.`
+      : problem === 'assignment_conflict'
       ? `This fold creases ${segment.a} from ${show(first.from)} to ${show(first.to)}, but the CP has ` +
         `${first.cp_assignment_here} there. The line is right and the direction is wrong: flip over, ` +
         `or move the other side of the line, so this crease comes out ${first.cp_assignment_here}.`
