@@ -55,7 +55,8 @@ for abl in inv["ablations"]:
             ident = plane and (att.get("run"), att["sample"]) not in flips
             outcomes[att["sample"]] = (plane, ident)
         for missing in stratum.get("missing", []):
-            outcomes.setdefault(missing, (False, False))  # protocol failures count unsolved
+            sid = missing["sample"] if isinstance(missing, dict) else missing
+            outcomes.setdefault(sid, (False, False))  # protocol failures count unsolved
     cells[key] = outcomes
 
 

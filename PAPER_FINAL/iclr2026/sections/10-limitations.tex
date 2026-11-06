@@ -1,7 +1,7 @@
 \section{Limitations}
 \label{sec:limitations}
 
-The evaluation covers Luna models, BFS and a random-legal baseline, and the ablations use ten samples per group and
+The evaluation covers Luna models and BFS, and the ablations use ten samples per group and
 configuration. This study is currently privately funded, and these limits follow from the cost of
 evaluation: with full image history, one Luna episode consumed about 3.1 million input tokens on
 average over 20 episodes. In pilots, Qwen3.5-9B (via Tinker) cycled without solving either of two samples, and one
@@ -16,7 +16,9 @@ collisions during folding.
 Termination labels record stopping conditions. The trajectory categories of
 Section~\ref{sec:results-failures} locate where an episode broke down, but they are mechanical
 rules over observable states and do not identify which internal capability failed. Revisit and
-budget limits constrain the observed search; one configuration was rerun with a looser cycling limit.
+budget limits constrain the observed search, and the effect of a looser cycling limit is untested.
+Per-turn logs of the image ablations were not retained, so the trajectory analysis covers the
+text-only runs only, and the comparison-tool defect cannot be audited call by call there.
 Training overlap with the public corpus is unknown.
 
 Corpus replay checks assess consistency with the shared generation engine. The submitted results

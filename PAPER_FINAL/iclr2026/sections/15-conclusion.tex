@@ -6,11 +6,12 @@ each fold and a scorer that accepts any valid sequence. The experiments support 
 depth: models solve some easy and some-layers samples, but no ablation configuration solves a
 medium or hard sample, and breadth-first search over the same actions solves 366/669 easy
 attempts but only 1/40 medium and 0/16 hard, consistent with a search cost that rises steeply on the deeper groups, which
-also have many more layers and creases. Second, once legal-fold enumeration removes illegal and off-pattern moves, unsuccessful episodes mostly
-never reach the target depth, and many of the rest reach it with the layers in the wrong order;
-most of them stop under the cycling rule, which describes how they ended rather than why. Third, assistance and reasoning effort
-help within reach but do not move that reach: on matched samples, legal-fold enumeration, target
-feedback and higher effort raise solve rates on short sequences, while medium and hard samples stay unsolved in every
+also have many more layers and creases. Second, in the text-only runs whose turns we could analyse, once legal-fold enumeration removes
+illegal and off-pattern moves, unsuccessful episodes mostly never reach the target depth, and some
+reach it with the layers in the wrong order; across the ablations most stop under the cycling
+rule, which describes how they ended rather than why. Third, assistance and reasoning effort
+help within reach but do not move that reach: on matched samples, target feedback and higher
+effort raise solve rates on short sequences (legal-fold enumeration alone does not reliably), while medium and hard samples stay unsolved in every
 condition. Because each ablation result rests on ten samples per cell, we report these as trends with
 their uncertainty rather than as rankings of models.
 
