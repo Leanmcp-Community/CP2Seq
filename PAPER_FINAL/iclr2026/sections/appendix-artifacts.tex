@@ -32,7 +32,8 @@ GENERATE(reference_depth, action_model):
     cp <- SPLIT_EDGES_AT_INTERSECTIONS(cp)
     if not REPLAY_CHECK(cp, actions, state): return FAILED
     return (cp, state, actions, frames, METADATA(actions))
-\end{verbatim}}
+\end{verbatim}
+}
 
 \subsection{Evaluation pipeline}
 \label{app:evaluation-pipeline}
