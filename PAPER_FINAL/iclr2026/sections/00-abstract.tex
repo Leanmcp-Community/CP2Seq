@@ -23,5 +23,9 @@ does not reduce solve rate, consistent with the models reasoning over the exact 
 are given. Re-scoring
 with a check that each layer comes from the right part of the sheet withdraws 22 of 536 accepted
 solutions, all on short sequences, and leaves these conclusions unchanged. A breadth-first search over the same actions, under its own time budget, solves 54.7\% of
-easy-group attempts, so short sequences are within reach of systematic search.
+easy-group attempts, so short sequences are within reach of systematic search. On the 40 ablation
+instances, 80 uniformly random legal folds solve 57\% of easy and 96\% of some-layers episodes and
+breadth-first search solves 5 of 10 medium instances within $10^5$ expansions, so the models fall
+short of undirected search on every group except hard, which no method we ran solves; models reach a tenth to a quarter of the
+distinct states random folding reaches.
 \end{abstract}

@@ -53,8 +53,10 @@ paper's image ablation (run inventory, identity flips applied):
 | --- | --- | --- | --- | --- | --- |
 | B | 2/10 | 0/10 | 0/10 | 0/10 | 2/40 |
 | **B+A** | **3/10** | **0/10** | **0/10** | **2/10** | **5/40** |
-| L | 1/10 | 0/10 | 0/10 | 5/10 | 6/40 |
-| L+A | 4/10 | 0/9 (+1 failure) | 0/10 | 6/10 | 10/40 |
+| L | 0/10 | 0/10 | 0/10 | 5/10 | 5/40 |
+| L+A | 3/10 | 0/9 (+1 failure) | 0/10 | 6/10 | 9/40 |
+
+Correction (2026-11-07 14:40): an earlier version of this table gave L 6/40 and L+A 10/40 (easy 1 and 4). Those were the E_plane counts; the paper (Table 1, cells marked §) withdraws one easy solve from each under E_id. All five B+A solves were re-checked on replay with `workspace/audit_identity.mjs --part A` and pass E_id.
 
 Text only (`image_history=none`, local runs `codex-20260925T*`, first episode per
 instance), for reference; these are the paper's text-only 3 / 5 / 11:
@@ -70,10 +72,9 @@ E_plane; two easy solves fail E_id) and L+A easy as "9/20, two runs" (it mixed a
 text-only and a text+images run).
 
 **Conclusion.** Against B in the same modality (text + images, 2/40), automatic feedback
-alone adds 3 solves (5/40: +1 easy, +2 layers); adding the legal list instead gives 6/40, and
-both together 10/40. The gain comes from
-constraining the action space (legal-fold list); feedback helps on top of it. Feedback and
-action constraint are complementary; feedback without the constraint is not enough.
+alone adds 3 solves (5/40: +1 easy, +2 layers); adding the legal list instead also gives 5/40, and
+both together 9/40. Each addition alone gives the same +3; together +7, so their effects
+roughly add. None of the differences is significant at n=40.
 
 ## 2. Input modality: text-only vs images-only vs text+images (basic tools B)
 
@@ -87,8 +88,8 @@ Text+images numbers are the paper's image ablation (run inventory, identity flip
 | images only | 1/10 | 0/10 | 0/10 | 0/10 | 1/40 |
 | text + images | 2/10 | 0/10 | 0/10 | 0/10 | 2/40 |
 
-Other tool conditions (no images-only arm): L text-only 5/40 vs text+images 6/40;
-A text-only 11/40 vs text+images 10/40.
+Other tool conditions (no images-only arm): L text-only 5/40 vs text+images 5/40;
+L+A text-only 11/40 vs text+images 9/40 (E_id).
 
 **Conclusion.** Removing coordinates lowers easy from 3 to 1; adding images to coordinates
 does not help (3 -> 2). All differences are small and not significant at n=40. Supported

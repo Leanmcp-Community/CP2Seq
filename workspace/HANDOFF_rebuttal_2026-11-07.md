@@ -47,7 +47,7 @@ action space) + layers-0001..0010 (some-generated-d5, any). Runs in `CODEX_HARNE
 - Analyses: `workspace/exploration_analysis.mjs` (H2), `workspace/audit_passed_through.mjs`.
 
 ## Key conclusions so far (details in the results note)
-- Same-modality (text+images): B 2/40, B+A 5/40, L 6/40, L+A 10/40. Text only: B 3, L 5, L+A 11.
+- Same-modality (text+images): B 2/40, B+A 5/40, L 5/40, L+A 9/40 (E_id; L 6 and L+A 10 were E_plane). Text only: B 3, L 5, L+A 11.
 - Modality (B): text 3/40, images-only 1/40, text+images 2/40: images don't replace coordinates.
 - Blind search: random legal folding solves 57% (easy) / 96% (layers) of 80-fold episodes; BFS
   solves mid 5/10. "Depth wall" framing must change: only hard is 0 for every method.

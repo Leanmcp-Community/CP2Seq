@@ -6,13 +6,21 @@ each fold and a scorer that accepts any valid sequence. The experiments support 
 depth: models solve some easy and some-layers samples, but no ablation configuration solves a
 medium or hard sample, and breadth-first search over the same actions solves 366/669 easy
 attempts but only 1/40 medium and 0/16 hard, consistent with a search cost that rises steeply on the deeper groups, which
-also have many more layers and creases. Second, in the text-only runs whose turns we could analyse, once legal-fold enumeration removes
+also have many more layers and creases. On the 40 ablation instances, however, 80 random legal folds per episode solve
+57\% of easy and 96\% of some-layers episodes, above the model's per-instance rate, and on medium,
+where no model episode succeeds, random folding (3 of 10 instances over 100 episodes each) and
+breadth-first search (5 of 10 within $10^5$ expansions) do. The medium group therefore marks a limit
+of these models rather than of search; only the hard group is unsolved by every method. Second, in the text-only runs whose turns we could analyse, once legal-fold enumeration removes
 illegal and off-pattern moves, unsuccessful episodes mostly never reach the target depth, and some
 reach it with the layers in the wrong order; across the ablations most stop under the cycling
-rule, which describes how they ended rather than why. Third, assistance and reasoning effort
+rule, which describes how they ended rather than why. Failures are almost never missed stops
+(an automatic stop would add 2 solves to 25 in 143 episodes), and models reach a tenth to a
+quarter of the distinct states that random folding reaches, which points to exploration as the
+bottleneck. Third, assistance and reasoning effort
 help within reach but do not move that reach: on matched samples, target feedback and higher
-effort raise solve rates on short sequences (legal-fold enumeration alone does not reliably), while medium and hard samples stay unsolved in every
-condition. Because each ablation result rests on ten samples per cell, we report these as trends with
+effort raise solve rates on short sequences (target feedback alone and legal-fold enumeration alone
+each raise GPT-5.6 Luna from 2/40 to 5/40, and together to 9/40), while medium and hard samples stay
+unsolved in every model condition. Because each ablation result rests on ten samples per cell, we report these as trends with
 their uncertainty rather than as rankings of models.
 
 Because the generator produces fresh instances with exact, programmatically checkable success,

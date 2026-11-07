@@ -376,3 +376,18 @@ reference depth (mean 6.2 vs.\ 6.8 folds on easy, 11.9 vs.\ 12.0 on medium, 16.4
 116 vs.\ 134 on medium, 860 vs.\ 933 on hard, 10.5 vs.\ 11.6 on some-layers) and in crease count.
 If anything, solve rates on the selected samples overstate those on the full groups.
 
+
+\subsection{Images-only condition}
+\label{app:images-only}
+The complementary images-only condition removes every coordinate from the prompt and from tool
+results: the crease pattern, the target and the current state are given only as rendered images,
+and tool results report acceptance or rejection but not the resulting geometry. The renderings are
+scaled to fit the canvas and carry no axes, so without any numeric cue a model could not state a
+fold line's offset, which is a coordinate in the current folded frame. We therefore keep one cue:
+the bounding box of the current stack in current folded coordinates (four numbers), which lets a
+model convert image positions to coordinates. The prompt states that the sheet is the unit square
+with $x$ right and $y$ up. This condition uses basic tools only, since legal-fold listings carry
+coordinates. GPT-5.6 Luna at low effort, 80 turns, one episode per instance on the 40 ablation
+instances, solves 1/40 under $E_{\mathrm{id}}$: one easy instance, and no medium, hard or some-layers
+instance (Table~\ref{tab:modality}). The same model solves 3/40 with text only and 2/40 with text and
+images under basic tools.

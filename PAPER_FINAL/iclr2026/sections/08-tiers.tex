@@ -2,17 +2,20 @@
 \label{sec:ablations}
 
 % EDITING NOTE: Planned comparisons retained: no visual feedback and verifier only.
-The ablations compare three conditions with common sample IDs and budgets: \emph{basic tools}
-(the interface of Section~\ref{sec:exp-tools}), \emph{legal enumeration} (adding
-\texttt{list\_legal\_folds}), and \emph{automatic feedback} (adding tier-3 target feedback after
-every edit). Earlier runs instead let the model request tier-3 comparison on demand.
+The ablations compare tool conditions with common sample IDs and budgets: \emph{basic tools}
+(B; the interface of Section~\ref{sec:exp-tools}), \emph{legal enumeration} (L; B plus
+\texttt{list\_legal\_folds}), and \emph{legal enumeration with automatic feedback} (L+A; L plus
+tier-3 target feedback after every accepted edit). A fourth condition, B+A, gives automatic
+feedback without legal enumeration, so that the two additions can be measured separately
+(Section~\ref{sec:results-feedback-only}). Earlier runs instead let the model request tier-3
+comparison on demand.
 \phantomsection\label{tab:ablations}
 
 \phantomsection
 \label{sec:target-feedback}
-The automatic-feedback condition supplies layer counts, aligned layer discrepancies,
+Automatic feedback supplies layer counts, aligned layer discrepancies,
 and suggested corrections after edits (Appendix~\ref{app:feedback-levels}). Because those
-corrections do much of the target comparison for the model, we treat this condition as an upper
-bound on what tool support can achieve, not as a measure of the model's own geometric reasoning;
+corrections do much of the target comparison for the model, we treat the feedback conditions as an upper
+bound on what tool support can achieve with this model, not as a measure of the model's own geometric reasoning;
 conclusions about the model rest on the basic-tools condition. Even that condition is assisted,
 since folds that would crease outside the target pattern are rejected (Section~\ref{sec:env}).
