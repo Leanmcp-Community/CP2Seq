@@ -1,31 +1,26 @@
 \begin{abstract}
-Multimodal language models perform well on visual recognition and on tool use, but these abilities
-do not transfer directly to spatial and geometric reasoning. Geometric structure does not reduce to
-text or to a single image: exact angles and incidences, which surface lies in front of which, and
-the order in which operations were applied are not recoverable from a semantic description of a
-scene. We introduce \textbf{CP2Seq}, a benchmark for evaluating geometric reasoning and sequential
-planning in multimodal language models through origami. The benchmark contains 600 procedurally
-generated samples, each requiring a model to produce a valid sequence of folds from a crease pattern
-and a target folded state. Samples are produced by a deterministic folding engine. Ground truth is
-recorded during generation. We release the generation and
-evaluation framework to support additional samples and experiments across reference depths and
-action models. During evaluation, the
-engine executes proposed folds or rejects invalid actions with explicit feedback, while the model
-remains responsible for selecting actions and searching for a solution. We evaluate
-multimodal language models under progressively greater tool assistance, and against a
-deterministic breadth-first search over the same action set. Candidate sequences are assessed by
-executing them and comparing the resulting folded state with the target, layer by layer and
-including which region of the sheet each layer comes from, allowing for planar translations,
-rotations, and reflections. Performance falls off sharply with sequence depth:
-in the Luna ablations no configuration solves a medium or hard sample (11 or more folds), while
-some-layers solves rise from 6/30 to 18/30 with higher reasoning effort, and removing images
-does not reduce solve rate, consistent with the models reasoning over the exact coordinates they
-are given. Re-scoring
-with a check that each layer comes from the right part of the sheet withdraws 22 of 536 accepted
-solutions, all on short sequences, and leaves these conclusions unchanged. A breadth-first search over the same actions, under its own time budget, solves 54.7\% of
-easy-group attempts, so short sequences are within reach of systematic search. On the 40 ablation
-instances, 80 uniformly random legal folds solve 57\% of easy and 96\% of some-layers episodes and
-breadth-first search solves 5 of 10 medium instances within $10^5$ expansions, so the models fall
-short of undirected search on every group except hard, which no method we ran solves; models reach a tenth to a quarter of the
-distinct states random folding reaches.
+Many tasks given to language-model agents require a long sequence of actions whose effects
+compound, where each intermediate state must be tracked exactly and the result can be checked
+only at the end. We introduce \textbf{CP2Seq}, a benchmark for long-horizon sequence planning with
+exact verification, built on flat origami. Each of its 600 procedurally generated samples gives a
+crease pattern and a target folded state, including the order of the layers; the model must
+produce a sequence of simple folds that reaches the target from an unfolded square. A
+deterministic folding engine executes each proposed fold or rejects it with a named reason, and a
+completed sequence is accepted only if its final stack matches the target layer by layer,
+including which region of the sheet each layer comes from, up to a rigid motion. Ground truth is
+recorded during generation, and the released generator produces fresh instances at a chosen
+reference depth. Origami supplies the state space; we make no claim about physical folding, which
+would require thickness and contact. We evaluate GPT-5.6 and GPT-6 Luna under increasing tool
+assistance and compare them with breadth-first search and with random legal folding over the same
+actions. On 40 ablation instances, no model condition solves a sample of 11 or more folds, and
+higher reasoning effort raises some-layers solves from 6/30 to 18/30. The models fall short of
+undirected search: within 80 folds, random legal folding solves 57\% of easy and 96\% of
+some-layers episodes, against at most 5 of 10 easy and 8 of 10 some-layers instances in any model
+condition, and breadth-first search solves 5 of 10 medium instances that no model episode
+solves. Model episodes rarely pass through the target without stopping (2 of 143), and they reach
+a tenth to a quarter of the distinct states that random folding reaches, consistent with a
+failure of exploration rather than of the final step. Removing the rendered images does not lower solve rate, so the benchmark
+measures reasoning over an exact symbolic state rather than visual perception. Single episodes per
+instance vary substantially between runs, and the deepest group of the released all-layers corpus
+grows to hundreds of layers; we report both and describe a layer-controlled regeneration.
 \end{abstract}

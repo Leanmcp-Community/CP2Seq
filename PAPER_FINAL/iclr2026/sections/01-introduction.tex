@@ -5,8 +5,12 @@ Geometric planning requires a model to connect a description of a target with th
 needed to construct it. In origami, this involves choosing a fold line, identifying which parts of
 the sheet should move, and tracking how the resulting reflections change their positions and layer
 order. A locally valid fold may lead away from the target, so completing a sequence also requires
-selecting among alternatives and revising earlier decisions. We study whether multimodal language
-models can use visual and geometric observations to make these decisions over successive folds.
+selecting among alternatives and revising earlier decisions. We study whether language models can
+make these decisions over a long sequence of folds when every intermediate state is given exactly
+and every action is checked. The question is one of long-horizon planning with exact state
+tracking; origami supplies a state space in which success is unambiguous and difficulty can be
+generated at will. Because the problem has exact algorithmic solutions, we report search baselines
+over the same actions alongside the models, and read the models' results against them.
 
 Origami provides a procedural setting for studying these decisions. A folding engine can
 generate instances across reference depths, record intermediate states, and check proposed
@@ -14,9 +18,10 @@ actions under a specified folding model.
 Sequence planning also arises in engineering: robotic origami folding requires choosing the order
 of simple folds \citep{balkcom-robotic-origami}, self-folding machines fold flat sheets into
 functional structures \citep{felton-self-folding}, and deployable arrays must accommodate panel
-thickness when stowed \citep{zirbel-thickness}. CP2Seq isolates the combinatorial part of this
-problem; physical feasibility, including thickness and contact, is outside the current model
-(Section~\ref{sec:limitations}).
+thickness when stowed \citep{zirbel-thickness}. CP2Seq does not model these settings: its states
+have zero thickness, no contact and no material, and its deepest instances have far more layers
+than physical paper allows (Section~\ref{sec:limitations}). We use origami as a controlled state
+space for planning, not as a model of physical folding.
 
 Existing origami benchmarks ask questions about folds or generate crease patterns
 \citep{gamibench,origamispace}.
@@ -45,8 +50,9 @@ the generator also enables fresh evaluation instances beyond the published corpu
 reliance on fixed examples that future models may encounter during training
 (Section~\ref{sec:cp2seq}).
 
-We also provide an evaluation framework that presents images of the input crease pattern, the
-target folded state, and the current state after each accepted edit. Tools support adding and
+We also provide an evaluation framework that gives the model the exact geometry of the crease
+pattern, the target folded state, and the current state after each accepted edit, optionally with
+rendered images; removing the images does not lower solve rate (Section~\ref{sec:results-matched}). Tools support adding and
 removing folds, inspecting geometry, and returning to a specified earlier step to explore another
 sequence. The engine checks proposed edits and returns feedback, while the model directs the
 search. Different levels of tool assistance allow us to study how this support affects performance
@@ -66,19 +72,25 @@ Our contributions are:
 \item \textbf{A dataset and generation framework.} CP2Seq contains 600 samples with
   crease patterns, target states, recorded fold sequences, and intermediate states. Configurable
   generation supports experiments across reference depths and action models.
-\item \textbf{An interactive evaluation and verification pipeline.} The framework connects visual
-  and geometric inputs to tools for constructing and revising sequences, step-level legality
-  checks, and final replay-based scoring. It includes corpus checks and a folded-state comparator.
+\item \textbf{An interactive evaluation and verification pipeline.} The framework connects exact
+  geometric state to tools for constructing and revising sequences, step-level legality
+  checks, and final replay-based scoring that verifies layer order and sheet region. It includes corpus checks and a folded-state comparator.
   Experiments vary access to legal-fold enumeration and target-comparison feedback.
-\item \textbf{A search baseline and an empirical analysis of model behavior.} We provide
-  breadth-first search over the same candidate actions, report performance by difficulty group,
-  and analyze episode termination. A broader evaluation of \texttt{gpt-5.6-luna}
-  is complemented by smaller ablations of model version, reasoning effort, and tool assistance.
+\item \textbf{Search baselines and an empirical analysis of model behavior.} We compare models
+  with breadth-first search and random legal folding over the same candidate actions on the same
+  instances, report performance by difficulty group, and analyze where episodes fail and how
+  much of the state space they explore. A broader evaluation of \texttt{gpt-5.6-luna}
+  is complemented by smaller ablations of model version, reasoning effort, tool assistance and
+  input modality.
 \end{enumerate}
 
 In ablations over model version, reasoning effort, and tool assistance, models solve some
-short sequences but no medium or hard sample; in the broader evaluation, most unsuccessful
-episodes (215 of 384) end by cycling through earlier states rather than by illegal moves (Section~\ref{sec:results}).
+short sequences but no medium or hard sample, and they fall short of random legal folding with
+the same fold budget. Failures are almost never missed stops; the models explore a small part of
+the reachable states and revisit them (Section~\ref{sec:results}). We also report two limits of
+the released corpus that bear on these results: one episode per instance varies substantially
+between runs, and in the all-layers tier sequence depth and layer count grow together, so the
+deepest group mostly measures stacks of hundreds of layers (Section~\ref{sec:limitations}).
 % Results source: workspace/RESULTS/run-inventory/report.md, generated 2026-09-24.
 % Some low-effort medium cells are incomplete (8 or 9 of 10); do not describe all
 % configurations as complete or pool this ablation set with the broader evaluation.

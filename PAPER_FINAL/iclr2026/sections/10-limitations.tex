@@ -11,7 +11,28 @@ model families and to the full corpus.
 The action space covers all-layers and selected some-layers simple folds, excluding
 pre-creasing; the some-layers corpus currently extends to six reference folds. The environment
 represents zero-thickness flat states and does not model material mechanics or continuous
-collisions during folding.
+collisions during folding. CP2Seq is a planning benchmark over an exact state space, not a model
+of physical folding, and we draw no engineering conclusions from it.
+
+\paragraph{Depth and layer count are confounded in the all-layers tier.} Whole-stack folds sampled
+uniformly almost always cross every layer, so the released medium and hard groups have medians of
+94 and 404 final layers (maximum 16,384), and 96 of the 100 hard samples end with a footprint under
+5\% of the sheet. Results on these groups, including every model's and search's failure on hard,
+cannot be attributed to sequence depth alone. The generator already provides a cap on the number
+of layers a single fold may cross; with a cap of 16, all three groups fill their quotas with medians
+of 24, 60 and 76 final layers (maximum 120). The results in this paper are on the uncapped release;
+re-evaluation on the capped corpus is future work.
+
+\paragraph{One episode per instance.} The ablations run one episode per instance and configuration.
+Repeating the text-only GPT-5.6 Luna L+A run on the easy group solved at most 2 instances instead of 5,
+with different instances solved. Both the totals and the set of solved instances therefore carry
+run-to-run variance that one episode cannot estimate; we interpret only differences in totals, with
+their uncertainty, and not per-instance differences between configurations. Repeated episodes per
+instance (pass@$k$) are in progress.
+
+\paragraph{Input modality.} Removing rendered images does not lower solve rate, and an images-only
+condition solves 1/40 with basic tools. The benchmark as configured measures reasoning over exact
+coordinates; it is not a test of visual perception.
 
 Termination labels record stopping conditions. The trajectory categories of
 Section~\ref{sec:results-failures} locate where an episode broke down, but they are mechanical

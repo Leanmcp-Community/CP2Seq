@@ -85,8 +85,12 @@ image ablation's settings (text and images, 80 turns, one episode per instance;
 Table~\ref{tab:feedback-only}). All five B+A solves also satisfy $E_{\mathrm{id}}$ on replay.
 Against B (2/40), feedback alone gives 5/40, the same as legal enumeration alone (5/40), and the
 two together give 9/40. With ten instances per group none of these differences is significant on
-its own; the counts show that feedback and enumeration each help to a similar degree and that
-their effects roughly add, not that either is necessary.
+its own. The totals do not decompose by instance: B+A solves easy-0001, 0004 and 0006, and at most
+one of these is among the L+A easy solves; L solves layers-0007, which L+A does not. With one
+episode per instance, which instances a condition solves varies between runs: a repeat of the
+text-only L+A run solved at most 2 easy instances instead of 5, with different instance IDs
+(Section~\ref{sec:limitations}). We therefore read Table~\ref{tab:feedback-only} only as showing
+that each addition raises the total, not that their effects add or which instances each helps.
 
 \begin{table}[htbp]
 \centering
@@ -125,9 +129,16 @@ four to ten folds, solves rise from 2/30 to 8/30 (0.20, 95\% CI 0.07--0.33, $p=0
 \paragraph{Depth.} No Luna ablation solves a medium or hard sample, and the breadth-first
 baseline solves 1/40 medium and 0/16 hard attempts (Appendix~\ref{app:bfs-analysis}), against
 366/669 on the easy group (at most four of which fail $E_{\mathrm{id}}$; Appendix~\ref{app:identity-audit}). Within the easy group, the model solve rate falls from 32\% at four folds to
-0--15\% at eight to ten (Table~\ref{tab:easy-depth}). The groups differ in more than depth: the
-medium and hard samples also have several times more layers and creases (Section~\ref{sec:results-ablations}),
-so these results show that the deeper groups are harder, not that depth alone is the cause.
+0--15\% at eight to ten (Table~\ref{tab:easy-depth}). The groups differ in more than depth. In
+the all-layers tier every fold moves the whole stack and usually crosses every layer, so the
+layer count grows roughly exponentially with depth: over the 40 ablation instances the final
+stack has a median of 23 layers on easy (maximum 64), 90 on medium (448) and 512 on hard (3,504),
+and over the full released groups the hard median is 404 (maximum 16,384). Depth and layer count
+are therefore confounded, and the hard group mostly measures states of hundreds to thousands of
+layers, whose serialised geometry approaches or exceeds what fits in a prompt (one medium
+episode failed on input size; Appendix~\ref{app:protocol-failures}). These results show that the
+deeper groups are harder, not that depth alone is the cause, and we do not read the hard group as
+a limit of planning depth (Section~\ref{sec:limitations}).
 Breadth-first search time on the saved searches grows by a fitted factor of 3.9 per fold on easy
 and 4.6 on medium (Figure~\ref{fig:depth-wall}); the hard-group factor of 12.4 rests on two samples
 and an extrapolation, and we do not use it as a measure of task complexity.
@@ -140,14 +151,17 @@ plays 80 uniformly random legal folds per episode (the model's turn budget), 100
 instance. \emph{BFS} searches distinct states (identity-keyed) up to the reference depth plus four,
 and we record whether it reaches the target within 80, $10^3$, $10^4$ and $10^5$ expansions (600\,s
 wall clock per instance). Within an 80-fold budget, random legal folding solves 57\% of easy and 96\%
-of some-layers episodes, while GPT-5.6 Luna's best condition, L+A, solves 3 (with images) or 5
-(text only) of 10 easy instances and 6 of 10 some-layers instances in one episode each
-(Section~\ref{sec:results-matched}).
+of some-layers episodes, while the best model conditions solve at most 5 of 10 easy instances
+(GPT-5.6 Luna, text-only L+A) and 8 of 10 some-layers instances (GPT-6 Luna, high effort, L+A)
+in one episode each (Table~\ref{tab:luna-ablations}, Section~\ref{sec:results-matched}).
 BFS solves 5 of 10 medium instances within $10^5$ expansions; random folding solves at least one
-episode on 3 of 10 medium instances. Only the hard group is unsolved by every method we ran. We
-therefore do not describe medium as beyond reach: on easy, some-layers and medium the model is
-less effective than undirected search over the same legal actions, and the hard group is the only
-one where no method succeeds.
+episode on 3 of 10 medium instances. Only the hard group is unsolved by every method we ran, and
+its states are the largest (above). We therefore do not describe medium as beyond reach: on easy,
+some-layers and medium the model is less effective than undirected search over the same legal
+actions. Search with $10^5$ expansions and 100 random episodes per instance uses far more
+attempts than one model episode; the comparison shows that the model's choices carry less
+information than chance would over the same number of folds, not that search is cheaper or
+better in general.
 
 \begin{table}[htbp]
 \centering
