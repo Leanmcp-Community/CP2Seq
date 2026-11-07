@@ -19,6 +19,10 @@ over 366
 % fact:corpus.instagram.total
 designs collected from Flat-Folder, and evaluates query efficiency, defined as the proportion of
 fold steps that contribute to the final model, together with geometric and semantic similarity.
+Its model adds one crease per step, the environment checks local flat-foldability, and the final
+state is scored by image overlap and CLIP similarity to the target; layer order is not verified.
+CP2Seq instead asks for a sequence of simple folds and checks the final stack exactly, layer by
+layer and by sheet region.
 \citet{corigami} pairs a generator with a designer in a pipeline for flat-foldable and visually
 recognisable models, using a vision-language model for aesthetic and semantic evaluation and
 reporting the flat-foldability of generated crease patterns separately.
