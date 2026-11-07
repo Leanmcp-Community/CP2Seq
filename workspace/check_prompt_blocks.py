@@ -7,6 +7,7 @@ For every saved turn prompt of the paused Sonnet pilot:
 
     .venv/bin/python workspace/check_prompt_blocks.py [run_dir]
 """
+import json
 import sys
 from pathlib import Path
 
@@ -23,6 +24,15 @@ for ep in sorted(p for p in run.iterdir() if p.is_dir() and (p / "turn-001").exi
         if not f.exists():
             continue
         prompt = f.read_text(encoding="utf-8")
+        # Saved prompts of the paused pilot use the legacy layout (current before history).
+        # New runs use history-first; rebuild that order so the check tests what will be sent.
+        mark, tail_mark = "Geometry and history:\n", "\nAttached images, in order:\n"
+        a = prompt.find(mark) + len(mark)
+        b = prompt.find(tail_mark, a)
+        p = json.loads(prompt[a:b])
+        order = ["cp", "target", "history", "current", "turn", "max_turns"]
+        p = {k: p[k] for k in order if k in p} | {k: v for k, v in p.items() if k not in order}
+        prompt = prompt[:a] + json.dumps(p) + prompt[b:]
         blocks = prompt_blocks(prompt)
         checked += 1
         if len(blocks) == 1:

@@ -143,7 +143,11 @@ usage: 226 turns cost $81.49 (CLI-reported), about $0.36/turn. Cause: the whole 
 prompt was one text block, so only the 11k-token system prompt was ever read from cache
 and ~60k tokens were written to cache every turn. Fixed in
 `CODEX_HARNESS_TESTING/claude_fold_loop.py` (`prompt_blocks`: head / one block per history
-entry / tail, cache breakpoint on the last history block; same text). Verify offline with
+entry / tail, cache breakpoint on the last history block; same text). A second cause: the
+Claude loop had no `--prompt-layout` flag and fell back to the legacy order (current state
+before history), unlike the Codex arms (history-first); it now defaults to history-first.
+**The four finished pilot episodes therefore used the legacy prompt order**; resumed
+episodes will not, so either report that or rerun all ten. Verify offline with
 `.venv/bin/python workspace/check_prompt_blocks.py` and on one paid instance before resuming
 with `ARMS=sonnet10-rest` in `scripts/rebuttal/8_generality.sh`.
 

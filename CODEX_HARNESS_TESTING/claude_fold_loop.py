@@ -206,7 +206,9 @@ def prompt_blocks(prompt):
     tail_json = json.dumps(tail_obj)
     tail = "]" + ((", " + tail_json[1:]) if tail_obj else "}") + prompt[end:]
     entries = payload["history"]
-    pieces = [head] + [json.dumps(e) + (", " if i < len(entries) - 1 else "")
+    # Separator BEFORE each entry but the first, so a history block's text never changes when
+    # a later entry is appended (a trailing ", " would appear on the old last block next turn).
+    pieces = [head] + [(", " if i else "") + json.dumps(e)
                        for i, e in enumerate(entries)] + [tail]
     if "".join(pieces) != prompt:
         return single  # serialisation drifted; never send the model a different prompt
@@ -291,6 +293,11 @@ def main():
     # for; the episode loop reads args.action_space, so it must exist on this side too.
     parser.add_argument("--action-space", choices=["any", "all-layers"], default="any")
     parser.add_argument("--oracle-stop", action="store_true")
+    # The Codex arm defaults to history-first; this arm had no such flag, so the episode loop
+    # fell back to legacy (current state BEFORE history). That put a per-turn-changing block
+    # ahead of the history and defeated prompt caching, and made the Claude prompt order differ
+    # from the Codex arms. Runs before 2026-11-07 (incl. claude-20261107T175727765597Z) are legacy.
+    parser.add_argument("--prompt-layout", choices=["legacy", "history-first"], default="history-first")
     # On by default: an arm without the PNGs is not comparable to a Codex run using
     # --image-history all. Verified working over stream-json by workspace/probe_claude_cli.sh.
     parser.add_argument("--no-attach-images", dest="attach_images", action="store_false",
