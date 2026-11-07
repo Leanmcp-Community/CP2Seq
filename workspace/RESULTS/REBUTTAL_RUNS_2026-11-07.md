@@ -182,3 +182,33 @@ Luna pass@5 (`ARMS=luna-pass5`, L+A text-only, easy+layers 20 instances x 5 repe
 2. Sonnet 5.5 finish 10, then 20 instances; Haiku 5.5 for a within-family size contrast.
 3. Qwen (needs an API backend; not written).
 4. Correlate per-model efficiency with public spatial-reasoning scores (H3).
+
+## 9. Backtracking behaviour (free, 2026-11-07)
+
+`workspace/backtrack_analysis.mjs` -> `workspace/RESULTS/backtracking/report.md` (+ events.json).
+Backtrack = accepted go_to_step / restore_revision / remove_fold that shortens the sequence.
+Local repair = target reachable (CP + E_id) from the sequence minus its last 1-3 folds, DFS depth
+limit reference+2-prefix, node cap 4000. Easy + layers only.
+
+| condition | episodes | backtracks | to step 0 | mean jump | repair within 3 existed | to step 0 although repair existed | re-made discarded folds (jump>=2) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Luna B text-only | 20 | 24 | 11 (46%) | 1.4 | 23/24 | 11/23 | 4/6 |
+| Luna B+A text+images | 23 | 35 | 15 (43%) | 1.5 | 34/35 | 15/34 | 11/14 |
+| Luna L text-only | 20 | 39 | 7 (18%) | 2.7 | 24/39 | 4/24 | 12/32 |
+| Luna L+A text-only | 68 | 230 | 55 (24%) | 2.6 | 128/230 | 36/128 | 42/176 |
+| Sonnet L+A text-only | 10 | 32 | 9 (28%) | 3.3 | 16/32 | 4/16 | 0/24 |
+
+Findings: (1) For Luna L+A, 36 of 55 returns to the flat sheet discarded a repair <=3 folds away.
+(2) "Near target" by tier-3 feedback is not "recoverable": layers-0003 (8/9 layers, 6/8 matching)
+and easy-0002 (24/24 layers, wrong order) are trap states hit by both Luna and Sonnet; 5 of 6 and
+4 of 4 restarts there had no repair within 3 folds. So the earlier note "Sonnet restarts instead
+of repairing locally" (easy-0005 t40, layers-0003 t10) is corrected: in both cases no repair within
+3 folds existed. (3) With basic tools, after long backtracks the model mostly re-makes the same
+folds (B 4/6, B+A 11/14). With B, "to step 0" from depth 1 is a 1-fold undo.
+
+## 10. Sonnet pilot complete
+
+`claude-20261107T232254743781Z`: layers-0001..0005 all solved ($5.27). Pilot total 8/10 (E_plane;
+easy 3/5 legacy prompt order for 0001-0004, layers 5/5). Luna L+A text-only on the same 10:
+6/10 (0925), 3/10 (pass@5 rep 1), 6/10 (rep 2). Sonnet solved easy-0001/0003, never solved by
+Luna in 4 runs; Luna solved easy-0002/0005, Sonnet did not.

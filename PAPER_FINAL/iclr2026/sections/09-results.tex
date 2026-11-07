@@ -268,6 +268,34 @@ uses all 80 folds. Together with the matched baselines, this indicates that the 
 far less of the legal state space than undirected search and revisits what it has seen, rather
 than failing at the final step.
 
+\paragraph{Backtracking.} We examined every backtrack (a \texttt{go\_to\_step},
+\texttt{restore\_revision} or \texttt{remove\_fold} that shortens the sequence) in the saved easy and
+some-layers episodes, and for each asked whether a local repair existed: whether the target is
+reachable (CP match plus $E_{\mathrm{id}}$) from the sequence with its last one, two or three folds
+removed, by depth-limited search within the reference depth plus two (node cap 4,000). In the
+68 text-only GPT-5.6 Luna L+A episodes there are 230 backtracks; 55 (24\%) return to the flat
+sheet, and the mean backtrack removes 2.6 folds. The search decided all 230: a repair within three
+folds existed for 128 (56\%), and 36 of the 55 returns to the flat sheet discarded such a repair.
+After a backtrack of two or more folds the model
+re-made the discarded folds in the same order in 42 of 176 cases. With basic tools, backtracks are
+almost all single folds (mean 1.4), and after longer ones the model re-made the discarded folds in
+4 of 6 (B) and 11 of 14 (B+A) cases. In ten Claude Sonnet~5.5 L+A episodes (a pilot; four used an
+earlier prompt order), 9 of 32 backtracks return to the flat sheet and none re-makes the discarded
+folds.
+
+The tier-3 comparison can mark a state as close to the target when no short repair exists. On
+\texttt{layers-0003}, GPT-5.6 Luna (five restarts in three episodes) and Claude Sonnet~5.5 (one)
+restarted from a state with 8 of 9 layers, 6 of the 8 matching the target; in five of these six
+cases the search found no repair within three folds (in the sixth a one-fold repair existed), and
+in the Sonnet case the state had no legal fold. On \texttt{easy-0002}, three Luna episodes and one Sonnet episode
+reached the target's 24 layers in the wrong order and restarted; none had a repair within three
+folds. Restarting from such states is therefore not by itself an error. What the episodes show is
+that the models do not distinguish a recoverable near miss from a trap: for GPT-5.6 Luna, two
+thirds of returns to the flat sheet (36 of 55) discard a repair three or fewer folds away, while
+the feedback's closeness signal (layer count and matching layers) also marks unrecoverable states
+as close. These counts come from one model family plus a
+ten-episode pilot and from a bounded search; they describe behaviour, not its cause.
+
 \phantomsection
 \label{sec:results-difficulty}
 \phantomsection
