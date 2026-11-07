@@ -69,7 +69,9 @@ Correction to an earlier draft of this note: it listed L text-only as 7/39 (that
 E_plane; two easy solves fail E_id) and L+A easy as "9/20, two runs" (it mixed a
 text-only and a text+images run).
 
-**Conclusion.** Automatic feedback alone adds little (+2, both on layers). The gain comes from
+**Conclusion.** Against B in the same modality (text + images, 2/40), automatic feedback
+alone adds 3 solves (5/40: +1 easy, +2 layers); adding the legal list instead gives 6/40, and
+both together 10/40. The gain comes from
 constraining the action space (legal-fold list); feedback helps on top of it. Feedback and
 action constraint are complementary; feedback without the constraint is not enough.
 
