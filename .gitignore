@@ -76,3 +76,7 @@ workspace/corpus_provenance/
 workspace/mid_all_layers/
 
 **.pdf
+
+# local secrets and installed packages; never commit
+.env
+node_modules/

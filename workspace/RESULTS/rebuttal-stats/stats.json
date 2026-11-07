@@ -1,0 +1,235 @@
+{
+  "identity_flips_applied": [
+    [
+      "codex-20260921T085459155281Z",
+      "easy-0004"
+    ],
+    [
+      "codex-20260925T075530762587Z",
+      "easy-0003"
+    ],
+    [
+      "codex-20260925T075530762587Z",
+      "easy-0004"
+    ]
+  ],
+  "cells": {
+    "gpt-5.6-luna|low|A": {
+      "n": 40,
+      "plane": 10,
+      "identity": 10,
+      "ci95": [
+        0.14187118574387983,
+        0.4019396154853519
+      ]
+    },
+    "gpt-5.6-luna|low|B": {
+      "n": 40,
+      "plane": 2,
+      "identity": 2,
+      "ci95": [
+        0.013820667261558629,
+        0.16503877495105868
+      ]
+    },
+    "gpt-5.6-luna|low|L": {
+      "n": 40,
+      "plane": 6,
+      "identity": 6,
+      "ci95": [
+        0.0706118767610743,
+        0.29072324495985025
+      ]
+    },
+    "gpt-6-luna|high|A": {
+      "n": 40,
+      "plane": 11,
+      "identity": 11,
+      "ci95": [
+        0.16108016177777446,
+        0.4283495593285342
+      ]
+    },
+    "gpt-6-luna|high|B": {
+      "n": 40,
+      "plane": 6,
+      "identity": 6,
+      "ci95": [
+        0.0706118767610743,
+        0.29072324495985025
+      ]
+    },
+    "gpt-6-luna|high|L": {
+      "n": 40,
+      "plane": 10,
+      "identity": 10,
+      "ci95": [
+        0.14187118574387983,
+        0.4019396154853519
+      ]
+    },
+    "gpt-6-luna|low|A": {
+      "n": 40,
+      "plane": 8,
+      "identity": 8,
+      "ci95": [
+        0.1049998967188637,
+        0.3475730647562145
+      ]
+    },
+    "gpt-6-luna|low|B": {
+      "n": 40,
+      "plane": 0,
+      "identity": 0,
+      "ci95": [
+        0.0,
+        0.08762160245846368
+      ]
+    },
+    "gpt-6-luna|low|L": {
+      "n": 40,
+      "plane": 2,
+      "identity": 2,
+      "ci95": [
+        0.013820667261558629,
+        0.16503877495105868
+      ]
+    }
+  },
+  "effort": {
+    "all 40|E_plane": {
+      "diff": 0.14166666666666666,
+      "ci95": [
+        0.06666666666666667,
+        0.21666666666666667
+      ],
+      "p_signflip": 0.001220703125,
+      "instances": 40,
+      "instances_nonzero": 14,
+      "observations": 120
+    },
+    "all 40|E_id": {
+      "diff": 0.14166666666666666,
+      "ci95": [
+        0.06666666666666667,
+        0.21666666666666667
+      ],
+      "p_signflip": 0.001220703125,
+      "instances": 40,
+      "instances_nonzero": 14,
+      "observations": 120
+    },
+    "some-layers|E_plane": {
+      "diff": 0.4,
+      "ci95": [
+        0.23333333333333334,
+        0.5333333333333333
+      ],
+      "p_signflip": 0.0078125,
+      "instances": 10,
+      "instances_nonzero": 8,
+      "observations": 30
+    },
+    "some-layers|E_id": {
+      "diff": 0.4,
+      "ci95": [
+        0.23333333333333334,
+        0.5666666666666667
+      ],
+      "p_signflip": 0.0078125,
+      "instances": 10,
+      "instances_nonzero": 8,
+      "observations": 30
+    },
+    "easy|E_plane": {
+      "diff": 0.16666666666666666,
+      "ci95": [
+        0.0,
+        0.3333333333333333
+      ],
+      "p_signflip": 0.1875,
+      "instances": 10,
+      "instances_nonzero": 6,
+      "observations": 30
+    },
+    "easy|E_id": {
+      "diff": 0.16666666666666666,
+      "ci95": [
+        0.0,
+        0.3333333333333333
+      ],
+      "p_signflip": 0.1875,
+      "instances": 10,
+      "instances_nonzero": 6,
+      "observations": 30
+    }
+  },
+  "tools": {
+    "L-B|E_plane": {
+      "diff": 0.08333333333333333,
+      "ci95": [
+        0.016666666666666666,
+        0.15833333333333333
+      ],
+      "p_signflip": 0.051025390625,
+      "instances": 40,
+      "instances_nonzero": 13,
+      "observations": 120
+    },
+    "L-B|E_id": {
+      "diff": 0.08333333333333333,
+      "ci95": [
+        0.016666666666666666,
+        0.15833333333333333
+      ],
+      "p_signflip": 0.051025390625,
+      "instances": 40,
+      "instances_nonzero": 13,
+      "observations": 120
+    },
+    "A-L|E_plane": {
+      "diff": 0.09166666666666666,
+      "ci95": [
+        0.016666666666666666,
+        0.16666666666666666
+      ],
+      "p_signflip": 0.04150390625,
+      "instances": 40,
+      "instances_nonzero": 13,
+      "observations": 120
+    },
+    "A-L|E_id": {
+      "diff": 0.09166666666666666,
+      "ci95": [
+        0.016666666666666666,
+        0.16666666666666666
+      ],
+      "p_signflip": 0.04150390625,
+      "instances": 40,
+      "instances_nonzero": 13,
+      "observations": 120
+    },
+    "A-B|E_plane": {
+      "diff": 0.175,
+      "ci95": [
+        0.08333333333333333,
+        0.275
+      ],
+      "p_signflip": 0.0009765625,
+      "instances": 40,
+      "instances_nonzero": 11,
+      "observations": 120
+    },
+    "A-B|E_id": {
+      "diff": 0.175,
+      "ci95": [
+        0.08333333333333333,
+        0.275
+      ],
+      "p_signflip": 0.0009765625,
+      "instances": 40,
+      "instances_nonzero": 11,
+      "observations": 120
+    }
+  }
+}

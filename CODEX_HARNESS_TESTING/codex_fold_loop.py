@@ -390,8 +390,12 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
     for turn in range(1, args.max_turns + 1):
         turn_dir = out / f"turn-{turn:03d}"
         turn_dir.mkdir()
-        manifest = ({**fixed_images, **historical_images} if args.image_history == "all" else
-                    {**fixed_images, **{f"current-{k}": v for k, v in current_images.items()}})
+        if args.image_history == "none":
+            manifest = {}  # text-only: geometry reaches the model as JSON alone
+        elif args.image_history == "all":
+            manifest = {**fixed_images, **historical_images}
+        else:
+            manifest = {**fixed_images, **{f"current-{k}": v for k, v in current_images.items()}}
         current_state = browser.artifacts()["state"]
         if getattr(args, "prompt_layout", "legacy") == "history-first":
             # Dict insertion order is intentional: preserve the static inputs and existing
@@ -515,6 +519,20 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
         if result.get("finished"):
             termination = "finished"
             break
+        # Oracle stop: the program, not the model, decides success. After every accepted move
+        # the current state is checked with the same goal test the search baselines use
+        # (CP match + E_id); the first match ends the episode as solved, with no submission.
+        if (getattr(args, "oracle_stop", False) and result.get("ok")
+                and action["name"] in ("add_fold", "remove_fold", "go_to_step", "restore_revision")):
+            ev = browser.artifacts()["evaluation"]
+            hit = ev.get("identity_match")
+            if hit is None:
+                hit = ev.get("pilot_match")
+            if hit:
+                termination = "oracle_stop"
+                run.event("oracle_stop", turn=turn, state_id=browser.artifacts()["state"]["state_id"])
+                print(f"{sample_id}: current state matches the target (oracle stop)", flush=True)
+                break
         # Only a real move counts; an unchanged position is a turn the model spent without
         # going anywhere, which the dead-end check above already covers.
         moved_to = position_key(browser)
@@ -558,7 +576,12 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
               "tools": args.tools, "action_space": args.action_space,
               "termination": termination, "sample_calls": sample_calls, "tool_calls": tool_calls,
               **artifacts["evaluation"], **sequence_metrics(artifacts["sequence"]["folds"], reference)}
-    result["solved"] = termination == "finished" and result["pilot_match"]
+    if termination == "oracle_stop":
+        result["oracle_stop"] = True
+        result["solved"] = bool(result.get("identity_match") if result.get("identity_match") is not None
+                                else result["pilot_match"])
+    else:
+        result["solved"] = termination == "finished" and result["pilot_match"]
     write_json(out / "result.json", result)
     run.episode_done(reward=float(result["solved"]), **result)
     run.artifact(result)
@@ -572,6 +595,10 @@ def main():
     parser.add_argument("--out", type=Path, default=HERE / "runs")
     parser.add_argument("--prompt", type=Path, default=HERE / "codex_fold_prompt.md")
     parser.add_argument("--codex-bin", default="codex")
+    parser.add_argument("--oracle-stop", action="store_true",
+                        help="After every accepted move, check the state against the target "
+                             "(CP match + E_id) and end the episode as solved on the first match, "
+                             "so the model never has to recognise or submit the solution.")
     parser.add_argument("--compare-auto", action="store_true",
                         help="Attach the target comparison to every accepted add_fold, so the "
                              "model gets it without spending a turn. Requires --compare-tier.")
@@ -598,8 +625,9 @@ def main():
                         help="Appended to --prompt only when --tools legal-folds")
     parser.add_argument("--model", help="An explicit model available to your Codex account; otherwise CLI default")
     parser.add_argument("--reasoning-effort", choices=["low", "medium", "high", "xhigh", "max"])
-    parser.add_argument("--image-history", choices=["latest", "all"], default="latest",
-                        help="all reattaches every prior feedback image, matching Tinker's visual history")
+    parser.add_argument("--image-history", choices=["latest", "all", "none"], default="latest",
+                        help="all reattaches every prior feedback image, matching Tinker's visual "
+                             "history; none attaches no image at all (text-only condition)")
     parser.add_argument("--prompt-layout", choices=["legacy", "history-first"], default="history-first",
                         help="history-first puts accumulated history before changing state to improve prefix reuse")
     parser.add_argument("--conversation-mode", choices=["auto", "fresh", "append-only"], default="fresh",

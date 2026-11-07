@@ -1,0 +1,640 @@
+{
+  "B+A (text+images)": {
+    "runs": [
+      "codex-20261106T235355009576Z",
+      "codex-20261107T060718355927Z"
+    ],
+    "episodes": [
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "easy-0001",
+        "solved": true,
+        "termination": "finished",
+        "tool_calls": 32
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "easy-0002",
+        "solved": false,
+        "termination": "turn_budget",
+        "tool_calls": 80
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "easy-0003",
+        "solved": false,
+        "termination": "state_cycling",
+        "tool_calls": 22
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "easy-0004",
+        "solved": true,
+        "termination": "finished",
+        "tool_calls": 20
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "easy-0005",
+        "solved": false,
+        "termination": "state_cycling",
+        "tool_calls": 45
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "easy-0006",
+        "solved": true,
+        "termination": "finished",
+        "tool_calls": 37
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "easy-0007",
+        "solved": false,
+        "termination": "dead_end_no_recovery",
+        "tool_calls": 26
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "easy-0008",
+        "solved": false,
+        "termination": "dead_end_no_recovery",
+        "tool_calls": 35
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "easy-0009",
+        "solved": false,
+        "termination": "state_cycling",
+        "tool_calls": 42
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "easy-0010",
+        "solved": false,
+        "termination": "dead_end_no_recovery",
+        "tool_calls": 18
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "hard-0001",
+        "solved": false,
+        "termination": "dead_end_no_recovery",
+        "tool_calls": 53
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "hard-0002",
+        "solved": false,
+        "termination": "turn_budget",
+        "tool_calls": 80
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "hard-0003",
+        "solved": false,
+        "termination": "repetition_detected",
+        "tool_calls": 44
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "hard-0004",
+        "solved": false,
+        "termination": "state_cycling",
+        "tool_calls": 32
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "hard-0005",
+        "solved": false,
+        "termination": "state_cycling",
+        "tool_calls": 62
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "hard-0006",
+        "solved": false,
+        "termination": "repetition_detected",
+        "tool_calls": 22
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "hard-0007",
+        "solved": false,
+        "termination": "dead_end_no_recovery",
+        "tool_calls": 42
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "hard-0008",
+        "solved": false,
+        "termination": "repetition_detected",
+        "tool_calls": 48
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "hard-0009",
+        "solved": false,
+        "termination": "state_cycling",
+        "tool_calls": 49
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "hard-0010",
+        "solved": false,
+        "termination": "state_cycling",
+        "tool_calls": 36
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "mid-0001",
+        "solved": false,
+        "termination": "dead_end_no_recovery",
+        "tool_calls": 24
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "mid-0002",
+        "solved": false,
+        "termination": "turn_budget",
+        "tool_calls": 80
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "mid-0003",
+        "solved": false,
+        "termination": "dead_end_no_recovery",
+        "tool_calls": 17
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "mid-0004",
+        "solved": false,
+        "termination": "turn_budget",
+        "tool_calls": 80
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "mid-0005",
+        "solved": false,
+        "termination": "state_cycling",
+        "tool_calls": 11
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "mid-0006",
+        "solved": false,
+        "termination": "repetition_detected",
+        "tool_calls": 15
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "mid-0007",
+        "solved": false,
+        "termination": "state_cycling",
+        "tool_calls": 52
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "mid-0008",
+        "solved": false,
+        "termination": "state_cycling",
+        "tool_calls": 61
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "mid-0009",
+        "solved": false,
+        "termination": "repetition_detected",
+        "tool_calls": 56
+      },
+      {
+        "run": "codex-20261106T235355009576Z",
+        "sample": "mid-0010",
+        "solved": false,
+        "termination": "dead_end_no_recovery",
+        "tool_calls": 78
+      },
+      {
+        "run": "codex-20261107T060718355927Z",
+        "sample": "layers-0001",
+        "solved": false,
+        "termination": "turn_budget",
+        "tool_calls": 80
+      },
+      {
+        "run": "codex-20261107T060718355927Z",
+        "sample": "layers-0002",
+        "solved": false,
+        "termination": "state_cycling",
+        "tool_calls": 15
+      },
+      {
+        "run": "codex-20261107T060718355927Z",
+        "sample": "layers-0003",
+        "solved": false,
+        "termination": "state_cycling",
+        "tool_calls": 48
+      },
+      {
+        "run": "codex-20261107T060718355927Z",
+        "sample": "layers-0004",
+        "solved": false,
+        "termination": "turn_budget",
+        "tool_calls": 80
+      },
+      {
+        "run": "codex-20261107T060718355927Z",
+        "sample": "layers-0005",
+        "solved": true,
+        "termination": "finished",
+        "tool_calls": 19
+      },
+      {
+        "run": "codex-20261107T060718355927Z",
+        "sample": "layers-0006",
+        "solved": false,
+        "termination": "turn_budget",
+        "tool_calls": 80
+      },
+      {
+        "run": "codex-20261107T060718355927Z",
+        "sample": "layers-0007",
+        "solved": false,
+        "termination": "state_cycling",
+        "tool_calls": 54
+      },
+      {
+        "run": "codex-20261107T060718355927Z",
+        "sample": "layers-0008",
+        "solved": true,
+        "termination": "finished",
+        "tool_calls": 51
+      },
+      {
+        "run": "codex-20261107T060718355927Z",
+        "sample": "layers-0009",
+        "solved": false,
+        "termination": "state_cycling",
+        "tool_calls": 20
+      },
+      {
+        "run": "codex-20261107T060718355927Z",
+        "sample": "layers-0010",
+        "solved": false,
+        "termination": "state_cycling",
+        "tool_calls": 51
+      }
+    ],
+    "config": {
+      "model": "gpt-5.6-luna",
+      "effort": "low",
+      "tools": "base",
+      "compare_auto": true,
+      "geometry": "json",
+      "image_history": "all",
+      "max_turns": 80
+    }
+  },
+  "images-only (B)": {
+    "runs": [
+      "codex-20261106T235442689294Z",
+      "codex-20261107T062854945223Z"
+    ],
+    "episodes": [
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "easy-0001",
+        "solved": false,
+        "termination": "finished",
+        "tool_calls": 41
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "easy-0002",
+        "solved": false,
+        "termination": "repetition_detected",
+        "tool_calls": 51
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "easy-0003",
+        "solved": false,
+        "termination": "state_cycling",
+        "tool_calls": 35
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "easy-0004",
+        "solved": true,
+        "termination": "finished",
+        "tool_calls": 19
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "easy-0005",
+        "solved": false,
+        "termination": "dead_end_no_recovery",
+        "tool_calls": 45
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "easy-0006",
+        "solved": false,
+        "termination": "turn_budget",
+        "tool_calls": 80
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "easy-0007",
+        "solved": false,
+        "termination": "dead_end_no_recovery",
+        "tool_calls": 21
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "easy-0008",
+        "solved": false,
+        "termination": "finished",
+        "tool_calls": 23
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "easy-0009",
+        "solved": false,
+        "termination": "dead_end_no_recovery",
+        "tool_calls": 15
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "easy-0010",
+        "solved": false,
+        "termination": "dead_end_no_recovery",
+        "tool_calls": 46
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "hard-0001",
+        "solved": false,
+        "termination": "finished",
+        "tool_calls": 8
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "hard-0002",
+        "solved": false,
+        "termination": "finished",
+        "tool_calls": 63
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "hard-0003",
+        "solved": false,
+        "termination": "state_cycling",
+        "tool_calls": 22
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "hard-0004",
+        "solved": false,
+        "termination": "state_cycling",
+        "tool_calls": 45
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "hard-0005",
+        "solved": false,
+        "termination": "finished",
+        "tool_calls": 80
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "hard-0006",
+        "solved": false,
+        "termination": "repetition_detected",
+        "tool_calls": 40
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "hard-0007",
+        "solved": false,
+        "termination": "repetition_detected",
+        "tool_calls": 44
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "hard-0008",
+        "solved": false,
+        "termination": "state_cycling",
+        "tool_calls": 61
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "hard-0009",
+        "solved": false,
+        "termination": "state_cycling",
+        "tool_calls": 67
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "hard-0010",
+        "solved": false,
+        "termination": "repetition_detected",
+        "tool_calls": 47
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "mid-0001",
+        "solved": false,
+        "termination": "finished",
+        "tool_calls": 49
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "mid-0002",
+        "solved": false,
+        "termination": "finished",
+        "tool_calls": 52
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "mid-0003",
+        "solved": false,
+        "termination": "state_cycling",
+        "tool_calls": 32
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "mid-0004",
+        "solved": false,
+        "termination": "repetition_detected",
+        "tool_calls": 15
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "mid-0005",
+        "solved": false,
+        "termination": "dead_end_no_recovery",
+        "tool_calls": 55
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "mid-0006",
+        "solved": false,
+        "termination": "repetition_detected",
+        "tool_calls": 11
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "mid-0007",
+        "solved": false,
+        "termination": "repetition_detected",
+        "tool_calls": 17
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "mid-0008",
+        "solved": false,
+        "termination": "repetition_detected",
+        "tool_calls": 38
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "mid-0009",
+        "solved": false,
+        "termination": "repetition_detected",
+        "tool_calls": 32
+      },
+      {
+        "run": "codex-20261106T235442689294Z",
+        "sample": "mid-0010",
+        "solved": false,
+        "termination": "repetition_detected",
+        "tool_calls": 54
+      },
+      {
+        "run": "codex-20261107T062854945223Z",
+        "sample": "layers-0001",
+        "solved": false,
+        "termination": "repetition_detected",
+        "tool_calls": 36
+      },
+      {
+        "run": "codex-20261107T062854945223Z",
+        "sample": "layers-0002",
+        "solved": false,
+        "termination": "repetition_detected",
+        "tool_calls": 20
+      },
+      {
+        "run": "codex-20261107T062854945223Z",
+        "sample": "layers-0003",
+        "solved": false,
+        "termination": "repetition_detected",
+        "tool_calls": 60
+      },
+      {
+        "run": "codex-20261107T062854945223Z",
+        "sample": "layers-0004",
+        "solved": false,
+        "termination": "repetition_detected",
+        "tool_calls": 53
+      },
+      {
+        "run": "codex-20261107T062854945223Z",
+        "sample": "layers-0005",
+        "solved": false,
+        "termination": "state_cycling",
+        "tool_calls": 39
+      },
+      {
+        "run": "codex-20261107T062854945223Z",
+        "sample": "layers-0006",
+        "solved": false,
+        "termination": "repetition_detected",
+        "tool_calls": 75
+      },
+      {
+        "run": "codex-20261107T062854945223Z",
+        "sample": "layers-0007",
+        "solved": false,
+        "termination": "turn_budget",
+        "tool_calls": 80
+      },
+      {
+        "run": "codex-20261107T062854945223Z",
+        "sample": "layers-0008",
+        "solved": false,
+        "termination": "repetition_detected",
+        "tool_calls": 21
+      },
+      {
+        "run": "codex-20261107T062854945223Z",
+        "sample": "layers-0009",
+        "solved": false,
+        "termination": "turn_budget",
+        "tool_calls": 80
+      },
+      {
+        "run": "codex-20261107T062854945223Z",
+        "sample": "layers-0010",
+        "solved": false,
+        "termination": "turn_budget",
+        "tool_calls": 80
+      }
+    ],
+    "config": {
+      "model": "gpt-5.6-luna",
+      "effort": "low",
+      "tools": "base",
+      "compare_auto": false,
+      "geometry": "images-only",
+      "image_history": "all",
+      "max_turns": 80
+    }
+  },
+  "Sonnet 5.5 L+A text-only pilot (paused)": {
+    "runs": [
+      "claude-20261107T175727765597Z"
+    ],
+    "episodes": [
+      {
+        "run": "claude-20261107T175727765597Z",
+        "sample": "easy-0001",
+        "solved": true,
+        "termination": "finished",
+        "tool_calls": 26
+      },
+      {
+        "run": "claude-20261107T175727765597Z",
+        "sample": "easy-0002",
+        "solved": false,
+        "termination": "finished",
+        "tool_calls": 78
+      },
+      {
+        "run": "claude-20261107T175727765597Z",
+        "sample": "easy-0003",
+        "solved": true,
+        "termination": "finished",
+        "tool_calls": 54
+      },
+      {
+        "run": "claude-20261107T175727765597Z",
+        "sample": "easy-0004",
+        "solved": true,
+        "termination": "finished",
+        "tool_calls": 11
+      }
+    ],
+    "config": {
+      "model": "claude-sonnet-5-5",
+      "effort": "low",
+      "tools": "legal-folds",
+      "compare_auto": true,
+      "geometry": "json",
+      "image_history": "none",
+      "max_turns": 80
+    }
+  }
+}

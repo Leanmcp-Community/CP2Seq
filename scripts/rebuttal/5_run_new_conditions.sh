@@ -7,6 +7,7 @@
 #   bash scripts/rebuttal/5_run_new_conditions.sh                  # dry run: print commands
 #   EXECUTE=1 bash scripts/rebuttal/5_run_new_conditions.sh        # both arms
 #   EXECUTE=1 ARMS=images-only bash scripts/rebuttal/5_run_new_conditions.sh
+#   EXECUTE=1 ARMS=oracle bash ...   # L+A with oracle stop (program checks success every move)
 #   EXECUTE=1 SMOKE=1 ...   # 2 easy + 1 some-layers sample per arm first, to check cost
 set -euo pipefail
 repo=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)
@@ -24,6 +25,7 @@ for arm in $ARMS; do
   case $arm in
     b-plus-a) runner=run_luna_low_autocompare_base.sh ;;
     images-only) runner=run_luna_low_images_only.sh ;;
+    oracle) runner=run_luna_low_legal_autocompare_oracle.sh ;;   # L+A + program-decided success
     *) echo "unknown arm $arm" >&2; exit 1 ;;
   esac
   for part in all some; do

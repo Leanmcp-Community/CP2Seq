@@ -157,13 +157,64 @@ def stream_json_message(prompt, manifest):
     Text first so the cacheable prefix is as long as possible, and the images in manifest
     order, which puts the fixed initial views ahead of the per-turn ones.
     """
-    content = [{"type": "text", "text": prompt}]
+    content = prompt_blocks(prompt)
     for info in manifest.values():
         path = Path(info["path"] if isinstance(info, dict) else info)
         content.append({"type": "image", "source": {
             "type": "base64", "media_type": "image/png",
             "data": base64.b64encode(path.read_bytes()).decode("ascii")}})
     return json.dumps({"type": "user", "message": {"role": "user", "content": content}}) + "\n"
+
+
+GEOMETRY_MARK = "Geometry and history:\n"
+IMAGES_MARK = "\nAttached images, in order:\n"
+
+
+def prompt_blocks(prompt):
+    """Split one turn's prompt into text blocks whose concatenation is the same prompt.
+
+    WHY. Sent as ONE text block, the prompt changes as a whole every turn (history grows in
+    the middle of it), and a prompt-cache entry ends at a block boundary, so nothing after the
+    system prompt was ever reused: the 2026-11-07 Sonnet pilot paid a fresh cache write of
+    ~60k tokens on every turn (~$0.36/turn). Here the stable head (instructions, CP, target),
+    each history entry, and the volatile tail (current state, turn, image list) are separate
+    blocks, and the LAST history block carries a cache breakpoint. Next turn the same blocks
+    reappear byte-identical up to that point plus one new history block, so the request reads
+    the previous turn's cache entry and writes only the new entry.
+
+    The text the model sees is unchanged: json.dumps with default separators produces exactly
+    the pieces joined here. If the prompt does not have the expected shape, it falls back to a
+    single block (the old behaviour) rather than guessing.
+    """
+    single = [{"type": "text", "text": prompt}]
+    start = prompt.find(GEOMETRY_MARK)
+    end = prompt.find(IMAGES_MARK, start + 1)
+    if start < 0 or end < 0:
+        return single
+    start += len(GEOMETRY_MARK)
+    try:
+        payload = json.loads(prompt[start:end])
+    except json.JSONDecodeError:
+        return single
+    keys = list(payload)
+    if not isinstance(payload, dict) or "history" not in payload or not isinstance(payload["history"], list):
+        return single
+    hi = keys.index("history")
+    head_obj = {k: payload[k] for k in keys[:hi]}
+    tail_obj = {k: payload[k] for k in keys[hi + 1:]}
+    head = prompt[:start] + json.dumps(head_obj)[:-1] + (", " if head_obj else "") + '"history": ['
+    tail_json = json.dumps(tail_obj)
+    tail = "]" + ((", " + tail_json[1:]) if tail_obj else "}") + prompt[end:]
+    entries = payload["history"]
+    pieces = [head] + [json.dumps(e) + (", " if i < len(entries) - 1 else "")
+                       for i, e in enumerate(entries)] + [tail]
+    if "".join(pieces) != prompt:
+        return single  # serialisation drifted; never send the model a different prompt
+    blocks = [{"type": "text", "text": p} for p in pieces if p]
+    # Breakpoint on the last stable block: the last history entry, or the head on turn 1.
+    stable = len(entries)  # index of the last history block (head is 0)
+    blocks[stable]["cache_control"] = {"type": "ephemeral"}
+    return blocks
 
 
 def result_event(raw):
@@ -235,7 +286,11 @@ def main():
                         help="Pinned model id. Aliases like opus/sonnet follow whatever is "
                              "newest, which would silently change what a benchmark measures.")
     parser.add_argument("--reasoning-effort", choices=["low", "medium", "high", "xhigh", "max"])
-    parser.add_argument("--image-history", choices=["latest", "all"], default="latest")
+    parser.add_argument("--image-history", choices=["latest", "all", "none"], default="latest")
+    # Same meaning as on the Codex arm. all-layers is what the easy/mid/hard corpus was built
+    # for; the episode loop reads args.action_space, so it must exist on this side too.
+    parser.add_argument("--action-space", choices=["any", "all-layers"], default="any")
+    parser.add_argument("--oracle-stop", action="store_true")
     # On by default: an arm without the PNGs is not comparable to a Codex run using
     # --image-history all. Verified working over stream-json by workspace/probe_claude_cli.sh.
     parser.add_argument("--no-attach-images", dest="attach_images", action="store_false",
@@ -268,10 +323,14 @@ def main():
     args.out = args.out.expanduser().resolve()
     args.corpus = args.corpus.expanduser().resolve()
     args.prompt = args.prompt.expanduser().resolve()
-    args.tool_specs = tools_for(args.tools, args.compare_tier)
+    if args.image_history == "none":
+        args.attach_images = False
+    args.tool_specs = tools_for(args.tools, args.compare_tier, args.action_space)
     args.prompt_text = args.prompt.read_text()
     if args.tools == "legal-folds":
         args.prompt_text += "\n" + args.prompt_appendix.expanduser().resolve().read_text()
+    if args.action_space == "all-layers":
+        args.prompt_text += "\n" + (HERE / "codex_fold_prompt_all_layers.md").read_text()
     if args.compare_tier:
         args.prompt_text += "\n" + (HERE / "codex_fold_prompt_compare.md").read_text()
     if args.compare_auto:

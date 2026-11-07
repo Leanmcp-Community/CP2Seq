@@ -1,0 +1,574 @@
+[
+  {
+    "sample": "easy-0001",
+    "group": "easy",
+    "depth": 4,
+    "random": {
+      "episodes": 20,
+      "turns": 80,
+      "solved_identity": 12,
+      "solved_plane": 12,
+      "enumerations": 1318,
+      "seconds": 0.908
+    },
+    "bfs": {
+      "expanded": 38,
+      "distinct_states": 90,
+      "stop": "solved",
+      "seconds": 0.03,
+      "first_solved_at_expansion_identity": 38,
+      "first_solved_at_expansion_plane": 38,
+      "by_budget": {
+        "80": true,
+        "1000": true
+      },
+      "wall_clock_cap_s": 60
+    }
+  },
+  {
+    "sample": "easy-0002",
+    "group": "easy",
+    "depth": 7,
+    "random": {
+      "episodes": 20,
+      "turns": 80,
+      "solved_identity": 0,
+      "solved_plane": 0,
+      "enumerations": 1762,
+      "seconds": 27.535
+    },
+    "bfs": {
+      "expanded": 920,
+      "distinct_states": 1622,
+      "stop": "solved",
+      "seconds": 8.721,
+      "first_solved_at_expansion_identity": 920,
+      "first_solved_at_expansion_plane": 920,
+      "by_budget": {
+        "80": false,
+        "1000": true
+      },
+      "wall_clock_cap_s": 60
+    }
+  },
+  {
+    "sample": "easy-0003",
+    "group": "easy",
+    "depth": 10,
+    "random": {
+      "episodes": 20,
+      "turns": 80,
+      "solved_identity": 0,
+      "solved_plane": 5,
+      "enumerations": 1746,
+      "seconds": 13.726
+    },
+    "bfs": {
+      "expanded": 1000,
+      "distinct_states": 2854,
+      "stop": "expansion-budget",
+      "seconds": 9.725,
+      "first_solved_at_expansion_identity": null,
+      "first_solved_at_expansion_plane": null,
+      "by_budget": {
+        "80": false,
+        "1000": false
+      },
+      "wall_clock_cap_s": 60
+    }
+  },
+  {
+    "sample": "easy-0004",
+    "group": "easy",
+    "depth": 5,
+    "random": {
+      "episodes": 20,
+      "turns": 80,
+      "solved_identity": 20,
+      "solved_plane": 20,
+      "enumerations": 708,
+      "seconds": 2.584
+    },
+    "bfs": {
+      "expanded": 41,
+      "distinct_states": 52,
+      "stop": "solved",
+      "seconds": 0.183,
+      "first_solved_at_expansion_identity": 41,
+      "first_solved_at_expansion_plane": 41,
+      "by_budget": {
+        "80": true,
+        "1000": true
+      },
+      "wall_clock_cap_s": 60
+    }
+  },
+  {
+    "sample": "easy-0005",
+    "group": "easy",
+    "depth": 5,
+    "random": {
+      "episodes": 20,
+      "turns": 80,
+      "solved_identity": 10,
+      "solved_plane": 10,
+      "enumerations": 1376,
+      "seconds": 2.702
+    },
+    "bfs": {
+      "expanded": 40,
+      "distinct_states": 98,
+      "stop": "solved",
+      "seconds": 0.091,
+      "first_solved_at_expansion_identity": 40,
+      "first_solved_at_expansion_plane": 40,
+      "by_budget": {
+        "80": true,
+        "1000": true
+      },
+      "wall_clock_cap_s": 60
+    }
+  },
+  {
+    "sample": "easy-0006",
+    "group": "easy",
+    "depth": 5,
+    "random": {
+      "episodes": 20,
+      "turns": 80,
+      "solved_identity": 20,
+      "solved_plane": 20,
+      "enumerations": 251,
+      "seconds": 0.911
+    },
+    "bfs": {
+      "expanded": 11,
+      "distinct_states": 13,
+      "stop": "solved",
+      "seconds": 0.032,
+      "first_solved_at_expansion_identity": 11,
+      "first_solved_at_expansion_plane": 11,
+      "by_budget": {
+        "80": true,
+        "1000": true
+      },
+      "wall_clock_cap_s": 60
+    }
+  },
+  {
+    "sample": "easy-0007",
+    "group": "easy",
+    "depth": 8,
+    "random": {
+      "episodes": 20,
+      "turns": 80,
+      "solved_identity": 8,
+      "solved_plane": 17,
+      "enumerations": 1452,
+      "seconds": 14.05
+    },
+    "bfs": {
+      "expanded": 171,
+      "distinct_states": 209,
+      "stop": "solved",
+      "seconds": 3.028,
+      "first_solved_at_expansion_identity": 171,
+      "first_solved_at_expansion_plane": 120,
+      "by_budget": {
+        "80": false,
+        "1000": true
+      },
+      "wall_clock_cap_s": 60
+    }
+  },
+  {
+    "sample": "easy-0008",
+    "group": "easy",
+    "depth": 7,
+    "random": {
+      "episodes": 20,
+      "turns": 80,
+      "solved_identity": 13,
+      "solved_plane": 13,
+      "enumerations": 1200,
+      "seconds": 3.038
+    },
+    "bfs": {
+      "expanded": 43,
+      "distinct_states": 49,
+      "stop": "solved",
+      "seconds": 0.157,
+      "first_solved_at_expansion_identity": 43,
+      "first_solved_at_expansion_plane": 43,
+      "by_budget": {
+        "80": true,
+        "1000": true
+      },
+      "wall_clock_cap_s": 60
+    }
+  },
+  {
+    "sample": "easy-0009",
+    "group": "easy",
+    "depth": 5,
+    "random": {
+      "episodes": 20,
+      "turns": 80,
+      "solved_identity": 20,
+      "solved_plane": 20,
+      "enumerations": 130,
+      "seconds": 0.532
+    },
+    "bfs": {
+      "expanded": 12,
+      "distinct_states": 20,
+      "stop": "solved",
+      "seconds": 0.054,
+      "first_solved_at_expansion_identity": 12,
+      "first_solved_at_expansion_plane": 12,
+      "by_budget": {
+        "80": true,
+        "1000": true
+      },
+      "wall_clock_cap_s": 60
+    }
+  },
+  {
+    "sample": "easy-0010",
+    "group": "easy",
+    "depth": 6,
+    "random": {
+      "episodes": 20,
+      "turns": 80,
+      "solved_identity": 8,
+      "solved_plane": 8,
+      "enumerations": 1480,
+      "seconds": 3.323
+    },
+    "bfs": {
+      "expanded": 46,
+      "distinct_states": 74,
+      "stop": "solved",
+      "seconds": 0.151,
+      "first_solved_at_expansion_identity": 46,
+      "first_solved_at_expansion_plane": 46,
+      "by_budget": {
+        "80": true,
+        "1000": true
+      },
+      "wall_clock_cap_s": 60
+    }
+  },
+  {
+    "sample": "mid-0001",
+    "group": "mid",
+    "depth": 11,
+    "random": {
+      "episodes": 20,
+      "turns": 80,
+      "solved_identity": 0,
+      "solved_plane": 1,
+      "enumerations": 1865,
+      "seconds": 34.587
+    },
+    "bfs": {
+      "expanded": 1000,
+      "distinct_states": 2727,
+      "stop": "expansion-budget",
+      "seconds": 29.14,
+      "first_solved_at_expansion_identity": null,
+      "first_solved_at_expansion_plane": null,
+      "by_budget": {
+        "80": false,
+        "1000": false
+      },
+      "wall_clock_cap_s": 60
+    }
+  },
+  {
+    "sample": "mid-0002",
+    "group": "mid",
+    "depth": 12,
+    "random": {
+      "episodes": 20,
+      "turns": 80,
+      "solved_identity": 0,
+      "solved_plane": 0,
+      "enumerations": 1837,
+      "seconds": 21.102
+    },
+    "bfs": {
+      "expanded": 1000,
+      "distinct_states": 1561,
+      "stop": "expansion-budget",
+      "seconds": 16.962,
+      "first_solved_at_expansion_identity": null,
+      "first_solved_at_expansion_plane": null,
+      "by_budget": {
+        "80": false,
+        "1000": false
+      },
+      "wall_clock_cap_s": 60
+    }
+  },
+  {
+    "sample": "mid-0003",
+    "group": "mid",
+    "depth": 13,
+    "random": {
+      "episodes": 20,
+      "turns": 80,
+      "solved_identity": 0,
+      "solved_plane": 0,
+      "enumerations": 1978,
+      "seconds": 20.672
+    },
+    "bfs": {
+      "expanded": 1000,
+      "distinct_states": 2638,
+      "stop": "expansion-budget",
+      "seconds": 19.119,
+      "first_solved_at_expansion_identity": null,
+      "first_solved_at_expansion_plane": null,
+      "by_budget": {
+        "80": false,
+        "1000": false
+      },
+      "wall_clock_cap_s": 60
+    }
+  },
+  {
+    "sample": "mid-0004",
+    "group": "mid",
+    "depth": 11,
+    "random": {
+      "episodes": 20,
+      "turns": 80,
+      "solved_identity": 0,
+      "solved_plane": 0,
+      "enumerations": 1735,
+      "seconds": 15.857
+    },
+    "bfs": {
+      "expanded": 1000,
+      "distinct_states": 2150,
+      "stop": "expansion-budget",
+      "seconds": 6.646,
+      "first_solved_at_expansion_identity": null,
+      "first_solved_at_expansion_plane": null,
+      "by_budget": {
+        "80": false,
+        "1000": false
+      },
+      "wall_clock_cap_s": 60
+    }
+  },
+  {
+    "sample": "mid-0005",
+    "group": "mid",
+    "depth": 12,
+    "random": {
+      "episodes": 20,
+      "turns": 80,
+      "solved_identity": 0,
+      "solved_plane": 0,
+      "enumerations": 1912,
+      "seconds": 36.749
+    },
+    "bfs": {
+      "expanded": 1000,
+      "distinct_states": 3671,
+      "stop": "expansion-budget",
+      "seconds": 30.676,
+      "first_solved_at_expansion_identity": null,
+      "first_solved_at_expansion_plane": null,
+      "by_budget": {
+        "80": false,
+        "1000": false
+      },
+      "wall_clock_cap_s": 60
+    }
+  },
+  {
+    "sample": "mid-0006",
+    "group": "mid",
+    "depth": 13,
+    "random": {
+      "episodes": 20,
+      "turns": 80,
+      "solved_identity": 0,
+      "solved_plane": 0,
+      "enumerations": 1753,
+      "seconds": 266.692
+    },
+    "bfs": {
+      "expanded": 688,
+      "distinct_states": 2929,
+      "stop": "wall-clock",
+      "seconds": 60.036,
+      "first_solved_at_expansion_identity": null,
+      "first_solved_at_expansion_plane": null,
+      "by_budget": {
+        "80": false,
+        "1000": false
+      },
+      "wall_clock_cap_s": 60
+    }
+  },
+  {
+    "sample": "mid-0007",
+    "group": "mid",
+    "depth": 11,
+    "random": {
+      "episodes": 20,
+      "turns": 80,
+      "solved_identity": 0,
+      "solved_plane": 0,
+      "enumerations": 1903,
+      "seconds": 26.091
+    },
+    "bfs": {
+      "expanded": 1000,
+      "distinct_states": 2009,
+      "stop": "expansion-budget",
+      "seconds": 32.163,
+      "first_solved_at_expansion_identity": null,
+      "first_solved_at_expansion_plane": null,
+      "by_budget": {
+        "80": false,
+        "1000": false
+      },
+      "wall_clock_cap_s": 60
+    }
+  },
+  {
+    "sample": "mid-0008",
+    "group": "mid",
+    "depth": 13,
+    "random": {
+      "episodes": 20,
+      "turns": 80,
+      "solved_identity": 0,
+      "solved_plane": 0,
+      "enumerations": 1900,
+      "seconds": 52.109
+    },
+    "bfs": {
+      "expanded": 914,
+      "distinct_states": 2115,
+      "stop": "wall-clock",
+      "seconds": 60.097,
+      "first_solved_at_expansion_identity": null,
+      "first_solved_at_expansion_plane": null,
+      "by_budget": {
+        "80": false,
+        "1000": false
+      },
+      "wall_clock_cap_s": 60
+    }
+  },
+  {
+    "sample": "mid-0009",
+    "group": "mid",
+    "depth": 11,
+    "random": {
+      "episodes": 20,
+      "turns": 80,
+      "solved_identity": 0,
+      "solved_plane": 0,
+      "enumerations": 1811,
+      "seconds": 10.891
+    },
+    "bfs": {
+      "expanded": 1000,
+      "distinct_states": 2739,
+      "stop": "expansion-budget",
+      "seconds": 9.904,
+      "first_solved_at_expansion_identity": null,
+      "first_solved_at_expansion_plane": null,
+      "by_budget": {
+        "80": false,
+        "1000": false
+      },
+      "wall_clock_cap_s": 60
+    }
+  },
+  {
+    "sample": "mid-0010",
+    "group": "mid",
+    "depth": 12,
+    "random": {
+      "episodes": 20,
+      "turns": 80,
+      "solved_identity": 0,
+      "solved_plane": 0,
+      "enumerations": 1918,
+      "seconds": 10.229
+    },
+    "bfs": {
+      "expanded": 1000,
+      "distinct_states": 1578,
+      "stop": "expansion-budget",
+      "seconds": 22.284,
+      "first_solved_at_expansion_identity": null,
+      "first_solved_at_expansion_plane": null,
+      "by_budget": {
+        "80": false,
+        "1000": false
+      },
+      "wall_clock_cap_s": 60
+    }
+  },
+  {
+    "sample": "hard-0001",
+    "group": "hard",
+    "depth": 19,
+    "random": {
+      "episodes": 20,
+      "turns": 80,
+      "solved_identity": 0,
+      "solved_plane": 0,
+      "enumerations": 1749,
+      "seconds": 2510.929
+    },
+    "bfs": {
+      "expanded": 80,
+      "distinct_states": 672,
+      "stop": "wall-clock",
+      "seconds": 60.27,
+      "first_solved_at_expansion_identity": null,
+      "first_solved_at_expansion_plane": null,
+      "by_budget": {
+        "80": false,
+        "1000": false
+      },
+      "wall_clock_cap_s": 60
+    }
+  },
+  {
+    "sample": "hard-0002",
+    "group": "hard",
+    "depth": 19,
+    "random": {
+      "episodes": 20,
+      "turns": 80,
+      "solved_identity": 0,
+      "solved_plane": 0,
+      "enumerations": 1908,
+      "seconds": 234.093
+    },
+    "bfs": {
+      "expanded": 334,
+      "distinct_states": 630,
+      "stop": "wall-clock",
+      "seconds": 60.118,
+      "first_solved_at_expansion_identity": null,
+      "first_solved_at_expansion_plane": null,
+      "by_budget": {
+        "80": false,
+        "1000": false
+      },
+      "wall_clock_cap_s": 60
+    }
+  }
+]

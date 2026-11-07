@@ -1,0 +1,104 @@
+{
+  "ranker": "llm",
+  "model": "claude-haiku-5-5",
+  "effort": "low",
+  "budget": 200,
+  "top": 10,
+  "seed": 1,
+  "usage": {
+    "calls": 1651,
+    "input": 12164974,
+    "output": 98276,
+    "parse_failures": 0
+  },
+  "rows": [
+    {
+      "sample": "easy-0003",
+      "solved": false,
+      "expanded": 200,
+      "reference_depth": 10,
+      "stop": "budget",
+      "seconds": 180.364
+    },
+    {
+      "sample": "mid-0001",
+      "solved": false,
+      "expanded": 200,
+      "reference_depth": 11,
+      "stop": "budget",
+      "seconds": 151.684
+    },
+    {
+      "sample": "mid-0002",
+      "solved": false,
+      "expanded": 200,
+      "reference_depth": 12,
+      "stop": "budget",
+      "seconds": 150.814
+    },
+    {
+      "sample": "mid-0003",
+      "solved": false,
+      "expanded": 200,
+      "reference_depth": 13,
+      "stop": "budget",
+      "seconds": 137.883
+    },
+    {
+      "sample": "mid-0004",
+      "solved": false,
+      "expanded": 200,
+      "reference_depth": 11,
+      "stop": "budget",
+      "seconds": 172.908
+    },
+    {
+      "sample": "mid-0005",
+      "solved": false,
+      "expanded": 200,
+      "reference_depth": 12,
+      "stop": "budget",
+      "seconds": 171.809
+    },
+    {
+      "sample": "mid-0006",
+      "solved": false,
+      "expanded": 200,
+      "reference_depth": 13,
+      "stop": "budget",
+      "seconds": 493.256
+    },
+    {
+      "sample": "mid-0007",
+      "solved": false,
+      "expanded": 200,
+      "reference_depth": 11,
+      "stop": "budget",
+      "seconds": 127.755
+    },
+    {
+      "sample": "mid-0008",
+      "solved": false,
+      "expanded": 200,
+      "reference_depth": 13,
+      "stop": "budget",
+      "seconds": 152.286
+    },
+    {
+      "sample": "mid-0009",
+      "solved": false,
+      "expanded": 200,
+      "reference_depth": 11,
+      "stop": "budget",
+      "seconds": 143.298
+    },
+    {
+      "sample": "mid-0010",
+      "solved": true,
+      "expanded": 166,
+      "depth": 13,
+      "reference_depth": 12,
+      "seconds": 125.984
+    }
+  ]
+}
