@@ -21,6 +21,8 @@
       Sonnet 试跑 10 题合计 8/10（easy 3/5，layers 5/5）；easy 待 E_id 复核；最早 4 道 easy 用旧 prompt 顺序。
 - [ ] Sonnet 补跑另外 10 题（easy-0006..0010、layers-0006..0010），约 $20：
       `caffeinate -i env EXECUTE=1 bash scripts/rebuttal/8c_sonnet_rest10.sh`（用户决定：最早 4 道 easy 不重跑）
+      15:52 状态：easy-0006、0007 解出（claude-20261107T234703304522Z）；easy-0008 第 13 轮撞 5 小时上限（7pm 重置）。
+      7pm 后续跑：`caffeinate -i env EXECUTE=1 EASY="easy-0008 easy-0009 easy-0010" bash scripts/rebuttal/8c_sonnet_rest10.sh`
 - [ ] Qwen 只测一个模型：qwen/qwen3-235b-a22b-thinking-2507（脚本默认已改）。冒烟测试：`.env` 加 `OPENROUTER_API_KEY`，到 OpenRouter 核对模型 id，然后
       `SMOKE=1 EXECUTE=1 bash scripts/rebuttal/9_qwen_sizes.sh`，看每轮花费。
 - [ ] Qwen 正式运行：`caffeinate -i env EXECUTE=1 bash scripts/rebuttal/9_qwen_sizes.sh`

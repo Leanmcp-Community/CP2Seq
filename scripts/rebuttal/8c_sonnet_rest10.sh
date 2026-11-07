@@ -7,6 +7,9 @@
 #
 #   bash scripts/rebuttal/8c_sonnet_rest10.sh                                   # dry run
 #   caffeinate -i env EXECUTE=1 bash scripts/rebuttal/8c_sonnet_rest10.sh       # run
+# Resume after a quota stop (2026-11-07: easy-0006, 0007 done in claude-20261107T234703304522Z;
+# hit the 5-hour limit at easy-0008 turn 13, resets 7pm):
+#   caffeinate -i env EXECUTE=1 EASY="easy-0008 easy-0009 easy-0010" bash scripts/rebuttal/8c_sonnet_rest10.sh
 set -euo pipefail
 repo=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)
 cd "$repo"
@@ -14,10 +17,12 @@ all=$repo/workspace/corpus/out/release/all-layers/samples
 some=$repo/workspace/corpus/out/release/some-generated-d5/samples
 common=(REASONING_EFFORT=low EFFORT=low MAX_TURNS=80 TIMEOUT=300 IMAGE_HISTORY=none CLAUDE_MODEL=claude-sonnet-5-5)
 R=CODEX_HARNESS_TESTING/run_claude_low_legal_autocompare.sh
-a=(env "${common[@]}" SAMPLES="easy-0006 easy-0007 easy-0008 easy-0009 easy-0010"
+EASY=${EASY-"easy-0006 easy-0007 easy-0008 easy-0009 easy-0010"}
+LAYERS=${LAYERS-"layers-0006 layers-0007 layers-0008 layers-0009 layers-0010"}
+a=(env "${common[@]}" SAMPLES="$EASY"
    sh $R --corpus "$all" --action-space all-layers)
-b=(env "${common[@]}" SAMPLES="layers-0006 layers-0007 layers-0008 layers-0009 layers-0010"
+b=(env "${common[@]}" SAMPLES="$LAYERS"
    sh $R --corpus "$some" --action-space any)
-echo "${a[*]}"; [[ "${EXECUTE:-0}" == 1 ]] && "${a[@]}"
-echo "${b[*]}"; [[ "${EXECUTE:-0}" == 1 ]] && "${b[@]}"
+if [[ -n "$EASY" ]]; then echo "${a[*]}"; [[ "${EXECUTE:-0}" == 1 ]] && "${a[@]}"; fi
+if [[ -n "$LAYERS" ]]; then echo "${b[*]}"; [[ "${EXECUTE:-0}" == 1 ]] && "${b[@]}"; fi
 exit 0
