@@ -9,6 +9,8 @@ Transport: POST {base_url}/chat/completions, standard library only (no SDK). Any
 OpenAI-compatible server works; the default is OpenRouter, and DashScope or a local vLLM server
 are selected with --base-url / QWEN_BASE_URL:
   OpenRouter  https://openrouter.ai/api/v1                         key: OPENROUTER_API_KEY
+  Fireworks   https://api.fireworks.ai/inference/v1                key: FIREWORKS_API_KEY
+              model ids look like accounts/fireworks/models/qwen3-235b-a22b-thinking-2507
   DashScope   https://dashscope-intl.aliyuncs.com/compatible-mode/v1  key: DASHSCOPE_API_KEY
   vLLM        http://localhost:8000/v1                             key: none needed
 The key is read from QWEN_API_KEY, then OPENROUTER_API_KEY, then DASHSCOPE_API_KEY. It is
@@ -41,7 +43,7 @@ from capture_fold import CORPUS, DEFAULT_SAMPLES, load_task, write_json, add_ima
 from tool_schemas import tools_for
 from codex_fold_loop import MODEL_GEOMETRY_DECIMALS, action_schema, archive_attempt, run_batch
 
-KEY_VARS = ("QWEN_API_KEY", "OPENROUTER_API_KEY", "DASHSCOPE_API_KEY")
+KEY_VARS = ("QWEN_API_KEY", "FIREWORKS_API_KEY", "OPENROUTER_API_KEY", "DASHSCOPE_API_KEY")
 RETRY_HTTP = {408, 409, 425, 429, 500, 502, 503, 504, 529}
 
 
@@ -50,7 +52,14 @@ class Transient(Exception):
     or a reply that was not a parseable JSON object."""
 
 
-def api_key():
+def api_key(base_url=""):
+    """The key for this endpoint: a provider-specific variable first, so a .env holding several
+    providers' keys never sends one provider's key to another."""
+    specific = ("FIREWORKS_API_KEY" if "fireworks.ai" in base_url else
+                "OPENROUTER_API_KEY" if "openrouter.ai" in base_url else
+                "DASHSCOPE_API_KEY" if "dashscope" in base_url else None)
+    if specific:
+        return os.environ.get(specific) or os.environ.get("QWEN_API_KEY")
     for name in KEY_VARS:
         if os.environ.get(name):
             return os.environ[name]
@@ -114,6 +123,10 @@ def parse_action(reply):
     if not choices:
         raise Transient(f"no choices in reply: {str(reply)[:500]}")
     text = (choices[0].get("message") or {}).get("content") or ""
+    # Thinking models served without a separate reasoning field (e.g. some Fireworks routes)
+    # put the chain of thought inline as <think>...</think>; it may contain braces.
+    if "</think>" in text:
+        text = text.rsplit("</think>", 1)[1]
     text = text.strip()
     if text.startswith("```"):
         text = text.split("\n", 1)[-1].rsplit("```", 1)[0].strip()
@@ -141,7 +154,7 @@ def ask_qwen(args, prompt, manifest, turn_dir, workdir, schema_path, run=None):
                           {"role": "user", "content": "<turn_dir/prompt.md>"
                            + (f" + {len(manifest)} image(s)" if args.attach_images and manifest else "")}]
     write_json(turn_dir / "command.json", {"endpoint": args.base_url, "body": logged})
-    key = api_key()
+    key = api_key(args.base_url)
     attempts_allowed = args.max_retries + 1
     history = []
     for attempt in range(1, attempts_allowed + 1):
@@ -233,7 +246,7 @@ def main():
     if len(args.samples) != len(set(args.samples)):
         parser.error("Sample IDs must be unique")
     args.openrouter = "openrouter.ai" in args.base_url
-    if not api_key() and not args.base_url.startswith(("http://localhost", "http://127.0.0.1")):
+    if not api_key(args.base_url) and not args.base_url.startswith(("http://localhost", "http://127.0.0.1")):
         parser.error(f"No API key: set one of {', '.join(KEY_VARS)} (e.g. in .env).")
     args.attach_images = args.image_history != "none"
     args.ask = ask_qwen

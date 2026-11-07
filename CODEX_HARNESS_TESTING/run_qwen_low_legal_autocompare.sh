@@ -8,7 +8,7 @@
 #
 # Overridable: QWEN_MODEL (required) QWEN_BASE_URL SAMPLES MAX_TURNS EFFORT TIMEOUT
 #              IMAGE_HISTORY JSON_MODE FOLD_PYTHON
-# The API key is loaded from the repo's .env (QWEN_API_KEY / OPENROUTER_API_KEY /
+# The API key is loaded from the repo's .env (QWEN_API_KEY / FIREWORKS_API_KEY / OPENROUTER_API_KEY /
 # DASHSCOPE_API_KEY) and never echoed.
 set -eu
 script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)

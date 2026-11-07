@@ -3,6 +3,9 @@
 # (L+A, text only, 80 turns, 300 s timeout; easy-0001..0010 all-layers + layers-0001..0010 any).
 #
 # STEP 0 (once): put a key in .env, e.g.  OPENROUTER_API_KEY=...   (never commit .env)
+# FIREWORKS instead of OpenRouter (official price $0.22 in / $0.11 cached / $0.88 out per 1M,
+# checked 2026-11-07): FIREWORKS_API_KEY=... in .env, then prefix every command below with
+#   QWEN_BASE_URL=https://api.fireworks.ai/inference/v1 MODELS=accounts/fireworks/models/qwen3-235b-a22b-thinking-2507
 # STEP 1 smoke test, 1 instance x 3 turns on the smallest model, to check the endpoint accepts
 #        the json_schema response format and that cost per turn is sane:
 #   SMOKE=1 EXECUTE=1 bash scripts/rebuttal/9_qwen_sizes.sh
