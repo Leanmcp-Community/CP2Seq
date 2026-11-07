@@ -1,5 +1,36 @@
 # Rebuttal runs, 2026-11-06 to 2026-11-07: results and conclusions
 
+## Definitions
+
+Tool conditions (what the model can call besides folding):
+
+| label | name | what the model gets |
+| --- | --- | --- |
+| **B** | basic tools | `add_fold`, `remove_fold`, `go_to_step`, `restore_revision`, `get_state`, `get_images`, `finish`. A fold whose creases are not in the crease pattern (CP) is rejected with an explanation; nothing else helps. |
+| **L** | legal-fold list | B plus `list_legal_folds`: enumerates every fold that is legal now and stays inside the CP, so the model can pick from a list instead of computing fold parameters. A rejected fold also returns this list. |
+| **A** | automatic feedback | Every accepted fold returns `comparison_now`: tier-3 comparison of the current stack with the target (layer count difference, which layers differ, what each should be). Costs no turn. |
+| **B+A** | basic + feedback | B with A, no legal list. New in this round. |
+| **L+A** | legal list + feedback | L with A. **The paper's tables call this condition "A"**; here it is written L+A to make clear it includes the legal list. |
+
+Input modality (how the geometry reaches the model):
+
+| label | meaning |
+| --- | --- |
+| text only | JSON coordinates of the CP, target and current stack; no images (`image_history=none`). |
+| images only | Rendered images only; no coordinates anywhere, only the stack bounding box (`--geometry images-only`). |
+| text + images | Both (`image_history=all`, every earlier image re-attached). |
+
+Instance groups: **easy / mid / hard** are 10 instances each from the all-layers corpus
+(reference sequences of about 4-10, 11-13, and 15-19 whole-stack folds); **layers** is 10
+instances from the some-layers corpus (5 folds, partial-stack folds allowed).
+
+Scoring: **E_id** = the final stack matches the target layer by layer including which part of
+the sheet each layer is (identity-aware, up to the CP's symmetries); **E_plane** = the older
+looser match on shape and parity only. **pass@k** = solved in at least one of k independent
+runs of the same instance.
+
+## Setup
+
 All model runs are GPT-5.6 Luna, low reasoning effort, 80-turn budget, 300 s timeout, on the
 40 ablation instances (easy/mid/hard-0001..0010 in the all-layers action space,
 layers-0001..0010 from some-generated-d5 in the any action space), unless stated. Scores are
