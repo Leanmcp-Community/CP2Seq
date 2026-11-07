@@ -43,14 +43,31 @@ E_id (identity-aware terminal match) unless stated. Raw run directories are git-
 Runs `codex-20261106T235355009576Z` (easy/mid/hard) and `codex-20261107T060718355927Z`
 (layers). Text + images (`image_history=all`).
 
+E_id, one episode per instance, an instance with no completed episode (protocol failure)
+counts as unsolved, so every total is out of 40.
+
+Text + images (`image_history=all`), the modality B+A was run in. B, L, L+A rows are the
+paper's image ablation (run inventory, identity flips applied):
+
 | condition | easy | mid | hard | layers | total |
 | --- | --- | --- | --- | --- | --- |
-| B (basic) | 3/10 | 0/10 | 0/9 | 0/10 | 3/39 |
+| B | 2/10 | 0/10 | 0/10 | 0/10 | 2/40 |
 | **B+A** | **3/10** | **0/10** | **0/10** | **2/10** | **5/40** |
-| L (legal list) | 3/10 | 0/9 | 0/10 | 4/10 | 7/39 |
-| L+A | ~4.5/10 (9/20, two runs) | 0 | 0/10 | 6/10 | - |
+| L | 1/10 | 0/10 | 0/10 | 5/10 | 6/40 |
+| L+A | 4/10 | 0/9 (+1 failure) | 0/10 | 6/10 | 10/40 |
 
-(B, L, L+A rows: earlier text-only local runs, `image_history=none`.)
+Text only (`image_history=none`, local runs `codex-20260925T*`, first episode per
+instance), for reference; these are the paper's text-only 3 / 5 / 11:
+
+| condition | easy | mid | hard | layers | total |
+| --- | --- | --- | --- | --- | --- |
+| B | 3/10 | 0/10 | 0/9 (+1 failure) | 0/10 | 3/40 |
+| L | 1/10 | 0/9 (+1 failure) | 0/10 | 4/10 | 5/40 |
+| L+A | 5/10 | 0/9 (+1 failure) | 0/10 | 6/10 | 11/40 |
+
+Correction to an earlier draft of this note: it listed L text-only as 7/39 (that was
+E_plane; two easy solves fail E_id) and L+A easy as "9/20, two runs" (it mixed a
+text-only and a text+images run).
 
 **Conclusion.** Automatic feedback alone adds little (+2, both on layers). The gain comes from
 constraining the action space (legal-fold list); feedback helps on top of it. Feedback and
