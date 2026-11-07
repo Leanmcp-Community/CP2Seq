@@ -17,7 +17,9 @@
 set -euo pipefail
 repo=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)
 cd "$repo"
-MODELS=${MODELS:-"qwen/qwen3-8b qwen/qwen3-32b qwen/qwen3-235b-a22b-2507"}
+# Default: ONE model, the largest Qwen3 reasoning model (user decision 2026-11-07). Smaller sizes
+# can be added later for a size contrast, e.g. MODELS="qwen/qwen3-32b qwen/qwen3-235b-a22b-thinking-2507".
+MODELS=${MODELS:-"qwen/qwen3-235b-a22b-thinking-2507"}
 all=$repo/workspace/corpus/out/release/all-layers/samples
 some=$repo/workspace/corpus/out/release/some-generated-d5/samples
 seq_ids() { for i in $(seq 1 "$2"); do printf '%s-%04d ' "$1" "$i"; done; }

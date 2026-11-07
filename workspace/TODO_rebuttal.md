@@ -19,8 +19,9 @@
 - [ ] Luna pass@5：在跑（v1 语料）。15:20 进度：第 1 轮 easy 2/10、layers 5/10；第 2 轮 easy 4/10、layers 7/10；第 3 轮 easy 跑到第 4 题。预计 19:00–20:00 跑完（不睡眠的前提下）。跑完算每轮 pass@1 和 pass@5，easy / layers 分开。
 - [x] Sonnet 续跑 layers-0001..0005：`claude-20261107T232254743781Z`，5/5 解出（E_plane），$5.27。
       Sonnet 试跑 10 题合计 8/10（easy 3/5，layers 5/5）；easy 待 E_id 复核；最早 4 道 easy 用旧 prompt 顺序。
-- [ ] 决定是否跑 sonnet20 / haiku20。
-- [ ] Qwen 冒烟测试：`.env` 加 `OPENROUTER_API_KEY`，到 OpenRouter 核对模型 id，然后
+- [ ] Sonnet 补跑另外 10 题（easy-0006..0010、layers-0006..0010），约 $20：
+      `caffeinate -i env EXECUTE=1 bash scripts/rebuttal/8c_sonnet_rest10.sh`（用户决定：最早 4 道 easy 不重跑）
+- [ ] Qwen 只测一个模型：qwen/qwen3-235b-a22b-thinking-2507（脚本默认已改）。冒烟测试：`.env` 加 `OPENROUTER_API_KEY`，到 OpenRouter 核对模型 id，然后
       `SMOKE=1 EXECUTE=1 bash scripts/rebuttal/9_qwen_sizes.sh`，看每轮花费。
 - [ ] Qwen 正式运行：`caffeinate -i env EXECUTE=1 bash scripts/rebuttal/9_qwen_sizes.sh`
 - [x] 新实验只跑 easy、mid、layers，不跑 hard（8_generality / 9_qwen_sizes 本来就只跑 easy + layers）。
@@ -35,6 +36,7 @@
 - [x] 编译检查，提交（标题改为 CP2Seq: An Exactly Verifiable Benchmark for Long-Horizon Fold-Sequence Planning）。
 
 ## 之后
+- [ ] OrigamiBench 作者邮件：Gmail 草稿已建（10 人），用户核对后从 lu@ 手动发送。
 - [x] 模型行为分析：回溯模式，已写进论文 09-results 和结果文档第 9 节。
 - [ ] Haiku 排序的混合搜索（可选）。
 - [ ] Sonnet 成本优化：直连 API、尾部不写缓存（跑 sonnet20 / haiku20 之前再做）。
