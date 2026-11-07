@@ -16,6 +16,9 @@
 #   cap 16  all strata fill; layers p50 easy 28 / mid 64 / hard 86, max 102 (v1: 16384);
 #           bbox still shrinks with depth (collapsed 5/10 hard), which release.mjs explains is
 #           inherent to whole-stack folding, not degeneracy.
+# --max-attempts 400 (x n=30 default = 12000 attempts per stratum): the default 1200 filled
+# only 39/100 hard (every rejection "stalled": no fold crosses <= CAP layers). Generation is
+# seconds, so this costs nothing.
 # Same strata and quotas as v1 (strata-release.json: easy 4-10 x200, mid 11-13 x100,
 # hard 14-19 x100), new seed so v1 and v2 never share an instance.
 #
@@ -34,7 +37,7 @@ rm -rf "$OUT"; mkdir -p "$OUT"
 
 echo "=== 1/3 all-layers, coupling cap $CAP ==="
 time node generate.mjs --seed 20261210 --out $OUT/all-layers-cap$CAP \
-    --strata strata-release.json --coupling-cap "$CAP" --export-steps
+    --strata strata-release.json --coupling-cap "$CAP" --max-attempts 400 --export-steps
 
 if [[ "${SKIP_DEEP_LAYERS:-0}" != 1 ]]; then
   echo "=== 2/3 some-layers d7, d8 (slow) ==="
