@@ -215,7 +215,9 @@ def prompt_blocks(prompt):
     blocks = [{"type": "text", "text": p} for p in pieces if p]
     # Breakpoint on the last stable block: the last history entry, or the head on turn 1.
     stable = len(entries)  # index of the last history block (head is 0)
-    blocks[stable]["cache_control"] = {"type": "ephemeral"}
+    # ttl 1h: the CLI's own breakpoints are 1h, and the API rejects a 1h breakpoint that comes
+    # after a 5m one (400 on the first resumed turn, 2026-11-07).
+    blocks[stable]["cache_control"] = {"type": "ephemeral", "ttl": "1h"}
     return blocks
 
 
