@@ -387,7 +387,9 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
     #       5 arrivals while working through 4 distinct alternatives, which was the bug.
     position = position_key(browser)
     moves, arrivals = Counter(), Counter({position: 1})
-    for turn in range(1, args.max_turns + 1):
+    # Controlled continuation can cap new calls without changing replayed prompts.
+    last_turn = min(args.max_turns, getattr(args, "stop_after_turn", args.max_turns))
+    for turn in range(1, last_turn + 1):
         turn_dir = out / f"turn-{turn:03d}"
         turn_dir.mkdir()
         if args.image_history == "none":
@@ -463,7 +465,8 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
             continue
         signature = json.dumps({"action": action, "state": browser.artifacts()["state"]}, sort_keys=True)
         seen[signature] += 1
-        if seen[signature] > 3:
+        repetition_limit = getattr(args, "repetition_limit", 3)
+        if repetition_limit and seen[signature] > repetition_limit:
             termination = "repetition_detected"
             run.event("repetition_detected", turn=turn, action=action)
             break
@@ -564,6 +567,8 @@ def episode(args, sample_id, browser, run_dir, workdir, schema_path, run):
             print(f"{sample_id}: no legal fold for {stuck_turns} turns and no backtrack; stopping",
                   flush=True)
             break
+    if termination == "turn_budget" and last_turn < args.max_turns:
+        termination = "intervention_budget"
     artifacts = browser.artifacts()
     save_candidate(out, artifacts)
     save_images(browser.call("get_images")["images"], out / "final", **image_options)
@@ -636,6 +641,9 @@ def main():
     parser.add_argument("--conversation-transport", choices=["resume", "fork"], default="resume",
                         help="resume preserves thread identity; fork reproduces the earlier cache pilot")
     parser.add_argument("--max-turns", type=int, default=40)
+    parser.add_argument("--repetition-limit", type=int, default=3,
+                        help="Stop before executing the same action/state more than this many times; "
+                             "0 disables. Default preserves historical behavior.")
     parser.add_argument("--stuck-limit", type=int, default=5,
                         help="End the episode after this many consecutive turns with no legal fold "
                              "available and no backtrack. 0 disables the check.")
@@ -666,6 +674,8 @@ def main():
         parser.error("--compare-auto needs --compare-tier; there is nothing to attach at tier 0")
     if args.stuck_limit < 0 or args.cycle_limit < 0 or args.revisit_limit < 0:
         parser.error("Require stuck-limit, cycle-limit and revisit-limit >= 0")
+    if args.repetition_limit < 0:
+        parser.error("Require repetition-limit >= 0")
     if args.max_retries < 0 or args.retry_wait <= 0 or args.retry_max_wait < args.retry_wait:
         parser.error("Require max-retries >= 0, retry-wait > 0, and retry-max-wait >= retry-wait")
     if len(args.samples) != len(set(args.samples)):

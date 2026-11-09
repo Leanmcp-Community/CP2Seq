@@ -174,13 +174,14 @@ $E_{\mathrm{id}}$.
 \paragraph{Adversarial rollouts.} For each of the 40 ablation samples we drew 200 random legal
 rollouts of exactly the reference depth from the flat sheet, sampling uniformly among the
 distinct legal folds the model's own enumerator returns, and checked every terminal state.
-On the 20 easy and medium instances, 1,509 of the 4,000 rollouts reach the
-reference depth without a dead end; 339 of these reproduce the crease pattern (336 easy, 3
-medium), 233 satisfy $E_{\mathrm{plane}}$ (all easy), and 8 satisfy $E_{\mathrm{plane}}$ but not
-$E_{\mathrm{id}}$: seven on \texttt{easy-0007} and one on \texttt{easy-0003}. On the other eight easy
-instances the two relations never disagree. Plane-equivalent but identity-distinct constructions
-are therefore a property of a few specific patterns, which a model or a search can reach by
-chance. Rollouts on the hard and some-layers instances were not completed.
+Of the 8,000 rollouts, 3,226 reach the reference depth without a dead end; 1,536 of these
+reproduce the crease pattern, 1,210 satisfy $E_{\mathrm{plane}}$, and 1,202 satisfy $E_{\mathrm{id}}$.
+The 8 that satisfy $E_{\mathrm{plane}}$ but not $E_{\mathrm{id}}$ are all on easy instances: seven on
+\texttt{easy-0007} and one on \texttt{easy-0003}. On the other 38 instances the two relations never
+disagree, including 977 $E_{\mathrm{plane}}$-equivalent rollouts on the ten some-layers instances. No
+medium or hard rollout satisfies $E_{\mathrm{plane}}$. Plane-equivalent but identity-distinct
+constructions are therefore a property of a few specific patterns, which a model or a search can
+reach by chance.
 The audit script and its outputs are \texttt{workspace/audit\_identity.mjs} and
 \texttt{workspace/RESULTS/identity-audit/}.
 

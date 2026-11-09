@@ -87,9 +87,9 @@ Against B (2/40), feedback alone gives 5/40, the same as legal enumeration alone
 two together give 9/40. With ten instances per group none of these differences is significant on
 its own. The totals do not decompose by instance: B+A solves easy-0001, 0004 and 0006, and at most
 one of these is among the L+A easy solves; L solves layers-0007, which L+A does not. With one
-episode per instance, which instances a condition solves varies between runs: a repeat of the
-text-only L+A run solved at most 2 easy instances instead of 5, with different instance IDs
-(Section~\ref{sec:limitations}). We therefore read Table~\ref{tab:feedback-only} only as showing
+episode per instance, which instances a condition solves varies between runs: five further repeats of the
+text-only L+A run solved 2, 3, 1, 3 and 3 easy instances under $E_{\mathrm{id}}$, against 5 in
+the original run, with different instance IDs (Section~\ref{sec:limitations}). We therefore read Table~\ref{tab:feedback-only} only as showing
 that each addition raises the total, not that their effects add or which instances each helps.
 
 \begin{table}[htbp]
@@ -281,7 +281,11 @@ re-made the discarded folds in the same order in 42 of 176 cases. With basic too
 almost all single folds (mean 1.4), and after longer ones the model re-made the discarded folds in
 4 of 6 (B) and 11 of 14 (B+A) cases. In ten Claude Sonnet~5.5 L+A episodes (a pilot; four used an
 earlier prompt order), 9 of 32 backtracks return to the flat sheet and none re-makes the discarded
-folds.
+folds. Extended to one episode on each of the 10 easy and the first 5 some-layers instances,
+Claude Sonnet~5.5 solves 4/10 easy and 5/5 some-layers under $E_{\mathrm{id}}$ (6/10 easy under
+$E_{\mathrm{plane}}$); the two $E_{\mathrm{plane}}$-only solves ended with \texttt{finish} after the
+comparison tool reported \emph{matches}, as for GPT-5.6 Luna (Section~\ref{sec:limitations}).
+With one episode per instance and mixed prompt orders this is not a model comparison.
 
 The tier-3 comparison can mark a state as close to the target when no short repair exists. On
 \texttt{layers-0003}, GPT-5.6 Luna (five restarts in three episodes) and Claude Sonnet~5.5 (one)

@@ -24,11 +24,28 @@ of 24, 60 and 76 final layers (maximum 120). The results in this paper are on th
 re-evaluation on the capped corpus is future work.
 
 \paragraph{One episode per instance.} The ablations run one episode per instance and configuration.
-Repeating the text-only GPT-5.6 Luna L+A run on the easy group solved at most 2 instances instead of 5,
-with different instances solved. Both the totals and the set of solved instances therefore carry
+Five further repeats of the text-only GPT-5.6 Luna L+A run solved 2, 3, 1, 3 and 3 easy instances
+under $E_{\mathrm{id}}$, against 5 in the original run, with different instances solved. Both the totals and the set of solved instances therefore carry
 run-to-run variance that one episode cannot estimate; we interpret only differences in totals, with
 their uncertainty, and not per-instance differences between configurations. Repeated episodes per
-instance (pass@$k$) are in progress.
+instance were then run for the text-only GPT-5.6 Luna L+A configuration: five episodes on each
+of the 10 easy and 10 some-layers instances (100 episodes). Under $E_{\mathrm{id}}$ the five
+repeats solve 7, 10, 6, 10 and 9 of 20 (42/100 episodes), and 14 of 20 instances are solved in at
+least one repeat (easy 5/10, some-layers 9/10); six instances are never solved. Under
+$E_{\mathrm{plane}}$ the counts are 47/100 episodes and 16/20 instances (easy 7/10). The five
+episodes counted as solved only under $E_{\mathrm{plane}}$ (\texttt{easy-0004} in four repeats,
+\texttt{easy-0003} in one) each ended with the model calling \texttt{finish} after the comparison
+it was shown reported \emph{matches} with every layer agreeing, so they record the plane-only
+comparison tool, not a model error. The gap between per-episode rate and coverage measures
+run-to-run variance; it is obtained with five times the episode budget and is not evidence of more
+efficient search.
+
+We treat these repeated trials as a stability analysis, not a causal diagnosis of failure.
+A planned diagnostic study freezes the task, state, history and reasoning effort, then varies
+one form of support: a summary of previously observed attempts, explicit action semantics, or
+uniform one-step previews. Its controls share the same legal-action menu. Such interventions
+can test the effect of support on decisions and subsequent success; they do not by themselves
+identify an internal memory or reasoning deficit. This study has not yet been run.
 
 \paragraph{Input modality.} Removing rendered images does not lower solve rate, and an images-only
 condition solves 1/40 with basic tools. The benchmark as configured measures reasoning over exact

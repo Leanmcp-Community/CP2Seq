@@ -67,6 +67,9 @@ def api_key(base_url=""):
 
 
 def request_body(args, prompt, manifest, schema):
+    if args.json_mode == "none":
+        prompt += ("\n\nReturn the final action as one JSON object matching this schema:\n"
+                   + json.dumps(schema))
     user = [{"type": "text", "text": prompt}]
     for info in manifest.values():
         path = Path(info["path"] if isinstance(info, dict) else info)
