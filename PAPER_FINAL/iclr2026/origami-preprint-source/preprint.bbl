@@ -1,4 +1,4 @@
-\begin{thebibliography}{40}
+\begin{thebibliography}{37}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -63,13 +63,6 @@ Esther~M. Arkin, Michael~A. Bender, Erik~D. Demaine, Martin~L. Demaine, Joseph
 \newblock \emph{Computational Geometry}, 29\penalty0 (1):\penalty0 23--46,
   2004.
 
-\bibitem[Balkcom \& Mason(2008)Balkcom and Mason]{balkcom-robotic-origami}
-Devin~J. Balkcom and Matthew~T. Mason.
-\newblock Robotic origami folding.
-\newblock \emph{The International Journal of Robotics Research}, 27\penalty0
-  (5):\penalty0 613--627, 2008.
-\newblock \doi{10.1177/0278364908090235}.
-
 \bibitem[Bern \& Hayes(1996)Bern and Hayes]{bern-hayes}
 Marshall Bern and Barry Hayes.
 \newblock The complexity of flat origami.
@@ -103,13 +96,6 @@ David Eppstein.
 \newblock \emph{Journal of Computational Geometry}, 10\penalty0 (1):\penalty0
   257--280, 2019.
 \newblock \doi{10.20382/jocg.v10i1a10}.
-
-\bibitem[Felton et~al.(2014)Felton, Tolley, Demaine, Rus, and
-  Wood]{felton-self-folding}
-Samuel Felton, Michael Tolley, Erik Demaine, Daniela Rus, and Robert Wood.
-\newblock A method for building self-folding machines.
-\newblock \emph{Science}, 345\penalty0 (6197):\penalty0 644--646, 2014.
-\newblock \doi{10.1126/science.1252610}.
 
 \bibitem[Filipov et~al.(2017)Filipov, Liu, Tachi, Schenk, and
   Paulino]{bar-and-hinge}
@@ -292,15 +278,5 @@ Yi~Zhu and Evgueni~T. Filipov.
   Engineering Conference (IDETC-CIE), Volume 8B: 45th Mechanisms and Robotics
   Conference}, pp.\  V08BT08A034, 2021.
 \newblock \doi{10.1115/DETC2021-68042}.
-
-\bibitem[Zirbel et~al.(2013)Zirbel, Lang, Thomson, Sigel, Walkemeyer, Trease,
-  Magleby, and Howell]{zirbel-thickness}
-Shannon~A. Zirbel, Robert~J. Lang, Mark~W. Thomson, Deborah~A. Sigel,
-  Phillip~E. Walkemeyer, Brian~P. Trease, Spencer~P. Magleby, and Larry~L.
-  Howell.
-\newblock Accommodating thickness in origami-based deployable arrays.
-\newblock \emph{Journal of Mechanical Design}, 135\penalty0 (11):\penalty0
-  111005, 2013.
-\newblock \doi{10.1115/1.4025372}.
 
 \end{thebibliography}

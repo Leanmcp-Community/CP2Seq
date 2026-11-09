@@ -1,67 +1,35 @@
 \section{Limitations}
 \label{sec:limitations}
+\paragraph{Scope and difficulty.}
+The environment models zero-thickness flat states and simple folds, without material
+mechanics or continuous collision checks. It is not a physical folding simulator.
+Reference depth need not be minimum solution depth. In the uncapped all-layers release,
+depth and layer count are confounded (medium and hard medians 94 and 404 layers;
+maximum 16,384), so hard-group failure is not an isolated planning-depth limit.
+A layer-capped corpus was generated, but no reported model result uses it.
 
-The evaluation covers Luna models and BFS, and the ablations use ten samples per group and
-configuration. This study is currently privately funded, and these limits follow from the cost of
-evaluation: with full image history, one Luna episode consumed about 3.1 million input tokens on
-average over 20 episodes. In pilots, Qwen3.5-9B (via Tinker) cycled without solving either of two samples, and one
-80-turn GPT-6 Astra episode cost about US\$400. We are seeking research funding to extend the evaluation to further
-model families and to the full corpus.
+\paragraph{Evaluation and uncertainty.}
+Most ablations use one episode per instance and ten instances per group. The repeated
+Luna trials show substantial variance; five-trial coverage uses five times the budget.
+Sonnet extends family coverage but does not support broad rankings. Protocol failures
+count as unsolved. The original comparison tool used $E_{\mathrm{plane}}$ and could
+falsely report a match; identity-aware re-scoring corrects terminal outcomes, not the
+feedback already shown to models (Appendices~\ref{app:identity-audit}
+and~\ref{app:protocol-failures}).
+For the separate bottom-layer alignment defect, a call-level audit of 65 saved
+non-ablation episodes finds one divergent call among 1,025 comparisons; two additional
+calls report a plane-only match that fails identity-aware scoring. Missing image-run
+logs prevent a complete historical audit. Affected cases have not been rerun, and
+the direction of the feedback effect remains unknown.
+An offline stricter cycling threshold can truncate saved trajectories, but a relaxed
+threshold requires new continuations. We have not run those continuations and do not
+claim invariance to the stopping rule (Appendix~\ref{app:matched-trajectories}).
 
-The action space covers all-layers and selected some-layers simple folds, excluding
-pre-creasing; the some-layers corpus currently extends to six reference folds. The environment
-represents zero-thickness flat states and does not model material mechanics or continuous
-collisions during folding. CP2Seq is a planning benchmark over an exact state space, not a model
-of physical folding, and we draw no engineering conclusions from it.
-
-\paragraph{Depth and layer count are confounded in the all-layers tier.} Whole-stack folds sampled
-uniformly almost always cross every layer, so the released medium and hard groups have medians of
-94 and 404 final layers (maximum 16,384), and 96 of the 100 hard samples end with a footprint under
-5\% of the sheet. Results on these groups, including every model's and search's failure on hard,
-cannot be attributed to sequence depth alone. The generator already provides a cap on the number
-of layers a single fold may cross; with a cap of 16, all three groups fill their quotas with medians
-of 24, 60 and 76 final layers (maximum 120). The results in this paper are on the uncapped release;
-re-evaluation on the capped corpus is future work.
-
-\paragraph{One episode per instance.} The ablations run one episode per instance and configuration.
-Five further repeats of the text-only GPT-5.6 Luna L+A run solved 2, 3, 1, 3 and 3 easy instances
-under $E_{\mathrm{id}}$, against 5 in the original run, with different instances solved. Both the totals and the set of solved instances therefore carry
-run-to-run variance that one episode cannot estimate; we interpret only differences in totals, with
-their uncertainty, and not per-instance differences between configurations. Repeated episodes per
-instance were then run for the text-only GPT-5.6 Luna L+A configuration: five episodes on each
-of the 10 easy and 10 some-layers instances (100 episodes). Under $E_{\mathrm{id}}$ the five
-repeats solve 7, 10, 6, 10 and 9 of 20 (42/100 episodes), and 14 of 20 instances are solved in at
-least one repeat (easy 5/10, some-layers 9/10); six instances are never solved. Under
-$E_{\mathrm{plane}}$ the counts are 47/100 episodes and 16/20 instances (easy 7/10). The five
-episodes counted as solved only under $E_{\mathrm{plane}}$ (\texttt{easy-0004} in four repeats,
-\texttt{easy-0003} in one) each ended with the model calling \texttt{finish} after the comparison
-it was shown reported \emph{matches} with every layer agreeing, so they record the plane-only
-comparison tool, not a model error. The gap between per-episode rate and coverage measures
-run-to-run variance; it is obtained with five times the episode budget and is not evidence of more
-efficient search.
-
-We treat these repeated trials as a stability analysis, not a causal diagnosis of failure.
-A planned diagnostic study freezes the task, state, history and reasoning effort, then varies
-one form of support: a summary of previously observed attempts, explicit action semantics, or
-uniform one-step previews. Its controls share the same legal-action menu. Such interventions
-can test the effect of support on decisions and subsequent success; they do not by themselves
-identify an internal memory or reasoning deficit. This study has not yet been run.
-
-\paragraph{Input modality.} Removing rendered images does not lower solve rate, and an images-only
-condition solves 1/40 with basic tools. The benchmark as configured measures reasoning over exact
-coordinates; it is not a test of visual perception.
-
-Termination labels record stopping conditions. The trajectory categories of
-Section~\ref{sec:results-failures} locate where an episode broke down, but they are mechanical
-rules over observable states and do not identify which internal capability failed. Revisit and
-budget limits constrain the observed search, and the effect of a looser cycling limit is untested.
-Per-turn logs of the image ablations were not retained, so the trajectory analysis covers the
-text-only runs only, and the comparison-tool defect cannot be audited call by call there.
-Training overlap with the public corpus is unknown.
-
-Corpus replay checks assess consistency with the shared generation engine. The submitted results
-were scored with a plane-only terminal comparator that did not check original-sheet region
-identity; the identity audit (Appendix~\ref{app:identity-audit}) found accepted solutions that
-fail the identity-aware relation, and all results are now re-scored under it. The comparison
-tool shown to models still uses the plane-only relation, so its \emph{matches} can be wrong in
-the same way; the affected calls are counted in Appendix~\ref{app:protocol-failures}.
+\paragraph{Interpretation and reproducibility.}
+Revisits, restarts and stopping labels locate behavior without identifying an internal
+memory or reasoning deficit. Planned support interventions have not been evaluated.
+Per-turn logs survive only for the text-only runs; image-run feedback cannot be audited
+call by call. Cycling limits and unequal episode lengths affect observed exploration.
+Corpus replay shares the generation engine, numerical checks use stated tolerances,
+closed model weights cannot be pinned, and training overlap is unknown. Extended
+limitations and repeated-trial details appear in Appendix~\ref{app:extended-limitations}.

@@ -23,6 +23,16 @@ Appendix~\ref{app:comparison-details}). Two stacks equal in the plane but interl
 differently are different objects. We now score with $E_{\mathrm{id}}$, report both, and count
 $E_{\mathrm{plane}}$-only solves as unsolved (Appendix~\ref{app:identity-audit}).
 
+\paragraph{Audit and scope.}
+Crease-pattern agreement does not remove identity ambiguity. In the reported audit of
+536 previously accepted episodes, 514 pass $E_{\mathrm{id}}$; the 22 reversals include
+18 model and four BFS solutions. The primary 360-case ablation total changes from
+55 to 50 solves (Table~\ref{tab:luna-ablations}). Identity-sensitive regression tests
+include congruent layers with permuted sheet regions; these pass the plane test but
+must fail the identity test (Appendices~\ref{app:comparison-details}
+and~\ref{app:identity-audit}). These corrections concern terminal outcomes, separately
+from defects in feedback shown during search.
+
 The crease comparator and the shared folded-state
 comparator both match positions within $2\times10^{-6}$; Table~\ref{tab:tolerances} lists every
 tolerance in the pipeline, and Appendix~\ref{app:comparison-details} describes the alignment and
@@ -51,5 +61,6 @@ whose counts are reported separately.
 
 \phantomsection
 \label{sec:scoring-validate}
+Verification is operational and tolerance-based, not a formal proof in exact arithmetic.
 Comparator implementation and validation cases are described in
 Appendix~\ref{app:comparison-details}.

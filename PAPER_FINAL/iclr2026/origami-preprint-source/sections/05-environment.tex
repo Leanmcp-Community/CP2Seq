@@ -21,9 +21,9 @@ class of unrecoverable moves, and the rates reported here are therefore rates un
 constraint. Detailed conditions are listed in
 Appendix~\ref{app:action-errors}.
 
-The environment never refuses a fold for self-intersection. A fold moves either the whole stack or
-a contiguous run taken from the top or the bottom, and such a move cannot drive paper through the
-layers it leaves behind, so the action space excludes self-intersection by construction.
+The environment restricts moving layers to the whole stack or a contiguous top/bottom run.
+It checks flat endpoint states and connectivity, but does not verify continuous collision-free
+motion; endpoint legality is therefore not a physical realizability guarantee.
 
 \phantomsection
 \label{sec:env-observes}

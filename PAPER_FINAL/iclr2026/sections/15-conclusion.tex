@@ -1,50 +1,12 @@
 \section{Conclusion and future work}
 \label{sec:conclusion}
-
-CP2Seq pairs 600 generated instances and an open-ended generator with an environment that rules on
-each fold and a scorer that accepts any valid sequence and checks the final stack exactly,
-including layer order and sheet region. It poses long-horizon sequence planning with exact state
-tracking in a setting where success is unambiguous and search baselines over the same actions are
-available. The experiments support four observations, each on the uncapped release, under exact
-matching ($E_{\mathrm{id}}$) and with one episode per instance unless stated.
-
-First, the models solve some short sequences and no sequence of 11 or more folds, but this is not
-a limit of the task: within 80 folds, random legal folding solves 57\% of easy and 96\% of
-some-layers episodes (1,000 per group), and breadth-first search solves within $10^5$ expansions
-5 of 10 medium instances that no model episode solves. Only the hard group is unsolved by every method, and in the all-layers tier it is
-also the group whose stacks reach hundreds to thousands of layers, so we do not attribute that
-failure to depth.
-
-Second, failures are failures of exploration rather than of the last step. An automatic stop at
-the first match would add 2 solves to 25 in 143 saved episodes; with legal enumeration,
-unsuccessful episodes mostly never reach the target depth; and with exact coordinates models reach
-a median tenth to a quarter of the distinct states that random folding reaches, revisiting many of them. When they restart,
-whether a repair within three folds exists barely changes how often they do so (for GPT-5.6 Luna,
-68\% of restarts versus 58\% of shorter backtracks had one), so the models do not separate a
-recoverable near miss from a trap. Claude Sonnet~5.5 returns to abandoned states far less often
-than GPT-5.6 Luna (11\% versus 37\% of later folds) and, in one episode per instance, solves
-14 of 20 instances, as many as Luna covers in five repeats; one episode per instance on 20
-instances is consistent with a stronger model but does not measure the difference.
-
-Third, assistance and reasoning effort raise totals on short sequences. GPT-6 Luna's some-layers
-solves rise from 6/30 to 18/30 with higher effort (three tool conditions, 10 instances each), and
-for GPT-5.6 Luna at low effort with images, target feedback alone and
-legal enumeration alone each raise the total from 2/40 to 5/40, and both together to 9/40. The
-instances each condition solves overlap little and vary between runs, so these are differences in
-totals, not evidence that the effects add.
-
-Fourth, the models reason over the exact coordinates: removing rendered images does not lower
-solve rate (GPT-5.6 Luna, 19/120 without images against 16/120 with), and images alone solve 1/40
-with basic tools. CP2Seq measures planning over an exact numeric
-description of every layer (coordinates, orientation, stacking order and sheet region), not visual
-perception. Because each ablation result rests on ten samples per cell, we report these
-as trends with their uncertainty rather than as rankings of models.
-
-Next steps are to re-evaluate on the layer-capped corpus, so that difficulty follows sequence
-depth rather than stack size; to run several episodes per instance for every configuration, as done
-here only for GPT-5.6 Luna L+A (pass@5 14/20 against 8.4 per repeat); to extend the evaluation to
-other model families and sizes; and to probe model reasoning directly, so that failures can be
-attributed to state tracking, target comparison or backtracking rather than located by observable
-state alone. Because the generator produces fresh instances with exact, programmatically checkable
-success, CP2Seq could also serve as a training environment, a use we have not evaluated.
+CP2Seq supplies generated, reachable targets and executable sequence planning with
+identity-aware verification. Matched search baselines show that model failures on
+easy, some-layers and medium instances do not imply unreachable targets. Images add
+no measured benefit over exact numeric state; assistance and effort improve some
+short-sequence totals. Repeated trials, stopping audits and trajectory analysis
+characterize observable behavior while exposing variance, comparison-tool defects
+and depth--layer confounding. Future work should evaluate the layer-capped corpus,
+repeat every condition, expand model coverage and test controlled support
+interventions before attributing failure to internal capabilities.
 \phantomsection\label{sec:main-text-end}

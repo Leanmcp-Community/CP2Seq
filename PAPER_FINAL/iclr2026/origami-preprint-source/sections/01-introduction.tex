@@ -1,99 +1,40 @@
 \section{Introduction}
 \label{sec:intro}
+A locally valid action can lead away from a target. Completing a folding sequence therefore
+requires selecting among alternatives, tracking their consequences, and revising earlier
+decisions. We study long-horizon planning when the model receives the exact coordinates,
+orientations, stacking order and original-sheet regions of every layer, and every action is
+checked. Origami provides a generated state space with programmatically checkable success;
+we use it as a controlled planning task rather than a model of physical folding.
 
-Geometric planning requires a model to connect a description of a target with the operations
-needed to construct it. In origami, this involves choosing a fold line, identifying which parts of
-the sheet should move, and tracking how the resulting reflections change their positions and layer
-order. A locally valid fold may lead away from the target, so completing a sequence also requires
-selecting among alternatives and revising earlier decisions. We study whether language models can
-make these decisions over a long sequence of folds when every intermediate state is given exactly
-and every action is checked. The question is one of long-horizon planning with exact state
-tracking; origami supplies a state space in which success is unambiguous and difficulty can be
-generated at will. Because the problem has exact algorithmic solutions, we report search baselines
-over the same actions alongside the models, and read the models' results against them.
+We introduce \textbf{CP2Seq}: 600 generated instances, a configurable generator, and an
+interactive evaluation environment. Given a crease pattern and a target folded state, the
+model constructs a sequence of simple folds from an unfolded square. Reference sequences
+and intermediate reference states are withheld; any valid sequence producing both the
+specified creases and the target stack is accepted. Original-sheet identity and layer order
+distinguish geometrically overlapping constructions (Section~\ref{sec:scoring}).
 
-Origami provides a procedural setting for studying these decisions. A folding engine can
-generate instances across reference depths, record intermediate states, and check proposed
-actions under a specified folding model.
-Sequence planning also arises in engineering: robotic origami folding requires choosing the order
-of simple folds \citep{balkcom-robotic-origami}, self-folding machines fold flat sheets into
-functional structures \citep{felton-self-folding}, and deployable arrays must accommodate panel
-thickness when stowed \citep{zirbel-thickness}. CP2Seq does not model these settings: its states
-have zero thickness, no contact and no material, and its deepest instances have far more layers
-than physical paper allows (Section~\ref{sec:limitations}). We use origami as a controlled state
-space for planning, not as a model of physical folding.
+Existing origami benchmarks assess visual questions, pattern prediction or generation
+\citep{gamibench,origamispace,origamibench}. CP2Seq instead tests executable sequence
+recovery under explicit action constraints. Fold lines are specified in current folded
+coordinates while target creases are given on the original sheet; planning connects these
+representations through reflections and layer connectivity. Tools expose legality checks,
+backtracking, optional legal-action enumeration and target feedback. Search baselines use
+the same candidate actions, allowing us to distinguish task reachability from model success.
 
-Existing origami benchmarks ask questions about folds or generate crease patterns
-\citep{gamibench,origamispace}.
-CP2Seq evaluates whether a model can translate geometric information into a complete, executable
-folding sequence, with each action checked for validity and the resulting construction checked
-against the target.
+Our contributions are (1) a generated dataset and generator spanning reference depths and
+two simple-fold action models; (2) an interactive pipeline with step-level checks and
+replay-based terminal scoring, including original-sheet identity; and (3) matched search
+baselines, assistance and modality ablations, repeated trials, and observable trajectory
+analysis. These isolate measurable behavior without attributing it to unobserved internal
+capabilities.
 
-We introduce \textbf{CP2Seq}, a benchmark of 600 procedurally generated origami samples and a
-framework for generating, executing, and evaluating folding sequences. Each task supplies a crease
-pattern and a target folded state; the reference sequence and intermediate reference states are
-withheld. Starting from an unfolded square, the model must produce a valid sequence of simple
-folds under the specified action model. The crease pattern constrains which creases must be
-produced, while the target specifies the arrangement of the folded sheet, including layer order.
-
-The task combines \emph{geometric reasoning}, \emph{spatial state tracking}, and
-\emph{sequential planning}. A fold line is specified in the current folded coordinates, whereas
-the target crease pattern describes the original sheet. Connecting these representations requires
-tracking reflections and the correspondence between paper regions. Selecting a fold also requires
-reasoning about overlapping layers and their connectivity. Subsequent decisions depend on the
-state produced by earlier actions, so increasing sequence depth extends the planning horizon.
-
-We generate examples procedurally by applying legal folds and recording the resulting sequence,
-crease pattern, and folded state. This supplies reference solutions without manual annotation and
-lets us vary reference depth and the permitted folding operations. Releasing
-the generator also enables fresh evaluation instances beyond the published corpus, reducing
-reliance on fixed examples that future models may encounter during training
-(Section~\ref{sec:cp2seq}).
-
-We also provide an evaluation framework that gives the model the exact geometry of the crease
-pattern, the target folded state, and the current state after each accepted edit, optionally with
-rendered images; removing the images does not lower solve rate (Section~\ref{sec:results-matched}). Tools support adding and
-removing folds, inspecting geometry, and returning to a specified earlier step to explore another
-sequence. The engine checks proposed edits and returns feedback, while the model directs the
-search. Different levels of tool assistance allow us to study how this support affects performance
-(Section~\ref{sec:experiments}).
-
-Evaluation checks both individual actions and the completed construction. Candidate sequences
-are replayed and assessed for crease-pattern agreement and agreement with the target folded
-state. Folded-state comparison
-accounts for a global translation, rotation, or turnover of the completed object, with the
-corresponding changes to layer order and face orientation (Section~\ref{sec:scoring}).
-We also provide a deterministic breadth-first search
-baseline using the same candidate-fold enumerator and terminal-state comparator. This baseline
-shows what systematic search achieves with the same filtering.
-
-Our contributions are:
-\begin{enumerate}
-\item \textbf{A dataset and generation framework.} CP2Seq contains 600 samples with
-  crease patterns, target states, recorded fold sequences, and intermediate states. Configurable
-  generation supports experiments across reference depths and action models.
-\item \textbf{An interactive evaluation and verification pipeline.} The framework connects exact
-  geometric state to tools for constructing and revising sequences, step-level legality
-  checks, and final replay-based scoring that verifies layer order and sheet region. It includes corpus checks and a folded-state comparator.
-  Experiments vary access to legal-fold enumeration and target-comparison feedback.
-\item \textbf{Search baselines and an empirical analysis of model behavior.} We compare models
-  with breadth-first search and random legal folding over the same candidate actions on the same
-  instances, report performance by difficulty group, and analyze where episodes fail and how
-  much of the state space they explore. A broader evaluation of \texttt{gpt-5.6-luna}
-  is complemented by smaller ablations of model version, reasoning effort, tool assistance and
-  input modality.
-\end{enumerate}
-
-In ablations over model version, reasoning effort, and tool assistance, models solve some
-short sequences but no medium or hard sample, and they fall short of random legal folding with
-the same fold budget. Failures are almost never missed stops; the models explore a small part of
-the reachable states and revisit them, and they restart about as often when a short repair exists
-as when none does. On 20 instances, Claude Sonnet~5.5 returns to abandoned branches far less often
-than GPT-5.6 Luna and solves 14 in one episode each, as many as Luna covers in five repeats
-(Section~\ref{sec:results}). We also report two limits of
-the released corpus that bear on these results: one episode per instance varies substantially
-between runs, and in the all-layers tier sequence depth and layer count grow together, so the
-deepest group mostly measures stacks of hundreds of layers (Section~\ref{sec:limitations}).
-% Results source: workspace/RESULTS/run-inventory/report.md, generated 2026-09-24.
-% Some low-effort medium cells are incomplete (8 or 9 of 10); do not describe all
-% configurations as complete or pool this ablation set with the broader evaluation.
+The models solve some short sequences but no medium or hard ablation instance. Yet random
+legal folding solves 57\% of easy and 96\% of some-layers episodes within 80 folds, and BFS
+solves five of ten medium instances. Removing images does not reduce solve rate. Failures
+rarely reflect reaching the target without stopping; models explore fewer distinct states
+than random folding and revisit discarded branches. Repeated trials reveal substantial
+variance, while a second model family solves 14/20 instances in one episode each. We
+therefore frame CP2Seq as planning over explicit geometric state, not as a validated measure
+of visual perception or an isolated internal reasoning faculty. Depth and layer count are
+confounded in the released all-layers corpus, limiting depth-based conclusions.

@@ -1,0 +1,28 @@
+匿名修订稿与回复定位（2026-11-09）
+
+本版是独立的 rebuttal 修订稿，不覆盖预印本；使用 ICLR 2027 匿名样式。
+标题保留仓库中 rebuttal 修改前的 Origami as a Spatial and Geometric Reasoning Benchmark。
+上传前应与 OpenReview 原稿标题核对。本地没有原投稿 PDF，不能生成经过确认的逐字原稿 diff。
+
+修改对应位置
+1. 原始纸张区域身份、E_plane/E_id、容差与计分修正：§4.2.1；Table 2；Appendices A.6–A.7。
+2. 40 个实例的选取是否独立于模型表现、代表性边界：§5 开头；Appendix B.15。
+3. 反馈 bug、全调用审计的覆盖范围、未重跑的已知案例：§6；Appendix B.13。
+4. 同实例 random-legal / BFS 对照及预算：§5.1，Table 4；详细分析 Appendix D.1。
+5. B+A 对照，分离枚举和反馈：§5.1，Table 3。
+6. text-only / images-only：§5.2，Table 5；Appendix B.16。
+7. 实例聚类统计：§5.1 的 Reasoning effort；Appendix D.1。
+8. 停止规则不等于失败原因，轨迹、停止审计、回溯：§5.3；Appendix B.14、D.3。
+9. pass@5、Sonnet 20题、运行差异与不确定性：§5.3；Appendices D.3、E。
+10. 深度和层数混杂、非物理模拟、并非严格等算力、未来工作：§§5.1、6–7；Appendix E。
+11. CLI 接口和闭源可复现性：§4.3；Reproducibility statement；§6。
+
+仍未解决，回复中已明说
+- 两个已知受错误反馈影响的消融案例，尚未在正确反馈下重跑。
+- image ablation逐轮日志缺失，无法穷尽历史错误反馈影响。
+- 尚无放宽cycling阈值后的新模型续跑结果。
+- 尚未补齐多规模开源模型或直接API复现实验。
+- 有限实例和单次运行不能支撑广泛的模型能力排名或内部原因归因。
+
+reviewer-responses.txt 中 Reviewer 1/2/3 仅对应用户粘贴顺序，发布前换成真实审稿人ID。
+英文回复与PDF均未上传OpenReview。此修订包与同步后的预印本随本次提交推送GitHub。

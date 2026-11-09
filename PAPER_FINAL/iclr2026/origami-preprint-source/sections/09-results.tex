@@ -1,38 +1,25 @@
 \section{Results}
 \label{sec:results}
-
-We report the completed Codex runs in the inventory generated on 24 September 2026,
-separating the broader GPT-5.6 Luna evaluation from the recent ablations. The inventory
-counts completed attempts, including unsuccessful submissions and stopping-limit
-terminations. For the ablations, all 360 planned sample--configuration pairs enter
-the denominator. Execution errors and omissions after blocking errors count as
-unsuccessful evaluations, with causes marked separately. We retain the first completed
-attempt per sample and configuration when available; retries do not add denominator entries.
-% Source: workspace/RESULTS/run-inventory/report.md (2026-09-24T23:13:33.275Z).
-% Generated with workspace/report_run_inventory.mjs; per-attempt provenance is in report.json.
-% The prior Results section and its editorial notes are preserved in
-% sections/09-results-previous-snapshot.tex, but are not included in the paper.
-
 \phantomsection\label{sec:results-headline}
-Earlier GPT-5.6 Luna runs used different samples and budgets per condition, so we list them
-without comparison (Table~\ref{tab:headline}); tool effects are measured only in the ablations.
+The main ablations use the first ten fixed-seed instances from each of four groups,
+with 360 planned sample--configuration pairs. Five protocol failures count as unsolved;
+retries do not add denominator entries (Appendix~\ref{app:protocol-failures}). IDs follow
+generation seeds, not model performance; selected samples match depth but have somewhat
+fewer layers and creases (Appendix~\ref{app:sample-selection}). We report
+the broader evaluation separately (Table~\ref{tab:headline}), since its samples and
+budgets differ. All headline solves require CP match and $E_{\mathrm{id}}$; historical
+$E_{\mathrm{plane}}$ counts are explicitly marked. Detailed analyses are in
+Appendix~\ref{app:revision-details}.
 
 \subsection{Tool and reasoning-effort ablations}
-\label{sec:results-tiers}
-\label{sec:results-ablations}
-
-The recent study uses the first ten samples of each group in every configuration:
-\texttt{easy-}, \texttt{mid-} and \texttt{hard-0001}--\texttt{0010} from the all-layers corpus and
-\texttt{layers-0001}--\texttt{0010} from the some-layers corpus; the some-layers samples all have five reference folds. It compares GPT-5.6 Luna at low effort with
-GPT-6 Luna at low and high effort. Tool conditions and run settings are
-given in Sections~\ref{sec:ablations} and~\ref{sec:exp-protocol}. Of the 360 planned
-sample--configuration pairs, five are protocol failures counted as unsolved
-(Appendix~\ref{app:protocol-failures}).
-
-\paragraph{Sample selection.} IDs follow consecutive generator seeds and were fixed before any
-ablation run; the selected samples match their groups in depth but have somewhat fewer layers and
-creases, so their solve rates if anything overstate the full groups' (Appendix~\ref{app:sample-selection}).
-
+\label{sec:results-tiers}\label{sec:results-ablations}
+Table~\ref{tab:luna-ablations} compares basic tools (B), legal enumeration (L) and
+enumeration with automatic target feedback (L+A). Pooled totals are 8/120, 15/120 and
+27/120. These are descriptive totals over the same 40 instances reused across model
+settings, not 120 independent tasks. The L+A rows were generated with the defective
+feedback tool discussed in Section~\ref{sec:limitations}; corrected terminal scoring
+does not make these clean estimates of the effect of correct feedback. We do not pool
+the earlier, differently budgeted runs into this comparison.
 \begin{table}[htbp]
 \centering
 \caption{Recent Luna ablations. Cells show solved/evaluated samples; each group
@@ -65,33 +52,12 @@ GPT-6 Luna & High & B & 3/10 & 0/10 & 0/10 & 3/10 & 6/40 \\
 \hline
 \end{tabular}
 \end{table}
-
-\paragraph{Tools.} Summing the Total column of Table~\ref{tab:luna-ablations} over the three model
-settings gives, for the same 40 samples in each, 8/120 solves with B, 15/120 with L and 27/120
-with L+A (two L and three L+A pairs are protocol failures counted as unsolved); the order B$<$L$<$L+A
-holds in each setting. By group, easy gives 5, 2 and 8 of 30 and some-layers 3, 13 and 19 of 30;
-medium and hard give none. Clustering by instance (10,000 bootstrap resamples of the 40 instances; exact sign-flip test over
-per-instance differences), L+A exceeds L by 0.100 in solve rate (95\% CI 0.042--0.167, $p=0.009$)
-and B by 0.158 (0.058--0.267, $p=0.007$), but the L$-$B difference of 0.058 ($-$0.017--0.133,
-$p=0.19$) is not distinguishable from zero. Under the submitted $E_{\mathrm{plane}}$ scoring it
-was 0.083 (0.017--0.158, $p=0.05$). Target feedback helps reliably; legal enumeration alone may not.
-
-\paragraph{Feedback without enumeration.}
-\label{sec:results-feedback-only}
-Because L+A adds two things to B, the ablation above cannot say whether target feedback helps
-without legal enumeration. We therefore ran B+A (basic tools plus automatic tier-3 feedback, no
-\texttt{list\_legal\_folds}) for GPT-5.6 Luna at low effort on the same 40 instances, with the
-image ablation's settings (text and images, 80 turns, one episode per instance;
-Table~\ref{tab:feedback-only}). All five B+A solves also satisfy $E_{\mathrm{id}}$ on replay.
-Against B (2/40), feedback alone gives 5/40, the same as legal enumeration alone (5/40), and the
-two together give 9/40. With ten instances per group none of these differences is significant on
-its own. The totals do not decompose by instance: B+A solves easy-0001, 0004 and 0006, and at most
-one of these is among the L+A easy solves; L solves layers-0007, which L+A does not. With one
-episode per instance, which instances a condition solves varies between runs: five further repeats of the
-text-only L+A run solved 2, 3, 1, 3 and 3 easy instances under $E_{\mathrm{id}}$, against 5 in
-the original run, with different instance IDs (Section~\ref{sec:limitations}). We therefore read Table~\ref{tab:feedback-only} only as showing
-that each addition raises the total, not that their effects add or which instances each helps.
-
+\paragraph{Feedback without enumeration.}\label{sec:results-feedback-only}
+A new B+A arm uses GPT-5.6 Luna, low effort, text and images, 80 turns and the same
+40 instances. Feedback alone and enumeration alone each raise solves from 2/40 to 5/40;
+their combination gives 9/40 (Table~\ref{tab:feedback-only}). Single comparisons are
+underpowered, solved-instance sets differ, and repeated trials vary. We do not infer
+additive effects or stable per-instance benefits.
 \begin{table}[htbp]
 \centering
 \caption{Separating the two additions (GPT-5.6 Luna, low effort, text and images, $E_{\mathrm{id}}$,
@@ -110,59 +76,25 @@ L+A & 3/10 & $0/10^{*}$ & 0/10 & 6/10 & $9/40^{*}$ \\
 \hline
 \end{tabular}
 \end{table}
+\paragraph{Reasoning effort.}
+GPT-6 Luna solves 6/30 some-layers sample--condition pairs at low effort versus 18/30
+at high effort. Clustering by the ten instances gives a difference of 0.40
+(95\% CI 0.23--0.53; exact sign-flip $p=0.008$; 10,000 resamples, seed 1). These are five-reference-fold
+instances; the result does not establish performance on long sequences.
 
-\paragraph{Reasoning effort.} Pooled over the three tool conditions, GPT-6 Luna solves 6/30
-some-layers samples at low effort and 18/30 at high effort. Per condition the increases are
-0/10 to 3/10, 1/10 to 7/10 and 5/10 to 8/10; with ten samples per cell only the second is
-significant on its own (two-sided Fisher exact test, $p\approx0.02$; $p\approx0.21$ and $0.35$
-for the others), and a 95\% Wilson interval spans roughly $\pm0.3$ (e.g.\ 0.11--0.60 for
-3/10). Pairing outcomes by sample and condition, every discordant pair favours high effort
-(12 to 0; exact McNemar test, $p<0.001$), so the effect is consistent even where single cells
-are underpowered. McNemar treats the 30 sample--condition pairs as independent, but each
-some-layers instance appears in all three tool conditions. Treating the instance as the unit,
-a cluster bootstrap over the ten instances gives a high-minus-low difference of
-0.40 in some-layers solve rate (95\% CI 0.23--0.57), and an exact sign-flip test over
-per-instance differences gives $p=0.008$; over all 40 instances the difference is 0.15
-(0.08--0.23, $p<0.001$). The effect survives clustering; its size is not well determined. It is measured on five-fold some-layers samples; on the easy group, which spans
-four to ten folds, solves rise from 2/30 to 8/30 (0.20, 95\% CI 0.07--0.33, $p=0.06$).
-
-\paragraph{Depth.} No Luna ablation solves a medium or hard sample, and the breadth-first
-baseline solves 1/40 medium and 0/16 hard attempts (Appendix~\ref{app:bfs-analysis}), against
-366/669 on the easy group (at most four of which fail $E_{\mathrm{id}}$; Appendix~\ref{app:identity-audit}). Within the easy group, the model solve rate falls from 32\% at four folds to
-0--15\% at eight to ten (Table~\ref{tab:easy-depth}). The groups differ in more than depth. In
-the all-layers tier every fold moves the whole stack and usually crosses every layer, so the
-layer count grows roughly exponentially with depth: over the 40 ablation instances the final
-stack has a median of 23 layers on easy (maximum 64), 90 on medium (448) and 512 on hard (3,504),
-and over the full released groups the hard median is 404 (maximum 16,384). Depth and layer count
-are therefore confounded, and the hard group mostly measures states of hundreds to thousands of
-layers, whose serialised geometry approaches or exceeds what fits in a prompt (one medium
-episode failed on input size; Appendix~\ref{app:protocol-failures}). These results show that the
-deeper groups are harder, not that depth alone is the cause, and we do not read the hard group as
-a limit of planning depth (Section~\ref{sec:limitations}).
-Breadth-first search time on the saved searches grows by a fitted factor of 3.9 per fold on easy
-and 4.6 on medium (Figure~\ref{fig:depth-wall}); the hard-group factor of 12.4 rests on two samples
-and an extrapolation, and we do not use it as a measure of task complexity.
-
-\paragraph{Matched search baselines.} The comparison above mixes budgets and instance sets. To
-compare the model with search on the same footing, we ran two baselines that use no model on the
-same 40 ablation instances, with the action set the model is given and success defined as CP match
-plus $E_{\mathrm{id}}$, checked after every fold (Table~\ref{tab:matched-baselines}). \emph{Random}
-plays 80 uniformly random legal folds per episode (the model's turn budget), 100 episodes per
-instance. \emph{BFS} searches distinct states (identity-keyed) up to the reference depth plus four,
-and we record whether it reaches the target within 80, $10^3$, $10^4$ and $10^5$ expansions (600\,s
-wall clock per instance). Within an 80-fold budget, random legal folding solves 57\% of easy and 96\%
-of some-layers episodes, while the best model conditions solve at most 5 of 10 easy instances
-(GPT-5.6 Luna, text-only L+A) and 8 of 10 some-layers instances (GPT-6 Luna, high effort, L+A)
-in one episode each (Table~\ref{tab:luna-ablations}, Section~\ref{sec:results-matched}).
-BFS solves 5 of 10 medium instances within $10^5$ expansions; random folding solves at least one
-episode on 3 of 10 medium instances. Only the hard group is unsolved by every method we ran, and
-its states are the largest (above). We therefore do not describe medium as beyond reach: on easy,
-some-layers and medium the model is less effective than undirected search over the same legal
-actions. Search with $10^5$ expansions and 100 random episodes per instance uses far more
-attempts than one model episode; the comparison shows that the model's choices carry less
-information than chance would over the same number of folds, not that search is cheaper or
-better in general.
-
+\paragraph{Matched search baselines.}
+Table~\ref{tab:matched-baselines} uses the same 40 instances, legal candidate actions
+and identity-aware success check. Random folding uses 100 independent 80-fold episodes
+per instance; its per-episode success is 0.572 on easy and 0.959 on some-layers.
+Model conditions reach at most 5/10 and 8/10 respectively in one episode each.
+BFS solves 5/10 medium instances within $10^5$ expansions. Search establishes that
+these targets are accessible; its larger total budget does not establish lower cost.
+Random folding checks success after each accepted fold, whereas model episodes can
+consume turns on rejections, observations and backtracking and must submit a solution.
+The comparison therefore matches the legal action set and a nominal 80-step ceiling,
+not the number of executed folds, stopping rule, inference compute or elapsed time.
+Only hard is unsolved by every tested method. Its final stacks have a median of
+404 layers across the full release, so failure cannot be attributed to depth alone.
 \begin{table}[htbp]
 \centering
 \caption{Matched search baselines on the 40 ablation instances (no model; CP match plus
@@ -183,31 +115,14 @@ Some-layers & 10/10 & 0.959 & 9 & 10 & 10 & 10 \\
 \hline
 \end{tabular}
 \end{table}
-
 \subsection{Input modality}
-\label{sec:results-matched}
-\phantomsection\label{sec:results-textonly}
-
-To measure what the images contribute, we reran the GPT-5.6 Luna (low effort) ablation with
-every image removed from the prompt and from tool results, keeping the JSON geometry of the crease
-pattern, target and current state. Under $E_{\mathrm{id}}$, text-only solves 3, 5 and 11 of 40 with
-B, L and L+A, against 2, 5 and 9 with images (pooled 19/120 vs.\ 16/120); under the submitted
-$E_{\mathrm{plane}}$ scoring the text-only counts were 3, 7 and 11 (21/120 vs.\ 18/120; discordant
-pairs 9 vs.\ 6, exact McNemar $p=0.61$). Removing images does not reduce solve rate on these
-samples. The prompt already states every vertex coordinate, parity and layer rank exactly, while a
-512-pixel rendering shows the same geometry less precisely and cannot show which layer lies above
-which; the model's successful reasoning runs through the coordinates. At this sample size we
-cannot exclude a small benefit from images, but we find none. CP2Seq as configured here therefore
-measures geometric reasoning over an exact numeric description of every layer (coordinates,
-orientation, stacking order and sheet region) more than visual perception. One
-text-only basic and two text-only medium episodes ended in protocol failures and count as unsolved.
-
-An images-only condition, which keeps the renderings and removes the coordinates, isolates
-perception (Appendix~\ref{app:images-only}). With basic tools it solves 1/40 (one easy instance),
-against 3/40 text-only and 2/40 with both (Table~\ref{tab:modality}). The differences are one and
-two instances out of 40 and are not significant; they are consistent with the text-only result in
-that images do not substitute for coordinates.
-
+\label{sec:results-matched}\label{sec:results-textonly}
+Removing all images while retaining exact numeric state gives 3/40, 5/40 and 11/40
+solves with B, L and L+A, versus 2/40, 5/40 and 9/40 with images. With B, images
+alone give 1/40 (Table~\ref{tab:modality}; Appendix~\ref{app:images-only}). These small
+differences do not establish a modality advantage, but provide no evidence that images
+are necessary. We frame the configured task as planning over explicit geometry,
+rather than visual perception.
 \begin{table}[htbp]
 \centering
 \caption{Input modality with basic tools (GPT-5.6 Luna, low effort, $E_{\mathrm{id}}$, one episode
@@ -225,115 +140,27 @@ Text and images & 2/10 & 0/10 & 0/10 & 0/10 & 2/40 \\
 \hline
 \end{tabular}
 \end{table}
-
 \subsection{Failure analysis}
 \label{sec:results-failures}
+Cycling terminates 191 of 305 unsuccessful completed ablation episodes, but a stopping
+condition is not a causal explanation. Trajectory categories are observable mechanical
+rules (Appendix~\ref{app:matched-trajectories}), not internal capability diagnoses.
+An automatic stop at the first CP plus $E_{\mathrm{id}}$ match raises solves only
+from 25 to 27 in 143 saved episodes: most failures never reach the target.
 
-Termination labels name the stopping rule that fired, not the cause of failure. Rejected
-actions never end an episode, although they consume turns; the cycling rule stops an episode
-when the same fold is played from the same position three times. In the ablations, 191 of the 305
-unsuccessful completed episodes ($E_{\mathrm{id}}$; 300 under $E_{\mathrm{plane}}$) end under the cycling rule (Table~\ref{tab:ablation-terminations}); in the
-earlier 447-attempt GPT-5.6 Luna snapshot, 215 of 384 do. These counts describe how episodes
-stopped, not why they failed, and we do not attribute failures to capabilities from them.
+The median ratio of distinct model states to random-folding states is 0.11--0.25
+for text-only easy and some-layers conditions. Model episodes are often shorter
+(20--45 turns on average versus 80 random folds), which accounts for part of this gap.
+In 120 GPT-5.6 Luna L+A episodes, bounded search finds a repair within three removed
+folds for 71/104 full restarts and 161/280 shorter backtracks. These observations do
+not establish why a model restarts. After the first backtrack, 340/931 Luna accepted
+folds revisit abandoned states versus 26/243 for Sonnet; such revisits need not be
+errors unless the state has no legal continuation (Appendix~\ref{app:revision-details}).
 
-The per-turn logs of the image ablation episodes were not retained; the released runs keep each
-episode's accepted sequence and final state. Per-turn logs survive for the text-only GPT-5.6 Luna
-episodes, and we analysed those turn by turn (Table~\ref{tab:trajectories}), replaying each
-accepted state and comparing it with the target. Each unsuccessful episode is assigned one of four
-mechanical categories (Appendix~\ref{app:matched-trajectories}): F1, mostly geometrically illegal
-proposals; F2, mostly legal folds off the target pattern; F3, the full pattern at the target depth
-but a wrong stack; F4, never reaching the target depth. With basic tools, 82\% of proposed folds
-are rejected, mostly as off-pattern, and 29 of 36 failures are F2; with legal enumeration, the
-rejection rate falls to 13\% and failures shift to F4 (21 of 32) and F3 (6 of 32). These failure
-counts use the outcomes as submitted ($E_{\mathrm{plane}}$), as in Table~\ref{tab:trajectories}. Once the tool
-removes illegal and off-pattern moves, the remaining failures are episodes that never reach the
-target depth, or reach it with the layers in the wrong order. The categories locate where an
-episode broke down, not which internal capability failed, and they come from one model without
-images; we have not verified that they transfer to the image ablations.
-
-\paragraph{Reaching the target without stopping.} An episode could fail by passing through the
-target state and folding on instead of finishing. Replaying every accepted state of the 143 saved
-episodes with per-turn logs and checking CP match plus $E_{\mathrm{id}}$ after each, an automatic
-stop at the first match would raise solves from 25 to 27. Failures are therefore almost never
-missed stops; in all but two unsuccessful episodes the model never reaches the target.
-
-\paragraph{Exploration.} We counted the distinct folded states (flat sheet excluded) each saved
-episode reaches and compared them with 20 random episodes of 80 legal folds on the same instance.
-The median per-instance ratio of model to random distinct states (easy, some-layers) is 0.11 and
-0.12 with text-only B, 0.16 and 0.24 with text-only L, and 0.25 and 0.18 with text-only L+A; it is
-lowest for images-only B (0.12 and 0.07). The model reaches between a tenth and a quarter of the
-states random folding reaches, and more states with enumeration than without, as with solve rate.
-With basic tools 72--81\% of proposals are rejected; with legal enumeration 57--65\% of accepted
-folds return to a state already reached. Part of the gap reflects episode length: model episodes
-stop after 20--45 turns on average (cycling rule or \texttt{finish}), whereas every random episode
-uses all 80 folds. Together with the matched baselines, this indicates that the model explores
-far less of the legal state space than undirected search and revisits what it has seen, rather
-than failing at the final step.
-
-\paragraph{Backtracking.} We examined every backtrack (a \texttt{go\_to\_step},
-\texttt{restore\_revision} or \texttt{remove\_fold} that shortens the sequence) in the saved easy and
-some-layers episodes, and for each asked whether a local repair existed: whether the target is
-reachable (CP match plus $E_{\mathrm{id}}$) from the sequence with its last one, two or three folds
-removed, by depth-limited search within the reference depth plus two (node cap 4,000). In the
-120 text-only GPT-5.6 Luna L+A episodes (the original run and the five repeats) there are 384
-backtracks; 104 (27\%) return to the flat sheet, and the mean backtrack removes 2.6 folds. The
-search decided all 384: a repair within three folds existed for 232 (60\%). A repair existed for
-71 of the 104 returns to the flat sheet (68\%) and for 161 of the 280 shorter backtracks (58\%), so
-the model restarts about as often when a short repair is available as when it is not. In 21 Claude
-Sonnet~5.5 L+A episodes, 16 of 82 backtracks (20\%) return to the flat sheet; a repair existed for
-8 of these 16 (50\%) and for 36 of the other 66 (55\%).
-
-After a backtrack of two or more folds, we asked whether the next accepted folds re-make the
-discarded ones, reaching the same states in the same order, and compared this with a policy that
-picks uniformly among the distinct legal folds at each state. With legal enumeration the models
-re-make the discarded folds less often than chance: GPT-5.6 Luna L+A in 32 of 293 cases against
-61 expected, and Claude Sonnet~5.5 in 0 of 58 against 8.7 expected. With basic tools, where no
-list is shown, GPT-5.6 Luna re-makes them more often than chance (4 of 6 against 0.9 expected with
-B; 8 of 14 against 3.7 with B+A), but these counts are small.
-
-The two families differ in whether they return to branches they have already given up. Counting
-every state on a discarded suffix, and every state reported to have no legal fold, as abandoned,
-37\% of GPT-5.6 Luna L+A add\_folds after an episode's first backtrack land on an abandoned state
-again (340 of 931; 65 of them on a state with no legal fold), against 11\% for Claude Sonnet~5.5
-(26 of 243; 5 on such states); 77 of 120 Luna episodes and 7 of 21 Sonnet episodes contain such a
-revisit. Each turn is a fresh request, so the only record of abandoned branches is the action
-history in the prompt; Sonnet's lower rate is consistent with it using that history to avoid
-branches already tried, but its reasoning text is not returned by the interface we used, so we
-cannot tell how. Re-entering an abandoned shallow state is not always an error, since a solution
-may pass through it; re-entering a state with no legal fold always is.
-
-The tier-3 comparison can mark a state as close to the target when no short repair exists. On
-\texttt{layers-0003}, GPT-5.6 Luna (nine restarts in six episodes) and Claude Sonnet~5.5 (one)
-restarted from a state with 8 of 9 layers, 6 of the 8 matching the target; in seven of these ten
-cases the search found no repair within three folds (in the other three a one-fold repair
-existed), and in the Sonnet case the state had no legal fold. On \texttt{easy-0002}, five Luna
-episodes and one Sonnet episode reached the target's 24 layers in the wrong order and restarted;
-none had a repair within three folds. Restarting from such states is therefore not by itself an
-error. What the episodes show is that the models do not distinguish a recoverable near miss from a
-trap: whether a short repair exists barely changes how often they restart, while the feedback's closeness signal (layer count and matching layers)
-also marks unrecoverable states as close. These counts come from a bounded search; they describe
-behaviour, not its cause.
-
-\paragraph{A second model family.} Claude Sonnet~5.5 ran the same text-only L+A configuration on
-the 20 instances of the repeated-trial set, one episode each (the first four easy episodes used an
-earlier prompt order). Under $E_{\mathrm{id}}$ it solves 5 of 10 easy and 9 of 10 some-layers
-instances (14/20); under $E_{\mathrm{plane}}$ it solves 7 of 10 easy, and the two
-$E_{\mathrm{plane}}$-only solves ended with \texttt{finish} after the comparison tool reported
-\emph{matches}, as for GPT-5.6 Luna (Section~\ref{sec:limitations}). The unsolved some-layers
-instance, \texttt{layers-0006}, is a protocol failure: in two attempts a single call exceeded the
-300-second timeout (at turns 31 and 37); GPT-5.6 Luna never solved it in five repeats. On the same
-20 instances GPT-5.6 Luna solves 8.4 per repeat on average (2.4 easy, 6.0 some-layers) and 14 in at
-least one of five repeats. One Sonnet episode per instance thus matches Luna's five-repeat
-coverage, but the solved easy instances differ (Sonnet: 0001, 0004, 0006, 0009, 0010; Luna in at
-least one repeat: 0002, 0005, 0006, 0009, 0010). With one episode per instance and 20 instances
-this is consistent with a stronger model, not a measured difference; Sonnet still falls short of
-random legal folding on the same groups (Table~\ref{tab:matched-baselines}).
-
-\phantomsection
-\label{sec:results-difficulty}
-\phantomsection
-\label{sec:results-threats}
-The broader evaluation, ablations, BFS snapshot and CP-distance scan cover different attempt
-sets with different budgets; we report their denominators separately and do not pool them into
-a single controlled comparison. The one matched comparison of models and search is
-Table~\ref{tab:matched-baselines}, on the 40 ablation instances.
+\paragraph{Repeated trials and a second family.}
+Five text-only Luna L+A repeats on 20 instances solve 7, 10, 6, 10 and 9 instances
+(42/100 episodes), with coverage of 14/20 across five trials. Sonnet~5.5 solves
+14/20 in one episode each (easy 5/10, some-layers 9/10); one timeout case counts as
+unsolved, and its first four easy episodes used an earlier prompt order. These
+small samples and differing repeat budgets do not establish a model ranking.
+\phantomsection\label{sec:results-difficulty}\label{sec:results-threats}
