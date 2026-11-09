@@ -702,3 +702,13 @@ Luna B 4/6 vs 0.9; Luna B+A 8/14 vs 3.7. With the legal list the models avoid th
 (below chance); without it Luna re-makes it above chance (small n). Supersedes the "70/293"
 count in section 12, which counted a match of the first fold only and compared arguments, not
 states.
+
+## 14. Revisits of abandoned states (2026-11-09)
+
+`workspace/abandoned_revisits.mjs` -> `workspace/RESULTS/backtracking/abandoned_revisits.md`.
+Abandoned = states on a discarded suffix or reported dead ends; revisit = later accepted add_fold
+landing there (state compare), over add_folds after the first backtrack.
+Luna L+A text: 340/931 (37%), 65 on dead ends, 77/120 episodes. Sonnet: 26/243 (11%), 5 on dead
+ends, 7/21 episodes. Luna L 53%, B 59%, B+A 63%. Sonnet's thinking is returned as empty signed
+blocks by `claude -p`, so its reasoning cannot be inspected; the behaviour is consistent with
+pruning abandoned branches from the history in the prompt (each turn is a fresh request).

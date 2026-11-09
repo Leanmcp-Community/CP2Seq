@@ -289,6 +289,17 @@ re-make the discarded folds less often than chance: GPT-5.6 Luna L+A in 32 of 29
 list is shown, GPT-5.6 Luna re-makes them more often than chance (4 of 6 against 0.9 expected with
 B; 8 of 14 against 3.7 with B+A), but these counts are small.
 
+The two families differ in whether they return to branches they have already given up. Counting
+every state on a discarded suffix, and every state reported to have no legal fold, as abandoned,
+37\% of GPT-5.6 Luna L+A add\_folds after an episode's first backtrack land on an abandoned state
+again (340 of 931; 65 of them on a state with no legal fold), against 11\% for Claude Sonnet~5.5
+(26 of 243; 5 on such states); 77 of 120 Luna episodes and 7 of 21 Sonnet episodes contain such a
+revisit. Each turn is a fresh request, so the only record of abandoned branches is the action
+history in the prompt; Sonnet's lower rate is consistent with it using that history to avoid
+branches already tried, but its reasoning text is not returned by the interface we used, so we
+cannot tell how. Re-entering an abandoned shallow state is not always an error, since a solution
+may pass through it; re-entering a state with no legal fold always is.
+
 The tier-3 comparison can mark a state as close to the target when no short repair exists. On
 \texttt{layers-0003}, GPT-5.6 Luna (nine restarts in six episodes) and Claude Sonnet~5.5 (one)
 restarted from a state with 8 of 9 layers, 6 of the 8 matching the target; in seven of these ten
