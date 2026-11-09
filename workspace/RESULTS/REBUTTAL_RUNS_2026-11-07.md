@@ -690,3 +690,15 @@ T20261109T220051615479Z turn 37; single call > 300 s) -> protocol failure, unsol
 Backtracking (rerun with all runs): Luna L+A text-only 120 episodes, 384 backtracks, 104 to
 step 0, 71 of those discarded a repair <=3 folds; Sonnet 21 episodes, 82 backtracks, 16 to step
 0 (8 discarding a repair), re-made discarded folds 2/58. Paper 09-results updated.
+
+## 13. Backtracking: conditional rates and chance baseline (2026-11-09)
+
+`workspace/rebuild_baseline.mjs` -> `workspace/RESULTS/backtracking/rebuild_baseline.md`.
+Restart vs recoverability: repair (<=3 folds) existed for 68% of Luna L+A restarts vs 58% of
+shorter backtracks; Sonnet 50% vs 55%. Restart decisions do not track recoverability.
+Re-making discarded folds (jump>=2, compared by state) vs uniform choice among distinct legal
+folds: Luna L+A text 32/293 vs 61.0 expected (0.5x); Sonnet 0/58 vs 8.7 (0x); Luna L 7/32 vs 8.3;
+Luna B 4/6 vs 0.9; Luna B+A 8/14 vs 3.7. With the legal list the models avoid the discarded path
+(below chance); without it Luna re-makes it above chance (small n). Supersedes the "70/293"
+count in section 12, which counted a match of the first fold only and compared arguments, not
+states.
