@@ -12,15 +12,19 @@ recorded during generation, and the released generator produces fresh instances 
 reference depth. Origami supplies the state space; we make no claim about physical folding, which
 would require thickness and contact. We evaluate GPT-5.6 and GPT-6 Luna, and Claude Sonnet 5.5 on 20 instances, under increasing tool
 assistance and compare them with breadth-first search and with random legal folding over the same
-actions. On 40 ablation instances, no model condition solves a sample of 11 or more folds, and
-higher reasoning effort raises some-layers solves from 6/30 to 18/30. The models fall short of
+actions. All counts use exact matching, one episode per instance unless stated. On 40 ablation instances
+(10 per group), no model condition solves a sample of 11 or more folds, and higher reasoning effort
+raises GPT-6 Luna's some-layers solves from 6/30 to 18/30 (three tool conditions, 10 instances each). The models fall short of
 undirected search: within 80 folds, random legal folding solves 57\% of easy and 96\% of
-some-layers episodes, against at most 5 of 10 easy and 8 of 10 some-layers instances in any model
-condition, and breadth-first search solves 5 of 10 medium instances that no model episode
-solves. Model episodes rarely pass through the target without stopping (2 of 143), and they reach
-a tenth to a quarter of the distinct states that random folding reaches, consistent with a
-failure of exploration rather than of the final step. Removing the rendered images does not lower solve rate, so the benchmark
+some-layers episodes (1,000 per group), against at most 5 of 10 easy and 8 of 10 some-layers
+instances in any model condition, and breadth-first search solves within $10^5$ expansions 5 of
+10 medium instances that no model episode solves. Stopping at the first match would add only 2 solves to 25 in the 143 episodes with per-turn logs,
+and with exact coordinates models reach a median tenth to a quarter of the distinct states that
+random folding reaches, consistent with a
+failure of exploration rather than of the final step. Removing the rendered images does not lower GPT-5.6 Luna's solve rate (19/120 without, 16/120
+with), so the benchmark
 measures reasoning over an exact symbolic state rather than visual perception. Single episodes per
-instance vary substantially between runs, and the deepest group of the released all-layers corpus
-grows to hundreds of layers; we report both and describe a layer-controlled regeneration.
+instance vary substantially between runs (five repeats solve 1 to 3 of 10 easy instances against 5
+in the original run), and the deepest group of the released all-layers corpus grows to hundreds or
+thousands of layers; we report both and describe a layer-controlled regeneration.
 \end{abstract}

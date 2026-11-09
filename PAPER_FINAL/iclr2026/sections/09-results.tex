@@ -230,8 +230,8 @@ Text and images & 2/10 & 0/10 & 0/10 & 0/10 & 2/40 \\
 
 Termination labels name the stopping rule that fired, not the cause of failure. Rejected
 actions never end an episode, although they consume turns; the cycling rule stops an episode
-when the same fold is played from the same position three times. In the ablations, 191 of 300
-unsuccessful episodes end under the cycling rule (Table~\ref{tab:ablation-terminations}); in the
+when the same fold is played from the same position three times. In the ablations, 191 of the 305
+unsuccessful completed episodes ($E_{\mathrm{id}}$; 300 under $E_{\mathrm{plane}}$) end under the cycling rule (Table~\ref{tab:ablation-terminations}); in the
 earlier 447-attempt GPT-5.6 Luna snapshot, 215 of 384 do. These counts describe how episodes
 stopped, not why they failed, and we do not attribute failures to capabilities from them.
 
@@ -242,8 +242,9 @@ accepted state and comparing it with the target. Each unsuccessful episode is as
 mechanical categories (Appendix~\ref{app:matched-trajectories}): F1, mostly geometrically illegal
 proposals; F2, mostly legal folds off the target pattern; F3, the full pattern at the target depth
 but a wrong stack; F4, never reaching the target depth. With basic tools, 82\% of proposed folds
-are rejected, mostly as off-pattern, and 29 of 36 failures are F2 (episode outcomes as submitted); with legal enumeration, the
-rejection rate falls to 13\% and failures shift to F4 (21 of 32) and F3 (6 of 32). Once the tool
+are rejected, mostly as off-pattern, and 29 of 36 failures are F2; with legal enumeration, the
+rejection rate falls to 13\% and failures shift to F4 (21 of 32) and F3 (6 of 32). These failure
+counts use the outcomes as submitted ($E_{\mathrm{plane}}$), as in Table~\ref{tab:trajectories}. Once the tool
 removes illegal and off-pattern moves, the remaining failures are episodes that never reach the
 target depth, or reach it with the layers in the wrong order. The categories locate where an
 episode broke down, not which internal capability failed, and they come from one model without
