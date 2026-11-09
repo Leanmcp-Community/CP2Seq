@@ -35,8 +35,9 @@ totals, not evidence that the effects add.
 
 Fourth, the models reason over the exact coordinates: removing rendered images does not lower
 solve rate (GPT-5.6 Luna, 19/120 without images against 16/120 with), and images alone solve 1/40
-with basic tools. CP2Seq measures planning over an exact symbolic state,
-not visual perception. Because each ablation result rests on ten samples per cell, we report these
+with basic tools. CP2Seq measures planning over an exact numeric
+description of every layer (coordinates, orientation, stacking order and sheet region), not visual
+perception. Because each ablation result rests on ten samples per cell, we report these
 as trends with their uncertainty rather than as rankings of models.
 
 Next steps are to re-evaluate on the layer-capped corpus, so that difficulty follows sequence

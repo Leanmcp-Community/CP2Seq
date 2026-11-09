@@ -198,7 +198,8 @@ samples. The prompt already states every vertex coordinate, parity and layer ran
 512-pixel rendering shows the same geometry less precisely and cannot show which layer lies above
 which; the model's successful reasoning runs through the coordinates. At this sample size we
 cannot exclude a small benefit from images, but we find none. CP2Seq as configured here therefore
-measures geometric reasoning over an exact symbolic state more than visual perception. One
+measures geometric reasoning over an exact numeric description of every layer (coordinates,
+orientation, stacking order and sheet region) more than visual perception. One
 text-only basic and two text-only medium episodes ended in protocol failures and count as unsolved.
 
 An images-only condition, which keeps the renderings and removes the coordinates, isolates
