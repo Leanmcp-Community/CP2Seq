@@ -39,6 +39,7 @@
 - [x] 编译检查，提交（标题改为 CP2Seq: An Exactly Verifiable Benchmark for Long-Horizon Fold-Sequence Planning）。
 
 ## 之后
+- [ ] （可选，用户暂缓）直连 API 开启思考摘要，在几道题上重跑 Sonnet，验证它是否在推理里剪掉已试分支（约 $10–20）。
 - [ ] OrigamiBench 作者邮件：Gmail 草稿已建（10 人），用户核对后从 lu@ 手动发送。
 - [x] 模型行为分析：回溯模式，已写进论文 09-results 和结果文档第 9 节。
 - [ ] Haiku 排序的混合搜索（可选）。
