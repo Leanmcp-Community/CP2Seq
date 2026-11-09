@@ -1,0 +1,86 @@
+\section{Extended related work}
+\label{app:references}
+
+This appendix collects the literature the benchmark rests on, grouped by the role each work plays
+rather than alphabetically. Section~\ref{sec:related} discusses the works the design depends on
+directly; the rest are recorded here.
+
+\paragraph{Origami benchmarks and systems for language models.}
+\citet{gamibench} releases both code and data, and evaluates viewpoint consistency and the
+recognition of infeasible patterns. \citet{origamispace} evaluates pattern prediction, multi-step
+spatial reasoning and crease-pattern code generation, and ships an interactive environment for the
+last of these. \citet{origamibench} synthesises flat-foldable patterns in an interactive
+environment over 366
+% fact:corpus.instagram.total
+designs collected from Flat-Folder, and evaluates query efficiency, geometric similarity through
+intersection over union, and semantic similarity through CLIP embeddings; its query efficiency is
+the proportion of fold steps that contribute to the final model, not the number of queries to a
+solution. It is one source of the metrics surveyed while our scoring was designed.
+\citet{corigami} co-designs flat-foldable and recognisable models, using a vision-language model
+for aesthetic and semantic evaluation and reporting the flat-foldability of generated crease
+patterns separately. \citet{learn2fold} plans structured generation against a learned world model.
+\citet{foldingagent} reconstructs folding processes from instructional video, over the
+sequence-level corpus of \citet{purelandfold}.
+
+\paragraph{Complexity and theory of flat folding.}
+\citet{bern-hayes} carries the claim the task rests on: geometry does not determine layer order,
+and deciding the overlap order of a flat folding is NP hard even when a valid mountain-valley
+assignment is given. \citet{arkin-map} defines simple foldability and the one-layer, some-layers
+and all-layers models this action space is drawn from, and \citet{akitaya-hard} settles the
+complexity of deciding it for square paper with creases at multiples of $45^\circ$.
+\citet{akitaya-infinite} treats the all-layers model, which is also the model of sheet-metal
+bending, and \citet{mixed-orthogonal} treats mixed orthogonal crease patterns.
+\citet{akitaya-flatfolder} gives a method for deciding whether a pattern admits a flat-folded
+state at all, a problem that is NP hard in general. \citet{layer-algebra} gives an algebraic
+treatment of the layer-ordering constraints, and \citet{flat-folding-graphs} studies the graphs of
+flat foldings themselves. \citet{continuous} and its predecessor \citet{reaching-folded} separate a
+folded state from a continuous folding motion, for simple polygonal and rectangular paper
+respectively. Those results concern continuous motion; they do not establish that a folded state
+is reachable by the restricted sequence of simple folds used here, and the discrete step structure
+is the question this benchmark poses. \citet{turing} establishes that flat origami is Turing
+complete, which bounds what any general claim about foldability can promise.
+
+\paragraph{The crease-pattern-to-sequence problem itself.}
+\citet{akitaya-cp2seq} named the problem and supplied the tools the area still uses: reflection
+paths, graph rewriting, and a step sequence graph whose paths yield folding sequences.
+\citet{creasy} is an open-source implementation of that line and is usable as a symbolic baseline,
+which we have not yet run.
+
+\paragraph{Counting folded states.}
+The number of ways to fold a strip of $n$ labelled stamps runs 1, 2, 6, 16, 50, 144, 462, 1392,
+4536, 14060 for $n=1,\ldots,10$ \citep{oeis-a000136}. The problem was posed by \citet{lucas} in
+1891 and has been attacked repeatedly since \citep{koehler,lunnon}; the related enumeration of
+meanders is surveyed by \citet{meanders}, which reports that no closed formula was known. The
+relevance here is that the number of valid states grows fast enough that scoring against any
+single reference sequence would be wrong, which is why Section~\ref{sec:scoring} scores by
+execution instead.
+
+\paragraph{Spatial reasoning context.}
+\citet{spatial-survey} surveys spatial reasoning in multimodal models. \citet{vot} names the
+mental-imagery question this benchmark turns into a measurement: whether a model can maintain and
+update a spatial representation across steps rather than describe one.
+
+\paragraph{Statistical physics of random flat foldability.}
+\citet{spin-model} represents layer-order constraints as spin interactions, and
+\citet{random-locally} proves that for random locally flat-foldable mountain-valley assignments on
+the square grid, global flat foldability is exponentially unlikely under its sampling
+distribution. Neither result concerns the number of terminal states of the patterns in this
+corpus, and we do not extrapolate them to it.
+
+\paragraph{Tools, formats and data.}
+\citet{flatfolder} is the implementation that decides and enumerates flat-folded states, for the
+method of \citet{akitaya-flatfolder}; together they are the source of the four constraint classes
+cited in Section~\ref{sec:env-refusals}. \citet{fold-format} is the de facto standard used by
+every artifact we ship. \citet{oripa} is a crease-pattern editor with folded-form estimation.
+\citet{purelandfold} is the closest existing sequence-level corpus, with 27 sequences and 337
+annotated keyframes released under CC-BY-4.0 as the ground truth for FoldingAgent; it is not used
+here as training or evaluation data.
+
+\paragraph{Scope, and what is left out.}
+Thick folding \citep{thick-folding}, bar-and-hinge mechanics \citep{bar-and-hinge} and its
+simulators \citep{swomps,simfast}, and the wider creased-sheet mechanics literature belong
+to a different line of work, one in which the sheet has thickness and the verifier is a simulation
+rather than a decision. That line asks a question this benchmark does not: the states here are
+zero-thickness and flat, and the environment rules on a fold in one pass rather than integrating a
+deformation. Those works are therefore not treated as neighbouring work, and the limits of the
+model used here are stated in Section~\ref{sec:limitations}.

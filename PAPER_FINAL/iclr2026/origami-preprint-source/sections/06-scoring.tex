@@ -1,0 +1,55 @@
+\subsection{Evaluation metrics}
+\label{sec:scoring}
+
+\phantomsection
+\label{sec:scoring-why}
+We accept any executable sequence that produces the required crease pattern and folded state.
+
+\subsubsection{Verification}
+\label{sec:scoring-what}
+
+We execute the proposed sequence and compare its accumulated creases with the input pattern,
+including mountain--valley assignments. We then compare the final stack with the target after
+alignment by a single global translation, rotation, or turnover. A turnover reflects the geometry,
+reverses the stack order, and flips face orientations. The same transformation must align all
+layers in their corresponding stack order.
+A successful construction must satisfy both crease-pattern and folded-state agreement.
+
+\paragraph{Equivalence relation.} The submitted results used plane equivalence
+($E_{\mathrm{plane}}$): one isometry carries every layer polygon and parity onto the target's at
+the same rank. The task definition also requires each rank to hold the same region of the
+original sheet, up to a symmetry of the crease pattern ($E_{\mathrm{id}}$,
+Appendix~\ref{app:comparison-details}). Two stacks equal in the plane but interleaving the sheet
+differently are different objects. We now score with $E_{\mathrm{id}}$, report both, and count
+$E_{\mathrm{plane}}$-only solves as unsolved (Appendix~\ref{app:identity-audit}).
+
+The crease comparator and the shared folded-state
+comparator both match positions within $2\times10^{-6}$; Table~\ref{tab:tolerances} lists every
+tolerance in the pipeline, and Appendix~\ref{app:comparison-details} describes the alignment and
+representation details.
+
+\subsubsection{Reported metrics}
+\label{sec:scoring-metrics}
+
+We report solve rate by fold-count group, with the number of attempts and the applicable run
+budgets. Termination reasons distinguish successful submission, unsuccessful completion, budget
+limits, and repetition-related stopping. Query counts measure calls consumed before termination.
+
+% EDITING NOTE: Compute CP edit distance for the final valid state of every saved attempt,
+% including unsuccessful and interrupted runs. Define edits, costs, normalization, and treatment
+% of missing state artifacts before adding numerical results. See IMPORTANT_TODO.md.
+We measure CP edit distance between the accumulated crease pattern in the last recoverable
+state and the supplied pattern, in original-sheet coordinates. Collinear mountain and valley
+intervals are merged separately, excluding sheet boundaries. If $m$ intervals match under the
+crease comparator, the insertion/deletion distance is
+$d_{\mathrm{CP}}=|C_{\mathrm{target}}|+|C_{\mathrm{candidate}}|-2m$.
+Each missing or extra interval costs one; changing an assignment costs two. Partially overlapping
+intervals do not match unless their endpoints agree within tolerance. We also report
+$d_{\mathrm{CP}}/|C_{\mathrm{target}}|$, which can exceed one. Normalized distance is undefined
+for an empty target. Means weight attempts equally and exclude missing state artifacts,
+whose counts are reported separately.
+
+\phantomsection
+\label{sec:scoring-validate}
+Comparator implementation and validation cases are described in
+Appendix~\ref{app:comparison-details}.

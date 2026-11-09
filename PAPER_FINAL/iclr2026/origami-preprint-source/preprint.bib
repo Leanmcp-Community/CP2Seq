@@ -1,0 +1,408 @@
+% CP2Seq bibliography.
+% Grouped to mirror Section 14 of paper/DRAFT.md.
+% Metadata corrections and primary sources: REFERENCE_AUDIT.md (2026-09-25).
+
+% ---------------------------------------------------------------
+% Origami benchmarks and systems for language models
+% ---------------------------------------------------------------
+
+%  note      = {VERIFIED 2026-09-21: NeurIPS 2025 poster; also arXiv:2511.18450}   % internal check, not for print
+@inproceedings{origamispace,
+  author  = {Xu, Rui and Lu, Dakuan and Zhao, Zicheng and Tan, Xiaoyu and Wang, Xintao and Yuan, Siyu and Chen, Jiangjie and Xu, Yinghui},
+  title   = {{OrigamiSpace}: Benchmarking Multimodal {LLMs} in Multi-Step Spatial Reasoning with Mathematical Constraints},
+  booktitle = {Advances in Neural Information Processing Systems ({NeurIPS})},
+  year      = {2025},
+  url       = {https://neurips.cc/virtual/2025/poster/115182},
+}
+
+%  note    = {VERIFIED 2026-09-21: 186 regular and 186 impossible patterns, six viewpoints, three VQA tasks, VC and IFSR metrics}   % internal check, not for print
+@article{gamibench,
+  author  = {Spencer, Ryan and Yaari, Roey and Vemavarapu, Ritvik and Yang, Joyce and Ngo, Steven and Sharma, Utkarsh},
+  title   = {{GamiBench}: Evaluating Spatial Reasoning and {2D}-to-{3D} Planning Capabilities of {MLLMs} with Origami Folding Tasks},
+  journal = {arXiv preprint arXiv:2512.22207},
+  url     = {https://arxiv.org/abs/2512.22207},
+  year    = {2025},
+}
+
+@article{learn2fold,
+  author  = {Huang, Yanjia and Chen, Yunuo and Jiang, Ying and Han, Jinru and Tu, Zhengzhong and Yang, Yin and Jiang, Chenfanfu},
+  title   = {{Learn2Fold}: Structured Origami Generation with World Model Planning},
+  journal = {arXiv preprint arXiv:2603.29585},
+  year    = {2026}
+}
+
+@article{foldingagent,
+  author  = {Moriya, Maya and Raab, Sigal and Vinker, Yael and Dekel, Tali},
+  title   = {{FoldingAgent}: Inferring Parametric Origami Procedures from Demonstration Videos},
+  journal = {arXiv preprint arXiv:2609.00377},
+  year    = {2026},
+  url     = {https://arxiv.org/abs/2609.00377}
+}
+
+%  note    = {VERIFIED 2026-09-21 against the arXiv record}   % internal check, not for print
+% later arXiv versions of 2603.13856 are a different paper; cite v1 only
+@article{origamibench,
+  author  = {Agarwal, Naaisha and Wu, Yihan and Jian, Yichang and Hu, Yikuan and Mansoor, Nishad and Li, Mohan and Peng, Yifei and Dai, Wang-Zhou and Ding, Yao-Xiang and Sansone, Emanuele},
+  title   = {{OrigamiBench}: An Interactive Environment to Synthesize Flat-Foldable Origamis},
+  journal = {ICML 2026 Workshop on Planning in the Era of Language Models (LM4Plan); arXiv:2603.13856v1},
+  year    = {2026},
+}
+
+%  note    = {VERIFIED 2026-09-21 against the arXiv record}   % internal check, not for print
+@article{corigami,
+  author  = {Zahavy, Tom and Hou, Shaobo and Tumiel, Thomas and Doran, James and Faccio, Francesco and Feng, Xidong and Havrilla, Alex and Khytryi, Igor and Li, Chenglei and Schut, Lisa and Veeriah, Vivek and Abrashi, Arijan and Kosmulski, Micha{\l} and Lang, Robert J. and Robinson, Nick and Wong, Brandon and Chiam, Marcus and Fang, Gloria and Singh, Satinder},
+  title   = {{COrigami}: An {AI} Pipeline for Co-Designing Flat-Foldable Visually Recognisable Origami},
+  journal = {arXiv preprint arXiv:2606.26299},
+  year    = {2026},
+}
+
+% ---------------------------------------------------------------
+% Complexity and theory of flat folding
+% ---------------------------------------------------------------
+
+@inproceedings{bern-hayes,
+  author    = {Bern, Marshall and Hayes, Barry},
+  title     = {The Complexity of Flat Origami},
+  booktitle = {Proceedings of the Seventh Annual {ACM}-{SIAM} Symposium on Discrete Algorithms ({SODA})},
+  pages     = {175--183},
+  year      = {1996}
+}
+
+@article{arkin-map,
+  author  = {Arkin, Esther M. and Bender, Michael A. and Demaine, Erik D. and Demaine, Martin L. and Mitchell, Joseph S. B. and Sethia, Saurabh and Skiena, Steven S.},
+  title   = {When Can You Fold a Map?},
+  journal = {Computational Geometry},
+  volume  = {29},
+  number  = {1},
+  pages   = {23--46},
+  year    = {2004}
+}
+
+@article{akitaya-hard,
+  author  = {Akitaya, Hugo A. and Demaine, Erik D. and Ku, Jason S.},
+  title   = {Simple Folding is Really Hard},
+  journal = {Journal of Information Processing},
+  volume  = {25},
+  pages   = {580--589},
+  doi     = {10.2197/ipsjjip.25.580},
+  year    = {2017}
+}
+
+@article{akitaya-infinite,
+  author  = {Akitaya, Hugo A. and Avery, Cordelia and Bergeron, Joseph and Demaine, Erik D. and Kopinsky, Justin and Ku, Jason S.},
+  title   = {Infinite All-Layers Simple Foldability},
+  journal = {Graphs and Combinatorics},
+  volume  = {36},
+  number  = {2},
+  pages   = {231--244},
+  doi     = {10.1007/s00373-019-02079-2},
+  year    = {2020}
+}
+
+@inproceedings{akitaya-flatfolder,
+  author    = {Akitaya, Hugo A. and Demaine, Erik D. and Ku, Jason S.},
+  title     = {Computing Flat-Folded States},
+  booktitle = {Origami8, Volume III},
+  editor    = {Lu, Guoxing and You, Zhong and Assis, Michael},
+  publisher = {Springer},
+  pages     = {201--219},
+  doi       = {10.1007/978-981-96-6561-7_14},
+  year      = {2026}
+}
+
+@article{mixed-orthogonal,
+  author  = {Akitaya, Hugo and Brunner, Josh and Demaine, Erik D. and Hendrickson, Della and Luo, Victor and Tockman, Andy},
+  title   = {Complexity of Simple Folding of Mixed Orthogonal Crease Patterns},
+  journal = {Thai Journal of Mathematics},
+  volume  = {21},
+  number  = {4},
+  pages   = {1025--1046},
+  url     = {https://erikdemaine.org/papers/MixedSimpleFolds_TJM/},
+  year    = {2023}
+}
+
+@article{turing,
+  author  = {Hull, Thomas C. and Zakharevich, Inna},
+  title   = {Flat Origami is {T}uring Complete},
+  journal = {arXiv preprint arXiv:2309.07932},
+  year    = {2023}
+}
+
+@inproceedings{continuous,
+  author    = {Demaine, Erik D. and Devadoss, Satyan L. and Mitchell, Joseph S. B. and O'Rourke, Joseph},
+  title     = {Continuous Foldability of Polygonal Paper},
+  booktitle = {Proceedings of the 16th Canadian Conference on Computational Geometry ({CCCG})},
+  year      = {2004}
+}
+
+@inproceedings{reaching-folded,
+  author    = {Demaine, Erik D. and Mitchell, Joseph S. B.},
+  title     = {Reaching Folded States of a Rectangular Piece of Paper},
+  booktitle = {Proceedings of the 13th Canadian Conference on Computational Geometry ({CCCG})},
+  year      = {2001}
+}
+
+@inproceedings{layer-algebra,
+  author    = {Ku, Jason S. and Terao, Akira and Terao, Kenji N.},
+  title     = {An Algebraic Approach to Layer Ordering Constraints for Origami Flat-Foldability},
+  booktitle = {Origami8, Volume III},
+  editor    = {Lu, Guoxing and You, Zhong and Assis, Michael},
+  publisher = {Springer},
+  pages     = {317--333},
+  doi       = {10.1007/978-981-96-6561-7_21},
+  year      = {2026}
+}
+
+@article{flat-folding-graphs,
+  author  = {Eppstein, David},
+  title   = {Realization and Connectivity of the Graphs of Origami Flat Foldings},
+  journal = {Journal of Computational Geometry},
+  volume  = {10},
+  number  = {1},
+  pages   = {257--280},
+  doi     = {10.20382/jocg.v10i1a10},
+  year    = {2019}
+}
+
+% ---------------------------------------------------------------
+% The CP-to-sequence problem itself
+% ---------------------------------------------------------------
+
+@inproceedings{akitaya-cp2seq,
+  author    = {Akitaya, Hugo A. and Mitani, Jun and Kanamori, Yoshihiro and Fukui, Yukio},
+  title     = {Generating Folding Sequences from Crease Patterns of Flat-Foldable Origami},
+  booktitle = {{ACM SIGGRAPH 2013 Posters}},
+  publisher = {Association for Computing Machinery},
+  pages     = {1},
+  doi       = {10.1145/2503385.2503407},
+  year      = {2013}
+}
+
+@misc{creasy,
+  author = {{xkevio}},
+  title = {{Creasy}},
+  url   = {https://github.com/xkevio/Creasy},
+  note  = {Software repository, accessed 25 September 2026},
+  year  = {2026}
+}
+
+% ---------------------------------------------------------------
+% Counting folded states
+% ---------------------------------------------------------------
+
+@misc{oeis-a000136,
+  author = {{OEIS Foundation Inc.}},
+  year   = {2026},
+  title = {The On-Line Encyclopedia of Integer Sequences, {A000136}: Number of Ways of Folding a Strip of $n$ Labeled Stamps},
+  url   = {https://oeis.org/A000136},
+  note  = {Accessed 25 September 2026}
+}
+
+@book{lucas,
+  author = {Lucas, {\'E}douard},
+  title  = {Th{\'e}orie des Nombres},
+  year   = {1891},
+  volume = {1},
+  publisher = {Gauthier-Villars},
+  address = {Paris}
+}
+
+@article{koehler,
+  author  = {Koehler, John E.},
+  title   = {Folding a Strip of Stamps},
+  journal = {Journal of Combinatorial Theory},
+  volume  = {5},
+  pages   = {135--152},
+  year    = {1968}
+}
+
+@article{lunnon,
+  author  = {Lunnon, W. F.},
+  title   = {Multi-dimensional map-folding},
+  journal = {The Computer Journal},
+  volume  = {14},
+  number  = {1},
+  pages   = {75--80},
+  doi     = {10.1093/comjnl/14.1.75},
+  year    = {1971}
+}
+
+@article{meanders,
+  author  = {Legendre, St{\'e}phane},
+  title   = {Foldings and Meanders},
+  journal = {arXiv preprint arXiv:1302.2025},
+  year    = {2013}
+}
+
+% ---------------------------------------------------------------
+% Spatial reasoning context
+% ---------------------------------------------------------------
+
+@article{spatial-survey,
+  author  = {Liu, Weichen and Xue, Qiyao and Wang, Haoming and Yin, Xiangyu and Yang, Boyuan and Gao, Wei},
+  title   = {Spatial Reasoning in Multimodal Large Language Models: A Survey of Tasks, Benchmarks and Methods},
+  journal = {arXiv preprint arXiv:2511.15722},
+  year    = {2025}
+}
+
+@inproceedings{vot,
+  author    = {Wu, Wenshan and Mao, Shaoguang and Zhang, Yadong and Xia, Yan and Dong, Li and Cui, Lei and Wei, Furu},
+  title     = {Mind's Eye of {LLM}s: Visualization-of-Thought Elicits Spatial Reasoning in Large Language Models},
+  booktitle = {Advances in Neural Information Processing Systems ({NeurIPS})},
+  note      = {arXiv:2404.03622},
+  volume    = {37},
+  url       = {https://proceedings.neurips.cc/paper_files/paper/2024/hash/a45296e83b19f656392e0130d9e53cb1-Abstract-Conference.html},
+  year      = {2024}
+}
+
+% ---------------------------------------------------------------
+% Tools, formats and data
+% ---------------------------------------------------------------
+
+@misc{flatfolder,
+  year    = {2022},
+  author  = {Ku, Jason S.},
+  title   = {{Flat-Folder}: A Crease Pattern Solver},
+  url     = {https://github.com/origamimagiro/flat-folder},
+  note    = {Software repository, accessed 25 September 2026}
+}
+
+@misc{fold-format,
+  year    = {2026},
+  author  = {Demaine, Erik D. and Ku, Jason S. and Lang, Robert J.},
+  title = {The {FOLD} File Format},
+  url   = {https://github.com/edemaine/fold},
+  note  = {Format specification and software repository, accessed 25 September 2026}
+}
+
+@article{oripa,
+  author = {Mitani, Jun},
+  title  = {Development of Origami Pattern Editor ({ORIPA}) and a Method for Estimating a Folded Configuration of Origami from the Crease Pattern},
+  journal = {IPSJ Journal},
+  volume = {48},
+  number = {9},
+  pages  = {3309--3317},
+  year   = {2007},
+  note   = {In Japanese},
+  url    = {https://mitani.cs.tsukuba.ac.jp/dl/IPSJ-JNL4809039.pdf}
+}
+
+@misc{purelandfold,
+  year    = {2026},
+  author  = {Moriya, Maya and Raab, Sigal and Vinker, Yael and Dekel, Tali},
+  title = {{PurelandFold}},
+  url   = {https://huggingface.co/datasets/mayaweiz/PurelandFold},
+  note  = {Dataset accompanying FoldingAgent; CC-BY-4.0; accessed 25 September 2026}
+}
+
+@misc{openai-codex,
+  author = {{OpenAI}},
+  title = {{Codex CLI}},
+  year = {2026},
+  howpublished = {Open-source software, version 0.155.1},
+  url = {https://github.com/openai/codex/tree/be2951ea34f0d295ed0becf97079f92fa5f6950e},
+  note = {Release tag rust-v0.155.1; accessed 25 September 2026}
+}
+
+% ---------------------------------------------------------------
+% Statistical physics of random flat-foldability (optional support)
+% ---------------------------------------------------------------
+
+@article{spin-model,
+  author  = {Nakajima, Chihiro},
+  title   = {A Spin Model for Global Flat-Foldability of Random Origami},
+  journal = {arXiv preprint arXiv:2403.07306},
+  year    = {2024}
+}
+
+@article{random-locally,
+  author  = {Hull, Thomas C. and Michelen, Marcus and Yap, Corrine},
+  title   = {On Random Locally Flat-Foldable Origami},
+  journal = {arXiv preprint arXiv:2502.04279},
+  year    = {2025}
+}
+
+@article{alphago,
+  author  = {Silver, David and Huang, Aja and Maddison, Chris J. and Guez, Arthur and Sifre, Laurent and van den Driessche, George and Schrittwieser, Julian and Antonoglou, Ioannis and Panneershelvam, Veda and Lanctot, Marc and Dieleman, Sander and Grewe, Dominik and Nham, John and Kalchbrenner, Nal and Sutskever, Ilya and Lillicrap, Timothy and Leach, Madeleine and Kavukcuoglu, Koray and Graepel, Thore and Hassabis, Demis},
+  title   = {Mastering the Game of {Go} with Deep Neural Networks and Tree Search},
+  journal = {Nature},
+  volume  = {529},
+  number  = {7587},
+  pages   = {484--489},
+  year    = {2016}
+}
+
+% ---------------------------------------------------------------
+% Thickness and mechanics (scope boundary; not neighbouring work)
+% ---------------------------------------------------------------
+
+@article{thick-folding,
+  author  = {Ku, Jason S. and Demaine, Erik D.},
+  title   = {Folding Flat Crease Patterns With Thick Materials},
+  journal = {Journal of Mechanisms and Robotics},
+  volume  = {8},
+  number  = {3},
+  pages   = {031003},
+  year    = {2016},
+  doi     = {10.1115/1.4031954}
+}
+
+@article{bar-and-hinge,
+  author  = {Filipov, Evgueni T. and Liu, Ke and Tachi, Tomohiro and Schenk, Mark and Paulino, Glaucio H.},
+  title   = {Bar and Hinge Models for Scalable Analysis of Origami},
+  journal = {International Journal of Solids and Structures},
+  volume  = {124},
+  pages   = {26--45},
+  year    = {2017},
+  doi     = {10.1016/j.ijsolstr.2017.05.028}
+}
+
+@inproceedings{swomps,
+  author    = {Zhu, Yi and Filipov, Evgueni T.},
+  title     = {Sequentially Working Origami Multi-Physics Simulator ({SWOMPS}): A Versatile Implementation},
+  booktitle = {Proceedings of the ASME 2021 International Design Engineering Technical Conferences and Computers and Information in Engineering Conference (IDETC-CIE), Volume 8B: 45th Mechanisms and Robotics Conference},
+  pages     = {V08BT08A034},
+  year      = {2021},
+  doi       = {10.1115/DETC2021-68042}
+}
+
+@misc{simfast,
+  author = {Zhu, Yi},
+  title  = {{Sim-FAST}: Simulator For Active Structures},
+  url    = {https://github.com/zzhuyii/Sim-FAST},
+  note   = {Software repository, accessed 25 September 2026},
+  year   = {2026}
+}
+
+@article{balkcom-robotic-origami,
+  author  = {Balkcom, Devin J. and Mason, Matthew T.},
+  title   = {Robotic Origami Folding},
+  journal = {The International Journal of Robotics Research},
+  volume  = {27},
+  number  = {5},
+  pages   = {613--627},
+  year    = {2008},
+  doi     = {10.1177/0278364908090235}
+}
+
+@article{felton-self-folding,
+  author  = {Felton, Samuel and Tolley, Michael and Demaine, Erik and Rus, Daniela and Wood, Robert},
+  title   = {A Method for Building Self-Folding Machines},
+  journal = {Science},
+  volume  = {345},
+  number  = {6197},
+  pages   = {644--646},
+  year    = {2014},
+  doi     = {10.1126/science.1252610}
+}
+
+@article{zirbel-thickness,
+  author  = {Zirbel, Shannon A. and Lang, Robert J. and Thomson, Mark W. and Sigel, Deborah A. and Walkemeyer, Phillip E. and Trease, Brian P. and Magleby, Spencer P. and Howell, Larry L.},
+  title   = {Accommodating Thickness in Origami-Based Deployable Arrays},
+  journal = {Journal of Mechanical Design},
+  volume  = {135},
+  number  = {11},
+  pages   = {111005},
+  year    = {2013},
+  doi     = {10.1115/1.4025372}
+}

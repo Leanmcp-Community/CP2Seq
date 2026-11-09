@@ -1,0 +1,394 @@
+\section{Software and supplementary examples}
+\label{app:artifacts}
+
+\subsection{Software versions}
+\label{app:software-versions}
+The inspected Codex CLI installation is version \texttt{0.155.1}
+\citep{openai-codex}. Its upstream release tag \texttt{rust-v0.155.1} resolves to
+commit \texttt{be2951ea34f0d295ed0becf97079f92fa5f6950e}.
+
+The saved run configurations record the executable path but do not record its
+version or binary hash; the installation was checked on 25 September 2026.
+% EDITING NOTE: Do not assert that every historical run used this release without
+% contemporaneous version evidence. See SOFTWARE_PROVENANCE.md for local evidence.
+
+\input{sections/appendix-bfs}
+
+\subsection{Dataset generation}
+\label{app:generation-procedure}
+
+{\small\begin{verbatim}
+GENERATE(reference_depth, action_model):
+    state <- unfolded square
+    actions, frames <- [], []
+    for step in 1..reference_depth:
+        candidates <- LEGAL_FOLDS(state, action_model)
+        if candidates is empty: return FAILED
+        action <- SAMPLE(candidates)
+        state <- APPLY(state, action)
+        actions.append(action)
+        frames.append(state)
+    cp <- CREASE_PATTERN_IN_ORIGINAL_SHEET(state)
+    cp <- SPLIT_EDGES_AT_INTERSECTIONS(cp)
+    if not REPLAY_CHECK(cp, actions, state): return FAILED
+    return (cp, state, actions, frames, METADATA(actions))
+\end{verbatim}
+}
+
+\subsection{Evaluation pipeline}
+\label{app:evaluation-pipeline}
+
+{\small\begin{verbatim}
+EPISODE(sample, model, condition, query_budget):
+    cp, target <- LOAD_INPUTS(sample)
+    session <- INITIALIZE(cp, target, unfolded_square)
+    history <- []
+    for query in 1..query_budget:
+        obs <- OBSERVE(session, condition)
+        call <- model(cp, target, obs, history, condition)
+        if call is finish: break
+        # Edits: add/remove fold, go to step, restore revision.
+        # Reads: state, images, candidates, target feedback.
+        result <- DISPATCH_TRANSACTIONALLY(session, call)
+        # Rejected edits leave session unchanged but consume a query.
+        # Read calls consume a query without changing the sequence.
+        history.append(call, result)
+        if STOPPING_RULE(session, history): break
+    return SCORE(REPLAY(session.actions), REFERENCE_AT_SCORING(sample))
+\end{verbatim}
+}
+
+\input{figures/pipeline}
+
+\subsection{Tool interface and feedback}
+\label{app:tool-interface}
+Basic tools comprise all entries in Table~\ref{tab:tools} except the optional
+\texttt{list\_legal\_folds} and \texttt{compare\_to\_target} tools.
+Loading and configuration are described in Appendix~\ref{app:tool-loading}.
+
+\begin{table}[h]
+\centering
+\caption{Tools available to the evaluation harness; exposure depends on run configuration.}
+\label{tab:tools}
+\begin{tabular}{lp{0.65\textwidth}}
+\hline
+Tool & Operation \\
+\hline
+\texttt{add\_fold} & Append a checked fold; reject invalid actions without changing state. \\
+\texttt{remove\_fold} & Remove a specified fold and replay the remainder transactionally. \\
+\texttt{go\_to\_step} & Retain the first specified number of folds. \\
+\texttt{restore\_revision} & Restore a previously recorded branch state. \\
+\texttt{get\_state} & Return the current sequence and layer geometry. \\
+\texttt{get\_images} & Render top, oblique, reverse, X-ray, and exploded views of a completed step; exposed views depend on run configuration. \\
+\texttt{list\_legal\_folds} & Optionally enumerate legal candidates compatible with the target CP. \\
+\texttt{compare\_to\_target} & Optionally return feedback at the configured level (Section~\ref{sec:target-feedback}). \\
+\texttt{finish} & End the episode and evaluate the current sequence. \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Target-feedback levels}
+\label{app:feedback-levels}
+The run configuration selects one of three feedback levels for
+\texttt{compare\_to\_target}. The tool compares the current and target stacks.
+
+\begin{table}[h]
+\centering
+\caption{Information returned at each target-feedback level.}
+\begin{tabular}{lp{0.72\textwidth}}
+\hline
+Level & Information returned \\
+\hline
+1: Counts & Current and target layer counts, their difference, and a count-based summary. \\
+2: Diagnosis & Level 1 plus aligned layer matches, mismatched ranks, and a diagnosis of count,
+shape, orientation, or ordering disagreement. \\
+3: Corrections & Level 2 plus suggested corrections for up to twelve mismatched ranks, such as
+orientation changes or a different target rank for a layer shape. \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Tool schemas and prompt}
+The following listings document the tool schemas and folding prompt; tool exposure is configured per run.
+\lstinputlisting{listings/tool_schemas.py}
+\lstinputlisting{listings/fold_prompt.md}
+
+\subsection{Sample contents}
+\label{app:sample-contents}
+Each sample contains the input crease pattern, a reference state sequence, reference
+fold actions, and metadata (Table~\ref{tab:sample-files}).
+
+\begin{table}[h]
+\centering
+\caption{Contents of a CP2Seq sample.}
+\label{tab:sample-files}
+\label{sec:cp2seq-sample}
+\begin{tabular}{lp{0.68\textwidth}}
+\hline
+Artifact & Contents \\
+\hline
+Crease pattern & Input crease geometry. \\
+State sequence & Folded states after each reference action; only the final state is supplied
+as the target. \\
+Reference actions & Withheld fold lines, directions, layer selections, and
+creases created. \\
+Metadata & Sample descriptors and generator version. \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Dataset gallery and reference sequences}
+Each rendered panel contains the crease pattern, top view, and an oblique view with illustrative
+layer separation.
+\IfFileExists{figures/dataset/gallery.tex}{\input{figures/dataset/gallery}}{
+\noindent\fbox{\parbox{.9\linewidth}{Dataset gallery pending export: short all-layers,
+longer all-layers, and some-layers examples.}}}
+\IfFileExists{figures/dataset/sequences.tex}{\input{figures/dataset/sequences}}{}
+
+\subsection{Trace-analysis interface}
+We provide a trace-inspection interface for browsing saved runs, replaying recorded folding
+trajectories, and examining model actions alongside tool feedback and rendered states. This
+supports qualitative analysis of successful construction, repeated exploration, and unsuccessful
+termination. A command-line trace viewer additionally supports filtering by task, trial,
+session, role, and event type.
+
+Figures~\ref{fig:dataset-browser-ui} and~\ref{fig:trace-viewer-ui} show the dataset
+browser and trace viewer, respectively. These interfaces support inspection of
+reference sequences and recorded model episodes.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth,height=.34\textheight,keepaspectratio]{figures/screenshots/dataset-browser.png}
+\caption{Dataset browser with \texttt{easy-0028} selected. The interface displays
+sample metadata, the target crease pattern, and reference-sequence playback controls.
+The right panel shows the unfolded sheet at step zero.}
+\label{fig:dataset-browser-ui}
+\end{figure}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth,height=.34\textheight,keepaspectratio]{figures/screenshots/trace-viewer.png}
+\caption{Trace viewer for a saved GPT-6 Luna attempt on \texttt{mid-0007}.
+Run and turn navigation appear beside the current and target states. The selected
+episode is marked unsolved; the displayed frame is at turn 12. Playback controls allow inspection of saved actions
+and feedback.}
+\label{fig:trace-viewer-ui}
+\end{figure}
+
+% EDITING NOTE: 07.44.33 is a second dataset-browser capture, not a verification
+% capture; retained in assets/screenshots but omitted as redundant. Add an actual
+% Verification-tab capture when available. Screenshots above are user-provided.
+
+% EDITING NOTE: Select actual saved episodes after inspecting their terminal verdicts.
+% Include one solved, one cycling, and one unsuccessful non-cycling attempt. For each,
+% give run/sample IDs, configuration, terminal reason, and selected actions/tool responses.
+% Include screenshots from traces.html: target/current state plus action and feedback panes.
+% Include actual request/response excerpts; do not invent representative tool responses.
+% Attach per-run budgets, effort, tool schemas, comparison tier, and supplementary results.
+
+\subsection{Tool loading and configuration}
+\label{app:tool-loading}
+The schema builder selects the tools exposed in each run. Basic mode excludes candidate
+enumeration; filtered mode includes it. Target comparison is added only when a comparison level
+is configured. For an all-layers action model, partial-layer selection arguments are removed
+from the exposed action schemas. The run configuration therefore records tool mode, comparison
+level, and action model separately.
+
+% REFUSAL FIGURE PLAN: Use a saved some-layers would-tear response with geometric diagnostics.
+\subsection{Rejection feedback}
+Figure~\ref{fig:rejection-feedback} illustrates the geometric evidence associated with
+a \texttt{would-tear} response using the shared verification fixtures. The comparison
+holds the initial state and hinge fixed and changes the selected layers. The export
+script records both engine responses and checks that rejection preserves the state.
+\input{figures/rejection-feedback}
+
+\subsection{Supplementary results}
+\label{app:supplementary-results}
+
+\begin{table}[htbp]
+\centering
+\caption{Earlier GPT-5.6 Luna evaluation at low reasoning effort. Counts are solved
+attempts over completed attempts, including repeats across samples and budgets.}
+\label{tab:headline}
+\begin{tabular}{lrr}
+\hline
+Condition & Solved / completed & Solve rate \\
+\hline
+Basic tools & 4/67 & 6.0\% \\
+Legal enumeration & 31/272 & 11.4\% \\
+Legal enumeration + on-demand comparison & 28/108 & 25.9\% \\
+\hline
+\end{tabular}
+\end{table}
+% Earlier solved counts: inventory totals minus recent ablation solves:
+% basic 6-2=4; legal 37-6=31; on-demand comparison 28-0=28.
+
+% Source for the two tables below: workspace/analysis/paper_stats.py over
+% workspace/RESULTS/run-inventory/report.json (2026-09-24T23:13:33.275Z).
+\begin{table}[htbp]
+\centering
+\caption{How each Luna ablation episode ended, under $E_{\mathrm{id}}$. Solved: correct submission. Wrong:
+incorrect submission, including the five submissions accepted under $E_{\mathrm{plane}}$ only
+(Appendix~\ref{app:identity-audit}), which moves one episode from Solved to Wrong in five cells. Cycling: stopped after revisiting earlier states. Dead end: no recoverable legal
+continuation. The five protocol failures of Appendix~\ref{app:protocol-failures} have no
+completed episode and are not listed, so rows can sum to fewer than 40.}
+\label{tab:ablation-terminations}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lllrrrrrr}
+\hline
+Model & Effort & Tools & Solved & Wrong & Cycling & Repetition & Turn budget & Dead end \\
+\hline
+GPT-5.6 Luna & Low & B & 2 & 6 & 14 & 3 & 5 & 10 \\
+ & Low & L & 5 & 13 & 22 & 0 & 0 & 0 \\
+ & Low & L+A & 9 & 3 & 27 & 0 & 0 & 0 \\
+\hline
+GPT-6 Luna & Low & B & 0 & 2 & 12 & 20 & 1 & 5 \\
+ & Low & L & 1 & 11 & 25 & 1 & 0 & 0 \\
+ & Low & L+A & 7 & 1 & 29 & 0 & 0 & 1 \\
+\hline
+GPT-6 Luna & High & B & 6 & 4 & 13 & 5 & 5 & 7 \\
+ & High & L & 9 & 9 & 21 & 0 & 1 & 0 \\
+ & High & L+A & 11 & 1 & 28 & 0 & 0 & 0 \\
+\hline
+Total & & & 50 & 50 & 191 & 29 & 12 & 23 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Easy-group solve rate by reference fold count, over all completed model attempts in the
+inventory. Attempts include repeats and differing budgets, so rates are descriptive.}
+\label{tab:easy-depth}
+\small
+\begin{tabular}{lrrrrrrr}
+\hline
+Reference folds & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+\hline
+Solved / attempts & 19/59 & 35/115 & 12/46 & 10/97 & 3/60 & 0/33 & 7/47 \\
+Solve rate & 32.2\% & 30.4\% & 26.1\% & 10.3\% & 5.0\% & 0.0\% & 14.9\% \\
+\hline
+\end{tabular}
+\end{table}
+
+The inventory also contains small exploratory runs: GPT-6 Sol with legal enumeration
+solves 1/3 low-effort attempts and 1/1 high-effort attempt; GPT-6 Astra with basic tools
+solves 1/1 low-effort attempt. Earlier basic-tool runs record 0/7 for GPT-5.6 Sol and
+0/1 for GPT-5.6 Terra. One additional completed basic-tool attempt has no recorded
+model identity and is unsolved. These exploratory runs are reported separately from the Luna ablations.
+% EDITING NOTE: This paragraph reflects the generated inventory, not newer unaggregated runs.
+
+\phantomsection\label{sec:results-distance}
+A separate scan of 1,421 saved attempts with recoverable states gives a mean crease-pattern
+insertion/deletion distance of 45.5, or 0.55 of the target crease count
+(Table~\ref{tab:cp-distance}). These averages pool models, baselines, configurations and repeated
+samples, and predate the ablations.
+
+\input{figures/cp-distance-table}
+
+\subsection{Protocol failure accounting}
+\label{app:protocol-failures}
+All 360 planned Luna ablation cases enter the solve-rate denominator. Of these,
+355 have completed episodes. Two cases end at the request input-size limit:
+\texttt{mid-0006} for GPT-5.6 Luna low with automatic feedback and GPT-6 Luna low
+with legal enumeration. GPT-6 Luna low with legal enumeration on \texttt{mid-0010}
+ends in a service prompt rejection. For GPT-6 Luna low with automatic feedback,
+\texttt{mid-0006} and \texttt{mid-0010} were omitted from the restarted batch after
+these blocking errors. These two cases are classified as omissions after blocking errors;
+no direct service error is recorded for them in that condition. All five cases
+count as unsuccessful evaluations under the planned protocol.
+
+\paragraph{Comparison-tool defect.} The target-comparison tool aligns stacks by their bottom
+layer. When no rigid motion aligned the two bottom layers and the layer counts were equal, it
+reported the diagnosis \emph{matches} with zero matching layers. Scoring uses a separate
+comparator and was not affected by this defect. Replaying the final state of every incorrect
+submission made under a comparison condition shows that five followed this false report:
+\texttt{easy-0001} in the automatic-feedback ablations for GPT-5.6 Luna (low) and GPT-6 Luna
+(high), and \texttt{easy-0001}, \texttt{easy-0058} and \texttt{easy-0095} in the earlier on-demand
+comparison runs.
+
+Inspecting final states does not bound the defect's effect: a wrong diagnosis at any turn can
+redirect the rest of the search, and the correction need not only add solves. A full bound
+requires every comparison the model was shown, and the per-turn logs of the image ablations were
+not retained, so we cannot audit them call by call or rerun them under identical conditions. The
+two affected ablation cells (easy, GPT-5.6 Luna low A and GPT-6 Luna high A) should therefore be
+read as measured under a defective tool, with an effect of unknown sign.
+
+Where per-turn logs survive, in 65 GPT-5.6 Luna episodes with automatic feedback outside the
+ablations, we replayed the accepted sequence recorded with each of the 1,025 comparisons shown and
+recomputed it with the corrected tool. One call, in one episode, differs. The comparison tool,
+like the submitted scorer, used $E_{\mathrm{plane}}$, and two calls reported \emph{matches} on a
+state that is plane- but not identity-equivalent to the target. On this sample the defect is rare,
+but the sample is not the ablation set.
+
+% Panel A: current stack, selected moving region, proposed hinge, and shared off-hinge edge.
+% Panel B: original-sheet connectivity showing which moving/stationary regions share that edge.
+% Label the rejection and note that the simulator retains the pre-action state.
+% Do not render a torn state as an accepted simulation result. A counterfactual separation may
+% be shown only as a clearly labelled explanatory schematic. Add a legal alternative only if
+% the same-state action has been checked by the engine. Pending selection of a suitable trace.
+
+\subsection{Trajectory analysis}
+\label{app:matched-trajectories}
+
+\paragraph{Failure categories.} Each unsuccessful episode is assigned the first of four
+mechanical categories that applies. \emph{F1, state tracking}: more than half of the proposed folds
+are geometrically illegal in the current state (tearing, no crease, nothing to move, impossible
+direction, invalid selection). \emph{F2, off pattern}: most rejections are legal folds outside the
+target crease pattern, and the crease pattern is never completed. \emph{F3, wrong stack}: the
+episode reaches a state with the full crease pattern and the target layer count, but in the wrong
+order, orientation or shape. \emph{F4, shallow search}: none of the above; the episode never
+reaches the target depth with a consistent crease pattern. The categories are descriptive. They
+separate where in the task an episode broke down, not which internal capability failed.
+
+\begin{table}[htbp]
+\centering
+\caption{Trajectory-level analysis of the completed text-only GPT-5.6 Luna (low effort)
+episodes, the runs whose per-turn logs were retained. Rejection: share of proposed folds rejected
+(all causes / geometric only). Backtracks: accepted remove, go-to-step and restore calls per
+episode. F1--F4: unsuccessful episodes by category. Outcomes as submitted ($E_{\mathrm{plane}}$).}
+\label{tab:trajectories}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrrrrrrr}
+\hline
+Tools & Episodes & Solved & Rejection & Geom. & Backtracks & F1 & F2 & F3 & F4 \\
+\hline
+B & 39 & 3 & 82.0\% & 20.5\% & 1.2 & 3 & 29 & 0 & 4 \\
+L & 39 & 7 & 13.0\% & 8.4\% & 3.4 & 0 & 5 & 6 & 21 \\
+\hline
+\end{tabular}
+\end{table}
+
+\paragraph{Cycling limit.} The cycling rule stops an episode when the same fold is played from the
+same position three times. A looser limit cannot be evaluated from logs, because episodes were not
+observed past their stop, and we have not rerun any configuration with a different limit. Cycling
+counts are therefore a property of the protocol as well as of the models.
+
+\subsection{Ablation sample selection}
+\label{app:sample-selection}
+\paragraph{Sample selection.} Sample IDs are assigned in generation order, which follows
+consecutive generator seeds (\texttt{easy-0001}--\texttt{0010} use seeds 20260918--20260927); the
+corpus manifest was written on 17 September 2026, before any ablation run (from 23 September), so
+the selection could not depend on model performance. The selected samples match their groups in
+reference depth (mean 6.2 vs.\ 6.8 folds on easy, 11.9 vs.\ 12.0 on medium, 16.4 vs.\ 16.2 on hard,
+5 vs.\ 5 on some-layers) but are somewhat simpler in final layer count (26.4 vs.\ 33.0 on easy,
+116 vs.\ 134 on medium, 860 vs.\ 933 on hard, 10.5 vs.\ 11.6 on some-layers) and in crease count.
+If anything, solve rates on the selected samples overstate those on the full groups.
+
+
+\subsection{Images-only condition}
+\label{app:images-only}
+The complementary images-only condition removes every coordinate from the prompt and from tool
+results: the crease pattern, the target and the current state are given only as rendered images,
+and tool results report acceptance or rejection but not the resulting geometry. The renderings are
+scaled to fit the canvas and carry no axes, so without any numeric cue a model could not state a
+fold line's offset, which is a coordinate in the current folded frame. We therefore keep one cue:
+the bounding box of the current stack in current folded coordinates (four numbers), which lets a
+model convert image positions to coordinates. The prompt states that the sheet is the unit square
+with $x$ right and $y$ up. This condition uses basic tools only, since legal-fold listings carry
+coordinates. GPT-5.6 Luna at low effort, 80 turns, one episode per instance on the 40 ablation
+instances, solves 1/40 under $E_{\mathrm{id}}$: one easy instance, and no medium, hard or some-layers
+instance (Table~\ref{tab:modality}). The same model solves 3/40 with text only and 2/40 with text and
+images under basic tools.

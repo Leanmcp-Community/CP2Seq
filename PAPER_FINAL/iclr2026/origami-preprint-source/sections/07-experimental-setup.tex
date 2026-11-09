@@ -1,0 +1,72 @@
+\subsection{Evaluation protocol}
+\label{sec:experiments}
+
+The model interface uses OpenAI Codex CLI \citep{openai-codex} through a custom
+episode harness. Software version evidence is documented in
+Appendix~\ref{app:software-versions}.
+
+% EDITING NOTE (retained): The pipeline -----should have a hand drawn graph
+\subsubsection{Episode procedure}
+\label{sec:exp-pipeline}
+
+One episode is one sample attempted by one model under one tier of assistance. The loop is the same
+for every arm and every model, and the only thing that varies between arms is what the model is
+allowed to see and call.
+
+Each query contains one tool call. Accepted edits update the current sequence;
+rejected edits preserve it, and both consume budget. Removing a fold replays the remaining actions;
+returning to an earlier step truncates the sequence, while revision restoration can recover a
+previous branch. The reference sequence is withheld until scoring.
+
+% ===========================================================================
+% FIGURE 4 -- THE EVALUATION PIPELINE.  [TO DRAW]
+% Left-to-right diagram of one episode.
+%   LEFT    the two inputs: crease pattern, final folded state.
+%   CENTRE  the loop as a cycle: model proposes a fold; environment returns either
+%           a new state with its two rendered views, or a NAMED refusal; history
+%           accumulates.
+%   RIGHT   termination and scoring: replay of the model's sequence and replay of
+%           the reference, compared at Level 1 and Level 2.
+% Must make three things visually obvious:
+%   (1) environment and verifier are ONE box, not two;
+%   (2) refusals loop back WITHOUT advancing;
+%   (3) seq.json sits OUTSIDE the loop, entering only at scoring.
+% A dashed boundary around the withheld items (intermediate frames, reference
+% sequence) carries point (3) without a sentence.
+% ===========================================================================
+Episode pseudocode and the evaluation pipeline appear in
+Appendix~\ref{app:evaluation-pipeline}.
+
+\phantomsection\label{sec:exp-tools}
+All conditions provide fold editing, backtracking, and state observations. Additional
+conditions provide legal-fold enumeration and target feedback
+(Section~\ref{sec:ablations}). The full tool interface and loading configuration
+appear in Appendix~\ref{app:tool-interface}.
+
+% ===========================================================================
+% FIGURE 5 -- A REFUSAL AS THE MODEL RECEIVES IT.  [TO DRAW]
+% One concrete rejected fold, rendered exactly as the harness returns it:
+%   - the proposed fold line drawn over the current state;
+%   - the named reason (would-tear);
+%   - the specific evidence: for a tear, the crease segment joining a moving face
+%     to a stationary one, highlighted, away from the fold line.
+% Beside it, the SAME state with a legal fold line, for contrast. This is the
+% tearing pair of the action-space section, which currently exists only as prose.
+% Caption states that the reason is a NAME rather than a boolean, and that this is
+% why error analysis is a taxonomy that exists before the experiment.
+% ===========================================================================
+% EDITING NOTE: Refusal figure moved to the appendix plan; use an actual rejected action.
+
+\subsubsection{Models and budgets}
+\label{sec:exp-protocol}
+
+The recent ablations evaluate GPT-5.6 Luna at low reasoning effort and GPT-6 Luna
+at low and high effort, using ten samples per group and configuration. Runs use an
+80-turn limit, a 300-second call timeout, and full image history. Earlier runs have
+different coverage and budgets and are reported separately (Section~\ref{sec:results}).
+% EDITING NOTE: Report per-run stopping limits and repeat variability from the inventory.
+
+We include breadth-first search over the same enumerated legal actions as a
+systematic-search baseline (Appendix~\ref{app:bfs-analysis}).
+% EDITING NOTE: Planned baselines retained for future work: uniform random search
+% over legal candidates and the symbolic crease-pattern solver cited as creasy.

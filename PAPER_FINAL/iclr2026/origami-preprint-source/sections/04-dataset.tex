@@ -1,0 +1,85 @@
+\section{CP2Seq: task and dataset}
+\label{sec:cp2seq}
+
+\input{sections/03-problem-formulation}
+
+\subsection{Dataset construction}
+\label{sec:cp2seq-generation}
+\label{sec:cp2seq-why}
+\label{sec:cp2seq-difficulty}
+
+Starting from a square sheet, the generator samples a legal fold under the chosen action model,
+applies it, and records the action and resulting state. This process continues to the requested
+reference depth; attempts with no available legal continuation are discarded. The accumulated
+creases are mapped to the original sheet to form the input crease pattern, with edges split at
+intersections. The last state supplies the target, and the recorded actions supply a reference
+solution.
+We group samples by reference fold count, hypothesizing that longer sequences generally require
+more search and are therefore harder to recover. These groups describe expected difficulty;
+reference length need not equal the shortest valid solution length. We also record coupling,
+the number of creases created by a fold, to characterize the geometry of each instance.
+
+Generation pseudocode is provided in Appendix~\ref{app:generation-procedure}.
+
+We provide inspection software to visualize crease patterns and folded states, replay
+reference sequences, and examine verification feedback. These views support manual
+review to identify samples with inconsistent geometry or failed checks for exclusion
+from the dataset. Example interfaces and rejection feedback appear in
+Appendix~\ref{app:artifacts}.
+
+\input{figures/dataset-examples}
+
+\subsection{Dataset statistics}
+\label{sec:dataset-statistics}
+\label{sec:cp2seq-contents}
+
+% EDITING NOTE (retained): This part only needs to let readers know that there are
+% all-layers folds (easy, medium, hard levels) and some-layers folds.
+% EDITING NOTE (retained): Other things like generated or verified can be put in
+% Hugging Face or the appendix rather than emphasized here.
+
+CP2Seq contains 600 samples: 400 all-layers examples grouped by reference depth and 200
+some-layers examples with three to six reference folds (Table~\ref{tab:dataset-statistics}).
+
+\begin{table}[h]
+\centering
+\caption{Dataset composition. Fold counts refer to recorded reference sequences.}
+\label{tab:dataset-statistics}
+\begin{tabular}{llrr}
+\hline
+Action model & Group & Samples & Reference folds \\
+\hline
+All-layers & Easy & 200 & 4--10 \\
+All-layers & Medium & 100 & 11--13 \\
+All-layers & Hard & 100 & 14--19 \\
+Some-layers & Depth 3 & 50 & 3 \\
+Some-layers & Depth 4 & 50 & 4 \\
+Some-layers & Depth 5 & 50 & 5 \\
+Some-layers & Depth 6 & 50 & 6 \\
+\hline
+Total & & 600 & 3--19 \\
+\hline
+\end{tabular}
+\end{table}
+
+The model receives the crease pattern and target folded state; reference actions and
+intermediate reference states are withheld. Sample contents are documented in
+Appendix~\ref{app:sample-contents}.
+
+\phantomsection
+\label{sec:cp2seq-verify}
+The two replay-based corpus checks pass on all 600 samples; their shared-engine
+validation scope is discussed in Section~\ref{sec:limitations}.
+
+\input{figures/difficulty-grid-plot}
+
+\phantomsection
+\label{sec:cp2seq-limits}
+% EDITING NOTE (retained): "Two limits that belong in the paper rather than an appendix -- MISSING."
+% The two issues are limited coverage of long sequences with low coupling, and
+% the six-fold maximum reference depth of the some-layers subset.
+
+% FIGURE NOTE (retained): Plot fold depth against coupling, shaded by sample count.
+% Check the actual counts before describing a cell as empty; the earlier draft
+% reported two hits in 16,000 attempts, which does not establish impossibility.
+% The draft difficulty-grid placeholder has been removed from the main text.

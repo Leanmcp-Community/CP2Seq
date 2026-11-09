@@ -1,0 +1,32 @@
+\subsection{Environment}
+\label{sec:env}
+\label{sec:env-one-object}
+\label{sec:env-division}
+
+The model edits a folding sequence through the tools in Table~\ref{tab:tools}. For each proposed
+fold, the engine reflects the selected paper across the fold line, updates layer order and
+orientation, and checks sheet connectivity and compatibility with the input crease pattern.
+Accepted edits update the current state; rejected edits return an error code and preserve the
+previous state.
+
+\phantomsection
+\label{sec:env-refusals}
+% EDITING NOTE (retained): Explain checks for each step and the final state.
+For a some-layers fold, moving and stationary regions may share an edge away from the hinge.
+Reflecting only the moving region would separate that shared edge, so the engine rejects the
+proposal as \texttt{would-tear}. A \texttt{no-crease} rejection means that paper was selected to
+move but the operation did not create a crease segment. Other rejections cover an empty moving region, an incompatible over/under direction,
+and creases absent from the target pattern. That last check is a form of assistance: it prevents a
+class of unrecoverable moves, and the rates reported here are therefore rates under that
+constraint. Detailed conditions are listed in
+Appendix~\ref{app:action-errors}.
+
+The environment never refuses a fold for self-intersection. A fold moves either the whole stack or
+a contiguous run taken from the top or the bottom, and such a move cannot drive paper through the
+layers it leaves behind, so the action space excludes self-intersection by construction.
+
+\phantomsection
+\label{sec:env-observes}
+% EDITING NOTE (retained): Add a screenshot of the simulator interface.
+Observation tools are listed in Table~\ref{tab:tools}. Exploded views use illustrative
+layer separation.

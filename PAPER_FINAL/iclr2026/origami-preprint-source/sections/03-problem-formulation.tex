@@ -1,0 +1,19 @@
+% Included within the dataset section.
+\subsection{Task and action models}
+\label{sec:problem}
+\label{sec:problem-task}
+
+Given a crease pattern $C$ and a target folded state $S^\star$, the model must construct a
+sequence of legal folds $a_1,\ldots,a_T$ starting from an unfolded square. Replaying the sequence
+must reproduce the crease pattern and reach the target state under the equivalence defined in
+Section~\ref{sec:scoring}. Each state records paper geometry and layer ordering; the reference
+sequence and its intermediate states are withheld, and alternative valid sequences are accepted.
+Figure~\ref{fig:sample} summarizes the task.
+
+We use two simple-fold action models \citep{arkin-map}: all-layers folds move the paper on the
+selected side of a fold line across the full stack, while some-layers folds select a contiguous
+run from the top or bottom of the stack. Both use flat $180^\circ$ folds, with connectivity checks
+to reject moves that would tear the sheet; state representations and action constraints are
+detailed in Appendix~\ref{app:folding-model}.
+
+\input{figures/task-example}

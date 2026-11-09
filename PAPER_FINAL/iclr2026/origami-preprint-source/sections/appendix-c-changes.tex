@@ -1,0 +1,357 @@
+\section{Changes}
+\label{app:changes}
+
+Decisions taken about the paper's framing, recorded here so they are not relitigated and so a
+co-author can see what was deliberate. Not part of the paper.
+
+\subsection{The free-verification framing is removed}
+
+\textbf{Decision.} The phrase \emph{free exact verification}, and the framing built on it, is out.
+It is gone from the title, from the abstract, and from the body. Where the property still matters
+it is stated as what it is: the judge executes the model's proposal, and the engine that generates
+a sample is the engine that rules on a step.
+
+\textbf{Why.} Free verification is not a distinguishing property. It is the ordinary condition of
+the benchmarks this paper sits beside: code benchmarks run tests, maths benchmarks run a proof
+assistant, and nobody advertises that as a contribution because it is assumed. Leading with it
+invites two bad readings at once. A reviewer who works on code or maths benchmarks reads it as a
+claim to something everyone already has, which reads as naivety. A reviewer who does not reads it
+as the paper's main idea, which displaces the actual contribution. Either way the reader's
+attention goes to the verifier rather than to the dataset, the task and the tiers, which is where
+the work is.
+
+\textbf{What replaces it.} The contribution is stated as a dataset and an evaluation framework for
+spatial and geometric reasoning. Exact verification stays in the paper as a property of the
+environment (Section 5) and as the reason the scoring protocol can be trusted (Section 6.4), which
+is the right altitude for it: a mechanism the paper relies on, not the thing it is selling.
+
+\subsection{The task definition is fixed and is now stated once, precisely}
+
+\textbf{Decision.} The model is given \textbf{both} the crease pattern \textbf{and} the final
+folded state, and is asked for the sequence of folds that turns the flat sheet into that state.
+Both endpoints are supplied; the path between them is not.
+
+\textbf{Why.} The abstract previously said the task was recovering the sequence ``that produced a
+crease pattern,'' which omits the final state and describes a harder and different task. Section 1
+and the abstract now agree and use the same wording. Any future edit that changes what the model is
+given has to change both.
+
+\subsection{Geometry versus search is not a contradiction, and the resolution is now written down}
+
+\textbf{Decision.} The paper keeps saying that what it scores is search, and also keeps positioning
+itself as a benchmark for spatial and geometric reasoning. Both are true and the bridge between
+them is now stated in Section 1 and the abstract rather than left implicit.
+
+\textbf{Why.} The two only look like they collide. Geometry is supplied to the model as input, so
+the paper is not scoring whether a model can compute a reflection. What it scores is whether a
+model can \emph{act} on the geometry it was given in order to choose a direction. That distinction
+is load-bearing, because blind search does not survive this task: the reachable space grows with
+depth faster than exhaustive strategies can cover, so a model proposing without reading the pattern
+exhausts its budget on the deeper strata, and a deterministic breadth-first search fails on the
+same samples for the same reason. Blind enumeration is not a weak baseline here, it stops being
+viable. A model that cannot read a reflection off a pattern therefore has no way to choose a
+direction, and on this task that is indistinguishable from being unable to do it at all. Geometric
+understanding is the precondition for the search that gets scored.
+
+\subsection{Ablations are demoted to tiers, because the full study has not been run}
+
+\textbf{Decision.} The word \emph{ablation} is out of the abstract and Section 1. Section 9 is now
+``Progressive tiers of tool assistance.'' The four arms are unchanged; only the claim about them is
+weaker.
+
+\textbf{Why.} A full ablation study was planned and has not been run. An ablation is a specific
+claim, that one factor was isolated and its contribution measured, and a partial sweep does not
+support it. Reporting tiers says what was actually done: the model is run at four levels of
+assistance and the levels are compared. If the full study is run before submission this can be
+restored to an ablation, and Section 9 and the abstract both change back together.
+
+\subsection{Still open}
+
+\begin{itemize}
+\item \textbf{The abstract's lede.} It now opens on multimodal models and the geometry gap,
+  matching Section 1. It is still long, at roughly one page-third, and should be cut once
+  Section 10 exists and the headline result has to fit.
+\item \textbf{The headline result sentence} in Section 1 and the abstract. \texttt{[TO RUN]}
+\item \textbf{Figure 1}, the generation-versus-recovery asymmetry. Section 12 has it as ``to
+  draw''; an introduction to a benchmark paper is usually carried by that figure.
+\item \textbf{The star example in Section 1 is an unverified citation} and blocks submission. See
+  Section 15 rule 7.
+\end{itemize}
+
+\subsection{The 89.3\% scope claim is now bounded to the corpus it was measured on}
+
+\textbf{Decision.} Every statement of the figure now reads ``89.3\% of the 366 real crease patterns
+in Flat-Folder's \texttt{examples/instagram/} corpus'' rather than ``89.3\% of real crease
+patterns.'' Three places: Section 1 contribution 5, Section 7, Section 11.
+
+\textbf{Why.} The measurement was made on one convenience corpus of 366 patterns. ``Real crease
+patterns'' names a population that was never sampled, and a reviewer who checks the provenance will
+read the generalization as either careless or deliberate. The bounded version is unattackable and
+loses none of its force, because the point is only that the action space excludes most real origami
+and the boundary is reported rather than buried. This was the single easiest reviewer objection in
+the paper to remove.
+
+\subsection{The BFS claim was removed until the number exists}
+
+\textbf{Decision.} Section 1 previously asserted that a deterministic breadth-first search fails on
+the same samples a model does. That sentence is gone. In its place is a statement that the depth at
+which exhaustive search stops being affordable is measurable, and a \texttt{[TO RUN]} for the
+baseline.
+
+\textbf{Why.} The claim had no measurement behind it, and the repo's own baseline suggests it may
+point the other way. \texttt{workspace/search\_baseline.mjs} was written to answer the opposite
+worry: its header records that \texttt{list\_legal\_folds} evaluates roughly 2010 candidate actions
+per state and returns a mean of 3.51 that are legal and stay inside the target CP, measured over
+73,750 enumerations, and warns that if exhaustive search over that pruned set solves the easy tier
+outright then the enumerator arm's 20 to 26 percent is not measuring origami reasoning. A branching
+factor of 3.5 is small. Asserting that blind search collapses, while shipping a script that
+suspects it does not, is the kind of contradiction a reviewer finds by reading the repository.
+\textbf{The script has never had its results written into any document in this project.} Run it and
+the sentence can come back, stronger, with a number.
+
+\subsection{Baselines are named, because a benchmark without them is usually rejected}
+
+\textbf{Decision.} Section 8.5 names three: uniform random over enumerated legal actions,
+deterministic breadth-first over the same action set, and the symbolic CP$\rightarrow$Seq solver
+(Creasy). All \texttt{[TO RUN]}.
+
+\textbf{Why.} Reviewers of dataset and benchmark papers ask what the floor is and what a non-learned
+method achieves. Without that, model numbers are uninterpretable: 25 percent is either impressive
+or embarrassing depending on what search alone does. The BFS baseline doubles as the answer to the
+``the simulator did all the work'' objection of Section 7, which is currently argued structurally
+and would be much stronger argued numerically.
+
+\subsection{Licence and release terms}
+
+\textbf{Decision.} Everything ships under \textbf{BSD 3-Clause}: generator, environment and
+verifier, corpus checks, comparator, harness, and the corpus itself. Recorded in Section 13a.
+
+\textbf{Why.} Dataset and benchmark tracks expect an explicit licence, a hosting story and a
+maintenance commitment, and their absence is a routine reviewer complaint. The corpus shipping as a
+seed rather than a blob answers hosting almost for free. Still outstanding: the anonymised
+repository URL, an archival DOI, and a datasheet.
+
+\subsection{OrigamiBench is closer to this work than Section 2 assumes, and this needs a decision}
+
+\textbf{Status: open. This is the most significant finding of the September 2026 citation check.}
+
+The missing \texttt{origamibench} citation was recovered: Agarwal, Wu, Jian, Hu, Mansoor, Li, Peng,
+Dai, Ding and Sansone, \emph{OrigamiBench: An Interactive Environment to Synthesize Flat-Foldable
+Origamis}, arXiv:2603.13856, March 2026. Its abstract describes ``an interactive benchmark in which
+models iteratively propose folds and receive feedback on physical validity and similarity to a
+target configuration.''
+
+That is much nearer this paper's design than the draft assumed when it listed OrigamiBench as one
+of the works that ``complete the picture.'' The claim in Section 1 and Section 2.4 that
+\emph{none} of the existing benchmarks steps an engine and rules on a proposed move is now doubtful
+as stated, because OrigamiBench appears to do exactly that.
+
+Two distinctions probably survive and both need checking against the paper rather than the
+abstract. First, OrigamiBench reports ``similarity to a target configuration'', which is a graded
+comparison, where this work replays and compares exactly under a declared symmetry group. Second,
+OrigamiBench synthesises toward a target, where this work recovers a sequence from a crease pattern
+and a final state, which is the inverse problem. If both hold, the contribution stands and the
+wording needs narrowing from ``none of them executes'' to something precise about exactness and
+about the inverse direction. \textbf{If neither holds, the framing of Section 1 and Section 2.4 has
+to change.} Read the paper before submission.
+
+\subsection{Citations verified in the September 2026 check}
+
+\begin{itemize}
+\item \textbf{OrigamiSpace.} 350 instances and the four tasks confirmed. The venue is confirmed as
+  \textbf{NeurIPS 2025}, not an unvenued preprint, so Section 15 rule 4 is now satisfied and can be
+  retired.
+\item \textbf{GamiBench.} 186 regular and 186 impossible patterns, six viewpoints, three VQA tasks,
+  and the viewpoint-consistency and impossible-fold-selection-rate metrics all confirmed. Authors
+  confirmed.
+\item \textbf{OrigamiBench.} Recovered; see Section 16.10.
+\item \textbf{COrigami.} Recovered as \emph{COrigami: An AI Pipeline for Co-Designing Flat-Foldable
+  Visually Recognisable Origami}, arXiv:2606.26299. Author list still unverified.
+\item \textbf{Still unverified:} the \emph{Vision Language Models Are Blind} star example of
+  Section 1, and the author lists of thirteen theory and tools entries, which now carry sort keys so
+  the bibliography renders but still need real authors.
+\end{itemize}
+
+\subsection{Two claims about exactness were narrowed to what the code does}
+
+\textbf{Decision.} The paper no longer calls the pipeline tolerance-free, and no longer describes
+the Level 2 group as the eight symmetries of the square plus a translation.
+
+\textbf{Why.} Neither matched\\
+\texttt{DHEERAJ\_WORKSPACE/EXPERIMENT\_SETUP/terminal\_match.mjs}.
+Two mismatches:
+
+\begin{enumerate}
+\item \textbf{The group is larger than claimed.} The comparator quotients out the full plane
+  isometry group, including \emph{arbitrary} rotation, not the eight symmetries of the square. Its
+  own header says so: ``terminalMatch quotients the plane isometry group out.''
+\item \textbf{There is a tolerance.} \texttt{MATCH\_TOL = 2e-6}, with degenerate-vertex cleanup at
+  \texttt{1e-7} and a collinearity threshold at \texttt{1e-9}. The value is recorded in every result
+  the harness writes: 1,187 of 1,211 attempts across the saved runs carry
+  \texttt{"tolerance": 2e-06}.
+\end{enumerate}
+
+Admitting arbitrary rotation makes a tolerance unavoidable, because a rotation by an angle that is
+not a multiple of a right angle produces irrational coordinates. So the tolerance is not
+sloppiness; it is the necessary consequence of a design choice the paper wanted. What was wrong was
+the claim, not the code.
+
+The formulation now used: the \textbf{verifier} is exact, because legality is decided
+combinatorially by the engine and involves no threshold; \textbf{terminal-state equality under
+transforms} carries a stated numerical tolerance. Level 1 crease-set comparison remains genuinely
+tolerance-free.
+
+Claiming an exactness the implementation does not have is the first thing a reviewer with the
+repository checks, and in a paper whose contribution is the trustworthiness of its judge it would
+be the most damaging possible thing to get wrong.
+
+\subsection{Figures have written briefs}
+
+\textbf{Decision.} \texttt{paper/figures/figure1.md} through \texttt{figure6.md}, one per figure,
+each naming where it appears, the argument it carries, what it must show, \textbf{what it must not
+show}, how to tell whether the drawing worked, and a draft caption.
+\texttt{paper/figures/README.md} indexes them.
+
+\textbf{Why.} Three of the six figures can be drawn wrongly in ways that would contradict the
+paper's own claims, and the briefs say so explicitly. Figure 1 must not imply legal moves are rare,
+which Section 3.3 exists to forbid. Figure 4 must draw the environment and the verifier as one box,
+because that is the claim. Figure 6 must not hide a baseline crossing. A figure brief that only says
+what to draw would let all three happen.
+
+\subsection{The abstract is rewritten as one paragraph and made consistent with the code}
+
+\textbf{Decision.} The abstract is now a single paragraph of roughly 440 words, down from six
+paragraphs, and every claim in it matches the implementation and the rest of the paper.
+
+\textbf{Why one paragraph.} The ICLR template states the requirement outright: ``The abstract must
+be limited to one paragraph.'' Six paragraphs was a hard format violation, not a style preference.
+
+\textbf{What changed beyond the format.} Five inconsistencies were removed rather than reworded.
+
+\begin{enumerate}
+\item \textbf{The task.} It now says the model is given the crease pattern \emph{and the final
+  folded state}, matching Section 1. The old text said only ``the sequence of folds that produced a
+  crease pattern'', which describes a harder and different task.
+\item \textbf{The dataset.} It now leads with a benchmark \emph{and dataset} of 600 samples. The old
+  abstract named no size and made no dataset claim, which for a datasets-and-benchmarks submission
+  is the first thing a reviewer looks for.
+\item \textbf{Tolerance.} It no longer claims tolerance-free replay. Crease-set comparison is
+  tolerance-free and says so; folded-state comparison is up to the plane isometry group and carries
+  a stated numerical tolerance, per Section 16.12.
+\item \textbf{Ablation vocabulary.} ``Ablations that remove visual feedback, remove filtering,
+  remove tools'' is replaced by progressive tiers of tool assistance, per Section 16.4.
+\item \textbf{Baselines.} The abstract now says models are ranked against a deterministic search
+  baseline rather than only against each other, which is what Section 8.4 promises and what a
+  benchmark paper is expected to provide.
+\end{enumerate}
+
+The free-verification framing stays out (Section 16.1). What survives of it is the one sentence that
+carries a fact rather than a slogan: the verdict on a step carries no threshold because legality is
+decided combinatorially.
+
+\textbf{Done, see Section 16.18.} The abstract was cut to 282 words once Section 10 produced
+numbers.
+
+\subsection{Figure drafting is scripted, with the limits of the method written into the script}
+
+\textbf{Decision.} \texttt{paper/figures/gen\_figures.sh} drives the imagegen CLI to produce tracing
+drafts. \texttt{--list} prints how each figure should actually be made; \texttt{--dry-run} needs no
+API key.
+
+\textbf{How it runs.} Each figure is one \texttt{codex exec} call. Codex uses its \textbf{built-in
+\texttt{image\_gen} tool}, which is the imagegen skill's own preferred path and needs \textbf{no
+\texttt{OPENAI\_API\_KEY}} and no direct API access. The \texttt{scripts/image\_gen.py} CLI
+fallback, which does require a key, is explicitly not used.
+
+\textbf{Why only two of six by default.} Figures 1 and 4 are conceptual and draft usefully from a
+prompt; a bare run drafts only those. \texttt{--all} overrides it. The other four carry data or
+geometry and must not ship as generated images: figures 2 and 5 should be built from renders that
+already exist in this repo (\texttt{initial/cp.png}, \texttt{final/top.png},
+\texttt{final/exploded.png} for any sample), and figures 3 and 6 must be plotted from the release
+manifest and the aggregation output. A generated crease pattern would be a fabricated figure in a
+paper whose subject is exact verification, which is the worst place in the literature to put one.
+The imagegen skill says the same thing in its own terms: diagrams are ``better produced directly in
+SVG, HTML/CSS, or canvas''. The script prints this rather than assuming it is remembered.
+
+\subsection{Draft figures are labelled as drafts, in the PDF itself}
+
+\textbf{Decision.} Every placeholder figure renders a visible banner reading \textbf{DRAFT IMAGE:
+PLACEHOLDER, NOT FINAL}, with a line saying it will be replaced by a human-authored figure and that
+drafts come from OpenAI \texttt{gpt-image-2}. Captions carry a \texttt{[DRAFT IMAGE]} prefix so the
+marking also appears in any list of figures. The same banner is at the top of each
+\texttt{paper/figures/figureN.md} and the README.
+
+\textbf{Why in the PDF and not only in the notes.} A placeholder that is only labelled in a side
+file becomes a real figure the moment somebody exports a PDF to show a collaborator. The label has
+to travel with the artifact. It costs nothing and removes a whole class of accident.
+
+\subsection{LLM usage is disclosed, per ICLR 2026 policy}
+
+\textbf{Decision.} A new Section 13b discloses every use: models as the object of study, Claude Code
+for the implementation, partial AI assistance for literature search alongside Google Scholar and
+alphaXiv, AI assistance in drafting, and \texttt{gpt-image-2} for draft figures.
+
+\textbf{The policy, checked rather than assumed.} ICLR 2026 has two policies on LLM use. Policy 1:
+any use of an LLM must be disclosed, on the Code of Ethics principle that all contributions to the
+research must be acknowledged. Policy 2: authors are ultimately responsible for their contributions
+and must not make false or misleading claims. The policy does \textbf{not} distinguish a model used
+as a research instrument from one used for writing; both must be disclosed.
+
+\textbf{Caveat. Disclosure is required in the paper's text \emph{and} in the submission form.}
+Section 13b satisfies the first. The second is a separate field on the OpenReview form and is easy
+to miss.
+
+The FAQ does not specify a required section, required wording, or whether the disclosure counts
+against the page limit. It is written as a full section here on the basis that under Policy 2 the
+authors carry responsibility either way, so under-disclosing buys nothing and risks everything.
+
+\textbf{Why it is written long rather than minimal.} A disclosure that omits a use is worse than one
+that reports a use a reader would have forgiven. The section also names the two verification habits
+that exist \emph{because} of the reliance on AI-assisted implementation, the independent corpus
+checks and the comparator's negative control, and states that the negative control caught a real
+defect. That is the honest form of the disclosure: not a claim that assistance introduced no risk,
+but a description of what was put in place to catch it.
+
+\subsection{The abstract is cut to 282 words, and the result now carries its ending}
+
+\textbf{Decision.} The abstract is 282 words, down from 443. It ends on the finding rather than on
+the scoring protocol.
+
+\textbf{Why it was too long.} 443 words is roughly a page-third and reads as a summary of the
+paper's mechanism rather than of its contribution. The cause was structural: the abstract was
+written before Section 10 existed, so the middle of it carried mechanism description that was doing
+the work a result would otherwise do. Once the numbers existed, most of that description could go.
+
+\textbf{What was cut, and on what principle.} Everything that a reader can reach in one page of
+Section 1 and that is not a claim. Gone: the enumeration of refusal types beyond one example, the
+two named levels of equality, the crease-set versus folded-state distinction, the per-stratum
+reporting protocol, queries-to-solution as a secondary measure, the stratification axes, and the
+tolerance discussion. None of that is wrong and all of it survives in Sections 5, 6 and 8; none of
+it belongs in an abstract competing with a result for the same 250 words.
+
+\textbf{What was kept, and why each earns its place.} The multimodal framing, because it is the
+reason a reader at ICLR should care. The task in one sentence. The generate-versus-solve asymmetry
+with the NP-hardness, because it is the paper's foundation. Constructed ground truth and
+seed-rebuilding, because those are the dataset claims a benchmark reviewer reads for.
+Environment-as-verifier in two sentences. The tiers, in one clause. And the three numbers: no solve
+past easy, 54.7 against 20.4, 48 percent cycling.
+
+\textbf{The ending changed, and this is the part that matters most.} The old abstract ended on the
+scoring protocol, which tells a reader what we did. It now ends on state cycling, which tells them
+what we found. An abstract whose last sentence is a method is a proposal; one whose last sentence is
+a finding is a result.
+
+\subsection{No repository or dataset links in the paper}
+
+\textbf{Decision.} Section 13a states the licence and one sentence: code and data are released on
+publication, links omitted. No URLs, no DOI, no datasheet, no hosting or maintenance prose.
+
+\textbf{Why no links at all.} Two reasons, and either is sufficient on its own. A URL naming the
+authors' organisation identifies them in a double-blind submission. And a link committed to in a
+paper is fixed at the moment of submission, so naming one before the repository and dataset are
+actually published creates a name the project then has to honour. Omitting them removes both
+problems and costs nothing at submission time.
+
+\textbf{When to add them.} At camera-ready, once the repository and the dataset exist under names
+that are not going to change. At that point the paper is the authority and the artifacts are renamed
+to match it, rather than the paper being edited to chase them.
