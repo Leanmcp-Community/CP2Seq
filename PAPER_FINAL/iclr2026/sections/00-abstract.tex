@@ -6,15 +6,19 @@ crease pattern and a target folded state, including layer order; the model must 
 simple folds from an unfolded square. An engine executes or rejects each fold with a named reason,
 and a sequence is accepted only if its final stack matches the target layer by layer, including
 which region of the sheet each layer comes from. We make no claim about physical folding. We
-evaluate GPT-5.6 and GPT-6 Luna under increasing tool assistance, Claude Sonnet 5.5 on 20
-instances, and breadth-first and random search over the same actions. Counts use exact matching,
-one episode per instance unless stated. No model condition solves any of the 20 medium or hard
-ablation instances (11 or more folds), and the models fall short of undirected search: within 80
-folds, random legal folding solves 57\% of easy and 96\% of some-layers episodes, against at most
-5 and 8 of 10 instances for any model condition. Failures reflect exploration rather than the
-final step: stopping at the first match adds 2 solves to 25 in 143 logged episodes, models reach a
-median tenth to a quarter of the states random folding reaches, and they restart about as often
-when a short repair exists as when none does. Removing images does not lower solve rate, so the
-task measures reasoning over an exact symbolic state. Results vary substantially between repeated
-runs, and depth and layer count are confounded in the deepest group; we report both.
+evaluate GPT-5.6 and GPT-6 Luna under increasing tool assistance and Claude Sonnet 5.5 on 20
+instances, counting exact matches with one episode per instance unless stated. The models solve
+some short sequences and none of the 20 medium or hard ablation instances (11 or more folds). To
+tell whether this reflects the instances or the models, we run random legal folding over the same
+actions and budget: it solves 57\% of easy and 96\% of some-layers episodes, while no model
+condition solves more than 5 and 8 of the 10 instances. The targets are reachable; the models'
+choices are less effective than chance. Their episodes show why. They rarely reach the target and
+fail to stop (2 extra solves among 143 logged episodes), they reach a median tenth to a quarter of
+the states random folding reaches, and they restart about as often when a repair within three
+folds exists as when none does. Support raises totals without removing this pattern: higher
+reasoning effort lifts GPT-6 Luna's some-layers solves from 6/30 to 18/30, and legal-fold lists
+and target feedback each help. Because the models are given exact coordinates, we also test
+whether rendered images add anything; removing them does not lower solve rate, so CP2Seq measures
+planning over an exact symbolic state rather than visual perception. Single runs vary
+substantially, and depth and layer count are confounded in the deepest group; we report both.
 \end{abstract}
