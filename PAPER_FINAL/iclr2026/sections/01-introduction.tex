@@ -87,7 +87,10 @@ Our contributions are:
 In ablations over model version, reasoning effort, and tool assistance, models solve some
 short sequences but no medium or hard sample, and they fall short of random legal folding with
 the same fold budget. Failures are almost never missed stops; the models explore a small part of
-the reachable states and revisit them (Section~\ref{sec:results}). We also report two limits of
+the reachable states and revisit them, and they restart about as often when a short repair exists
+as when none does. On 20 instances, Claude Sonnet~5.5 returns to abandoned branches far less often
+than GPT-5.6 Luna and solves 14 in one episode each, as many as Luna covers in five repeats
+(Section~\ref{sec:results}). We also report two limits of
 the released corpus that bear on these results: one episode per instance varies substantially
 between runs, and in the all-layers tier sequence depth and layer count grow together, so the
 deepest group mostly measures stacks of hundreds of layers (Section~\ref{sec:limitations}).
