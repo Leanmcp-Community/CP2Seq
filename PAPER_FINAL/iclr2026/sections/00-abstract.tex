@@ -10,7 +10,7 @@ completed sequence is accepted only if its final stack matches the target layer 
 including which region of the sheet each layer comes from, up to a rigid motion. Ground truth is
 recorded during generation, and the released generator produces fresh instances at a chosen
 reference depth. Origami supplies the state space; we make no claim about physical folding, which
-would require thickness and contact. We evaluate GPT-5.6 and GPT-6 Luna under increasing tool
+would require thickness and contact. We evaluate GPT-5.6 and GPT-6 Luna, and Claude Sonnet 5.5 on 20 instances, under increasing tool
 assistance and compare them with breadth-first search and with random legal folding over the same
 actions. On 40 ablation instances, no model condition solves a sample of 11 or more folds, and
 higher reasoning effort raises some-layers solves from 6/30 to 18/30. The models fall short of

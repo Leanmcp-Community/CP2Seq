@@ -1,0 +1,281 @@
+Recover a folding sequence from the supplied crease pattern (CP) and final folded
+state. The sequence starts empty. Use one tool call at a time, then inspect its
+result before proposing the next fold. Do not return an entire sequence in prose.
+The environment writes your accepted actions into seq.json.
+
+You receive only geometry and images of the CP, final target, and current state.
+No reference folding sequence is supplied. All folds are flat 180-degree simple
+folds. Select all layers (default), or a contiguous run from the top or bottom.
+
+Coordinates are x right, y up. Fold axes are in CURRENT folded coordinates:
+
+| angle_index | fold line | positive side |
+| --- | --- | --- |
+| 0 | y = offset | y > offset |
+| 1 | y = x + offset | y - x > offset |
+| 2 | x = offset | x > offset |
+| 3 | x + y = offset | x + y > offset |
+
+For an arbitrary line, supply angle_degrees instead of angle_index (never both).
+The angle is counterclockwise from +x: at 35 degrees the line satisfies
+-sin(35°)*x + cos(35°)*y = offset. In this form offset is signed perpendicular
+distance, and move_positive selects the greater-than side. This is the crease
+line's angle; the folding motion still ends at 180 degrees.
+
+selection_mode is all, top, or bottom. For top/bottom, supply layer_count counting
+from that end of the current bottom-to-top face stack; omit layer_count for all.
+Top folds must use over=true; bottom folds must use over=false. Arbitrary internal
+subsets are unavailable. The engine tracks original-sheet connections: selecting
+three of four layers can tear a paired flap if its attached partner stays still
+and their shared connection is away from the fold line. Such a move is rejected
+as would-tear before checking target-CP compatibility. Use sheet_polygon geometry
+and exploded views to reason about connectivity, not just overlapping outlines.
+
+move_positive selects which half-plane moves. over=true puts the reflected moving
+stack above the stationary stack; false puts it below. A flipped stack reverses
+its internal order. Offset is not a normalized distance for diagonal axes.
+The tool rejects extra creases or incompatible mountain/valley assignments and
+leaves the state unchanged on error. This is a zero-thickness geometric engine;
+it does not check continuous collisions during motion.
+
+add_fold appends ONE fold. remove_fold removes a 1-based fold and replays the
+remaining actions; an invalid replay leaves the sequence unchanged. go_to_step
+keeps the first N folds (0 empties the sequence). restore_revision restores a
+previous tool state, even after changing branches; revision 0 is the empty sheet.
+These editing operations create new revision IDs. get_state returns your current
+sequence and geometry. get_images returns PNG views of any completed step in the
+current branch without changing it. Use the returned revision IDs when backtracking.
+
+Images: CP red = mountain, blue = valley, dark boundary = paper edge. Top and
+two oblique views show paper shape with a small illustrative layer separation.
+Oblique views look down from opposite directions, never exactly edge-on. X-ray
+is a top projection: more overlapping layers produce darker pixels. Each view
+is fitted independently; use geometry for coordinates and scale, not pixel size.
+Exploded views separate layers upward for inspection: layer 1 is the bottom,
+and p0/p1 labels give face parity. Separation is illustrative, not paper thickness.
+The first turn includes the initial sheet and the target's exploded view. The
+target views stay attached; after each successful edit, the next turn includes
+an exploded view of the updated state alongside the other feedback views.
+
+Try to reproduce both the CP and the supplied target, including face orientation
+and layer order. Terminal matching accepts any global translation and any rotation
+angle, including 30 degrees. It also accepts turning the whole model upside down:
+reflect the geometry, reverse the bottom-to-top stack, and flip every face parity.
+These operations can be combined. One common rigid transformation must match all
+layers; arbitrary layer rearrangements, scaling, or independently moving layers
+do not count. CP matching still uses the supplied original-sheet coordinates and
+mountain/valley assignments. Call finish when you are done. This ends the episode and evaluates your
+current sequence; it does not automatically claim success.
+
+Planning and recovery:
+Before proposing a fold, check its consistency with the current state:
+
+1. Treat the supplied CP as geometry in the original sheet coordinates.
+   Fold axes are specified in CURRENT folded coordinates. Account for earlier
+   reflections when relating a current fold line to the CP.
+2. A fold affects the selected run on the chosen side. Check the crease
+   implications for all affected layers, including their orientations and
+   mountain/valley assignments.
+3. Choose move_positive and over using both crease compatibility and the final
+   target. A locally accepted fold does not establish that the sequence can
+   reach the target.
+
+Use rejection feedback to change your plan:
+- A rejected action leaves the state unchanged.
+- Do not repeat an identical rejected action at the same revision.
+- OUTSIDE_TARGET_CP means the proposed action introduces an incompatible
+  crease segment or mountain/valley assignment. The rejection names the offence:
+  `off_target_creases` lists each proposed crease the CP does not contain, in
+  original sheet coordinates, with `problem` one of `assignment_conflict` (the
+  line is right, the M/V is wrong: flip over or move the other side),
+  `absent` (no CP crease lies on this line at all), or `partly_missing` (the CP
+  crease covers only part of this fold, so it would crease unfolded paper).
+  `uncovered` gives the exact sub-spans and `cp_creases_on_this_line` gives what
+  the CP does have there. `proposed_creases` lists every crease the fold makes.
+- would-tear means moving and stationary faces share a connection away from the
+  hinge. Change the selected run or crease; the paper state remains unchanged.
+  `diagnostic` names the two layer ranks and the join itself:
+  `join_current_coords` and `join_sheet_coords` are its endpoints, and
+  `join_distance_from_fold_line` its signed distance from the proposed hinge.
+- direction-impossible means top must fold over or bottom must fold under;
+  `diagnostic.required_over` gives the only legal value for this selection.
+- nothing-to-move / no-crease mean the chosen line and side do not move selected
+  paper or do not create a crease. `diagnostic.offsets_that_cut_the_selection`
+  gives the offset interval, in your own offset units along the same normal,
+  that would cross the selected layers. invalid-selection means too many layers;
+  it reports `stack_size`.
+- After three consecutive rejected add_fold actions without progress, reconsider
+  the accepted prefix. Use restore_revision, go_to_step, or remove_fold to explore
+  a different branch. If the sequence is empty, reconsider the first fold instead.
+- Track rejected actions by revision. Returning to the same revision does not
+  make a previously rejected action valid. Restoring an identical sequence under
+  a new revision also does not make its rejected actions valid.
+
+Before calling finish, compare the current geometry, face orientations, and
+bottom-to-top layer order with the target. Reproducing the CP alone is
+insufficient. First account for a common rotation/translation or physical turnover;
+if the target still differs, reconsider fold
+order, moving side, and over/under choices.
+
+Return exactly one action in the existing JSON schema.
+
+Codex CLI response protocol:
+Geometry and numeric history are displayed to 10 decimal places to suppress
+floating-point arithmetic noise. Treat last-digit coordinate differences as
+numeric noise, not extra creases. Terminal polygon matching uses a 2e-6
+coordinate tolerance. Infer fold offsets from the crease geometry; do not
+perturb an offset merely to imitate long decimal artifacts.
+Return exactly one JSON object matching the supplied output schema. For example:
+{"action":{"name":"add_fold","arguments":{"angle_index":0,"angle_degrees":null,"selection_mode":"all","layer_count":null,"offset":0.5,"move_positive":true,"over":true}}}
+For a proposed top-three 35-degree fold (legality depends on the current sheet):
+{"action":{"name":"add_fold","arguments":{"angle_index":null,"angle_degrees":35,"selection_mode":"top","layer_count":3,"offset":0.1,"move_positive":true,"over":true}}}
+To finish: {"action":{"name":"finish","arguments":{}}}.
+For get_images, use step=null for the latest step, or an integer for a specific
+step. The controller executes the action after your response and sends its
+result in the next invocation. These actions are JSON decisions, not installed
+Codex tools. Never execute shell commands, run scripts, inspect repository files,
+use MCP tools, search the web, or look for reference actions. Use only the
+supplied geometry, action history, simulator feedback, and attached images.
+Each invocation is fresh; the controller supplies the previous action history.
+Image names are listed in attachment order. Initial views remain attached;
+current-* views show the most recent requested or automatically rendered state.
+When all image history is enabled, turn-NNN-* views contain each earlier turn's
+visual feedback; use the turn number to pair them with the textual history.
+
+Additional action: list_legal_folds
+
+This condition gives you one extra action. It is read-only: it never changes the
+sequence, the state, or the revision, and it costs a turn like any other action.
+
+list_legal_folds enumerates every fold that is legal from the current state and
+compatible with the supplied CP. It is computed by the same verifier add_fold
+uses, so while state_id is unchanged, any listed action is accepted verbatim by
+add_fold. A fold that is absent from the list would be rejected by add_fold now;
+it may become available after other folds change the stack.
+
+Arguments, all optional:
+- max_results, a positive integer, default 40. The list is truncated, not
+  filtered, when there are more; `truncated` and `distinct_legal_folds` say so.
+- selection_filter, one of any (default), all, top, bottom. Restricts the
+  enumeration to that selection_mode.
+- include_rejected, boolean, default false. When true, rejected_summary carries
+  an example rejection message per error code as well as the count.
+
+The result arrives under `enumeration`:
+- legal_folds: each entry has `action`, the exact arguments to pass to add_fold;
+  `creates`, the crease segments the fold would make, in original sheet
+  coordinates with their M/V assignment; `new_crease_length`, how much of that
+  crease the sequence has not already laid down; and `layers_after`, the
+  resulting stack size.
+- Entries are deduplicated by result. Several argument combinations can reach
+  the same paper in the same stacking order, differing only by where the model
+  ends up sitting in the plane or by being turned over; those are one entry.
+  `equivalent_actions` lists up to four of the merged alternatives and
+  `equivalent_action_count` gives the total. Any of them may be passed to
+  add_fold; they differ in placement, not in what they fold.
+- Entries are ordered by new_crease_length descending, then by fewest resulting
+  layers. That ordering is a heuristic about progress, not a recommendation: a
+  fold that lays a lot of new crease can still be the wrong fold for the target.
+- candidate_lines, actions_evaluated, distinct_legal_folds, returned, truncated
+  describe the enumeration itself.
+- rejected_summary counts the candidates that failed, by error code. A large
+  OUTSIDE_TARGET_CP count is normal; it is most of the search space.
+
+You do not have to spend a turn to see the list after a mistake. Every rejected
+add_fold carries `legal_folds_now`, the same enumeration for the unchanged state,
+in the same result as the error. If a fold was rejected, the fold you want is in
+that field: read it rather than guessing at another set of arguments.
+
+How to use it well:
+- Legal is not correct. Every listed fold is reproducible on paper and stays
+  inside the CP, but only some of them lie on a path to the target's layer
+  order and face orientation. Choose using the target geometry and images, not
+  by taking the first entry.
+- Two entries that create the same creases can still differ in over/under and
+  in move_positive, and those choices decide the final stack. Read `action` in
+  full before copying it.
+- An empty list means no legal on-target fold exists here. The prefix is a dead
+  end: use restore_revision, go_to_step, or remove_fold to back out.
+- Do not call list_legal_folds twice at the same state_id. The answer cannot
+  have changed, and it costs a turn out of your budget.
+
+## This run allows whole-stack folds only
+
+Every fold you make moves the entire stack. `selection_mode` and `layer_count` are not part
+of the action schema in this run, and `add_fold` refuses a partial top or bottom run.
+`list_legal_folds` will not list one either.
+
+This is not a restriction you have to work around. Every reference solution for this corpus
+is built from whole-stack folds, so a correct sequence exists inside this action space for
+every sample. `over` is free on every fold, since nothing is left behind.
+
+Additional action: compare_to_target
+
+This condition gives you one more action. It is read-only: it never changes the
+sequence, the state, or the revision, and it costs a turn like any other action.
+
+compare_to_target tells you how your current stack differs from the target
+folded state. It reads the target you were already given; it never consults a
+reference fold sequence, and no such sequence exists in your inputs.
+
+How much detail it returns is fixed by this run's configuration, not by you, and
+the result names its own level in `tier` and `tier_meaning`:
+- tier 1 reports layer counts only: how many layers you have against how many
+  the target has.
+- tier 2 adds which layers disagree and in what way: `diagnosis` is one of
+  `matches`, `layer_count`, `parity`, `order`, or `shape`, and
+  `mismatched_ranks` lists the bottom-to-top ranks that differ.
+- tier 3 adds `corrections`, naming for each differing rank what it should be.
+
+Read `alignment` before `mismatched_ranks`. The comparison is made under one
+rigid motion of the whole model, and `compared_under` says whether that motion
+included turning the model over. A turned-over comparison is legitimate: the
+target accepts it.
+
+What the diagnoses mean:
+- `layer_count`: you have more or fewer layers than the target, so folding is
+  incomplete or overdone. Ranks are compared only as deep as the shorter stack.
+- `parity`: every layer is the right shape in the right place and some face the
+  wrong way. That is an over/under or moving-side choice, not a wrong crease.
+  Reversing the direction of the fold that placed those layers is the repair.
+- `order`: your stack holds exactly the target's pieces in the wrong order. The
+  folds are right; the order that stacked them is not. Reorder by backtracking
+  and folding the same lines in a different sequence, not by folding new lines.
+- `shape`: at least one layer is not a shape the target has at that rank, so an
+  earlier fold took a different line or a different side.
+
+How to use it well:
+- A perfect crease pattern is not a solved episode. Most failures reproduce the
+  CP exactly and still lose on layer order, which is the thing this action
+  measures and nothing else reports until the episode is over.
+- Check before calling finish, not after. finish ends the episode.
+- The comparison only changes when the paper moves. Calling it twice without
+  folding or backtracking in between returns the same answer and costs a turn.
+
+Free target comparison after every fold
+
+In this condition you do not have to spend a turn asking how you are doing.
+Every accepted add_fold carries `comparison_now`: the same content
+compare_to_target returns, for the state your fold just produced, in the same
+result as the fold itself.
+
+Read it on every fold. It is the only signal that tells you whether the folds
+you are making are taking you toward the target stack or away from it, and it
+costs you nothing.
+
+Act on it early. A comparison after your second or third fold is worth far more
+than one after your thirtieth: once the sequence has diverged, the later folds
+are exploring a branch that does not contain the answer, and no amount of
+backtracking inside that branch will find it. If `comparison_now` shows the
+layer count moving away from the target, or ranks that were matching stop
+matching, the fold you just made is the one to reconsider -- not a later one.
+
+compare_to_target is still available if you want it at a state you reached by
+backtracking rather than by folding, since those turns carry no comparison.
+Calling it straight after an accepted fold is wasted: you already have the
+answer in that fold's result.
+
+
+Find the next action. Geometry and history:
+{"cp": {"file_spec": 1.1, "frame_classes": ["creasePattern"], "vertices_coords": [[0, 0], [0.25, 0], [0.5, 0], [0.75, 0], [1, 0], [1, 0.25], [1, 0.5], [1, 0.75], [1, 1], [0.75, 1], [0.5, 1], [0.25, 1], [0, 1], [0, 0.75], [0, 0.5], [0, 0.25], [0.5, 0.25], [0.5, 0.5], [0.5, 0.75], [0.25, 0.5], [0.75, 0.5]], "edges_vertices": [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7], [7, 8], [8, 9], [9, 10], [10, 11], [11, 12], [12, 13], [13, 14], [14, 15], [0, 15], [2, 16], [16, 17], [17, 18], [10, 18], [7, 18], [13, 18], [3, 16], [1, 16], [14, 19], [17, 19], [6, 20], [17, 20], [18, 19], [18, 20], [9, 18], [11, 18], [16, 20], [16, 19], [15, 16], [5, 16]], "edges_assignment": ["B", "B", "B", "B", "B", "B", "B", "B", "B", "B", "B", "B", "B", "B", "B", "B", "M", "M", "M", "M", "V", "M", "M", "V", "M", "M", "V", "V", "V", "M", "V", "M", "V", "M", "M", "V"]}, "target": {"file_spec": 1.1, "frame_classes": ["foldedForm"], "vertices_coords": [[1, 0.25], [0.75, 0], [0.5, 0], [0.5, 0.25], [0.75, 0.25]], "faces_vertices": [[0, 1, 2, 3], [3, 2, 1, 0], [0, 1, 2, 3], [3, 2, 1, 0], [2, 3, 0, 1], [0, 3, 2, 1], [4, 0, 1], [0, 4, 1], [1, 4, 0], [0, 4, 1], [1, 4, 0], [0, 4, 1], [1, 2, 3, 0], [2, 1, 0, 3], [1, 4, 0], [4, 1, 0]], "fo:faces_layer": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], "fo:faces_parity": [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0]}, "history": [{"action": {"name": "list_legal_folds", "arguments": {"max_results": 40, "include_rejected": false}}, "result": {"ok": true, "state_id": 0, "layers_bottom_to_top": [{"polygon": [[0, 0], [0.25, 0], [0.5, 0], [0.75, 0], [1, 0], [1, 0.25], [1, 0.5], [1, 0.75], [1, 1], [0.75, 1], [0.5, 1], [0.25, 1], [0, 1], [0, 0.75], [0, 0.5], [0, 0.25]], "parity": 0, "sheet_polygon": [[0, 0], [0.25, 0], [0.5, 0], [0.75, 0], [1, 0], [1, 0.25], [1, 0.5], [1, 0.75], [1, 1], [0.75, 1], [0.5, 1], [0.25, 1], [0, 1], [0, 0.75], [0, 0.5], [0, 0.25]]}], "revision": 0, "sequence": [], "enumeration": {"state_id": 0, "stack_size": 1, "candidate_lines": 8, "actions_evaluated": 32, "distinct_legal_folds": 1, "returned": 1, "truncated": false, "ordering": "most new crease length first, then fewest resulting layers", "deduplication": "Actions reaching the same paper in the same stacking order, up to one rigid motion of the whole sheet or a turnover, are one entry; the others are in equivalent_actions.", "coordinate_frames": {"action": "current folded coordinates", "creates": "original sheet coordinates"}, "guarantee": "Each listed action is accepted verbatim by add_fold while state_id is unchanged. Legality and CP compatibility are decided by the same verifier add_fold uses.", "rejected_summary": {"OUTSIDE_TARGET_CP": 30}, "legal_folds": [{"action": {"angle_index": 2, "offset": 0.5, "move_positive": true, "selection_mode": "all", "over": false}, "creates": [{"assignment": "M", "from": [0.5, 0], "to": [0.5, 1]}], "new_crease_length": 1, "layers_after": 2, "equivalent_actions": [{"angle_index": 2, "offset": 0.5, "move_positive": false, "selection_mode": "all", "over": false}], "equivalent_action_count": 2}]}}}, {"action": {"name": "add_fold", "arguments": {"angle_index": 2, "offset": 0.5, "move_positive": true, "over": false}}, "result": {"ok": true, "state_id": 1, "created_segments": 1, "layers_bottom_to_top": [{"polygon": [[0.5, 0], [0.25, 0], [0, 0], [0, 0.25], [0, 0.5], [0, 0.75], [0, 1], [0.25, 1], [0.5, 1]], "parity": 1, "sheet_polygon": [[0.5, 0], [0.75, 0], [1, 0], [1, 0.25], [1, 0.5], [1, 0.75], [1, 1], [0.75, 1], [0.5, 1]]}, {"polygon": [[0, 0], [0.25, 0], [0.5, 0], [0.5, 1], [0.25, 1], [0, 1], [0, 0.75], [0, 0.5], [0, 0.25]], "parity": 0, "sheet_polygon": [[0, 0], [0.25, 0], [0.5, 0], [0.5, 1], [0.25, 1], [0, 1], [0, 0.75], [0, 0.5], [0, 0.25]]}], "revision": 1, "sequence": [{"angle_index": 2, "offset": 0.5, "move_positive": true, "over": false}], "comparison_now": {"tier": 3, "tier_meaning": "which layers disagree and what each one should be", "layers_now": 2, "layers_target": 16, "layer_difference": -14, "summary": "14 layers short of the target: more folding to do.", "uses_reference_sequence": false, "alignment": {"compared_under": "a direct rotation/translation of the target", "layers_matching": 0, "layers_compared": 2}, "diagnosis": "layer_count", "diagnosis_meaning": "The stacks are different sizes, so folding is incomplete or overdone; ranks are compared only as deep as the shorter stack.", "mismatched_ranks": [0, 1], "corrections": [{"rank": 0, "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"}, {"rank": 1, "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"}]}}}, {"action": {"name": "list_legal_folds", "arguments": {"max_results": 40, "include_rejected": false}}, "result": {"ok": true, "state_id": 1, "layers_bottom_to_top": [{"polygon": [[0.5, 0], [0.25, 0], [0, 0], [0, 0.25], [0, 0.5], [0, 0.75], [0, 1], [0.25, 1], [0.5, 1]], "parity": 1, "sheet_polygon": [[0.5, 0], [0.75, 0], [1, 0], [1, 0.25], [1, 0.5], [1, 0.75], [1, 1], [0.75, 1], [0.5, 1]]}, {"polygon": [[0, 0], [0.25, 0], [0.5, 0], [0.5, 1], [0.25, 1], [0, 1], [0, 0.75], [0, 0.5], [0, 0.25]], "parity": 0, "sheet_polygon": [[0, 0], [0.25, 0], [0.5, 0], [0.5, 1], [0.25, 1], [0, 1], [0, 0.75], [0, 0.5], [0, 0.25]]}], "revision": 1, "sequence": [{"angle_index": 2, "offset": 0.5, "move_positive": true, "over": false}], "enumeration": {"state_id": 1, "stack_size": 2, "candidate_lines": 8, "actions_evaluated": 32, "distinct_legal_folds": 5, "returned": 5, "truncated": false, "ordering": "most new crease length first, then fewest resulting layers", "deduplication": "Actions reaching the same paper in the same stacking order, up to one rigid motion of the whole sheet or a turnover, are one entry; the others are in equivalent_actions.", "coordinate_frames": {"action": "current folded coordinates", "creates": "original sheet coordinates"}, "guarantee": "Each listed action is accepted verbatim by add_fold while state_id is unchanged. Legality and CP compatibility are decided by the same verifier add_fold uses.", "rejected_summary": {"nothing-to-move": 2, "no-crease": 2, "OUTSIDE_TARGET_CP": 18}, "legal_folds": [{"action": {"angle_index": 0, "offset": 0.75, "move_positive": true, "selection_mode": "all", "over": false}, "creates": [{"assignment": "V", "from": [1, 0.75], "to": [0.5, 0.75]}, {"assignment": "M", "from": [0.5, 0.75], "to": [0, 0.75]}], "new_crease_length": 1, "layers_after": 4, "equivalent_actions": [{"angle_index": 0, "offset": 0.75, "move_positive": false, "selection_mode": "all", "over": false}], "equivalent_action_count": 2}, {"action": {"angle_index": 0, "offset": 0.5, "move_positive": true, "selection_mode": "all", "over": false}, "creates": [{"assignment": "V", "from": [1, 0.5], "to": [0.5, 0.5]}, {"assignment": "M", "from": [0.5, 0.5], "to": [0, 0.5]}], "new_crease_length": 1, "layers_after": 4, "equivalent_actions": [{"angle_index": 0, "offset": 0.5, "move_positive": false, "selection_mode": "all", "over": false}], "equivalent_action_count": 2}, {"action": {"angle_index": 0, "offset": 0.25, "move_positive": true, "selection_mode": "all", "over": false}, "creates": [{"assignment": "V", "from": [1, 0.25], "to": [0.5, 0.25]}, {"assignment": "M", "from": [0.5, 0.25], "to": [0, 0.25]}], "new_crease_length": 1, "layers_after": 4, "equivalent_actions": [{"angle_index": 0, "offset": 0.25, "move_positive": false, "selection_mode": "all", "over": false}], "equivalent_action_count": 2}, {"action": {"angle_index": 3, "offset": 1.25, "move_positive": true, "selection_mode": "all", "over": false}, "creates": [{"assignment": "V", "from": [0.75, 1], "to": [0.5, 0.75]}, {"assignment": "M", "from": [0.5, 0.75], "to": [0.25, 1]}], "new_crease_length": 0.7071067812, "layers_after": 4, "equivalent_actions": [{"angle_index": 3, "offset": 1.25, "move_positive": false, "selection_mode": "all", "over": false}], "equivalent_action_count": 2}, {"action": {"angle_index": 1, "offset": -0.25, "move_positive": true, "selection_mode": "all", "over": true}, "creates": [{"assignment": "M", "from": [0.75, 0], "to": [0.5, 0.25]}, {"assignment": "V", "from": [0.25, 0], "to": [0.5, 0.25]}], "new_crease_length": 0.7071067812, "layers_after": 4, "equivalent_actions": [{"angle_index": 1, "offset": -0.25, "move_positive": false, "selection_mode": "all", "over": true}], "equivalent_action_count": 2}]}}}, {"action": {"name": "add_fold", "arguments": {"angle_index": 0, "offset": 0.75, "move_positive": true, "over": false}}, "result": {"ok": true, "state_id": 2, "created_segments": 2, "layers_bottom_to_top": [{"polygon": [[0.5, 0.75], [0.5, 0.5], [0.25, 0.5], [0, 0.5], [0, 0.75]], "parity": 1, "sheet_polygon": [[0.5, 0.75], [0.5, 1], [0.25, 1], [0, 1], [0, 0.75]]}, {"polygon": [[0, 0.75], [0, 0.5], [0.25, 0.5], [0.5, 0.5], [0.5, 0.75]], "parity": 0, "sheet_polygon": [[1, 0.75], [1, 1], [0.75, 1], [0.5, 1], [0.5, 0.75]]}, {"polygon": [[0.5, 0], [0.25, 0], [0, 0], [0, 0.25], [0, 0.5], [0, 0.75], [0.5, 0.75]], "parity": 1, "sheet_polygon": [[0.5, 0], [0.75, 0], [1, 0], [1, 0.25], [1, 0.5], [1, 0.75], [0.5, 0.75]]}, {"polygon": [[0, 0], [0.25, 0], [0.5, 0], [0.5, 0.75], [0, 0.75], [0, 0.5], [0, 0.25]], "parity": 0, "sheet_polygon": [[0, 0], [0.25, 0], [0.5, 0], [0.5, 0.75], [0, 0.75], [0, 0.5], [0, 0.25]]}], "revision": 2, "sequence": [{"angle_index": 2, "offset": 0.5, "move_positive": true, "over": false}, {"angle_index": 0, "offset": 0.75, "move_positive": true, "over": false}], "comparison_now": {"tier": 3, "tier_meaning": "which layers disagree and what each one should be", "layers_now": 4, "layers_target": 16, "layer_difference": -12, "summary": "12 layers short of the target: more folding to do.", "uses_reference_sequence": false, "alignment": {"compared_under": "a direct rotation/translation of the target", "layers_matching": 0, "layers_compared": 4}, "diagnosis": "layer_count", "diagnosis_meaning": "The stacks are different sizes, so folding is incomplete or overdone; ranks are compared only as deep as the shorter stack.", "mismatched_ranks": [0, 1, 2, 3], "corrections": [{"rank": 0, "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"}, {"rank": 1, "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"}, {"rank": 2, "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"}, {"rank": 3, "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"}]}}}, {"action": {"name": "list_legal_folds", "arguments": {"max_results": 40, "include_rejected": false}}, "result": {"ok": true, "state_id": 2, "layers_bottom_to_top": [{"polygon": [[0.5, 0.75], [0.5, 0.5], [0.25, 0.5], [0, 0.5], [0, 0.75]], "parity": 1, "sheet_polygon": [[0.5, 0.75], [0.5, 1], [0.25, 1], [0, 1], [0, 0.75]]}, {"polygon": [[0, 0.75], [0, 0.5], [0.25, 0.5], [0.5, 0.5], [0.5, 0.75]], "parity": 0, "sheet_polygon": [[1, 0.75], [1, 1], [0.75, 1], [0.5, 1], [0.5, 0.75]]}, {"polygon": [[0.5, 0], [0.25, 0], [0, 0], [0, 0.25], [0, 0.5], [0, 0.75], [0.5, 0.75]], "parity": 1, "sheet_polygon": [[0.5, 0], [0.75, 0], [1, 0], [1, 0.25], [1, 0.5], [1, 0.75], [0.5, 0.75]]}, {"polygon": [[0, 0], [0.25, 0], [0.5, 0], [0.5, 0.75], [0, 0.75], [0, 0.5], [0, 0.25]], "parity": 0, "sheet_polygon": [[0, 0], [0.25, 0], [0.5, 0], [0.5, 0.75], [0, 0.75], [0, 0.5], [0, 0.25]]}], "revision": 2, "sequence": [{"angle_index": 2, "offset": 0.5, "move_positive": true, "over": false}, {"angle_index": 0, "offset": 0.75, "move_positive": true, "over": false}], "enumeration": {"state_id": 2, "stack_size": 4, "candidate_lines": 12, "actions_evaluated": 48, "distinct_legal_folds": 3, "returned": 3, "truncated": false, "ordering": "most new crease length first, then fewest resulting layers", "deduplication": "Actions reaching the same paper in the same stacking order, up to one rigid motion of the whole sheet or a turnover, are one entry; the others are in equivalent_actions.", "coordinate_frames": {"action": "current folded coordinates", "creates": "original sheet coordinates"}, "guarantee": "Each listed action is accepted verbatim by add_fold while state_id is unchanged. Legality and CP compatibility are decided by the same verifier add_fold uses.", "rejected_summary": {"nothing-to-move": 14, "no-crease": 14, "OUTSIDE_TARGET_CP": 14}, "legal_folds": [{"action": {"angle_index": 0, "offset": 0.5, "move_positive": true, "selection_mode": "all", "over": false}, "creates": [{"assignment": "V", "from": [1, 0.5], "to": [0.5, 0.5]}, {"assignment": "M", "from": [0.5, 0.5], "to": [0, 0.5]}], "new_crease_length": 1, "layers_after": 6, "equivalent_actions": [{"angle_index": 0, "offset": 0.5, "move_positive": false, "selection_mode": "all", "over": false}], "equivalent_action_count": 2}, {"action": {"angle_index": 0, "offset": 0.25, "move_positive": true, "selection_mode": "all", "over": false}, "creates": [{"assignment": "V", "from": [1, 0.25], "to": [0.5, 0.25]}, {"assignment": "M", "from": [0.5, 0.25], "to": [0, 0.25]}], "new_crease_length": 1, "layers_after": 6, "equivalent_actions": [{"angle_index": 0, "offset": 0.25, "move_positive": false, "selection_mode": "all", "over": false}], "equivalent_action_count": 2}, {"action": {"angle_index": 1, "offset": -0.25, "move_positive": true, "selection_mode": "all", "over": true}, "creates": [{"assignment": "M", "from": [0.75, 0], "to": [0.5, 0.25]}, {"assignment": "V", "from": [0.25, 0], "to": [0.5, 0.25]}], "new_crease_length": 0.7071067812, "layers_after": 6, "equivalent_actions": [{"angle_index": 1, "offset": -0.25, "move_positive": false, "selection_mode": "all", "over": true}], "equivalent_action_count": 2}]}}}, {"action": {"name": "add_fold", "arguments": {"angle_index": 0, "offset": 0.5, "move_positive": true, "over": false}}, "result": {"ok": true, "state_id": 3, "created_segments": 2, "layers_bottom_to_top": [{"polygon": [[0.5, 0.5], [0.5, 0.25], [0, 0.25], [0, 0.5]], "parity": 1, "sheet_polygon": [[0.5, 0.5], [0.5, 0.75], [0, 0.75], [0, 0.5]]}, {"polygon": [[0, 0.5], [0, 0.25], [0.5, 0.25], [0.5, 0.5]], "parity": 0, "sheet_polygon": [[1, 0.5], [1, 0.75], [0.5, 0.75], [0.5, 0.5]]}, {"polygon": [[0, 0.25], [0, 0.5], [0.25, 0.5], [0.5, 0.5], [0.5, 0.25]], "parity": 1, "sheet_polygon": [[1, 0.75], [1, 1], [0.75, 1], [0.5, 1], [0.5, 0.75]]}, {"polygon": [[0.5, 0.25], [0.5, 0.5], [0.25, 0.5], [0, 0.5], [0, 0.25]], "parity": 0, "sheet_polygon": [[0.5, 0.75], [0.5, 1], [0.25, 1], [0, 1], [0, 0.75]]}, {"polygon": [[0.5, 0], [0.25, 0], [0, 0], [0, 0.25], [0, 0.5], [0.5, 0.5]], "parity": 1, "sheet_polygon": [[0.5, 0], [0.75, 0], [1, 0], [1, 0.25], [1, 0.5], [0.5, 0.5]]}, {"polygon": [[0, 0], [0.25, 0], [0.5, 0], [0.5, 0.5], [0, 0.5], [0, 0.25]], "parity": 0, "sheet_polygon": [[0, 0], [0.25, 0], [0.5, 0], [0.5, 0.5], [0, 0.5], [0, 0.25]]}], "revision": 3, "sequence": [{"angle_index": 2, "offset": 0.5, "move_positive": true, "over": false}, {"angle_index": 0, "offset": 0.75, "move_positive": true, "over": false}, {"angle_index": 0, "offset": 0.5, "move_positive": true, "over": false}], "comparison_now": {"tier": 3, "tier_meaning": "which layers disagree and what each one should be", "layers_now": 6, "layers_target": 16, "layer_difference": -10, "summary": "10 layers short of the target: more folding to do.", "uses_reference_sequence": false, "alignment": {"compared_under": "a direct rotation/translation of the target", "layers_matching": 0, "layers_compared": 6}, "diagnosis": "layer_count", "diagnosis_meaning": "The stacks are different sizes, so folding is incomplete or overdone; ranks are compared only as deep as the shorter stack.", "mismatched_ranks": [0, 1, 2, 3, 4, 5], "corrections": [{"rank": 0, "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"}, {"rank": 1, "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"}, {"rank": 2, "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"}, {"rank": 3, "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"}, {"rank": 4, "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"}, {"rank": 5, "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"}]}}}], "current": {"state_id": 3, "layers_bottom_to_top": [{"polygon": [[0.5, 0.5], [0.5, 0.25], [0, 0.25], [0, 0.5]], "parity": 1, "sheet_polygon": [[0.5, 0.5], [0.5, 0.75], [0, 0.75], [0, 0.5]]}, {"polygon": [[0, 0.5], [0, 0.25], [0.5, 0.25], [0.5, 0.5]], "parity": 0, "sheet_polygon": [[1, 0.5], [1, 0.75], [0.5, 0.75], [0.5, 0.5]]}, {"polygon": [[0, 0.25], [0, 0.5], [0.25, 0.5], [0.5, 0.5], [0.5, 0.25]], "parity": 1, "sheet_polygon": [[1, 0.75], [1, 1], [0.75, 1], [0.5, 1], [0.5, 0.75]]}, {"polygon": [[0.5, 0.25], [0.5, 0.5], [0.25, 0.5], [0, 0.5], [0, 0.25]], "parity": 0, "sheet_polygon": [[0.5, 0.75], [0.5, 1], [0.25, 1], [0, 1], [0, 0.75]]}, {"polygon": [[0.5, 0], [0.25, 0], [0, 0], [0, 0.25], [0, 0.5], [0.5, 0.5]], "parity": 1, "sheet_polygon": [[0.5, 0], [0.75, 0], [1, 0], [1, 0.25], [1, 0.5], [0.5, 0.5]]}, {"polygon": [[0, 0], [0.25, 0], [0.5, 0], [0.5, 0.5], [0, 0.5], [0, 0.25]], "parity": 0, "sheet_polygon": [[0, 0], [0.25, 0], [0.5, 0], [0.5, 0.5], [0, 0.5], [0, 0.25]]}], "revision": 3, "sequence": [{"angle_index": 2, "offset": 0.5, "move_positive": true, "over": false}, {"angle_index": 0, "offset": 0.75, "move_positive": true, "over": false}, {"angle_index": 0, "offset": 0.5, "move_positive": true, "over": false}]}, "turn": 7, "max_turns": 80}
+Attached images, in order:

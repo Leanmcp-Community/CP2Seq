@@ -1,0 +1,258 @@
+{
+  "version": 1,
+  "arms": [
+    "baseline",
+    "memory",
+    "semantics",
+    "preview"
+  ],
+  "nodes": [
+    {
+      "sample": "easy-0002",
+      "source": "/Users/luxian/FoldOriganmi/CODEX_HARNESS_TESTING/runs/codex-20261107T175431422982Z",
+      "turn": 23,
+      "state_key": "18f3ed3e49ff123df8b3d5a0",
+      "original_sha256": "563c670c23ebddbb4e5282a63bdb52e2078a1c1ef19f42e2fe4053a89a096523",
+      "suffix_sha256": {
+        "baseline": "d180ba1415db8ed3abd67a735fa60cb551a2c6e74e2bc3c2d1c709d5271e8526",
+        "memory": "3e04f9a609d3dfcf47b2ac5283a62c99eefe191f89e87460b4cbd1584e446904",
+        "semantics": "924256e63513b299a3860a70836c45b8069267c26bf5f0f01430dc7af8088dca",
+        "preview": "ee52dd5246766ca7084e388475d8ddf4a3ff5e3712fe9dfb155d91ab32de9dc2"
+      },
+      "suffix_bytes": {
+        "baseline": 1049,
+        "memory": 4551,
+        "semantics": 3016,
+        "preview": 9651
+      },
+      "candidates": 7,
+      "past_actions": 2,
+      "preparation_ms": 12.860374999999976,
+      "preview_simulations": 7
+    },
+    {
+      "sample": "easy-0005",
+      "source": "/Users/luxian/FoldOriganmi/CODEX_HARNESS_TESTING/runs/codex-20261107T175431422982Z",
+      "turn": 6,
+      "state_key": "b943811546337f637c56ed17",
+      "original_sha256": "1af6047e28e7f0d95d7adfa1b690af38705ae4fb0a17318d3f650de9e5383511",
+      "suffix_sha256": {
+        "baseline": "87449e2b88c26232209a20f4a3f71c054dff08280f54ed4b62581d62db04edb2",
+        "memory": "2c940271a7b34da16f314190ba69ff7ff6db112a57bf3355769f94e99ba40a61",
+        "semantics": "f1c47005bce9b437a0979bb2dd614a9ffbe68845e6b70924e8d77a5fc2a938ae",
+        "preview": "5f662a6729c9ae14fad07f11371a01ae790d9aec65c00dd121d9d1fab3d25460"
+      },
+      "suffix_bytes": {
+        "baseline": 504,
+        "memory": 656,
+        "semantics": 1101,
+        "preview": 4172
+      },
+      "candidates": 2,
+      "past_actions": 0,
+      "preparation_ms": 2.483040999999986,
+      "preview_simulations": 2
+    },
+    {
+      "sample": "easy-0006",
+      "source": "/Users/luxian/FoldOriganmi/CODEX_HARNESS_TESTING/runs/codex-20261107T230335798303Z",
+      "turn": 10,
+      "state_key": "43c259f3df526e46fbeedef9",
+      "original_sha256": "ad80ef2459527a7666c5d0a0173e7390dff4d614bde595ca6d590b2cc2008923",
+      "suffix_sha256": {
+        "baseline": "298b894225e48da9c87cba26511d29c7ab5959764ae5f7d10b9291b81f9e67d2",
+        "memory": "6447c202808afd4ec058d036e95abb8e6fe6b5cd72b6d404ba396384f68d690f",
+        "semantics": "3b0e8352c9c60e831a81a6ff298fdfeae40b164e768e283ea99ee420c9502ee9",
+        "preview": "d379f1a3573f614f5cff340730e5989e722e75fb7925a8a66b19da1c24b7321e"
+      },
+      "suffix_bytes": {
+        "baseline": 392,
+        "memory": 544,
+        "semantics": 709,
+        "preview": 2524
+      },
+      "candidates": 1,
+      "past_actions": 0,
+      "preparation_ms": 3.775166000000013,
+      "preview_simulations": 1
+    },
+    {
+      "sample": "easy-0009",
+      "source": "/Users/luxian/FoldOriganmi/CODEX_HARNESS_TESTING/runs/codex-20261107T175431422982Z",
+      "turn": 8,
+      "state_key": "6079ec611d4f8dca1be68b40",
+      "original_sha256": "b84cf6f4d319d806f955e72d790e9c25bd325dc98376647f9f80e435da955cde",
+      "suffix_sha256": {
+        "baseline": "acd54c36711d0a9d59cdb580cb0fe3387bb8dccead36ca9dcd9906a38fd9d366",
+        "memory": "534264e1ccd2653950640d14fc36c98a33af180f9e47b8d4ab5f7689aca06388",
+        "semantics": "aadb8cda301b241ff6d9dec58bade9d86237247d649441f169a51b1bcf64de7d",
+        "preview": "1010942506341ea58a352ded97e4abbc0cf67e8d6797a4a9f0179ab64406daed"
+      },
+      "suffix_bytes": {
+        "baseline": 613,
+        "memory": 765,
+        "semantics": 1480,
+        "preview": 11101
+      },
+      "candidates": 3,
+      "past_actions": 0,
+      "preparation_ms": 6.835250000000002,
+      "preview_simulations": 3
+    },
+    {
+      "sample": "easy-0010",
+      "source": "/Users/luxian/FoldOriganmi/CODEX_HARNESS_TESTING/runs/codex-20261107T192735624427Z",
+      "turn": 7,
+      "state_key": "f805161912b0f6afaacff213",
+      "original_sha256": "c4608bd2015cb731ee148246460e1fcd3c53ceefe77e7729ab8d9a99535ee19c",
+      "suffix_sha256": {
+        "baseline": "c80a8cd5bc4f3cdda219aad4df53ef73e89b030b6ed5bd23ec5708245f36314f",
+        "memory": "c054f5cd4804e225012e7451b0b860219b97f4297a5fd9a4995e38ae104004cf",
+        "semantics": "26836afce37e643ac2d0a203b4d53e6e2761ea383653882734a37a643cb79578",
+        "preview": "ade7d2a5fad4c2cd34e0dfdd58abe557690a182941657112b5919f0d5202356d"
+      },
+      "suffix_bytes": {
+        "baseline": 612,
+        "memory": 764,
+        "semantics": 1475,
+        "preview": 5355
+      },
+      "candidates": 3,
+      "past_actions": 0,
+      "preparation_ms": 3.8045829999999796,
+      "preview_simulations": 3
+    },
+    {
+      "sample": "layers-0001",
+      "source": "/Users/luxian/FoldOriganmi/CODEX_HARNESS_TESTING/runs/codex-20261107T183433007248Z",
+      "turn": 26,
+      "state_key": "3968e39109aa617da963a0ef",
+      "original_sha256": "7f4a893844324fc4a2410f7940f62499b64bb09ac492c9a783e15e88a8866391",
+      "suffix_sha256": {
+        "baseline": "0ade5f233e20afd9aa6ed631fb1de575f9f1b23643e76b0c92c96503751a733e",
+        "memory": "75a6e50fc861873251617f8dbc1620f440f221060601897b7ab20ab067821fb5",
+        "semantics": "28f7225cbfb0a85cd92129de9608c2315f9c41a61023c6e1c395867a4332e617",
+        "preview": "3add4b209a2e01953cb32edeabee61fefcd8323a945c543f4ebfe2d82d49af91"
+      },
+      "suffix_bytes": {
+        "baseline": 398,
+        "memory": 1261,
+        "semantics": 727,
+        "preview": 2129
+      },
+      "candidates": 1,
+      "past_actions": 1,
+      "preparation_ms": 2.9007080000000087,
+      "preview_simulations": 1
+    },
+    {
+      "sample": "layers-0002",
+      "source": "/Users/luxian/FoldOriganmi/CODEX_HARNESS_TESTING/runs/codex-20261107T224002250939Z",
+      "turn": 13,
+      "state_key": "d54c7ca8d20d5d5d2dca79f2",
+      "original_sha256": "dc8b5c9502db91839274854ea613c31d6d85888885857fe24a127a022e4f8ec6",
+      "suffix_sha256": {
+        "baseline": "2f0cbabfdbab38c86ca31669166b72d1009e54e982f446c634307a5a306c6988",
+        "memory": "3fcb242932f1ff8293de875d623b644b5b93659e6de39b709a3a327a6b226c3b",
+        "semantics": "4352c4dbb39af1a3e27a2f34811dab565eb0b1a94b2c5cabf441ce50da63a1ef",
+        "preview": "be76da9280395ea59f513457a1d44bad38a484f12cba03f507b9621546443c15"
+      },
+      "suffix_bytes": {
+        "baseline": 738,
+        "memory": 3738,
+        "semantics": 1895,
+        "preview": 6814
+      },
+      "candidates": 4,
+      "past_actions": 1,
+      "preparation_ms": 5.427999999999997,
+      "preview_simulations": 4
+    },
+    {
+      "sample": "layers-0003",
+      "source": "/Users/luxian/FoldOriganmi/CODEX_HARNESS_TESTING/runs/codex-20261107T183433007248Z",
+      "turn": 16,
+      "state_key": "20e3142a63881e6a904cc369",
+      "original_sha256": "2e788f0b1b16153b44311e074e3de7fa4b0017d1b526e5c1dd325d6341b6ae27",
+      "suffix_sha256": {
+        "baseline": "7f8479b9a94421ce0f367ab588960a0e093ac8fce70207788ba8350d56871661",
+        "memory": "a9770e6cac52afb4384ac415b1b15be879108155328396f536081e6fc5562419",
+        "semantics": "b05a3462023ccd8c3d322988b5daa8a274455784dc775751b0311311b3b5bbdb",
+        "preview": "e0744f49d86fe2b6fe37f57c45832987cfc6349aeec5655d30959857ae337b4e"
+      },
+      "suffix_bytes": {
+        "baseline": 613,
+        "memory": 2295,
+        "semantics": 1478,
+        "preview": 3154
+      },
+      "candidates": 3,
+      "past_actions": 1,
+      "preparation_ms": 1.2219160000000215,
+      "preview_simulations": 3
+    },
+    {
+      "sample": "layers-0007",
+      "source": "/Users/luxian/FoldOriganmi/CODEX_HARNESS_TESTING/runs/codex-20261107T183433007248Z",
+      "turn": 22,
+      "state_key": "991c6f76e958c7b3bf0957bf",
+      "original_sha256": "1878c3ca00fa2eaf0a08f54bdf7fa15df0d975f973e959b256278d0d0509fce8",
+      "suffix_sha256": {
+        "baseline": "a4cccf232946e31455f4017c1e158fbefd856c4b177c5d76b98590e38ba8147e",
+        "memory": "8fac0b15eb5c5de446ebf232896856c9c940f612c7be310ce4299fc2f2ca19f5",
+        "semantics": "72acfe946b282e3da0a37e655128321f6ece11060e77715b898692a48311a688",
+        "preview": "f6935ec18982caf236a91477ea0352520381e37316164f247c231176d2f34c11"
+      },
+      "suffix_bytes": {
+        "baseline": 640,
+        "memory": 15183,
+        "semantics": 1527,
+        "preview": 8030
+      },
+      "candidates": 3,
+      "past_actions": 4,
+      "preparation_ms": 26.770083,
+      "preview_simulations": 3
+    },
+    {
+      "sample": "layers-0010",
+      "source": "/Users/luxian/FoldOriganmi/CODEX_HARNESS_TESTING/runs/codex-20261107T183433007248Z",
+      "turn": 18,
+      "state_key": "cf00715abe028207592ef0c6",
+      "original_sha256": "f65ce9a6a2b9cc80ffa0714094c890a3708f16b5c24a27fc4f06d60af99e8674",
+      "suffix_sha256": {
+        "baseline": "f0ad2cd2da70f0eb7b1c76c06bd6779fb1a9dfe232e9b7612371846e6a33ccf5",
+        "memory": "e18858fe8f431e768a32c5a685cd472b389a85adf7d9ddd1219ff7f8f50b6110",
+        "semantics": "61347531173f54d17064e5060fa9456c2da6425fe52d0ad577c4a43c172ce9f8",
+        "preview": "86950461e7b47a6cdfae9f35e042cd9f1b1cc59f6c13bffbe84754997d45d8a9"
+      },
+      "suffix_bytes": {
+        "baseline": 510,
+        "memory": 4279,
+        "semantics": 1111,
+        "preview": 5263
+      },
+      "candidates": 2,
+      "past_actions": 1,
+      "preparation_ms": 15.051166000000023,
+      "preview_simulations": 2
+    }
+  ],
+  "protocol": {
+    "purpose": "Estimate the effect of decision support at frozen states; not identify an internal cognitive defect.",
+    "selection": "10 retrospectively selected mixed-outcome tasks; first success/failure pair with a shared-state route witness, last failure departure from that state. Not representative of all20 tasks.",
+    "baseline": "Original full prompt plus identical legal-fold menu; original tools retained. Not the historical untreated baseline.",
+    "intervention": "One support is added at the frozen decision only; later calls use normal prompts. Same low effort and original early-stop counters.",
+    "repeats": 3,
+    "continuation_call_cap": 20,
+    "primary": "Immediate choice: previously used transition, rejected action, or recovery action. Paired by node; repeated runs nested within nodes.",
+    "secondary": "Reached E_id within horizon and submitted E_id at finish, reported separately; actual new calls, tokens, wall time and preview engine cost.",
+    "caveats": [
+      "Additional prompt length is not matched: effects belong to the whole support package, not a pure cognitive mechanism.",
+      "No-information memory nodes must be reported separately.",
+      "A known successful route is a witness, not an exhaustive label of viable branches.",
+      "Uniform previews consume extra engine work. Equal model-call caps are not equal compute budgets.",
+      "No claim that restarts outperform long episodes; pass@5 remains stability analysis."
+    ]
+  }
+}

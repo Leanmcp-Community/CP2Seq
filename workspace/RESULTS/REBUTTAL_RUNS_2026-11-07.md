@@ -671,3 +671,22 @@ Sonnet 2 个：easy-0003、easy-0007）逐个查看了 finish 前最后一次 `c
 **历史接口限制：** 此诊断协议为了逐字重建历史，保留原有 plane-only 自动反馈，并在离线分析中使用 E_id。它应标为“历史接口下的干预”，不能声称运行时反馈已经修复。误导性的 matches 仍可能影响后续提交；相应失败不能全部归于模型。修复运行时 E_id 后的实验应单独定义新协议、重新生成全部条件，不能在一部分条件中静默更换比较器。
 
 已完成 Node 材料生成、候选应用合法性和状态哈希检查、Node语法检查、shell语法检查及 diff 检查。按用户规则未执行 Python 回放或模型评测，因此端到端运行仍待用户执行验证脚本。
+
+## 12. Sonnet 5.5 on all 20 pass@5 instances (complete 2026-11-09)
+
+L+A, text only, low, one episode each. Runs: claude-20261107T175727765597Z (easy 1-4, legacy
+prompt order), T183345423404Z (easy 5), T232254743781Z (layers 1-5), T234703304522Z (easy 6-7),
+T20261108T044658778503Z (easy 8-9), T20261109T215442499384Z (easy 10), T20261108T175644588326Z
+(layers 7-10), layers-0006 timed out twice (T20261108T155517688929Z turn 31,
+T20261109T220051615479Z turn 37; single call > 300 s) -> protocol failure, unsolved.
+
+| | easy | layers | total |
+| --- | --- | --- | --- |
+| Sonnet, E_id | 5/10 (0001, 0004, 0006, 0009, 0010) | 9/10 | 14/20 |
+| Sonnet, E_plane | 7/10 (+0003, 0007) | 9/10 | 16/20 |
+| Luna mean per repeat, E_id | 2.4 | 6.0 | 8.4 |
+| Luna pass@5, E_id | 5/10 (0002, 0005, 0006, 0009, 0010) | 9/10 | 14/20 |
+
+Backtracking (rerun with all runs): Luna L+A text-only 120 episodes, 384 backtracks, 104 to
+step 0, 71 of those discarded a repair <=3 folds; Sonnet 21 episodes, 82 backtracks, 16 to step
+0 (8 discarding a repair), re-made discarded folds 2/58. Paper 09-results updated.

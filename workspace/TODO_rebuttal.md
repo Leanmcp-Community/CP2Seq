@@ -19,7 +19,8 @@
 - [ ] Luna pass@5：在跑（v1 语料）。15:20 进度：第 1 轮 easy 2/10、layers 5/10；第 2 轮 easy 4/10、layers 7/10；第 3 轮 easy 跑到第 4 题。预计 19:00–20:00 跑完（不睡眠的前提下）。跑完算每轮 pass@1 和 pass@5，easy / layers 分开。
 - [x] Sonnet 续跑 layers-0001..0005：`claude-20261107T232254743781Z`，5/5 解出（E_plane），$5.27。
       Sonnet 试跑 10 题合计 8/10（easy 3/5，layers 5/5）；easy 待 E_id 复核；最早 4 道 easy 用旧 prompt 顺序。
-- [ ] Sonnet 补跑另外 10 题（easy-0006..0010、layers-0006..0010），约 $20：
+- [x] Sonnet 20 题完成：E_id 14/20（easy 5/10，layers 9/10；layers-0006 两次超时算未解出）。结果文档第 12 节。
+- [x] （已完成）Sonnet 补跑另外 10 题（easy-0006..0010、layers-0006..0010），约 $20：
       `caffeinate -i env EXECUTE=1 bash scripts/rebuttal/8c_sonnet_rest10.sh`（用户决定：最早 4 道 easy 不重跑）
       15:52 状态：easy-0006、0007 解出（claude-20261107T234703304522Z）；easy-0008 第 13 轮撞 5 小时上限（7pm 重置）。
       7pm 后续跑：`caffeinate -i env EXECUTE=1 EASY="easy-0008 easy-0009 easy-0010" bash scripts/rebuttal/8c_sonnet_rest10.sh`

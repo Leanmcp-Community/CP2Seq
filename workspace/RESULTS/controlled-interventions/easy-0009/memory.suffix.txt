@@ -1,0 +1,6 @@
+
+
+Decision support for this turn only. The following is the same legal-fold menu for every condition. IDs are labels only: return the original action JSON with its parameters, not an ID. Other original tools, including backtracking, remain available. No candidate is recommended.
+[{"id":"F1","action":{"angle_index":1,"offset":-0.25,"move_positive":true,"selection_mode":"all","over":true}},{"id":"F2","action":{"angle_index":0,"offset":-0.25,"move_positive":true,"selection_mode":"all","over":true}},{"id":"F3","action":{"angle_index":3,"offset":-0.25,"move_positive":true,"selection_mode":"all","over":false}}]
+Previously observed actions at this exact state, from your existing history only. These immediate outcomes do not imply that a branch is unsolvable:
+[]

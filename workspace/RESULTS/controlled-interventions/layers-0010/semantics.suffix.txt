@@ -1,0 +1,6 @@
+
+
+Decision support for this turn only. The following is the same legal-fold menu for every condition. IDs are labels only: return the original action JSON with its parameters, not an ID. Other original tools, including backtracking, remain available. No candidate is recommended.
+[{"id":"F1","action":{"angle_index":2,"offset":0.84375,"move_positive":true,"selection_mode":"all","over":false}},{"id":"F2","action":{"angle_index":1,"offset":-1.671875,"move_positive":true,"selection_mode":"all","over":false}}]
+Explicit meanings of the same actions:
+[{"id":"F1","meaning":"In current folded coordinates the line is x = 0.84375. From bottom-to-top layer ranks 0..5 (zero-based), move only material on the side x > 0.84375. Reflect it across the line, reverse the moving stack order, and place it below the stationary stack."},{"id":"F2","meaning":"In current folded coordinates the line is y - x = -1.671875. From bottom-to-top layer ranks 0..5 (zero-based), move only material on the side y - x > -1.671875. Reflect it across the line, reverse the moving stack order, and place it below the stationary stack."}]

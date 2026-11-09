@@ -273,32 +273,43 @@ than failing at the final step.
 some-layers episodes, and for each asked whether a local repair existed: whether the target is
 reachable (CP match plus $E_{\mathrm{id}}$) from the sequence with its last one, two or three folds
 removed, by depth-limited search within the reference depth plus two (node cap 4,000). In the
-68 text-only GPT-5.6 Luna L+A episodes there are 230 backtracks; 55 (24\%) return to the flat
-sheet, and the mean backtrack removes 2.6 folds. The search decided all 230: a repair within three
-folds existed for 128 (56\%), and 36 of the 55 returns to the flat sheet discarded such a repair.
-After a backtrack of two or more folds the model
-re-made the discarded folds in the same order in 42 of 176 cases. With basic tools, backtracks are
+120 text-only GPT-5.6 Luna L+A episodes (the original run and the five repeats) there are 384
+backtracks; 104 (27\%) return to the flat sheet, and the mean backtrack removes 2.6 folds. The
+search decided all 384: a repair within three folds existed for 232 (60\%), and 71 of the 104
+returns to the flat sheet discarded such a repair. After a backtrack of two or more folds the model
+re-made the discarded folds in the same order in 70 of 293 cases. With basic tools, backtracks are
 almost all single folds (mean 1.4), and after longer ones the model re-made the discarded folds in
-4 of 6 (B) and 11 of 14 (B+A) cases. In ten Claude Sonnet~5.5 L+A episodes (a pilot; four used an
-earlier prompt order), 9 of 32 backtracks return to the flat sheet and none re-makes the discarded
-folds. Extended to one episode on each of the 10 easy and the first 5 some-layers instances,
-Claude Sonnet~5.5 solves 4/10 easy and 5/5 some-layers under $E_{\mathrm{id}}$ (6/10 easy under
-$E_{\mathrm{plane}}$); the two $E_{\mathrm{plane}}$-only solves ended with \texttt{finish} after the
-comparison tool reported \emph{matches}, as for GPT-5.6 Luna (Section~\ref{sec:limitations}).
-With one episode per instance and mixed prompt orders this is not a model comparison.
+4 of 6 (B) and 11 of 14 (B+A) cases. In 21 Claude Sonnet~5.5 L+A episodes, 16 of 82 backtracks
+(20\%) return to the flat sheet, 8 of them discarding a repair within three folds, and the
+discarded folds are re-made in 2 of 58 cases.
 
 The tier-3 comparison can mark a state as close to the target when no short repair exists. On
-\texttt{layers-0003}, GPT-5.6 Luna (five restarts in three episodes) and Claude Sonnet~5.5 (one)
-restarted from a state with 8 of 9 layers, 6 of the 8 matching the target; in five of these six
-cases the search found no repair within three folds (in the sixth a one-fold repair existed), and
-in the Sonnet case the state had no legal fold. On \texttt{easy-0002}, three Luna episodes and one Sonnet episode
-reached the target's 24 layers in the wrong order and restarted; none had a repair within three
-folds. Restarting from such states is therefore not by itself an error. What the episodes show is
-that the models do not distinguish a recoverable near miss from a trap: for GPT-5.6 Luna, two
-thirds of returns to the flat sheet (36 of 55) discard a repair three or fewer folds away, while
-the feedback's closeness signal (layer count and matching layers) also marks unrecoverable states
-as close. These counts come from one model family plus a
-ten-episode pilot and from a bounded search; they describe behaviour, not its cause.
+\texttt{layers-0003}, GPT-5.6 Luna (nine restarts in six episodes) and Claude Sonnet~5.5 (one)
+restarted from a state with 8 of 9 layers, 6 of the 8 matching the target; in seven of these ten
+cases the search found no repair within three folds (in the other three a one-fold repair
+existed), and in the Sonnet case the state had no legal fold. On \texttt{easy-0002}, five Luna
+episodes and one Sonnet episode reached the target's 24 layers in the wrong order and restarted;
+none had a repair within three folds. Restarting from such states is therefore not by itself an
+error. What the episodes show is that the models do not distinguish a recoverable near miss from a
+trap: for GPT-5.6 Luna, about two thirds of returns to the flat sheet (71 of 104) discard a repair
+three or fewer folds away, while the feedback's closeness signal (layer count and matching layers)
+also marks unrecoverable states as close. These counts come from a bounded search; they describe
+behaviour, not its cause.
+
+\paragraph{A second model family.} Claude Sonnet~5.5 ran the same text-only L+A configuration on
+the 20 instances of the repeated-trial set, one episode each (the first four easy episodes used an
+earlier prompt order). Under $E_{\mathrm{id}}$ it solves 5 of 10 easy and 9 of 10 some-layers
+instances (14/20); under $E_{\mathrm{plane}}$ it solves 7 of 10 easy, and the two
+$E_{\mathrm{plane}}$-only solves ended with \texttt{finish} after the comparison tool reported
+\emph{matches}, as for GPT-5.6 Luna (Section~\ref{sec:limitations}). The unsolved some-layers
+instance, \texttt{layers-0006}, is a protocol failure: in two attempts a single call exceeded the
+300-second timeout (at turns 31 and 37); GPT-5.6 Luna never solved it in five repeats. On the same
+20 instances GPT-5.6 Luna solves 8.4 per repeat on average (2.4 easy, 6.0 some-layers) and 14 in at
+least one of five repeats. One Sonnet episode per instance thus matches Luna's five-repeat
+coverage, but the solved easy instances differ (Sonnet: 0001, 0004, 0006, 0009, 0010; Luna in at
+least one repeat: 0002, 0005, 0006, 0009, 0010). With one episode per instance and 20 instances
+this is consistent with a stronger model, not a measured difference; Sonnet still falls short of
+random legal folding on the same groups (Table~\ref{tab:matched-baselines}).
 
 \phantomsection
 \label{sec:results-difficulty}

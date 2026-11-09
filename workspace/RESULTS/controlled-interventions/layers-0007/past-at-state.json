@@ -1,0 +1,1815 @@
+[
+  {
+    "turn": 8,
+    "action": {
+      "name": "add_fold",
+      "arguments": {
+        "angle_index": 0,
+        "selection_mode": "top",
+        "layer_count": 4,
+        "offset": 0.15625,
+        "move_positive": false,
+        "over": true
+      }
+    },
+    "observed_result": {
+      "ok": true,
+      "state_id": 4,
+      "created_segments": 3,
+      "layers_bottom_to_top": [
+        {
+          "polygon": [
+            [
+              1.3125,
+              0.2734375
+            ],
+            [
+              1.3125,
+              0.109375
+            ],
+            [
+              0.75,
+              0.109375
+            ],
+            [
+              0.5859375,
+              0.2734375
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              0.9140625,
+              1
+            ],
+            [
+              0.75,
+              1
+            ],
+            [
+              0.75,
+              0.4375
+            ],
+            [
+              0.9140625,
+              0.2734375
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.5859375,
+              0.2734375
+            ],
+            [
+              0.75,
+              0.109375
+            ],
+            [
+              1.3125,
+              0.109375
+            ],
+            [
+              1.3125,
+              0.2734375
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              0.5859375,
+              0.2734375
+            ],
+            [
+              0.75,
+              0.4375
+            ],
+            [
+              0.75,
+              1
+            ],
+            [
+              0.5859375,
+              1
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.75,
+              0.2734375
+            ],
+            [
+              0.75,
+              0.109375
+            ],
+            [
+              0.5859375,
+              0.2734375
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              0.75,
+              0.2734375
+            ],
+            [
+              0.75,
+              0.4375
+            ],
+            [
+              0.5859375,
+              0.2734375
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.5859375,
+              0.2734375
+            ],
+            [
+              0.75,
+              0.109375
+            ],
+            [
+              0.75,
+              0.2734375
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              0.9140625,
+              0.2734375
+            ],
+            [
+              0.75,
+              0.4375
+            ],
+            [
+              0.75,
+              0.2734375
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.5,
+              0.15625
+            ],
+            [
+              0.5,
+              0.1875
+            ],
+            [
+              0.5859375,
+              0.2734375
+            ],
+            [
+              0.75,
+              0.2734375
+            ],
+            [
+              0.75,
+              0.15625
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              1,
+              0.15625
+            ],
+            [
+              1,
+              0.1875
+            ],
+            [
+              0.9140625,
+              0.2734375
+            ],
+            [
+              0.75,
+              0.2734375
+            ],
+            [
+              0.75,
+              0.15625
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.75,
+              0.15625
+            ],
+            [
+              0.75,
+              0.2734375
+            ],
+            [
+              0.5859375,
+              0.2734375
+            ],
+            [
+              0.46875,
+              0.15625
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              0.75,
+              0.15625
+            ],
+            [
+              0.75,
+              0.2734375
+            ],
+            [
+              0.5859375,
+              0.2734375
+            ],
+            [
+              0.46875,
+              0.15625
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.46875,
+              0.15625
+            ],
+            [
+              0.5859375,
+              0.2734375
+            ],
+            [
+              1.3125,
+              0.2734375
+            ],
+            [
+              1.3125,
+              0.15625
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              0.46875,
+              0.15625
+            ],
+            [
+              0.5859375,
+              0.2734375
+            ],
+            [
+              0.5859375,
+              1
+            ],
+            [
+              0.46875,
+              1
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.5,
+              0.1875
+            ],
+            [
+              1.3125,
+              0.1875
+            ],
+            [
+              1.3125,
+              0.2734375
+            ],
+            [
+              0.5859375,
+              0.2734375
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              1,
+              0.1875
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0.9140625,
+              1
+            ],
+            [
+              0.9140625,
+              0.2734375
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.3125,
+              0.625
+            ],
+            [
+              0.3125,
+              0.3125
+            ],
+            [
+              0.46875,
+              0.15625
+            ],
+            [
+              1.3125,
+              0.15625
+            ],
+            [
+              1.3125,
+              0.296875
+            ],
+            [
+              1.3125,
+              0.625
+            ],
+            [
+              0.984375,
+              0.625
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              0,
+              0
+            ],
+            [
+              0.3125,
+              0
+            ],
+            [
+              0.46875,
+              0.15625
+            ],
+            [
+              0.46875,
+              1
+            ],
+            [
+              0.328125,
+              1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              0.671875
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.3125,
+              0.3125
+            ],
+            [
+              0.75,
+              0.3125
+            ],
+            [
+              0.75,
+              0.15625
+            ],
+            [
+              0.46875,
+              0.15625
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              0.3125,
+              0
+            ],
+            [
+              0.75,
+              0
+            ],
+            [
+              0.75,
+              0.15625
+            ],
+            [
+              0.46875,
+              0.15625
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.75,
+              0.3125
+            ],
+            [
+              0.5,
+              0.3125
+            ],
+            [
+              0.5,
+              0.15625
+            ],
+            [
+              0.75,
+              0.15625
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              0.75,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              0.15625
+            ],
+            [
+              0.75,
+              0.15625
+            ]
+          ]
+        }
+      ],
+      "revision": 4,
+      "sequence": [
+        {
+          "angle_index": 2,
+          "selection_mode": "all",
+          "offset": 0.75,
+          "move_positive": true,
+          "over": false
+        },
+        {
+          "angle_index": 1,
+          "selection_mode": "all",
+          "offset": -0.3125,
+          "move_positive": true,
+          "over": true
+        },
+        {
+          "angle_index": 0,
+          "selection_mode": "all",
+          "offset": 0.2734375,
+          "move_positive": true,
+          "over": false
+        },
+        {
+          "angle_index": 0,
+          "selection_mode": "top",
+          "layer_count": 4,
+          "offset": 0.15625,
+          "move_positive": false,
+          "over": true
+        }
+      ],
+      "comparison_now": {
+        "tier": 3,
+        "tier_meaning": "which layers disagree and what each one should be",
+        "layers_now": 11,
+        "layers_target": 12,
+        "layer_difference": -1,
+        "summary": "1 layer short of the target: more folding to do.",
+        "uses_reference_sequence": false,
+        "alignment": {
+          "compared_under": "the target turned over (stack reversed, parities flipped)",
+          "layers_matching": 2,
+          "layers_compared": 11
+        },
+        "diagnosis": "layer_count",
+        "diagnosis_meaning": "The stacks are different sizes, so folding is incomplete or overdone; ranks are compared only as deep as the shorter stack.",
+        "mismatched_ranks": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "corrections": [
+          {
+            "rank": 2,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          },
+          {
+            "rank": 3,
+            "parity_now": 1,
+            "parity_target": 0,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          },
+          {
+            "rank": 4,
+            "parity_now": 0,
+            "parity_target": 1,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          },
+          {
+            "rank": 5,
+            "parity_now": 1,
+            "parity_target": 0,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          },
+          {
+            "rank": 6,
+            "parity_now": 0,
+            "parity_target": 1,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          },
+          {
+            "rank": 7,
+            "parity_now": 1,
+            "parity_target": 0,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          },
+          {
+            "rank": 8,
+            "parity_now": 0,
+            "parity_target": 1,
+            "fix": "this layer should face the other way (parity 1, not 0): the fold that placed it went over where it should have gone under, or the other side of the line moved"
+          },
+          {
+            "rank": 9,
+            "parity_now": 1,
+            "parity_target": 0,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          },
+          {
+            "rank": 10,
+            "parity_now": 0,
+            "parity_target": 1,
+            "fix": "this layer should face the other way (parity 1, not 0): the fold that placed it went over where it should have gone under, or the other side of the line moved"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "turn": 13,
+    "action": {
+      "name": "add_fold",
+      "arguments": {
+        "angle_index": 1,
+        "selection_mode": "all",
+        "offset": -1.296875,
+        "move_positive": true,
+        "over": true
+      }
+    },
+    "observed_result": {
+      "ok": true,
+      "state_id": 4,
+      "created_segments": 1,
+      "layers_bottom_to_top": [
+        {
+          "polygon": [
+            [
+              1.3125,
+              0.015625
+            ],
+            [
+              1.3125,
+              -0.3125
+            ],
+            [
+              0.984375,
+              -0.3125
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              0.328125,
+              1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              0.671875
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              1.484375,
+              -0.796875
+            ],
+            [
+              1.484375,
+              0.015625
+            ],
+            [
+              1.5703125,
+              0.015625
+            ],
+            [
+              1.5703125,
+              -0.7109375
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              1,
+              0.1875
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0.9140625,
+              1
+            ],
+            [
+              0.9140625,
+              0.2734375
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.984375,
+              -0.984375
+            ],
+            [
+              1.296875,
+              -0.984375
+            ],
+            [
+              1.5703125,
+              -0.7109375
+            ],
+            [
+              1.5703125,
+              0.015625
+            ],
+            [
+              1.453125,
+              0.015625
+            ],
+            [
+              1.3125,
+              0.015625
+            ],
+            [
+              0.984375,
+              -0.3125
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              0,
+              0
+            ],
+            [
+              0.3125,
+              0
+            ],
+            [
+              0.5859375,
+              0.2734375
+            ],
+            [
+              0.5859375,
+              1
+            ],
+            [
+              0.46875,
+              1
+            ],
+            [
+              0.328125,
+              1
+            ],
+            [
+              0,
+              0.671875
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              1.296875,
+              -0.984375
+            ],
+            [
+              1.296875,
+              -0.546875
+            ],
+            [
+              1.5703125,
+              -0.546875
+            ],
+            [
+              1.5703125,
+              -0.7109375
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              0.3125,
+              0
+            ],
+            [
+              0.75,
+              0
+            ],
+            [
+              0.75,
+              0.2734375
+            ],
+            [
+              0.5859375,
+              0.2734375
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              1.296875,
+              -0.546875
+            ],
+            [
+              1.296875,
+              -0.796875
+            ],
+            [
+              1.453125,
+              -0.796875
+            ],
+            [
+              1.484375,
+              -0.796875
+            ],
+            [
+              1.5703125,
+              -0.7109375
+            ],
+            [
+              1.5703125,
+              -0.546875
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              0.75,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              0.15625
+            ],
+            [
+              1,
+              0.1875
+            ],
+            [
+              0.9140625,
+              0.2734375
+            ],
+            [
+              0.75,
+              0.2734375
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              1.5703125,
+              -0.7109375
+            ],
+            [
+              1.40625,
+              -0.546875
+            ],
+            [
+              1.5703125,
+              -0.546875
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              0.9140625,
+              0.2734375
+            ],
+            [
+              0.75,
+              0.4375
+            ],
+            [
+              0.75,
+              0.2734375
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              1.5703125,
+              -0.546875
+            ],
+            [
+              1.40625,
+              -0.546875
+            ],
+            [
+              1.5703125,
+              -0.7109375
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              0.75,
+              0.2734375
+            ],
+            [
+              0.75,
+              0.4375
+            ],
+            [
+              0.5859375,
+              0.2734375
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              1.5703125,
+              -0.7109375
+            ],
+            [
+              1.40625,
+              -0.546875
+            ],
+            [
+              1.40625,
+              0.015625
+            ],
+            [
+              1.5703125,
+              0.015625
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              0.5859375,
+              0.2734375
+            ],
+            [
+              0.75,
+              0.4375
+            ],
+            [
+              0.75,
+              1
+            ],
+            [
+              0.5859375,
+              1
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              1.5703125,
+              0.015625
+            ],
+            [
+              1.40625,
+              0.015625
+            ],
+            [
+              1.40625,
+              -0.546875
+            ],
+            [
+              1.5703125,
+              -0.7109375
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              0.9140625,
+              1
+            ],
+            [
+              0.75,
+              1
+            ],
+            [
+              0.75,
+              0.4375
+            ],
+            [
+              0.9140625,
+              0.2734375
+            ]
+          ]
+        }
+      ],
+      "revision": 8,
+      "sequence": [
+        {
+          "angle_index": 2,
+          "selection_mode": "all",
+          "offset": 0.75,
+          "move_positive": true,
+          "over": false
+        },
+        {
+          "angle_index": 1,
+          "selection_mode": "all",
+          "offset": -0.3125,
+          "move_positive": true,
+          "over": true
+        },
+        {
+          "angle_index": 0,
+          "selection_mode": "all",
+          "offset": 0.2734375,
+          "move_positive": true,
+          "over": false
+        },
+        {
+          "angle_index": 1,
+          "selection_mode": "all",
+          "offset": -1.296875,
+          "move_positive": true,
+          "over": true
+        }
+      ],
+      "comparison_now": {
+        "tier": 3,
+        "tier_meaning": "which layers disagree and what each one should be",
+        "layers_now": 9,
+        "layers_target": 12,
+        "layer_difference": -3,
+        "summary": "3 layers short of the target: more folding to do.",
+        "uses_reference_sequence": false,
+        "alignment": {
+          "compared_under": "a direct rotation/translation of the target",
+          "layers_matching": 0,
+          "layers_compared": 9
+        },
+        "diagnosis": "layer_count",
+        "diagnosis_meaning": "The stacks are different sizes, so folding is incomplete or overdone; ranks are compared only as deep as the shorter stack.",
+        "mismatched_ranks": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "corrections": [
+          {
+            "rank": 0,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          },
+          {
+            "rank": 1,
+            "parity_now": 1,
+            "parity_target": 0,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          },
+          {
+            "rank": 2,
+            "parity_now": 0,
+            "parity_target": 1,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          },
+          {
+            "rank": 3,
+            "parity_now": 1,
+            "parity_target": 0,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          },
+          {
+            "rank": 4,
+            "parity_now": 0,
+            "parity_target": 1,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          },
+          {
+            "rank": 5,
+            "parity_now": 1,
+            "parity_target": 0,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          },
+          {
+            "rank": 6,
+            "parity_now": 0,
+            "parity_target": 1,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          },
+          {
+            "rank": 7,
+            "parity_now": 1,
+            "parity_target": 0,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          },
+          {
+            "rank": 8,
+            "parity_now": 0,
+            "parity_target": 1,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "turn": 15,
+    "action": {
+      "name": "add_fold",
+      "arguments": {
+        "angle_index": 1,
+        "selection_mode": "all",
+        "offset": -1.296875,
+        "move_positive": true,
+        "over": true
+      }
+    },
+    "observed_result": {
+      "ok": true,
+      "state_id": 4,
+      "created_segments": 1,
+      "layers_bottom_to_top": [
+        {
+          "polygon": [
+            [
+              1.3125,
+              0.015625
+            ],
+            [
+              1.3125,
+              -0.3125
+            ],
+            [
+              0.984375,
+              -0.3125
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              0.328125,
+              1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              0.671875
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              1.484375,
+              -0.796875
+            ],
+            [
+              1.484375,
+              0.015625
+            ],
+            [
+              1.5703125,
+              0.015625
+            ],
+            [
+              1.5703125,
+              -0.7109375
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              1,
+              0.1875
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0.9140625,
+              1
+            ],
+            [
+              0.9140625,
+              0.2734375
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.984375,
+              -0.984375
+            ],
+            [
+              1.296875,
+              -0.984375
+            ],
+            [
+              1.5703125,
+              -0.7109375
+            ],
+            [
+              1.5703125,
+              0.015625
+            ],
+            [
+              1.453125,
+              0.015625
+            ],
+            [
+              1.3125,
+              0.015625
+            ],
+            [
+              0.984375,
+              -0.3125
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              0,
+              0
+            ],
+            [
+              0.3125,
+              0
+            ],
+            [
+              0.5859375,
+              0.2734375
+            ],
+            [
+              0.5859375,
+              1
+            ],
+            [
+              0.46875,
+              1
+            ],
+            [
+              0.328125,
+              1
+            ],
+            [
+              0,
+              0.671875
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              1.296875,
+              -0.984375
+            ],
+            [
+              1.296875,
+              -0.546875
+            ],
+            [
+              1.5703125,
+              -0.546875
+            ],
+            [
+              1.5703125,
+              -0.7109375
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              0.3125,
+              0
+            ],
+            [
+              0.75,
+              0
+            ],
+            [
+              0.75,
+              0.2734375
+            ],
+            [
+              0.5859375,
+              0.2734375
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              1.296875,
+              -0.546875
+            ],
+            [
+              1.296875,
+              -0.796875
+            ],
+            [
+              1.453125,
+              -0.796875
+            ],
+            [
+              1.484375,
+              -0.796875
+            ],
+            [
+              1.5703125,
+              -0.7109375
+            ],
+            [
+              1.5703125,
+              -0.546875
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              0.75,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              0.15625
+            ],
+            [
+              1,
+              0.1875
+            ],
+            [
+              0.9140625,
+              0.2734375
+            ],
+            [
+              0.75,
+              0.2734375
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              1.5703125,
+              -0.7109375
+            ],
+            [
+              1.40625,
+              -0.546875
+            ],
+            [
+              1.5703125,
+              -0.546875
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              0.9140625,
+              0.2734375
+            ],
+            [
+              0.75,
+              0.4375
+            ],
+            [
+              0.75,
+              0.2734375
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              1.5703125,
+              -0.546875
+            ],
+            [
+              1.40625,
+              -0.546875
+            ],
+            [
+              1.5703125,
+              -0.7109375
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              0.75,
+              0.2734375
+            ],
+            [
+              0.75,
+              0.4375
+            ],
+            [
+              0.5859375,
+              0.2734375
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              1.5703125,
+              -0.7109375
+            ],
+            [
+              1.40625,
+              -0.546875
+            ],
+            [
+              1.40625,
+              0.015625
+            ],
+            [
+              1.5703125,
+              0.015625
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              0.5859375,
+              0.2734375
+            ],
+            [
+              0.75,
+              0.4375
+            ],
+            [
+              0.75,
+              1
+            ],
+            [
+              0.5859375,
+              1
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              1.5703125,
+              0.015625
+            ],
+            [
+              1.40625,
+              0.015625
+            ],
+            [
+              1.40625,
+              -0.546875
+            ],
+            [
+              1.5703125,
+              -0.7109375
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              0.9140625,
+              1
+            ],
+            [
+              0.75,
+              1
+            ],
+            [
+              0.75,
+              0.4375
+            ],
+            [
+              0.9140625,
+              0.2734375
+            ]
+          ]
+        }
+      ],
+      "revision": 10,
+      "sequence": [
+        {
+          "angle_index": 2,
+          "selection_mode": "all",
+          "offset": 0.75,
+          "move_positive": true,
+          "over": false
+        },
+        {
+          "angle_index": 1,
+          "selection_mode": "all",
+          "offset": -0.3125,
+          "move_positive": true,
+          "over": true
+        },
+        {
+          "angle_index": 0,
+          "selection_mode": "all",
+          "offset": 0.2734375,
+          "move_positive": true,
+          "over": false
+        },
+        {
+          "angle_index": 1,
+          "selection_mode": "all",
+          "offset": -1.296875,
+          "move_positive": true,
+          "over": true
+        }
+      ],
+      "comparison_now": {
+        "tier": 3,
+        "tier_meaning": "which layers disagree and what each one should be",
+        "layers_now": 9,
+        "layers_target": 12,
+        "layer_difference": -3,
+        "summary": "3 layers short of the target: more folding to do.",
+        "uses_reference_sequence": false,
+        "alignment": {
+          "compared_under": "a direct rotation/translation of the target",
+          "layers_matching": 0,
+          "layers_compared": 9
+        },
+        "diagnosis": "layer_count",
+        "diagnosis_meaning": "The stacks are different sizes, so folding is incomplete or overdone; ranks are compared only as deep as the shorter stack.",
+        "mismatched_ranks": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "corrections": [
+          {
+            "rank": 0,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          },
+          {
+            "rank": 1,
+            "parity_now": 1,
+            "parity_target": 0,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          },
+          {
+            "rank": 2,
+            "parity_now": 0,
+            "parity_target": 1,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          },
+          {
+            "rank": 3,
+            "parity_now": 1,
+            "parity_target": 0,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          },
+          {
+            "rank": 4,
+            "parity_now": 0,
+            "parity_target": 1,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          },
+          {
+            "rank": 5,
+            "parity_now": 1,
+            "parity_target": 0,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          },
+          {
+            "rank": 6,
+            "parity_now": 0,
+            "parity_target": 1,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          },
+          {
+            "rank": 7,
+            "parity_now": 1,
+            "parity_target": 0,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          },
+          {
+            "rank": 8,
+            "parity_now": 0,
+            "parity_target": 1,
+            "fix": "this layer is not the target's shape at this rank: an earlier fold took the wrong line or the wrong side"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "turn": 19,
+    "action": {
+      "name": "restore_revision",
+      "arguments": {
+        "revision": 2
+      }
+    },
+    "observed_result": {
+      "ok": true,
+      "state_id": 2,
+      "layers_bottom_to_top": [
+        {
+          "polygon": [
+            [
+              0.75,
+              0
+            ],
+            [
+              0.5,
+              0
+            ],
+            [
+              0.5,
+              0.15625
+            ],
+            [
+              0.5,
+              0.1875
+            ],
+            [
+              0.75,
+              0.4375
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              0.75,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              0.15625
+            ],
+            [
+              1,
+              0.1875
+            ],
+            [
+              0.75,
+              0.4375
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.3125,
+              0
+            ],
+            [
+              0.75,
+              0
+            ],
+            [
+              0.75,
+              0.4375
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              0.3125,
+              0
+            ],
+            [
+              0.75,
+              0
+            ],
+            [
+              0.75,
+              0.4375
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.3125,
+              -0.3125
+            ],
+            [
+              0.3125,
+              0
+            ],
+            [
+              0.75,
+              0.4375
+            ],
+            [
+              1.3125,
+              0.4375
+            ],
+            [
+              1.3125,
+              0.2734375
+            ],
+            [
+              1.3125,
+              0.15625
+            ],
+            [
+              1.3125,
+              0.015625
+            ],
+            [
+              1.3125,
+              -0.3125
+            ],
+            [
+              0.984375,
+              -0.3125
+            ]
+          ],
+          "parity": 1,
+          "sheet_polygon": [
+            [
+              0,
+              0
+            ],
+            [
+              0.3125,
+              0
+            ],
+            [
+              0.75,
+              0.4375
+            ],
+            [
+              0.75,
+              1
+            ],
+            [
+              0.5859375,
+              1
+            ],
+            [
+              0.46875,
+              1
+            ],
+            [
+              0.328125,
+              1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              0.671875
+            ]
+          ]
+        },
+        {
+          "polygon": [
+            [
+              0.5,
+              0.1875
+            ],
+            [
+              1.3125,
+              0.1875
+            ],
+            [
+              1.3125,
+              0.2734375
+            ],
+            [
+              1.3125,
+              0.4375
+            ],
+            [
+              0.75,
+              0.4375
+            ]
+          ],
+          "parity": 0,
+          "sheet_polygon": [
+            [
+              1,
+              0.1875
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0.9140625,
+              1
+            ],
+            [
+              0.75,
+              1
+            ],
+            [
+              0.75,
+              0.4375
+            ]
+          ]
+        }
+      ],
+      "revision": 14,
+      "sequence": [
+        {
+          "angle_index": 2,
+          "selection_mode": "all",
+          "offset": 0.75,
+          "move_positive": true,
+          "over": false
+        },
+        {
+          "angle_index": 1,
+          "selection_mode": "all",
+          "offset": -0.3125,
+          "move_positive": true,
+          "over": true
+        }
+      ]
+    }
+  }
+]

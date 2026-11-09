@@ -1,0 +1,4 @@
+
+
+Decision support for this turn only. The following is the same legal-fold menu for every condition. IDs are labels only: return the original action JSON with its parameters, not an ID. Other original tools, including backtracking, remain available. No candidate is recommended.
+[{"id":"F1","action":{"angle_index":2,"offset":0.17578125,"move_positive":true,"selection_mode":"all","over":true}},{"id":"F2","action":{"angle_index":3,"offset":1.53125,"move_positive":true,"selection_mode":"all","over":false}},{"id":"F3","action":{"angle_index":2,"offset":0.09375,"move_positive":true,"selection_mode":"all","over":true}},{"id":"F4","action":{"angle_index":2,"offset":0.01171875,"move_positive":true,"selection_mode":"all","over":false}}]

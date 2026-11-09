@@ -1,0 +1,1476 @@
+[
+  {
+    "sample": "easy-0002",
+    "selection_pair": {
+      "successRepeat": 5,
+      "failureRepeat": 1,
+      "commonInitialAcceptedFoldCount": 6,
+      "divergence": {
+        "success": {
+          "turn": 13,
+          "action": {
+            "name": "add_fold",
+            "arguments": {
+              "angle_index": 3,
+              "offset": 0.5,
+              "move_positive": true,
+              "over": true
+            }
+          },
+          "ok": true,
+          "from": "18f3ed3e49ff123df8b3d5a0",
+          "to": "5785df737bbd1b0f9b50063b",
+          "depthBefore": 0,
+          "depthAfter": 1,
+          "eid": false,
+          "plane": false,
+          "cp": false,
+          "repeated": false,
+          "revisit": false,
+          "backtrack": false,
+          "deadEnd": false,
+          "diagnosis": "layer_count"
+        },
+        "failure": {
+          "turn": 14,
+          "action": {
+            "name": "add_fold",
+            "arguments": {
+              "angle_index": 1,
+              "offset": -0.5,
+              "move_positive": true,
+              "over": false
+            }
+          },
+          "ok": true,
+          "from": "18f3ed3e49ff123df8b3d5a0",
+          "to": "68c42a1f1ec528bd9772d2d6",
+          "depthBefore": 0,
+          "depthAfter": 1,
+          "eid": false,
+          "plane": false,
+          "cp": false,
+          "repeated": false,
+          "revisit": false,
+          "backtrack": false,
+          "deadEnd": false,
+          "diagnosis": "layer_count"
+        }
+      },
+      "firstUntriedSuccessfulRouteEdge": {
+        "step": 1,
+        "from": "18f3ed3e49ff123df8b3d5a0",
+        "to": "5785df737bbd1b0f9b50063b",
+        "sourceVisitedByFailure": true,
+        "successEvents": [
+          {
+            "turn": 13,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 3,
+                "offset": 0.5,
+                "move_positive": true,
+                "over": true
+              }
+            },
+            "ok": true,
+            "from": "18f3ed3e49ff123df8b3d5a0",
+            "to": "5785df737bbd1b0f9b50063b",
+            "depthBefore": 0,
+            "depthAfter": 1,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": false,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          }
+        ],
+        "failureDepartures": [
+          {
+            "turn": 2,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 2,
+                "offset": 0.5,
+                "move_positive": true,
+                "over": true
+              }
+            },
+            "ok": true,
+            "from": "18f3ed3e49ff123df8b3d5a0",
+            "to": "6c9cb5e5985dace0cb2dcb4c",
+            "depthBefore": 0,
+            "depthAfter": 1,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": false,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          },
+          {
+            "turn": 14,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 1,
+                "offset": -0.5,
+                "move_positive": true,
+                "over": false
+              }
+            },
+            "ok": true,
+            "from": "18f3ed3e49ff123df8b3d5a0",
+            "to": "68c42a1f1ec528bd9772d2d6",
+            "depthBefore": 0,
+            "depthAfter": 1,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": false,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          },
+          {
+            "turn": 23,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 1,
+                "offset": -0.5,
+                "move_positive": true,
+                "over": false
+              }
+            },
+            "ok": true,
+            "from": "18f3ed3e49ff123df8b3d5a0",
+            "to": "68c42a1f1ec528bd9772d2d6",
+            "depthBefore": 0,
+            "depthAfter": 1,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": true,
+            "revisit": true,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          }
+        ]
+      }
+    },
+    "warning": "ANALYST ONLY. Never append this file or its labels to a model prompt."
+  },
+  {
+    "sample": "easy-0005",
+    "selection_pair": {
+      "successRepeat": 2,
+      "failureRepeat": 1,
+      "commonInitialAcceptedFoldCount": 4,
+      "divergence": {
+        "success": {
+          "turn": 13,
+          "action": {
+            "name": "add_fold",
+            "arguments": {
+              "angle_index": 3,
+              "offset": -0.25,
+              "move_positive": true,
+              "over": false
+            }
+          },
+          "ok": true,
+          "from": "b943811546337f637c56ed17",
+          "to": "965ab2ec6b97bfd53be14327",
+          "depthBefore": 2,
+          "depthAfter": 3,
+          "eid": false,
+          "plane": false,
+          "cp": false,
+          "repeated": false,
+          "revisit": false,
+          "backtrack": false,
+          "deadEnd": false,
+          "diagnosis": "layer_count"
+        },
+        "failure": {
+          "turn": 11,
+          "action": {
+            "name": "add_fold",
+            "arguments": {
+              "angle_index": 3,
+              "offset": -0.25,
+              "move_positive": true,
+              "over": true
+            }
+          },
+          "ok": true,
+          "from": "1f2591d4770f801bc7b56f94",
+          "to": "acff03b5b1bb41bc0bc0d070",
+          "depthBefore": 3,
+          "depthAfter": 4,
+          "eid": false,
+          "plane": false,
+          "cp": false,
+          "repeated": false,
+          "revisit": false,
+          "backtrack": false,
+          "deadEnd": false,
+          "diagnosis": "layer_count"
+        }
+      },
+      "firstUntriedSuccessfulRouteEdge": {
+        "step": 3,
+        "from": "b943811546337f637c56ed17",
+        "to": "965ab2ec6b97bfd53be14327",
+        "sourceVisitedByFailure": true,
+        "successEvents": [
+          {
+            "turn": 13,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 3,
+                "offset": -0.25,
+                "move_positive": true,
+                "over": false
+              }
+            },
+            "ok": true,
+            "from": "b943811546337f637c56ed17",
+            "to": "965ab2ec6b97bfd53be14327",
+            "depthBefore": 2,
+            "depthAfter": 3,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": false,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          }
+        ],
+        "failureDepartures": [
+          {
+            "turn": 6,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 1,
+                "offset": -0.25,
+                "move_positive": true,
+                "over": false
+              }
+            },
+            "ok": true,
+            "from": "b943811546337f637c56ed17",
+            "to": "1f2591d4770f801bc7b56f94",
+            "depthBefore": 2,
+            "depthAfter": 3,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": false,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          }
+        ]
+      }
+    },
+    "warning": "ANALYST ONLY. Never append this file or its labels to a model prompt."
+  },
+  {
+    "sample": "easy-0006",
+    "selection_pair": {
+      "successRepeat": 1,
+      "failureRepeat": 3,
+      "commonInitialAcceptedFoldCount": 4,
+      "divergence": {
+        "success": {
+          "turn": 11,
+          "action": {
+            "name": "add_fold",
+            "arguments": {
+              "angle_index": 3,
+              "offset": 1.25,
+              "move_positive": true,
+              "over": false
+            }
+          },
+          "ok": true,
+          "from": "43c259f3df526e46fbeedef9",
+          "to": "bf556e5ab6cdeb0d69d3f933",
+          "depthBefore": 2,
+          "depthAfter": 3,
+          "eid": false,
+          "plane": false,
+          "cp": false,
+          "repeated": false,
+          "revisit": false,
+          "backtrack": false,
+          "deadEnd": false,
+          "diagnosis": "layer_count"
+        },
+        "failure": {
+          "turn": 11,
+          "action": {
+            "name": "add_fold",
+            "arguments": {
+              "angle_index": 1,
+              "offset": 0.75,
+              "move_positive": true,
+              "over": false
+            }
+          },
+          "ok": true,
+          "from": "3a93318b088e4a1a13c47f3c",
+          "to": "94d705042be99d90710301ab",
+          "depthBefore": 0,
+          "depthAfter": 1,
+          "eid": false,
+          "plane": false,
+          "cp": false,
+          "repeated": false,
+          "revisit": false,
+          "backtrack": false,
+          "deadEnd": false,
+          "diagnosis": "layer_count"
+        }
+      },
+      "firstUntriedSuccessfulRouteEdge": {
+        "step": 3,
+        "from": "43c259f3df526e46fbeedef9",
+        "to": "bf556e5ab6cdeb0d69d3f933",
+        "sourceVisitedByFailure": true,
+        "successEvents": [
+          {
+            "turn": 11,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 3,
+                "offset": 1.25,
+                "move_positive": true,
+                "over": false
+              }
+            },
+            "ok": true,
+            "from": "43c259f3df526e46fbeedef9",
+            "to": "bf556e5ab6cdeb0d69d3f933",
+            "depthBefore": 2,
+            "depthAfter": 3,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": false,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          }
+        ],
+        "failureDepartures": [
+          {
+            "turn": 10,
+            "action": {
+              "name": "restore_revision",
+              "arguments": {
+                "revision": 0
+              }
+            },
+            "ok": true,
+            "from": "43c259f3df526e46fbeedef9",
+            "to": "3a93318b088e4a1a13c47f3c",
+            "depthBefore": 2,
+            "depthAfter": 0,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": true,
+            "backtrack": true,
+            "deadEnd": false
+          }
+        ]
+      }
+    },
+    "warning": "ANALYST ONLY. Never append this file or its labels to a model prompt."
+  },
+  {
+    "sample": "easy-0009",
+    "selection_pair": {
+      "successRepeat": 2,
+      "failureRepeat": 1,
+      "commonInitialAcceptedFoldCount": 8,
+      "divergence": {
+        "success": {
+          "turn": 18,
+          "action": {
+            "name": "add_fold",
+            "arguments": {
+              "angle_index": 2,
+              "offset": 0,
+              "move_positive": true,
+              "over": false
+            }
+          },
+          "ok": true,
+          "from": "2cbb51fe50a9dc9d4f6c0991",
+          "to": "78f4b8f8ca4ed4c6bda3aaf7",
+          "depthBefore": 5,
+          "depthAfter": 6,
+          "eid": false,
+          "plane": false,
+          "cp": true,
+          "repeated": false,
+          "revisit": false,
+          "backtrack": false,
+          "deadEnd": false,
+          "diagnosis": "order"
+        },
+        "failure": {
+          "turn": 17,
+          "action": {
+            "name": "add_fold",
+            "arguments": {
+              "angle_index": 3,
+              "offset": -0.25,
+              "move_positive": true,
+              "over": false
+            }
+          },
+          "ok": true,
+          "from": "49b413b5ed9fac533f3ff849",
+          "to": "2cbb51fe50a9dc9d4f6c0991",
+          "depthBefore": 4,
+          "depthAfter": 5,
+          "eid": false,
+          "plane": false,
+          "cp": false,
+          "repeated": true,
+          "revisit": true,
+          "backtrack": false,
+          "deadEnd": false,
+          "diagnosis": "layer_count"
+        }
+      },
+      "firstUntriedSuccessfulRouteEdge": {
+        "step": 4,
+        "from": "6079ec611d4f8dca1be68b40",
+        "to": "aa5a897ed02211b5a523c8f0",
+        "sourceVisitedByFailure": true,
+        "successEvents": [
+          {
+            "turn": 20,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 0,
+                "offset": -0.25,
+                "move_positive": true,
+                "over": true
+              }
+            },
+            "ok": true,
+            "from": "6079ec611d4f8dca1be68b40",
+            "to": "aa5a897ed02211b5a523c8f0",
+            "depthBefore": 3,
+            "depthAfter": 4,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": false,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          }
+        ],
+        "failureDepartures": [
+          {
+            "turn": 8,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 1,
+                "offset": -0.25,
+                "move_positive": true,
+                "over": true
+              }
+            },
+            "ok": true,
+            "from": "6079ec611d4f8dca1be68b40",
+            "to": "49b413b5ed9fac533f3ff849",
+            "depthBefore": 3,
+            "depthAfter": 4,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": false,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          }
+        ]
+      }
+    },
+    "warning": "ANALYST ONLY. Never append this file or its labels to a model prompt."
+  },
+  {
+    "sample": "easy-0010",
+    "selection_pair": {
+      "successRepeat": 1,
+      "failureRepeat": 2,
+      "commonInitialAcceptedFoldCount": 1,
+      "divergence": {
+        "success": {
+          "turn": 4,
+          "action": {
+            "name": "add_fold",
+            "arguments": {
+              "angle_index": 0,
+              "offset": 0.25,
+              "move_positive": true,
+              "over": false
+            }
+          },
+          "ok": true,
+          "from": "9a26cc2c5def6d95f2405063",
+          "to": "cb71c5a9cdcccba897b78acc",
+          "depthBefore": 1,
+          "depthAfter": 2,
+          "eid": false,
+          "plane": false,
+          "cp": false,
+          "repeated": false,
+          "revisit": false,
+          "backtrack": false,
+          "deadEnd": false,
+          "diagnosis": "layer_count"
+        },
+        "failure": {
+          "turn": 4,
+          "action": {
+            "name": "add_fold",
+            "arguments": {
+              "angle_index": 0,
+              "offset": 0.75,
+              "move_positive": true,
+              "over": false
+            }
+          },
+          "ok": true,
+          "from": "9a26cc2c5def6d95f2405063",
+          "to": "66bb79d1a252c3097917a2b3",
+          "depthBefore": 1,
+          "depthAfter": 2,
+          "eid": false,
+          "plane": false,
+          "cp": false,
+          "repeated": false,
+          "revisit": false,
+          "backtrack": false,
+          "deadEnd": false,
+          "diagnosis": "layer_count"
+        }
+      },
+      "firstUntriedSuccessfulRouteEdge": {
+        "step": 4,
+        "from": "f805161912b0f6afaacff213",
+        "to": "44f5e139fb29fbb14d3320a9",
+        "sourceVisitedByFailure": true,
+        "successEvents": [
+          {
+            "turn": 15,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 3,
+                "offset": 0.75,
+                "move_positive": true,
+                "over": false
+              }
+            },
+            "ok": true,
+            "from": "f805161912b0f6afaacff213",
+            "to": "44f5e139fb29fbb14d3320a9",
+            "depthBefore": 3,
+            "depthAfter": 4,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": false,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          }
+        ],
+        "failureDepartures": [
+          {
+            "turn": 7,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 0,
+                "offset": 0.25,
+                "move_positive": true,
+                "over": false
+              }
+            },
+            "ok": true,
+            "from": "f805161912b0f6afaacff213",
+            "to": "66489683c63244d8254fe2cd",
+            "depthBefore": 3,
+            "depthAfter": 4,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": false,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          }
+        ]
+      }
+    },
+    "warning": "ANALYST ONLY. Never append this file or its labels to a model prompt."
+  },
+  {
+    "sample": "layers-0001",
+    "selection_pair": {
+      "successRepeat": 2,
+      "failureRepeat": 1,
+      "commonInitialAcceptedFoldCount": 4,
+      "divergence": {
+        "success": {
+          "turn": 11,
+          "action": {
+            "name": "add_fold",
+            "arguments": {
+              "angle_index": 3,
+              "selection_mode": "all",
+              "offset": -0.0625,
+              "move_positive": true,
+              "over": true
+            }
+          },
+          "ok": true,
+          "from": "46bcbdd288d2d75c7f313561",
+          "to": "3968e39109aa617da963a0ef",
+          "depthBefore": 1,
+          "depthAfter": 2,
+          "eid": false,
+          "plane": false,
+          "cp": false,
+          "repeated": false,
+          "revisit": false,
+          "backtrack": false,
+          "deadEnd": false,
+          "diagnosis": "layer_count"
+        },
+        "failure": {
+          "turn": 11,
+          "action": {
+            "name": "add_fold",
+            "arguments": {
+              "angle_index": 0,
+              "selection_mode": "all",
+              "offset": 0.147460938,
+              "move_positive": true,
+              "over": true
+            }
+          },
+          "ok": true,
+          "from": "8a4be69c615292ecd6bc2bd3",
+          "to": "5de2a1b2b5d69f85ae601de7",
+          "depthBefore": 2,
+          "depthAfter": 3,
+          "eid": false,
+          "plane": false,
+          "cp": false,
+          "repeated": false,
+          "revisit": false,
+          "backtrack": false,
+          "deadEnd": false,
+          "diagnosis": "layer_count"
+        }
+      },
+      "firstUntriedSuccessfulRouteEdge": {
+        "step": 3,
+        "from": "3968e39109aa617da963a0ef",
+        "to": "d69d0e3620f8bcfdd493e939",
+        "sourceVisitedByFailure": true,
+        "successEvents": [
+          {
+            "turn": 13,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 3,
+                "selection_mode": "all",
+                "offset": -0.5546875,
+                "move_positive": true,
+                "over": false
+              }
+            },
+            "ok": true,
+            "from": "3968e39109aa617da963a0ef",
+            "to": "d69d0e3620f8bcfdd493e939",
+            "depthBefore": 2,
+            "depthAfter": 3,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": false,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          }
+        ],
+        "failureDepartures": [
+          {
+            "turn": 24,
+            "action": {
+              "name": "restore_revision",
+              "arguments": {
+                "revision": 14
+              }
+            },
+            "ok": true,
+            "from": "3968e39109aa617da963a0ef",
+            "to": "46bcbdd288d2d75c7f313561",
+            "depthBefore": 2,
+            "depthAfter": 1,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": true,
+            "backtrack": true,
+            "deadEnd": false
+          },
+          {
+            "turn": 26,
+            "action": {
+              "name": "restore_revision",
+              "arguments": {
+                "revision": 0
+              }
+            },
+            "ok": true,
+            "from": "3968e39109aa617da963a0ef",
+            "to": "551dd213a24225b08ca51641",
+            "depthBefore": 2,
+            "depthAfter": 0,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": true,
+            "backtrack": true,
+            "deadEnd": false
+          }
+        ]
+      }
+    },
+    "warning": "ANALYST ONLY. Never append this file or its labels to a model prompt."
+  },
+  {
+    "sample": "layers-0002",
+    "selection_pair": {
+      "successRepeat": 1,
+      "failureRepeat": 2,
+      "commonInitialAcceptedFoldCount": 8,
+      "divergence": {
+        "success": {
+          "turn": 18,
+          "action": {
+            "name": "add_fold",
+            "arguments": {
+              "angle_index": 2,
+              "selection_mode": "all",
+              "offset": 0.09375,
+              "move_positive": true,
+              "over": true
+            }
+          },
+          "ok": true,
+          "from": "d54c7ca8d20d5d5d2dca79f2",
+          "to": "8a6b8e8aa252c24d4baa954d",
+          "depthBefore": 2,
+          "depthAfter": 3,
+          "eid": false,
+          "plane": false,
+          "cp": false,
+          "repeated": false,
+          "revisit": false,
+          "backtrack": false,
+          "deadEnd": false,
+          "diagnosis": "layer_count"
+        },
+        "failure": {
+          "turn": 19,
+          "action": {
+            "name": "add_fold",
+            "arguments": {
+              "angle_index": 2,
+              "selection_mode": "all",
+              "offset": 0.17578125,
+              "move_positive": true,
+              "over": true
+            }
+          },
+          "ok": true,
+          "from": "46f35b5f493a97f3cc4ceda5",
+          "to": "d8da3ce2eef3651840ce6538",
+          "depthBefore": 3,
+          "depthAfter": 4,
+          "eid": false,
+          "plane": false,
+          "cp": false,
+          "repeated": true,
+          "revisit": true,
+          "backtrack": false,
+          "deadEnd": false,
+          "diagnosis": "layer_count"
+        }
+      },
+      "firstUntriedSuccessfulRouteEdge": {
+        "step": 3,
+        "from": "d54c7ca8d20d5d5d2dca79f2",
+        "to": "8a6b8e8aa252c24d4baa954d",
+        "sourceVisitedByFailure": true,
+        "successEvents": [
+          {
+            "turn": 18,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 2,
+                "selection_mode": "all",
+                "offset": 0.09375,
+                "move_positive": true,
+                "over": true
+              }
+            },
+            "ok": true,
+            "from": "d54c7ca8d20d5d5d2dca79f2",
+            "to": "8a6b8e8aa252c24d4baa954d",
+            "depthBefore": 2,
+            "depthAfter": 3,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": false,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          }
+        ],
+        "failureDepartures": [
+          {
+            "turn": 6,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 2,
+                "selection_mode": "all",
+                "offset": 0.17578125,
+                "move_positive": true,
+                "over": true
+              }
+            },
+            "ok": true,
+            "from": "d54c7ca8d20d5d5d2dca79f2",
+            "to": "75d63c3e18ea041e1041eba4",
+            "depthBefore": 2,
+            "depthAfter": 3,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": false,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          },
+          {
+            "turn": 13,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 3,
+                "selection_mode": "all",
+                "offset": 1.53125,
+                "move_positive": true,
+                "over": false
+              }
+            },
+            "ok": true,
+            "from": "d54c7ca8d20d5d5d2dca79f2",
+            "to": "46f35b5f493a97f3cc4ceda5",
+            "depthBefore": 2,
+            "depthAfter": 3,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": false,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          }
+        ]
+      }
+    },
+    "warning": "ANALYST ONLY. Never append this file or its labels to a model prompt."
+  },
+  {
+    "sample": "layers-0003",
+    "selection_pair": {
+      "successRepeat": 2,
+      "failureRepeat": 1,
+      "commonInitialAcceptedFoldCount": 4,
+      "divergence": {
+        "success": {
+          "turn": 11,
+          "action": {
+            "name": "add_fold",
+            "arguments": {
+              "angle_index": 3,
+              "selection_mode": "all",
+              "offset": 1.75,
+              "move_positive": true,
+              "over": true
+            }
+          },
+          "ok": true,
+          "from": "20e3142a63881e6a904cc369",
+          "to": "528d771014d096b1d60a313d",
+          "depthBefore": 0,
+          "depthAfter": 1,
+          "eid": false,
+          "plane": false,
+          "cp": false,
+          "repeated": false,
+          "revisit": false,
+          "backtrack": false,
+          "deadEnd": false,
+          "diagnosis": "layer_count"
+        },
+        "failure": {
+          "turn": 11,
+          "action": {
+            "name": "add_fold",
+            "arguments": {
+              "angle_index": 1,
+              "selection_mode": "bottom",
+              "layer_count": 1,
+              "offset": -0.75,
+              "move_positive": false,
+              "over": false
+            }
+          },
+          "ok": true,
+          "from": "5d85b57b11cfd594a628c870",
+          "to": "e3e407cffb5b29fdaf7ea05c",
+          "depthBefore": 1,
+          "depthAfter": 2,
+          "eid": false,
+          "plane": false,
+          "cp": false,
+          "repeated": false,
+          "revisit": false,
+          "backtrack": false,
+          "deadEnd": false,
+          "diagnosis": "layer_count"
+        }
+      },
+      "firstUntriedSuccessfulRouteEdge": {
+        "step": 1,
+        "from": "20e3142a63881e6a904cc369",
+        "to": "a5911e34d276f598254c8169",
+        "sourceVisitedByFailure": true,
+        "successEvents": [
+          {
+            "turn": 20,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 3,
+                "selection_mode": "all",
+                "offset": 0.21875,
+                "move_positive": true,
+                "over": false
+              }
+            },
+            "ok": true,
+            "from": "20e3142a63881e6a904cc369",
+            "to": "a5911e34d276f598254c8169",
+            "depthBefore": 0,
+            "depthAfter": 1,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": false,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          }
+        ],
+        "failureDepartures": [
+          {
+            "turn": 2,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 0,
+                "selection_mode": "all",
+                "offset": 0.5,
+                "move_positive": true,
+                "over": false
+              }
+            },
+            "ok": true,
+            "from": "20e3142a63881e6a904cc369",
+            "to": "5d85b57b11cfd594a628c870",
+            "depthBefore": 0,
+            "depthAfter": 1,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": false,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          },
+          {
+            "turn": 16,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 3,
+                "selection_mode": "all",
+                "offset": 1.75,
+                "move_positive": true,
+                "over": true
+              }
+            },
+            "ok": true,
+            "from": "20e3142a63881e6a904cc369",
+            "to": "528d771014d096b1d60a313d",
+            "depthBefore": 0,
+            "depthAfter": 1,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": false,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          }
+        ]
+      }
+    },
+    "warning": "ANALYST ONLY. Never append this file or its labels to a model prompt."
+  },
+  {
+    "sample": "layers-0007",
+    "selection_pair": {
+      "successRepeat": 2,
+      "failureRepeat": 1,
+      "commonInitialAcceptedFoldCount": 5,
+      "divergence": {
+        "success": {
+          "turn": 12,
+          "action": {
+            "name": "add_fold",
+            "arguments": {
+              "angle_index": 1,
+              "selection_mode": "top",
+              "layer_count": 4,
+              "offset": -1.296875,
+              "move_positive": false,
+              "over": true
+            }
+          },
+          "ok": true,
+          "from": "991c6f76e958c7b3bf0957bf",
+          "to": "4c24a49b52687173fc70b8ff",
+          "depthBefore": 3,
+          "depthAfter": 4,
+          "eid": false,
+          "plane": false,
+          "cp": false,
+          "repeated": false,
+          "revisit": false,
+          "backtrack": false,
+          "deadEnd": false,
+          "diagnosis": "layer_count"
+        },
+        "failure": {
+          "turn": 13,
+          "action": {
+            "name": "add_fold",
+            "arguments": {
+              "angle_index": 1,
+              "selection_mode": "all",
+              "offset": -1.296875,
+              "move_positive": true,
+              "over": true
+            }
+          },
+          "ok": true,
+          "from": "991c6f76e958c7b3bf0957bf",
+          "to": "df61e44ef7b07bbc8a6f42cd",
+          "depthBefore": 3,
+          "depthAfter": 4,
+          "eid": false,
+          "plane": false,
+          "cp": false,
+          "repeated": false,
+          "revisit": false,
+          "backtrack": false,
+          "deadEnd": false,
+          "diagnosis": "layer_count"
+        }
+      },
+      "firstUntriedSuccessfulRouteEdge": {
+        "step": 4,
+        "from": "991c6f76e958c7b3bf0957bf",
+        "to": "4c24a49b52687173fc70b8ff",
+        "sourceVisitedByFailure": true,
+        "successEvents": [
+          {
+            "turn": 12,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 1,
+                "selection_mode": "top",
+                "layer_count": 4,
+                "offset": -1.296875,
+                "move_positive": false,
+                "over": true
+              }
+            },
+            "ok": true,
+            "from": "991c6f76e958c7b3bf0957bf",
+            "to": "4c24a49b52687173fc70b8ff",
+            "depthBefore": 3,
+            "depthAfter": 4,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": false,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          }
+        ],
+        "failureDepartures": [
+          {
+            "turn": 8,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 0,
+                "selection_mode": "top",
+                "layer_count": 4,
+                "offset": 0.15625,
+                "move_positive": false,
+                "over": true
+              }
+            },
+            "ok": true,
+            "from": "991c6f76e958c7b3bf0957bf",
+            "to": "102355353284974c8af23f69",
+            "depthBefore": 3,
+            "depthAfter": 4,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": false,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          },
+          {
+            "turn": 13,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 1,
+                "selection_mode": "all",
+                "offset": -1.296875,
+                "move_positive": true,
+                "over": true
+              }
+            },
+            "ok": true,
+            "from": "991c6f76e958c7b3bf0957bf",
+            "to": "df61e44ef7b07bbc8a6f42cd",
+            "depthBefore": 3,
+            "depthAfter": 4,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": false,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          },
+          {
+            "turn": 15,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 1,
+                "selection_mode": "all",
+                "offset": -1.296875,
+                "move_positive": true,
+                "over": true
+              }
+            },
+            "ok": true,
+            "from": "991c6f76e958c7b3bf0957bf",
+            "to": "df61e44ef7b07bbc8a6f42cd",
+            "depthBefore": 3,
+            "depthAfter": 4,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": true,
+            "revisit": true,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          },
+          {
+            "turn": 19,
+            "action": {
+              "name": "restore_revision",
+              "arguments": {
+                "revision": 2
+              }
+            },
+            "ok": true,
+            "from": "991c6f76e958c7b3bf0957bf",
+            "to": "e18c88d08f4b3dea55fcf22f",
+            "depthBefore": 3,
+            "depthAfter": 2,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": true,
+            "backtrack": true,
+            "deadEnd": false
+          },
+          {
+            "turn": 22,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 1,
+                "selection_mode": "all",
+                "offset": -1.296875,
+                "move_positive": true,
+                "over": true
+              }
+            },
+            "ok": true,
+            "from": "991c6f76e958c7b3bf0957bf",
+            "to": "df61e44ef7b07bbc8a6f42cd",
+            "depthBefore": 3,
+            "depthAfter": 4,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": true,
+            "revisit": true,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          }
+        ]
+      }
+    },
+    "warning": "ANALYST ONLY. Never append this file or its labels to a model prompt."
+  },
+  {
+    "sample": "layers-0010",
+    "selection_pair": {
+      "successRepeat": 4,
+      "failureRepeat": 1,
+      "commonInitialAcceptedFoldCount": 5,
+      "divergence": {
+        "success": {
+          "turn": 12,
+          "action": {
+            "name": "add_fold",
+            "arguments": {
+              "angle_index": 1,
+              "selection_mode": "top",
+              "layer_count": 4,
+              "offset": -0.6875,
+              "move_positive": false,
+              "over": true
+            }
+          },
+          "ok": true,
+          "from": "cb0770faa9c36ae0d5895193",
+          "to": "94cc3c09c7f402f1972470b9",
+          "depthBefore": 3,
+          "depthAfter": 4,
+          "eid": false,
+          "plane": false,
+          "cp": false,
+          "repeated": false,
+          "revisit": false,
+          "backtrack": false,
+          "deadEnd": false,
+          "diagnosis": "layer_count"
+        },
+        "failure": {
+          "turn": 12,
+          "action": {
+            "name": "add_fold",
+            "arguments": {
+              "angle_index": 1,
+              "selection_mode": "all",
+              "offset": -0.6875,
+              "move_positive": true,
+              "over": true
+            }
+          },
+          "ok": true,
+          "from": "17a50000ea7b16c28dc534f8",
+          "to": "cf00715abe028207592ef0c6",
+          "depthBefore": 2,
+          "depthAfter": 3,
+          "eid": false,
+          "plane": false,
+          "cp": false,
+          "repeated": false,
+          "revisit": false,
+          "backtrack": false,
+          "deadEnd": false,
+          "diagnosis": "layer_count"
+        }
+      },
+      "firstUntriedSuccessfulRouteEdge": {
+        "step": 4,
+        "from": "cf00715abe028207592ef0c6",
+        "to": "77e0548152a4e05be87ba600",
+        "sourceVisitedByFailure": true,
+        "successEvents": [
+          {
+            "turn": 24,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 1,
+                "selection_mode": "all",
+                "offset": -1.671875,
+                "move_positive": true,
+                "over": false
+              }
+            },
+            "ok": true,
+            "from": "cf00715abe028207592ef0c6",
+            "to": "77e0548152a4e05be87ba600",
+            "depthBefore": 3,
+            "depthAfter": 4,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": false,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          }
+        ],
+        "failureDepartures": [
+          {
+            "turn": 14,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 2,
+                "selection_mode": "all",
+                "offset": 0.84375,
+                "move_positive": true,
+                "over": false
+              }
+            },
+            "ok": true,
+            "from": "cf00715abe028207592ef0c6",
+            "to": "a23a6c0cecc6fc47455a233e",
+            "depthBefore": 3,
+            "depthAfter": 4,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": false,
+            "revisit": false,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          },
+          {
+            "turn": 18,
+            "action": {
+              "name": "add_fold",
+              "arguments": {
+                "angle_index": 2,
+                "selection_mode": "all",
+                "offset": 0.84375,
+                "move_positive": true,
+                "over": false
+              }
+            },
+            "ok": true,
+            "from": "cf00715abe028207592ef0c6",
+            "to": "a23a6c0cecc6fc47455a233e",
+            "depthBefore": 3,
+            "depthAfter": 4,
+            "eid": false,
+            "plane": false,
+            "cp": false,
+            "repeated": true,
+            "revisit": true,
+            "backtrack": false,
+            "deadEnd": false,
+            "diagnosis": "layer_count"
+          }
+        ]
+      }
+    },
+    "warning": "ANALYST ONLY. Never append this file or its labels to a model prompt."
+  }
+]
