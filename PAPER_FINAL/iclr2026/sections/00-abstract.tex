@@ -1,30 +1,20 @@
 \begin{abstract}
-Many tasks given to language-model agents require a long sequence of actions whose effects
-compound, where each intermediate state must be tracked exactly and the result can be checked
-only at the end. We introduce \textbf{CP2Seq}, a benchmark for long-horizon sequence planning with
-exact verification, built on flat origami. Each of its 600 procedurally generated samples gives a
-crease pattern and a target folded state, including the order of the layers; the model must
-produce a sequence of simple folds that reaches the target from an unfolded square. A
-deterministic folding engine executes each proposed fold or rejects it with a named reason, and a
-completed sequence is accepted only if its final stack matches the target layer by layer,
-including which region of the sheet each layer comes from, up to a rigid motion. Ground truth is
-recorded during generation, and the released generator produces fresh instances at a chosen
-reference depth. Origami supplies the state space; we make no claim about physical folding, which
-would require thickness and contact. We evaluate GPT-5.6 and GPT-6 Luna, and Claude Sonnet 5.5 on 20 instances, under increasing tool
-assistance and compare them with breadth-first search and with random legal folding over the same
-actions. All counts use exact matching, one episode per instance unless stated. On 40 ablation instances
-(10 per group), no model condition solves a sample of 11 or more folds, and higher reasoning effort
-raises GPT-6 Luna's some-layers solves from 6/30 to 18/30 (three tool conditions, 10 instances each). The models fall short of
-undirected search: within 80 folds, random legal folding solves 57\% of easy and 96\% of
-some-layers episodes (1,000 per group), against at most 5 of 10 easy and 8 of 10 some-layers
-instances in any model condition, and breadth-first search solves within $10^5$ expansions 5 of
-10 medium instances that no model episode solves. Stopping at the first match would add only 2 solves to 25 in the 143 episodes with per-turn logs,
-and with exact coordinates models reach a median tenth to a quarter of the distinct states that
-random folding reaches, consistent with a
-failure of exploration rather than of the final step. Removing the rendered images does not lower GPT-5.6 Luna's solve rate (19/120 without, 16/120
-with), so the benchmark
-measures reasoning over an exact symbolic state rather than visual perception. Single episodes per
-instance vary substantially between runs (five repeats solve 1 to 3 of 10 easy instances against 5
-in the original run), and the deepest group of the released all-layers corpus grows to hundreds or
-thousands of layers; we report both and describe a layer-controlled regeneration.
+Many agent tasks require long action sequences whose effects compound and whose result can be
+checked only at the end. We introduce \textbf{CP2Seq}, a benchmark for long-horizon sequence planning
+with exact verification, built on flat origami. Each of 600 procedurally generated samples gives a
+crease pattern and a target folded state, including layer order; the model must find a sequence of
+simple folds from an unfolded square. An engine executes or rejects each fold with a named reason,
+and a sequence is accepted only if its final stack matches the target layer by layer, including
+which region of the sheet each layer comes from. We make no claim about physical folding. We
+evaluate GPT-5.6 and GPT-6 Luna under increasing tool assistance, Claude Sonnet 5.5 on 20
+instances, and breadth-first and random search over the same actions. Counts use exact matching,
+one episode per instance unless stated. No model condition solves any of the 20 medium or hard
+ablation instances (11 or more folds), and the models fall short of undirected search: within 80
+folds, random legal folding solves 57\% of easy and 96\% of some-layers episodes, against at most
+5 and 8 of 10 instances for any model condition. Failures reflect exploration rather than the
+final step: stopping at the first match adds 2 solves to 25 in 143 logged episodes, models reach a
+median tenth to a quarter of the states random folding reaches, and they restart about as often
+when a short repair exists as when none does. Removing images does not lower solve rate, so the
+task measures reasoning over an exact symbolic state. Results vary substantially between repeated
+runs, and depth and layer count are confounded in the deepest group; we report both.
 \end{abstract}
